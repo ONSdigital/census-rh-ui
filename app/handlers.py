@@ -5,13 +5,16 @@ from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorErro
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from structlog import wrap_logger
+from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_CODE_TYPE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG)
 from .case import get_case, post_case_event
-from .eq import EqPayloadConstructor
+from .sample import get_sample_attributes
 from .exceptions import InactiveCaseError, InvalidIACError
+from .eq import EqPayloadConstructor
 from .flash import flash
+from .exceptions import InvalidEqPayLoad
 
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
@@ -37,6 +40,7 @@ class Index:
     def __init__(self):
         self.iac = None
         self.request = None
+        self._sample_unit_id = None
 
     @property
     def client_ip(self):
@@ -102,8 +106,11 @@ class Index:
     @aiohttp_jinja2.template('index.html')
     async def post(self, request):
         """
-        Main entry point to building an eQ payload as URL parameter.
+        Forward to Address confirmation
+        :param request:
+        :return: address confirmation view
         """
+
         self.request = request
         data = await self.request.post()
 
@@ -121,6 +128,7 @@ class Index:
             flash(self.request, INVALID_CODE_MSG)
             return aiohttp_jinja2.render_template("index.html", self.request, {}, status=202)
 
+        # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
         self.validate_case(iac_json)
 
         try:
@@ -133,25 +141,83 @@ class Index:
         case = await get_case(case_id, self.request.app)
 
         try:
-            assert case['sampleUnitType'] == 'H'
-        except AssertionError:
-            logger.warn('Attempt to use unexpected sample unit type', sample_unit_type=case['sampleUnitType'])
-            flash(self.request, BAD_CODE_TYPE_MSG)
-            return {}
+            self._sample_unit_id = case["sampleUnitId"]
         except KeyError:
-            logger.error('sampleUnitType missing from case response', client_ip=self.client_ip)
-            flash(self.request, BAD_RESPONSE_MSG)
-            return {}
+            raise InvalidEqPayLoad(f"No sample unit id for case {self._case_id}")
 
-        eq_payload = await EqPayloadConstructor(case, self.request.app, self.iac).build()
+        sample_attr = await get_sample_attributes(self._sample_unit_id, self.request.app)
 
-        token = encrypt(eq_payload, key_store=self.request.app['key_store'], key_purpose="authentication")
+        try:
+            attributes = sample_attr["attributes"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve attributes for case {self._case_id}")
 
-        description = f"Instrument LMS launched for case {case_id}"
-        await post_case_event(case_id, 'EQ_LAUNCH', description, self.request.app)
+        logger.debug("Address Conformation displayed", client_ip=self.client_ip)
+        session = await get_session(request)
+        session["attributes"] = attributes
+        session["case"] = case
+        session["iac"] = self.iac
+        return aiohttp_jinja2.render_template("address-confirmation.html", self.request, attributes)
 
-        logger.info('Redirecting to eQ', client_ip=self.client_ip)
-        raise HTTPFound(f"{self.request.app['EQ_URL']}/session?token={token}")
+
+@routes.view('/address-confirmation')
+class AddressConfirmation:
+
+    def __init__(self):
+        self.request = None
+
+    @property
+    def client_ip(self):
+        if not hasattr(self, '_client_ip'):
+            self._client_ip = self.request.headers.get("X-Forwarded-For")
+        return self._client_ip
+
+    @aiohttp_jinja2.template('address-confirmation.html')
+    async def post(self, request):
+        """
+        Address Confirmation flow. If correct address will build EQ payload and send to EQ.
+        """
+        self.request = request
+        session = await get_session(request)
+
+        data = await self.request.post()
+
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+            iac = session["iac"]
+        except KeyError:
+            return aiohttp_jinja2.render_template("index.html", self.request, {}, status=401)
+
+        try:
+            address_confirmation = data["address-check-answer"]
+        except KeyError:
+            logger.warn("Address confirmation error", client_ip=self.client_ip)
+            flash(self.request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'Yes':
+            # Correct address flow
+            app = self.request.app
+
+            eq_payload = await EqPayloadConstructor(case, attributes, app, iac).build()
+
+            token = encrypt(eq_payload, key_store=self.request.app['key_store'], key_purpose="authentication")
+
+            description = f"Census Instrument launched for case {case['id']}"
+            await post_case_event(case['id'], 'EQ_LAUNCH', description, self.request.app)
+
+            logger.info('Redirecting to eQ', client_ip=self.client_ip)
+            raise HTTPFound(f"{self.request.app['EQ_URL']}/session?token={token}")
+
+        elif address_confirmation == 'No':
+            # TODO: Form to enter address and deal with incorrect address
+            pass
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self.client_ip)
+            flash(self.request, ADDRESS_CHECK_MSG)
+            return attributes
 
 
 @routes.view('/cookies-privacy')

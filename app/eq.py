@@ -72,7 +72,7 @@ def build_response_id(case_id, collex_id, iac):
 
 class EqPayloadConstructor(object):
 
-    def __init__(self, case: dict, app: Application, iac: str):
+    def __init__(self, case: dict, attributes: dict, app: Application, iac: str):
         """
         Creates the payload needed to communicate with EQ, built from the Case, Collection Exercise, Sample,
         and Collection Instrument services
@@ -90,6 +90,11 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad("IAC is empty")
 
         self._iac = iac
+
+        if not attributes:
+            raise InvalidEqPayLoad("Attributes is empty")
+
+        self._sample_attributes = attributes
 
         try:
             self._case_id = case["id"]
@@ -162,12 +167,6 @@ class EqPayloadConstructor(object):
 
         self._collex_events = await self._get_collection_exercise_events()
         self._collex_event_dates = self._get_collex_event_dates()
-        self._sample_attributes = await self._get_sample_attributes_by_id()
-
-        try:
-            self._sample_attributes = self._sample_attributes["attributes"]
-        except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve attributes for case {self._case_id}")
 
         try:
             self._country_code = self._sample_attributes["COUNTRY"]
@@ -189,6 +188,8 @@ class EqPayloadConstructor(object):
             "period_id": self._collex_period_id,  # required by eQ
             "form_type": self._form_type,  # required by eQ ('2' for lms_2 schema)
             "collection_exercise_sid": self._collex_id,  # required by eQ
+            "region_code": "GB-ENG",
+            "sexual_identity": True,
             "ru_ref": self._sample_unit_ref,  # required by eQ
             "case_id": self._case_id,  # not required by eQ but useful for downstream
             "case_ref": self._case_ref,  # not required by eQ but useful for downstream

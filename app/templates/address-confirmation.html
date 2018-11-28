@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% block title %}{% if 'ERROR' in messages_dict %}Error - {{ super() }}{% else %}{{ super() }}{% endif %}{% endblock %}
+{% block content %}
+  {% if messages_dict %}
+    {% include "partials/messages.html" with context %}
+  {% endif %}
+  <div>
+    <h2 class="saturn u-mt-l u-mb-m">Is your address correct?</h2>
+    <form action="{{ url('AddressConfirmation:post') }}" class="form qa-questionnaire-form" role="form" method="post" novalidate>
+           <div class="group" id="household-and-accommodation">
+               <div class="block" id="address-check">
+                  <div class="section" id="address-check-section">
+                     <div class="question" id="address-check-question">
+                     <div class="question__guidance">
+                        <div class="panel panel--simple panel--info">
+                            {{ ADDRESS_LINE1 }}<br>
+                            {{ ADDRESS_LINE2 }}<br>
+                            {{ TOWN_NAME }}<br>
+                            {{ LOCALITY }}<br>
+                            {{ POSTCODE }}
+                        </div>
+                     </div>
+                     </div>
+                      <div class="question__answers">
+                          <div class="question__answer">
+                              <div class="answer answer--radio" id="container-address-check-answer">
+                                  <div class="answer__fields js-fields">
+                                     <div class="{% if 'ERROR' in messages_dict %} panel panel--simple panel--error {% endif %} u-mb-l">
+                                      <div class="field field--radio field--multiplechoice">
+                                          <fieldset>
+                                              <div class="field__item js-focusable-box">
+                                                  <input class="input input--radio js-focusable" id="address-check-answer-0" type="radio" value="Yes"
+                                                         name="address-check-answer">
+                                                  <label class="label label--inline venus" id="label-address-check-answer-0" for="address-check-answer-0">
+                                                      <span class="u-vh u-mt-s">Or, </span>
+                                                        Yes, this address is correct
+                                                      <span class="u-vh">. Selecting this will uncheck all other answers</span>
+                                                  </label>
+                                              </div>
+                                              <div class="field__item js-focusable-box">
+                                                  <input class="input input--radio js-focusable" id="address-check-answer-1" type="radio" value="No"
+                                                         name="address-check-answer">
+                                                  <label class="label label--inline venus" id="label-address-check-answer-1" for="address-check-answer-1">
+                                                      <span class="u-vh u-mt-s">Or, </span>
+                                                        No, I need to change this address
+                                                      <span class="u-vh">. Selecting this will uncheck all other answers</span>
+                                                  </label>
+                                              </div>
+                                          </fieldset>
+                                      </div>
+                                     </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
+        <button class="btn u-mb-s" data-qa="btn-submit" type="submit" name="action[save_continue]">Save and continue</button>
+    </form>
+  </div>
+{% endblock %}
