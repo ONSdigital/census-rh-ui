@@ -152,7 +152,7 @@ class Index:
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve attributes for case {self._case_id}")
 
-        logger.debug("Address Conformation displayed", client_ip=self.client_ip)
+        logger.debug("Address Confirmation displayed", client_ip=self.client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = case
