@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% block title %}{% if 'ERROR' in messages_dict %}Error - {{ super() }}{% else %}{{ super() }}{% endif %}{% endblock %}
+{% block content %}
+  {% if messages_dict %}
+    {% include "partials/messages.html" with context %}
+  {% endif %}
+  <div>
+    <h2 class="saturn u-mt-l u-mb-m">What is your address?</h2>
+      <form action="{{ url('AddressEdit:post') }}" class="form qa-questionnaire-form" role="form" method="post" novalidate>
+         <div class="group u-mb-l" id="what-is-your-address">
+             <div class="block" id="address-edit">
+                 <div class="section" id="address-edit-section">
+                     <div class="question" id="address-edit-question">
+                         <fieldset class="question__fieldset js-question-fieldset">
+                             <div class="question__answers">
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-address-line-1">
+                                         <div class="answer__fields js-fields">
+                                             <div class="{% if 'ERROR' in messages_dict %} panel panel--simple panel--error {% endif %}">
+                                                <div class=="field">
+                                                    <label class="label venus" id="label-address-line-1" for="address-line-1"> Address Line 1 (Including your house name or number) </label>
+                                                    <input class="input input--text" id="address-line-1" data-qa="input-text"
+                                                           name="address-line-1" value="{{ ADDRESS_LINE1 }}">
+                                                </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-address-line-2">
+                                         <div class="answer__fields js-fields">
+                                             <div class=="field">
+                                                 <label class="label venus" id="label-address-line-2" for="address-line-2"> Address Line 2 </label>
+                                                 <input class="input input--text" id="address-line-2" data-qa="input-text"
+                                                        name="address-line-2" value="{{ ADDRESS_LINE2 }}" >
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-town-city">
+                                         <div class="answer__fields js-fields">
+                                             <div class=="field">
+                                                 <label class="label venus" id="label-town-city" for="town-city"> Town/City </label>
+                                                 <input class="input input--text" id="town-city" data-qa="input-text"
+                                                        name="town-city" value="{{ TOWN_NAME }}">
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-county">
+                                         <div class="answer__fields js-fields">
+                                             <div class=="field">
+                                                 <label class="label venus" id="label-county" for="county"> County </label>
+                                                 <input class="input input--text" id="county" data-qa="input-text"
+                                                        name="county" value="{{ LOCALITY }}">
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-postcode">
+                                         <div class="answer__fields js-fields">
+                                             <div class=="field">
+                                                 <label class="label venus" id="label-postcode" for="postcode"> Postcode </label>
+                                                 <input class="input input--text" id="postcode" data-qa="input-text"
+                                                        name="postcode" value="{{ POSTCODE }}">
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="question__answer">
+                                     <div class="answer answer--textfield" id="container-country">
+                                         <div class="answer__fields js-fields">
+                                             <div class=="field">
+                                                 <label class="label venus" id="label-country" for="country"> Country </label>
+                                                 {% if COUNTRY == "E" %} {% set country_display = "England" %} {% endif %}
+                                                 <input class="input input--text" id="country" data-qa="input-text"
+                                                        name="country" value={{country_display}}>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </fieldset>
+                     </div>
+                 </div>
+             </div>
+         </div>
+          <button class="btn u-mb-s" data-qa="btn-submit" type="submit" name="action[save_continue]">Save and continue</button>
+      </form>
+  </div>
+{% endblock %}
