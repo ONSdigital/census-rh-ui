@@ -231,6 +231,7 @@ class RHTestCase(AioHTTPTestCase):
         self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
         self.iac_json = {'active': '1', 'caseId': self.case_id}
         self.sample_unit_id = self.sample_attributes_json['id']
+        self.sample_unit_attributes = self.sample_attributes_json['attributes']
         self.sample_unit_ref = self.case_json['caseGroup']['sampleUnitRef']
         self.sample_unit_type = self.case_json['sampleUnitType']
         self.survey_id = self.survey_json['id']
@@ -264,7 +265,9 @@ class RHTestCase(AioHTTPTestCase):
             "country": self.sample_attributes_json['attributes']['COUNTRY'],
             "country_code": self.sample_attributes_json['attributes']['COUNTRY'],
             "reference": self.sample_attributes_json['attributes']['REFERENCE'],
-            "response_id": self.response_id
+            "response_id": self.response_id,
+            "region_code": 'GB-ENG',
+            "sexual_identity": True
         }
 
         self.case_url = (
