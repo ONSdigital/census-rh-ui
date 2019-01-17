@@ -198,8 +198,6 @@ class TestEq(RHTestCase):
 
     @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
-        sample_json = self.sample_attributes_json.copy()
-        del sample_json['attributes']
 
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
 
@@ -210,8 +208,8 @@ class TestEq(RHTestCase):
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
                 await eq.EqPayloadConstructor(
-                    self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f'Could not retrieve attributes for case {self.case_id}', ex.exception.message)
+                    self.case_json, None, self.app, self.iac_code).build()
+            self.assertIn('Attributes is empty', ex.exception.message)
 
     def test_find_event_date_by_tag(self):
         find_mandatory_date = functools.partial(EqPayloadConstructor._find_event_date_by_tag, mandatory=True)

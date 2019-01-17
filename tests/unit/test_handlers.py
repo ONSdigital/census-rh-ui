@@ -45,14 +45,12 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.iac_url, payload=self.iac_json)
             mocked.get(self.case_url, payload=self.case_json)
-            mocked.post(self.case_events_url)
+            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
 
-            with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertLogLine(cm, 'Redirecting to eQ')
+            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
 
-        self.assertEqual(response.status, 302)
-        self.assertIn(self.app['EQ_URL'], response.headers['location'])
+        self.assertEqual(response.status, 200)
+        self.assertIn('Is your address correct', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_connector_error(self):
@@ -281,16 +279,11 @@ class TestHandlers(RHTestCase):
             # mocks for initial data setup in post
             mocked.get(self.iac_url, payload=self.iac_json)
             mocked.get(self.case_url, payload=self.case_json)
-            mocked.post(self.case_events_url)
-            # mocks for the payload builder
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
             mocked.get(self.sample_attributes_url, status=403)
 
-            with self.assertLogs('app.eq', 'ERROR') as cm:
+            with self.assertLogs('app.sample', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertLogLine(cm, "Error in response", status_code=403)
+            self.assertLogLine(cm, "Error retrieving sample attributes", status_code=403)
 
         self.assertEqual(response.status, 500)
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
