@@ -280,3 +280,10 @@ class ContactUs:
     @aiohttp_jinja2.template('contact-us.html')
     async def get(self, _):
         return {}
+
+
+@routes.view('/onlinehelp')
+class OnlineHelp:
+    @aiohttp_jinja2.template('onlinehelp.html')
+    async def get(self, _):
+        return {}
