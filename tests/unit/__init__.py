@@ -215,6 +215,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_cookies_privacy = self.app.router['CookiesPrivacy:get'].url_for()
         self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
+        self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
 
         self.action_plan_id = self.case_json['actionPlanId']
         self.case_id = self.case_json['id']
@@ -300,6 +301,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.form_data = {
             'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',
+        }
+
+        self.address_confirmation_data = {
+            'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
         class DummyConstructor:
