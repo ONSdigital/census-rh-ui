@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-cd respondent-home-ui-source
+cd census-rh-ui-source
 
 # Install libssl-dev for python cryptography lib
 apt-get install libssl-dev -y
