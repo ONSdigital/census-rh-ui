@@ -215,6 +215,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_cookies_privacy = self.app.router['CookiesPrivacy:get'].url_for()
         self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
+        self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
 
         self.action_plan_id = self.case_json['actionPlanId']
         self.case_id = self.case_json['id']
@@ -231,6 +232,7 @@ class RHTestCase(AioHTTPTestCase):
         self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
         self.iac_json = {'active': '1', 'caseId': self.case_id}
         self.sample_unit_id = self.sample_attributes_json['id']
+        self.sample_unit_attributes = self.sample_attributes_json['attributes']
         self.sample_unit_ref = self.case_json['caseGroup']['sampleUnitRef']
         self.sample_unit_type = self.case_json['sampleUnitType']
         self.survey_id = self.survey_json['id']
@@ -264,7 +266,9 @@ class RHTestCase(AioHTTPTestCase):
             "country": self.sample_attributes_json['attributes']['COUNTRY'],
             "country_code": self.sample_attributes_json['attributes']['COUNTRY'],
             "reference": self.sample_attributes_json['attributes']['REFERENCE'],
-            "response_id": self.response_id
+            "response_id": self.response_id,
+            "region_code": 'GB-ENG',
+            "sexual_identity": True
         }
 
         self.case_url = (
@@ -297,6 +301,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.form_data = {
             'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',
+        }
+
+        self.address_confirmation_data = {
+            'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
         class DummyConstructor:

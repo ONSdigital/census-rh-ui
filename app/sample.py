@@ -22,4 +22,3 @@ async def get_sample_attributes(sample_unit_id: str, app: Application):
             logger.debug("Successfully retrieved sample attributes", sample_unit_id=sample_unit_id,
                          url=str(response.url))
         return await response.json()
-

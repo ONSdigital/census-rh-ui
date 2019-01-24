@@ -60,7 +60,7 @@ class TestEq(RHTestCase):
         del case_json["caseGroup"]["collectionExerciseId"]
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            self.sample_attributes_json,
+            EqPayloadConstructor(case_json, self.sample_attributes_json, self.app, self.iac_code)
         self.assertIn(f'No collection id for case id {self.case_id}', ex.exception.message)
 
     def test_create_eq_constructor_missing_sample_unit_id(self):
@@ -83,12 +83,10 @@ class TestEq(RHTestCase):
                 mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
                 mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
                 mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-                mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-                mocked.get(self.survey_url, payload=self.survey_json)
 
                 with self.assertLogs('app.eq', 'INFO') as cm:
                     payload = await EqPayloadConstructor(
-                        self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                        self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
                 self.assertLogLine(cm, '', payload=payload)
 
         mocked_uuid4.assert_called()
@@ -107,7 +105,7 @@ class TestEq(RHTestCase):
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
                 await eq.EqPayloadConstructor(
-                    self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                    self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Collection instrument {self.collection_instrument_id} type is not EQ", ex.exception.message)
 
     @unittest_run_loop
@@ -119,7 +117,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=ci_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"No Collection Instrument type for {self.collection_instrument_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -131,7 +129,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=ci_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve classifiers for case {self.case_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -143,7 +141,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=ci_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve eq_id for case {self.case_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -155,7 +153,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=ci_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve form_type for eq_id {self.eq_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -168,7 +166,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_exercise_url, payload=ce_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve period id for case {self.case_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -181,7 +179,7 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_exercise_url, payload=ce_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve ce id for case {self.case_id}", ex.exception.message)
 
     @unittest_run_loop
@@ -193,16 +191,13 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
             mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
             mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-            mocked.get(self.sample_attributes_url, payload=sample_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
+                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
             self.assertIn(f"Could not retrieve country_code for case {self.case_id}", ex.exception.message)
 
     @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
-        sample_json = self.sample_attributes_json.copy()
-        del sample_json['attributes']
 
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
 
@@ -210,12 +205,11 @@ class TestEq(RHTestCase):
             mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
             mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
             mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-            mocked.get(self.sample_attributes_url, payload=sample_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
                 await eq.EqPayloadConstructor(
-                    self.case_json, self.sample_attributes_json, self.app, self.iac_code).build()
-            self.assertIn(f'Could not retrieve attributes for case {self.case_id}', ex.exception.message)
+                    self.case_json, None, self.app, self.iac_code).build()
+            self.assertIn('Attributes is empty', ex.exception.message)
 
     def test_find_event_date_by_tag(self):
         find_mandatory_date = functools.partial(EqPayloadConstructor._find_event_date_by_tag, mandatory=True)
