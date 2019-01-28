@@ -188,7 +188,7 @@ class TestHandlers(RHTestCase):
                                collex_id=self.collection_exercise_id)
 
         self.assertEqual(response.status, 200)
-        self.assertIn('This study has closed', str(await response.content.read()))
+        self.assertIn('This survey has closed', str(await response.content.read()))
 
     @build_eq_raises
     @unittest_run_loop
@@ -371,7 +371,7 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Study complete', str(await response.content.read()))
+        self.assertIn('Survey complete', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_iac_inactive(self):
@@ -386,7 +386,7 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Study complete', str(await response.content.read()))
+        self.assertIn('Survey complete', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_iac_service_connection_error(self):
