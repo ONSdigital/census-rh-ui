@@ -17,6 +17,7 @@ script:
   - pipenv run coverage report
 
 after_success:
+  - ./scripts/docker_push.sh
   - pipenv run codecov
 
 branches:
