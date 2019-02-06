@@ -111,8 +111,6 @@ class EqPayloadConstructor(object):
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve sample unit ref for case {self._case_id}")
 
-        logger.info("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
-
         try:
             self._ci_id = case["collectionInstrumentId"]
         except KeyError:
@@ -175,6 +173,8 @@ class EqPayloadConstructor(object):
 
         response_id = build_response_id(self._case_id, self._collex_id, self._iac)
 
+        logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
+
         # TODO: Remove hardcoded language variables for payload when they become available in RAS/RM
         self._language_code = 'en'  # sample attributes do not currently have language details
 
@@ -211,8 +211,6 @@ class EqPayloadConstructor(object):
             [(key, value) for key, value in self._collex_event_dates.items() if value is not None]
         )
 
-        logger.info(payload=self._payload)
-
         return self._payload
 
     @staticmethod
@@ -241,7 +239,7 @@ class EqPayloadConstructor(object):
 
     async def _make_request(self, request: Request):
         method, url, auth, func = request
-        logger.info(f"Making {method} request to {url} and handling with {func.__name__}")
+        logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
         async with self._app.http_session_pool.request(method, url, auth=auth) as resp:
             func(resp)
             return await resp.json()
