@@ -84,10 +84,10 @@ class TestEq(RHTestCase):
                 mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
                 mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
 
-                with self.assertLogs('app.eq', 'INFO') as cm:
+                with self.assertLogs('app.eq', 'DEBUG') as cm:
                     payload = await EqPayloadConstructor(
                         self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-                self.assertLogLine(cm, '', payload=payload)
+                self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
         mocked_time.assert_called()

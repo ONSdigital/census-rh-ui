@@ -57,7 +57,7 @@ class View:
         description = f"Census Instrument launched for case {case['id']}"
         await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
 
-        logger.info('Redirecting to eQ', client_ip=self._client_ip)
+        logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
 
@@ -100,7 +100,7 @@ class Index(View):
                     if resp.status == 404:
                         raise InvalidIACError
                     elif resp.status in (401, 403):
-                        logger.info("Unauthorized access to IAC service attempted", client_ip=self._client_ip)
+                        logger.warn("Unauthorized access to IAC service attempted", client_ip=self._client_ip)
                         flash(self._request, NOT_AUTHORIZED_MSG)
                         return self.redirect()
                     elif 400 <= resp.status < 500:
@@ -144,7 +144,7 @@ class Index(View):
         try:
             iac_json = await self.get_iac_details()
         except InvalidIACError:
-            logger.info("Attempt to use an invalid access code", client_ip=self._client_ip)
+            logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
             flash(self._request, INVALID_CODE_MSG)
             return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
 

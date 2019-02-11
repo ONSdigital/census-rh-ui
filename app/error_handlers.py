@@ -45,12 +45,12 @@ def create_error_middleware(overrides):
 
 
 async def inactive_case(request):
-    logger.info("Attempt to use an inactive access code")
+    logger.warn("Attempt to use an inactive access code")
     return aiohttp_jinja2.render_template("completed.html", request, {})
 
 
 async def ce_closed(request, collex_id):
-    logger.info("Attempt to access collection exercise that has already ended", collex_id=collex_id)
+    logger.warn("Attempt to access collection exercise that has already ended", collex_id=collex_id)
     return aiohttp_jinja2.render_template("closed.html", request, {})
 
 
