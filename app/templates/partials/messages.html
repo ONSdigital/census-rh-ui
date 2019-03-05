@@ -18,7 +18,9 @@
         <ul class="list list--bare">
           <li class="list__item mars">
             {% if message.clickable %}
-              {{loop.index}}) <a class="js-inpagelink" href="#access-code-answer">{{ message.text }}</a>
+              {{loop.index}}) <a class="js-inpagelink" href="#access-code-answer">
+                                {{ message.text }}
+                              </a>
             {% else %}
               {{ message.text }}
             {% endif %}
@@ -26,6 +28,17 @@
         </ul>
       </div>
       {% endfor %}
+      Or please call for advice on one of these numbers:
+      <ul class="list list--bare">
+        <li>England 0800 141 2021
+        </li>
+        <li>Wales 0800 169 2021
+        </li>
+        <li>Northern Ireland 0800 328 2021
+        </li>
+        <li>Language 0800 587 2021
+        </li>
+    </ul>
     </div>
 
     {% elif group=='INFO' %}
