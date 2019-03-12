@@ -18,13 +18,31 @@
         <ul class="list list--bare">
           <li class="list__item mars">
             {% if message.clickable %}
-              {{loop.index}}) <a class="js-inpagelink" href="#access-code-answer">{{ message.text }}</a>
+              {{loop.index}}) <a class="js-inpagelink" href="#access-code-answer">
+                                {{ message.text }}
+                              </a>
             {% else %}
               {{ message.text }}
             {% endif %}
           </li>
         </ul>
+
+        {% if message.type !='ADDRESS_CONFIRMATION_ERROR' %}
+          <p></p>
+          Or please call for advice on one of these numbers:
+          <ul class="list list--bare">
+            <li>  0800 141 2021   England
+            </li>
+            <li>  0800 169 2021   Wales
+            </li>
+            <li>  0800 328 2021   Northern Ireland
+            </li>
+            <li>  0800 587 2021   Translation
+            </li>
+          </ul>
+        {% endif %}
       </div>
+
       {% endfor %}
     </div>
 
