@@ -6,6 +6,7 @@
                 <ul class="list list--bare">
                     <li>
                         <a href="{{ url('CookiesPrivacy:get') }}"
+                           target="_blank"
                            class="footer__link">Cookies and privacy</a>
                     </li>
                 </ul>
@@ -15,19 +16,23 @@
                 <p class="venus footer__heading"><strong>About ONS</strong></p>
                 <ul class="list list--bare">
                     <li>
-                        <a href="https://www.ons.gov.uk/surveys/informationforhouseholdsandindividuals/householdandindividualsurveys"
+                        <a href="https://www.ons.gov.uk/aboutus/whatwedo"
+                           target="_blank"
                            class="footer__link">What we do</a>
                     </li>
                     <li>
                         <a href="{{ url('ContactUs:get') }}"
+                           target="_blank"
                            class="footer__link">Contact us</a>
                     </li>
                     <li>
                         <a href="{{ url('OnlineHelp:get') }}"
+                           target="_blank"
                            class="footer__link">Online Help</a>
                     </li>
                     <li>
                         <a href="https://www.ons.gov.uk/help/accessibility"
+                           target="_blank"
                            class="footer__link">Accessibility</a>
                     </li>
                 </ul>
@@ -38,14 +43,17 @@
                 <ul class="list list--bare">
                     <li>
                         <a href="https://www.statisticsauthority.gov.uk/about-the-authority/"
+                           target="_blank"
                            class="footer__link">UK Statistics Authority</a>
                     </li>
                     <li>
                         <a href="https://www.ons.gov.uk/releasecalendar"
+                           target="_blank"
                            class="footer__link">Release calendar</a>
                     </li>
                     <li>
                         <a href="https://www.ons.gov.uk/news"
+                           target="_blank"
                            class="footer__link">News</a>
                     </li>
                 </ul>
@@ -54,7 +62,7 @@
             <div class="grid__col col-12@m">
                 <div class="footer__license footer__license--border">
                     {% set logo_cdn = cdn_url_prefix~"/img/UKOpenGovernmentLicence-grey.svg" %}
-                    <img alt="OGL" class="footer__ogl-img" src="{{ logo_cdn }}"> All content is available under the <a class="footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
+                    <img alt="OGL" class="footer__ogl-img" src="{{ logo_cdn }}"> All content is available under the <a class="footer__link" target ="_blank" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>, except where otherwise stated
                 </div>
             </div>
         </div>
