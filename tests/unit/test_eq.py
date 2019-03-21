@@ -378,7 +378,7 @@ class TestEq(RHTestCase):
         self.assertEqual(response_id, self.eq_payload['response_id'])
 
     def test_build_response_id_is_unique_by_iac(self):
-        different_iac = 'A' * 12
+        different_iac = 'A' * 16
 
         response_id = build_response_id(self.case_id, self.collection_exercise_id, self.iac_code)
         different_response_id = build_response_id(self.case_id, self.collection_exercise_id, different_iac)

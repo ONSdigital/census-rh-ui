@@ -21,8 +21,8 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_index)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('Your 12 character access code is on the letter we sent you', contents)
-        self.assertEqual(contents.count('input-text'), 3)
+        self.assertIn('Your 16 character access code is on the letter we sent you', contents)
+        self.assertEqual(contents.count('input-text'), 4)
         self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
@@ -345,7 +345,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_malformed(self):
         form_data = self.form_data.copy()
-        del form_data['iac3']
+        del form_data['iac4']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.iac_url, payload=self.iac_json)
@@ -473,13 +473,13 @@ class TestHandlers(RHTestCase):
 
     def test_join_iac(self):
         # Given some post data
-        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '9012', 'action[save_continue]': ''}
+        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '1234', 'iac4': '5678','action[save_continue]': ''}
 
         # When join_iac is called
         result = Index.join_iac(post_data)
 
         # Then a single string built from the iac values is returned
-        self.assertEqual(result, post_data['iac1'] + post_data['iac2'] + post_data['iac3'])
+        self.assertEqual(result, post_data['iac1'] + post_data['iac2'] + post_data['iac3'] + post_data['iac4'])
 
     def test_join_iac_missing(self):
         # Given some missing post data
@@ -492,7 +492,7 @@ class TestHandlers(RHTestCase):
 
     def test_join_iac_some_missing(self):
         # Given some missing post data
-        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '', 'action[save_continue]': ''}
+        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '1234', 'iac4': '', 'action[save_continue]': ''}
 
         # When join_iac is called
         with self.assertRaises(TypeError):
