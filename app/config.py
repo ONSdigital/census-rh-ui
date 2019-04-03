@@ -2,8 +2,6 @@ from functools import partial
 
 from envparse import Env, ConfigurationError
 
-from app.session import generate_new_key
-
 
 class Config(dict):
 
@@ -61,11 +59,15 @@ class BaseConfig:
     SURVEY_URL = env("SURVEY_URL")
     SURVEY_AUTH = (env("SURVEY_USERNAME"), env("SURVEY_PASSWORD"))
 
-    SECRET_KEY = env("SECRET_KEY")
-
     URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
 
     ANALYTICS_UA_ID = env("ANALYTICS_UA_ID", default="")
+
+    REDIS_SERVER = env("REDIS_SERVER", default="localhost")
+
+    REDIS_PORT = env("REDIS_PORT", default="7379")
+
+    ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
 
 
 class ProductionConfig(BaseConfig):
@@ -106,11 +108,15 @@ class DevelopmentConfig:
     SURVEY_URL = env("SURVEY_URL", default="http://localhost:8080")
     SURVEY_AUTH = (env("SURVEY_USERNAME", default="admin"), env("SURVEY_PASSWORD", default="secret"))
 
-    SECRET_KEY = env.str("SECRET_KEY", default=None) or generate_new_key()
-
     URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
 
     ANALYTICS_UA_ID = env("ANALYTICS_UA_ID", default="")
+
+    REDIS_SERVER = env("REDIS_SERVER", default="localhost")
+
+    REDIS_PORT = env("REDIS_PORT", default="7379")
+
+    ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
 
 
 class TestingConfig:
@@ -140,8 +146,12 @@ class TestingConfig:
     SURVEY_URL = "http://localhost:8080"
     SURVEY_AUTH = ("admin", "secret")
 
-    SECRET_KEY = generate_new_key()
-
     URL_PATH_PREFIX = ""
 
     ANALYTICS_UA_ID = ""
+
+    REDIS_SERVER = ""
+
+    REDIS_PORT = ""
+
+    ABSOLUTE_SESSION_AGE = ""

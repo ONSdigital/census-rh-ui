@@ -8,7 +8,8 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG,
+    ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
 from .case import get_case, post_case_event
 from .sample import get_sample_attributes
 from .exceptions import InactiveCaseError, InvalidIACError
@@ -48,6 +49,12 @@ class View:
         if not hasattr(self, '_client_ip'):
             self._client_ip = self._request.headers.get("X-Forwarded-For")
         return self._client_ip
+
+    def check_session(self):
+        if self._request.cookies.get('RH_SESSION') is None:
+            logger.warn("Session timed out", client_ip=self._client_ip)
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def call_questionnaire(self, case, attributes, app, iac):
         eq_payload = await EqPayloadConstructor(case, attributes, app, iac).build()
@@ -188,16 +195,18 @@ class AddressConfirmation(View):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
-        self._request = request
         data = await request.post()
+        self._request = request
 
+        self.check_session()
         session = await get_session(request)
         try:
             attributes = session["attributes"]
             case = session["case"]
             iac = session["iac"]
         except KeyError:
-            return aiohttp_jinja2.render_template("index.html", request, {}, status=401)
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
         try:
             address_confirmation = data["address-check-answer"]
@@ -247,16 +256,18 @@ class AddressEdit(View):
         """
         Address Edit flow. Edited address details.
         """
-        self._request = request
         data = await request.post()
+        self._request = request
 
+        self.check_session()
         session = await get_session(request)
         try:
             attributes = session["attributes"]
             case = session["case"]
             iac = session["iac"]
         except KeyError:
-            return aiohttp_jinja2.render_template("index.html", request, {}, status=401)
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
         try:
             attributes = self.get_address_details(data, attributes)
