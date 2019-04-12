@@ -54,8 +54,8 @@ class View:
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-        description = f"Census Instrument launched for case {case['id']}"
-        await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
+    #    description = f"Census Instrument launched for case {case['id']}"
+    #    await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
@@ -73,6 +73,10 @@ class Index(View):
     def _iac_url(self):
         return f"{self._request.app['IAC_URL']}/iacs/{self._iac}"
 
+    @property
+    def _rhsvc_url(self):
+        return f"{self._request.app['RHSVC_URL']}/uacs/{self._iac}"
+
     @staticmethod
     def join_iac(data, expected_length=12):
         combined = "".join([v.lower() for v in data.values()][:3])
@@ -89,10 +93,11 @@ class Index(View):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def get_iac_details(self):
-        logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
+        #logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
+        logger.debug(f"Making GET request to {self._rhsvc_url}", iac=self._iac, client_ip=self._client_ip)
         try:
-            async with self._request.app.http_session_pool.get(self._iac_url, auth=self._request.app["IAC_AUTH"]) as resp:
-                logger.debug("Received response from IAC", iac=self._iac, status_code=resp.status)
+            async with self._request.app.http_session_pool.get(self._rhsvc_url, auth=self._request.app["RHSVC_AUTH"]) as resp:
+                logger.debug("Received response from RHSVC", iac=self._iac, status_code=resp.status)
 
                 try:
                     resp.raise_for_status()
@@ -142,41 +147,30 @@ class Index(View):
             return self.redirect()
 
         try:
-            iac_json = await self.get_iac_details()
+           # iac_json = await self.get_iac_details()
+            uac_json = await self.get_iac_details()
         except InvalidIACError:
             logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
             flash(self._request, INVALID_CODE_MSG)
             return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
-        self.validate_case(iac_json)
+        #self.validate_case(iac_json)
+        self.validate_case(uac_json)
 
         try:
-            case_id = iac_json["caseId"]
+            attributes = uac_json["address"]
         except KeyError:
-            logger.error('caseId missing from IAC response', client_ip=self._client_ip)
-            flash(self._request, BAD_RESPONSE_MSG)
-            return {}
+            raise InvalidEqPayLoad(f"Could not retrieve address details")
 
-        case = await get_case(case_id, self._request.app)
-
-        try:
-            self._sample_unit_id = case["sampleUnitId"]
-        except KeyError:
-            raise InvalidEqPayLoad(f"No sample unit id for case {self._case_id}")
-
-        sample_attr = await get_sample_attributes(self._sample_unit_id, self._request.app)
-
-        try:
-            attributes = sample_attr["attributes"]
-        except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve attributes for case {self._case_id}")
+# SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
         logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
-        session["case"] = case
+        session["case"] = uac_json
         session["iac"] = self._iac
+
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
 

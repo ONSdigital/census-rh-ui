@@ -55,6 +55,9 @@ class BaseConfig:
     IAC_URL = env("IAC_URL")
     IAC_AUTH = (env("IAC_USERNAME"), env("IAC_PASSWORD"))
 
+    RHSVC_URL = env("RHSVC_URL")
+    RHSVC_AUTH = (env("RHSVC_USERNAME"), env("RHSVC_PASSWORD"))
+
     SAMPLE_URL = env("SAMPLE_URL")
     SAMPLE_AUTH = (env("SAMPLE_USERNAME"), env("SAMPLE_PASSWORD"))
 
@@ -100,6 +103,9 @@ class DevelopmentConfig:
     IAC_URL = env.str("IAC_URL", default="http://localhost:8121")
     IAC_AUTH = (env.str("IAC_USERNAME", default="admin"), env.str("IAC_PASSWORD", default="secret"))
 
+    RHSVC_URL = env.str("RHSVC_URL", default="http://localhost:8081")
+    RHSVC_AUTH = (env.str("RHSVC_USERNAME", default="admin"), env.str("RHSVC_PASSWORD", default="secret"))
+
     SAMPLE_URL = env("SAMPLE_URL", default="http://localhost:8125")
     SAMPLE_AUTH = (env("SAMPLE_USERNAME", default="admin"), env("SAMPLE_PASSWORD", default="secret"))
 
@@ -133,6 +139,9 @@ class TestingConfig:
 
     IAC_URL = "http://localhost:8121"
     IAC_AUTH = ("admin", "secret")
+
+    RHSVC_URL = "http://localhost:8081"
+    RHSVC_AUTH = ("admin", "secret")
 
     SAMPLE_URL = "http://localhost:8125"
     SAMPLE_AUTH = ("admin", "secret")

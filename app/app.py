@@ -23,7 +23,7 @@ from .app_logging import logger_initial_config
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
 server_logger = logging.getLogger("aiohttp.server")
-server_logger.setLevel("INFO")
+server_logger.setLevel("DEBUG")
 
 
 async def on_startup(app):

@@ -79,9 +79,9 @@ class EqPayloadConstructor(object):
         """
 
         self._app = app
-        self._ci_url = f"{app['COLLECTION_INSTRUMENT_URL']}/collection-instrument-api/1.0.2/collectioninstrument/id/"
-        self._collex_url = f"{app['COLLECTION_EXERCISE_URL']}/collectionexercises/"
-        self._sample_url = f"{app['SAMPLE_URL']}/samples/"
+   #     self._ci_url = f"{app['COLLECTION_INSTRUMENT_URL']}/collection-instrument-api/1.0.2/collectioninstrument/id/"
+   #     self._collex_url = f"{app['COLLECTION_EXERCISE_URL']}/collectionexercises/"
+   #     self._sample_url = f"{app['SAMPLE_URL']}/samples/"
 
         self._tx_id = str(uuid4())
         self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}'
@@ -97,14 +97,24 @@ class EqPayloadConstructor(object):
         self._sample_attributes = attributes
 
         try:
-            self._case_id = case["id"]
+            self._case_id = case["caseId"]
         except KeyError:
             raise InvalidEqPayLoad("No case id in supplied case JSON")
 
         try:
+            self._collex_id = case["collectionExerciseId"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"No collection id for case id {self._case_id}")
+
+        try:
+            self._response_id = case["questionnaireId"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve questionnaire for case {self._case_id}")
+
+        """try:
             self._case_ref = case["caseRef"]
         except KeyError:
-            raise InvalidEqPayLoad(f"No case ref in supplied case JSON")
+            raise InvalidEqPayLoad(f"No case ref in supplied case JSON") 
 
         try:
             self._sample_unit_ref = case["caseGroup"]["sampleUnitRef"]
@@ -114,64 +124,89 @@ class EqPayloadConstructor(object):
         try:
             self._ci_id = case["collectionInstrumentId"]
         except KeyError:
-            raise InvalidEqPayLoad(f"No collectionInstrumentId value for case id {self._case_id}")
+            raise InvalidEqPayLoad(f"No collectionInstrumentId value for case id {self._case_id}") """
 
         try:
-            self._collex_id = case["caseGroup"]["collectionExerciseId"]
+            self._collex_id = case["collectionExerciseId"]
         except KeyError:
             raise InvalidEqPayLoad(f"No collection id for case id {self._case_id}")
 
         try:
+            self._response_id = case["questionnaireId"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve questionnaire for case {self._case_id}")
+
+        try:
+            self._uprn = case["address"]["uprn"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve uprn for case {self._case_id}")
+
+        """try:
             self._sample_unit_id = case["sampleUnitId"]
         except KeyError:
-            raise InvalidEqPayLoad(f"No sample unit id for case {self._case_id}")
+            raise InvalidEqPayLoad(f"No sample unit id for case {self._case_id}")"""
 
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
-        self._ci = await self._get_collection_instrument()
+        #self._ci = await self._get_collection_instrument()
 
-        try:
+        """try:
             if self._ci["type"] != "EQ":
                 raise InvalidEqPayLoad(f"Collection instrument {self._ci_id} type is not EQ")
         except KeyError:
-            raise InvalidEqPayLoad(f"No Collection Instrument type for {self._ci_id}")
+            raise InvalidEqPayLoad(f"No Collection Instrument type for {self._ci_id}")"""
 
-        try:
+        """try:
             self._ci["classifiers"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve classifiers for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve classifiers for case {self._case_id}")"""
 
-        try:
+        """try:
             self._eq_id = self._ci["classifiers"]["eq_id"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve eq_id for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve eq_id for case {self._case_id}")"""
 
-        try:
+        """try:
             self._form_type = self._ci["classifiers"]["form_type"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve form_type for eq_id {self._eq_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve form_type for eq_id {self._eq_id}")"""
 
-        self._collex = await self._get_collection_exercise()
+        #self._collex = await self._get_collection_exercise()
 
-        try:
+        """try:
             self._collex_period_id = self._collex["exerciseRef"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve period id for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve period id for case {self._case_id}")"""
 
-        try:
+        """try:
             self._collex_id = self._collex["id"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve ce id for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve ce id for case {self._case_id}")"""
 
-        self._collex_events = await self._get_collection_exercise_events()
-        self._collex_event_dates = self._get_collex_event_dates()
+        #self._collex_events = await self._get_collection_exercise_events()
+        #self._collex_event_dates = self._get_collex_event_dates()
 
-        try:
+        """try:
             self._country_code = self._sample_attributes["COUNTRY"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve country_code for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve country_code for case {self._case_id}")"""
 
-        response_id = build_response_id(self._case_id, self._collex_id, self._iac)
+        """try:
+            self._response_id = case["questionnaireId"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve questionnaire for case {self._case_id}")"""
+
+        """try:
+            self._response_id = case["questionnaireId"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve questionnaire for case {self._case_id}")"""
+
+        """try:
+            self._ru_ref = case["address"]["uprn"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve uprn for case {self._case_id}")"""
+
+        #response_id = build_response_id(self._case_id, self._collex_id, self._iac)
 
         logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
 
@@ -181,27 +216,29 @@ class EqPayloadConstructor(object):
         self._payload = {
             "jti": str(uuid4()),  # required by eQ for creating a new claim
             "tx_id": self._tx_id,  # not required by eQ (will generate if does not exist)
-            "user_id": self._sample_unit_id,  # required by eQ
+            #"user_id": self._sample_unit_id,  # required by eQ
+            "user_id": "",
             "iat": int(time.time()),
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
-            "eq_id": self._eq_id,  # required but currently only one social survey ('lms')
-            "period_id": self._collex_period_id,  # required by eQ
-            "form_type": self._form_type,  # required by eQ ('2' for lms_2 schema)
+            "eq_id": "census",  # will not be needed for new payload but still needed for original
+            "period_id": "1",  # will not be needed for new payload but still needed for original
+            "form_type": "household",  # will not be needed for new payload but still needed for original
             "collection_exercise_sid": self._collex_id,  # required by eQ
             "region_code": "GB-ENG",
-            "sexual_identity": True,
-            "ru_ref": self._sample_unit_ref,  # required by eQ
+            "sexual_identity": True, # will not be needed for new payload but still needed for original
+            #"ru_ref": self._sample_unit_ref,  # original was sample unti ref, new one is uprn
+            "ru_ref":self._uprn,
             "case_id": self._case_id,  # not required by eQ but useful for downstream
-            "case_ref": self._case_ref,  # not required by eQ but useful for downstream
+           # "case_ref": self._case_ref,  # not required by eQ but useful for downstream
             "account_service_url": self._account_service_url,  # required for save/continue
-            "country_code": self._country_code,
+            #"country_code": self._country_code,
             "language_code": self._language_code,  # currently only 'en' or 'cy'
             "display_address": self.build_display_address(self._sample_attributes),
-            "response_id": response_id
+            "response_id": self._response_id
         }
 
         # Add all of the sample attributes to the payload as camel case fields
-        self._payload.update(
+        """self._payload.update(
             [(self.caps_to_snake(key), value) for key, value in self._sample_attributes.items()]
         )
 
@@ -209,7 +246,7 @@ class EqPayloadConstructor(object):
         # NB: for LMS the event dates are optional
         self._payload.update(
             [(key, value) for key, value in self._collex_event_dates.items() if value is not None]
-        )
+        )"""
 
         return self._payload
 
@@ -226,7 +263,7 @@ class EqPayloadConstructor(object):
         :return: string of a single address attribute or a combination of two
         """
         display_address = ''
-        for key in ['ADDRESS_LINE1', 'ADDRESS_LINE2', 'LOCALITY', 'TOWN_NAME', 'POSTCODE']:  # retain order of address attributes
+        for key in ['address_line1', 'address_line2', 'address_line3', 'town_name', 'postcode']:  # retain order of address attributes
             val = sample_attributes.get(key)
             if val:
                 prev_display = display_address
