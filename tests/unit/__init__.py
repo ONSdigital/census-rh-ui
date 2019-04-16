@@ -5,7 +5,11 @@ import uuid
 
 from aiohttp.test_utils import AioHTTPTestCase
 
-from app.app import create_app
+from app import app
+
+from app import session
+from aiohttp_session import session_middleware
+from aiohttp_session import SimpleCookieStorage
 
 
 def skip_build_eq(func, *args, **kwargs):
@@ -141,8 +145,16 @@ class RHTestCase(AioHTTPTestCase):
     end_date = '2020-05-31'
     return_by = '2018-05-08'
 
+    def session_storage(self, app_config):
+        self.assertIn("REDIS_SERVER", app_config)
+        self.assertIn("REDIS_PORT", app_config)
+        self.assertIn("ABSOLUTE_SESSION_AGE", app_config)
+        return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
+
     async def get_application(self):
-        return create_app('TestingConfig')
+        # Monkey patch the session setup function to remove Redis dependency for unit tests
+        session.setup = self.session_storage
+        return app.create_app('TestingConfig')
 
     async def setUpAsync(self):
         test_method = getattr(self, self._testMethodName)
