@@ -10,11 +10,12 @@ envparse = "*"
 "aiohttp-jinja2" = "*"
 structlog = "*"
 sdc-cryptography = "*"
-aiohttp-session = {extras = ["secure"]}
+aiohttp-session = {extras = ["aioredis"], version = "*"}
 cchardet = "*"
 aiodns = "*"
 "iso8601" = "*"
 invoke = "*"
+aioredis = "*"
 
 [dev-packages]
 codecov = "*"

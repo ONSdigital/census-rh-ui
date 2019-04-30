@@ -8,14 +8,26 @@ from envparse import ConfigurationError, env
 
 from app.app import create_app
 
+from app import session
+from aiohttp_session import session_middleware
+from aiohttp_session import SimpleCookieStorage
+
 
 class TestCreateApp(AioHTTPTestCase):
 
     config = 'TestingConfig'
 
+    def session_storage(self, app_config):
+        self.assertIn("REDIS_SERVER", app_config)
+        self.assertIn("REDIS_PORT", app_config)
+        self.assertIn("ABSOLUTE_SESSION_AGE", app_config)
+        return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
+
     async def get_application(self):
         from app import settings
         settings.DEBUG = False  # force security headers to be applied to response
+        # Monkey patch the session setup function to remove Redis dependency for unit tests
+        session.setup = self.session_storage
         return create_app(self.config)
 
     @unittest_run_loop
@@ -96,7 +108,14 @@ class TestCheckServices(AioHTTPTestCase):
     config = 'TestingConfig'
     required_services = ('case', 'collection_exercise', 'collection_instrument', 'iac', 'sample', 'survey')
 
+    def session_storage(self, app_config):
+        self.assertIn("REDIS_SERVER", app_config)
+        self.assertIn("REDIS_PORT", app_config)
+        return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
+
     async def get_application(self):
+        # Monkey patch the session setup function to remove Redis dependency for unit tests
+        session.setup = self.session_storage
         return create_app(self.config)
 
     @unittest_run_loop

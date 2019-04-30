@@ -66,7 +66,7 @@ def create_app(config_name=None) -> Application:
         debug=settings.DEBUG,
         middlewares=[
             security.nonce_middleware,
-            session.setup(app_config["SECRET_KEY"]),
+            session.setup(app_config),
             flash.flash_middleware,
         ],
         router=routing.ResourceRouter(),
