@@ -1,8 +1,8 @@
 import datetime
 import logging
 import time
-import hashlib
-import base64
+# import hashlib
+# import base64
 from collections import namedtuple
 from uuid import uuid4
 
@@ -53,7 +53,6 @@ def format_date(datetime_object):
         raise InvalidEqPayLoad(f"Unable to format {datetime_object}")
 
 
-
 class EqPayloadConstructor(object):
 
     def __init__(self, case: dict, attributes: dict, app: Application, iac: str):
@@ -97,7 +96,6 @@ class EqPayloadConstructor(object):
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve uprn for case {self._case_id}")
 
-
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
@@ -109,8 +107,8 @@ class EqPayloadConstructor(object):
         self._payload = {
             "jti": str(uuid4()),  # required by eQ for creating a new claim
             "tx_id": self._tx_id,  # not required by eQ (will generate if does not exist)
-            #"user_id": self._sample_unit_id,  # required by eQ
-            "user_id": "1234567890",  # for new payload can be empty
+            # "user_id": self._sample_unit_id,  # required by eQ
+            "user_id": "1234567890",  # to be empty for new payload
             "iat": int(time.time()),
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
             "eq_id": "census",  # will not be needed for new payload but still needed for original
@@ -118,17 +116,18 @@ class EqPayloadConstructor(object):
             "form_type": "household",  # will not be needed for new payload but still needed for original
             "collection_exercise_sid": self._collex_id,  # required by eQ
             "region_code": "GB-ENG",
-            "sexual_identity": True, # will not be needed for new payload but still needed for original
-           # "ru_ref": self._sample_unit_ref,  # original was sample unti ref, new one is uprn
-            "ru_ref":self._uprn,   #new payload reuires uprn to be ru_ref
+            # "sexual_identity": True, # will not be needed for new payload but still needed for original
+            # "ru_ref": self._sample_unit_ref,  # original was sample unti ref, new one is uprn
+            "ru_ref": self._uprn,   # new payload reuires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
-           # "case_ref": self._case_ref,  # not required by eQ but useful for downstream and not needed for new payload
+            # "case_ref": self._case_ref,  # not required by eQ but useful for downstream and not needed for new payload
             "account_service_url": self._account_service_url,  # required for save/continue
-           # "country_code": self._country_code,  #not needed for new payload
-            "country_code": "E",
+            # "country_code": self._country_code,  #not needed for new payload
+            # "country_code": "E", removed
             "language_code": self._language_code,  # currently only 'en' or 'cy'
             "display_address": self.build_display_address(self._sample_attributes),
-            "response_id": self._response_id
+            "response_id": self._response_id,
+            "channel": "rh"
         }
 
         return self._payload

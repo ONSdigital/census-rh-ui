@@ -4,7 +4,8 @@ from unittest import mock
 from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
-from app.eq import EqPayloadConstructor, build_response_id, format_date, parse_date
+from app.eq import EqPayloadConstructor, format_date, parse_date
+#from app.eq import EqPayloadConstructor, build_response_id, format_date, parse_date
 from app.exceptions import ExerciseClosedError, InvalidEqPayLoad
 
 from . import RHTestCase

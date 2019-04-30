@@ -9,13 +9,12 @@ from aiohttp_session import get_session
 
 from . import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG)
-from .case import get_case, post_case_event
-from .sample import get_sample_attributes
+# from .case import get_case, post_case_event
+# from .sample import get_sample_attributes
 from .exceptions import InactiveCaseError, InvalidIACError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
-
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
 routes = RouteTableDef()
@@ -54,8 +53,8 @@ class View:
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-    #    description = f"Census Instrument launched for case {case['id']}"
-    #    await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
+        #    description = f"Census Instrument launched for case {case['id']}"
+        #    await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
@@ -93,10 +92,11 @@ class Index(View):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def get_iac_details(self):
-        #logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
+        # logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
         logger.debug(f"Making GET request to {self._rhsvc_url}", iac=self._iac, client_ip=self._client_ip)
         try:
-            async with self._request.app.http_session_pool.get(self._rhsvc_url, auth=self._request.app["RHSVC_AUTH"]) as resp:
+            async with self._request.app.http_session_pool.get(self._rhsvc_url,
+                                                               auth=self._request.app["RHSVC_AUTH"]) as resp:
                 logger.debug("Received response from RHSVC", iac=self._iac, status_code=resp.status)
 
                 try:
@@ -147,7 +147,7 @@ class Index(View):
             return self.redirect()
 
         try:
-           # iac_json = await self.get_iac_details()
+            # iac_json = await self.get_iac_details()
             uac_json = await self.get_iac_details()
         except InvalidIACError:
             logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
@@ -155,7 +155,7 @@ class Index(View):
             return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
-        #self.validate_case(iac_json)
+        # self.validate_case(iac_json)
         self.validate_case(uac_json)
 
         try:
@@ -163,7 +163,7 @@ class Index(View):
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve address details")
 
-# SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
+        # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
         logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
         session = await get_session(request)
@@ -228,11 +228,11 @@ class AddressEdit(View):
         if not data["address-line-1"].strip():
             raise InvalidEqPayLoad(f"Mandatory address field not present{self._client_ip}")
         else:
-            attributes["ADDRESS_LINE1"] = data["address-line-1"].strip()
-            attributes["ADDRESS_LINE2"] = data["address-line-2"].strip()
-            attributes["TOWN_NAME"] = data["town-city"].strip()
-            attributes["LOCALITY"] = data["county"].strip()
-            attributes["POSTCODE"] = data["postcode"].strip()
+            attributes["address_line1"] = data["address-line-1"].strip()
+            attributes["address_line2"] = data["address-line-2"].strip()
+            attributes["address_line3"] = data["address-line-3"].strip()
+            attributes["town_name"] = data["town_name"].strip()
+            attributes["postcode"] = data["postcode"].strip()
 
         return attributes
 
