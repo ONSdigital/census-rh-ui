@@ -85,7 +85,6 @@ class EqPayloadConstructor(object):
         except KeyError:
             raise InvalidEqPayLoad("No case type in supplied case JSON")
 
-
         try:
             self._collex_id = case["collectionExerciseId"]
         except KeyError:
@@ -115,7 +114,7 @@ class EqPayloadConstructor(object):
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
             "case_type": self._case_type,
             "collection_exercise_sid": self._collex_id,  # required by eQ
-            "region_code": "GB-ENG", #hardcoded for sprint 19.9
+            "region_code": "GB-ENG",  # hardcoded for sprint 19.9
             "ru_ref": self._uprn,  # new payload reuires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
             "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
