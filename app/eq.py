@@ -57,8 +57,7 @@ class EqPayloadConstructor(object):
 
     def __init__(self, case: dict, attributes: dict, app: Application, iac: str):
         """
-        Creates the payload needed to communicate with EQ, built from the Case, Collection Exercise, Sample,
-        and Collection Instrument services
+        Creates the payload needed to communicate with EQ, built from the RH service
         """
 
         self._app = app
@@ -82,52 +81,53 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad("No case id in supplied case JSON")
 
         try:
+            self._case_type = case["caseType"]
+        except KeyError:
+            raise InvalidEqPayLoad("No case type in supplied case JSON")
+
+
+        try:
             self._collex_id = case["collectionExerciseId"]
         except KeyError:
-            raise InvalidEqPayLoad(f"No collection id for case id {self._case_id}")
+            raise InvalidEqPayLoad("No collection id in supplied case JSON")
 
         try:
             self._response_id = case["questionnaireId"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve questionnaire for case {self._case_id}")
+            raise InvalidEqPayLoad("No questionnaireId in supplied case JSON")
 
         try:
             self._uprn = case["address"]["uprn"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve uprn for case {self._case_id}")
+            raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
 
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
         logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
 
-        # TODO: Remove hardcoded language variables for payload when they become available in RAS/RM
-        self._language_code = 'en'  # sample attributes do not currently have language details
+        self._language_code = 'en'  # hardcoded for 19.9 until we know how to derive
 
         self._payload = {
             "jti": str(uuid4()),  # required by eQ for creating a new claim
             "tx_id": self._tx_id,  # not required by eQ (will generate if does not exist)
-            # "user_id": self._sample_unit_id,  # required by eQ
-            "user_id": "1234567890",  # to be empty for new payload
             "iat": int(time.time()),
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
-            "eq_id": "census",  # will not be needed for new payload but still needed for original
-            "period_id": "1",  # will not be needed for new payload but still needed for original
-            "form_type": "household",  # will not be needed for new payload but still needed for original
+            "case_type": self._case_type,
             "collection_exercise_sid": self._collex_id,  # required by eQ
-            "region_code": "GB-ENG",
-            # "sexual_identity": True, # will not be needed for new payload but still needed for original
-            # "ru_ref": self._sample_unit_ref,  # original was sample unti ref, new one is uprn
-            "ru_ref": self._uprn,   # new payload reuires uprn to be ru_ref
+            "region_code": "GB-ENG", #hardcoded for sprint 19.9
+            "ru_ref": self._uprn,  # new payload reuires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
-            # "case_ref": self._case_ref,  # not required by eQ but useful for downstream and not needed for new payload
-            "account_service_url": self._account_service_url,  # required for save/continue
-            # "country_code": self._country_code,  #not needed for new payload
-            # "country_code": "E", removed
-            "language_code": self._language_code,  # currently only 'en' or 'cy'
+            "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
             "display_address": self.build_display_address(self._sample_attributes),
             "response_id": self._response_id,
-            "channel": "rh"
+            "account_service_url": self._account_service_url,  # required for save/continue
+            "channel": "rh",  # from claims sent from RH channel will always by rh,
+            "user_id": "1234567890",  # for 19.9 will be hardcoded. This will be set to empty when eq reasdy to accept as empty
+            "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
+            "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
+            "form_type": "household"  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
+
         }
 
         return self._payload
