@@ -122,7 +122,7 @@ class EqPayloadConstructor(object):
             "account_service_url": self._account_service_url,  # required for save/continue
             "channel": "rh",  # from claims sent from RH channel will always by rh,
             "user_id": "1234567890",  # for 19.9 will be hardcoded. This will be set to empty when eq reasdy to accept as empty
-            "questionnaireId": self._questionnaire_id,
+            "questionnaire_id": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "form_type": "household"  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
