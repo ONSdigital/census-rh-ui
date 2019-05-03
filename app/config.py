@@ -41,26 +41,8 @@ class BaseConfig:
     EQ_URL = env("EQ_URL")
     JSON_SECRET_KEYS = env("JSON_SECRET_KEYS")
 
-    CASE_URL = env("CASE_URL")
-    CASE_AUTH = (env("CASE_USERNAME"), env("CASE_PASSWORD"))
-
-    COLLECTION_EXERCISE_URL = env("COLLECTION_EXERCISE_URL")
-    COLLECTION_EXERCISE_AUTH = (env("COLLECTION_EXERCISE_USERNAME"), env("COLLECTION_EXERCISE_PASSWORD"))
-
-    COLLECTION_INSTRUMENT_URL = env("COLLECTION_INSTRUMENT_URL")
-    COLLECTION_INSTRUMENT_AUTH = (env("COLLECTION_INSTRUMENT_USERNAME"), env("COLLECTION_INSTRUMENT_PASSWORD"))
-
-    IAC_URL = env("IAC_URL")
-    IAC_AUTH = (env("IAC_USERNAME"), env("IAC_PASSWORD"))
-
     RHSVC_URL = env("RHSVC_URL")
     RHSVC_AUTH = (env("RHSVC_USERNAME"), env("RHSVC_PASSWORD"))
-
-    SAMPLE_URL = env("SAMPLE_URL")
-    SAMPLE_AUTH = (env("SAMPLE_USERNAME"), env("SAMPLE_PASSWORD"))
-
-    SURVEY_URL = env("SURVEY_URL")
-    SURVEY_AUTH = (env("SURVEY_USERNAME"), env("SURVEY_PASSWORD"))
 
     URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
 
@@ -87,32 +69,8 @@ class DevelopmentConfig:
     EQ_URL = env.str("EQ_URL", default="http://localhost:5000")
     JSON_SECRET_KEYS = env.str("JSON_SECRET_KEYS", default=None) or open("./tests/test_data/test_keys.json").read()
 
-    COLLECTION_EXERCISE_URL = env.str("COLLECTION_EXERCISE_URL", default="http://localhost:8145")
-    COLLECTION_EXERCISE_AUTH = (
-        env.str("COLLECTION_EXERCISE_USERNAME", default="admin"),
-        env.str("COLLECTION_EXERCISE_PASSWORD", default="secret")
-    )
-
-    COLLECTION_INSTRUMENT_URL = env.str("COLLECTION_INSTRUMENT_URL", default="http://localhost:8002")
-    COLLECTION_INSTRUMENT_AUTH = (
-        env.str("COLLECTION_INSTRUMENT_USERNAME", default="admin"),
-        env.str("COLLECTION_INSTRUMENT_PASSWORD", default="secret")
-    )
-
-    CASE_URL = env.str("CASE_URL", default="http://localhost:8171")
-    CASE_AUTH = (env.str("CASE_USERNAME", default="admin"), env.str("CASE_PASSWORD", default="secret"))
-
-    IAC_URL = env.str("IAC_URL", default="http://localhost:8121")
-    IAC_AUTH = (env.str("IAC_USERNAME", default="admin"), env.str("IAC_PASSWORD", default="secret"))
-
     RHSVC_URL = env.str("RHSVC_URL", default="http://localhost:8081")
     RHSVC_AUTH = (env.str("RHSVC_USERNAME", default="admin"), env.str("RHSVC_PASSWORD", default="secret"))
-
-    SAMPLE_URL = env("SAMPLE_URL", default="http://localhost:8125")
-    SAMPLE_AUTH = (env("SAMPLE_USERNAME", default="admin"), env("SAMPLE_PASSWORD", default="secret"))
-
-    SURVEY_URL = env("SURVEY_URL", default="http://localhost:8080")
-    SURVEY_AUTH = (env("SURVEY_USERNAME", default="admin"), env("SURVEY_PASSWORD", default="secret"))
 
     URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
 
@@ -134,26 +92,8 @@ class TestingConfig:
     EQ_URL = "http://localhost:5000"
     JSON_SECRET_KEYS = open("./tests/test_data/test_keys.json").read()
 
-    COLLECTION_EXERCISE_URL = "http://localhost:8145"
-    COLLECTION_EXERCISE_AUTH = ("admin", "secret")
-
-    COLLECTION_INSTRUMENT_URL = "http://localhost:8002"
-    COLLECTION_INSTRUMENT_AUTH = ("admin", "secret")
-
-    CASE_URL = "http://localhost:8171"
-    CASE_AUTH = ("admin", "secret")
-
-    IAC_URL = "http://localhost:8121"
-    IAC_AUTH = ("admin", "secret")
-
     RHSVC_URL = "http://localhost:8081"
     RHSVC_AUTH = ("admin", "secret")
-
-    SAMPLE_URL = "http://localhost:8125"
-    SAMPLE_AUTH = ("admin", "secret")
-
-    SURVEY_URL = "http://localhost:8080"
-    SURVEY_AUTH = ("admin", "secret")
 
     URL_PATH_PREFIX = ""
 

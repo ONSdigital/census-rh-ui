@@ -1,4 +1,4 @@
-import datetime
+# import datetime
 import logging
 import time
 # import hashlib
@@ -11,8 +11,7 @@ from aiohttp import ClientError
 from aiohttp.web import Application
 from structlog import wrap_logger
 
-from .exceptions import ExerciseClosedError, InvalidEqPayLoad
-
+from .exceptions import InvalidEqPayLoad
 
 logger = wrap_logger(logging.getLogger(__name__))
 
@@ -55,7 +54,7 @@ def format_date(datetime_object):
 
 class EqPayloadConstructor(object):
 
-    def __init__(self, case: dict, attributes: dict, app: Application, iac: str):
+    def __init__(self, case: dict, attributes: dict, app: Application):
         """
         Creates the payload needed to communicate with EQ, built from the RH service
         """
@@ -64,11 +63,6 @@ class EqPayloadConstructor(object):
 
         self._tx_id = str(uuid4())
         self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}'
-
-        if not iac:
-            raise InvalidEqPayLoad("IAC is empty")
-
-        self._iac = iac
 
         if not attributes:
             raise InvalidEqPayLoad("Attributes is empty")
@@ -92,6 +86,11 @@ class EqPayloadConstructor(object):
 
         try:
             self._response_id = case["questionnaireId"]
+        except KeyError:
+            raise InvalidEqPayLoad("No questionnaireId in supplied case JSON")
+
+        try:
+            self._questionnaire_id = case["questionnaireId"]
         except KeyError:
             raise InvalidEqPayLoad("No questionnaireId in supplied case JSON")
 
@@ -123,6 +122,7 @@ class EqPayloadConstructor(object):
             "account_service_url": self._account_service_url,  # required for save/continue
             "channel": "rh",  # from claims sent from RH channel will always by rh,
             "user_id": "1234567890",  # for 19.9 will be hardcoded. This will be set to empty when eq reasdy to accept as empty
+            "questionnaireId": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "form_type": "household"  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
@@ -161,47 +161,3 @@ class EqPayloadConstructor(object):
         async with self._app.http_session_pool.request(method, url, auth=auth) as resp:
             func(resp)
             return await resp.json()
-
-    async def _get_sample_attributes_by_id(self):
-        url = self._sample_url + self._sample_unit_id + "/attributes"
-        return await self._make_request(Request("GET", url, self._app['SAMPLE_AUTH'], handle_response))
-
-    async def _get_collection_instrument(self):
-        url = self._ci_url + self._ci_id
-        return await self._make_request(Request("GET", url, self._app['COLLECTION_INSTRUMENT_AUTH'], handle_response))
-
-    async def _get_collection_exercise(self):
-        url = self._collex_url + self._collex_id
-        return await self._make_request(Request("GET", url, self._app['COLLECTION_EXERCISE_AUTH'], handle_response))
-
-    async def _get_collection_exercise_events(self):
-        url = self._collex_url + self._collex_id + "/events"
-        return await self._make_request(Request("GET", url, self._app['COLLECTION_EXERCISE_AUTH'], handle_response))
-
-    def _get_collex_event_dates(self):
-        return {
-            "exercise_end": self._find_event_date_by_tag("exercise_end", True, cmp_func=self._check_ce_has_ended),
-            "ref_p_start_date": self._find_event_date_by_tag("ref_period_start", False),
-            "ref_p_end_date": self._find_event_date_by_tag("ref_period_end", False),
-            "return_by": self._find_event_date_by_tag("return_by", False),
-        }
-
-    def _check_ce_has_ended(self, datetime_object):
-        try:
-            if datetime.datetime.now(tz=datetime_object.tzinfo) > datetime_object:
-                raise ExerciseClosedError(collection_exercise_id=self._collex_id)
-        except (AttributeError, ValueError):
-            raise InvalidEqPayLoad("Unable to compare date objects")
-
-    def _find_event_date_by_tag(self, search_param: str, mandatory: bool, cmp_func=None):
-        for event in self._collex_events:
-            if event["tag"] == search_param and event.get("timestamp"):
-                parsed_datetime = parse_date(event["timestamp"])
-                if callable(cmp_func):
-                    cmp_func(parsed_datetime)
-                return format_date(parsed_datetime)
-
-        if mandatory:
-            raise InvalidEqPayLoad(
-                f"Mandatory event not found for collection {self._collex_id} for search param {search_param}"
-            )

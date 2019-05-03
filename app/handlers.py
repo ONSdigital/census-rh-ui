@@ -9,8 +9,6 @@ from aiohttp_session import get_session
 
 from . import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
-# from .case import get_case, post_case_event
-# from .sample import get_sample_attributes
 from .exceptions import InactiveCaseError, InvalidIACError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -54,8 +52,8 @@ class View:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
-    async def call_questionnaire(self, case, attributes, app, iac):
-        eq_payload = await EqPayloadConstructor(case, attributes, app, iac).build()
+    async def call_questionnaire(self, case, attributes, app):
+        eq_payload = await EqPayloadConstructor(case, attributes, app).build()
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
@@ -73,10 +71,6 @@ class Index(View):
         self._iac = None
         self._sample_unit_id = None
         super().__init__()
-
-    @property
-    def _iac_url(self):
-        return f"{self._request.app['IAC_URL']}/iacs/{self._iac}"
 
     @property
     def _rhsvc_url(self):
@@ -98,12 +92,11 @@ class Index(View):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def get_iac_details(self):
-        # logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
         logger.debug(f"Making GET request to {self._rhsvc_url}", iac=self._iac, client_ip=self._client_ip)
         try:
             async with self._request.app.http_session_pool.get(self._rhsvc_url,
                                                                auth=self._request.app["RHSVC_AUTH"]) as resp:
-                logger.debug("Received response from RHSVC", iac=self._iac, status_code=resp.status)
+                logger.debug("Received response from RH service", iac=self._iac, status_code=resp.status)
 
                 try:
                     resp.raise_for_status()
@@ -111,12 +104,12 @@ class Index(View):
                     if resp.status == 404:
                         raise InvalidIACError
                     elif resp.status in (401, 403):
-                        logger.warn("Unauthorized access to IAC service attempted", client_ip=self._client_ip)
+                        logger.warn("Unauthorized access to RH service attempted", client_ip=self._client_ip)
                         flash(self._request, NOT_AUTHORIZED_MSG)
                         return self.redirect()
                     elif 400 <= resp.status < 500:
                         logger.warn(
-                            "Client error when accessing IAC service",
+                            "Client error when accessing RH service",
                             client_ip=self._client_ip,
                             status=resp.status,
                         )
@@ -128,7 +121,7 @@ class Index(View):
                 else:
                     return await resp.json()
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error("Client failed to connect to iac service", client_ip=self._client_ip)
+            logger.error("Client failed to connect to RH service", client_ip=self._client_ip)
             raise ex
 
     @aiohttp_jinja2.template('index.html')
@@ -153,7 +146,6 @@ class Index(View):
             return self.redirect()
 
         try:
-            # iac_json = await self.get_iac_details()
             uac_json = await self.get_iac_details()
         except InvalidIACError:
             logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
@@ -161,7 +153,6 @@ class Index(View):
             return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
-        # self.validate_case(iac_json)
         self.validate_case(uac_json)
 
         try:
@@ -175,7 +166,6 @@ class Index(View):
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
-        session["iac"] = self._iac
 
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
@@ -196,7 +186,7 @@ class AddressConfirmation(View):
         try:
             attributes = session["attributes"]
             case = session["case"]
-            iac = session["iac"]
+
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
@@ -210,7 +200,7 @@ class AddressConfirmation(View):
 
         if address_confirmation == 'Yes':
             # Correct address flow
-            await self.call_questionnaire(case, attributes, request.app, iac)
+            await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
             return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
@@ -257,7 +247,6 @@ class AddressEdit(View):
         try:
             attributes = session["attributes"]
             case = session["case"]
-            iac = session["iac"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
@@ -269,7 +258,7 @@ class AddressEdit(View):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
-        await self.call_questionnaire(case, attributes, request.app, iac)
+        await self.call_questionnaire(case, attributes, request.app)
 
 
 @routes.view('/cookies-privacy')
