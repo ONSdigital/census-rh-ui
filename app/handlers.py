@@ -236,10 +236,10 @@ class AddressEdit(View):
         if not data["address-line-1"].strip():
             raise InvalidEqPayLoad(f"Mandatory address field not present{self._client_ip}")
         else:
-            attributes["address_line1"] = data["address-line-1"].strip()
-            attributes["address_line2"] = data["address-line-2"].strip()
-            attributes["address_line3"] = data["address-line-3"].strip()
-            attributes["town_name"] = data["town_name"].strip()
+            attributes["addressLine1"] = data["address-line-1"].strip()
+            attributes["addressLine2"] = data["address-line-2"].strip()
+            attributes["addressLine3"] = data["address-line-3"].strip()
+            attributes["townName"] = data["town_name"].strip()
             attributes["postcode"] = data["postcode"].strip()
 
         return attributes
