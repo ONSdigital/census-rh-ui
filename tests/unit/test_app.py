@@ -106,7 +106,8 @@ class TestCreateAppMissingConfig(TestCase):
 class TestCheckServices(AioHTTPTestCase):
 
     config = 'TestingConfig'
-    required_services = ('case', 'collection_exercise', 'collection_instrument', 'iac', 'sample', 'survey')
+    # required_services = ('case', 'collection_exercise', 'collection_instrument', 'iac', 'sample', 'survey')
+    required_services = ['rhsvc']
 
     def session_storage(self, app_config):
         self.assertIn("REDIS_SERVER", app_config)
