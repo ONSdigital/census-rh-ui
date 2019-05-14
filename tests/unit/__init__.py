@@ -207,6 +207,8 @@ class RHTestCase(AioHTTPTestCase):
 
     def setUp(self):
         super().setUp()  # NB: setUp the server first so we can use self.app
+        with open('tests/test_data/rhsvc/uac.json') as fp:
+            self.uac_json = json.load(fp)
         with open('tests/test_data/case/case.json') as fp:
             self.case_json = json.load(fp)
         with open('tests/test_data/collection_exercise/collection_exercise.json') as fp:
@@ -249,6 +251,7 @@ class RHTestCase(AioHTTPTestCase):
         self.sample_unit_type = self.case_json['sampleUnitType']
         self.survey_id = self.survey_json['id']
         self.survey_ref = self.survey_json['surveyRef']
+        self.uac = self.uac_json['uac']
         self.eq_payload = {
             "jti": self.jti,
             "tx_id": self.jti,
@@ -283,6 +286,10 @@ class RHTestCase(AioHTTPTestCase):
             "sexual_identity": True
         }
 
+        self.rhsvc_url = (
+            f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
+        )
+        """
         self.case_url = (
             f"{self.app['CASE_URL']}/cases/{self.case_id}"
         )
@@ -310,6 +317,7 @@ class RHTestCase(AioHTTPTestCase):
         self.survey_url = (
             f"{self.app['SURVEY_URL']}/surveys/{self.survey_id}"
         )
+        """
 
         self.form_data = {
             'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',

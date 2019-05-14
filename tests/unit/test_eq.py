@@ -276,37 +276,37 @@ class TestEq(RHTestCase):
 
         for attributes, expected in [
             ({
-                 "ADDRESS_LINE1": "A House",
-                 "ADDRESS_LINE2": "",
+                 "addressLine1": "A House",
+                 "addressLine2": "",
              }, "A House"),
             ({
-                 "ADDRESS_LINE1": "",
-                 "ADDRESS_LINE2": "A Second House",
+                 "addressLine1": "",
+                 "addressLine2": "A Second House",
              }, "A Second House"),
             ({
-                 "ADDRESS_LINE1": "A House",
-                 "ADDRESS_LINE2": "On The Second Hill",
+                 "addressLine1": "A House",
+                 "addressLine2": "On The Second Hill",
              }, "A House, On The Second Hill"),
             ({
-                 "ADDRESS_LINE1": "Another House",
-                 "ADDRESS_LINE2": "",
-                 "LOCALITY": "",
-                 "TOWN_NAME": "",
-                 "POSTCODE": "AA1 2BB"
+                 "addressLine1": "Another House",
+                 "addressLine2": "",
+                 "addressLine3": "",
+                 "townName": "",
+                 "postcode": "AA1 2BB"
              }, "Another House, AA1 2BB"),
             ({
-                 "ADDRESS_LINE1": "Another House",
-                 "ADDRESS_LINE2": "",
-                 "LOCALITY": "",
-                 "TOWN_NAME": "In Brizzle",
-                 "POSTCODE": ""
+                 "addressLine1": "Another House",
+                 "addressLine2": "",
+                 "addressLine3": "",
+                 "townName": "In Brizzle",
+                 "postcode": ""
              }, "Another House, In Brizzle"),
             ({
-                 "ADDRESS_LINE1": "Another House",
-                 "ADDRESS_LINE2": "",
-                 "LOCALITY": "In The Shire",
-                 "TOWN_NAME": "",
-                 "POSTCODE": ""
+                 "addressLine1": "Another House",
+                 "addressLine2": "",
+                 "addressLine3": "In The Shire",
+                 "townName": "",
+                 "postcode": ""
              }, "Another House, In The Shire"),
         ]:
             self.assertEqual(eq.EqPayloadConstructor.build_display_address(attributes), expected)
