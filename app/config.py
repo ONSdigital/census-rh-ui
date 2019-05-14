@@ -69,7 +69,7 @@ class DevelopmentConfig:
     EQ_URL = env.str("EQ_URL", default="http://localhost:5000")
     JSON_SECRET_KEYS = env.str("JSON_SECRET_KEYS", default=None) or open("./tests/test_data/test_keys.json").read()
 
-    RHSVC_URL = env.str("RHSVC_URL", default="http://localhost:8081")
+    RHSVC_URL = env.str("RHSVC_URL", default="http://localhost:8071")
     RHSVC_AUTH = (env.str("RHSVC_USERNAME", default="admin"), env.str("RHSVC_PASSWORD", default="secret"))
 
     URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
@@ -92,7 +92,7 @@ class TestingConfig:
     EQ_URL = "http://localhost:5000"
     JSON_SECRET_KEYS = open("./tests/test_data/test_keys.json").read()
 
-    RHSVC_URL = "http://localhost:8081"
+    RHSVC_URL = "http://localhost:8071"
     RHSVC_AUTH = ("admin", "secret")
 
     URL_PATH_PREFIX = ""
