@@ -92,11 +92,11 @@ class Index(View):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def get_iac_details(self):
-        logger.debug(f"Making GET request to {self._rhsvc_url}", iac=self._iac, client_ip=self._client_ip)
+        logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
         try:
             async with self._request.app.http_session_pool.get(self._rhsvc_url,
                                                                auth=self._request.app["RHSVC_AUTH"]) as resp:
-                logger.debug("Received response from RH service", iac=self._iac, status_code=resp.status)
+                logger.debug("Received response from RH service", status_code=resp.status)
 
                 try:
                     resp.raise_for_status()

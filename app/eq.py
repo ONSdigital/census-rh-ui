@@ -144,7 +144,7 @@ class EqPayloadConstructor(object):
         :return: string of a single address attribute or a combination of two
         """
         display_address = ''
-        for key in ['address_line1', 'address_line2', 'address_line3', 'town_name', 'postcode']:  # retain order of address attributes
+        for key in ['addressLine1', 'addressLine2', 'addressLine3', 'townName', 'postcode']:  # retain order of address attributes
             val = sample_attributes.get(key)
             if val:
                 prev_display = display_address
