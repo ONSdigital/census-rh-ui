@@ -15,7 +15,7 @@ class TestEq(RHTestCase):
 
     def test_create_eq_constructor(self):
         self.assertIsInstance(EqPayloadConstructor(
-            self.case_json, self.sample_attributes_json, self.app, self.iac_code), EqPayloadConstructor)
+            self.uac_json, self.uac_json['address'], self.app), EqPayloadConstructor)
 
     def test_create_eq_constructor_missing_iac(self):
         iac_code = ''
@@ -259,7 +259,7 @@ class TestEq(RHTestCase):
     def test_build_display_address(self):
         from app import eq
 
-        result = eq.EqPayloadConstructor.build_display_address(self.sample_attributes_json['attributes'])
+        result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
         self.assertEqual(result, self.eq_payload['display_address'])
 
     def test_build_display_address_raises(self):

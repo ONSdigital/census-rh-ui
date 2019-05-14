@@ -230,9 +230,8 @@ class RHTestCase(AioHTTPTestCase):
         self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
         self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
-
         self.action_plan_id = self.case_json['actionPlanId']
-        self.case_id = self.case_json['id']
+        self.case_id = self.uac_json['caseId']
         self.case_group_id = self.case_json['caseGroup']['id']
         self.case_ref = self.case_json['caseRef']
         self.collection_exercise_id = self.collection_exercise_json['id']
@@ -246,7 +245,7 @@ class RHTestCase(AioHTTPTestCase):
         self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
         self.iac_json = {'active': '1', 'caseId': self.case_id}
         self.sample_unit_id = self.sample_attributes_json['id']
-        self.sample_unit_attributes = self.sample_attributes_json['attributes']
+        self.sample_unit_attributes = self.uac_json['address']
         self.sample_unit_ref = self.case_json['caseGroup']['sampleUnitRef']
         self.sample_unit_type = self.case_json['sampleUnitType']
         self.survey_id = self.survey_json['id']
@@ -271,7 +270,7 @@ class RHTestCase(AioHTTPTestCase):
             "ref_p_end_date": self.end_date,
             "ref_p_start_date": self.start_date,
             "exercise_end": self.end_date,
-            "display_address": f"{self.sample_attributes_json['attributes']['ADDRESS_LINE1']}, {self.sample_attributes_json['attributes']['TOWN_NAME']}",
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "address_line1": self.sample_attributes_json['attributes']['ADDRESS_LINE1'],
             "address_line2": self.sample_attributes_json['attributes']['ADDRESS_LINE2'],
             "locality": self.sample_attributes_json['attributes']['LOCALITY'],
