@@ -197,32 +197,6 @@ class TestEq(RHTestCase):
                     self.case_json, None, self.app, self.iac_code).build()
             self.assertIn('Attributes is empty', ex.exception.message)
 
-    def test_find_event_date_by_tag(self):
-        find_mandatory_date = functools.partial(EqPayloadConstructor._find_event_date_by_tag, mandatory=True)
-
-        for tag, expected in [
-            ("ref_period_start", self.start_date),
-            ("ref_period_end", self.end_date),
-            ("return_by", self.return_by)
-        ]:
-            self.assertEqual(find_mandatory_date(self.dummy_eq, tag), expected)
-
-    def test_find_event_date_by_tag_missing(self):
-        self.dummy_eq._collex_events = []
-        result = EqPayloadConstructor._find_event_date_by_tag(self.dummy_eq, "ref_period_start", False)
-        self.assertIsNone(result)
-
-    def test_find_event_date_by_tag_missing_mandatory(self):
-        self.dummy_eq._collex_events = []
-        with self.assertRaises(InvalidEqPayLoad) as e:
-            EqPayloadConstructor._find_event_date_by_tag(self.dummy_eq, "ref_period_start", True)
-        self.assertIn("ref_period_start", e.exception.message)
-
-    def test_find_event_date_by_tag_unexpected_mandatory(self):
-        with self.assertRaises(InvalidEqPayLoad) as e:
-            EqPayloadConstructor._find_event_date_by_tag(self.dummy_eq, "unexpected", True)
-        self.assertIn("unexpected", e.exception.message)
-
     def test_caps_to_snake(self):
         from app import eq
 
@@ -328,45 +302,9 @@ class TestEq(RHTestCase):
         # Then an InvalidEqPayLoad is raised
         self.assertEqual(e.exception.message, 'Unable to format invalid_date')
 
-    def test_check_ce_has_ended(self):
-        # Given a valid date
-        datetime_obj = parse_date('2007-01-25T12:00:00Z')
 
-        # When check_ce_has_ended is called
-        with self.assertRaises(ExerciseClosedError):
-            EqPayloadConstructor._check_ce_has_ended(self.dummy_eq, datetime_obj)
 
-        # Then an ExerciseEndError is raised
 
-    def test_check_ce_has_not_ended(self):
-        # Given a valid date
-        datetime_obj = parse_date('2027-01-25T12:00:00Z')
 
-        # When check_ce_has_ended is called
-        self.assertIsNone(EqPayloadConstructor._check_ce_has_ended(self.dummy_eq, datetime_obj))
 
-        # Then an ExerciseEndError is not raised
 
-    def test_check_ce_has_ended_error(self):
-        # Given an invalid date
-        datetime_obj = 'invalid_date'
-
-        # When check_ce_has_ended is called
-        with self.assertRaises(InvalidEqPayLoad) as e:
-            EqPayloadConstructor._check_ce_has_ended(self.dummy_eq, datetime_obj)
-
-        # Then an InvalidEqPayload is raised
-        self.assertEqual(e.exception.message, 'Unable to compare date objects')
-
-    def test_build_response_id(self):
-        response_id = build_response_id(self.case_id, self.collection_exercise_id, self.iac_code)
-
-        self.assertEqual(response_id, self.eq_payload['response_id'])
-
-    def test_build_response_id_is_unique_by_iac(self):
-        different_iac = 'A' * 12
-
-        response_id = build_response_id(self.case_id, self.collection_exercise_id, self.iac_code)
-        different_response_id = build_response_id(self.case_id, self.collection_exercise_id, different_iac)
-
-        self.assertNotEqual(different_response_id, response_id)
