@@ -66,13 +66,13 @@ class TestEq(RHTestCase):
             mocked_uuid4.return_value = self.jti
 
             with aioresponses() as mocked:
-                mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-                mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-                mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
+                # mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
+                # mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
+                # mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
 
                 with self.assertLogs('app.eq', 'DEBUG') as cm:
                     payload = await EqPayloadConstructor(
-                        self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
+                        self.uac_json, self.uac_json['address'], self.app).build()
                 self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -80,121 +80,18 @@ class TestEq(RHTestCase):
         self.assertEqual(payload, self.eq_payload)
 
     @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_bad_ci_type(self):
-        ci_json = self.collection_instrument_json.copy()
-        ci_json['type'] = 'not_eq'
-
-        from app import eq  # NB: local import to avoid overwriting the patched version for some tests
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=ci_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await eq.EqPayloadConstructor(
-                    self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Collection instrument {self.collection_instrument_id} type is not EQ", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_ci_type(self):
-        ci_json = self.collection_instrument_json.copy()
-        del ci_json['type']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=ci_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"No Collection Instrument type for {self.collection_instrument_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_classifiers(self):
-        ci_json = self.collection_instrument_json.copy()
-        del ci_json['classifiers']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=ci_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve classifiers for case {self.case_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_eq_id(self):
-        ci_json = self.collection_instrument_json.copy()
-        del ci_json['classifiers']['eq_id']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=ci_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve eq_id for case {self.case_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_form_type(self):
-        ci_json = self.collection_instrument_json.copy()
-        del ci_json['classifiers']['form_type']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=ci_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve form_type for eq_id {self.eq_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_exerciseRef(self):
-        ce_json = self.collection_exercise_json.copy()
-        del ce_json['exerciseRef']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=ce_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve period id for case {self.case_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_exercise_id(self):
-        ce_json = self.collection_exercise_json.copy()
-        del ce_json['id']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=ce_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve ce id for case {self.case_id}", ex.exception.message)
-
-    @unittest_run_loop
-    async def test_build_raises_InvalidEqPayLoad_missing_country_code(self):
-        sample_json = self.sample_attributes_json.copy()
-        del sample_json['attributes']['COUNTRY']
-
-        with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await EqPayloadConstructor(self.case_json, self.sample_unit_attributes, self.app, self.iac_code).build()
-            self.assertIn(f"Could not retrieve country_code for case {self.case_id}", ex.exception.message)
-
-    @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
 
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
 
         with aioresponses() as mocked:
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
+            # mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
+            # mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
+            # mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
 
             with self.assertRaises(InvalidEqPayLoad) as ex:
                 await eq.EqPayloadConstructor(
-                    self.case_json, None, self.app, self.iac_code).build()
+                    self.uac_json, None, self.app).build()
             self.assertIn('Attributes is empty', ex.exception.message)
 
     def test_caps_to_snake(self):

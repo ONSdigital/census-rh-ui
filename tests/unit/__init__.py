@@ -209,6 +209,7 @@ class RHTestCase(AioHTTPTestCase):
         super().setUp()  # NB: setUp the server first so we can use self.app
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
+        """
         with open('tests/test_data/case/case.json') as fp:
             self.case_json = json.load(fp)
         with open('tests/test_data/collection_exercise/collection_exercise.json') as fp:
@@ -223,6 +224,7 @@ class RHTestCase(AioHTTPTestCase):
             self.sample_attributes_json = json.load(fp)
         with open('tests/test_data/survey/survey.json') as fp:
             self.survey_json = json.load(fp)
+            """
 
 
         self.get_index = self.app.router['Index:get'].url_for()
@@ -275,10 +277,10 @@ class RHTestCase(AioHTTPTestCase):
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
             "user_id": "1234567890",
-            "questionnare_id": self.questionnaire_id,
+            "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
-            "form_type": self.user_id
+            "form_type": self.form_type
  }
 
         self.rhsvc_url = (
@@ -322,7 +324,9 @@ class RHTestCase(AioHTTPTestCase):
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
+        """
         class DummyConstructor:
             _collex_id = self.collection_exercise_id
             _collex_events = self.collection_exercise_events_json
         self.dummy_eq = DummyConstructor()
+        """
