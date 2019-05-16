@@ -55,7 +55,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_connector_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
+            mocked.get(self.rhsvc_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
@@ -348,7 +348,7 @@ class TestHandlers(RHTestCase):
         del form_data['iac3']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
 
             with self.assertLogs('respondent-home', 'WARNING') as cm:
                 response = await self.client.request("POST", self.post_index, data=form_data)
