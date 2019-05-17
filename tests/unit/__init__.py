@@ -242,7 +242,7 @@ class RHTestCase(AioHTTPTestCase):
         # self.collection_exercise_user_desc = self.collection_exercise_json['userDescription']
         # self.collection_instrument_id = self.collection_instrument_json['id']
         self.eq_id = "census"
-        self.form_type = "household"
+        self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
         self.iac_code = ''.join([str(n) for n in range(11)])
         self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
