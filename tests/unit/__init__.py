@@ -209,23 +209,6 @@ class RHTestCase(AioHTTPTestCase):
         super().setUp()  # NB: setUp the server first so we can use self.app
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
-        """
-        with open('tests/test_data/case/case.json') as fp:
-            self.case_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise.json') as fp:
-            self.collection_exercise_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise_events.json') as fp:
-            self.collection_exercise_events_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise_events_closed.json') as fp:
-            self.closed_ce_events_json = json.load(fp)
-        with open('tests/test_data/collection_instrument/collection_instrument_eq.json') as fp:
-            self.collection_instrument_json = json.load(fp)
-        with open('tests/test_data/sample/sample_attributes.json') as fp:
-            self.sample_attributes_json = json.load(fp)
-        with open('tests/test_data/survey/survey.json') as fp:
-            self.survey_json = json.load(fp)
-            """
-
 
         self.get_index = self.app.router['Index:get'].url_for()
         self.get_info = self.app.router['Info:get'].url_for()
@@ -233,26 +216,13 @@ class RHTestCase(AioHTTPTestCase):
         self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
         self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
-        # self.action_plan_id = self.case_json['actionPlanId']
         self.case_id = self.uac_json['caseId']
-        # self.case_group_id = self.case_json['caseGroup']['id']
-        # self.case_ref = self.case_json['caseRef']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
-        # self.collection_exercise_ref = self.collection_exercise_json['exerciseRef']
-        # self.collection_exercise_user_desc = self.collection_exercise_json['userDescription']
-        # self.collection_instrument_id = self.collection_instrument_json['id']
         self.eq_id = "census"
         self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
         self.iac_code = ''.join([str(n) for n in range(11)])
         self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
-        # self.iac_json = {'active': '1', 'caseId': self.case_id}
-        # self.sample_unit_id = self.sample_attributes_json['id']
-        # self.sample_unit_attributes = self.uac_json['address']
-        # self.sample_unit_ref = self.case_json['caseGroup']['sampleUnitRef']
-        # self.sample_unit_type = self.case_json['sampleUnitType']
-        # self.survey_id = self.survey_json['id']
-        # self.survey_ref = self.survey_json['surveyRef']
         self.period_id = "1"
         self.user_id = "1234567890"
         self.uac = self.uac_json['uac']
@@ -286,35 +256,6 @@ class RHTestCase(AioHTTPTestCase):
         self.rhsvc_url = (
             f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
         )
-        """
-        self.case_url = (
-            f"{self.app['CASE_URL']}/cases/{self.case_id}"
-        )
-        self.case_events_url = (
-            f"{self.app['CASE_URL']}/cases/{self.case_id}/events"
-        )
-        self.collection_instrument_url = (
-            f"{self.app['COLLECTION_INSTRUMENT_URL']}"
-            f"/collection-instrument-api/1.0.2/collectioninstrument/id/{self.collection_instrument_id}"
-        )
-        self.collection_exercise_url = (
-            f"{self.app['COLLECTION_EXERCISE_URL']}"
-            f"/collectionexercises/{self.collection_exercise_id}"
-        )
-        self.collection_exercise_events_url = (
-            f"{self.app['COLLECTION_EXERCISE_URL']}"
-            f"/collectionexercises/{self.collection_exercise_id}/events"
-        )
-        self.iac_url = (
-            f"{self.app['IAC_URL']}/iacs/{self.iac_code}"
-        )
-        self.sample_attributes_url = (
-            f"{self.app['SAMPLE_URL']}/samples/{self.sample_unit_id}/attributes"
-        )
-        self.survey_url = (
-            f"{self.app['SURVEY_URL']}/surveys/{self.survey_id}"
-        )
-        """
 
         self.form_data = {
             'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',
@@ -324,9 +265,3 @@ class RHTestCase(AioHTTPTestCase):
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
-        """
-        class DummyConstructor:
-            _collex_id = self.collection_exercise_id
-            _collex_events = self.collection_exercise_events_json
-        self.dummy_eq = DummyConstructor()
-        """
