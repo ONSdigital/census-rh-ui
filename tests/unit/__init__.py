@@ -139,7 +139,7 @@ def skip_encrypt(func, *args, **kwargs):
 class RHTestCase(AioHTTPTestCase):
 
     language_code = 'en'
-    response_id = '6tg2s16T1HClxcttXW3IJgpe198BuJkGE5oJg0dieOU='
+    response_id = '2vfBHlIsGPImYlWTvXLiBeXw14NkzoicZcDJB8pZ9FQ='
 
     start_date = '2018-04-10'
     end_date = '2020-05-31'
@@ -221,8 +221,8 @@ class RHTestCase(AioHTTPTestCase):
         self.eq_id = "census"
         self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
-        self.iac_code = ''.join([str(n) for n in range(11)])
-        self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
+        self.iac_code = ''.join([str(n) for n in range(13)])
+        self.iac1, self.iac2, self.iac3, self.iac4 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:12], self.iac_code[12:]
         self.period_id = "1"
         self.user_id = "1234567890"
         self.uac = self.uac_json['uac']
@@ -258,7 +258,7 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.form_data = {
-            'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',
+            'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'iac4': self.iac4, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {

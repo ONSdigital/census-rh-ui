@@ -77,8 +77,8 @@ class Index(View):
         return f"{self._request.app['RHSVC_URL']}/uacs/{self._iac}"
 
     @staticmethod
-    def join_iac(data, expected_length=12):
-        combined = "".join([v.lower() for v in data.values()][:3])
+    def join_iac(data, expected_length=16):
+        combined = "".join([v.lower() for v in data.values()][:4])
         if len(combined) < expected_length:
             raise TypeError
         return combined
