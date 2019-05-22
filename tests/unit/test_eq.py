@@ -5,8 +5,7 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app.eq import EqPayloadConstructor, format_date, parse_date
-#from app.eq import EqPayloadConstructor, build_response_id, format_date, parse_date
-from app.exceptions import ExerciseClosedError, InvalidEqPayLoad
+from app.exceptions import InvalidEqPayLoad
 
 from . import RHTestCase
 
@@ -65,15 +64,10 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with aioresponses() as mocked:
-                # mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-                # mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-                # mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-
-                with self.assertLogs('app.eq', 'DEBUG') as cm:
-                    payload = await EqPayloadConstructor(
-                        self.uac_json, self.uac_json['address'], self.app).build()
-                self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.uac_json['address'], self.app).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
@@ -84,15 +78,10 @@ class TestEq(RHTestCase):
 
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
 
-        with aioresponses() as mocked:
-            # mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            # mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            # mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-
-            with self.assertRaises(InvalidEqPayLoad) as ex:
-                await eq.EqPayloadConstructor(
-                    self.uac_json, None, self.app).build()
-            self.assertIn('Attributes is empty', ex.exception.message)
+        with self.assertRaises(InvalidEqPayLoad) as ex:
+            await eq.EqPayloadConstructor(
+                self.uac_json, None, self.app).build()
+        self.assertIn('Attributes is empty', ex.exception.message)
 
     def test_caps_to_snake(self):
         from app import eq
