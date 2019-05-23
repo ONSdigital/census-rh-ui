@@ -92,10 +92,6 @@ class EqPayloadConstructor(object):
         return self._payload
 
     @staticmethod
-    def caps_to_snake(s):
-        return s.lower().lstrip('_')
-
-    @staticmethod
     def build_display_address(sample_attributes):
         """
         Build `display_address` value by appending not-None (in order) values of sample attributes
