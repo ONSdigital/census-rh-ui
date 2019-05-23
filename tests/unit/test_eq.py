@@ -1,10 +1,6 @@
-import functools
 from unittest import mock
-
 from aiohttp.test_utils import unittest_run_loop
-from aioresponses import aioresponses
-
-from app.eq import EqPayloadConstructor, format_date, parse_date
+from app.eq import EqPayloadConstructor
 from app.exceptions import InvalidEqPayLoad
 
 from . import RHTestCase
@@ -155,42 +151,5 @@ class TestEq(RHTestCase):
              }, "Another House, In The Shire"),
         ]:
             self.assertEqual(eq.EqPayloadConstructor.build_display_address(attributes), expected)
-
-    def test_correct_iso8601_date_format(self):
-        # Given a valid date
-        date = '2007-01-25T12:00:00Z'
-
-        # When format_date is called
-        result = format_date(parse_date(date))
-
-        # Then the date is formatted correctly
-        self.assertEqual(result, '2007-01-25')
-
-    def test_invalid_iso8601_date_format(self):
-        # Given a valid date
-        date = 'invalid_date'
-
-        # When parse_date is called
-        with self.assertRaises(InvalidEqPayLoad) as e:
-            parse_date(date)
-
-        # Then the date is formatted correctly
-        self.assertEqual(e.exception.message, 'Unable to parse invalid_date')
-
-    def test_incorrect_date_format(self):
-        # Given an invalid date
-        date = 'invalid_date'
-
-        # When format_date is called
-        with self.assertRaises(InvalidEqPayLoad) as e:
-            format_date(date)
-
-        # Then an InvalidEqPayLoad is raised
-        self.assertEqual(e.exception.message, 'Unable to format invalid_date')
-
-
-
-
-
 
 

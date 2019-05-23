@@ -1,13 +1,7 @@
-# import datetime
 import logging
 import time
-# import hashlib
-# import base64
 from collections import namedtuple
 from uuid import uuid4
-
-import iso8601
-from aiohttp import ClientError
 from aiohttp.web import Application
 from structlog import wrap_logger
 
@@ -16,40 +10,6 @@ from .exceptions import InvalidEqPayLoad
 logger = wrap_logger(logging.getLogger(__name__))
 
 Request = namedtuple("Request", ["method", "path", "auth", "func"])
-
-
-def handle_response(response):
-    try:
-        response.raise_for_status()
-    except ClientError as ex:
-        logger.error("Error in response", url=str(response.url), status_code=response.status)
-        raise ex
-    else:
-        logger.debug("Successfully connected to service", url=str(response.url))
-
-
-def parse_date(string_date):
-    """
-    Parses a date string from ISO 8601 format to be converted elsewhere.
-    :param string_date: a date string in ISO 8601 format
-    :return: datetime object
-    """
-    try:
-        return iso8601.parse_date(string_date)
-    except (ValueError, iso8601.iso8601.ParseError):
-        raise InvalidEqPayLoad(f"Unable to parse {string_date}")
-
-
-def format_date(datetime_object):
-    """
-    Formats the date from a datetime object to %Y-%m-%d eg 2018-01-20
-    :param datetime_object: datetime object
-    :return formatted date
-    """
-    try:
-        return datetime_object.strftime("%Y-%m-%d")
-    except (ValueError, AttributeError):
-        raise InvalidEqPayLoad(f"Unable to format {datetime_object}")
 
 
 class EqPayloadConstructor(object):
@@ -154,10 +114,3 @@ class EqPayloadConstructor(object):
         if not display_address:
             raise InvalidEqPayLoad("Displayable address not in sample attributes")
         return display_address
-
-    async def _make_request(self, request: Request):
-        method, url, auth, func = request
-        logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
-        async with self._app.http_session_pool.request(method, url, auth=auth) as resp:
-            func(resp)
-            return await resp.json()
