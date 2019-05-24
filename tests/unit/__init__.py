@@ -139,7 +139,7 @@ def skip_encrypt(func, *args, **kwargs):
 class RHTestCase(AioHTTPTestCase):
 
     language_code = 'en'
-    response_id = '6tg2s16T1HClxcttXW3IJgpe198BuJkGE5oJg0dieOU='
+    response_id = '2vfBHlIsGPImYlWTvXLiBeXw14NkzoicZcDJB8pZ9FQ='
 
     start_date = '2018-04-10'
     end_date = '2020-05-31'
@@ -207,20 +207,8 @@ class RHTestCase(AioHTTPTestCase):
 
     def setUp(self):
         super().setUp()  # NB: setUp the server first so we can use self.app
-        with open('tests/test_data/case/case.json') as fp:
-            self.case_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise.json') as fp:
-            self.collection_exercise_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise_events.json') as fp:
-            self.collection_exercise_events_json = json.load(fp)
-        with open('tests/test_data/collection_exercise/collection_exercise_events_closed.json') as fp:
-            self.closed_ce_events_json = json.load(fp)
-        with open('tests/test_data/collection_instrument/collection_instrument_eq.json') as fp:
-            self.collection_instrument_json = json.load(fp)
-        with open('tests/test_data/sample/sample_attributes.json') as fp:
-            self.sample_attributes_json = json.load(fp)
-        with open('tests/test_data/survey/survey.json') as fp:
-            self.survey_json = json.load(fp)
+        with open('tests/test_data/rhsvc/uac.json') as fp:
+            self.uac_json = json.load(fp)
 
         self.get_index = self.app.router['Index:get'].url_for()
         self.get_info = self.app.router['Info:get'].url_for()
@@ -228,98 +216,52 @@ class RHTestCase(AioHTTPTestCase):
         self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
         self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
-
-        self.action_plan_id = self.case_json['actionPlanId']
-        self.case_id = self.case_json['id']
-        self.case_group_id = self.case_json['caseGroup']['id']
-        self.case_ref = self.case_json['caseRef']
-        self.collection_exercise_id = self.collection_exercise_json['id']
-        self.collection_exercise_ref = self.collection_exercise_json['exerciseRef']
-        self.collection_exercise_user_desc = self.collection_exercise_json['userDescription']
-        self.collection_instrument_id = self.collection_instrument_json['id']
-        self.eq_id = self.collection_instrument_json['classifiers']['eq_id']
-        self.form_type = self.collection_instrument_json['classifiers']['form_type']
+        self.case_id = self.uac_json['caseId']
+        self.collection_exercise_id = self.uac_json['collectionExerciseId']
+        self.eq_id = "census"
+        self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
-        self.iac_code = ''.join([str(n) for n in range(11)])
-        self.iac1, self.iac2, self.iac3 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:]
-        self.iac_json = {'active': '1', 'caseId': self.case_id}
-        self.sample_unit_id = self.sample_attributes_json['id']
-        self.sample_unit_attributes = self.sample_attributes_json['attributes']
-        self.sample_unit_ref = self.case_json['caseGroup']['sampleUnitRef']
-        self.sample_unit_type = self.case_json['sampleUnitType']
-        self.survey_id = self.survey_json['id']
-        self.survey_ref = self.survey_json['surveyRef']
+        self.iac_code = ''.join([str(n) for n in range(13)])
+        self.iac1, self.iac2, self.iac3, self.iac4 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:12], self.iac_code[12:]
+        self.period_id = "1"
+        self.user_id = "1234567890"
+        self.uac = self.uac_json['uac']
+        self.uprn = self.uac_json['address']['uprn']
+        self.response_id = self.uac_json['questionnaireId']
+        self.questionnaire_id = self.uac_json['questionnaireId']
+        self.case_type = self.uac_json['caseType']
+        self.channel = "rh"
         self.eq_payload = {
             "jti": self.jti,
             "tx_id": self.jti,
-            "user_id": self.sample_unit_id,
             "iat": int(time.time()),
             "exp": int(time.time() + (5 * 60)),
-            "eq_id": self.eq_id,
-            "period_id": self.collection_exercise_ref,
-            "form_type": self.form_type,
+            "case_type": self.case_type,
             "collection_exercise_sid": self.collection_exercise_id,
-            "ru_ref": self.sample_unit_ref,
-            "case_id": self.case_id,
-            "case_ref": self.case_ref,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
-            "language_code": self.language_code,
-            "return_by": self.return_by,
-            "ref_p_end_date": self.end_date,
-            "ref_p_start_date": self.start_date,
-            "exercise_end": self.end_date,
-            "display_address": f"{self.sample_attributes_json['attributes']['ADDRESS_LINE1']}, {self.sample_attributes_json['attributes']['TOWN_NAME']}",
-            "address_line1": self.sample_attributes_json['attributes']['ADDRESS_LINE1'],
-            "address_line2": self.sample_attributes_json['attributes']['ADDRESS_LINE2'],
-            "locality": self.sample_attributes_json['attributes']['LOCALITY'],
-            "town_name": self.sample_attributes_json['attributes']['TOWN_NAME'],
-            "postcode": self.sample_attributes_json['attributes']['POSTCODE'],
-            "tla": self.sample_attributes_json['attributes']['TLA'],
-            "country": self.sample_attributes_json['attributes']['COUNTRY'],
-            "country_code": self.sample_attributes_json['attributes']['COUNTRY'],
-            "reference": self.sample_attributes_json['attributes']['REFERENCE'],
-            "response_id": self.response_id,
             "region_code": 'GB-ENG',
-            "sexual_identity": True
-        }
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": self.language_code,
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "1234567890",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type
+ }
 
-        self.case_url = (
-            f"{self.app['CASE_URL']}/cases/{self.case_id}"
-        )
-        self.case_events_url = (
-            f"{self.app['CASE_URL']}/cases/{self.case_id}/events"
-        )
-        self.collection_instrument_url = (
-            f"{self.app['COLLECTION_INSTRUMENT_URL']}"
-            f"/collection-instrument-api/1.0.2/collectioninstrument/id/{self.collection_instrument_id}"
-        )
-        self.collection_exercise_url = (
-            f"{self.app['COLLECTION_EXERCISE_URL']}"
-            f"/collectionexercises/{self.collection_exercise_id}"
-        )
-        self.collection_exercise_events_url = (
-            f"{self.app['COLLECTION_EXERCISE_URL']}"
-            f"/collectionexercises/{self.collection_exercise_id}/events"
-        )
-        self.iac_url = (
-            f"{self.app['IAC_URL']}/iacs/{self.iac_code}"
-        )
-        self.sample_attributes_url = (
-            f"{self.app['SAMPLE_URL']}/samples/{self.sample_unit_id}/attributes"
-        )
-        self.survey_url = (
-            f"{self.app['SURVEY_URL']}/surveys/{self.survey_id}"
+        self.rhsvc_url = (
+            f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
         )
 
         self.form_data = {
-            'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'action[save_continue]': '',
+            'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'iac4': self.iac4, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
-        class DummyConstructor:
-            _collex_id = self.collection_exercise_id
-            _collex_events = self.collection_exercise_events_json
-        self.dummy_eq = DummyConstructor()

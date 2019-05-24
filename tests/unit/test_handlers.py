@@ -8,7 +8,7 @@ from aioresponses import aioresponses
 
 from app import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG)
-from app.exceptions import InactiveCaseError
+from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index
 
 from . import RHTestCase, build_eq_raises, skip_build_eq, skip_encrypt
@@ -21,8 +21,8 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_index)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('Your 12 character access code is on the letter we sent you', contents)
-        self.assertEqual(contents.count('input-text'), 3)
+        self.assertIn('Your 16 character access code is on the letter we sent you', contents)
+        self.assertEqual(contents.count('input-text'), 4)
         self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
@@ -43,9 +43,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
 
@@ -55,7 +53,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_connector_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
+            mocked.get(self.rhsvc_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
@@ -67,7 +65,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_no_iac_json(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, content_type='text')
+            mocked.get(self.rhsvc_url, content_type='text')
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
@@ -77,36 +75,9 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_index_case_403(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, status=403)
-
-            with self.assertLogs('app.case', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertLogLine(cm, "Error retrieving case", case_id=self.case_id, status_code=403)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_case_500(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, status=500)
-
-            with self.assertLogs('app.case', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_index, data=self.form_data)
-            self.assertLogLine(cm, "Error retrieving case", case_id=self.case_id, status_code=500)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
     async def test_post_index_case_connector_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
+            mocked.get(self.rhsvc_url, exception=ClientConnectorError(mock.MagicMock(), mock.MagicMock()))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -118,17 +89,10 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_with_build_connection_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, exception=ClientConnectionError('Failed'))
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
+            mocked.get(self.rhsvc_url, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
+                response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertLogLine(cm, "Service connection error", message='Failed')
 
         self.assertEqual(response.status, 500)
@@ -138,13 +102,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_with_build(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.post(self.case_events_url)
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 200)
@@ -165,37 +123,11 @@ class TestHandlers(RHTestCase):
                 continue  # skip uuid / time generated values
             self.assertEqual(self.eq_payload[key], token[key], key)  # outputs failed key as msg
 
-    @unittest_run_loop
-    async def test_post_index_build_closed_ce(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.post(self.case_events_url)
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.closed_ce_events_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as logs_home:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(logs_home,
-                               'Attempt to access collection exercise that has already ended',
-                               collex_id=self.collection_exercise_id)
-
-        self.assertEqual(response.status, 200)
-        self.assertIn('This survey has closed', str(await response.content.read()))
-
     @build_eq_raises
     @unittest_run_loop
     async def test_post_index_build_raises_InvalidEqPayLoad(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 200)
@@ -211,144 +143,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_index_with_build_ci_500(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, status=500)
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('app.eq', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(cm, "Error in response", status_code=500)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_with_build_ci_400(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, status=400)
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('app.eq', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(cm, "Error in response", status_code=400)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_with_build_ce_503(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, status=503)
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('app.eq', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(cm, "Error in response", status_code=503)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_with_build_events_404(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, status=404)
-
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('app.eq', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(cm, "Error in response", status_code=404)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_with_build_sample_403(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            # mocks for initial data setup in post
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, status=403)
-
-            with self.assertLogs('app.sample', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertLogLine(cm, "Error retrieving sample attributes", status_code=403)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_with_build_case_event_500(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
-            mocked.get(self.case_url, payload=self.case_json)
-            mocked.get(self.sample_attributes_url, payload=self.sample_attributes_json)
-            mocked.get(self.collection_instrument_url, payload=self.collection_instrument_json)
-            mocked.get(self.collection_exercise_url, payload=self.collection_exercise_json)
-            mocked.get(self.collection_exercise_events_url, payload=self.collection_exercise_events_json)
-
-            mocked.post(self.case_events_url, status=500)
-            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('app.case', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
-                                                     data=self.address_confirmation_data)
-            self.assertLogLine(cm, "Error posting case event", status_code=500, case_id=self.case_id)
-
-        self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_caseid_missing(self):
-        iac_json = self.iac_json.copy()
-        del iac_json['caseId']
-
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=iac_json)
-
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertLogLine(cm, 'caseId missing from IAC response')
-
-        self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
-
-
-    @unittest_run_loop
     async def test_post_index_malformed(self):
         form_data = self.form_data.copy()
-        del form_data['iac3']
+        del form_data['iac4']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=self.iac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
 
             with self.assertLogs('respondent-home', 'WARNING') as cm:
                 response = await self.client.request("POST", self.post_index, data=form_data)
@@ -359,11 +159,11 @@ class TestHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_iac_active_missing(self):
-        iac_json = self.iac_json.copy()
+        iac_json = self.uac_json.copy()
         del iac_json['active']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=iac_json)
+            mocked.get(self.rhsvc_url, payload=iac_json)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -374,11 +174,11 @@ class TestHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_iac_inactive(self):
-        iac_json = self.iac_json.copy()
+        iac_json = self.uac_json.copy()
         iac_json['active'] = False
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, payload=iac_json)
+            mocked.get(self.rhsvc_url, payload=iac_json)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -390,11 +190,11 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_connection_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, exception=ClientConnectionError('Failed'))
+            mocked.get(self.rhsvc_url, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
-            self.assertLogLine(cm, "Client failed to connect to iac service")
+            self.assertLogLine(cm, "Client failed to connect to RH service")
 
         self.assertEqual(response.status, 500)
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
@@ -402,7 +202,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_500(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=500)
+            mocked.get(self.rhsvc_url, status=500)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -414,7 +214,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_503(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=503)
+            mocked.get(self.rhsvc_url, status=503)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -426,7 +226,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_404(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=404)
+            mocked.get(self.rhsvc_url, status=404)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
@@ -438,11 +238,11 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_403(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=403)
+            mocked.get(self.rhsvc_url, status=403)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
-            self.assertLogLine(cm, "Unauthorized access to IAC service attempted", client_ip=None)
+            self.assertLogLine(cm, "Unauthorized access to RH service attempted", client_ip=None)
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(NOT_AUTHORIZED_MSG, str(await response.content.read()))
@@ -450,11 +250,11 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_401(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=401)
+            mocked.get(self.rhsvc_url, status=401)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
-            self.assertLogLine(cm, "Unauthorized access to IAC service attempted", client_ip=None)
+            self.assertLogLine(cm, "Unauthorized access to RH service attempted", client_ip=None)
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(NOT_AUTHORIZED_MSG, str(await response.content.read()))
@@ -462,24 +262,24 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_iac_service_400(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.iac_url, status=400)
+            mocked.get(self.rhsvc_url, status=400)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request("POST", self.post_index, data=self.form_data)
-            self.assertLogLine(cm, "Client error when accessing IAC service", client_ip=None, status=400)
+            self.assertLogLine(cm, "Client error when accessing RH service", client_ip=None, status=400)
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
 
     def test_join_iac(self):
         # Given some post data
-        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '9012', 'action[save_continue]': ''}
+        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '9012', 'iac4': '1314', 'action[save_continue]': ''}
 
         # When join_iac is called
         result = Index.join_iac(post_data)
 
         # Then a single string built from the iac values is returned
-        self.assertEqual(result, post_data['iac1'] + post_data['iac2'] + post_data['iac3'])
+        self.assertEqual(result, post_data['iac1'] + post_data['iac2'] + post_data['iac3'] + post_data['iac4'])
 
     def test_join_iac_missing(self):
         # Given some missing post data
@@ -492,7 +292,7 @@ class TestHandlers(RHTestCase):
 
     def test_join_iac_some_missing(self):
         # Given some missing post data
-        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '', 'action[save_continue]': ''}
+        post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '1234', 'iac4': '', 'action[save_continue]': ''}
 
         # When join_iac is called
         with self.assertRaises(TypeError):
@@ -501,7 +301,7 @@ class TestHandlers(RHTestCase):
 
     def test_validate_case(self):
         # Given a dict with an active key and value
-        case_json = {'active': True}
+        case_json = {'active': True, 'caseStatus': 'OK'}
 
         # When validate_case is called
         Index.validate_case(case_json)
@@ -510,13 +310,23 @@ class TestHandlers(RHTestCase):
 
     def test_validate_case_inactive(self):
         # Given a dict with an active key and value
-        case_json = {'active': False}
+        case_json = {'active': False, 'caseStatus': 'OK'}
 
         # When validate_case is called
         with self.assertRaises(InactiveCaseError):
             Index.validate_case(case_json)
 
         # Then an InactiveCaseError is raised
+
+    def test_validate_caseStatus_notfound(self):
+        # Given a dict with an active key and value
+        case_json = {'active': True, 'caseStatus': 'NOT_FOUND'}
+
+        # When validate_case is called
+        with self.assertRaises(InvalidEqPayLoad):
+            Index.validate_case(case_json)
+
+        # Then an InvalidEqPayload is raised
 
     def test_validate_case_empty(self):
         # Given an empty dict

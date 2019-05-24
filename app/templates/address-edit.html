@@ -21,7 +21,7 @@
                                                 <div class=="field">
                                                     <label class="label venus" id="label-address-line-1" for="address-line-1"> Address Line 1 (Including your house name or number) </label>
                                                     <input class="input input--text" id="address-line-1" data-qa="input-text"
-                                                           name="address-line-1" value="{{ ADDRESS_LINE1 }}">
+                                                           name="address-line-1" value="{{ addressLine1}}">
                                                 </div>
                                              </div>
                                          </div>
@@ -33,18 +33,18 @@
                                              <div class=="field">
                                                  <label class="label venus" id="label-address-line-2" for="address-line-2"> Address Line 2 </label>
                                                  <input class="input input--text" id="address-line-2" data-qa="input-text"
-                                                        name="address-line-2" value="{{ ADDRESS_LINE2 }}" >
+                                                        name="address-line-2" value="{{ addressLine2 }}" >
                                              </div>
                                          </div>
                                      </div>
                                  </div>
                                  <div class="question__answer">
-                                     <div class="answer answer--textfield" id="container-town-city">
+                                     <div class="answer answer--textfield" id="container-address-line-3">
                                          <div class="answer__fields js-fields">
                                              <div class=="field">
-                                                 <label class="label venus" id="label-town-city" for="town-city"> Town/City </label>
-                                                 <input class="input input--text" id="town-city" data-qa="input-text"
-                                                        name="town-city" value="{{ TOWN_NAME }}">
+                                                 <label class="label venus" id="label-address-line-3" for="address-line-3"> Address Line 3 </label>
+                                                 <input class="input input--text" id="address-line-3" data-qa="input-text"
+                                                        name="address-line-3" value="{{ addressLine3 }}">
                                              </div>
                                          </div>
                                      </div>
@@ -53,9 +53,9 @@
                                      <div class="answer answer--textfield" id="container-county">
                                          <div class="answer__fields js-fields">
                                              <div class=="field">
-                                                 <label class="label venus" id="label-county" for="county"> County </label>
-                                                 <input class="input input--text" id="county" data-qa="input-text"
-                                                        name="county" value="{{ LOCALITY }}">
+                                                 <label class="label venus" id="label-town_name" for="town_name"> Town </label>
+                                                 <input class="input input--text" id="town_name" data-qa="input-text"
+                                                        name="town_name" value="{{ townName }}">
                                              </div>
                                          </div>
                                      </div>
@@ -66,7 +66,7 @@
                                              <div class=="field">
                                                  <label class="label venus" id="label-postcode" for="postcode"> Postcode </label>
                                                  <input class="input input--text" id="postcode" data-qa="input-text"
-                                                        name="postcode" value="{{ POSTCODE }}">
+                                                        name="postcode" value="{{ postcode }}">
                                              </div>
                                          </div>
                                      </div>

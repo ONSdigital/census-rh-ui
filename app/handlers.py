@@ -8,15 +8,11 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG,
-    ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
-from .case import get_case, post_case_event
-from .sample import get_sample_attributes
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
 from .exceptions import InactiveCaseError, InvalidIACError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
-
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
 routes = RouteTableDef()
@@ -56,13 +52,13 @@ class View:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
-    async def call_questionnaire(self, case, attributes, app, iac):
-        eq_payload = await EqPayloadConstructor(case, attributes, app, iac).build()
+    async def call_questionnaire(self, case, attributes, app):
+        eq_payload = await EqPayloadConstructor(case, attributes, app).build()
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-        description = f"Census Instrument launched for case {case['id']}"
-        await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
+        #    description = f"Census Instrument launched for case {case['id']}"
+        #    await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
@@ -77,12 +73,12 @@ class Index(View):
         super().__init__()
 
     @property
-    def _iac_url(self):
-        return f"{self._request.app['IAC_URL']}/iacs/{self._iac}"
+    def _rhsvc_url(self):
+        return f"{self._request.app['RHSVC_URL']}/uacs/{self._iac}"
 
     @staticmethod
-    def join_iac(data, expected_length=12):
-        combined = "".join([v.lower() for v in data.values()][:3])
+    def join_iac(data, expected_length=16):
+        combined = "".join([v.lower() for v in data.values()][:4])
         if len(combined) < expected_length:
             raise TypeError
         return combined
@@ -91,15 +87,18 @@ class Index(View):
     def validate_case(case_json):
         if not case_json.get("active", False):
             raise InactiveCaseError
+        if not case_json.get("caseStatus", None) == "OK":
+            raise InvalidEqPayLoad("caseStatus is not OK")
 
     def redirect(self):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def get_iac_details(self):
-        logger.debug(f"Making GET request to {self._iac_url}", iac=self._iac, client_ip=self._client_ip)
+        logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
         try:
-            async with self._request.app.http_session_pool.get(self._iac_url, auth=self._request.app["IAC_AUTH"]) as resp:
-                logger.debug("Received response from IAC", iac=self._iac, status_code=resp.status)
+            async with self._request.app.http_session_pool.get(self._rhsvc_url,
+                                                               auth=self._request.app["RHSVC_AUTH"]) as resp:
+                logger.debug("Received response from RH service", status_code=resp.status)
 
                 try:
                     resp.raise_for_status()
@@ -107,12 +106,12 @@ class Index(View):
                     if resp.status == 404:
                         raise InvalidIACError
                     elif resp.status in (401, 403):
-                        logger.warn("Unauthorized access to IAC service attempted", client_ip=self._client_ip)
+                        logger.warn("Unauthorized access to RH service attempted", client_ip=self._client_ip)
                         flash(self._request, NOT_AUTHORIZED_MSG)
                         return self.redirect()
                     elif 400 <= resp.status < 500:
                         logger.warn(
-                            "Client error when accessing IAC service",
+                            "Client error when accessing RH service",
                             client_ip=self._client_ip,
                             status=resp.status,
                         )
@@ -124,7 +123,7 @@ class Index(View):
                 else:
                     return await resp.json()
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error("Client failed to connect to iac service", client_ip=self._client_ip)
+            logger.error("Client failed to connect to RH service", client_ip=self._client_ip)
             raise ex
 
     @aiohttp_jinja2.template('index.html')
@@ -149,41 +148,27 @@ class Index(View):
             return self.redirect()
 
         try:
-            iac_json = await self.get_iac_details()
+            uac_json = await self.get_iac_details()
         except InvalidIACError:
             logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
             flash(self._request, INVALID_CODE_MSG)
             return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
-        self.validate_case(iac_json)
+        self.validate_case(uac_json)
 
         try:
-            case_id = iac_json["caseId"]
+            attributes = uac_json["address"]
         except KeyError:
-            logger.error('caseId missing from IAC response', client_ip=self._client_ip)
-            flash(self._request, BAD_RESPONSE_MSG)
-            return {}
+            raise InvalidEqPayLoad("Could not retrieve address details")
 
-        case = await get_case(case_id, self._request.app)
-
-        try:
-            self._sample_unit_id = case["sampleUnitId"]
-        except KeyError:
-            raise InvalidEqPayLoad(f"No sample unit id for case {self._case_id}")
-
-        sample_attr = await get_sample_attributes(self._sample_unit_id, self._request.app)
-
-        try:
-            attributes = sample_attr["attributes"]
-        except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve attributes for case {self._case_id}")
+        # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
         logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
-        session["case"] = case
-        session["iac"] = self._iac
+        session["case"] = uac_json
+
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
 
@@ -203,7 +188,7 @@ class AddressConfirmation(View):
         try:
             attributes = session["attributes"]
             case = session["case"]
-            iac = session["iac"]
+
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
@@ -217,7 +202,7 @@ class AddressConfirmation(View):
 
         if address_confirmation == 'Yes':
             # Correct address flow
-            await self.call_questionnaire(case, attributes, request.app, iac)
+            await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
             return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
@@ -243,11 +228,11 @@ class AddressEdit(View):
         if not data["address-line-1"].strip():
             raise InvalidEqPayLoad(f"Mandatory address field not present{self._client_ip}")
         else:
-            attributes["ADDRESS_LINE1"] = data["address-line-1"].strip()
-            attributes["ADDRESS_LINE2"] = data["address-line-2"].strip()
-            attributes["TOWN_NAME"] = data["town-city"].strip()
-            attributes["LOCALITY"] = data["county"].strip()
-            attributes["POSTCODE"] = data["postcode"].strip()
+            attributes["addressLine1"] = data["address-line-1"].strip()
+            attributes["addressLine2"] = data["address-line-2"].strip()
+            attributes["addressLine3"] = data["address-line-3"].strip()
+            attributes["townName"] = data["town_name"].strip()
+            attributes["postcode"] = data["postcode"].strip()
 
         return attributes
 
@@ -264,7 +249,6 @@ class AddressEdit(View):
         try:
             attributes = session["attributes"]
             case = session["case"]
-            iac = session["iac"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
@@ -276,7 +260,7 @@ class AddressEdit(View):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
-        await self.call_questionnaire(case, attributes, request.app, iac)
+        await self.call_questionnaire(case, attributes, request.app)
 
 
 @routes.view('/cookies-privacy')
