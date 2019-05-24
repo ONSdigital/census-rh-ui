@@ -88,7 +88,7 @@ class Index(View):
         if not case_json.get("active", False):
             raise InactiveCaseError
         if not case_json.get("caseStatus", None) == "OK":
-            raise InvalidEqPayLoad
+            raise InvalidEqPayLoad("caseStatus is not OK")
 
 
     def redirect(self):
@@ -161,7 +161,7 @@ class Index(View):
         try:
             attributes = uac_json["address"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve address details")
+            raise InvalidEqPayLoad("Could not retrieve address details")
 
         # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
