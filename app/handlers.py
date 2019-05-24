@@ -90,7 +90,6 @@ class Index(View):
         if not case_json.get("caseStatus", None) == "OK":
             raise InvalidEqPayLoad("caseStatus is not OK")
 
-
     def redirect(self):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 

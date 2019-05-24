@@ -8,7 +8,7 @@ from aioresponses import aioresponses
 
 from app import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG)
-from app.exceptions import InactiveCaseError
+from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index
 
 from . import RHTestCase, build_eq_raises, skip_build_eq, skip_encrypt
@@ -301,7 +301,7 @@ class TestHandlers(RHTestCase):
 
     def test_validate_case(self):
         # Given a dict with an active key and value
-        case_json = {'active': True}
+        case_json = {'active': True, 'caseStatus': 'OK'}
 
         # When validate_case is called
         Index.validate_case(case_json)
@@ -310,13 +310,23 @@ class TestHandlers(RHTestCase):
 
     def test_validate_case_inactive(self):
         # Given a dict with an active key and value
-        case_json = {'active': False}
+        case_json = {'active': False, 'caseStatus': 'OK'}
 
         # When validate_case is called
         with self.assertRaises(InactiveCaseError):
             Index.validate_case(case_json)
 
         # Then an InactiveCaseError is raised
+
+    def test_validate_caseStatus_notfound(self):
+        # Given a dict with an active key and value
+        case_json = {'active': True, 'caseStatus': 'NOT_FOUND'}
+
+        # When validate_case is called
+        with self.assertRaises(InvalidEqPayLoad):
+            Index.validate_case(case_json)
+
+        # Then an InvalidEqPayload is raised
 
     def test_validate_case_empty(self):
         # Given an empty dict

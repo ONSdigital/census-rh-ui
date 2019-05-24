@@ -1,6 +1,7 @@
 {
 	"uac": "0123456789101112",
 	"active": "True",
+	"caseStatus": "OK",
 	"questionnaireId": "11100000009",
 	"caseType": "H",
 	"region": "E",
