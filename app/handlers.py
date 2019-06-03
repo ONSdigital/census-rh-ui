@@ -221,7 +221,7 @@ class AddressConfirmation(View):
 
         if address_confirmation == 'Yes':
             # Correct address flow
-            # await self.call_surveylaunched(case)
+            await self.call_surveylaunched(case)
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':

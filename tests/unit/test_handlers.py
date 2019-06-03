@@ -103,6 +103,7 @@ class TestHandlers(RHTestCase):
     async def test_post_index_with_build(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched, payload=self.survey_launched_data)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 200)
@@ -138,6 +139,7 @@ class TestHandlers(RHTestCase):
     async def test_post_index_build_raises_InvalidEqPayLoad(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched, payload=self.survey_launched_data)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 200)
@@ -166,18 +168,6 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_post_index_call_surveylaunched(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url_surveylaunched, payload=self.survey_launched_data)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.call_surveylaunched(self.survey_launched_data)
-            self.assertLogLine(cm, "Received survey launched response from RH service")
-
-        self.assertEqual(response.status, 200)
-        # self.assertIn('Survey complete', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_iac_active_missing(self):
