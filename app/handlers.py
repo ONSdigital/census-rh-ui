@@ -46,6 +46,10 @@ class View:
             self._client_ip = self._request.headers.get("X-Forwarded-For")
         return self._client_ip
 
+    @property
+    def _rhsvc_url_surveylaunched(self):
+        return f"{self._request.app['RHSVC_URL']}/surveyLaunched"
+
     def check_session(self):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
@@ -62,6 +66,21 @@ class View:
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
+
+    async def call_surveylaunched(self, case):
+
+        data = {
+            "questionnaireId": case["questionnaireId"],
+            "caseId": case["caseId"]
+        }
+
+        try:
+            async with self._request.app.http_session_pool.post(url=self._rhsvc_url_surveylaunched, data=data) as resp:
+                logger.debug("Received survey launched response from RH service", status_code=resp.status)
+
+        except (ClientConnectionError, ClientConnectorError) as ex:
+            logger.error("Client failed to connect to RH service for survey launched", client_ip=self._client_ip)
+            raise ex
 
 
 @routes.view('/')
@@ -202,6 +221,7 @@ class AddressConfirmation(View):
 
         if address_confirmation == 'Yes':
             # Correct address flow
+            # await self.call_surveylaunched(case)
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
@@ -260,6 +280,7 @@ class AddressEdit(View):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
+        await self.call_surveylaunched(case)
         await self.call_questionnaire(case, attributes, request.app)
 
 

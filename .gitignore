@@ -104,3 +104,7 @@ ENV/
 .flooignore
 .pytest_cache/
 .pytest_cache/
+
+# Templates
+app/templates/layout
+app/templates/components

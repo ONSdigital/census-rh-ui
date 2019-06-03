@@ -257,11 +257,19 @@ class RHTestCase(AioHTTPTestCase):
             f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
         )
 
+        self.rhsvc_url_surveylaunched = (
+            f"{self.app['RHSVC_URL']}/surveyLaunched"
+        )
+
         self.form_data = {
             'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'iac4': self.iac4, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.survey_launched_data = {
+            'questionnaireId': self.questionnaire_id, 'caseId': self.case_id
         }
 
