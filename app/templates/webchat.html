@@ -1,0 +1,138 @@
+{% extends "layout/_template.njk" %}
+{% set page = { 
+    "title": "Census 2019 Rehearsal",
+    "header": {},
+    "footer": {}
+} %}
+{% block main %}
+
+    <div class="web-chat-form__body">
+
+        {% from "components/input/_macro.njk" import onsInput %}
+        {{
+            onsInput({
+                "id": "name",
+                "classes": "input--w-20",
+                "label": {
+                    "text": "Enter your name"
+                }
+            })
+        }}
+
+        {{
+            onsInput({
+                "id": "email",
+                "type": "email",
+                "autocomplete": "email",
+                "classes": "input--w-20",
+                "label": {
+                    "text": "Enter your email address<br>
+                    <span class='label__description'>We will send a copy of the chat to this address</span>"
+                }
+            })
+        }}
+
+        {% from "components/radios/_macro.njk" import onsRadios %}
+        {{
+            onsRadios({
+                "legend": "Select your language",
+                "name": "language",
+                "radios": [
+                    {
+                        "id": "english",
+                        "label": {
+                            "text": "English"
+                        },
+                        "value": "english"
+                    },
+                    {
+                        "id": "welsh",
+                        "label": {
+                            "text": "Welsh"
+                        },
+                        "value": "welsh"
+                    }
+                ]
+            })
+        }}
+
+        {{
+            onsRadios({
+                "legend": "What type of query do you have",
+                "name": "query",
+                "radios": [
+                    {
+                        "id": "help",
+                        "label": {
+                            "text": "I need some help"
+                        },
+                        "value": "help"
+                    },
+                    {
+                        "id": "form",
+                        "label": {
+                            "text": "I have a query about a form"
+                        },
+                        "value": "form"
+                    },
+                    {
+                        "id": "technical",
+                        "label": {
+                            "text": "I have a technical question"
+                        },
+                        "value": "technical"
+                    },
+                    {
+                        "id": "complaint",
+                        "label": {
+                            "text": "I have a complaint"
+                        },
+                        "value": "complaint"
+                    },
+                    {
+                        "id": "address",
+                        "label": {
+                            "text": "I have a query about my address"
+                        },
+                        "value": "address"
+                    },
+                    {
+                        "id": "sent",
+                        "label": {
+                            "text": "I need something sent to me"
+                        },
+                        "value": "sent"
+                    },
+                    {
+                        "id": "face",
+                        "label": {
+                            "text": "I need face to face help"
+                        },
+                        "value": "face"
+                    }
+                ]
+            })
+        }}
+
+        {% from "components/button/_macro.njk" import onsButton %}
+
+        <p class="btn-group">
+            {{
+                onsButton({
+                    "type": 'button',
+                    "text": 'Start chat',
+                    "classes": 'btn-group__btn'
+                })
+            }}
+            {{
+                onsButton({
+                    "type": 'button',
+                    "text": 'Close chat',
+                    "classes": 'btn--secondary btn-group__btn'
+                })
+            }}
+        </p>
+
+    </div>
+
+{% endblock %}
