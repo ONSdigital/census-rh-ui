@@ -69,13 +69,10 @@ class View:
 
     async def call_surveylaunched(self, case):
 
-        data = {
-            "questionnaireId": case["questionnaireId"],
-            "caseId": case["caseId"]
-        }
+        data = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
 
         try:
-            async with self._request.app.http_session_pool.post(url=self._rhsvc_url_surveylaunched, data=data) as resp:
+            async with self._request.app.http_session_pool.post(url=self._rhsvc_url_surveylaunched, json=data) as resp:
                 logger.debug("Received survey launched response from RH service", status_code=resp.status)
 
         except (ClientConnectionError, ClientConnectorError) as ex:
