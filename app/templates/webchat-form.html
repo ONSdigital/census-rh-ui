@@ -4,35 +4,36 @@
     "header": {},
     "footer": {}
 } %}
-{% block main %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/textarea/_macro.njk" import onsTextarea %}
 
+{% block main %}
     <div class="web-chat-form__body">
 
-        {% from "components/input/_macro.njk" import onsInput %}
         {{
             onsInput({
                 "id": "name",
-                "classes": "input--w-20",
                 "label": {
                     "text": "Enter your name"
-                }
+                },
+                "classes": "input--w-20@m js-name"
             })
         }}
 
         {{
             onsInput({
                 "id": "email",
-                "type": "email",
-                "autocomplete": "email",
-                "classes": "input--w-20",
                 "label": {
-                    "text": "Enter your email address<br>
-                    <span class='label__description'>We will send a copy of the chat to this address</span>"
-                }
+                    "text": "Enter your email address",
+                    "description": "We will send a copy of the chat to this address"
+                },
+                "classes": "input--w-20@m js-name"
             })
         }}
 
-        {% from "components/radios/_macro.njk" import onsRadios %}
         {{
             onsRadios({
                 "legend": "Select your language",
@@ -43,14 +44,14 @@
                         "label": {
                             "text": "English"
                         },
-                        "value": "english"
+                        "value": "help"
                     },
                     {
                         "id": "welsh",
                         "label": {
                             "text": "Welsh"
                         },
-                        "value": "welsh"
+                        "value": "form"
                     }
                 ]
             })
@@ -97,41 +98,37 @@
                         "value": "address"
                     },
                     {
-                        "id": "sent",
+                        "id": "send-something",
                         "label": {
                             "text": "I need something sent to me"
                         },
-                        "value": "sent"
+                        "value": "send-something"
                     },
                     {
-                        "id": "face",
+                        "id": "face-to-face",
                         "label": {
                             "text": "I need face to face help"
                         },
-                        "value": "face"
+                        "value": "face-to-face"
                     }
                 ]
             })
         }}
 
-        {% from "components/button/_macro.njk" import onsButton %}
+        {{
+            onsButton({
+                "text": "Start chat",
+                "classes": "btn-group__btn u-mb-m u-mt-m"
+            })
 
-        <p class="btn-group">
-            {{
-                onsButton({
-                    "type": 'button',
-                    "text": 'Start chat',
-                    "classes": 'btn-group__btn'
-                })
-            }}
-            {{
-                onsButton({
-                    "type": 'button',
-                    "text": 'Close chat',
-                    "classes": 'btn--secondary btn-group__btn'
-                })
-            }}
-        </p>
+        }}
+        {{
+            onsButton({
+                "type": 'button',
+                "text": 'Close chat',
+                "classes": 'btn--secondary btn-group__btn u-mb-m u-mt-m'
+            })
+        }}
 
     </div>
 

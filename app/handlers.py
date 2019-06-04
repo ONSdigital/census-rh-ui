@@ -285,6 +285,6 @@ class OnlineHelp:
 
 @routes.view('/webchat')
 class WebChat:
-    @aiohttp_jinja2.template('webchat.html')
+    @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
         return {}
