@@ -10,12 +10,27 @@
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/textarea/_macro.njk" import onsTextarea %}
 
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": url('WebChat:post')
+    }
+} %}
+
 {% block main %}
+
+  {% if messages_dict %}
+    {% include "partials/messages.html" with context %}
+  {% endif %}
+
     <div class="web-chat-form__body">
 
         {{
             onsInput({
-                "id": "name",
+                "id": "screen_name",
+                "name": "screen_name",
                 "label": {
                     "text": "Enter your name"
                 },

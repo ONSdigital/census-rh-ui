@@ -285,6 +285,28 @@ class OnlineHelp:
 
 @routes.view('/webchat')
 class WebChat:
+
+    @staticmethod
+    def validate_name(data):
+        if data is None:
+            raise TypeError
+        return {}
+
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
         return {}
+
+    @aiohttp_jinja2.template('webchat-form.html')
+    async def post(self, request):
+
+        data = await request.post()
+        self._request = request
+
+        screen_name = data.get('screen_name')
+
+        try:
+            self._screenname = self.validate_name(screen_name)
+        except TypeError:
+            logger.warn("Name not supplied", client_ip=self._client_ip)
+            flash(self._request, "Enter your name")
+            return self.redirect()

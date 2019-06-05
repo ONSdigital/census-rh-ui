@@ -2,8 +2,6 @@
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% block title %}{% if 'ERROR' in messages_dict %}Error - {{ super() }}{% else %}{{ super() }}{% endif %}{% endblock %}
-
 
 {% set form =  {
     "method": "POST",

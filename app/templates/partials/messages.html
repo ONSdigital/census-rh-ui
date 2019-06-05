@@ -1,52 +1,53 @@
 {% for group, messages in messages_dict.items() %}
+
+{% from "./components/panel/_macro.njk" import onsPanel %}
+
+{% if messages | length == 1 %}
+{% set errorTitle = "This page has an error" %}
+{% else %}
+{% set errorTitle = "This page has {{messages | length}} errors" %}
+{% endif %}
+
+{% set itemsList = [] %}
+
+{% for message in messages %}
+
+{% if itemsList.append( {
+                "text": message.text,
+                "index": true,
+                "url": "#container-test-number",
+                "classes": "js-inpagelink"
+            } )
+%} {% endif %}
+
+{% if not loop.last %}, {% endif %}
+{% endfor %}
+
+
+{% if group=='ERROR' %}
+{% call
+    onsPanel({
+        "title": errorTitle,
+        "type": "error"
+    })
+%}
+
+<p>These <strong>must be corrected</strong> to continue.</p>
+{% from "./components/lists/_macro.njk" import onsList %}
+{{
+    onsList({
+        "classes": "list--bare",
+        "itemsList": itemsList
+    })
+}}
+{% endcall %}
+{% endif %}
+
+
   <div class="u-mt-s">
 
-    {% if group=='ERROR' %}
-    <div class="panel panel--error">
-      <div class="panel__header">
-        <h1 class="panel__title venus">
-          {% trans count=messages|length %}
-          This page has an error
-          {% pluralize %}
-          This page has {{ count }} errors
-          {% endtrans %}
-        </h1>
-      </div>
 
-      {% for message in messages %}
-      <div class="panel__body" {% if message.type %}data-ga="error" data-ga-category="error" data-ga-action="error-validation" data-ga-label="error_type = {{ message.type }}" {% endif %}>
-        <ul class="list list--bare">
-          <li class="list__item mars">
-            {% if message.clickable %}
-              {{loop.index}}) <a class="js-inpagelink" href="#access-code-answer">
-                                {{ message.text }}
-                              </a>
-            {% else %}
-              {{ message.text }}
-            {% endif %}
-          </li>
-        </ul>
-
-        {% if message.type !='ADDRESS_CONFIRMATION_ERROR' %}
-          <p></p>
-          Or please call for advice on one of these numbers:
-          <ul class="list list--bare">
-            <li>  0800 141 2021   England
-            </li>
-            <li>  0800 169 2021   Wales
-            </li>
-            <li>  0800 328 2021   Northern Ireland
-            </li>
-            <li>  0800 587 2021   Translation
-            </li>
-          </ul>
-        {% endif %}
-      </div>
-
-      {% endfor %}
-    </div>
-
-    {% elif group=='INFO' %}
+    {% if group=='INFO' %}
       {% for message in messages %}
       <div class="panel panel--simple panel--info" {% if message.type %}data-ga="error" data-ga-category="info" data-ga-action="info-message" data-ga-label="info_type = {{ message.type }}" {% endif %}>
         <div class="panel__body">
@@ -60,3 +61,4 @@
 
   </div>
 {% endfor %}
+
