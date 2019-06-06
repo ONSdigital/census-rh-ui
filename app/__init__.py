@@ -9,3 +9,5 @@ NOT_AUTHORIZED_MSG = {'text': 'There was a problem connecting to this study. Ple
 SESSION_TIMEOUT_MSG = {'text': 'Apologies, your session has timed out. Please re-enter your access code.', "level": "ERROR", "type": "SYSTEM_AUTH_ERROR"}
 ADDRESS_CHECK_MSG = {'text': 'Please check and confirm address.', "level": "ERROR", "type": "ADDRESS_CONFIRMATION_ERROR"}
 ADDRESS_EDIT_MSG = {'text': 'Enter address to continue', "level": "ERROR", "type": "ADDRESS_EDIT_ERROR"}
+WEBCHAT_MISSING_NAME_MSG = {'text': 'Enter your name', "clickable": True, "level": "ERROR", "type": "BAD_CODE"}  # NOQA
+WEBCHAT_MISSING_EMAIL_MSG = {'text': 'Enter your email address', "clickable": True, "level": "ERROR", "type": "BAD_CODE"}  # NOQA

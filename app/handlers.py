@@ -8,7 +8,7 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_EMAIL_MSG)
 from .exceptions import InactiveCaseError, InvalidIACError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -283,14 +283,33 @@ class OnlineHelp:
     async def get(self, _):
         return {}
 
+@routes.view('/webchat/chat')
+class WebChatWindow:
+    @aiohttp_jinja2.template('webchat-window.html')
+    async def get(self, _):
+        return {}
+
 @routes.view('/webchat')
-class WebChat:
+class WebChat(View):
 
     @staticmethod
-    def validate_name(data):
-        if data is None:
-            raise TypeError
-        return {}
+    def validate_form(data):
+
+        screen_name = data.get('screen_name')
+        email = data.get('email')
+
+        form_return = {}
+
+        if screen_name == '':
+            form_return[WEBCHAT_MISSING_NAME_MSG]
+
+        if email == '':
+            form_return[WEBCHAT_MISSING_EMAIL_MSG]
+
+        return form_return
+
+    def redirect(self):
+        raise HTTPFound(self._request.app.router['WebChat:get'].url_for())
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
@@ -302,11 +321,18 @@ class WebChat:
         data = await request.post()
         self._request = request
 
-        screen_name = data.get('screen_name')
-
         try:
-            self._screenname = self.validate_name(screen_name)
+            form_return = self.validate_form(data)
+
+            if form_return != {}:
+                raise TypeError(form_return)
+
         except TypeError:
             logger.warn("Name not supplied", client_ip=self._client_ip)
-            flash(self._request, "Enter your name")
+            flash(self._request, form_return)
             return self.redirect()
+
+        response = aiohttp_jinja2.render_template("webchat-window.html", self._request, data)
+        response.headers['Content-Language'] = 'en'
+
+        return response
