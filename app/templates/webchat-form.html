@@ -1,16 +1,15 @@
-{% extends "layout/_template.njk" %}
-{% set page = { 
-    "title": "Census 2019 Rehearsal",
-    "header": {},
-    "footer": {}
-} %}
+{% extends "base-webchat.html" %}
+
 {% from "components/input/_macro.njk" import onsInput %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/select/_macro.njk" import onsSelect %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/textarea/_macro.njk" import onsTextarea %}
+{% from "components/lists/_macro.njk" import onsList %}
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set messages_dict_field=dict(get_flashed_messages()|groupby('field')) %}
 
 {% set form =  {
     "method": "POST",
@@ -27,20 +26,54 @@
 
     <div class="web-chat-form__body">
 
-        {{
-            onsInput({
-                "id": "screen_name",
-                "name": "screen_name",
-                "label": {
-                    "text": "Enter your name"
-                },
-                "classes": "input--w-20@m js-name"
-            })
-        }}
+        {{messages_dict}}
+        {{messages_dict_field}}
+
+        {% if 'screen_name' in messages_dict_field %}
+            {% call
+                onsPanel({
+                    "type": "error"
+                })
+            %}
+            {{
+                onsList({
+                    "id": 'container-test-number',
+                    "classes": 'list--bare list--errors u-mb-s',
+                    "itemsList": [
+                        {
+                            "text": 'Enter a number.'
+                        }
+                    ]
+                })
+            }}
+            {{
+                onsInput({
+                    "id": "screen_name",
+                    "name": "screen_name",
+                    "label": {
+                        "text": "Enter your name"
+                    },
+                    "classes": "input--w-20@m js-name"
+                })
+            }}
+            {% endcall %}
+        {% else %}
+            {{
+                onsInput({
+                    "id": "screen_name",
+                    "name": "screen_name",
+                    "label": {
+                        "text": "Enter your name"
+                    },
+                    "classes": "input--w-20@m js-name"
+                })
+            }}
+        {% endif %}
 
         {{
             onsInput({
                 "id": "email",
+                "name": "email",
                 "label": {
                     "text": "Enter your email address",
                     "description": "We will send a copy of the chat to this address"

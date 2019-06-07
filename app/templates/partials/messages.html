@@ -1,11 +1,12 @@
 {% for group, messages in messages_dict.items() %}
 
 {% from "./components/panel/_macro.njk" import onsPanel %}
+{% from "./components/lists/_macro.njk" import onsList %}
 
 {% if messages | length == 1 %}
 {% set errorTitle = "This page has an error" %}
 {% else %}
-{% set errorTitle = "This page has {{messages | length}} errors" %}
+{% set errorTitle = "This page has " + messages | length | string + " errors" %}
 {% endif %}
 
 {% set itemsList = [] %}
@@ -20,7 +21,6 @@
             } )
 %} {% endif %}
 
-{% if not loop.last %}, {% endif %}
 {% endfor %}
 
 
@@ -33,7 +33,7 @@
 %}
 
 <p>These <strong>must be corrected</strong> to continue.</p>
-{% from "./components/lists/_macro.njk" import onsList %}
+
 {{
     onsList({
         "classes": "list--bare",

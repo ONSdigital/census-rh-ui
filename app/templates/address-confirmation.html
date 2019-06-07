@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% block title %}{% if 'ERROR' in messages_dict %}Error - {{ super() }}{% else %}{{ super() }}{% endif %}{% endblock %}
-{% block content %}
+{% block main %}
   {% if messages_dict %}
     {% include "partials/messages.html" with context %}
   {% endif %}

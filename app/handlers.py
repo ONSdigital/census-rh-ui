@@ -8,7 +8,8 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_EMAIL_MSG)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_EMAIL_MSG, WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_QUERY_MSG)
 from .exceptions import InactiveCaseError, InvalidIACError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -295,16 +296,19 @@ class WebChat(View):
     @staticmethod
     def validate_form(data):
 
-        screen_name = data.get('screen_name')
-        email = data.get('email')
+        form_return = []
 
-        form_return = {}
+        if data.get('screen_name') == '':
+            form_return.append('name-missing')
 
-        if screen_name == '':
-            form_return[WEBCHAT_MISSING_NAME_MSG]
+        if data.get('email') == '':
+            form_return.append('email-missing')
 
-        if email == '':
-            form_return[WEBCHAT_MISSING_EMAIL_MSG]
+        if not(data.get('language')):
+            form_return.append('language-missing')
+
+        if not(data.get('query')):
+            form_return.append('query-missing')
 
         return form_return
 
@@ -324,12 +328,19 @@ class WebChat(View):
         try:
             form_return = self.validate_form(data)
 
-            if form_return != {}:
+            if form_return != []:
                 raise TypeError(form_return)
 
         except TypeError:
-            logger.warn("Name not supplied", client_ip=self._client_ip)
-            flash(self._request, form_return)
+            logger.warn("Form submission error", client_ip=self._client_ip)
+            if any("name-missing" in s for s in form_return):
+                flash(self._request, WEBCHAT_MISSING_NAME_MSG)
+            if any("email-missing" in s for s in form_return):
+                flash(self._request, WEBCHAT_MISSING_EMAIL_MSG)
+            if any("language-missing" in s for s in form_return):
+                flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
+            if any("query-missing" in s for s in form_return):
+                flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
             return self.redirect()
 
         response = aiohttp_jinja2.render_template("webchat-window.html", self._request, data)
