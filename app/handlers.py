@@ -75,6 +75,27 @@ class View:
             async with self._request.app.http_session_pool.post(url=self._rhsvc_url_surveylaunched, json=data) as resp:
                 logger.debug("Received survey launched response from RH service", status_code=resp.status)
 
+                try:
+                    resp.raise_for_status()
+                except ClientResponseError as ex:
+                    if resp.status == 404:
+                        raise InvalidIACError
+                    elif resp.status in (401, 403):
+                        logger.warn("Unauthorized access to RH service attempted for survey launched", client_ip=self._client_ip)
+                        flash(self._request, NOT_AUTHORIZED_MSG)
+                        return self.redirect()
+                    elif 400 <= resp.status < 500:
+                        logger.warn(
+                            "Client error when accessing RH service for survey launched",
+                            client_ip=self._client_ip,
+                            status=resp.status,
+                        )
+                        flash(self._request, BAD_RESPONSE_MSG)
+                        return self.redirect()
+                    else:
+                        logger.error("Error in response for survey launched", url=resp.url, status_code=resp.status)
+                        raise ex
+
         except (ClientConnectionError, ClientConnectorError) as ex:
             logger.error("Client failed to connect to RH service for survey launched", client_ip=self._client_ip)
             raise ex

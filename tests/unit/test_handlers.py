@@ -108,15 +108,6 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 200)
 
-            # with self.assertLogs('respondent-home', 'DEBUG') as logs_surveylaunched:
-            #     surveylaunched_response = await self.client.request("POST", self.rhsvc_url_surveylaunched,
-            #                                                         allow_redirects=False,
-            #                                                         data=self.survey_launched_data)
-            #
-            # self.assertEqual(surveylaunched_response.status, 200)
-            #
-            # self.assertLogLine(logs_surveylaunched, 'Received survey launched response from RH service')
-
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
                                                      data=self.address_confirmation_data)
@@ -282,6 +273,19 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_index_survey_launched_connection_error(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url_surveylaunched, exception=ClientConnectionError('Failed'))
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request("POST", self.post_index, data=self.form_data)
+            self.assertLogLine(cm, "Client failed to connect to RH service for survey launched")
+
+        self.assertEqual(response.status, 500)
+        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     def test_join_iac(self):
         # Given some post data
