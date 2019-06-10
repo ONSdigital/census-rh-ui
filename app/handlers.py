@@ -292,7 +292,7 @@ class WebChatWindow:
         return {}
 
 @routes.view('/webchat/closed')
-class WebChatWindow:
+class WebChatClosed:
     @aiohttp_jinja2.template('webchat-closed.html')
     async def get(self, _):
         return {}
@@ -304,7 +304,6 @@ class WebChat(View):
     def validate_form(data):
 
         form_return = []
-        form_data = []
 
         if data.get('screen_name') == '':
             form_return.append('name-missing')
@@ -318,10 +317,10 @@ class WebChat(View):
         if not(data.get('query')):
             form_return.append('query-missing')
 
-        return form_return, form_data
+        return form_return
 
     def redirect(self, data):
-        raise HTTPFound(self._request.app.router['WebChat:post'].url_for(), body=data, content_type='json')
+        raise HTTPFound(self._request.app.router['WebChat:get'].url_for())
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
