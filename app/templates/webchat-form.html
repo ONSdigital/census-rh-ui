@@ -9,7 +9,7 @@
 {% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set messages_dict_field=dict(get_flashed_messages()|groupby('field')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
 {% set form =  {
     "method": "POST",
@@ -24,12 +24,113 @@
     {% include "partials/messages.html" with context %}
   {% endif %}
 
+    {% set screen_name_form_call =
+        onsInput({
+            "id": "screen_name",
+            "name": "screen_name",
+            "label": {
+                "text": "Enter your name"
+            },
+            "classes": "input--w-20@m js-name"
+        })
+    %}
+
+    {% set email_form_call =
+        onsInput({
+            "id": "email",
+            "name": "email",
+            "label": {
+                "text": "Enter your email address",
+                "description": "We will send a copy of the chat to this address"
+            },
+            "classes": "input--w-20@m js-name"
+        })
+    %}
+
+    {% set language_form_call =
+        onsRadios({
+            "legend": "Select your language",
+            "name": "language",
+            "radios": [
+                {
+                    "id": "english",
+                    "label": {
+                        "text": "English"
+                    },
+                    "value": "help"
+                },
+                {
+                    "id": "welsh",
+                    "label": {
+                        "text": "Welsh"
+                    },
+                    "value": "form"
+                }
+            ]
+        })
+    %}
+
+    {% set query_form_call =
+        onsRadios({
+            "legend": "What type of query do you have",
+            "name": "query",
+            "radios": [
+                {
+                    "id": "help",
+                    "label": {
+                        "text": "I need some help"
+                    },
+                    "value": "help"
+                },
+                {
+                    "id": "form",
+                    "label": {
+                        "text": "I have a query about a form"
+                    },
+                    "value": "form"
+                },
+                {
+                    "id": "technical",
+                    "label": {
+                        "text": "I have a technical question"
+                    },
+                    "value": "technical"
+                },
+                {
+                    "id": "complaint",
+                    "label": {
+                        "text": "I have a complaint"
+                    },
+                    "value": "complaint"
+                },
+                {
+                    "id": "address",
+                    "label": {
+                        "text": "I have a query about my address"
+                    },
+                    "value": "address"
+                },
+                {
+                    "id": "send-something",
+                    "label": {
+                        "text": "I need something sent to me"
+                    },
+                    "value": "send-something"
+                },
+                {
+                    "id": "face-to-face",
+                    "label": {
+                        "text": "I need face to face help"
+                    },
+                    "value": "face-to-face"
+                }
+            ]
+        })
+    %}
+
     <div class="web-chat-form__body">
 
-        {{messages_dict}}
-        {{messages_dict_field}}
-
-        {% if 'screen_name' in messages_dict_field %}
+        {% if 'screen_name' in field_messages_dict %}
             {% call
                 onsPanel({
                     "type": "error"
@@ -37,131 +138,89 @@
             %}
             {{
                 onsList({
-                    "id": 'container-test-number',
+                    "id": 'link-screen_name',
                     "classes": 'list--bare list--errors u-mb-s',
                     "itemsList": [
                         {
-                            "text": 'Enter a number.'
+                            "text": 'Enter your name.'
                         }
                     ]
                 })
             }}
-            {{
-                onsInput({
-                    "id": "screen_name",
-                    "name": "screen_name",
-                    "label": {
-                        "text": "Enter your name"
-                    },
-                    "classes": "input--w-20@m js-name"
-                })
-            }}
+            {{ screen_name_form_call }}
             {% endcall %}
         {% else %}
-            {{
-                onsInput({
-                    "id": "screen_name",
-                    "name": "screen_name",
-                    "label": {
-                        "text": "Enter your name"
-                    },
-                    "classes": "input--w-20@m js-name"
-                })
-            }}
+            {{ screen_name_form_call }}
         {% endif %}
 
-        {{
-            onsInput({
-                "id": "email",
-                "name": "email",
-                "label": {
-                    "text": "Enter your email address",
-                    "description": "We will send a copy of the chat to this address"
-                },
-                "classes": "input--w-20@m js-name"
-            })
-        }}
+        {% if 'email' in field_messages_dict %}
+            {% call
+                onsPanel({
+                    "type": "error"
+                })
+            %}
+            {{
+                onsList({
+                    "id": 'link-email',
+                    "classes": 'list--bare list--errors u-mb-s',
+                    "itemsList": [
+                        {
+                            "text": 'Enter a valid email address.'
+                        }
+                    ]
+                })
+            }}
+            {{ email_form_call }}
+            {% endcall %}
+        {% else %}
+            {{ email_form_call }}
+        {% endif %}
 
-        {{
-            onsRadios({
-                "legend": "Select your language",
-                "name": "language",
-                "radios": [
-                    {
-                        "id": "english",
-                        "label": {
-                            "text": "English"
-                        },
-                        "value": "help"
-                    },
-                    {
-                        "id": "welsh",
-                        "label": {
-                            "text": "Welsh"
-                        },
-                        "value": "form"
-                    }
-                ]
-            })
-        }}
+        {% if 'language' in field_messages_dict %}
+            {% call
+                onsPanel({
+                    "type": "error"
+                })
+            %}
+            {{
+                onsList({
+                    "id": 'link-language',
+                    "classes": 'list--bare list--errors u-mb-s',
+                    "itemsList": [
+                        {
+                            "text": 'Select an option'
+                        }
+                    ]
+                })
+            }}
+            {{ language_form_call }}
+            {% endcall %}
+        {% else %}
+            {{ language_form_call }}
+        {% endif %}
 
-        {{
-            onsRadios({
-                "legend": "What type of query do you have",
-                "name": "query",
-                "radios": [
-                    {
-                        "id": "help",
-                        "label": {
-                            "text": "I need some help"
-                        },
-                        "value": "help"
-                    },
-                    {
-                        "id": "form",
-                        "label": {
-                            "text": "I have a query about a form"
-                        },
-                        "value": "form"
-                    },
-                    {
-                        "id": "technical",
-                        "label": {
-                            "text": "I have a technical question"
-                        },
-                        "value": "technical"
-                    },
-                    {
-                        "id": "complaint",
-                        "label": {
-                            "text": "I have a complaint"
-                        },
-                        "value": "complaint"
-                    },
-                    {
-                        "id": "address",
-                        "label": {
-                            "text": "I have a query about my address"
-                        },
-                        "value": "address"
-                    },
-                    {
-                        "id": "send-something",
-                        "label": {
-                            "text": "I need something sent to me"
-                        },
-                        "value": "send-something"
-                    },
-                    {
-                        "id": "face-to-face",
-                        "label": {
-                            "text": "I need face to face help"
-                        },
-                        "value": "face-to-face"
-                    }
-                ]
-            })
-        }}
+        {% if 'query' in field_messages_dict %}
+            {% call
+                onsPanel({
+                    "type": "error"
+                })
+            %}
+            {{
+                onsList({
+                    "id": 'link-query',
+                    "classes": 'list--bare list--errors u-mb-s',
+                    "itemsList": [
+                        {
+                            "text": 'Select an option'
+                        }
+                    ]
+                })
+            }}
+            {{ query_form_call }}
+            {% endcall %}
+        {% else %}
+            {{ query_form_call }}
+        {% endif %}
 
         {{
             onsButton({

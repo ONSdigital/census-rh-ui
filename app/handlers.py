@@ -312,8 +312,8 @@ class WebChat(View):
 
         return form_return
 
-    def redirect(self):
-        raise HTTPFound(self._request.app.router['WebChat:get'].url_for())
+    def redirect(self, data):
+        raise HTTPFound(self._request.app.router['WebChat:post'].url_for(), body=data)
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
@@ -341,7 +341,7 @@ class WebChat(View):
                 flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
             if any("query-missing" in s for s in form_return):
                 flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
-            return self.redirect()
+            return self.redirect(data)
 
         response = aiohttp_jinja2.render_template("webchat-window.html", self._request, data)
         response.headers['Content-Language'] = 'en'
