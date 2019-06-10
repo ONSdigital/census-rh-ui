@@ -1,6 +1,7 @@
 import logging
 
 import aiohttp_jinja2
+import json
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
@@ -290,6 +291,12 @@ class WebChatWindow:
     async def get(self, _):
         return {}
 
+@routes.view('/webchat/closed')
+class WebChatWindow:
+    @aiohttp_jinja2.template('webchat-closed.html')
+    async def get(self, _):
+        return {}
+
 @routes.view('/webchat')
 class WebChat(View):
 
@@ -297,6 +304,7 @@ class WebChat(View):
     def validate_form(data):
 
         form_return = []
+        form_data = []
 
         if data.get('screen_name') == '':
             form_return.append('name-missing')
@@ -310,10 +318,10 @@ class WebChat(View):
         if not(data.get('query')):
             form_return.append('query-missing')
 
-        return form_return
+        return form_return, form_data
 
     def redirect(self, data):
-        raise HTTPFound(self._request.app.router['WebChat:post'].url_for(), body=data)
+        raise HTTPFound(self._request.app.router['WebChat:post'].url_for(), body=data, content_type='json')
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
@@ -341,7 +349,10 @@ class WebChat(View):
                 flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
             if any("query-missing" in s for s in form_return):
                 flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
-            return self.redirect(data)
+            return {'form_value_screen_name': data.get('screen_name'),
+                    'form_value_email': data.get('email'),
+                    'form_value_language': data.get('language'),
+                    'form_value_query': data.get('query')}
 
         response = aiohttp_jinja2.render_template("webchat-window.html", self._request, data)
         response.headers['Content-Language'] = 'en'

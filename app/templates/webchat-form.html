@@ -20,6 +20,11 @@
 
 {% block main %}
 
+{{ form_value_screen_name }}
+{{ form_value_email }}
+{{ form_value_language }}
+{{ form_value_query }}
+
   {% if messages_dict %}
     {% include "partials/messages.html" with context %}
   {% endif %}
@@ -31,6 +36,7 @@
             "label": {
                 "text": "Enter your name"
             },
+            "value": form_value_screen_name,
             "classes": "input--w-20@m js-name"
         })
     %}
@@ -43,6 +49,7 @@
                 "text": "Enter your email address",
                 "description": "We will send a copy of the chat to this address"
             },
+            "value": form_value_email,
             "classes": "input--w-20@m js-name"
         })
     %}
@@ -51,6 +58,7 @@
         onsRadios({
             "legend": "Select your language",
             "name": "language",
+            "value": form_value_language,
             "radios": [
                 {
                     "id": "english",
