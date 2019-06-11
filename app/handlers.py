@@ -64,7 +64,7 @@ class View:
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
 
-@routes.view('/')
+@routes.view('/start/')
 class Index(View):
 
     def __init__(self):
@@ -172,7 +172,7 @@ class Index(View):
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
 
-@routes.view('/address-confirmation')
+@routes.view('/start/address-confirmation')
 class AddressConfirmation(View):
 
     @aiohttp_jinja2.template('address-confirmation.html')
@@ -214,7 +214,7 @@ class AddressConfirmation(View):
             return attributes
 
 
-@routes.view('/address-edit')
+@routes.view('/start/address-edit')
 class AddressEdit(View):
 
     def get_address_details(self, data: dict, attributes: dict):

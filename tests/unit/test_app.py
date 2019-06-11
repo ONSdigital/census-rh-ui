@@ -67,8 +67,8 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], url_prefix)
 
-        self.assertEqual(app.router['Index:get'].canonical, '/url-path-prefix/')
-        self.assertEqual(app.router['Index:post'].canonical, '/url-path-prefix/')
+        self.assertEqual(app.router['Index:get'].canonical, '/url-path-prefix/start/')
+        self.assertEqual(app.router['Index:post'].canonical, '/url-path-prefix/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
     def test_create_app_without_url_path_prefix(self):
@@ -79,8 +79,8 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], '')
 
-        self.assertEqual(app.router['Index:get'].canonical, '/')
-        self.assertEqual(app.router['Index:post'].canonical, '/')
+        self.assertEqual(app.router['Index:get'].canonical, '/start/')
+        self.assertEqual(app.router['Index:post'].canonical, '/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
 
