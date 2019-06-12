@@ -48,7 +48,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Is your address correct', str(await response.content.read()))
+        self.assertIn('Is this address correct', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_connector_error(self):

@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Error - Census Rehearsal 2019{% endblock title %}
-
-{% block content %}
+{% block main %}
 
 <h1 class="saturn" data-ga="error" data-ga-category="error" data-ga-action="error-message-shown" data-ga-label="system-error">
     Sorry, something went wrong
@@ -12,4 +10,4 @@
 <p>Please try again later, or <a href="{{ url('ContactUs:get') }}">contact us</a> if the problem continues.</p>
 
 
-{% endblock content %}
+{% endblock main %}

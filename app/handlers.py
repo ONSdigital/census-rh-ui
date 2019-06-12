@@ -1,7 +1,6 @@
 import logging
 
 import aiohttp_jinja2
-import json
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
@@ -66,7 +65,7 @@ class View:
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
 
-@routes.view('/')
+@routes.view('/start/')
 class Index(View):
 
     def __init__(self):
@@ -174,7 +173,7 @@ class Index(View):
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
 
-@routes.view('/address-confirmation')
+@routes.view('/start/address-confirmation')
 class AddressConfirmation(View):
 
     @aiohttp_jinja2.template('address-confirmation.html')
@@ -216,7 +215,7 @@ class AddressConfirmation(View):
             return attributes
 
 
-@routes.view('/address-edit')
+@routes.view('/start/address-edit')
 class AddressEdit(View):
 
     def get_address_details(self, data: dict, attributes: dict):
@@ -285,17 +284,20 @@ class OnlineHelp:
     async def get(self, _):
         return {}
 
+
 @routes.view('/webchat/chat')
 class WebChatWindow:
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
         return {}
 
+
 @routes.view('/webchat/closed')
 class WebChatClosed:
     @aiohttp_jinja2.template('webchat-closed.html')
     async def get(self, _):
         return {}
+
 
 @routes.view('/webchat')
 class WebChat(View):
