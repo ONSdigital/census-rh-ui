@@ -19,3 +19,7 @@ class ExerciseClosedError(Exception):
     def __init__(self, collection_exercise_id):
         super().__init__()
         self.collection_exercise_id = collection_exercise_id
+
+
+class WebChatClosedError(Exception):
+    """Raised when the WebChat Service is Closed"""

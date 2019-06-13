@@ -6,11 +6,13 @@ from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from structlog import wrap_logger
 from aiohttp_session import get_session
+import datetime
 
 from . import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_EMAIL_MSG, WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_QUERY_MSG)
-from .exceptions import InactiveCaseError, InvalidIACError
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_EMAIL_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    WEBCHAT_MISSING_QUERY_MSG)
+from .exceptions import InactiveCaseError, InvalidIACError, WebChatClosedError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
@@ -303,6 +305,30 @@ class WebChatClosed:
 class WebChat(View):
 
     @staticmethod
+    def check_open(self):
+
+        nowdt = datetime.datetime.now()
+        weekday = nowdt.weekday()
+        hour = nowdt.hour
+        state = 'closed'
+        logger.info(hour, client_ip=self._client_ip)
+        if weekday == 5:
+            if hour < 8 or hour >= 13:
+                raise WebChatClosedError
+            else:
+                state = 'open'
+        elif weekday == 6:
+            raise WebChatClosedError
+        else:
+            if hour < 8 or hour >= 19:
+                raise WebChatClosedError
+            else:
+                state = 'open'
+
+        return state
+
+
+    @staticmethod
     def validate_form(data):
 
         form_return = []
@@ -321,12 +347,24 @@ class WebChat(View):
 
         return form_return
 
-    def redirect(self, data):
+    def redirect(self):
         raise HTTPFound(self._request.app.router['WebChat:get'].url_for())
+
+    def redirect_closed(self):
+        raise HTTPFound('/webchat/closed')
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
-        return {}
+
+        try:
+            logger.info("Date/time check", client_ip=self._client_ip)
+            self.check_open(self)
+        except WebChatClosedError:
+            logger.info("Closed", client_ip=self._client_ip)
+            return self.redirect_closed()
+
+        return
+
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):

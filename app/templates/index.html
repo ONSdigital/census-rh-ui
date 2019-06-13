@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/uac/_macro.njk" import onsUACInput %}
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
@@ -15,7 +16,28 @@
     {% include "partials/messages.html" with context %}
   {% endif %}
 
-  <h1 class="u-mt-l">Enter your access code</h1>
+    <h1 class="u-mt-l">Start survey</h1>
+
+    {{ onsUACInput({
+        "id": "uac",
+        "name": "uac",
+        "label": {
+            "text": "Enter the 16 character code printed on the letter",
+            "description": "Keep this code safe and only share it with others in your household"
+        },
+        "securityMessage": "Your personal information is protected by law and will be kept confidential."
+    }) }}
+
+    {{ onsButton({
+        "text": "Access survey",
+        "classes": "u-mb-xl",
+        "name": "action[save_continue]"
+    }) }}
+
+    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
+    <p>
+        You can <a href="#">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
+    </p>
 
   <div>
 <!--    <form action="{{ url('Index:post') }}" class="form qa-questionnaire-form" role="form" method="post" novalidate>-->
@@ -67,19 +89,6 @@
 <!--      <button class="btn btn&#45;&#45;lg qa-btn-get-started" type="submit" name="action[save_continue]" data-ga="click" data-ga-category="survey" data-ga-action="launcheq" data-ga-label="survey_ref = LMS">Start now</button>-->
 <!--    </form>-->
   </div>
-
-    <p class="u-mt-m"><span class="icon--lock"></span>Your personal information is protected by law and will be kept confidential.</p>
-
-    {{ onsButton({
-        "text": "Access survey",
-        "classes": "u-mb-xl",
-        "name": "action[save_continue]"
-    }) }}
-
-    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
-    <p>
-        You can <a href="/prototypes/rh-census/address.html">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
-    </p>
 
     <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
 

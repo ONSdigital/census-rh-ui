@@ -4,4 +4,15 @@
 
 <h1>WebChat</h1>
 
+{% set webchat_url = 'https://www.timeforstorm.com/IM/endpoint/client/5089/CG%20Test%20Webchat/e5caff4fa81d7ba395123b678e9fd82f387476308267a658ca4b91c2e5e40e3d' %}
+{% set screen_name_param = 'im_name=' + screen_name %}
+{% set subject_param = 'im_subject=ONS' %}
+{% set email_param = 'email=' + email %}
+{% set language_param = 'language=' + language %}
+{% set query_param = 'query=' + query %}
+{% set iframe_url = webchat_url + '?' + screen_name_param + '&' + subject_param + '&' + email_param + '&' + language_param + '&' + query_param %}
+
+<iframe style="scrolling: no; margin: 0; padding: 0; border: none; width: 100%; height: 400px;"
+        src="{{ iframe_url }}"></iframe>
+
 {% endblock %}
