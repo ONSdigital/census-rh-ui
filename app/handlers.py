@@ -310,22 +310,17 @@ class WebChat(View):
         nowdt = datetime.datetime.now()
         weekday = nowdt.weekday()
         hour = nowdt.hour
-        state = 'closed'
         logger.info(hour, client_ip=self._client_ip)
         if weekday == 5:
             if hour < 8 or hour >= 13:
                 raise WebChatClosedError
-            else:
-                state = 'open'
         elif weekday == 6:
             raise WebChatClosedError
         else:
             if hour < 8 or hour >= 19:
                 raise WebChatClosedError
-            else:
-                state = 'open'
 
-        return state
+        return
 
     @staticmethod
     def validate_form(data):

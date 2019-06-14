@@ -1,4 +1,5 @@
 import json
+import datetime
 from unittest import mock
 from urllib.parse import urlsplit, parse_qs
 
@@ -7,9 +8,9 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_NAME_MSG)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_QUERY_MSG)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
-from app.handlers import Index
+from app.handlers import Index, WebChat
 
 from . import RHTestCase, build_eq_raises, skip_build_eq, skip_encrypt
 
@@ -293,7 +294,7 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
 
     @unittest_run_loop
     async def test_get_webchat_closed(self):
