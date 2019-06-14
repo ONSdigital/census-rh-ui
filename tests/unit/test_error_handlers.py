@@ -27,7 +27,7 @@ class TestErrorHandlers(RHTestCase):
         self.assertIn(b'type="submit"', contents)
 
     @unittest_run_loop
-    async def test_404_renders_tempalate(self):
+    async def test_404_renders_template(self):
         response = await self.client.request("GET", '/unknown-path')
         self.assertEqual(response.status, 404)
         contents = str(await response.content.read())

@@ -7,7 +7,7 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG)
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_NAME_MSG)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index
 
@@ -279,6 +279,38 @@ class TestHandlers(RHTestCase):
         self.assertIn('Enter your name', contents)
         self.assertEqual(contents.count('radio__input'), 9)
         self.assertIn('type="submit"', contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_incomplete(self):
+        form_data = self.webchat_form_data.copy()
+        del form_data['query']
+
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.get_webchat)
+
+            with self.assertLogs('respondent-home', 'WARNING') as cm:
+                response = await self.client.request("POST", self.post_webchat, data=form_data)
+            self.assertLogLine(cm, "Form submission error")
+
+        self.assertEqual(response.status, 200)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_get_webchat_closed(self):
+        response = await self.client.request("GET", self.get_webchat_closed)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Opening times', contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_chat(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.get_webchat)
+
+            response = await self.client.request("POST", self.post_webchat, allow_redirects=False, data=self.webchat_form_data)
+
+        self.assertEqual(response.status, 200)
+        self.assertIn('iframe', str(await response.content.read()))
 
     def test_join_iac(self):
         # Given some post data
