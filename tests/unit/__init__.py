@@ -265,3 +265,9 @@ class RHTestCase(AioHTTPTestCase):
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
+        self.get_webchat = self.app.router['WebChat:get'].url_for()
+
+        self.webchat_form_data = {
+            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help'
+        }
+

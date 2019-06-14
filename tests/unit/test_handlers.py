@@ -271,6 +271,15 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
 
+    @unittest_run_loop
+    async def test_get_webchat(self):
+        response = await self.client.request("GET", self.get_webchat)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Enter your name', contents)
+        self.assertEqual(contents.count('radio__input'), 9)
+        self.assertIn('type="submit"', contents)
+
     def test_join_iac(self):
         # Given some post data
         post_data = {'iac1': '1234', 'iac2': '5678', 'iac3': '9012', 'iac4': '1314', 'action[save_continue]': ''}

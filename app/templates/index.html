@@ -18,27 +18,6 @@
 
     <h1 class="u-mt-l">Start survey</h1>
 
-    {{ onsUACInput({
-        "id": "uac",
-        "name": "uac",
-        "label": {
-            "text": "Enter the 16 character code printed on the letter",
-            "description": "Keep this code safe and only share it with others in your household"
-        },
-        "securityMessage": "Your personal information is protected by law and will be kept confidential."
-    }) }}
-
-    {{ onsButton({
-        "text": "Access survey",
-        "classes": "u-mb-xl",
-        "name": "action[save_continue]"
-    }) }}
-
-    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
-    <p>
-        You can <a href="#">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
-    </p>
-
   <div>
 <!--    <form action="{{ url('Index:post') }}" class="form qa-questionnaire-form" role="form" method="post" novalidate>-->
       <div class="panel panel--simple panel--spacious {% if 'ERROR' in messages_dict %} panel--error {% else %} panel--info {% endif %} u-mb-l">
@@ -89,6 +68,17 @@
 <!--      <button class="btn btn&#45;&#45;lg qa-btn-get-started" type="submit" name="action[save_continue]" data-ga="click" data-ga-category="survey" data-ga-action="launcheq" data-ga-label="survey_ref = LMS">Start now</button>-->
 <!--    </form>-->
   </div>
+
+    {{ onsButton({
+        "text": "Access survey",
+        "classes": "u-mb-xl",
+        "name": "action[save_continue]"
+    }) }}
+
+    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
+    <p>
+        You can <a href="#">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
+    </p>
 
     <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
 

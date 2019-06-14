@@ -327,7 +327,6 @@ class WebChat(View):
 
         return state
 
-
     @staticmethod
     def validate_form(data):
 
@@ -364,7 +363,6 @@ class WebChat(View):
             return self.redirect_closed()
 
         return
-
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
