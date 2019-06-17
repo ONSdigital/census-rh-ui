@@ -1,6 +1,7 @@
 import json
 import datetime
 from unittest import mock
+from unittest.mock import patch, Mock
 from urllib.parse import urlsplit, parse_qs
 
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError
@@ -8,8 +9,9 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_QUERY_MSG)
-from app.exceptions import InactiveCaseError, InvalidEqPayLoad
+    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_QUERY_MSG,
+WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_NAME_MSG)
+from app.exceptions import InactiveCaseError, InvalidEqPayLoad, WebChatClosedError
 from app.handlers import Index, WebChat
 
 from . import RHTestCase, build_eq_raises, skip_build_eq, skip_encrypt
@@ -273,6 +275,34 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
 
     @unittest_run_loop
+    async def test_check_open_weekday_open(self):
+        mock_nowdt = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
+        WebChat.check_open(self, mock_nowdt)
+
+    @unittest_run_loop
+    async def test_check_open_weekday_closed(self):
+        mock_nowdt = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
+        with self.assertRaises(WebChatClosedError):
+            WebChat.check_open(self, mock_nowdt)
+
+    @unittest_run_loop
+    async def test_check_open_saturday_open(self):
+        mock_nowdt = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
+        WebChat.check_open(self, mock_nowdt)
+
+    @unittest_run_loop
+    async def test_check_open_saturday_closed(self):
+        mock_nowdt = datetime.datetime(2019, 6, 15, 16, 30, 00, 0)
+        with self.assertRaises(WebChatClosedError):
+            WebChat.check_open(self, mock_nowdt)
+
+    @unittest_run_loop
+    async def test_check_open_sunday_closed(self):
+        mock_nowdt = datetime.datetime(2019, 6, 16, 9, 30, 00, 0)
+        with self.assertRaises(WebChatClosedError):
+            WebChat.check_open(self, mock_nowdt)
+
+    @unittest_run_loop
     async def test_get_webchat(self):
         response = await self.client.request("GET", self.get_webchat)
         self.assertEqual(response.status, 200)
@@ -282,7 +312,7 @@ class TestHandlers(RHTestCase):
         self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
-    async def test_post_webchat_incomplete(self):
+    async def test_post_webchat_incomplete_query(self):
         form_data = self.webchat_form_data.copy()
         del form_data['query']
 
@@ -295,6 +325,21 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_webchat_incomplete_query(self):
+        form_data = self.webchat_form_data.copy()
+        del form_data['language']
+
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.get_webchat)
+
+            with self.assertLogs('respondent-home', 'WARNING') as cm:
+                response = await self.client.request("POST", self.post_webchat, data=form_data)
+            self.assertLogLine(cm, "Form submission error")
+
+        self.assertEqual(response.status, 200)
+        self.assertMessagePanel(WEBCHAT_MISSING_LANGUAGE_MSG, str(await response.content.read()))
 
     @unittest_run_loop
     async def test_get_webchat_closed(self):

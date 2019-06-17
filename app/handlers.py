@@ -305,12 +305,10 @@ class WebChatClosed:
 class WebChat(View):
 
     @staticmethod
-    def check_open(self):
+    def check_open(self, nowdt):
 
-        nowdt = datetime.datetime.now()
         weekday = nowdt.weekday()
         hour = nowdt.hour
-        logger.info(hour, client_ip=self._client_ip)
         if weekday == 5:
             if hour < 8 or hour >= 13:
                 raise WebChatClosedError
@@ -349,7 +347,7 @@ class WebChat(View):
 
         try:
             logger.info("Date/time check", client_ip=self._client_ip)
-            self.check_open(self)
+            self.check_open(self, datetime.datetime.now())
         except WebChatClosedError:
             logger.info("Closed", client_ip=self._client_ip)
             return self.redirect_closed()
