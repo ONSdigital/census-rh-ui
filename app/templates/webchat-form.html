@@ -36,19 +36,6 @@
         })
     %}
 
-    {% set email_form_call =
-        onsInput({
-            "id": "email",
-            "name": "email",
-            "label": {
-                "text": "Enter your email address",
-                "description": "We will send a copy of the chat to this address"
-            },
-            "value": form_value_email,
-            "classes": "input--w-20@m js-name"
-        })
-    %}
-
     {% set language_form_call =
         onsRadios({
             "legend": "Select your language",
@@ -156,29 +143,6 @@
             {% endcall %}
         {% else %}
             {{ screen_name_form_call }}
-        {% endif %}
-
-        {% if 'email' in field_messages_dict %}
-            {% call
-                onsPanel({
-                    "type": "error"
-                })
-            %}
-            {{
-                onsList({
-                    "id": 'email',
-                    "classes": 'list--bare list--errors u-mb-s',
-                    "itemsList": [
-                        {
-                            "text": 'Enter a valid email address.'
-                        }
-                    ]
-                })
-            }}
-            {{ email_form_call }}
-            {% endcall %}
-        {% else %}
-            {{ email_form_call }}
         {% endif %}
 
         {% if 'language' in field_messages_dict %}
