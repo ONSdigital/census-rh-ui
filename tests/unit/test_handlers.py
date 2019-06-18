@@ -303,7 +303,9 @@ class TestHandlers(RHTestCase):
             WebChat.check_open(self, mock_nowdt)
 
     @unittest_run_loop
-    async def test_get_webchat(self):
+    @patch('app.handlers.WebChat.get_now')
+    async def test_get_webchat(self, mock_get_now):
+        mock_get_now.return_value = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
         response = await self.client.request("GET", self.get_webchat)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
