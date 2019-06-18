@@ -221,8 +221,8 @@ class RHTestCase(AioHTTPTestCase):
         self.eq_id = "census"
         self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
-        self.iac_code = ''.join([str(n) for n in range(13)])
-        self.iac1, self.iac2, self.iac3, self.iac4 = self.iac_code[:4], self.iac_code[4:8], self.iac_code[8:12], self.iac_code[12:]
+        self.uac_code = ''.join([str(n) for n in range(13)])
+        self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = "1"
         self.user_id = "1234567890"
         self.uac = self.uac_json['uac']
@@ -257,11 +257,14 @@ class RHTestCase(AioHTTPTestCase):
             f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
         )
 
+        self.rhsvc_url_surveylaunched = (
+            f"{self.app['RHSVC_URL']}/surveyLaunched"
+        )
+
         self.form_data = {
-            'iac1': self.iac1, 'iac2': self.iac2, 'iac3': self.iac3, 'iac4': self.iac4, 'action[save_continue]': '',
+            'uac1': self.uac1, 'uac2': self.uac2, 'uac3': self.uac3, 'uac4': self.uac4, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
-

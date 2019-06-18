@@ -8,13 +8,15 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
-from .exceptions import InactiveCaseError, InvalidIACError
+    BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
+from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
+from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
+Request = namedtuple("Request", ["method", "url", "auth", "json", "func"])
 routes = RouteTableDef()
 
 
@@ -46,38 +48,75 @@ class View:
             self._client_ip = self._request.headers.get("X-Forwarded-For")
         return self._client_ip
 
+    @property
+    def _rhsvc_url_surveylaunched(self):
+        return f"{self._request.app['RHSVC_URL']}/surveyLaunched"
+
+    @staticmethod
+    def _handle_response(response):
+        try:
+            response.raise_for_status()
+        except ClientResponseError as ex:
+            if not ex.status == 404:
+                logger.error("Error in response", url=response.url, status_code=response.status)
+            raise ex
+        else:
+            logger.debug("Successfully connected to service", url=str(response.url))
+
     def check_session(self):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
+    def redirect(self):
+        raise HTTPFound(self._request.app.router['Index:get'].url_for())
+
+    async def _make_request(self, request: Request):
+        method, url, auth, json, func = request
+        logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
+        try:
+            async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json) as resp:
+                func(resp)
+                # Not all end points return JSON with content type header set.
+                # Turn off content type header checking setting parameter to none, empty return body will return none.
+                return await resp.json(content_type=None)
+        except (ClientConnectionError, ClientConnectorError) as ex:
+            logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
+            raise ex
+
     async def call_questionnaire(self, case, attributes, app):
         eq_payload = await EqPayloadConstructor(case, attributes, app).build()
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-        #    description = f"Census Instrument launched for case {case['id']}"
-        #    await post_case_event(case['id'], 'EQ_LAUNCH', description, app)
+        await self.get_surveylaunched(case)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
+
+    async def get_surveylaunched(self, case):
+
+        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
+        return await self._make_request(
+            Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response))
 
 
 @routes.view('/start/')
 class Index(View):
 
     def __init__(self):
-        self._iac = None
+        self._uac = None
         self._sample_unit_id = None
         super().__init__()
 
     @property
     def _rhsvc_url(self):
-        return f"{self._request.app['RHSVC_URL']}/uacs/{self._iac}"
+        return f"{self._request.app['RHSVC_URL']}/uacs/{self._uac}"
 
     @staticmethod
-    def join_iac(data, expected_length=16):
+    def join_uac(data, expected_length=16):
         combined = "".join([v.lower() for v in data.values()][:4])
         if len(combined) < expected_length:
             raise TypeError
@@ -88,43 +127,12 @@ class Index(View):
         if not case_json.get("active", False):
             raise InactiveCaseError
         if not case_json.get("caseStatus", None) == "OK":
-            raise InvalidEqPayLoad("caseStatus is not OK")
+            raise InvalidEqPayLoad("CaseStatus is not OK")
 
-    def redirect(self):
-        raise HTTPFound(self._request.app.router['Index:get'].url_for())
-
-    async def get_iac_details(self):
+    async def get_uac_details(self):
         logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
-        try:
-            async with self._request.app.http_session_pool.get(self._rhsvc_url,
-                                                               auth=self._request.app["RHSVC_AUTH"]) as resp:
-                logger.debug("Received response from RH service", status_code=resp.status)
-
-                try:
-                    resp.raise_for_status()
-                except ClientResponseError as ex:
-                    if resp.status == 404:
-                        raise InvalidIACError
-                    elif resp.status in (401, 403):
-                        logger.warn("Unauthorized access to RH service attempted", client_ip=self._client_ip)
-                        flash(self._request, NOT_AUTHORIZED_MSG)
-                        return self.redirect()
-                    elif 400 <= resp.status < 500:
-                        logger.warn(
-                            "Client error when accessing RH service",
-                            client_ip=self._client_ip,
-                            status=resp.status,
-                        )
-                        flash(self._request, BAD_RESPONSE_MSG)
-                        return self.redirect()
-                    else:
-                        logger.error("Error in response", url=resp.url, status_code=resp.status)
-                        raise ex
-                else:
-                    return await resp.json()
-        except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error("Client failed to connect to RH service", client_ip=self._client_ip)
-            raise ex
+        return await self._make_request(
+            Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response))
 
     @aiohttp_jinja2.template('index.html')
     async def get(self, _):
@@ -141,18 +149,21 @@ class Index(View):
         data = await self._request.post()
 
         try:
-            self._iac = self.join_iac(data)
+            self._uac = self.join_uac(data)
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
             return self.redirect()
 
         try:
-            uac_json = await self.get_iac_details()
-        except InvalidIACError:
-            logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
-            flash(self._request, INVALID_CODE_MSG)
-            return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
+            uac_json = await self.get_uac_details()
+        except ClientResponseError as ex:
+            if ex.status == 404:
+                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                flash(self._request, INVALID_CODE_MSG)
+                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
+            else:
+                raise ex
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
         self.validate_case(uac_json)
