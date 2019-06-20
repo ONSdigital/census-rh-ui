@@ -267,7 +267,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_webchat = self.app.router['WebChat:get'].url_for()
         self.post_webchat = self.app.router['WebChat:post'].url_for()
-        self.get_webchat_closed = self.app.router['WebChatClosed:get'].url_for()
         self.get_webchat_chat = self.app.router['WebChatWindow:get'].url_for()
 
         self.webchat_form_data = {

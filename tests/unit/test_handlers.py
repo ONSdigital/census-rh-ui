@@ -274,6 +274,21 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(BAD_RESPONSE_MSG, str(await response.content.read()))
 
     @unittest_run_loop
+    async def test_check_open_weekday_open_census_weekend(self):
+        mocked_now = datetime.datetime(2019, 10, 12, 9, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            WebChat.check_open()
+
+    @unittest_run_loop
+    async def test_check_open_weekday_closed_census_weekend(self):
+        mocked_now = datetime.datetime(2019, 10, 13, 7, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            with self.assertRaises(WebChatClosedError):
+                WebChat.check_open()
+
+    @unittest_run_loop
     async def test_check_open_weekday_open(self):
         mocked_now = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:

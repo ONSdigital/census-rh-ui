@@ -54,6 +54,8 @@ class BaseConfig:
 
     ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
 
+    WEBCHAT_SVC_URL = env("WEBCHAT_SVC_URL")
+
 
 class ProductionConfig(BaseConfig):
     pass
@@ -82,6 +84,8 @@ class DevelopmentConfig:
 
     ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
 
+    WEBCHAT_SVC_URL = env.str("WEBCHAT_SVC_URL", default="https://www.timeforstorm.com/IM/endpoint/client/5089/CG%20Test%20Webchat/e5caff4fa81d7ba395123b678e9fd82f387476308267a658ca4b91c2e5e40e3d")  # NOQA
+
 
 class TestingConfig:
     HOST = "0.0.0.0"
@@ -104,3 +108,5 @@ class TestingConfig:
     REDIS_PORT = ""
 
     ABSOLUTE_SESSION_AGE = ""
+
+    WEBCHAT_SVC_URL = "https://www.timeforstorm.com/IM/endpoint/client/5089/CG%20Test%20Webchat/e5caff4fa81d7ba395123b678e9fd82f387476308267a658ca4b91c2e5e40e3d"  # NOQA

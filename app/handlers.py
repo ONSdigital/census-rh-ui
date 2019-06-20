@@ -304,9 +304,15 @@ class WebChat(View):
     @staticmethod
     def check_open():
 
+        year = WebChat.get_now().year
+        month = WebChat.get_now().month
+        day = WebChat.get_now().day
         weekday = WebChat.get_now().weekday()
         hour = WebChat.get_now().hour
-        if weekday == 5:
+        if year == 2019 and month == 10 and (day == 12 or day == 13):
+            if hour < 8 or hour >= 16:
+                raise WebChatClosedError
+        elif weekday == 5:
             if hour < 8 or hour >= 13:
                 raise WebChatClosedError
         elif weekday == 6:
@@ -354,7 +360,7 @@ class WebChat(View):
         try:
             form_return = self.validate_form(data)
 
-            if form_return != []:
+            if not form_return == []:
                 raise TypeError(form_return)
 
         except TypeError:
@@ -369,7 +375,12 @@ class WebChat(View):
                     'form_value_language': data.get('language'),
                     'form_value_query': data.get('query')}
 
-        response = aiohttp_jinja2.render_template("webchat-window.html", self._request, data)
+        context = {'screen_name': data.get('screen_name'),
+                   'language': data.get('language'),
+                   'query': data.get('query'),
+                   'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
+
+        response = aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         response.headers['Content-Language'] = 'en'
 
         return response
