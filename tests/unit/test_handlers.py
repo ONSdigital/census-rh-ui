@@ -1,7 +1,6 @@
 import json
 import datetime
 from unittest import mock
-from unittest.mock import patch, Mock
 from urllib.parse import urlsplit, parse_qs
 
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError
@@ -10,7 +9,7 @@ from aioresponses import aioresponses
 
 from app import (
     BAD_CODE_MSG, BAD_RESPONSE_MSG, INVALID_CODE_MSG, NOT_AUTHORIZED_MSG, WEBCHAT_MISSING_QUERY_MSG,
-WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_NAME_MSG)
+    WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_NAME_MSG)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad, WebChatClosedError
 from app.handlers import Index, WebChat
 
@@ -276,42 +275,67 @@ class TestHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_check_open_weekday_open(self):
-        mock_nowdt = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
-        WebChat.check_open(self, mock_nowdt)
+        mocked_now = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            WebChat.check_open()
 
     @unittest_run_loop
     async def test_check_open_weekday_closed(self):
-        mock_nowdt = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
-        with self.assertRaises(WebChatClosedError):
-            WebChat.check_open(self, mock_nowdt)
+        mocked_now = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            with self.assertRaises(WebChatClosedError):
+                WebChat.check_open()
 
     @unittest_run_loop
     async def test_check_open_saturday_open(self):
-        mock_nowdt = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
-        WebChat.check_open(self, mock_nowdt)
+        mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            WebChat.check_open()
 
     @unittest_run_loop
     async def test_check_open_saturday_closed(self):
-        mock_nowdt = datetime.datetime(2019, 6, 15, 16, 30, 00, 0)
-        with self.assertRaises(WebChatClosedError):
-            WebChat.check_open(self, mock_nowdt)
+        mocked_now = datetime.datetime(2019, 6, 15, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            with self.assertRaises(WebChatClosedError):
+                WebChat.check_open()
 
     @unittest_run_loop
     async def test_check_open_sunday_closed(self):
-        mock_nowdt = datetime.datetime(2019, 6, 16, 9, 30, 00, 0)
-        with self.assertRaises(WebChatClosedError):
-            WebChat.check_open(self, mock_nowdt)
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            with self.assertRaises(WebChatClosedError):
+                WebChat.check_open()
 
     @unittest_run_loop
-    @patch('app.handlers.WebChat.get_now')
-    async def test_get_webchat(self, mock_get_now):
-        mock_get_now.return_value = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
-        response = await self.client.request("GET", self.get_webchat)
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn('Enter your name', contents)
-        self.assertEqual(contents.count('radio__input'), 9)
-        self.assertIn('type="submit"', contents)
+    async def test_get_webchat_open(self):
+        mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            response = await self.client.request("GET", self.get_webchat)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Enter your name', contents)
+            self.assertEqual(contents.count('radio__input'), 9)
+            self.assertIn('type="submit"', contents)
+
+    @unittest_run_loop
+    async def test_get_webchat_not_open(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            response = await self.client.request("GET", self.get_webchat)
+
+            self.assertRaises(WebChatClosedError)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query(self):
@@ -342,13 +366,6 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(WEBCHAT_MISSING_LANGUAGE_MSG, str(await response.content.read()))
-
-    @unittest_run_loop
-    async def test_get_webchat_closed(self):
-        response = await self.client.request("GET", self.get_webchat_closed)
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn('Opening times', contents)
 
     @unittest_run_loop
     async def test_post_webchat_chat(self):

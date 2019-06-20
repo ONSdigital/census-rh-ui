@@ -294,32 +294,25 @@ class WebChatWindow:
         return {}
 
 
-@routes.view('/webchat/closed')
-class WebChatClosed:
-    @aiohttp_jinja2.template('webchat-closed.html')
-    async def get(self, _):
-        return {}
-
-
 @routes.view('/webchat')
 class WebChat(View):
 
     @staticmethod
-    def get_now(self):
+    def get_now():
         return datetime.datetime.now()
 
     @staticmethod
-    def check_open(self, nowdt):
+    def check_open():
 
-        weekday = nowdt.weekday()
-        hour = nowdt.hour
+        weekday = WebChat.get_now().weekday()
+        hour = WebChat.get_now().hour
         if weekday == 5:
             if hour < 8 or hour >= 13:
                 raise WebChatClosedError
         elif weekday == 6:
             raise WebChatClosedError
         else:
-            if hour < 8 or hour >= 16:
+            if hour < 8 or hour >= 19:
                 raise WebChatClosedError
 
         return
@@ -340,21 +333,15 @@ class WebChat(View):
 
         return form_return
 
-    def redirect(self):
-        raise HTTPFound(self._request.app.router['WebChat:get'].url_for())
-
-    def redirect_closed(self):
-        raise HTTPFound('/webchat/closed')
-
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, _):
 
         try:
             logger.info("Date/time check", client_ip=self._client_ip)
-            self.check_open(self, self.get_now(self))
+            WebChat.check_open()
         except WebChatClosedError:
             logger.info("Closed", client_ip=self._client_ip)
-            return self.redirect_closed()
+            return {'webchat_status': 'closed'}
 
         return
 
