@@ -132,9 +132,6 @@ class Index(View):
         if not case_json.get("caseStatus", None) == "OK":
             raise InvalidEqPayLoad("CaseStatus is not OK")
 
-    def redirect(self):
-        raise HTTPFound(self._request.app.router['Index:get'].url_for())
-
     async def get_uac_details(self):
         logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
         return await self._make_request(
