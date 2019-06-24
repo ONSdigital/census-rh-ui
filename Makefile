@@ -24,6 +24,7 @@ live_test: start_services wait_for_services setup live_integration_tests stop_se
 start_services:
 	./scripts/start_ras_rm.sh ${RAS_RM_REPO_URL}
 	./scripts/start_eq.sh ${EQ_RUNNER_REPO_URL}
+	./scripts/load_templates.sh
 
 stop_services:
 	./scripts/stop_ras_rm.sh ${RAS_RM_REPO_URL}
@@ -34,7 +35,6 @@ wait_for_services:
 
 setup:
 	./scripts/setup_data.sh ${RM_TOOLS_REPO_URL}
-	./scripts/load_templates.sh
 
 integration_tests:
 	pipenv run inv integration
