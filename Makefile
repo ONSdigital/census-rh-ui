@@ -34,6 +34,7 @@ wait_for_services:
 
 setup:
 	./scripts/setup_data.sh ${RM_TOOLS_REPO_URL}
+	./scripts/load_templates.sh
 
 integration_tests:
 	pipenv run inv integration
