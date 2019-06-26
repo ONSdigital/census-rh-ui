@@ -43,7 +43,7 @@ def setup(app_config):
     loop = get_event_loop()
     redis_pool = loop.run_until_complete(make_redis_pool(app_config["REDIS_SERVER"], app_config["REDIS_PORT"]))
     return session_middleware(RedisStorage(redis_pool, cookie_name='RH_SESSION',
-                                           max_age=int(app_config["ABSOLUTE_SESSION_AGE"])))
+                                           max_age=int(app_config["SESSION_AGE"])))
 
 
 async def make_redis_pool(host, port):

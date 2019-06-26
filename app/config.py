@@ -52,7 +52,7 @@ class BaseConfig:
 
     REDIS_PORT = env("REDIS_PORT", default="7379")
 
-    ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
+    SESSION_AGE = env("SESSION_AGE", default="600")
 
 
 class ProductionConfig(BaseConfig):
@@ -80,7 +80,7 @@ class DevelopmentConfig:
 
     REDIS_PORT = env("REDIS_PORT", default="7379")
 
-    ABSOLUTE_SESSION_AGE = env("ABSOLUTE_SESSION_AGE", default="600")
+    SESSION_AGE = env("SESSION_AGE", default="600")
 
 
 class TestingConfig:
@@ -103,4 +103,4 @@ class TestingConfig:
 
     REDIS_PORT = ""
 
-    ABSOLUTE_SESSION_AGE = ""
+    SESSION_AGE = ""
