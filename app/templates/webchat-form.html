@@ -34,6 +34,14 @@
 
     {% else %}
 
+        <noscript>
+            <h1>Javascript disabled</h1>
+
+            <p>Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.</p>
+
+            <p><a href="#">Get Help</a></p>
+        </noscript>
+
         {% if messages_dict %}
         {% include "partials/messages.html" with context %}
         {% endif %}
@@ -54,6 +62,7 @@
             onsRadios({
                 "legend": "Select your language",
                 "name": "language",
+                "dontVisuallyHideLegend": true,
                 "value": form_value_language,
                 "radios": [
                     {
@@ -78,6 +87,7 @@
             onsRadios({
                 "legend": "What type of query do you have",
                 "name": "query",
+                "dontVisuallyHideLegend": true,
                 "value": form_value_query,
                 "radios": [
                     {
@@ -133,7 +143,7 @@
             })
         %}
 
-        <div class="web-chat-form__body">
+        <div id="web-chat-form-display" class="web-chat-form__body" style="display:none;">
             <h1>Webchat</h1>
 
             {% if 'screen_name' in field_messages_dict %}
@@ -212,16 +222,17 @@
                 })
 
             }}
-            {{
-                onsButton({
-                    "type": 'button',
-                    "text": 'Close chat',
-                    "classes": 'btn--secondary btn-group__btn u-mb-m u-mt-m'
-                })
-            }}
 
         </div>
 
     {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+    document.getElementById('web-chat-form-display').style.display='block';
+</script>
 
 {% endblock %}
