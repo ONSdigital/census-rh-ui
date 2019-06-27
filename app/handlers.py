@@ -391,7 +391,13 @@ class WebChat(View):
                    'query': data.get('query'),
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
-        response = aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
-        response.headers['Content-Language'] = 'en'
+        try:
+            logger.info("Date/time check", client_ip=self._client_ip)
+            WebChat.check_open()
+            response = aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
+            response.headers['Content-Language'] = 'en'
+        except WebChatClosedError:
+            logger.info("Closed", client_ip=self._client_ip)
+            return {'webchat_status': 'closed'}
 
         return response
