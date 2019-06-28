@@ -55,6 +55,10 @@ class View:
     def _rhsvc_url_surveylaunched(self):
         return f"{self._request.app['RHSVC_URL']}/surveyLaunched"
 
+    @property
+    def _webchat_service_url(self):
+        return f"{self._request.app['WEBCHAT_SVC_URL']}"
+
     @staticmethod
     def _handle_response(response):
         try:
@@ -103,6 +107,13 @@ class View:
         json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response))
+
+    async def post_webchat_closed(self):
+
+        json = {'im_name': 'closed', 'im_subject': 'ONS', 'email': '', 'language': 'closed', 'query': 'closed'}
+        return await self._make_request(
+            Request("POST", self._webchat_service_url, '',
                     json, self._handle_response))
 
 
@@ -358,6 +369,7 @@ class WebChat(View):
             WebChat.check_open()
         except WebChatClosedError:
             logger.info("Closed", client_ip=self._client_ip)
+            # await self.post_webchat_closed()
             return {'webchat_status': 'closed'}
 
         return
@@ -398,6 +410,7 @@ class WebChat(View):
             response.headers['Content-Language'] = 'en'
         except WebChatClosedError:
             logger.info("Closed", client_ip=self._client_ip)
+            # await self.post_webchat_closed()
             return {'webchat_status': 'closed'}
 
         return response

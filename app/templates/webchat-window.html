@@ -7,10 +7,13 @@
 {% set webchat_url = webchat_url %}
 {% set screen_name_param = 'im_name=' + screen_name %}
 {% set subject_param = 'im_subject=ONS' %}
-{% set email_param = 'email=' %}
-{% set language_param = 'language=' + language %}
-{% set query_param = 'query=' + query %}
-{% set iframe_url = webchat_url + '?' + screen_name_param + '&' + subject_param + '&' + email_param + '&' + language_param + '&' + query_param %}
+{% set countchars_param = 'im_countchars=1' %}
+{% set email_param = 'info_email=none' %}
+{% set country_param = 'info_country=none' %}
+{% set language_param = 'info_language=' + language %}
+{% set query_param = 'info_query=' + query %}
+{% set iframe_url = webchat_url + '?' + screen_name_param + '&' + subject_param + '&' + countchars_param + '&' + email_param + '&' + country_param + '&' + query_param + '&' + language_param %}
+
 
 <iframe style="scrolling: no; margin: 0; padding: 0; border: none; width: 100%; height: 400px;"
         src="{{ iframe_url }}"></iframe>
