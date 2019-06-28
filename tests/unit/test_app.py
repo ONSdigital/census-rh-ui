@@ -20,7 +20,7 @@ class TestCreateApp(AioHTTPTestCase):
     def session_storage(self, app_config):
         self.assertIn("REDIS_SERVER", app_config)
         self.assertIn("REDIS_PORT", app_config)
-        self.assertIn("ABSOLUTE_SESSION_AGE", app_config)
+        self.assertIn("SESSION_AGE", app_config)
         return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
 
     async def get_application(self):

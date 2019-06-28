@@ -148,7 +148,7 @@ class RHTestCase(AioHTTPTestCase):
     def session_storage(self, app_config):
         self.assertIn("REDIS_SERVER", app_config)
         self.assertIn("REDIS_PORT", app_config)
-        self.assertIn("ABSOLUTE_SESSION_AGE", app_config)
+        self.assertIn("SESSION_AGE", app_config)
         return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
 
     async def get_application(self):
@@ -219,6 +219,7 @@ class RHTestCase(AioHTTPTestCase):
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
         self.eq_id = "census"
+        self.survey = "CENSUS"
         self.form_type = "individual_gb_eng"
         self.jti = str(uuid.uuid4())
         self.uac_code = ''.join([str(n) for n in range(13)])
@@ -250,7 +251,8 @@ class RHTestCase(AioHTTPTestCase):
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
-            "form_type": self.form_type
+            "form_type": self.form_type,
+            "survey": self.survey
  }
 
         self.rhsvc_url = (
