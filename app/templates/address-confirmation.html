@@ -50,9 +50,9 @@
 
     <p>
         {{ addressLine1 }}<br>
-        {{ addressLine2 }}<br>
-        {{ addressLine3 }}<br>
-        {{ townName }}<br>
+        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
+        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
+        {% if townName %}{{ townName }}<br>{% endif %}
         {{ postcode }}
     </p>
 

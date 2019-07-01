@@ -22,8 +22,8 @@ class TestErrorHandlers(RHTestCase):
         self.assertLogLine(cm, 'Redirecting to index')
         self.assertEqual(response.status, 200)
         contents = await response.content.read()
-        self.assertIn(b'Your 16 character access code is on the letter we sent you', contents)
-        self.assertEqual(contents.count(b'input-text'), 4)
+        self.assertIn(b'Enter the 16 character code printed on the letter', contents)
+        self.assertEqual(contents.count(b'input--text'), 1)
         self.assertIn(b'type="submit"', contents)
 
     @unittest_run_loop

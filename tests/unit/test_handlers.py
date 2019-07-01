@@ -22,23 +22,9 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_index)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('Your 16 character access code is on the letter we sent you', contents)
-        self.assertEqual(contents.count('input-text'), 4)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
+        self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('type="submit"', contents)
-
-    @unittest_run_loop
-    async def test_get_cookies_privacy(self):
-        response = await self.client.request("GET", self.get_cookies_privacy)
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn('Cookies and Privacy', contents)
-
-    @unittest_run_loop
-    async def test_get_contact_us(self):
-        response = await self.client.request("GET", self.get_contact_us)
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn('Contact us', contents)
 
     @unittest_run_loop
     async def test_post_index(self):
@@ -100,7 +86,7 @@ class TestHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_malformed(self):
         form_data = self.form_data.copy()
-        del form_data['uac4']
+        del form_data['uac']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
@@ -429,17 +415,17 @@ class TestHandlers(RHTestCase):
 
     def test_join_uac(self):
         # Given some post data
-        post_data = {'uac1': '1234', 'uac2': '5678', 'uac3': '9012', 'uac4': '1314', 'action[save_continue]': ''}
+        post_data = {'uac': '1234567890121314', 'action[save_continue]': ''}
 
         # When join_uac is called
         result = Index.join_uac(post_data)
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, post_data['uac1'] + post_data['uac2'] + post_data['uac3'] + post_data['uac4'])
+        self.assertEqual(result, post_data['uac'])
 
     def test_join_uac_missing(self):
         # Given some missing post data
-        post_data = {'action[save_continue]': ''}
+        post_data = {'uac': '', 'action[save_continue]': ''}
 
         # When join_uac is called
         with self.assertRaises(TypeError):
@@ -448,7 +434,7 @@ class TestHandlers(RHTestCase):
 
     def test_join_uac_some_missing(self):
         # Given some missing post data
-        post_data = {'uac1': '1234', 'uac2': '5678', 'uac3': '1234', 'uac4': '', 'action[save_continue]': ''}
+        post_data = {'uac': '123456781234', 'action[save_continue]': ''}
 
         # When join_uac is called
         with self.assertRaises(TypeError):

@@ -212,8 +212,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_index = self.app.router['Index:get'].url_for()
         self.get_info = self.app.router['Info:get'].url_for()
-        self.get_cookies_privacy = self.app.router['CookiesPrivacy:get'].url_for()
-        self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
         self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
         self.case_id = self.uac_json['caseId']
@@ -264,7 +262,7 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.form_data = {
-            'uac1': self.uac1, 'uac2': self.uac2, 'uac3': self.uac3, 'uac4': self.uac4, 'action[save_continue]': '',
+            'uac': self.uac, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {

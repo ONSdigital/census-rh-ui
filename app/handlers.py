@@ -111,7 +111,8 @@ class View:
 
     async def post_webchat_closed(self):
 
-        json = {'im_name': 'closed', 'im_subject': 'ONS', 'email': '', 'language': 'closed', 'query': 'closed'}
+        json = {'im_name': 'closed', 'im_subject': 'ONS', 'im_countchars': '1', 'info_email': 'none',
+                'info_country': 'none', 'info_language': 'closed', 'info_query': 'closed'}
         return await self._make_request(
             Request("POST", self._webchat_service_url, '',
                     json, self._handle_response))
@@ -131,7 +132,11 @@ class Index(View):
 
     @staticmethod
     def join_uac(data, expected_length=16):
-        combined = "".join([v.lower() for v in data.values()][:4])
+        if data.get('uac'):
+            combined = data.get('uac').lower().replace(" ", "")
+        else:
+            combined = ''
+
         if len(combined) < expected_length:
             raise TypeError
         return combined
@@ -256,8 +261,8 @@ class AddressEdit(View):
             attributes["addressLine1"] = data["address-line-1"].strip()
             attributes["addressLine2"] = data["address-line-2"].strip()
             attributes["addressLine3"] = data["address-line-3"].strip()
-            attributes["townName"] = data["town_name"].strip()
-            attributes["postcode"] = data["postcode"].strip()
+            attributes["townName"] = data["address-town"].strip()
+            attributes["postcode"] = data["address-postcode"].strip()
 
         return attributes
 
@@ -286,27 +291,6 @@ class AddressEdit(View):
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
-
-
-@routes.view('/cookies-privacy')
-class CookiesPrivacy:
-    @aiohttp_jinja2.template('cookies-privacy.html')
-    async def get(self, _):
-        return {}
-
-
-@routes.view('/contact-us')
-class ContactUs:
-    @aiohttp_jinja2.template('contact-us.html')
-    async def get(self, _):
-        return {}
-
-
-@routes.view('/onlinehelp')
-class OnlineHelp:
-    @aiohttp_jinja2.template('onlinehelp.html')
-    async def get(self, _):
-        return {}
 
 
 @routes.view('/webchat/chat')
