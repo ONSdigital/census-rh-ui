@@ -9,7 +9,7 @@ from aioresponses import aioresponses
 
 from app import (
     BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_LANGUAGE_MSG)
-from app.exceptions import InactiveCaseError, InvalidEqPayLoad, WebChatClosedError
+from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index, WebChat
 
 from . import RHTestCase, build_eq_raises, skip_encrypt
@@ -299,53 +299,49 @@ class TestHandlers(RHTestCase):
         mocked_now = datetime.datetime(2019, 10, 12, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open()
+            WebChat.check_open() == True
 
     @unittest_run_loop
     async def test_check_open_weekday_closed_census_weekend(self):
         mocked_now = datetime.datetime(2019, 10, 13, 7, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            with self.assertRaises(WebChatClosedError):
-                WebChat.check_open()
+            WebChat.check_open() == False
 
     @unittest_run_loop
     async def test_check_open_weekday_open(self):
         mocked_now = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open()
+            WebChat.check_open() == True
 
     @unittest_run_loop
     async def test_check_open_weekday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            with self.assertRaises(WebChatClosedError):
-                WebChat.check_open()
+            WebChat.check_open() == False
 
     @unittest_run_loop
     async def test_check_open_saturday_open(self):
         mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open()
+            WebChat.check_open() == True
 
     @unittest_run_loop
     async def test_check_open_saturday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 15, 16, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            with self.assertRaises(WebChatClosedError):
-                WebChat.check_open()
+            WebChat.check_open() == False
 
     @unittest_run_loop
     async def test_check_open_sunday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            with self.assertRaises(WebChatClosedError):
-                WebChat.check_open()
+            WebChat.check_open() == False
 
     @unittest_run_loop
     async def test_get_webchat_open(self):
@@ -368,7 +364,6 @@ class TestHandlers(RHTestCase):
 
             response = await self.client.request("GET", self.get_webchat)
 
-            self.assertRaises(WebChatClosedError)
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn('Bank Holidays', contents)
