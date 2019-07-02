@@ -293,3 +293,55 @@ class OnlineHelp:
     @aiohttp_jinja2.template('onlinehelp.html')
     async def get(self, _):
         return {}
+
+
+@routes.view('/request-code/enter-mobile')
+class RequestCodeEnterMobile(View):
+    @aiohttp_jinja2.template('mobile-enter-number.html')
+    async def get(self, _):
+        return {}
+
+
+@routes.view('/request-code/confirm-mobile')
+class RequestCodeConfirmMobile(View):
+    @aiohttp_jinja2.template('mobile-confirm-number.html')
+    async def post(self, request):
+
+        data = await request.post()
+        self._request = request
+
+        self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+
+        try:
+            mobile_confirmation = data["mobile-confirmation"]
+        except KeyError:
+            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if mobile_confirmation == 'Yes':
+            # await self.call_questionnaire(case, attributes, request.app)
+            raise HTTPFound(self._request.app.router['RequestCodeCodeSent:post'].url_for())
+
+        elif mobile_confirmation == 'No':
+            return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/request-code/code-sent')
+class RequestCodeCodeSent(View):
+    @aiohttp_jinja2.template('mobile-code-sent.html')
+    async def post(self, _):
+        return {}
