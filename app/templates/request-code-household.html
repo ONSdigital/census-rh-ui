@@ -7,37 +7,36 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('RequestCodeConfirmMobile:post')
+        "action": url('RequestCode:post')
     }
 } %}
 
 {% block main %}
-
     {% call onsQuestion({
-        "title": "What is your mobile phone number?",
-        "description": "<p>We will send an access code by text to this number.</p>"
+        "title": "What is your postcode?",
+        "description": "<p>There is a reason for this.</p>"
     }) %}
 
-    {{ 
+    {{
         onsInput({
-            "id": "telephone",
-            "type": "tel",
-            "autocomplete": "tel",
+            "id": "postcode",
+            "type": "postcode",
+            "autocomplete": "postcode",
             "classes": "input--w-8",
             "label": {
-                "text": "UK mobile phone number"
+                "text": "UK postcode"
             },
-            "name": "mobile-number"
-        }) 
+            "name": "request-postcode"
+        })
     }}
-    
+
     {% endcall %}
-    
+
     {{
         onsButton({
             "text": "Continue",
             "classes": "u-mt-l"
         })
     }}
-    
+
 {% endblock %}

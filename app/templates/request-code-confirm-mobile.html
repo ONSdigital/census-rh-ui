@@ -6,15 +6,17 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('RequestCodeCodeSent:post')
+        "action": url('RequestCodeConfirmMobile:post')
     }
 } %}
+
+{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">' + mobile_number + '</p>' %}
 
 {% block main %}
 
     {% call onsQuestion({
         "title": "Is this mobile number correct?",
-        "description": "<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">mobile-number</p>"
+        "description": question_description
     }) %}
 
 
@@ -22,7 +24,7 @@
     {% from "components/radios/_macro.njk" import onsRadios %}
     {{
         onsRadios({
-            "name": "mobile-confirmation",
+            "name": "request-mobile-confirmation",
             "radios": [
                 {
                     "id": "yes",

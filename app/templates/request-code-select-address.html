@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": url('RequestCodeSelectAddress:post')
+    }
+} %}
+
+{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">' + postcode + '</p>' %}
+
+{% block main %}
+
+    {% call onsQuestion({
+        "title": "Select your address",
+        "description": question_description
+    }) %}
+
+    {% for singleAddress in addresses.response.addresses %}
+
+        {{singleAddress.formattedAddressPaf}} ({{singleAddress.uprn}})<br>
+
+    {% endfor %}
+
+    {% endcall %}
+
+    {{
+        onsButton({
+            "text": "Continue",
+            "classes": "u-mt-l"
+        })
+    }}
+
+{% endblock %}

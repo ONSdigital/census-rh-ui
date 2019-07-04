@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": url('RequestCodeConfirmAddress:post')
+    }
+} %}
+
+{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">' + postcode + '</p>' %}
+
+{% block main %}
+
+    {% call onsQuestion({
+        "title": "Is this address correct?",
+        "description": question_description
+    }) %}
+
+
+    {{
+        onsRadios({
+            "name": "request-address-confirmation",
+            "radios": [
+                {
+                    "id": "yes",
+                    "label": {
+                        "text": "Yes, this address is correct"
+                    },
+                    "value": "yes"
+                },
+                {
+                    "id": "no",
+                    "label": {
+                        "text": "No, I need to change it"
+                    },
+                    "value": "no"
+                }
+            ]
+        })
+    }}
+    {% endcall %}
+
+    {{
+        onsButton({
+            "text": "Continue",
+            "classes": "u-mt-l"
+        })
+    }}
+
+{% endblock %}
