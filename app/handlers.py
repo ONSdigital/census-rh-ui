@@ -3,6 +3,7 @@ import logging
 import aiohttp_jinja2
 import re
 import json
+import ast
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
@@ -10,7 +11,8 @@ from structlog import wrap_logger
 from aiohttp_session import get_session
 
 from . import (
-    BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG, MOBILE_ENTER_MSG)
+    BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
+    MOBILE_ENTER_MSG, POSTCODE_INVALID_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -318,21 +320,36 @@ class RequestCode(View):
         self._request = request
         data = await self._request.post()
 
-        attributes = {}
+        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
 
-        attributes["postcode"] = data["request-postcode"]
+        if pattern.fullmatch(data["request-postcode"]):
 
-        session = await get_session(request)
-        session["attributes"] = attributes
+            attributes = {}
 
-        postcode_return = await self.get_ai_postcode(attributes["postcode"])
+            attributes["postcode"] = data["request-postcode"].upper()
 
-        # postcode_return_json = json.loads(postcode_return.text)
+            session = await get_session(request)
+            session["attributes"] = attributes
 
-        address_content = {'postcode': attributes["postcode"],
-                           'addresses': postcode_return}
+            postcode_return = await self.get_ai_postcode(attributes["postcode"])
 
-        return aiohttp_jinja2.render_template("request-code-select-address.html", self._request, address_content)
+            address_options = []
+
+            for singleAddress in postcode_return['response']['addresses']:
+                address_options.append(
+                    {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
+                     "text": singleAddress['formattedAddress']})
+
+            address_content = {'postcode': attributes["postcode"],
+                               'addresses': address_options,
+                               'total_matches': postcode_return['response']['total']}
+
+            return aiohttp_jinja2.render_template("request-code-select-address.html", self._request, address_content)
+
+        else:
+            logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
+            flash(self._request, POSTCODE_INVALID_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:post'].url_for())
 
 
 @routes.view('/request-access-code/select-address')
@@ -352,7 +369,12 @@ class RequestCodeSelectAddress(View):
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
-        return
+        form_return = ast.literal_eval(data["request-address-select"])
+
+        attributes["address"] = form_return["address"]
+        attributes["uprn"] = form_return["uprn"]
+
+        return aiohttp_jinja2.render_template("request-code-confirm-address.html", self._request, attributes)
 
 
 @routes.view('/request-access-code/confirm-address')
@@ -384,7 +406,6 @@ class RequestCodeConfirmAddress(View):
 
         elif address_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
-            # return aiohttp_jinja2.render_template("request-code-household.html", request, attributes)
 
         else:
             # catch all just in case, should never get here
@@ -454,7 +475,7 @@ class RequestCodeConfirmMobile(View):
             return
 
         if mobile_confirmation == 'yes':
-            raise HTTPFound(self._request.app.router['RequestCodeCodeSent:post'].url_for())
+            return aiohttp_jinja2.render_template("request-code-code-sent.html", self._request, attributes)
 
         elif mobile_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())

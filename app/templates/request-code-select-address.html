@@ -2,7 +2,7 @@
 
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/button/_macro.njk" import onsButton %}
-{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/select/_macro.njk" import onsSelect %}
 
 {% set form =  {
     "method": "POST",
@@ -11,28 +11,46 @@
     }
 } %}
 
-{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">' + postcode + '</p>' %}
+{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">Addresses for postcode ' + postcode + '</p>' %}
+
+{% set address_select =
+    onsSelect({
+        "id": "select-wide",
+        "name": "request-address-select",
+        "label": {
+            "text": "Select your address"
+        },
+        "classes": "input--block",
+        "options": addresses
+    })
+%}
 
 {% block main %}
 
-    {% call onsQuestion({
-        "title": "Select your address",
-        "description": question_description
-    }) %}
+    {% if total_matches == 0: %}
 
-    {% for singleAddress in addresses.response.addresses %}
+        <h1>We cannot find your address</h1>
 
-        {{singleAddress.formattedAddressPaf}} ({{singleAddress.uprn}})<br>
+        <p>If this is incorrect you can <a href="{{ url('RequestCode:get') }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
 
-    {% endfor %}
+    {% else: %}
 
-    {% endcall %}
+        {% call onsQuestion({
+            "title": "Select your address",
+            "description": question_description
+        }) %}
 
-    {{
-        onsButton({
-            "text": "Continue",
-            "classes": "u-mt-l"
-        })
-    }}
+            {{ address_select }}
+
+        {% endcall %}
+
+        {{
+            onsButton({
+                "text": "Continue",
+                "classes": "u-mt-l"
+            })
+        }}
+
+    {% endif %}
 
 {% endblock %}

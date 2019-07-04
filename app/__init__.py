@@ -13,3 +13,4 @@ WEBCHAT_MISSING_NAME_MSG = {'text': 'Enter your name', "clickable": True, "level
 WEBCHAT_MISSING_LANGUAGE_MSG = {'text': 'Select your language', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "language"}  # NOQA
 WEBCHAT_MISSING_QUERY_MSG = {'text': 'What type of query do you have', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "query"}  # NOQA
 MOBILE_ENTER_MSG = {'text': 'Enter a valid UK mobile number to continue', "level": "ERROR", "type": "MOBILE_ENTER_ERROR", "field": "mobile"}  # NOQA
+POSTCODE_INVALID_MSG = {'text': 'Enter a valid UK mobile number to continue', "level": "ERROR", "type": "MOBILE_ENTER_ERROR", "field": "postcode"}  # NOQA
