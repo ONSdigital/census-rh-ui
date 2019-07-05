@@ -2,7 +2,6 @@ import logging
 
 import aiohttp_jinja2
 import re
-import json
 import ast
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
@@ -64,7 +63,7 @@ class View:
 
     @property
     def _ai_url_postcode(self):
-        return f"http://addressindex-api-beta.apps.devtest.onsclofo.uk/addresses/postcode/"
+        return self._request.app['AI_POSTCODE_SVC_URL']
 
     @staticmethod
     def _handle_response(response):
@@ -129,7 +128,8 @@ class View:
 
         return await self._make_request(
             Request("GET", self._ai_url_postcode + postcode, None,
-                    None, self._handle_response))
+                    None, self._handle_response, "json"))
+
 
 @routes.view('/start/')
 class Index(View):
@@ -505,8 +505,6 @@ class RequestCodeConfirmAddress(View):
 
             address = session["attributes"]['postcode']
 
-            logger.info(address, client_ip=self._client_ip)
-
             if address == 'EX1 1LL':
                 return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
             else:
@@ -527,7 +525,6 @@ class RequestCodeNotRequired(View):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def post(self, request):
 
-        data = await request.post()
         self._request = request
 
         self.check_session()
@@ -620,7 +617,6 @@ class RequestCodeCodeSent(View):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def post(self, request):
 
-        data = await request.post()
         self._request = request
 
         self.check_session()
