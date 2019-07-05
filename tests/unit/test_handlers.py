@@ -8,7 +8,7 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (
-    BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_LANGUAGE_MSG)
+    BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_NAME_MSG)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index, WebChat
 
@@ -294,54 +294,47 @@ class TestHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
-    @unittest_run_loop
-    async def test_check_open_weekday_open_census_weekend(self):
+    def test_check_open_weekday_open_census_weekend(self):
         mocked_now = datetime.datetime(2019, 10, 12, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == True
+            self.assertTrue(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_weekday_closed_census_weekend(self):
+    def test_check_open_weekday_closed_census_weekend(self):
         mocked_now = datetime.datetime(2019, 10, 13, 7, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == False
+            self.assertFalse(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_weekday_open(self):
+    def test_check_open_weekday_open(self):
         mocked_now = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == True
+            self.assertTrue(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_weekday_closed(self):
+    def test_check_open_weekday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 16, 19, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == False
+            self.assertFalse(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_saturday_open(self):
+    def test_check_open_saturday_open(self):
         mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == True
+            self.assertTrue(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_saturday_closed(self):
+    def test_check_open_saturday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 15, 16, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == False
+            self.assertFalse(WebChat.check_open())
 
-    @unittest_run_loop
-    async def test_check_open_sunday_closed(self):
+    def test_check_open_sunday_closed(self):
         mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            WebChat.check_open() == False
+            self.assertFalse(WebChat.check_open())
 
     @unittest_run_loop
     async def test_get_webchat_open(self):
@@ -357,12 +350,52 @@ class TestHandlers(RHTestCase):
             self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
-    async def test_get_webchat_not_open(self):
+    async def test_get_webchat_not_open_200(self):
         mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
 
-            response = await self.client.request("GET", self.get_webchat)
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, status=200)
+
+                response = await self.client.request("GET", self.get_webchat)
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Bank Holidays', contents)
+
+    @unittest_run_loop
+    async def test_get_webchat_not_open_clientconnectionerror(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
+
+                with self.assertLogs('respondent-home', 'ERROR') as cm:
+                    response = await self.client.request("GET", self.get_webchat)
+                self.assertLogLine(cm, "Client failed to connect")
+                self.assertLogLine(cm, "Failed to post WebChat Closed")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Bank Holidays', contents)
+
+    @unittest_run_loop
+    async def test_get_webchat_not_open_500(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, status=500)
+
+                with self.assertLogs('respondent-home', 'ERROR') as cm:
+                    response = await self.client.request("GET", self.get_webchat)
+
+                self.assertLogLine(cm, "Error in response", status_code=500)
+                self.assertLogLine(cm, "Failed to post WebChat Closed")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -373,40 +406,102 @@ class TestHandlers(RHTestCase):
         form_data = self.webchat_form_data.copy()
         del form_data['query']
 
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.get_webchat)
-
-            with self.assertLogs('respondent-home', 'WARNING') as cm:
-                response = await self.client.request("POST", self.post_webchat, data=form_data)
-            self.assertLogLine(cm, "Form submission error")
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_webchat, data=form_data)
+        self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_webchat_incomplete_query(self):
+    async def test_post_webchat_incomplete_language(self):
         form_data = self.webchat_form_data.copy()
         del form_data['language']
 
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.get_webchat)
-
-            with self.assertLogs('respondent-home', 'WARNING') as cm:
-                response = await self.client.request("POST", self.post_webchat, data=form_data)
-            self.assertLogLine(cm, "Form submission error")
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_webchat, data=form_data)
+        self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(WEBCHAT_MISSING_LANGUAGE_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_webchat_chat(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.get_webchat)
+    async def test_post_webchat_incomplete_name(self):
+        form_data = self.webchat_form_data.copy()
+        del form_data['screen_name']
 
-            response = await self.client.request("POST", self.post_webchat, allow_redirects=False, data=self.webchat_form_data)
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_webchat, data=form_data)
+        self.assertLogLine(cm, "Form submission error")
+
+        self.assertEqual(response.status, 200)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_webchat_open(self):
+        mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+            
+            response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
+                                                 data=self.webchat_form_data)
 
         self.assertEqual(response.status, 200)
         self.assertIn('iframe', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_webchat_not_open_200(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, status=200)
+
+                response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
+                                                     data=self.webchat_form_data)
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Bank Holidays', contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_not_open_clientconnectionerror(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
+
+                with self.assertLogs('respondent-home', 'ERROR') as cm:
+                    response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
+                                                         data=self.webchat_form_data)
+                self.assertLogLine(cm, "Client failed to connect")
+                self.assertLogLine(cm, "Failed to post WebChat Closed")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Bank Holidays', contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_not_open_500(self):
+        mocked_now = datetime.datetime(2019, 6, 16, 16, 30, 00, 0)
+        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+            mocked_get_now.return_value = mocked_now
+
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.post(self.webchatsvc_url, status=500)
+
+                with self.assertLogs('respondent-home', 'ERROR') as cm:
+                    response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
+                                                         data=self.webchat_form_data)
+                self.assertLogLine(cm, "Error in response", status_code=500)
+                self.assertLogLine(cm, "Failed to post WebChat Closed")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Bank Holidays', contents)
 
     def test_join_uac(self):
         # Given some post data

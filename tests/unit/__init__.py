@@ -276,3 +276,5 @@ class RHTestCase(AioHTTPTestCase):
         self.webchat_form_data = {
             'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help'
         }
+
+        self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']

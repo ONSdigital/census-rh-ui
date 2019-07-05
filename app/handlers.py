@@ -1,7 +1,7 @@
 import logging
 
 import aiohttp_jinja2
-from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
+from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from structlog import wrap_logger
@@ -19,7 +19,7 @@ from .exceptions import InvalidEqPayLoad
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
-Request = namedtuple("Request", ["method", "url", "auth", "json", "func"])
+Request = namedtuple("Request", ["method", "url", "auth", "json", "func", "response"])
 routes = RouteTableDef()
 
 
@@ -80,14 +80,15 @@ class View:
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def _make_request(self, request: Request):
-        method, url, auth, json, func = request
+        method, url, auth, json, func, response = request
         logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
         try:
-            async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json) as resp:
+            async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json, ssl=False) as resp:
                 func(resp)
-                # Not all end points return JSON with content type header set.
-                # Turn off content type header checking setting parameter to none, empty return body will return none.
-                return await resp.json(content_type=None)
+                if response == "json":
+                    return await resp.json()
+                else:
+                    return None
         except (ClientConnectionError, ClientConnectorError) as ex:
             logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
             raise ex
@@ -107,7 +108,7 @@ class View:
         json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
-                    json, self._handle_response))
+                    json, self._handle_response, None))
 
     async def post_webchat_closed(self):
 
@@ -115,7 +116,7 @@ class View:
                 'info_country': 'none', 'info_language': 'closed', 'info_query': 'closed'}
         return await self._make_request(
             Request("POST", self._webchat_service_url, None,
-                    json, self._handle_response))
+                    json, self._handle_response, None))
 
 
 @routes.view('/start/')
@@ -151,7 +152,7 @@ class Index(View):
     async def get_uac_details(self):
         logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
         return await self._make_request(
-            Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response))
+            Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
     @aiohttp_jinja2.template('index.html')
     async def get(self, _):
@@ -329,21 +330,23 @@ class WebChat(View):
 
         return True
 
-    @staticmethod
-    def validate_form(data):
+    def validate_form(self, data):
 
-        form_return = []
+        form_valid = True
 
-        if data.get('screen_name') == '':
-            form_return.append('name-missing')
+        if not data.get('screen_name'):
+            flash(self._request, WEBCHAT_MISSING_NAME_MSG)
+            form_valid = False
 
         if not(data.get('language')):
-            form_return.append('language-missing')
+            flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
+            form_valid = False
 
         if not(data.get('query')):
-            form_return.append('query-missing')
+            flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
+            form_valid = False
 
-        return form_return
+        return form_valid
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
@@ -357,7 +360,7 @@ class WebChat(View):
 
             try:
                 await self.post_webchat_closed()
-            except (ClientConnectionError, ClientConnectorError):
+            except ClientError:
                 logger.error("Failed to post WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
@@ -369,20 +372,10 @@ class WebChat(View):
         data = await request.post()
         self._request = request
 
-        try:
-            form_return = self.validate_form(data)
+        form_valid = self.validate_form(data)
 
-            if not form_return == []:
-                raise TypeError(form_return)
-
-        except TypeError:
-            logger.warn("Form submission error", client_ip=self._client_ip)
-            if any("name-missing" in s for s in form_return):
-                flash(self._request, WEBCHAT_MISSING_NAME_MSG)
-            if any("language-missing" in s for s in form_return):
-                flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
-            if any("query-missing" in s for s in form_return):
-                flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
+        if not form_valid:
+            logger.info("Form submission error", client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_language': data.get('language'),
                     'form_value_query': data.get('query')}
@@ -394,15 +387,12 @@ class WebChat(View):
 
         logger.info("Date/time check", client_ip=self._client_ip)
         if WebChat.check_open():
-            response = aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
-            response.headers['Content-Language'] = 'en'
+            return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         else:
             try:
                 await self.post_webchat_closed()
-            except (ClientConnectionError, ClientConnectorError):
+            except ClientError:
                 logger.error("Failed to post WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
             return {'webchat_status': 'closed'}
-
-        return response
