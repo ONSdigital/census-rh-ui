@@ -356,7 +356,7 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, status=200)
+                mocked.get(self.webchatsvc_url, status=200)
 
                 response = await self.client.request("GET", self.get_webchat)
 
@@ -371,12 +371,12 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
+                mocked.get(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
 
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request("GET", self.get_webchat)
                 self.assertLogLine(cm, "Client failed to connect")
-                self.assertLogLine(cm, "Failed to post WebChat Closed")
+                self.assertLogLine(cm, "Failed to send WebChat Closed")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -389,13 +389,12 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, status=500)
+                mocked.get(self.webchatsvc_url, status=500)
 
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request("GET", self.get_webchat)
 
-                self.assertLogLine(cm, "Error in response", status_code=500)
-                self.assertLogLine(cm, "Failed to post WebChat Closed")
+                self.assertLogLine(cm, "Failed to send WebChat Closed")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -456,7 +455,7 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, status=200)
+                mocked.get(self.webchatsvc_url, status=200)
 
                 response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
                                                      data=self.webchat_form_data)
@@ -472,13 +471,13 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
+                mocked.get(self.webchatsvc_url, exception=ClientConnectionError('Failed'))
 
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
                                                          data=self.webchat_form_data)
                 self.assertLogLine(cm, "Client failed to connect")
-                self.assertLogLine(cm, "Failed to post WebChat Closed")
+                self.assertLogLine(cm, "Failed to send WebChat Closed")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -491,13 +490,12 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-                mocked.post(self.webchatsvc_url, status=500)
+                mocked.get(self.webchatsvc_url, status=500)
 
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request("POST", self.post_webchat, allow_redirects=False,
                                                          data=self.webchat_form_data)
-                self.assertLogLine(cm, "Error in response", status_code=500)
-                self.assertLogLine(cm, "Failed to post WebChat Closed")
+                self.assertLogLine(cm, "Failed to send WebChat Closed")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())

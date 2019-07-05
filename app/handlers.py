@@ -110,13 +110,13 @@ class View:
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
 
-    async def post_webchat_closed(self):
+    async def get_webchat_closed(self):
 
         querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
 
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
-                    None, self._handle_response))
+                    None, self._handle_response, None))
 
 
 @routes.view('/start/')
@@ -325,7 +325,7 @@ class WebChat(View):
         elif weekday == 6:
             return False
         else:
-            if hour < 8 or hour >= 12:
+            if hour < 8 or hour >= 19:
                 return False
 
         return True
@@ -356,12 +356,10 @@ class WebChat(View):
         if WebChat.check_open():
             return {}
         else:
-            logger.info("Closed", client_ip=self._client_ip)
-
             try:
-                await self.post_webchat_closed()
+                await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to post WebChat Closed", client_ip=self._client_ip)
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
             return {'webchat_status': 'closed'}
@@ -390,9 +388,9 @@ class WebChat(View):
             return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         else:
             try:
-                await self.post_webchat_closed()
+                await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to post WebChat Closed", client_ip=self._client_ip)
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
             return {'webchat_status': 'closed'}
