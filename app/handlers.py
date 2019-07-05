@@ -112,11 +112,11 @@ class View:
 
     async def post_webchat_closed(self):
 
-        json = {'im_name': 'closed', 'im_subject': 'ONS', 'im_countchars': '1', 'info_email': 'none',
-                'info_country': 'none', 'info_language': 'closed', 'info_query': 'closed'}
+        querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
+
         return await self._make_request(
-            Request("POST", self._webchat_service_url, None,
-                    json, self._handle_response, None))
+            Request("GET", self._webchat_service_url + querystring, None,
+                    None, self._handle_response))
 
 
 @routes.view('/start/')
@@ -325,7 +325,7 @@ class WebChat(View):
         elif weekday == 6:
             return False
         else:
-            if hour < 8 or hour >= 19:
+            if hour < 8 or hour >= 12:
                 return False
 
         return True
