@@ -296,9 +296,8 @@ class CookiesPrivacy:
 
 @routes.view('/contact-us')
 class ContactUs:
-    @aiohttp_jinja2.template('contact-us.html')
     async def get(self, _):
-        return {}
+        raise HTTPFound("/contact-us")
 
 
 @routes.view('/onlinehelp')
