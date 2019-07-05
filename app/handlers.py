@@ -1,14 +1,17 @@
 import logging
 
 import aiohttp_jinja2
-from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
+from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from structlog import wrap_logger
 from aiohttp_session import get_session
+import datetime
 
 from . import (
-    BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG)
+    BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    WEBCHAT_MISSING_QUERY_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -16,7 +19,7 @@ from .exceptions import InvalidEqPayLoad
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
-Request = namedtuple("Request", ["method", "url", "auth", "json", "func"])
+Request = namedtuple("Request", ["method", "url", "auth", "json", "func", "response"])
 routes = RouteTableDef()
 
 
@@ -52,6 +55,10 @@ class View:
     def _rhsvc_url_surveylaunched(self):
         return f"{self._request.app['RHSVC_URL']}/surveyLaunched"
 
+    @property
+    def _webchat_service_url(self):
+        return self._request.app['WEBCHAT_SVC_URL']
+
     @staticmethod
     def _handle_response(response):
         try:
@@ -73,14 +80,15 @@ class View:
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def _make_request(self, request: Request):
-        method, url, auth, json, func = request
+        method, url, auth, json, func, response = request
         logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
         try:
-            async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json) as resp:
+            async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json, ssl=False) as resp:
                 func(resp)
-                # Not all end points return JSON with content type header set.
-                # Turn off content type header checking setting parameter to none, empty return body will return none.
-                return await resp.json(content_type=None)
+                if response == "json":
+                    return await resp.json()
+                else:
+                    return None
         except (ClientConnectionError, ClientConnectorError) as ex:
             logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
             raise ex
@@ -100,7 +108,15 @@ class View:
         json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
-                    json, self._handle_response))
+                    json, self._handle_response, None))
+
+    async def get_webchat_closed(self):
+
+        querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
+
+        return await self._make_request(
+            Request("GET", self._webchat_service_url + querystring, None,
+                    None, self._handle_response, None))
 
 
 @routes.view('/start/')
@@ -117,7 +133,11 @@ class Index(View):
 
     @staticmethod
     def join_uac(data, expected_length=16):
-        combined = "".join([v.lower() for v in data.values()][:4])
+        if data.get('uac'):
+            combined = data.get('uac').lower().replace(" ", "")
+        else:
+            combined = ''
+
         if len(combined) < expected_length:
             raise TypeError
         return combined
@@ -132,7 +152,7 @@ class Index(View):
     async def get_uac_details(self):
         logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
         return await self._make_request(
-            Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response))
+            Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
     @aiohttp_jinja2.template('index.html')
     async def get(self, _):
@@ -242,8 +262,8 @@ class AddressEdit(View):
             attributes["addressLine1"] = data["address-line-1"].strip()
             attributes["addressLine2"] = data["address-line-2"].strip()
             attributes["addressLine3"] = data["address-line-3"].strip()
-            attributes["townName"] = data["town_name"].strip()
-            attributes["postcode"] = data["postcode"].strip()
+            attributes["townName"] = data["address-town"].strip()
+            attributes["postcode"] = data["address-postcode"].strip()
 
         return attributes
 
@@ -274,22 +294,103 @@ class AddressEdit(View):
         await self.call_questionnaire(case, attributes, request.app)
 
 
-@routes.view('/cookies-privacy')
-class CookiesPrivacy:
-    @aiohttp_jinja2.template('cookies-privacy.html')
+@routes.view('/webchat/chat')
+class WebChatWindow:
+    @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
         return {}
 
 
-@routes.view('/contact-us')
-class ContactUs:
-    @aiohttp_jinja2.template('contact-us.html')
-    async def get(self, _):
-        return {}
+@routes.view('/webchat')
+class WebChat(View):
 
+    @staticmethod
+    def get_now():
+        return datetime.datetime.now()
 
-@routes.view('/onlinehelp')
-class OnlineHelp:
-    @aiohttp_jinja2.template('onlinehelp.html')
-    async def get(self, _):
-        return {}
+    @staticmethod
+    def check_open():
+
+        year = WebChat.get_now().year
+        month = WebChat.get_now().month
+        day = WebChat.get_now().day
+        weekday = WebChat.get_now().weekday()
+        hour = WebChat.get_now().hour
+        if year == 2019 and month == 10 and (day == 12 or day == 13):
+            if hour < 8 or hour >= 16:
+                return False
+        elif weekday == 5:
+            if hour < 8 or hour >= 13:
+                return False
+        elif weekday == 6:
+            return False
+        else:
+            if hour < 8 or hour >= 19:
+                return False
+
+        return True
+
+    def validate_form(self, data):
+
+        form_valid = True
+
+        if not data.get('screen_name'):
+            flash(self._request, WEBCHAT_MISSING_NAME_MSG)
+            form_valid = False
+
+        if not(data.get('language')):
+            flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
+            form_valid = False
+
+        if not(data.get('query')):
+            flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
+            form_valid = False
+
+        return form_valid
+
+    @aiohttp_jinja2.template('webchat-form.html')
+    async def get(self, request):
+
+        self._request = request
+        logger.info("Date/time check", client_ip=self._client_ip)
+        if WebChat.check_open():
+            return {}
+        else:
+            try:
+                await self.get_webchat_closed()
+            except ClientError:
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+
+            logger.info("WebChat Closed", client_ip=self._client_ip)
+            return {'webchat_status': 'closed'}
+
+    @aiohttp_jinja2.template('webchat-form.html')
+    async def post(self, request):
+
+        data = await request.post()
+        self._request = request
+
+        form_valid = self.validate_form(data)
+
+        if not form_valid:
+            logger.info("Form submission error", client_ip=self._client_ip)
+            return {'form_value_screen_name': data.get('screen_name'),
+                    'form_value_language': data.get('language'),
+                    'form_value_query': data.get('query')}
+
+        context = {'screen_name': data.get('screen_name'),
+                   'language': data.get('language'),
+                   'query': data.get('query'),
+                   'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
+
+        logger.info("Date/time check", client_ip=self._client_ip)
+        if WebChat.check_open():
+            return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
+        else:
+            try:
+                await self.get_webchat_closed()
+            except ClientError:
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+
+            logger.info("WebChat Closed", client_ip=self._client_ip)
+            return {'webchat_status': 'closed'}
