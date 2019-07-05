@@ -567,3 +567,12 @@ class TestHandlers(RHTestCase):
             Index.validate_case(case_json)
 
         # Then an InactiveCaseError is raised
+
+    @unittest_run_loop
+    async def test_get_request_access_code(self):
+        response = await self.client.request("GET", self.get_requestcode)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('What is your postcode?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('UK postcode', contents)

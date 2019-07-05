@@ -278,3 +278,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
+
+        self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
+
+        self.get_requestcode = self.app.router['RequestCode:get'].url_for()
