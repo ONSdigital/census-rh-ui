@@ -63,7 +63,7 @@ class View:
 
     @property
     def _ai_url_postcode(self):
-        return self._request.app['AI_POSTCODE_SVC_URL']
+        return f"{self._request.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
     @staticmethod
     def _handle_response(response):

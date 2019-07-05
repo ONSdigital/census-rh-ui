@@ -56,7 +56,7 @@ class BaseConfig:
 
     WEBCHAT_SVC_URL = env("WEBCHAT_SVC_URL")
 
-    AI_POSTCODE_SVC_URL = env("AI_POSTCODE_SVC_URL")
+    ADDRESS_INDEX_SVC_URL = env("ADDRESS_INDEX_SVC_URL")
 
 
 class ProductionConfig(BaseConfig):
@@ -88,7 +88,7 @@ class DevelopmentConfig:
 
     WEBCHAT_SVC_URL = env.str("WEBCHAT_SVC_URL", default="https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221")  # NOQA
 
-    AI_POSTCODE_SVC_URL = env.str("AI_POSTCODE_SVC_URL", default="http://addressindex-api-beta.apps.devtest.onsclofo.uk/addresses/postcode/")  # NOQA
+    ADDRESS_INDEX_SVC_URL = env.str("ADDRESS_INDEX_SVC_URL", default="http://addressindex-api-beta.apps.devtest.onsclofo.uk")  # NOQA
 
 
 class TestingConfig:
@@ -115,4 +115,4 @@ class TestingConfig:
 
     WEBCHAT_SVC_URL = "https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221"  # NOQA
 
-    AI_POSTCODE_SVC_URL = "http://addressindex-api-beta.apps.devtest.onsclofo.uk/addresses/postcode/"  # NOQA
+    ADDRESS_INDEX_SVC_URL = "http://addressindex-api-beta.apps.devtest.onsclofo.uk"  # NOQA
