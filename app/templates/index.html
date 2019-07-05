@@ -1,60 +1,76 @@
 {% extends "base.html" %}
+{% from "components/uac/_macro.njk" import onsUACInput %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/lists/_macro.njk" import onsList %}
+
+{% set page = {"title": "Start Survey"} %}
+
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% block title %}{% if 'ERROR' in messages_dict %}Error - {{ super() }}{% else %}{{ super() }}{% endif %}{% endblock %}
-{% block content %}
-  {% if messages_dict %}
-    {% include "partials/messages.html" with context %}
-  {% endif %}
-  <div>
-    <h2 class="saturn u-mt-l u-mb-m">Enter your access code</h2>
-    <form action="{{ url('Index:post') }}" class="form qa-questionnaire-form" role="form" method="post" novalidate>
-      <div class="panel panel--simple panel--spacious {% if 'ERROR' in messages_dict %} panel--error {% else %} panel--info {% endif %} u-mb-l">
-        <div class="panel__body">
-          <div class="group" id="household-and-accommodation">
-            <div class="block" id="access-code">
-              <div class="section" id="access-code-section">
-                <div class="question" id="access-code-question">
-                  <div class="question__answers">
-                    <div class="question__answer">
-                      <div class="answer answer--integer " id="access-code-answer">
-                        <div class="answer__fields js-fields">
-                          <fieldset class="fieldgroup fieldgroup--date">
-                            <legend class="fieldgroup__title venus">Your 16 character access code is on the letter we sent you</legend>
-                            <div class="fieldgroup__fields">
-                              <div class="field field--input field--code">
-                                <label class="label mercury u-vh" for="iac1">Enter the first four characters of the access code</label>
-                                <input pattern="^[a-zA-Z0-9]{4}$" maxlength="4" spellcheck="false" data-qa="input-text" id="iac1" name="iac1" class="input input--text" value=""
-                                  type="text" autocomplete="off" required>
-                              </div>
-                              <div class="field field--input field--code">
-                                <label class="label mercury u-vh" for="iac2">Enter the next four characters of the access code</label>
-                                <input pattern="^[a-zA-Z0-9]{4}$" maxlength="4" spellcheck="false"  data-qa="input-text" id="iac2" name="iac2" class="input input--text" value=""
-                                  type="text" autocomplete="off" required>
-                              </div>
-                              <div class="field field--input field--code">
-                                <label class="label mercury u-vh" for="iac3">Enter the next four characters of the access code</label>
-                                <input pattern="^[a-zA-Z0-9]{4}$" maxlength="4"  spellcheck="false" data-qa="input-text" id="iac3" name="iac3" class="input input--text" value=""
-                                  type="text" autocomplete="off" required>
-                              </div>
-                              <div class="field field--input field--code">
-                                <label class="label mercury u-vh" for="iac3">Enter the last four characters of the access code</label>
-                                <input pattern="^[a-zA-Z0-9]{4}$" maxlength="4"  spellcheck="false" data-qa="input-text" id="iac4" name="iac4" class="input input--text" value=""
-                                  type="text" autocomplete="off" required>
-                              </div>
-                            </div>
-                          </fieldset>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="venus icon--lock u-mb-m">Your information is protected by law and will be kept confidential.</p>  
-      <button class="btn btn--lg qa-btn-get-started" type="submit" name="action[save_continue]" data-ga="click" data-ga-category="survey" data-ga-action="launcheq" data-ga-label="survey_ref = LMS">Start now</button>
-    </form>
-  </div>
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": url('Index:post')
+    }
+} %}
+
+{% set uac_input = onsUACInput({
+        "id": "uac",
+        "name": "uac",
+        "label": {
+            "text": "Enter the 16 character code printed on the letter",
+            "description": "Keep this code safe and only share it with others in your household"
+        },
+        "securityMessage": "Your personal information is protected by law and will be kept confidential."
+    })
+%}
+
+{% block main %}
+
+    <h1 class="u-mt-l">Start survey</h1>
+
+    {% if messages_dict %}
+        {% include "partials/messages.html" with context %}
+    {% endif %}
+
+    {% if 'uac' in field_messages_dict %}
+        {% call
+            onsPanel({
+                "type": "error"
+            })
+        %}
+        {{
+            onsList({
+                "id": 'link-uac',
+                "classes": 'list--bare list--errors u-mb-s',
+                "itemsList": [
+                    {
+                        "text": 'Enter a valid code'
+                    }
+                ]
+            })
+        }}
+        {{ uac_input }}
+        {% endcall %}
+    {% else %}
+        {{ uac_input }}
+    {% endif %}
+
+    {{ onsButton({
+        "text": "Access survey",
+        "classes": "u-mb-xl",
+        "name": "action[save_continue]"
+    }) }}
+
+    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
+    <p>
+        You can <a href="#">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
+    </p>
+
+    <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
+
+    <p><a href="{{ url('WebChat:get') }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web Chat</a></p>
+
 {% endblock %}

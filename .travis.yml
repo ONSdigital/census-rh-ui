@@ -3,7 +3,8 @@ sudo: required
 dist: trusty
 python: '3.6'
 
-# before_install:
+before_install:
+  - ./scripts/load_templates.sh
 
 cache:
   - pip

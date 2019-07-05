@@ -212,8 +212,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_index = self.app.router['Index:get'].url_for()
         self.get_info = self.app.router['Info:get'].url_for()
-        self.get_cookies_privacy = self.app.router['CookiesPrivacy:get'].url_for()
-        self.get_contact_us = self.app.router['ContactUs:get'].url_for()
         self.post_index = self.app.router['Index:post'].url_for()
         self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
         self.case_id = self.uac_json['caseId']
@@ -264,9 +262,19 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.form_data = {
-            'uac1': self.uac1, 'uac2': self.uac2, 'uac3': self.uac3, 'uac4': self.uac4, 'action[save_continue]': '',
+            'uac': self.uac, 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
+
+        self.get_webchat = self.app.router['WebChat:get'].url_for()
+        self.post_webchat = self.app.router['WebChat:post'].url_for()
+        self.get_webchat_chat = self.app.router['WebChatWindow:get'].url_for()
+
+        self.webchat_form_data = {
+            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help'
+        }
+
+        self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
