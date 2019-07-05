@@ -402,7 +402,15 @@ class RequestCodeConfirmAddress(View):
             return
 
         if address_confirmation == 'yes':
-            raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+
+            address = session["attributes"]['postcode']
+
+            logger.info(address, client_ip=self._client_ip)
+
+            if address == 'EX1 1LL':
+                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
+            else:
+                raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
 
         elif address_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
@@ -412,6 +420,26 @@ class RequestCodeConfirmAddress(View):
             logger.warn("Address confirmation error", client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
+
+
+@routes.view('/request-access-code/not-required')
+class RequestCodeNotRequired(View):
+    @aiohttp_jinja2.template('request-code-not-required.html')
+    async def post(self, request):
+
+        data = await request.post()
+        self._request = request
+
+        self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+
+        return attributes
 
 
 @routes.view('/request-access-code/enter-mobile')
