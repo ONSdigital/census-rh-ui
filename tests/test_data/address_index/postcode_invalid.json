@@ -1,0 +1,26 @@
+{
+   "apiVersion": "1.0.0",
+   "dataVersion": "39",
+   "errors": [
+       {
+           "code": 16,
+           "message": "Postcode supplied is not valid according to the UK addresses pattern match."
+       }
+   ],
+   "response": {
+       "addresses": [],
+       "epoch": "",
+       "filter": "",
+       "historical": true,
+       "limit": 10,
+       "maxScore": 0,
+       "offset": 0,
+       "postcode": "zz999zz",
+       "total": 0,
+       "verbose": false
+   },
+   "status": {
+       "code": 400,
+       "message": "Bad request"
+   }
+}
