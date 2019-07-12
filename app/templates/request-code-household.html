@@ -34,7 +34,7 @@
 {% block main %}
     {% call onsQuestion({
         "title": "What is your postcode?",
-        "description": "<p>There is a reason for this.</p>"
+        "description": "<p>To text you a new code we need to know what address you are answering for.</p>"
     }) %}
 
         {% if 'postcode' in field_messages_dict %}

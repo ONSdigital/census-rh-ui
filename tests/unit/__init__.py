@@ -282,3 +282,32 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
         self.get_requestcode = self.app.router['RequestCode:get'].url_for()
+        self.post_requestcode = self.app.router['RequestCode:post'].url_for()
+        self.get_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:get'].url_for()
+        self.post_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:post'].url_for()
+
+        self.postcode_valid = 'EX2 6GA'
+        self.postcode_invalid = 'ZZ99 9ZZ'
+        self.postcode_no_results = 'GU34 5DU'
+
+        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
+            self.ai_postcode_no_results = json.load(fp)
+
+        with open('tests/test_data/address_index/postcode_results.json') as fp:
+            self.ai_postcode_results = json.load(fp)
+
+        self.request_code_form_data_valid = {
+            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
+        }
+
+        self.request_code_form_data_no_results = {
+            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
+        }
+
+        self.request_code_form_data_invalid = {
+            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        self.request_code_session_attributes = {'postcode': self.postcode_valid}
+
+        # self.request_code_session = "<Session [new:False, changed:False, created:1562930066] {'attributes': {'postcode': 'GU345DU'}}>"

@@ -410,6 +410,7 @@ class WebChat(View):
 
 @routes.view('/request-access-code')
 class RequestCode(View):
+
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, _):
         return {}
@@ -424,6 +425,8 @@ class RequestCode(View):
 
         if pattern.fullmatch(data["request-postcode"]):
 
+            logger.info("Valid postcode", client_ip=self._client_ip)
+
             attributes = {}
 
             attributes["postcode"] = data["request-postcode"].upper()
@@ -431,20 +434,7 @@ class RequestCode(View):
             session = await get_session(request)
             session["attributes"] = attributes
 
-            postcode_return = await self.get_ai_postcode(attributes["postcode"])
-
-            address_options = []
-
-            for singleAddress in postcode_return['response']['addresses']:
-                address_options.append(
-                    {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
-                     "text": singleAddress['formattedAddress']})
-
-            address_content = {'postcode': attributes["postcode"],
-                               'addresses': address_options,
-                               'total_matches': postcode_return['response']['total']}
-
-            return aiohttp_jinja2.render_template("request-code-select-address.html", self._request, address_content)
+            raise HTTPFound(self._request.app.router['RequestCodeSelectAddress:get'].url_for())
 
         else:
             logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
@@ -454,6 +444,36 @@ class RequestCode(View):
 
 @routes.view('/request-access-code/select-address')
 class RequestCodeSelectAddress(View):
+
+    @aiohttp_jinja2.template('request-code-select-address.html')
+    async def get(self, request):
+
+        self._request = request
+
+        # self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+
+        postcode_return = await self.get_ai_postcode(attributes["postcode"])
+
+        address_options = []
+
+        for singleAddress in postcode_return['response']['addresses']:
+            address_options.append(
+                {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
+                 "text": singleAddress['formattedAddress']})
+
+        address_content = {'postcode': attributes["postcode"],
+                           'addresses': address_options,
+                           'total_matches': postcode_return['response']['total']}
+
+        return address_content
+
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
 
@@ -474,11 +494,31 @@ class RequestCodeSelectAddress(View):
         attributes["address"] = form_return["address"]
         attributes["uprn"] = form_return["uprn"]
 
-        return aiohttp_jinja2.render_template("request-code-confirm-address.html", self._request, attributes)
+        session = await get_session(request)
+        session["attributes"] = attributes
+
+        raise HTTPFound(self._request.app.router['RequestCodeConfirmAddress:get'].url_for())
 
 
 @routes.view('/request-access-code/confirm-address')
 class RequestCodeConfirmAddress(View):
+
+    @aiohttp_jinja2.template('request-code-confirm-address.html')
+    async def get(self, request):
+
+        self._request = request
+
+        self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+
+        return attributes
+
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
 
@@ -566,8 +606,10 @@ class RequestCodeEnterMobile(View):
         if pattern.fullmatch(data['request-mobile-number']):
 
             attributes["mobile_number"] = data["request-mobile-number"]
+            session = await get_session(request)
+            session["attributes"] = attributes
 
-            return aiohttp_jinja2.render_template("request-code-confirm-mobile.html", self._request, attributes)
+            raise HTTPFound(self._request.app.router['RequestCodeConfirmMobile:get'].url_for())
 
         else:
             logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
@@ -577,6 +619,23 @@ class RequestCodeEnterMobile(View):
 
 @routes.view('/request-access-code/confirm-mobile')
 class RequestCodeConfirmMobile(View):
+
+    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    async def get(self, request):
+
+        self._request = request
+
+        self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+
+        return attributes
+
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
 
@@ -600,7 +659,7 @@ class RequestCodeConfirmMobile(View):
             return
 
         if mobile_confirmation == 'yes':
-            return aiohttp_jinja2.render_template("request-code-code-sent.html", self._request, attributes)
+            raise HTTPFound(self._request.app.router['RequestCodeCodeSent:get'].url_for())
 
         elif mobile_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
@@ -615,7 +674,7 @@ class RequestCodeConfirmMobile(View):
 @routes.view('/request-access-code/code-sent')
 class RequestCodeCodeSent(View):
     @aiohttp_jinja2.template('request-code-code-sent.html')
-    async def post(self, request):
+    async def get(self, request):
 
         self._request = request
 
