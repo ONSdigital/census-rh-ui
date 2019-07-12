@@ -450,7 +450,7 @@ class RequestCodeSelectAddress(View):
 
         self._request = request
 
-        # self.check_session()
+        self.check_session()
         session = await get_session(request)
         try:
             attributes = session["attributes"]
