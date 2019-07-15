@@ -599,8 +599,11 @@ class TestHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_request_access_code_found(self):
-        with mock.patch('aiohttp.ClientSession.get') as mocked_get_now:
-            mocked_get_now.return_value.attributes = self.request_code_session_attributes
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
+            self.assertEqual(response.status, 200)
 
             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
                 mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_results)
@@ -612,13 +615,18 @@ class TestHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_request_access_code_not_found(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.addressindexsvc_url + self.postcode_no_results, payload=self.ai_postcode_no_results)
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
+            self.assertEqual(response.status, 200)
 
-            response = await self.client.request("GET", self.get_requestcode_selectaddress)
+            with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+                mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_no_results)
 
-        self.assertEqual(response.status, 200)
-        self.assertIn('We cannot find your address', str(await response.content.read()))
+                response = await self.client.request("GET", self.get_requestcode_selectaddress)
+
+            self.assertEqual(response.status, 200)
+            self.assertIn('We cannot find your address', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error(self):
