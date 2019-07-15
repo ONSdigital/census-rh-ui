@@ -543,6 +543,7 @@ class RequestCodeConfirmAddress(View):
 
         if address_confirmation == 'yes':
 
+            # To be replaced with call to new endpoint - change render_template at that point
             address = session["attributes"]['postcode']
 
             if address == 'EX1 1LL':
