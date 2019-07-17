@@ -13,7 +13,7 @@ import datetime
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
     SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
-    WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, POSTCODE_INVALID_MSG)
+    WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -483,7 +483,7 @@ class RequestCodeSelectAddress(View):
         self.check_session()
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
+            session["attributes"]
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
@@ -491,11 +491,9 @@ class RequestCodeSelectAddress(View):
 
         form_return = ast.literal_eval(data["request-address-select"])
 
-        attributes["address"] = form_return["address"]
-        attributes["uprn"] = form_return["uprn"]
-
-        session = await get_session(request)
-        session["attributes"] = attributes
+        session["attributes"]["address"] = form_return["address"]
+        session["attributes"]["uprn"] = form_return["uprn"]
+        session.changed()
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddress:get'].url_for())
 
@@ -539,7 +537,7 @@ class RequestCodeConfirmAddress(View):
         except KeyError:
             logger.warn("Address confirmation error", client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
-            return
+            return attributes
 
         if address_confirmation == 'yes':
 
@@ -656,8 +654,8 @@ class RequestCodeConfirmMobile(View):
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
-            return
+            flash(request, MOBILE_CHECK_MSG)
+            return attributes
 
         if mobile_confirmation == 'yes':
             raise HTTPFound(self._request.app.router['RequestCodeCodeSent:get'].url_for())
@@ -668,7 +666,7 @@ class RequestCodeConfirmMobile(View):
         else:
             # catch all just in case, should never get here
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, MOBILE_CHECK_MSG)
             return attributes
 
 

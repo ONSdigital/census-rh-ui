@@ -285,10 +285,14 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode = self.app.router['RequestCode:post'].url_for()
         self.get_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:get'].url_for()
         self.post_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:post'].url_for()
+        self.get_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:get'].url_for()
+        self.post_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'
+
+        self.post_requestcode_address_confirmation_data = {'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"}
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             self.ai_postcode_no_results = json.load(fp)
@@ -308,6 +312,6 @@ class RHTestCase(AioHTTPTestCase):
             'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
-        self.request_code_session_attributes = {'postcode': self.postcode_valid}
-
-        # self.request_code_session = "<Session [new:False, changed:False, created:1562930066] {'attributes': {'postcode': 'GU345DU'}}>"
+        self.request_code_address_confirmation_data = {
+            'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+        }

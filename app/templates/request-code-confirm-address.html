@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/radios/_macro.njk" import onsRadios %}
@@ -15,12 +18,40 @@
 
 {% block main %}
 
+    {% if messages_dict %}
+        {% include "partials/messages.html" with context %}
+    {% endif %}
+
     {% call onsQuestion({
         "title": "Is this address correct?",
         "description": question_description
     }) %}
-
-
+{% if 'address' in field_messages_dict %}
+    {{
+        onsRadios({
+            "name": "request-address-confirmation",
+            "radios": [
+                {
+                    "id": "yes",
+                    "label": {
+                        "text": "Yes, this address is correct"
+                    },
+                    "value": "yes"
+                },
+                {
+                    "id": "no",
+                    "label": {
+                        "text": "No, I need to change it"
+                    },
+                    "value": "no"
+                }
+            ],
+            "error": {
+                "text": "Check and confirm the address"
+            }
+        })
+    }}
+{% else %}
     {{
         onsRadios({
             "name": "request-address-confirmation",
@@ -42,6 +73,7 @@
             ]
         })
     }}
+{% endif %}
     {% endcall %}
 
     {{

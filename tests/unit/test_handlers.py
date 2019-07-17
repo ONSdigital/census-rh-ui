@@ -629,6 +629,19 @@ class TestHandlers(RHTestCase):
             self.assertIn('We cannot find your address', str(await response.content.read()))
 
     @unittest_run_loop
+    async def test_post_request_code_select_address(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request("POST", self.post_requestcode_selectaddress,
+                                             data=self.post_requestcode_address_confirmation_data)
+
+            self.assertEqual(response.status, 200)
+
+    @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
