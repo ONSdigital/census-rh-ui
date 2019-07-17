@@ -466,7 +466,8 @@ class RequestCodeSelectAddress(View):
         for singleAddress in postcode_return['response']['addresses']:
             address_options.append(
                 {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
-                 "text": singleAddress['formattedAddress']})
+                 "label": {"text": singleAddress['formattedAddress']},
+                 "id": singleAddress['uprn']})
 
         address_content = {'postcode': attributes["postcode"],
                            'addresses': address_options,

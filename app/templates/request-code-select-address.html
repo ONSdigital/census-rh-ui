@@ -2,7 +2,7 @@
 
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/button/_macro.njk" import onsButton %}
-{% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/radios/_macro.njk" import onsRadios %}
 
 {% set form =  {
     "method": "POST",
@@ -11,19 +11,7 @@
     }
 } %}
 
-{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\">Addresses for postcode ' + postcode + '</p>' %}
-
-{% set address_select =
-    onsSelect({
-        "id": "select-wide",
-        "name": "request-address-select",
-        "label": {
-            "text": "Select your address"
-        },
-        "classes": "input--block",
-        "options": addresses
-    })
-%}
+{% set question_description = '<p class="js-piped-answer u-fs-r--b" data-question-to-pipe=\"/request-code/enter-mobile\">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
 
 {% block main %}
 
@@ -40,7 +28,24 @@
             "description": question_description
         }) %}
 
-            {{ address_select }}
+            {% if 'address' in field_messages_dict %}
+                {{
+                    onsRadios({
+                        "name": "request-address-select",
+                        "radios": addresses,
+                        "error": {
+                            "text": "Check and confirm the address"
+                        }
+                    })
+                }}
+            {% else %}
+                {{
+                    onsRadios({
+                        "name": "request-address-select",
+                        "radios": addresses
+                    })
+                }}
+            {% endif %}
 
         {% endcall %}
 
