@@ -1,4 +1,13 @@
-{% extends "base.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set request_link = url('RequestCodeNI:get') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set request_link = url('RequestCodeCY:get') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set request_link = url('RequestCode:get') %}
+{% endif %}
 
 {% block main %}
 
@@ -6,6 +15,6 @@
 
     <p>{{ address }}</p>
 
-    <p>Based on the address you have provided you are not required to take part. If this is incorrect you can <a href="{{ url('RequestCode:get') }}">enter the address</a> again or find out more <a href="#">about the census rehearsal.</a></p>
+    <p>Based on the address you have provided you are not required to take part. If this is incorrect you can <a href="{{ request_link }}">enter the address</a> again or find out more <a href="#">about the census rehearsal.</a></p>
 
 {% endblock %}

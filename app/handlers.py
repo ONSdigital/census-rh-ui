@@ -8,7 +8,7 @@ from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from structlog import wrap_logger
 from aiohttp_session import get_session
-import datetime
+from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
@@ -65,6 +65,18 @@ class View:
     def _ai_url_postcode(self):
         return f"{self._request.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
+    @property
+    def _rhsvc_get_cases_by_uprn(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/uprn/"
+
+    @property
+    def _rhsvc_get_fulfilments(self):
+        return f"{self._request.app['RHSVC_URL']}/fulfilments"
+
+    @property
+    def _rhsvc_request_fulfilment(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/"
+
     @staticmethod
     def _handle_response(response):
         try:
@@ -110,25 +122,38 @@ class View:
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
     async def get_surveylaunched(self, case):
-
         json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
 
     async def get_webchat_closed(self):
-
         querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
-
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
                     None, self._handle_response, None))
 
     async def get_ai_postcode(self, postcode):
-
         return await self._make_request(
             Request("GET", self._ai_url_postcode + postcode, None,
                     None, self._handle_response, "json"))
+
+    async def get_cases_by_uprn(self, uprn):
+        return await self._make_request(
+            Request("GET", self._rhsvc_get_cases_by_uprn + uprn, None,
+                    None, self._handle_response, "json"))
+
+    async def get_fulfilment(self, caseType, region, deliveryChannel):
+        querystring = '?caseType=' + caseType + '&region=' + region + '&deliveryChannel=' + deliveryChannel # NOQA
+        return await self._make_request(
+            Request("GET", self._rhsvc_get_fulfilments + querystring, None,
+                    None, self._handle_response, "json"))
+
+    async def request_fulfilment(self, caseId, telNo, fulfilmentCode):
+        json = {'caseId': caseId, 'telNo': telNo, 'fulfilmentCode': fulfilmentCode, 'dateTime': datetime.now(timezone.utc).isoformat()}
+        return await self._make_request(
+            Request("POST", self._rhsvc_request_fulfilment + caseId + '/fulfilments/sms', self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response, None))
 
 
 @routes.view('/start/')
@@ -318,7 +343,7 @@ class WebChat(View):
 
     @staticmethod
     def get_now():
-        return datetime.datetime.now()
+        return datetime.now()
 
     @staticmethod
     def check_open():
@@ -408,8 +433,43 @@ class WebChat(View):
             return {'webchat_status': 'closed'}
 
 
+class RequestCodeCommon(View):
+
+    async def get_check_attributes(self, request):
+        self._request = request
+
+        self.check_session()
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+
+        return attributes
+
+    async def get_postcode_return(self, postcode, display_region):
+        postcode_return = await self.get_ai_postcode(postcode)
+
+        address_options = []
+
+        for singleAddress in postcode_return['response']['addresses']:
+            address_options.append(
+                {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
+                 "label": {"text": singleAddress['formattedAddress']},
+                 "id": singleAddress['uprn']})
+
+        address_content = {'postcode': postcode,
+                           'addresses': address_options,
+                           'display_region': display_region,
+                           'total_matches': postcode_return['response']['total']}
+
+        return address_content
+
+
 @routes.view('/request-access-code')
-class RequestCode(View):
+class RequestCode(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, _):
@@ -428,8 +488,8 @@ class RequestCode(View):
             logger.info("Valid postcode", client_ip=self._client_ip)
 
             attributes = {}
-
             attributes["postcode"] = data["request-postcode"].upper()
+            attributes["display_region"] = 'en'
 
             session = await get_session(request)
             session["attributes"] = attributes
@@ -442,56 +502,98 @@ class RequestCode(View):
             raise HTTPFound(self._request.app.router['RequestCode:post'].url_for())
 
 
+@routes.view('/cy/request-access-code')
+class RequestCodeCY(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-household.html')
+    async def get(self, _):
+        attributes = {}
+        attributes["display_region"] = 'cy'
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-household.html')
+    async def post(self, request):
+
+        self._request = request
+        data = await self._request.post()
+
+        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
+
+        if pattern.fullmatch(data["request-postcode"]):
+
+            logger.info("Valid postcode", client_ip=self._client_ip)
+
+            attributes = {}
+            attributes["postcode"] = data["request-postcode"].upper()
+            attributes["display_region"] = 'cy'
+
+            session = await get_session(request)
+            session["attributes"] = attributes
+
+            raise HTTPFound(self._request.app.router['RequestCodeSelectAddressCY:get'].url_for())
+
+        else:
+            logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
+            flash(self._request, POSTCODE_INVALID_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeCY:post'].url_for())
+
+
+@routes.view('/ni/request-access-code')
+class RequestCodeNI(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-household.html')
+    async def get(self, _):
+        attributes = {}
+        attributes["display_region"] = 'ni'
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-household.html')
+    async def post(self, request):
+
+        self._request = request
+        data = await self._request.post()
+
+        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
+
+        if pattern.fullmatch(data["request-postcode"]):
+
+            logger.info("Valid postcode", client_ip=self._client_ip)
+
+            attributes = {}
+            attributes["postcode"] = data["request-postcode"].upper()
+            attributes["display_region"] = 'ni'
+
+            session = await get_session(request)
+            session["attributes"] = attributes
+
+            raise HTTPFound(self._request.app.router['RequestCodeSelectAddressNI:get'].url_for())
+
+        else:
+            logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
+            flash(self._request, POSTCODE_INVALID_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeNI:post'].url_for())
+
+
 @routes.view('/request-access-code/select-address')
-class RequestCodeSelectAddress(View):
+class RequestCodeSelectAddress(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
 
-        self._request = request
+        attributes = await self.get_check_attributes(request)
 
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
-
-        postcode_return = await self.get_ai_postcode(attributes["postcode"])
-
-        address_options = []
-
-        for singleAddress in postcode_return['response']['addresses']:
-            address_options.append(
-                {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
-                 "label": {"text": singleAddress['formattedAddress']},
-                 "id": singleAddress['uprn']})
-
-        address_content = {'postcode': attributes["postcode"],
-                           'addresses': address_options,
-                           'total_matches': postcode_return['response']['total']}
+        address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
 
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
-
+        await self.get_check_attributes(request)
         data = await request.post()
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
         form_return = ast.literal_eval(data["request-address-select"])
 
+        session = await get_session(request)
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
@@ -499,39 +601,72 @@ class RequestCodeSelectAddress(View):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddress:get'].url_for())
 
 
+@routes.view('/cy/request-access-code/select-address')
+class RequestCodeSelectAddressCY(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-select-address.html')
+    async def get(self, request):
+
+        attributes = await self.get_check_attributes(request)
+
+        address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
+
+        return address_content
+
+    @aiohttp_jinja2.template('request-code-select-address.html')
+    async def post(self, request):
+        await self.get_check_attributes(request)
+        data = await request.post()
+
+        form_return = ast.literal_eval(data["request-address-select"])
+
+        session = await get_session(request)
+        session["attributes"]["address"] = form_return["address"]
+        session["attributes"]["uprn"] = form_return["uprn"]
+        session.changed()
+
+        raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressCY:get'].url_for())
+
+
+@routes.view('/ni/request-access-code/select-address')
+class RequestCodeSelectAddressNI(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-select-address.html')
+    async def get(self, request):
+
+        attributes = await self.get_check_attributes(request)
+
+        address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
+
+        return address_content
+
+    @aiohttp_jinja2.template('request-code-select-address.html')
+    async def post(self, request):
+        await self.get_check_attributes(request)
+        data = await request.post()
+
+        form_return = ast.literal_eval(data["request-address-select"])
+
+        session = await get_session(request)
+        session["attributes"]["address"] = form_return["address"]
+        session["attributes"]["uprn"] = form_return["uprn"]
+        session.changed()
+
+        raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressNI:get'].url_for())
+
+
 @routes.view('/request-access-code/confirm-address')
-class RequestCodeConfirmAddress(View):
+class RequestCodeConfirmAddress(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
-
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
-
+        attributes = await self.get_check_attributes(request)
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
-
+        attributes = await self.get_check_attributes(request)
         data = await request.post()
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
         try:
             address_confirmation = data["request-address-confirmation"]
@@ -542,12 +677,15 @@ class RequestCodeConfirmAddress(View):
 
         if address_confirmation == 'yes':
 
-            # To be replaced with call to new endpoint - change render_template at that point
-            address = session["attributes"]['postcode']
-
-            if address == 'EX1 1LL':
-                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
+            session = await get_session(request)
+            uprn = session["attributes"]['uprn']
+            uprn_return = await self.get_cases_by_uprn(uprn)
+            if uprn_return == []:
+                raise HTTPFound(self._request.app.router['RequestCodeNotRequired:get'].url_for())
             else:
+                session["attributes"]["case_id"] = uprn_return[0]["id"]
+                session["attributes"]["region"] = uprn_return[0]["region"]
+                session.changed()
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
 
         elif address_confirmation == 'no':
@@ -560,46 +698,124 @@ class RequestCodeConfirmAddress(View):
             return attributes
 
 
+@routes.view('/cy/request-access-code/confirm-address')
+class RequestCodeConfirmAddressCY(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-confirm-address.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-confirm-address.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        try:
+            address_confirmation = data["request-address-confirmation"]
+        except KeyError:
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'yes':
+
+            # To be replaced with call to new endpoint - change render_template at that point
+            session = await get_session(request)
+            address = session["attributes"]['postcode']
+
+            if address == 'EX1 1LL':
+                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
+            else:
+                raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+
+        elif address_confirmation == 'no':
+            raise HTTPFound(self._request.app.router['RequestCodeCY:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/ni/request-access-code/confirm-address')
+class RequestCodeConfirmAddressNI(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-confirm-address.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-confirm-address.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        try:
+            address_confirmation = data["request-address-confirmation"]
+        except KeyError:
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'yes':
+
+            # To be replaced with call to new endpoint - change render_template at that point
+            session = await get_session(request)
+            address = session["attributes"]['postcode']
+
+            if address == 'EX1 1LL':
+                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
+            else:
+                raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+
+        elif address_confirmation == 'no':
+            raise HTTPFound(self._request.app.router['RequestCodeNI:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
 @routes.view('/request-access-code/not-required')
-class RequestCodeNotRequired(View):
+class RequestCodeNotRequired(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
 
-        self._request = request
 
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
+@routes.view('/cy/request-access-code/not-required')
+class RequestCodeNotRequiredCY(RequestCodeCommon):
+    @aiohttp_jinja2.template('welsh/request-code-not-required.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
 
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
+@routes.view('/ni/request-access-code/not-required')
+class RequestCodeNotRequiredNI(RequestCodeCommon):
+    @aiohttp_jinja2.template('request-code-not-required.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
         return attributes
 
 
 @routes.view('/request-access-code/enter-mobile')
-class RequestCodeEnterMobile(View):
+class RequestCodeEnterMobile(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
-    async def get(self, _):
-        return {}
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
-
+        attributes = await self.get_check_attributes(request)
         data = await request.post()
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
         pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
 
@@ -617,39 +833,76 @@ class RequestCodeEnterMobile(View):
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:post'].url_for())
 
 
+@routes.view('/cy/request-access-code/enter-mobile')
+class RequestCodeEnterMobileCY(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-enter-mobile.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-enter-mobile.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
+
+        if pattern.fullmatch(data['request-mobile-number']):
+
+            attributes["mobile_number"] = data["request-mobile-number"]
+            session = await get_session(request)
+            session["attributes"] = attributes
+
+            raise HTTPFound(self._request.app.router['RequestCodeConfirmMobileCY:get'].url_for())
+
+        else:
+            logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
+            flash(self._request, MOBILE_ENTER_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeEnterMobileCY:post'].url_for())
+
+
+@routes.view('/ni/request-access-code/enter-mobile')
+class RequestCodeEnterMobileNI(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-enter-mobile.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-enter-mobile.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
+
+        if pattern.fullmatch(data['request-mobile-number']):
+
+            attributes["mobile_number"] = data["request-mobile-number"]
+            session = await get_session(request)
+            session["attributes"] = attributes
+
+            raise HTTPFound(self._request.app.router['RequestCodeConfirmMobileNI:get'].url_for())
+
+        else:
+            logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
+            flash(self._request, MOBILE_ENTER_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeEnterMobileNI:post'].url_for())
+
+
 @routes.view('/request-access-code/confirm-mobile')
-class RequestCodeConfirmMobile(View):
+class RequestCodeConfirmMobile(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
-
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
-
+        attributes = await self.get_check_attributes(request)
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
-
+        attributes = await self.get_check_attributes(request)
         data = await request.post()
-        self._request = request
-
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
-
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
@@ -659,6 +912,17 @@ class RequestCodeConfirmMobile(View):
             return attributes
 
         if mobile_confirmation == 'yes':
+            available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
+            if len(available_fulfilments) > 1:
+                for fulfilment in available_fulfilments:
+                    if fulfilment['language'].startswith(attributes['display_region']):
+                        attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
+            else:
+                attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
+
+            await self.request_fulfilment(attributes['case_id'], attributes['mobile_number'],
+                                          attributes['fulfilmentCode'])
+
             raise HTTPFound(self._request.app.router['RequestCodeCodeSent:get'].url_for())
 
         elif mobile_confirmation == 'no':
@@ -671,20 +935,91 @@ class RequestCodeConfirmMobile(View):
             return attributes
 
 
+@routes.view('/cy/request-access-code/confirm-mobile')
+class RequestCodeConfirmMobileCY(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        try:
+            mobile_confirmation = data["request-mobile-confirmation"]
+        except KeyError:
+            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            flash(request, MOBILE_CHECK_MSG)
+            return attributes
+
+        if mobile_confirmation == 'yes':
+            raise HTTPFound(self._request.app.router['RequestCodeCodeSentCY:get'].url_for())
+
+        elif mobile_confirmation == 'no':
+            raise HTTPFound(self._request.app.router['RequestCodeEnterMobileCY:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            flash(request, MOBILE_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/ni/request-access-code/confirm-mobile')
+class RequestCodeConfirmMobileNI(RequestCodeCommon):
+
+    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
+
+    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    async def post(self, request):
+        attributes = await self.get_check_attributes(request)
+        data = await request.post()
+
+        try:
+            mobile_confirmation = data["request-mobile-confirmation"]
+        except KeyError:
+            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            flash(request, MOBILE_CHECK_MSG)
+            return attributes
+
+        if mobile_confirmation == 'yes':
+            raise HTTPFound(self._request.app.router['RequestCodeCodeSentNI:get'].url_for())
+
+        elif mobile_confirmation == 'no':
+            raise HTTPFound(self._request.app.router['RequestCodeEnterMobileNI:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            flash(request, MOBILE_CHECK_MSG)
+            return attributes
+
+
 @routes.view('/request-access-code/code-sent')
-class RequestCodeCodeSent(View):
+class RequestCodeCodeSent(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
 
-        self._request = request
 
-        self.check_session()
-        session = await get_session(request)
-        try:
-            attributes = session["attributes"]
+@routes.view('/cy/request-access-code/code-sent')
+class RequestCodeCodeSentCY(RequestCodeCommon):
+    @aiohttp_jinja2.template('request-code-code-sent.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
+        return attributes
 
-        except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
 
+@routes.view('/ni/request-access-code/code-sent')
+class RequestCodeCodeSentNI(RequestCodeCommon):
+    @aiohttp_jinja2.template('request-code-code-sent.html')
+    async def get(self, request):
+        attributes = await self.get_check_attributes(request)
         return attributes

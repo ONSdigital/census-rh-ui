@@ -1,4 +1,10 @@
-{% extends "base.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+{% else %}
+    {% extends "base-en.html" %}
+{% endif %}
 
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/button/_macro.njk" import onsButton %}
