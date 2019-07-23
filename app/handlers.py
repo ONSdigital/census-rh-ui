@@ -689,7 +689,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             except ClientResponseError as ex:
                 if ex.status == 404:
                     logger.warn("Unable to match UPRN", client_ip=self._client_ip)
-                    return HTTPFound(self._request.app.router['RequestCodeNotRequired:get'].url_for())
+                    raise HTTPFound(self._request.app.router['RequestCodeNotRequired:post'].url_for())
                 else:
                     raise ex
 
