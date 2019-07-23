@@ -679,14 +679,19 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
 
             session = await get_session(request)
             uprn = session["attributes"]['uprn']
-            uprn_return = await self.get_cases_by_uprn(uprn)
-            if uprn_return == []:
-                raise HTTPFound(self._request.app.router['RequestCodeNotRequired:get'].url_for())
-            else:
+
+            try:
+                uprn_return = await self.get_cases_by_uprn(uprn)
                 session["attributes"]["case_id"] = uprn_return[0]["id"]
                 session["attributes"]["region"] = uprn_return[0]["region"]
                 session.changed()
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+            except ClientResponseError as ex:
+                if ex.status == 404:
+                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    raise HTTPFound(self._request.app.router['RequestCodeNotRequired:get'].url_for())
+                else:
+                    raise ex
 
         elif address_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
