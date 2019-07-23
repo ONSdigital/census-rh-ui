@@ -689,7 +689,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             except ClientResponseError as ex:
                 if ex.status == 404:
                     logger.warn("Unable to match UPRN", client_ip=self._client_ip)
-                    raise HTTPFound(self._request.app.router['RequestCodeNotRequired:post'].url_for())
+                    raise HTTPFound(self._request.app.router['RequestCodeNotRequired:get'].url_for())
                 else:
                     raise ex
 
@@ -788,7 +788,7 @@ class RequestCodeConfirmAddressNI(RequestCodeCommon):
 @routes.view('/request-access-code/not-required')
 class RequestCodeNotRequired(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
-    async def post(self, request):
+    async def get(self, request):
         attributes = await self.get_check_attributes(request)
         return attributes
 
@@ -796,7 +796,7 @@ class RequestCodeNotRequired(RequestCodeCommon):
 @routes.view('/cy/request-access-code/not-required')
 class RequestCodeNotRequiredCY(RequestCodeCommon):
     @aiohttp_jinja2.template('welsh/request-code-not-required.html')
-    async def post(self, request):
+    async def get(self, request):
         attributes = await self.get_check_attributes(request)
         return attributes
 
@@ -804,7 +804,7 @@ class RequestCodeNotRequiredCY(RequestCodeCommon):
 @routes.view('/ni/request-access-code/not-required')
 class RequestCodeNotRequiredNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
-    async def post(self, request):
+    async def get(self, request):
         attributes = await self.get_check_attributes(request)
         return attributes
 
