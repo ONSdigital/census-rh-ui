@@ -467,6 +467,8 @@ class RequestCodeCommon(View):
 
         return address_content
 
+    postcode_validation_pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
+    mobile_validation_pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
 
 @routes.view('/request-access-code')
 class RequestCode(RequestCodeCommon):
@@ -481,9 +483,7 @@ class RequestCode(RequestCodeCommon):
         self._request = request
         data = await self._request.post()
 
-        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
-
-        if pattern.fullmatch(data["request-postcode"]):
+        if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"]):
 
             logger.info("Valid postcode", client_ip=self._client_ip)
 
@@ -517,9 +517,7 @@ class RequestCodeCY(RequestCodeCommon):
         self._request = request
         data = await self._request.post()
 
-        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
-
-        if pattern.fullmatch(data["request-postcode"]):
+        if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"]):
 
             logger.info("Valid postcode", client_ip=self._client_ip)
 
@@ -553,9 +551,7 @@ class RequestCodeNI(RequestCodeCommon):
         self._request = request
         data = await self._request.post()
 
-        pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
-
-        if pattern.fullmatch(data["request-postcode"]):
+        if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"]):
 
             logger.info("Valid postcode", client_ip=self._client_ip)
 
@@ -725,14 +721,21 @@ class RequestCodeConfirmAddressCY(RequestCodeCommon):
 
         if address_confirmation == 'yes':
 
-            # To be replaced with call to new endpoint - change render_template at that point
             session = await get_session(request)
-            address = session["attributes"]['postcode']
+            uprn = session["attributes"]['uprn']
 
-            if address == 'EX1 1LL':
-                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
-            else:
-                raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+            try:
+                uprn_return = await self.get_cases_by_uprn(uprn)
+                session["attributes"]["case_id"] = uprn_return[0]["id"]
+                session["attributes"]["region"] = uprn_return[0]["region"]
+                session.changed()
+                raise HTTPFound(self._request.app.router['RequestCodeEnterMobileCY:get'].url_for())
+            except ClientResponseError as ex:
+                if ex.status == 404:
+                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    raise HTTPFound(self._request.app.router['RequestCodeNotRequiredCY:get'].url_for())
+                else:
+                    raise ex
 
         elif address_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeCY:get'].url_for())
@@ -766,14 +769,21 @@ class RequestCodeConfirmAddressNI(RequestCodeCommon):
 
         if address_confirmation == 'yes':
 
-            # To be replaced with call to new endpoint - change render_template at that point
             session = await get_session(request)
-            address = session["attributes"]['postcode']
+            uprn = session["attributes"]['uprn']
 
-            if address == 'EX1 1LL':
-                return aiohttp_jinja2.render_template("request-code-not-required.html", self._request, attributes)
-            else:
-                raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
+            try:
+                uprn_return = await self.get_cases_by_uprn(uprn)
+                session["attributes"]["case_id"] = uprn_return[0]["id"]
+                session["attributes"]["region"] = uprn_return[0]["region"]
+                session.changed()
+                raise HTTPFound(self._request.app.router['RequestCodeEnterMobileNI:get'].url_for())
+            except ClientResponseError as ex:
+                if ex.status == 404:
+                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    raise HTTPFound(self._request.app.router['RequestCodeNotRequiredNI:get'].url_for())
+                else:
+                    raise ex
 
         elif address_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeNI:get'].url_for())
@@ -795,7 +805,7 @@ class RequestCodeNotRequired(RequestCodeCommon):
 
 @routes.view('/cy/request-access-code/not-required')
 class RequestCodeNotRequiredCY(RequestCodeCommon):
-    @aiohttp_jinja2.template('welsh/request-code-not-required.html')
+    @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request)
         return attributes
@@ -822,9 +832,7 @@ class RequestCodeEnterMobile(RequestCodeCommon):
         attributes = await self.get_check_attributes(request)
         data = await request.post()
 
-        pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
-
-        if pattern.fullmatch(data['request-mobile-number']):
+        if RequestCodeCommon.mobile_validation_pattern.fullmatch(data['request-mobile-number']):
 
             attributes["mobile_number"] = data["request-mobile-number"]
             session = await get_session(request)
@@ -851,9 +859,7 @@ class RequestCodeEnterMobileCY(RequestCodeCommon):
         attributes = await self.get_check_attributes(request)
         data = await request.post()
 
-        pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
-
-        if pattern.fullmatch(data['request-mobile-number']):
+        if RequestCodeCommon.mobile_validation_pattern.fullmatch(data['request-mobile-number']):
 
             attributes["mobile_number"] = data["request-mobile-number"]
             session = await get_session(request)
@@ -880,9 +886,7 @@ class RequestCodeEnterMobileNI(RequestCodeCommon):
         attributes = await self.get_check_attributes(request)
         data = await request.post()
 
-        pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
-
-        if pattern.fullmatch(data['request-mobile-number']):
+        if RequestCodeCommon.mobile_validation_pattern.fullmatch(data['request-mobile-number']):
 
             attributes["mobile_number"] = data["request-mobile-number"]
             session = await get_session(request)
@@ -917,18 +921,25 @@ class RequestCodeConfirmMobile(RequestCodeCommon):
             return attributes
 
         if mobile_confirmation == 'yes':
-            available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
-            if len(available_fulfilments) > 1:
-                for fulfilment in available_fulfilments:
-                    if fulfilment['language'].startswith(attributes['display_region']):
-                        attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
-            else:
-                attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
 
-            await self.request_fulfilment(attributes['case_id'], attributes['mobile_number'],
-                                          attributes['fulfilmentCode'])
+            try:
+                available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
+                if len(available_fulfilments) > 1:
+                    for fulfilment in available_fulfilments:
+                        if fulfilment['language'].startswith(attributes['display_region']):
+                            attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
+                else:
+                    attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
 
-            raise HTTPFound(self._request.app.router['RequestCodeCodeSent:get'].url_for())
+                try:
+                    await self.request_fulfilment(attributes['case_id'], attributes['mobile_number'],
+                                              attributes['fulfilmentCode'])
+                except ClientResponseError as ex:
+                    raise ex
+
+                raise HTTPFound(self._request.app.router['RequestCodeCodeSent:get'].url_for())
+            except ClientResponseError as ex:
+                raise ex
 
         elif mobile_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
@@ -961,7 +972,24 @@ class RequestCodeConfirmMobileCY(RequestCodeCommon):
             return attributes
 
         if mobile_confirmation == 'yes':
-            raise HTTPFound(self._request.app.router['RequestCodeCodeSentCY:get'].url_for())
+            try:
+                available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
+                if len(available_fulfilments) > 1:
+                    for fulfilment in available_fulfilments:
+                        if fulfilment['language'].startswith(attributes['display_region']):
+                            attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
+                else:
+                    attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
+
+                try:
+                    await self.request_fulfilment(attributes['case_id'], attributes['mobile_number'],
+                                              attributes['fulfilmentCode'])
+                except ClientResponseError as ex:
+                    raise ex
+
+                raise HTTPFound(self._request.app.router['RequestCodeCodeSentCY:get'].url_for())
+            except ClientResponseError as ex:
+                raise ex
 
         elif mobile_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobileCY:get'].url_for())
@@ -994,7 +1022,24 @@ class RequestCodeConfirmMobileNI(RequestCodeCommon):
             return attributes
 
         if mobile_confirmation == 'yes':
-            raise HTTPFound(self._request.app.router['RequestCodeCodeSentNI:get'].url_for())
+            try:
+                available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
+                if len(available_fulfilments) > 1:
+                    for fulfilment in available_fulfilments:
+                        if fulfilment['language'].startswith(attributes['display_region']):
+                            attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
+                else:
+                    attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
+
+                try:
+                    await self.request_fulfilment(attributes['case_id'], attributes['mobile_number'],
+                                              attributes['fulfilmentCode'])
+                except ClientResponseError as ex:
+                    raise ex
+
+                raise HTTPFound(self._request.app.router['RequestCodeCodeSentNI:get'].url_for())
+            except ClientResponseError as ex:
+                raise ex
 
         elif mobile_confirmation == 'no':
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobileNI:get'].url_for())
