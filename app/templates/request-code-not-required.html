@@ -1,13 +1,5 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
-    {% set request_link = url('RequestCodeNI:get') %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
-    {% set request_link = url('RequestCodeCY:get') %}
-{% else %}
-    {% extends "base-en.html" %}
-    {% set request_link = url('RequestCode:get') %}
-{% endif %}
+{% extends "base-en.html" %}
+{% set request_link = url('RequestCode:get') %}
 
 {% block main %}
 

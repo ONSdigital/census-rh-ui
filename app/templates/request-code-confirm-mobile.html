@@ -1,13 +1,5 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
-    {% set form_action = url('RequestCodeConfirmMobileNI:post') %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
-    {% set form_action = url('RequestCodeConfirmMobileCY:post') %}
-{% else %}
-    {% extends "base-en.html" %}
-    {% set form_action = url('RequestCodeConfirmMobile:post') %}
-{% endif %}
+{% extends "base-en.html" %}
+{% set form_action = url('RequestCodeConfirmMobile:post') %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}

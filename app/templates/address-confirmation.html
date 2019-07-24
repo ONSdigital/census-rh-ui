@@ -6,8 +6,6 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/button/_macro.njk" import onsButton %}
-{% from "components/panel/_macro.njk" import onsPanel %}
-{% from "components/lists/_macro.njk" import onsList %}
 
 {% set form =  {
     "method": "POST",
@@ -15,28 +13,6 @@
         "action": url('AddressConfirmation:post')
     }
 } %}
-
-    {% set address_check_form_call =
-        onsRadios({
-            "name": "address-check-answer",
-            "radios": [
-                {
-                    "id": "yes",
-                    "label": {
-                        "text": "Yes, this address is correct"
-                    },
-                    "value": "Yes"
-                },
-                {
-                    "id": "no",
-                    "label": {
-                        "text": "No, I need to change it"
-                    },
-                    "value": "No"
-                }
-            ]
-        })
-    %}
 
 {% block main %}
     {% if messages_dict %}
@@ -58,26 +34,52 @@
 
 
         {% if 'address' in field_messages_dict %}
-            {% call
-                onsPanel({
-                    "type": "error"
-                })
-            %}
             {{
-                onsList({
-                    "id": 'link-language',
-                    "classes": 'list--bare list--errors u-mb-s',
-                    "itemsList": [
+                onsRadios({
+                    "name": "address-check-answer",
+                    "radios": [
                         {
-                            "text": 'Select an option'
+                            "id": "yes",
+                            "label": {
+                                "text": "Yes, this address is correct"
+                            },
+                            "value": "Yes"
+                        },
+                        {
+                            "id": "no",
+                            "label": {
+                                "text": "No, I need to change it"
+                            },
+                            "value": "No"
+                        }
+                    ],
+                    "error": {
+                        "text": "Check and confirm the address"
+                    }
+                })
+            }}
+        {% else %}
+            {{
+                onsRadios({
+                    "name": "address-check-answer",
+                    "radios": [
+                        {
+                            "id": "yes",
+                            "label": {
+                                "text": "Yes, this address is correct"
+                            },
+                            "value": "Yes"
+                        },
+                        {
+                            "id": "no",
+                            "label": {
+                                "text": "No, I need to change it"
+                            },
+                            "value": "No"
                         }
                     ]
                 })
             }}
-            {{ address_check_form_call }}
-            {% endcall %}
-        {% else %}
-            {{ address_check_form_call }}
         {% endif %}
 
     {% endcall %}
