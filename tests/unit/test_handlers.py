@@ -588,53 +588,44 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
-    # Commented due to problem mocking await
-    # @unittest_run_loop
-    # async def test_post_request_access_code_good_postcode(self):
-    #
-    #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
-    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
-    #
-    #         with self.assertLogs('respondent-home', 'INFO') as cm:
-    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #         self.assertLogLine(cm, "Valid postcode")
-    #
-    #         self.assertEqual(response.status, 200)
+    @unittest_run_loop
+    async def test_post_request_access_code_good_postcode(self):
 
-    # Commented due to problem mocking await
-    # @unittest_run_loop
-    # async def test_post_request_access_code_found(self):
-    #
-    #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
-    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
-    #
-    #         with self.assertLogs('respondent-home', 'INFO') as cm:
-    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #             self.assertLogLine(cm, "Valid postcode")
-    #
-    #             self.assertEqual(response.status, 200)
-    #             self.assertIn('Select your address', str(await response.content.read()))
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-    # Commented due to problem mocking await
-    # @unittest_run_loop
-    # async def test_post_request_access_code_not_found(self):
-    #     with mock.patch('app.handlers.View.get_ai_postcode') as mocked_get_ai_postcode:
-    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
-    #
-    #         with self.assertLogs('respondent-home', 'INFO') as cm:
-    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #             self.assertLogLine(cm, "Valid postcode")
-    #             self.assertEqual(response.status, 200)
-    #
-    #             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-    #                 mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_no_results)
-    #
-    #                 response = await self.client.request("GET", self.get_requestcode_selectaddress)
-    #
-    #             self.assertEqual(response.status, 200)
-    #             self.assertIn('We cannot find your address', str(await response.content.read()))
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
 
-    # Commented due to not maintaining session updates between pages nd mocking await issue
+            self.assertEqual(response.status, 200)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_found(self):
+
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+                self.assertLogLine(cm, "Valid postcode")
+
+                self.assertEqual(response.status, 200)
+                self.assertIn('Select your address', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_not_found(self):
+        with mock.patch('app.handlers.View.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+                self.assertLogLine(cm, "Valid postcode")
+
+                self.assertEqual(response.status, 200)
+                self.assertIn('We cannot find your address', str(await response.content.read()))
+
+    # Commented due to not maintaining session updates between pages
     # @unittest_run_loop
     # async def test_post_request_code_select_address(self):
     #

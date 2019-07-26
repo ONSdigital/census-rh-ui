@@ -1,3 +1,4 @@
+import asyncio
 import functools
 import json
 import time
@@ -295,10 +296,14 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_address_confirmation_data = {'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"}
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
-            self.ai_postcode_no_results = json.load(fp)
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_no_results = f
 
         with open('tests/test_data/address_index/postcode_results.json') as fp:
-            self.ai_postcode_results = json.load(fp)
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_results = f
 
         self.request_code_form_data_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
