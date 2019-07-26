@@ -588,62 +588,69 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
-    # Commented due to Travis trying to call AI
+    # Commented due to problem mocking await
     # @unittest_run_loop
     # async def test_post_request_access_code_good_postcode(self):
     #
-    #     with self.assertLogs('respondent-home', 'INFO') as cm:
-    #         response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #     self.assertLogLine(cm, "Valid postcode")
+    #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
     #
-    #     self.assertEqual(response.status, 200)
+    #         with self.assertLogs('respondent-home', 'INFO') as cm:
+    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+    #         self.assertLogLine(cm, "Valid postcode")
+    #
+    #         self.assertEqual(response.status, 200)
 
-    # Commented due to Travis trying to call AI
+    # Commented due to problem mocking await
     # @unittest_run_loop
     # async def test_post_request_access_code_found(self):
     #
-    #     with self.assertLogs('respondent-home', 'INFO') as cm:
-    #         response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #         self.assertLogLine(cm, "Valid postcode")
-    #         self.assertEqual(response.status, 200)
+    #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
     #
-    #         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-    #             mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_results)
+    #         with self.assertLogs('respondent-home', 'INFO') as cm:
+    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+    #             self.assertLogLine(cm, "Valid postcode")
     #
-    #             response = await self.client.request("GET", self.get_requestcode_selectaddress)
-    #
-    #         self.assertEqual(response.status, 200)
-    #         self.assertIn('Select your address', str(await response.content.read()))
+    #             self.assertEqual(response.status, 200)
+    #             self.assertIn('Select your address', str(await response.content.read()))
 
-    # Commented due to Travis trying to call AI
+    # Commented due to problem mocking await
     # @unittest_run_loop
     # async def test_post_request_access_code_not_found(self):
-    #     with self.assertLogs('respondent-home', 'INFO') as cm:
-    #         response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #         self.assertLogLine(cm, "Valid postcode")
-    #         self.assertEqual(response.status, 200)
+    #     with mock.patch('app.handlers.View.get_ai_postcode') as mocked_get_ai_postcode:
+    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
     #
-    #         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-    #             mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_no_results)
+    #         with self.assertLogs('respondent-home', 'INFO') as cm:
+    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+    #             self.assertLogLine(cm, "Valid postcode")
+    #             self.assertEqual(response.status, 200)
     #
-    #             response = await self.client.request("GET", self.get_requestcode_selectaddress)
+    #             with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+    #                 mocked.get(self.addressindexsvc_url + self.postcode_valid, payload=self.ai_postcode_no_results)
     #
-    #         self.assertEqual(response.status, 200)
-    #         self.assertIn('We cannot find your address', str(await response.content.read()))
+    #                 response = await self.client.request("GET", self.get_requestcode_selectaddress)
+    #
+    #             self.assertEqual(response.status, 200)
+    #             self.assertIn('We cannot find your address', str(await response.content.read()))
 
-    # Commented due to not maintaining session updates between pages
+    # Commented due to not maintaining session updates between pages nd mocking await issue
     # @unittest_run_loop
     # async def test_post_request_code_select_address(self):
     #
-    #     with self.assertLogs('respondent-home', 'INFO') as cm:
-    #         response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
-    #         self.assertLogLine(cm, "Valid postcode")
-    #         self.assertEqual(response.status, 200)
+    #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
     #
-    #         response = await self.client.request("POST", self.post_requestcode_selectaddress,
-    #                                          data=self.post_requestcode_address_confirmation_data)
+    #         with self.assertLogs('respondent-home', 'INFO') as cm:
+    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+    #             self.assertLogLine(cm, "Valid postcode")
+    #             self.assertEqual(response.status, 200)
     #
-    #         self.assertEqual(response.status, 200)
+    #             response = await self.client.request("POST", self.post_requestcode_selectaddress,
+    #                                              data=self.post_requestcode_address_confirmation_data)
+    #
+    #             self.assertEqual(response.status, 200)
+    #             self.assertIn('1 Gate Reach', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error(self):
