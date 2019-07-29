@@ -625,9 +625,22 @@ class TestHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 self.assertIn('We cannot find your address', str(await response.content.read()))
 
-    # Commented due to not maintaining session updates between pages
+    @unittest_run_loop
+    async def test_post_request_code_select_address(self):
+
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+                self.assertLogLine(cm, "Valid postcode")
+
+                self.assertEqual(response.status, 200)
+                self.assertIn('1 Gate Reach', str(await response.content.read()))
+
+    # Commented out as session not maintaining the new data between pages - to be revisited.
     # @unittest_run_loop
-    # async def test_post_request_code_select_address(self):
+    # async def test_get_request_code_confirm_address(self):
     #
     #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
     #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -635,13 +648,15 @@ class TestHandlers(RHTestCase):
     #         with self.assertLogs('respondent-home', 'INFO') as cm:
     #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
     #             self.assertLogLine(cm, "Valid postcode")
-    #             self.assertEqual(response.status, 200)
-    #
-    #             response = await self.client.request("POST", self.post_requestcode_selectaddress,
-    #                                              data=self.post_requestcode_address_confirmation_data)
     #
     #             self.assertEqual(response.status, 200)
     #             self.assertIn('1 Gate Reach', str(await response.content.read()))
+    #
+    #             with self.assertLogs('respondent-home', 'INFO') as cm:
+    #                 response = await self.client.request("POST", self.post_requestcode_selectaddress,
+    #                                                      data=self.post_requestcode_address_confirmation_data)
+    #                 self.assertLogLine(cm, "Session updated")
+    #                 self.assertEqual(response.status, 200)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error(self):

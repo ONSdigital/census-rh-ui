@@ -526,6 +526,7 @@ class RequestCodeSelectAddress(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
+        logger.warn("Session updated", client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddress:get'].url_for())
 
