@@ -10,5 +10,5 @@ SESSION_TIMEOUT_MSG = {'text': 'Apologies, your session has timed out. Please re
 ADDRESS_CHECK_MSG = {'text': 'Please check and confirm address.', "level": "ERROR", "type": "ADDRESS_CONFIRMATION_ERROR", "field": "address"}  # NOQA
 ADDRESS_EDIT_MSG = {'text': 'Enter address to continue', "level": "ERROR", "type": "ADDRESS_EDIT_ERROR", "field": "address"}  # NOQA
 WEBCHAT_MISSING_NAME_MSG = {'text': 'Enter your name', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "screen_name"}  # NOQA
-WEBCHAT_MISSING_LANGUAGE_MSG = {'text': 'Select your language', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "language"}  # NOQA
+WEBCHAT_MISSING_COUNTRY_MSG = {'text': 'Select your country', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "country"}  # NOQA
 WEBCHAT_MISSING_QUERY_MSG = {'text': 'What type of query do you have', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "query"}  # NOQA

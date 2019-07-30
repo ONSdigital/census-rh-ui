@@ -10,7 +10,7 @@ import datetime
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
@@ -338,8 +338,8 @@ class WebChat(View):
             flash(self._request, WEBCHAT_MISSING_NAME_MSG)
             form_valid = False
 
-        if not(data.get('language')):
-            flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
+        if not(data.get('country')):
+            flash(self._request, WEBCHAT_MISSING_COUNTRY_MSG)
             form_valid = False
 
         if not(data.get('query')):
@@ -375,11 +375,12 @@ class WebChat(View):
         if not form_valid:
             logger.info("Form submission error", client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
-                    'form_value_language': data.get('language'),
+                    'form_value_country': data.get('country'),
                     'form_value_query': data.get('query')}
 
         context = {'screen_name': data.get('screen_name'),
-                   'language': data.get('language'),
+                   'language': 'english',
+                   'country': data.get('country'),
                    'query': data.get('query'),
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
