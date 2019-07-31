@@ -8,7 +8,7 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (
-    BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_LANGUAGE_MSG, WEBCHAT_MISSING_NAME_MSG)
+    BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_COUNTRY_MSG, WEBCHAT_MISSING_NAME_MSG)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import Index, WebChat
 
@@ -346,7 +346,7 @@ class TestHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn('Enter your name', contents)
-            self.assertEqual(contents.count('radio__input'), 9)
+            self.assertEqual(contents.count('radio__input'), 10)
             self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
@@ -413,16 +413,16 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_webchat_incomplete_language(self):
+    async def test_post_webchat_incomplete_country(self):
         form_data = self.webchat_form_data.copy()
-        del form_data['language']
+        del form_data['country']
 
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request("POST", self.post_webchat, data=form_data)
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_LANGUAGE_MSG, str(await response.content.read()))
+        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name(self):
