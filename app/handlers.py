@@ -306,26 +306,45 @@ class WebChat(View):
 
     @staticmethod
     def get_now():
-        return datetime.datetime.now()
+        return datetime.datetime.utcnow()
 
     @staticmethod
     def check_open():
 
+        logger.info("now " + str(WebChat.get_now()), client_ip='')
         year = WebChat.get_now().year
         month = WebChat.get_now().month
         day = WebChat.get_now().day
         weekday = WebChat.get_now().weekday()
         hour = WebChat.get_now().hour
+        logger.info("Hour now " + str(WebChat.get_now().hour), client_ip='')
+
+        logger.info("timezone " + str(datetime.datetime.now(datetime.timezone.utc)), client_ip='')
+        now_timezone = datetime.datetime.utcnow().astimezone().tzinfo
+        logger.info("astimezone " + str(now_timezone), client_ip='')
+
+        census_weekend_open = 8
+        census_weekend_close = 16
+        saturday_open = 8
+        saturday_close = 13
+        weekday_open = 8
+        weekday_close = 19
+
+        timezone_offset = 0
+
+        if datetime.datetime.utcnow().astimezone().tzinfo == 'BST':
+            timezone_offset = 1
+
         if year == 2019 and month == 10 and (day == 12 or day == 13):
-            if hour < 8 or hour >= 16:
+            if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
                 return False
-        elif weekday == 5:
-            if hour < 8 or hour >= 13:
+        elif weekday == 5:  # Saturday
+            if hour < (saturday_open - timezone_offset) or hour >= (saturday_close - timezone_offset):
                 return False
-        elif weekday == 6:
+        elif weekday == 6:  # Sunday
             return False
         else:
-            if hour < 8 or hour >= 19:
+            if hour < (weekday_open - timezone_offset) or hour >= (weekday_close - timezone_offset):
                 return False
 
         return True
