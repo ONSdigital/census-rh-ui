@@ -332,8 +332,8 @@ class WebChat(View):
 
         timezone_offset = 0
 
-        # if datetime.datetime.utcnow() < datetime.datetime(2019, 10, 27):
-        #     timezone_offset = 1
+        if datetime.datetime.utcnow() < datetime.datetime(2019, 10, 27):
+            timezone_offset = 1
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
             if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
