@@ -311,33 +311,24 @@ class WebChat(View):
     @staticmethod
     def check_open():
 
-        logger.info("now " + str(WebChat.get_now()), client_ip='')
         year = WebChat.get_now().year
         month = WebChat.get_now().month
         day = WebChat.get_now().day
         weekday = WebChat.get_now().weekday()
         hour = WebChat.get_now().hour
-        logger.info("Hour now " + str(WebChat.get_now().hour), client_ip='')
-
-        logger.info("timezone " + str(datetime.datetime.now(datetime.timezone.utc)), client_ip='')
-        now_timezone = datetime.datetime.utcnow().astimezone().tzinfo
-        logger.info("astimezone " + str(now_timezone), client_ip='')
 
         census_weekend_open = 8
         census_weekend_close = 16
         saturday_open = 8
         saturday_close = 13
-        weekday_open = 16
+        weekday_open = 8
         weekday_close = 19
 
         timezone_offset = 0
 
-        if datetime.datetime.utcnow() < datetime.datetime(2019, 10, 27):
+        if WebChat.get_now() < datetime.datetime(2019, 10, 27):
+            logger.info("Before switch to GMT - adjusting time", client_ip='')
             timezone_offset = 1
-
-        logger.info("timezone_offset " + str(timezone_offset), client_ip='')
-        logger.info("now " + str(datetime.datetime.utcnow()), client_ip='')
-        logger.info("change point " + str(datetime.datetime(2019, 10, 27)), client_ip='')
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
             if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
