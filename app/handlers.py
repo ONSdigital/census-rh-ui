@@ -327,7 +327,7 @@ class WebChat(View):
         census_weekend_close = 16
         saturday_open = 8
         saturday_close = 13
-        weekday_open = 15
+        weekday_open = 16
         weekday_close = 19
 
         timezone_offset = 0
