@@ -327,13 +327,13 @@ class WebChat(View):
         census_weekend_close = 16
         saturday_open = 8
         saturday_close = 13
-        weekday_open = 13
+        weekday_open = 15
         weekday_close = 19
 
         timezone_offset = 0
 
-        if datetime.datetime.utcnow().astimezone().tzinfo == 'BST':
-            timezone_offset = 1
+        # if datetime.datetime.utcnow() < datetime.datetime(2019, 10, 27):
+        #     timezone_offset = 1
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
             if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
