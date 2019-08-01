@@ -335,6 +335,10 @@ class WebChat(View):
         if datetime.datetime.utcnow() < datetime.datetime(2019, 10, 27):
             timezone_offset = 1
 
+        logger.info("timezone_offset " + str(timezone_offset), client_ip='')
+        logger.info("now " + str(datetime.datetime.utcnow()), client_ip='')
+        logger.info("change point " + str(datetime.datetime(2019, 10, 27)), client_ip='')
+
         if year == 2019 and month == 10 and (day == 12 or day == 13):
             if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
                 return False
