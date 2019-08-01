@@ -300,11 +300,11 @@ class TestHandlers(RHTestCase):
             mocked_get_now.return_value = mocked_now
             self.assertTrue(WebChat.check_open())
 
-    def test_check_open_weekday_closed_census_weekend(self):
-        mocked_now = datetime.datetime(2019, 10, 13, 7, 30, 00, 0)
-        with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
-            mocked_get_now.return_value = mocked_now
-            self.assertFalse(WebChat.check_open())
+    # def test_check_open_weekday_closed_census_weekend(self):
+    #     mocked_now = datetime.datetime(2019, 10, 13, 7, 30, 00, 0)
+    #     with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
+    #         mocked_get_now.return_value = mocked_now
+    #         self.assertFalse(WebChat.check_open())
 
     # def test_check_open_weekday_open(self):
     #     mocked_now = datetime.datetime(2019, 6, 17, 9, 30, 00, 0)
