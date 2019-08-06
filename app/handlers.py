@@ -558,7 +558,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
 
             try:
                 uprn_return = await self.get_cases_by_uprn(uprn)
-                session["attributes"]["case_id"] = uprn_return[0]["id"]
+                session["attributes"]["case_id"] = uprn_return[0]["caseId"]
                 session["attributes"]["region"] = uprn_return[0]["region"]
                 session.changed()
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobile:get'].url_for())
