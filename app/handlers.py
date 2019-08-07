@@ -248,6 +248,28 @@ class AddressConfirmation(View):
 @routes.view('/start/address-edit')
 class AddressEdit(View):
 
+    @property
+    def _rhsvc_modify_address(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/"
+
+    async def post_modify_address(self, case, address):
+        json = {
+            "caseId": case['caseId'],
+            "caseRef": case['caseRef'],
+            "addressType": case['addressType'],
+            "state": case['state'],
+            "uprn": case['uprn'],
+            "addressLine1": address['addressLine1'],
+            "addressLine2": address['addressLine2'],
+            "addressLine3": address['addressLine3'],
+            "townName": address['townName'],
+            "postcode": address['postcode'],
+            "region": case['region']
+            }
+        return await self._make_request(
+            Request("POST", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response, None))
+
     def get_address_details(self, data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
@@ -290,6 +312,11 @@ class AddressEdit(View):
             logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
+
+        try:
+            await self.post_modify_address(session["case"], attributes)
+        except ClientResponseError as ex:
+            raise ex
 
         await self.call_questionnaire(case, attributes, request.app)
 
