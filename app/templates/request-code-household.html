@@ -23,7 +23,7 @@
 
     {% call onsQuestion({
         "title": "What is your postcode?",
-        "description": "<p>To text you a new code we need to know what address you are answering for.</p>"
+        "description": "<p>To text you a new code we need to know the address for which you are answering.</p>"
     }) %}
 
         {% if 'postcode' in field_messages_dict %}

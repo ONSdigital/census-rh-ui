@@ -13,7 +13,8 @@ from datetime import datetime, timezone
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
     SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
-    WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG)
+    WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
+    ADDRESS_SELECT_CHECK_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -60,22 +61,6 @@ class View:
     @property
     def _webchat_service_url(self):
         return self._request.app['WEBCHAT_SVC_URL']
-
-    @property
-    def _ai_url_postcode(self):
-        return f"{self._request.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
-
-    @property
-    def _rhsvc_get_cases_by_uprn(self):
-        return f"{self._request.app['RHSVC_URL']}/cases/uprn/"
-
-    @property
-    def _rhsvc_get_fulfilments(self):
-        return f"{self._request.app['RHSVC_URL']}/fulfilments"
-
-    @property
-    def _rhsvc_request_fulfilment(self):
-        return f"{self._request.app['RHSVC_URL']}/cases/"
 
     @staticmethod
     def _handle_response(response):
@@ -132,28 +117,6 @@ class View:
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
                     None, self._handle_response, None))
-
-    async def get_ai_postcode(self, postcode):
-        return await self._make_request(
-            Request("GET", self._ai_url_postcode + postcode, None,
-                    None, self._handle_response, "json"))
-
-    async def get_cases_by_uprn(self, uprn):
-        return await self._make_request(
-            Request("GET", self._rhsvc_get_cases_by_uprn + uprn, None,
-                    None, self._handle_response, "json"))
-
-    async def get_fulfilment(self, caseType, region, deliveryChannel):
-        querystring = '?caseType=' + caseType + '&region=' + region + '&deliveryChannel=' + deliveryChannel # NOQA
-        return await self._make_request(
-            Request("GET", self._rhsvc_get_fulfilments + querystring, None,
-                    None, self._handle_response, "json"))
-
-    async def request_fulfilment(self, caseId, telNo, fulfilmentCode):
-        json = {'caseId': caseId, 'telNo': telNo, 'fulfilmentCode': fulfilmentCode, 'dateTime': datetime.now(timezone.utc).isoformat()}
-        return await self._make_request(
-            Request("POST", self._rhsvc_request_fulfilment + caseId + '/fulfilments/sms', self._request.app["RHSVC_AUTH"],
-                    json, self._handle_response, None))
 
 
 @routes.view('/start/')
@@ -467,8 +430,46 @@ class RequestCodeCommon(View):
 
         return address_content
 
-    postcode_validation_pattern = re.compile(r'^([A-PR-UWYZa-pr-uwyz]([0-9]{1,2}|([A-HK-Ya-hk-y][0-9]|[A-HK-Ya-hk-y][0-9]([0-9]|[ABEHMNPRV-Yabehmnprv-y]))|[0-9][A-HJKS-UWa-hjks-uw])\ {0,1}[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}|([Gg][Ii][Rr]\ 0[Aa][Aa])|([Ss][Aa][Nn]\ {0,1}[Tt][Aa]1)|([Bb][Ff][Pp][Oo]\ {0,1}([Cc]\/[Oo]\ )?[0-9]{1,4})|(([Aa][Ss][Cc][Nn]|[Bb][Bb][Nn][Dd]|[BFSbfs][Ii][Qq][Qq]|[Pp][Cc][Rr][Nn]|[Ss][Tt][Hh][Ll]|[Tt][Dd][Cc][Uu]|[Tt][Kk][Cc][Aa])\ {0,1}1[Zz][Zz]))$')  # NOQA
+    postcode_validation_pattern = re.compile(r'^((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}$')  # NOQA
     mobile_validation_pattern = re.compile(r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
+
+    @property
+    def _ai_url_postcode(self):
+        return f"{self._request.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
+
+    @property
+    def _rhsvc_get_cases_by_uprn(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/uprn/"
+
+    @property
+    def _rhsvc_get_fulfilments(self):
+        return f"{self._request.app['RHSVC_URL']}/fulfilments"
+
+    @property
+    def _rhsvc_request_fulfilment(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/"
+
+    async def get_ai_postcode(self, postcode):
+        return await self._make_request(
+            Request("GET", self._ai_url_postcode + postcode, None,
+                    None, self._handle_response, "json"))
+
+    async def get_cases_by_uprn(self, uprn):
+        return await self._make_request(
+            Request("GET", self._rhsvc_get_cases_by_uprn + uprn, None,
+                    None, self._handle_response, "json"))
+
+    async def get_fulfilment(self, caseType, region, deliveryChannel):
+        querystring = '?caseType=' + caseType + '&region=' + region + '&deliveryChannel=' + deliveryChannel # NOQA
+        return await self._make_request(
+            Request("GET", self._rhsvc_get_fulfilments + querystring, None,
+                    None, self._handle_response, "json"))
+
+    async def request_fulfilment(self, caseId, telNo, fulfilmentCode):
+        json = {'caseId': caseId, 'telNo': telNo, 'fulfilmentCode': fulfilmentCode, 'dateTime': datetime.now(timezone.utc).isoformat()}
+        return await self._make_request(
+            Request("POST", self._rhsvc_request_fulfilment + caseId + '/fulfilments/sms', self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response, None))
 
 
 @routes.view('/request-access-code')
@@ -484,7 +485,7 @@ class RequestCode(RequestCodeCommon):
         self._request = request
         data = await self._request.post()
 
-        if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"]):
+        if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"].upper()):
 
             logger.info("Valid postcode", client_ip=self._client_ip)
 
@@ -517,16 +518,24 @@ class RequestCodeSelectAddress(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
-        await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request)
         data = await request.post()
 
-        form_return = ast.literal_eval(data["request-address-select"])
+        try:
+            form_return = ast.literal_eval(data["request-address-select"])
+        except KeyError:
+            logger.warn("No address selected", client_ip=self._client_ip)
+            flash(request, ADDRESS_SELECT_CHECK_MSG)
+            address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
+            return address_content
+
+        # form_return = ast.literal_eval(data["request-address-select"])
 
         session = await get_session(request)
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.warn("Session updated", client_ip=self._client_ip)
+        logger.info("Session updated", client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddress:get'].url_for())
 
@@ -556,6 +565,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             session = await get_session(request)
             uprn = session["attributes"]['uprn']
 
+            # uprn_return[0] will need updating/changing for multiple households - post 2019 issue
             try:
                 uprn_return = await self.get_cases_by_uprn(uprn)
                 session["attributes"]["case_id"] = uprn_return[0]["caseId"]

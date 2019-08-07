@@ -1,5 +1,8 @@
 {% extends "base-en.html" %}
 
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/radios/_macro.njk" import onsRadios %}
@@ -28,13 +31,13 @@
             "description": question_description
         }) %}
 
-            {% if 'address' in field_messages_dict %}
+            {% if 'address-select' in field_messages_dict %}
                 {{
                     onsRadios({
                         "name": "request-address-select",
                         "radios": addresses,
                         "error": {
-                            "text": "Check and confirm the address"
+                            "text": "Select an address"
                         }
                     })
                 }}
