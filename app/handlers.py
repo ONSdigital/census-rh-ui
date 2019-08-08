@@ -256,7 +256,7 @@ class AddressEdit(View):
         json = {
             "caseId": case['caseId'],
             # "caseRef": case['caseRef'],
-            "addressType": case['addressType'],
+            # "addressType": case['addressType'],
             "state": case['state'],
             "uprn": case['uprn'],
             "addressLine1": address['addressLine1'],
