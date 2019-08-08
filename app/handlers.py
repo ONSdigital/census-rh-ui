@@ -257,7 +257,7 @@ class AddressEdit(View):
             "caseId": case['caseId'],
             # "caseRef": case['caseRef'],
             # "addressType": case['addressType'],
-            "state": case['state'],
+            # "state": case['state'],
             "uprn": case['uprn'],
             "addressLine1": address['addressLine1'],
             "addressLine2": address['addressLine2'],
