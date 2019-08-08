@@ -4,9 +4,9 @@ set -e
 
 echo $GCLOUD_SERVICE_KEY | base64 -d | docker login -u _json_key --password-stdin https://eu.gcr.io
 
-export TAG=`if [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then echo "latest"; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi`
+export TAG=$TRAVIS_BUILD_ID"-"$TRAVIS_BRANCH
 
-echo "Building with tag [$TAG]"
+echo "Building with tags [$TAG]"
 
 docker build -t eu.gcr.io/census-int-ci/census-rh-ui:$TAG .
 

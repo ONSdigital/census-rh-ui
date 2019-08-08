@@ -1,0 +1,64 @@
+{% extends "base-en.html" %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": url('RequestCodeSelectAddress:post')
+    }
+} %}
+
+{% set question_description = '<p class="js-piped-answer u-fs-r--b" data-question-to-pipe=\"/request-code/enter-mobile\">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
+
+{% block main %}
+
+    {% if total_matches == 0: %}
+
+        <h1>We cannot find your address</h1>
+
+        <p>If this is incorrect you can <a href="{{ url('RequestCode:get') }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
+
+    {% else: %}
+
+        {% call onsQuestion({
+            "title": "Select your address",
+            "description": question_description
+        }) %}
+
+            {% if 'address-select' in field_messages_dict %}
+                {{
+                    onsRadios({
+                        "name": "request-address-select",
+                        "radios": addresses,
+                        "error": {
+                            "text": "Select an address"
+                        }
+                    })
+                }}
+            {% else %}
+                {{
+                    onsRadios({
+                        "name": "request-address-select",
+                        "radios": addresses
+                    })
+                }}
+            {% endif %}
+
+        {% endcall %}
+
+        {{
+            onsButton({
+                "text": "Continue",
+                "classes": "u-mt-l"
+            })
+        }}
+
+    {% endif %}
+
+{% endblock %}

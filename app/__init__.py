@@ -12,3 +12,7 @@ ADDRESS_EDIT_MSG = {'text': 'Enter address to continue', "level": "ERROR", "type
 WEBCHAT_MISSING_NAME_MSG = {'text': 'Enter your name', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "screen_name"}  # NOQA
 WEBCHAT_MISSING_COUNTRY_MSG = {'text': 'Select your country', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "country"}  # NOQA
 WEBCHAT_MISSING_QUERY_MSG = {'text': 'What type of query do you have', "clickable": True, "level": "ERROR", "type": "BAD_CODE", "field": "query"}  # NOQA
+MOBILE_ENTER_MSG = {'text': 'Enter a valid UK mobile number to continue', "level": "ERROR", "type": "MOBILE_ENTER_ERROR", "field": "mobile"}  # NOQA
+MOBILE_CHECK_MSG = {'text': 'Please check and confirm your mobile number.', "level": "ERROR", "type": "MOBILE_CONFIRMATION_ERROR", "field": "mobile"}  # NOQA
+POSTCODE_INVALID_MSG = {'text': 'Enter a valid UK postcode to continue', "level": "ERROR", "type": "POSTCODE_ENTER_ERROR", "field": "postcode"}  # NOQA
+ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', "level": "ERROR", "type": "ADDRESS_SELECT_CHECK_MSG", "field": "address-select"}  # NOQA
