@@ -252,7 +252,7 @@ class AddressEdit(View):
     def _rhsvc_modify_address(self):
         return f"{self._request.app['RHSVC_URL']}/cases/"
 
-    async def post_modify_address(self, case, address):
+    async def put_modify_address(self, case, address):
         json = {
             "caseId": case['caseId'],
             # "caseRef": case['caseRef'],
@@ -267,7 +267,7 @@ class AddressEdit(View):
             "region": case['region']
             }
         return await self._make_request(
-            Request("POST", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
+            Request("PUT", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
 
     def get_address_details(self, data: dict, attributes: dict):
@@ -314,7 +314,7 @@ class AddressEdit(View):
             return attributes
 
         try:
-            await self.post_modify_address(session["case"], attributes)
+            await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
             raise ex
 
