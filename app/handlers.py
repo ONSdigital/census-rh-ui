@@ -326,7 +326,7 @@ class WebChat(View):
 
         timezone_offset = 0
 
-        if WebChat.get_now() < datetime.datetime(2019, 10, 27):
+        if WebChat.get_now() < datetime(2019, 10, 27):
             logger.info("Before switch to GMT - adjusting time", client_ip='')
             timezone_offset = 1
 
