@@ -255,7 +255,7 @@ class AddressEdit(View):
     async def post_modify_address(self, case, address):
         json = {
             "caseId": case['caseId'],
-            "caseRef": case['caseRef'],
+            # "caseRef": case['caseRef'],
             "addressType": case['addressType'],
             "state": case['state'],
             "uprn": case['uprn'],
