@@ -1,3 +1,4 @@
+import asyncio
 import functools
 import json
 import time
@@ -278,3 +279,44 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
+
+        self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
+
+        self.get_requestcode = self.app.router['RequestCode:get'].url_for()
+        self.post_requestcode = self.app.router['RequestCode:post'].url_for()
+        self.get_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:get'].url_for()
+        self.post_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:post'].url_for()
+        self.get_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:get'].url_for()
+        self.post_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:post'].url_for()
+
+        self.postcode_valid = 'EX2 6GA'
+        self.postcode_invalid = 'ZZ99 9ZZ'
+        self.postcode_no_results = 'GU34 5DU'
+
+        self.post_requestcode_address_confirmation_data = {'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"}
+
+        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_no_results = f
+
+        with open('tests/test_data/address_index/postcode_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_results = f
+
+        self.request_code_form_data_valid = {
+            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
+        }
+
+        self.request_code_form_data_no_results = {
+            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
+        }
+
+        self.request_code_form_data_invalid = {
+            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        self.request_code_address_confirmation_data = {
+            'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+        }

@@ -80,7 +80,8 @@ def create_app(config_name=None) -> Application:
 
     # Store a dict of health check urls for required services
     app.service_status_urls = app_config.get_service_urls_mapped_with_path(path='/info',
-                                                                           excludes=['ACCOUNT_SERVICE_URL', 'EQ_URL', 'WEBCHAT_SVC_URL'])
+                                                                           excludes=['ACCOUNT_SERVICE_URL', 'EQ_URL',
+                                                                                     'WEBCHAT_SVC_URL', 'ADDRESS_INDEX_SVC_URL'])
 
     # Monkey patch the check_services function as a method to the app object
     app.check_services = types.MethodType(check_services, app)
