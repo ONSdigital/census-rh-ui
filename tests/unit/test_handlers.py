@@ -85,16 +85,13 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_index_blank(self):
+    async def test_post_index_invalid_blank(self):
         form_data = self.form_data.copy()
         del form_data['uac']
 
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
-
-            with self.assertLogs('respondent-home', 'WARNING') as cm:
-                response = await self.client.request("POST", self.post_index, data=form_data)
-            self.assertLogLine(cm, "Attempt to use a malformed access code")
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request("POST", self.post_index, data=form_data)
+        self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
@@ -104,12 +101,9 @@ class TestHandlers(RHTestCase):
         form_data = self.form_data.copy()
         form_data['uac'] = 'http://www.census.gov.uk/'
 
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
-
-            with self.assertLogs('respondent-home', 'WARNING') as cm:
-                response = await self.client.request("POST", self.post_index, data=form_data)
-            self.assertLogLine(cm, "Attempt to use a malformed access code")
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request("POST", self.post_index, data=form_data)
+        self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
@@ -119,12 +113,9 @@ class TestHandlers(RHTestCase):
         form_data = self.form_data.copy()
         form_data['uac'] = 'rT~l34u8{?nm4£#f'
 
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
-
-            with self.assertLogs('respondent-home', 'WARNING') as cm:
-                response = await self.client.request("POST", self.post_index, data=form_data)
-            self.assertLogLine(cm, "Attempt to use a malformed access code")
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request("POST", self.post_index, data=form_data)
+        self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
         self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
