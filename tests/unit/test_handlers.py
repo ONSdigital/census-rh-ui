@@ -64,6 +64,42 @@ class TestHandlers(RHTestCase):
                 continue  # skip uuid / time generated values
             self.assertEqual(self.eq_payload[key], token[key], key)  # outputs failed key as msg
 
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_address_edit_with_build(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.put(self.rhsvc_modify_address + self.case_id + '/address', payload=self.modify_address_data)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
+                                                     data=self.address_confirmation_data_edit)
+                self.assertEqual(response.status, 200)
+
+                self.assertLogLine(logs_home, 'Address Edit Called')
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_address_edit, allow_redirects=False,
+                                                         data=self.address_edit_data)
+
+                self.assertLogLine(logs_home, 'Raising address modification call')
+                self.assertLogLine(logs_home, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload[key], token[key], key)  # outputs failed key as msg
+
     @build_eq_raises
     @unittest_run_loop
     async def test_post_index_build_raises_InvalidEqPayLoad(self):

@@ -236,6 +236,7 @@ class AddressConfirmation(View):
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
+            logger.info("Address Edit Called", client_ip=self._client_ip)
             return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
 
         else:
@@ -255,9 +256,6 @@ class AddressEdit(View):
     async def put_modify_address(self, case, address):
         json = {
             "caseId": case['caseId'],
-            # "caseRef": case['caseRef'],
-            # "addressType": case['addressType'],
-            # "state": case['state'],
             "uprn": case['address']['uprn'],
             "addressLine1": address['addressLine1'],
             "addressLine2": address['addressLine2'],
@@ -314,10 +312,13 @@ class AddressEdit(View):
             return attributes
 
         try:
+            logger.info("Raising address modification call", client_ip=self._client_ip)
             await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
+            logger.info("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
+        logger.info("Raising call questionnaire", client_ip=self._client_ip)
         await self.call_questionnaire(case, attributes, request.app)
 
 
