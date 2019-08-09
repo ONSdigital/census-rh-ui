@@ -113,7 +113,7 @@ class View:
                     json, self._handle_response, None))
 
     async def get_webchat_closed(self):
-        querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
+        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'  # NOQA
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
                     None, self._handle_response, None))
@@ -322,7 +322,7 @@ class WebChat(View):
         saturday_open = 8
         saturday_close = 13
         weekday_open = 8
-        weekday_close = 19
+        weekday_close = 12
 
         timezone_offset = 0
 
