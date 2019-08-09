@@ -138,7 +138,9 @@ class Index(View):
         else:
             combined = ''
 
-        if len(combined) < expected_length:
+        uac_validation_pattern = re.compile(r'^[a-z0-9]{16}$')
+
+        if (len(combined) < expected_length) or not (uac_validation_pattern.fullmatch(combined)):
             raise TypeError
         return combined
 
