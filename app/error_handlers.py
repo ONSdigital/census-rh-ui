@@ -26,6 +26,8 @@ def create_error_middleware(overrides):
                 logger.debug('Redirecting to index', path=request.path)
                 raise web.HTTPMovedPermanently(index_resource.url_for())
             return await not_found_error(request)
+        except web.HTTPForbidden:
+            return await forbidden(request)
         except InactiveCaseError:
             return await inactive_case(request)
         except ExerciseClosedError as ex:
@@ -75,6 +77,10 @@ async def response_error(request):
 
 async def not_found_error(request):
     return aiohttp_jinja2.render_template("404.html", request, {}, status=404)
+
+
+async def forbidden(request):
+    return aiohttp_jinja2.render_template("index.html", request, {}, status=403)
 
 
 def setup(app):
