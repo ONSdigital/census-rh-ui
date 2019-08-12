@@ -19,6 +19,7 @@ from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
+from .security import remember, check_permission
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
@@ -138,7 +139,9 @@ class Index(View):
         else:
             combined = ''
 
-        if len(combined) < expected_length:
+        uac_validation_pattern = re.compile(r'^[a-z0-9]{16}$')
+
+        if (len(combined) < expected_length) or not (uac_validation_pattern.fullmatch(combined)):
             raise TypeError
         return combined
 
@@ -158,7 +161,6 @@ class Index(View):
     async def get(self, _):
         return {}
 
-    @aiohttp_jinja2.template('index.html')
     async def post(self, request):
         """
         Forward to Address confirmation
@@ -181,9 +183,11 @@ class Index(View):
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=202)
+                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=401)
             else:
                 raise ex
+
+        await remember(uac_json["caseId"], request)
 
         # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
         self.validate_case(uac_json)
@@ -200,21 +204,38 @@ class Index(View):
         session["attributes"] = attributes
         session["case"] = uac_json
 
-        return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
+        raise HTTPFound(self._request.app.router['AddressConfirmation:get'].url_for())
 
 
 @routes.view('/start/address-confirmation')
 class AddressConfirmation(View):
 
     @aiohttp_jinja2.template('address-confirmation.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+
+        return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
+
+    @aiohttp_jinja2.template('address-confirmation.html')
     async def post(self, request):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
-        data = await request.post()
+        await check_permission(request)
         self._request = request
+        data = await request.post()
 
-        self.check_session()
         session = await get_session(request)
         try:
             attributes = session["attributes"]
@@ -236,7 +257,7 @@ class AddressConfirmation(View):
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
-            return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
+            raise HTTPFound(self._request.app.router['AddressEdit:get'].url_for())
 
         else:
             # catch all just in case, should never get here
@@ -268,14 +289,31 @@ class AddressEdit(View):
         return attributes
 
     @aiohttp_jinja2.template('address-edit.html')
+    async def get(self, request):
+        """
+        Address Edit get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+
+        return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
+
+    @aiohttp_jinja2.template('address-edit.html')
     async def post(self, request):
         """
         Address Edit flow. Edited address details.
         """
+        await check_permission(request)
         data = await request.post()
         self._request = request
 
-        self.check_session()
         session = await get_session(request)
         try:
             attributes = session["attributes"]

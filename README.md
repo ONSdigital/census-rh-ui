@@ -7,6 +7,7 @@ Respondent Home is part of ONS's Census Survey Data Collection platform. It allo
 them to the [ONS eQ Survey Runner](https://github.com/ONSdigital/eq-survey-runner) upon successful validation.
 
 
+
 ![The ONS Survey Data Collection platform](/images/sdc_platform.png?raw=true)
 
 This repository contains the Python [AIOHTTP](http://docs.aiohttp.org/en/stable/) application that is the user interface for the Respondent Home product.

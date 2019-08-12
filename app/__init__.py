@@ -16,3 +16,4 @@ MOBILE_ENTER_MSG = {'text': 'Enter a valid UK mobile number to continue', "level
 MOBILE_CHECK_MSG = {'text': 'Please check and confirm your mobile number.', "level": "ERROR", "type": "MOBILE_CONFIRMATION_ERROR", "field": "mobile"}  # NOQA
 POSTCODE_INVALID_MSG = {'text': 'Enter a valid UK postcode to continue', "level": "ERROR", "type": "POSTCODE_ENTER_ERROR", "field": "postcode"}  # NOQA
 ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', "level": "ERROR", "type": "ADDRESS_SELECT_CHECK_MSG", "field": "address-select"}  # NOQA
+VALIDATION_FAILURE_MSG = {'text': 'Session timed out or permission denied', "level": "ERROR", "type": "VALIDATION_FAILURE_MSG", "field": "uac"}  # NOQA
