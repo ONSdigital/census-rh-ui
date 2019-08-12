@@ -322,7 +322,7 @@ class WebChat(View):
         saturday_open = 8
         saturday_close = 13
         weekday_open = 8
-        weekday_close = 12
+        weekday_close = 19
 
         timezone_offset = 0
 
