@@ -225,13 +225,14 @@ class AddressConfirmation(View):
 
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
+    @aiohttp_jinja2.template('address-confirmation.html')
     async def post(self, request):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
         await check_permission(request)
-        data = await request.post()
         self._request = request
+        data = await request.post()
 
         session = await get_session(request)
         try:
@@ -302,6 +303,7 @@ class AddressEdit(View):
 
         return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
 
+    @aiohttp_jinja2.template('address-edit.html')
     async def post(self, request):
         """
         Address Edit flow. Edited address details.
