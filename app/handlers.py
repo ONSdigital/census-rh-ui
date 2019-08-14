@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, SESSION_TIMEOUT_CODE_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
     ADDRESS_SELECT_CHECK_MSG)
 from .exceptions import InactiveCaseError
@@ -496,7 +496,7 @@ class RequestCodeCommon(View):
         else:
             logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
             flash(self._request, POSTCODE_INVALID_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeSelectAddress' + f_type + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + f_type + ':get'].url_for())
 
     async def post_select_address(self, attributes, data, request):
         try:
