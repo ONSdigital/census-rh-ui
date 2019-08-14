@@ -1,8 +1,8 @@
 {% extends "base-en.html" %}
 {% if fulfillment_type == 'HI' %}
-    {% set form_action = url('RequestCodeEnterMobileHI:post') %}
+    {% set form_action = url('RequestCodeEnterAddressHI:post') %}
 {% else %}
-    {% set form_action = url('RequestCodeEnterMobileHH:post') %}
+    {% set form_action = url('RequestCodeEnterAddressHH:post') %}
 {% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
@@ -26,50 +26,48 @@
     {% endif %}
 
     {% call onsQuestion({
-        "title": "What is your mobile phone number?",
-        "description": "<p>We will send an access code by text to this number.</p>"
+        "title": "What is your postcode?",
+        "description": "<p>To text you a new code we need to know the address for which you are answering.</p>"
     }) %}
 
-        {% if 'mobile' in field_messages_dict %}
-
+        {% if 'postcode' in field_messages_dict %}
             {{
                 onsInput({
-                    "id": "telephone",
-                    "type": "tel",
-                    "autocomplete": "tel",
+                    "id": "postcode",
+                    "type": "postcode",
+                    "autocomplete": "postcode",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK mobile phone number"
+                        "text": "UK postcode"
                     },
-                    "name": "request-mobile-number",
+                    "name": "request-postcode",
                     "error": {
-                        "text": "Enter a valid UK mobile phone number"
-                    }
+                        "text": "Enter a valid UK postcode"
+                    },
                 })
             }}
-
         {% else %}
             {{
                 onsInput({
-                    "id": "telephone",
-                    "type": "tel",
-                    "autocomplete": "tel",
+                    "id": "postcode",
+                    "type": "postcode",
+                    "autocomplete": "postcode",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK mobile phone number"
+                        "text": "UK postcode"
                     },
-                    "name": "request-mobile-number"
+                    "name": "request-postcode"
                 })
             }}
         {% endif %}
 
     {% endcall %}
-    
+
     {{
         onsButton({
             "text": "Continue",
             "classes": "u-mt-l"
         })
     }}
-    
+
 {% endblock %}

@@ -1,5 +1,9 @@
 {% extends "base-en.html" %}
-{% set request_link = url('RequestCode:get') %}
+{% if fulfillment_type == 'HI' %}
+    {% set request_link = url('RequestCodeEnterAddressHI:get') %}
+{% else %}
+    {% set request_link = url('RequestCodeEnterAddressHH:get') %}
+{% endif %}
 
 {% block main %}
 

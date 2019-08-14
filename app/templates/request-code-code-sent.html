@@ -1,9 +1,13 @@
 {% extends "base-en.html" %}
-{% set request_link = url('RequestCode:get') %}
+{% if fulfillment_type == 'HI' %}
+    {% set request_link = url('RequestCodeEnterAddressHI:get') %}
+{% else %}
+    {% set request_link = url('RequestCodeEnterAddressHH:get') %}
+{% endif %}
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% block main %}
-    <h1 class="u-mt-l js-piped-answer" data-question-to-pipe="{{ url('RequestCodeConfirmMobile:post') }}">We have sent an access code to {{mobile_number}}</h1>
+    <h1 class="u-mt-l">We have sent an access code to {{mobile_number}}</h1>
 
     <p>A text with the code should arrive shortly. Once you get the code, you can start the survey.</p>
 
