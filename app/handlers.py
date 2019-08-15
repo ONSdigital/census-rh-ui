@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
     ADDRESS_SELECT_CHECK_MSG)
 from .exceptions import InactiveCaseError
@@ -111,7 +111,7 @@ class View:
                     json, self._handle_response, None))
 
     async def get_webchat_closed(self):
-        querystring = '?im_name=closed&im_subject=ONS&im_countchars=1&info_email=closed&info_country=closed&info_query=closed&info_language=closed'  # NOQA
+        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'  # NOQA
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
                     None, self._handle_response, None))
@@ -619,7 +619,7 @@ class WebChat(View):
 
     @staticmethod
     def get_now():
-        return datetime.now()
+        return datetime.utcnow()
 
     @staticmethod
     def check_open():
@@ -629,16 +629,30 @@ class WebChat(View):
         day = WebChat.get_now().day
         weekday = WebChat.get_now().weekday()
         hour = WebChat.get_now().hour
+
+        census_weekend_open = 8
+        census_weekend_close = 16
+        saturday_open = 8
+        saturday_close = 13
+        weekday_open = 8
+        weekday_close = 19
+
+        timezone_offset = 0
+
+        if WebChat.get_now() < datetime(2019, 10, 27):
+            logger.info("Before switch to GMT - adjusting time", client_ip='')
+            timezone_offset = 1
+
         if year == 2019 and month == 10 and (day == 12 or day == 13):
-            if hour < 8 or hour >= 16:
+            if hour < (census_weekend_open - timezone_offset) or hour >= (census_weekend_close - timezone_offset):
                 return False
-        elif weekday == 5:
-            if hour < 8 or hour >= 13:
+        elif weekday == 5:  # Saturday
+            if hour < (saturday_open - timezone_offset) or hour >= (saturday_close - timezone_offset):
                 return False
-        elif weekday == 6:
+        elif weekday == 6:  # Sunday
             return False
         else:
-            if hour < 8 or hour >= 19:
+            if hour < (weekday_open - timezone_offset) or hour >= (weekday_close - timezone_offset):
                 return False
 
         return True
@@ -651,8 +665,8 @@ class WebChat(View):
             flash(self._request, WEBCHAT_MISSING_NAME_MSG)
             form_valid = False
 
-        if not(data.get('language')):
-            flash(self._request, WEBCHAT_MISSING_LANGUAGE_MSG)
+        if not(data.get('country')):
+            flash(self._request, WEBCHAT_MISSING_COUNTRY_MSG)
             form_valid = False
 
         if not(data.get('query')):
@@ -688,11 +702,12 @@ class WebChat(View):
         if not form_valid:
             logger.info("Form submission error", client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
-                    'form_value_language': data.get('language'),
+                    'form_value_country': data.get('country'),
                     'form_value_query': data.get('query')}
 
         context = {'screen_name': data.get('screen_name'),
-                   'language': data.get('language'),
+                   'language': 'english',
+                   'country': data.get('country'),
                    'query': data.get('query'),
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
