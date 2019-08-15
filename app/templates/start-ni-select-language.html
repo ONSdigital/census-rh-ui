@@ -1,0 +1,88 @@
+{% extends "base-ni.html" %}
+{% set form_action = url('StartSelectLanguageNI:post') %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": form_action
+    }
+} %}
+
+{% set radio_options = [
+                        {
+                            "id": "gaeilge",
+                            "label": {
+                                "text": "Gaeilge"
+                            },
+                            "value": "gaeilge"
+                        },
+                        {
+                            "id": "ulster-scotch",
+                            "label": {
+                                "text": "Ulst&egrave;r-Scotch"
+                            },
+                            "value": "ulster-scotch"
+                        },
+                        {
+                            "id": "english",
+                            "label": {
+                                "text": "Continue in English"
+                            },
+                            "value": "english"
+                        }
+                    ]
+%}
+
+{% block main %}
+    {% if messages_dict %}
+        {% include "partials/messages.html" with context %}
+    {% endif %}
+
+    {% call onsQuestion({
+        "title": "Choose your language",
+        "useFieldset": true
+    }) %}
+
+        {% if 'language_option' in field_messages_dict %}
+            {{
+                onsRadios({
+                    "legend": "You will always have the option to change back to English",
+                    "name": "language-option",
+                    "or": "Or",
+                    "radios": radio_options,
+                    "error": {
+                        "text": "Select a language option"
+                    }
+                })
+            }}
+        {% else %}
+            {{
+                onsRadios({
+                    "legend": "You will always have the option to change back to English",
+                    "name": "language-option",
+                    "or": "Or",
+                    "radios": radio_options
+                })
+            }}
+        {% endif %}
+
+    {% endcall %}
+
+    {{
+        onsButton({
+            "text": "Continue",
+            "classes": "u-mt-l",
+            "name": "action[save_continue]"
+        })
+    }}
+
+    <p>TEXT TO GO HERE</p>
+
+{% endblock %}

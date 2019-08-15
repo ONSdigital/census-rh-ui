@@ -1,0 +1,77 @@
+{% extends "base-ni.html" %}
+{% set form_action = url('StartLanguageOptionsNI:post') %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% set form =  {
+    "method": "POST",
+    "attributes": {
+        "action": form_action
+    }
+} %}
+
+{% set radio_options = [
+                        {
+                            "id": "yes",
+                            "label": {
+                                "text": "Yes, continue in English"
+                            },
+                            "value": "Yes"
+                        },
+                        {
+                            "id": "no",
+                            "label": {
+                                "text": "No, I would like to change to Gaeilge or Ulst&egrave;r-Scotch"
+                            },
+                            "value": "No"
+                        }
+                    ]
+%}
+
+{% block main %}
+    {% if messages_dict %}
+        {% include "partials/messages.html" with context %}
+    {% endif %}
+
+    {% call onsQuestion({
+        "title": "Would you like to complete the survey in English?",
+        "useFieldset": true
+    }) %}
+
+        {% if 'language_option' in field_messages_dict %}
+            {{
+                onsRadios({
+                    "name": "language-option",
+                    "radios": radio_options,
+                    "error": {
+                        "text": "Select a language option"
+                    }
+                })
+            }}
+        {% else %}
+            {{
+                onsRadios({
+                    "name": "language-option",
+                    "radios": radio_options
+                })
+            }}
+        {% endif %}
+
+    {% endcall %}
+
+    {{
+        onsButton({
+            "text": "Continue",
+            "classes": "u-mt-l",
+            "name": "action[save_continue]"
+        })
+    }}
+
+    <p>TEXT TO GO HERE</p>
+
+{% endblock %}

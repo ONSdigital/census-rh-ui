@@ -1,4 +1,10 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set form_action = url('AddressConfirmationNI:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set form_action = url('AddressConfirmationEN:post') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -10,7 +16,7 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('AddressConfirmation:post')
+        "action": form_action
     }
 } %}
 

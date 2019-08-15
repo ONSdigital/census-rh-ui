@@ -80,9 +80,6 @@ class View:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
-    def redirect(self):
-        raise HTTPFound(self._request.app.router['Index:get'].url_for())
-
     async def _make_request(self, request: Request):
         method, url, auth, json, func, response = request
         logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
@@ -120,8 +117,7 @@ class View:
                     None, self._handle_response, None))
 
 
-@routes.view('/start/')
-class Index(View):
+class Start(View):
 
     def __init__(self):
         self._uac = None
@@ -157,6 +153,30 @@ class Index(View):
         return await self._make_request(
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
+
+    def get_address_details(self, data: dict, attributes: dict):
+        """
+        Replace any changed address details in attributes to be sent to EQ
+        :param data: Changed address details
+        :param attributes: attributes to be sent
+        :return: attributes with changed address
+        """
+
+        if not data["address-line-1"].strip():
+            raise InvalidEqPayLoad(f"Mandatory address field not present{self._client_ip}")
+        else:
+            attributes["addressLine1"] = data["address-line-1"].strip()
+            attributes["addressLine2"] = data["address-line-2"].strip()
+            attributes["addressLine3"] = data["address-line-3"].strip()
+            attributes["townName"] = data["address-town"].strip()
+            attributes["postcode"] = data["address-postcode"].strip()
+
+        return attributes
+
+
+@routes.view('/start/')
+class IndexEN(Start):
+
     @aiohttp_jinja2.template('index.html')
     async def get(self, _):
         return {}
@@ -175,7 +195,7 @@ class Index(View):
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
-            return self.redirect()
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
         try:
             uac_json = await self.get_uac_details()
@@ -204,11 +224,65 @@ class Index(View):
         session["attributes"] = attributes
         session["case"] = uac_json
 
-        raise HTTPFound(self._request.app.router['AddressConfirmation:get'].url_for())
+        raise HTTPFound(self._request.app.router['AddressConfirmationEN:get'].url_for())
+
+
+@routes.view('/ni/start/')
+class IndexNI(Start):
+
+    @aiohttp_jinja2.template('index.html')
+    async def get(self, _):
+        return {'display_region': 'ni'}
+
+    async def post(self, request):
+        """
+        Forward to Address confirmation
+        :param request:
+        :return: address confirmation view
+        """
+        self._request = request
+        data = await self._request.post()
+
+        try:
+            self._uac = self.join_uac(data)
+        except TypeError:
+            logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
+            flash(self._request, BAD_CODE_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        try:
+            uac_json = await self.get_uac_details()
+        except ClientResponseError as ex:
+            if ex.status == 404:
+                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                flash(self._request, INVALID_CODE_MSG)
+                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=401)
+            else:
+                raise ex
+
+        await remember(uac_json["caseId"], request)
+
+        # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
+        self.validate_case(uac_json)
+
+        try:
+            attributes = uac_json["address"]
+        except KeyError:
+            raise InvalidEqPayLoad("Could not retrieve address details")
+
+        # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
+
+        logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
+        session = await get_session(request)
+        session["attributes"] = attributes
+        session["case"] = uac_json
+        session["attributes"]["display_region"] = 'ni'
+
+        raise HTTPFound(self._request.app.router['AddressConfirmationNI:get'].url_for())
 
 
 @routes.view('/start/address-confirmation')
-class AddressConfirmation(View):
+class AddressConfirmationEN(Start):
 
     @aiohttp_jinja2.template('address-confirmation.html')
     async def get(self, request):
@@ -223,9 +297,9 @@ class AddressConfirmation(View):
             attributes = session["attributes"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
-        return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
+        return attributes
 
     @aiohttp_jinja2.template('address-confirmation.html')
     async def post(self, request):
@@ -243,7 +317,7 @@ class AddressConfirmation(View):
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
         try:
             address_confirmation = data["address-check-answer"]
@@ -257,7 +331,65 @@ class AddressConfirmation(View):
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
-            raise HTTPFound(self._request.app.router['AddressEdit:get'].url_for())
+            raise HTTPFound(self._request.app.router['AddressEditEN:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/ni/start/address-confirmation')
+class AddressConfirmationNI(Start):
+
+    @aiohttp_jinja2.template('address-confirmation.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('address-confirmation.html')
+    async def post(self, request):
+        """
+        Address Confirmation flow. If correct address will build EQ payload and send to EQ.
+        """
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        try:
+            address_confirmation = data["address-check-answer"]
+        except KeyError:
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'Yes':
+            raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+
+        elif address_confirmation == 'No':
+            raise HTTPFound(self._request.app.router['AddressEditNI:get'].url_for())
 
         else:
             # catch all just in case, should never get here
@@ -267,26 +399,7 @@ class AddressConfirmation(View):
 
 
 @routes.view('/start/address-edit')
-class AddressEdit(View):
-
-    def get_address_details(self, data: dict, attributes: dict):
-        """
-        Replace any changed address details in attributes to be sent to EQ
-        :param data: Changed address details
-        :param attributes: attributes to be sent
-        :return: attributes with changed address
-        """
-
-        if not data["address-line-1"].strip():
-            raise InvalidEqPayLoad(f"Mandatory address field not present{self._client_ip}")
-        else:
-            attributes["addressLine1"] = data["address-line-1"].strip()
-            attributes["addressLine2"] = data["address-line-2"].strip()
-            attributes["addressLine3"] = data["address-line-3"].strip()
-            attributes["townName"] = data["address-town"].strip()
-            attributes["postcode"] = data["address-postcode"].strip()
-
-        return attributes
+class AddressEditEN(Start):
 
     @aiohttp_jinja2.template('address-edit.html')
     async def get(self, request):
@@ -301,9 +414,9 @@ class AddressEdit(View):
             attributes = session["attributes"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
-        return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
+        return attributes
 
     @aiohttp_jinja2.template('address-edit.html')
     async def post(self, request):
@@ -320,13 +433,175 @@ class AddressEdit(View):
             case = session["case"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
         try:
-            attributes = self.get_address_details(data, attributes)
+            attributes = Start.get_address_details(self, data, attributes)
         except InvalidEqPayLoad:
             logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG)
+            return attributes
+
+        await self.call_questionnaire(case, attributes, request.app)
+
+
+@routes.view('/ni/start/address-edit')
+class AddressEditNI(Start):
+
+    @aiohttp_jinja2.template('address-edit.html')
+    async def get(self, request):
+        """
+        Address Edit get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('address-edit.html')
+    async def post(self, request):
+        """
+        Address Edit flow. Edited address details.
+        """
+        await check_permission(request)
+        data = await request.post()
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        try:
+            attributes = Start.get_address_details(self, data, attributes)
+        except InvalidEqPayLoad:
+            logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
+            flash(request, ADDRESS_EDIT_MSG)
+            return attributes
+
+        raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+
+
+@routes.view('/ni/start/language-options')
+class StartLanguageOptionsNI(Start):
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if language_option == 'Yes':
+            await self.call_questionnaire(case, attributes, request.app)
+
+        elif language_option == 'No':
+            raise HTTPFound(self._request.app.router['StartSelectLanguageNI:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/ni/start/select-language')
+class StartSelectLanguageNI(Start):
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if language_option == 'gaeilge':
+            attributes['language'] = ''
+
+        elif language_option == 'ulster-scotch':
+            attributes['language'] = ''
+
+        elif language_option == 'english':
+            attributes['language'] = ''
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
