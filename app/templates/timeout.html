@@ -1,4 +1,12 @@
 {% extends "base-en.html" %}
+{% if fulfillment_type == 'HH' %}
+    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHH:get')|string + '">re-enter your postcode</a>.' %}
+{% elif  fulfillment_type == 'HI' %}
+    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHI:get')|string + '">re-enter your postcode</a>.' %}
+{% else %}
+    {% set message = 'You will need to <a href="' + url('Index:get')|string + '">re-enter your access code</a>.' %}
+{% endif %}
+
 {% from "components/panel/_macro.njk" import onsPanel %}
 
 {% block main %}

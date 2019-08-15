@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
+    WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_LANGUAGE_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
     ADDRESS_SELECT_CHECK_MSG)
 from .exceptions import InactiveCaseError
@@ -77,8 +77,7 @@ class View:
     def check_session(self):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
     def redirect(self):
         raise HTTPFound(self._request.app.router['Index:get'].url_for())
@@ -222,8 +221,7 @@ class AddressConfirmation(View):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
         return aiohttp_jinja2.render_template("address-confirmation.html", self._request, attributes)
 
@@ -242,8 +240,7 @@ class AddressConfirmation(View):
             case = session["case"]
 
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
         try:
             address_confirmation = data["address-check-answer"]
@@ -300,8 +297,7 @@ class AddressEdit(View):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
         return aiohttp_jinja2.render_template("address-edit.html", request, attributes)
 
@@ -319,8 +315,7 @@ class AddressEdit(View):
             attributes = session["attributes"]
             case = session["case"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
+            raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
         try:
             attributes = self.get_address_details(data, attributes)
@@ -330,6 +325,13 @@ class AddressEdit(View):
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
+
+
+@routes.view('/start/timeout')
+class UACTimeout(View):
+    @aiohttp_jinja2.template('timeout.html')
+    async def get(self, _):
+        return {}
 
 
 @routes.view('/webchat/chat')
@@ -436,23 +438,23 @@ class WebChat(View):
 
 class RequestCodeCommon(View):
 
-    def request_code_check_session(self, f_type):
+    def request_code_check_session(self, fulfillment_type):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
             # flash(self._request, SESSION_TIMEOUT_CODE_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + f_type + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + ':get'].url_for())
 
-    async def get_check_attributes(self, request, f_type):
+    async def get_check_attributes(self, request, fulfillment_type):
         self._request = request
 
-        self.request_code_check_session(f_type)
+        self.request_code_check_session(fulfillment_type)
         session = await get_session(request)
         try:
             attributes = session["attributes"]
 
         except KeyError:
             # flash(self._request, SESSION_TIMEOUT_CODE_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + f_type + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + ':get'].url_for())
 
         return attributes
 
@@ -748,8 +750,8 @@ class RequestCodeCodeSentHH(RequestCodeCommon):
 @routes.view('/request-access-code/timeout')
 class RequestCodeTimeoutHH(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, request):
-        return {'message': 'You will need to <a href="' + str(request.app.router['RequestCodeEnterAddressHH:get'].url_for()) + '">re-enter your postcode</a>.'}
+    async def get(self, _):
+        return {'fulfillment_type': 'HH'}
 
 
 @routes.view('/request-individual-code')
@@ -851,8 +853,8 @@ class RequestCodeCodeSentHI(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/request-access-code/timeout')
+@routes.view('/request-individual-code/timeout')
 class RequestCodeTimeoutHI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, request):
-        return {'message': 'You will need to <a href="' + str(request.app.router['RequestCodeEnterAddressHI:get'].url_for()) + '">re-enter your postcode</a>.'}
+    async def get(self, _):
+        return {'fulfillment_type': 'HI'}
