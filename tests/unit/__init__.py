@@ -278,7 +278,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_webchat_chat = self.app.router['WebChatWindow:get'].url_for()
 
         self.webchat_form_data = {
-            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help'
+            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help', 'country': 'england'
         }
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
