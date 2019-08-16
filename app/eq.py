@@ -64,7 +64,7 @@ class EqPayloadConstructor(object):
 
         logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
 
-        self._language_code = 'en'  # hardcoded for 19.9 until we know how to derive
+        self._language_code = self._sample_attributes['language']
 
         self._payload = {
             "jti": str(uuid4()),  # required by eQ for creating a new claim

@@ -153,7 +153,6 @@ class Start(View):
         return await self._make_request(
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
-
     def get_address_details(self, data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
@@ -328,6 +327,7 @@ class AddressConfirmationEN(Start):
 
         if address_confirmation == 'Yes':
             # Correct address flow
+            attributes['language'] = 'en'
             await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
@@ -442,6 +442,7 @@ class AddressEditEN(Start):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
+        attributes['language'] = 'en'
         await self.call_questionnaire(case, attributes, request.app)
 
 
@@ -535,6 +536,7 @@ class StartLanguageOptionsNI(Start):
             return attributes
 
         if language_option == 'Yes':
+            attributes['language'] = 'en'
             await self.call_questionnaire(case, attributes, request.app)
 
         elif language_option == 'No':
@@ -590,13 +592,13 @@ class StartSelectLanguageNI(Start):
             return attributes
 
         if language_option == 'gaeilge':
-            attributes['language'] = ''
+            attributes['language'] = 'ga'
 
         elif language_option == 'ulster-scotch':
-            attributes['language'] = ''
+            attributes['language'] = 'us'
 
         elif language_option == 'english':
-            attributes['language'] = ''
+            attributes['language'] = 'en'
 
         else:
             # catch all just in case, should never get here
