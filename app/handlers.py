@@ -372,7 +372,6 @@ class AddressConfirmationNI(Start):
         session = await get_session(request)
         try:
             attributes = session["attributes"]
-            case = session["case"]
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
@@ -478,7 +477,6 @@ class AddressEditNI(Start):
         session = await get_session(request)
         try:
             attributes = session["attributes"]
-            case = session["case"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())

@@ -62,7 +62,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.uac_json['address'], self.app).build()
+                    self.uac_json, self.attributes_en, self.app).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()

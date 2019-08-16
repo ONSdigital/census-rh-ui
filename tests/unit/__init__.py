@@ -211,13 +211,19 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
 
-        self.get_index = self.app.router['Index:get'].url_for()
         self.get_info = self.app.router['Info:get'].url_for()
-        self.post_index = self.app.router['Index:post'].url_for()
-        self.get_address_confirmation = self.app.router['AddressConfirmation:get'].url_for()
-        self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
-        self.get_address_edit = self.app.router['AddressEdit:get'].url_for()
-        self.post_address_edit = self.app.router['AddressEdit:post'].url_for()
+        self.get_index_en = self.app.router['IndexEN:get'].url_for()
+        self.post_index_en = self.app.router['IndexEN:post'].url_for()
+        self.get_address_confirmation_en = self.app.router['AddressConfirmationEN:get'].url_for()
+        self.post_address_confirmation_en = self.app.router['AddressConfirmationEN:post'].url_for()
+        self.get_address_edit_en = self.app.router['AddressEditEN:get'].url_for()
+        self.post_address_edit_en = self.app.router['AddressEditEN:post'].url_for()
+        self.get_index_ni = self.app.router['IndexNI:get'].url_for()
+        self.post_index_ni = self.app.router['IndexNI:post'].url_for()
+        self.get_address_confirmation_ni = self.app.router['AddressConfirmationNI:get'].url_for()
+        self.post_address_confirmation_ni = self.app.router['AddressConfirmationNI:post'].url_for()
+        self.get_address_edit_ni = self.app.router['AddressEditNI:get'].url_for()
+        self.post_address_edit_ni = self.app.router['AddressEditNI:post'].url_for()
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
         self.eq_id = "census"
@@ -234,6 +240,16 @@ class RHTestCase(AioHTTPTestCase):
         self.questionnaire_id = self.uac_json['questionnaireId']
         self.case_type = self.uac_json['caseType']
         self.channel = "rh"
+        self.attributes_en = {
+            'address': self.uac_json,
+            'language': 'en',
+            'display_region': 'en'
+        }
+        self.attributes_ni = {
+            'address': self.uac_json,
+            'language': 'us',
+            'display_region': 'ni'
+        }
         self.eq_payload = {
             "jti": self.jti,
             "tx_id": self.jti,
