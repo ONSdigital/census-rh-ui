@@ -53,11 +53,11 @@ class TestEq(RHTestCase):
             self.assertIn(f'Could not retrieve address uprn from case JSON', ex.exception.message)
 
     @unittest_run_loop
-    async def test_build(self):
+    async def test_build_en(self):
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
-            mocked_time.return_value = self.eq_payload['iat']
+            mocked_time.return_value = self.eq_payload_en['iat']
             mocked_uuid4.return_value = self.jti
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
@@ -67,7 +67,24 @@ class TestEq(RHTestCase):
 
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
-        self.assertEqual(payload, self.eq_payload)
+        self.assertEqual(payload, self.eq_payload_en)
+
+    @unittest_run_loop
+    async def test_build_ni(self):
+        self.maxDiff = None  # for full payload comparison when running this test
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload_ni['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.attributes_ni, self.app).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, self.eq_payload_ni)
 
     @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
@@ -79,11 +96,17 @@ class TestEq(RHTestCase):
                 self.uac_json, None, self.app).build()
         self.assertIn('Attributes is empty', ex.exception.message)
 
-    def test_build_display_address(self):
+    def test_build_display_address_en(self):
         from app import eq
 
         result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
-        self.assertEqual(result, self.eq_payload['display_address'])
+        self.assertEqual(result, self.eq_payload_en['display_address'])
+
+    def test_build_display_address_ni(self):
+        from app import eq
+
+        result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
+        self.assertEqual(result, self.eq_payload_ni['display_address'])
 
     def test_build_display_address_raises(self):
         from app import eq

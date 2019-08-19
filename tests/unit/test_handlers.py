@@ -80,11 +80,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload.keys():
+        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_en.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
 
     @build_eq_raises
     @unittest_run_loop

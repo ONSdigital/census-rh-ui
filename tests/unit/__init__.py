@@ -241,16 +241,26 @@ class RHTestCase(AioHTTPTestCase):
         self.case_type = self.uac_json['caseType']
         self.channel = "rh"
         self.attributes_en = {
-            'address': self.uac_json,
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
             'language': 'en',
             'display_region': 'en'
         }
         self.attributes_ni = {
-            'address': self.uac_json,
-            'language': 'us',
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
+            'language': 'ul',
             'display_region': 'ni'
         }
-        self.eq_payload = {
+        self.eq_payload_en = {
             "jti": self.jti,
             "tx_id": self.jti,
             "iat": int(time.time()),
@@ -260,7 +270,7 @@ class RHTestCase(AioHTTPTestCase):
             "region_code": 'GB-ENG',
             "ru_ref": self.uprn,
             "case_id": self.case_id,
-            "language_code": self.language_code,
+            "language_code": 'en',
             "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
@@ -271,7 +281,30 @@ class RHTestCase(AioHTTPTestCase):
             "period_id": self.period_id,
             "form_type": self.form_type,
             "survey": self.survey
- }
+        }
+
+        self.eq_payload_ni = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-ENG',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'ul',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "1234567890",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
 
         self.rhsvc_url = (
             f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
