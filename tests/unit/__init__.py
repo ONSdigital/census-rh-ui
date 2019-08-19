@@ -224,6 +224,10 @@ class RHTestCase(AioHTTPTestCase):
         self.post_address_confirmation_ni = self.app.router['AddressConfirmationNI:post'].url_for()
         self.get_address_edit_ni = self.app.router['AddressEditNI:get'].url_for()
         self.post_address_edit_ni = self.app.router['AddressEditNI:post'].url_for()
+        self.get_language_options_ni = self.app.router['StartLanguageOptionsNI:get'].url_for()
+        self.post_language_options_ni = self.app.router['StartLanguageOptionsNI:post'].url_for()
+        self.get_select_language_ni = self.app.router['StartSelectLanguageNI:get'].url_for()
+        self.post_select_language_ni = self.app.router['StartSelectLanguageNI:post'].url_for()
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
         self.eq_id = "census"
@@ -283,7 +287,30 @@ class RHTestCase(AioHTTPTestCase):
             "survey": self.survey
         }
 
-        self.eq_payload_ni = {
+        self.eq_payload_ni_ga = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-ENG',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'ga',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "1234567890",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
+        self.eq_payload_ni_ul = {
             "jti": self.jti,
             "tx_id": self.jti,
             "iat": int(time.time()),
@@ -294,6 +321,29 @@ class RHTestCase(AioHTTPTestCase):
             "ru_ref": self.uprn,
             "case_id": self.case_id,
             "language_code": 'ul',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "1234567890",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
+        self.eq_payload_ni_en = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-ENG',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'en',
             "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
@@ -320,6 +370,26 @@ class RHTestCase(AioHTTPTestCase):
 
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.language_options_ni_eng_data = {
+            'language-option': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.language_options_ni_not_eng_data = {
+            'language-option': 'No', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_ul_data = {
+            'language-option': 'ulster-scotch', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_ga_data = {
+            'language-option': 'gaeilge', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_en_data = {
+            'language-option': 'english', 'action[save_continue]': ''
         }
 
         self.get_webchat = self.app.router['WebChat:get'].url_for()

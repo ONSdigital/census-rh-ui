@@ -86,6 +86,169 @@ class TestHandlers(RHTestCase):
                 continue  # skip uuid / time generated values
             self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
 
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/ni/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_eng_data)
+
+                self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        # Using eq_payload_en to test for language 'en' option in ni journey
+        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_en.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_language_choice_ul_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/ni/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/ni/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_ul_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_ul.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_ul.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
+
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_language_choice_ga_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/ni/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/ni/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_ga_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_ga.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_ga.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_ga[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_language_choice_en_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/ni/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/ni/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_en_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_en.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+
     @build_eq_raises
     @unittest_run_loop
     async def test_post_index_build_raises_InvalidEqPayLoad_en(self):

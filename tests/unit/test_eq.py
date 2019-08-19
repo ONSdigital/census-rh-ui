@@ -74,7 +74,7 @@ class TestEq(RHTestCase):
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
-            mocked_time.return_value = self.eq_payload_ni['iat']
+            mocked_time.return_value = self.eq_payload_ni_ul['iat']
             mocked_uuid4.return_value = self.jti
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
@@ -84,7 +84,7 @@ class TestEq(RHTestCase):
 
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
-        self.assertEqual(payload, self.eq_payload_ni)
+        self.assertEqual(payload, self.eq_payload_ni_ul)
 
     @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
@@ -106,7 +106,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
-        self.assertEqual(result, self.eq_payload_ni['display_address'])
+        self.assertEqual(result, self.eq_payload_ni_ul['display_address'])
 
     def test_build_display_address_raises(self):
         from app import eq
