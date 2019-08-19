@@ -593,7 +593,7 @@ class StartSelectLanguageNI(Start):
             attributes['language'] = 'ga'
 
         elif language_option == 'ulster-scotch':
-            attributes['language'] = 'us'
+            attributes['language'] = 'ul'
 
         elif language_option == 'english':
             attributes['language'] = 'en'

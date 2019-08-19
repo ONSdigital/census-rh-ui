@@ -39,6 +39,7 @@
                         }
                     ]
 %}
+{% set radio_legend = "You can change your language back to English at any time." %}
 
 {% block main %}
     {% if messages_dict %}
@@ -53,7 +54,7 @@
         {% if 'language_option' in field_messages_dict %}
             {{
                 onsRadios({
-                    "legend": "You will always have the option to change back to English",
+                    "legend": radio_legend,
                     "name": "language-option",
                     "or": "Or",
                     "radios": radio_options,
@@ -65,7 +66,7 @@
         {% else %}
             {{
                 onsRadios({
-                    "legend": "You will always have the option to change back to English",
+                    "legend": radio_legend,
                     "name": "language-option",
                     "or": "Or",
                     "radios": radio_options
