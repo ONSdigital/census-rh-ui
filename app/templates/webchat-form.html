@@ -1,4 +1,13 @@
-{% extends "base-webchat.html" %}
+{% if display_region == "cy" %}
+    {% extends "base-webchat-cy.html" %}
+    {% set form_action = url('WebChatCy:post') %}
+{% elif display_region == "ni" %}
+    {% extends "base-webchat-ni.html" %}
+    {% set form_action = url('WebChatNI:post') %}
+{% else %}
+    {% extends "base-webchat-en.html" %}
+    {% set form_action = url('WebChatEn:post') %}
+{% endif %}
 
 {% from "components/input/_macro.njk" import onsInput %}
 {% from "components/button/_macro.njk" import onsButton %}
@@ -14,7 +23,7 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('WebChat:post')
+        "action": form_action
     }
 } %}
 

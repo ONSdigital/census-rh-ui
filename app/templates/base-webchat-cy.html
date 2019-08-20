@@ -1,0 +1,44 @@
+{% extends "layout/_template.njk" %}
+
+{% set page = {
+    "title": "Cyfrifiad Webchat",
+    "theme": "census",
+    "header": {
+        "logoHref": "https://cy.ons.gov.uk/",
+        "titleLogo": "/img/census-logo-cy.svg",
+        "titleLogoAlt": "Cyfrifiad 2021",
+        "titleLogoHref": "https://www.cyfrifiad.gov.uk/"
+    },
+    "language": {
+        "languages": [
+            {
+                "url": "#",
+                "ISOCode": "cy",
+                "text": "Cymraeg",
+                "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
+                "chooseLanguage": "Dewiswch iaith",
+                "allLanguages": "Pob iaith",
+                "current": true
+            }
+        ]
+    },
+    "footer": {}
+} %}
+
+{% block head %}
+
+    <!-- Google Analytics -->
+    {% if analytics_ua_id %}
+    <script nonce="{{ request.csp_nonce }}">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', '{{analytics_ua_id}}', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('send', 'pageview');
+    </script>
+    {% endif %}
+    <!-- End Google Analytics -->
+
+{% endblock %}
