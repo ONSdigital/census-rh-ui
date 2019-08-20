@@ -60,7 +60,7 @@ class TestHandlers(RHTestCase):
 
     @skip_encrypt
     @unittest_run_loop
-    async def test_post_index_with_build_en(self):
+    async def test_post_index_with_build_en_region_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -88,9 +88,73 @@ class TestHandlers(RHTestCase):
 
     @skip_encrypt
     @unittest_run_loop
-    async def test_post_index_with_build_ni(self):
+    async def test_post_index_with_build_ni_region_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_en, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+            self.assertLogLine(logs_home, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_en.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_en_region_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_eng_data)
+
+                self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        # Using eq_payload_en to test for language 'en' option in ni journey
+        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_en.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_ni_region_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
@@ -124,9 +188,51 @@ class TestHandlers(RHTestCase):
 
     @skip_encrypt
     @unittest_run_loop
-    async def test_post_index_with_build_language_choice_ul_ni(self):
+    async def test_post_index_with_build_en_language_choice_ul_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_ul_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_ul.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_ul.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_ni_language_choice_ul_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
@@ -164,12 +270,53 @@ class TestHandlers(RHTestCase):
                 continue  # skip uuid / time generated values
             self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
 
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_en_language_choice_ga_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_ga_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_ga.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_ga.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_ga[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
-    async def test_post_index_with_build_language_choice_ga_ni(self):
+    async def test_post_index_with_build_ni_language_choice_ga_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
@@ -209,9 +356,51 @@ class TestHandlers(RHTestCase):
 
     @skip_encrypt
     @unittest_run_loop
-    async def test_post_index_with_build_language_choice_en_ni(self):
+    async def test_post_index_with_build_en_language_choice_en_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+
+                self.assertEqual(response.status, 302)
+                self.assertIn('/start/language-options', response.headers['Location'])
+
+                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
+                    response = await self.client.request("POST", self.post_language_options_ni, allow_redirects=False,
+                                                         data=self.language_options_ni_not_eng_data)
+
+                    self.assertEqual(response.status, 302)
+                    self.assertIn('/start/select-language', response.headers['Location'])
+
+                    with self.assertLogs('respondent-home', 'DEBUG') as logs_home_ni:
+                        response = await self.client.request("POST", self.post_select_language_ni, allow_redirects=False,
+                                                             data=self.select_language_ni_en_data)
+
+                    self.assertLogLine(logs_home_ni, 'Redirecting to eQ')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
+        _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
+        token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
+        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
+        for key in self.eq_payload_ni_en.keys():
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue  # skip uuid / time generated values
+            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+
+    @skip_encrypt
+    @unittest_run_loop
+    async def test_post_index_with_build_ni_language_choice_en_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
@@ -263,6 +452,27 @@ class TestHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 # decorator makes URL constructor raise InvalidEqPayLoad when build() is called in handler
                 response = await self.client.request("POST", self.post_address_confirmation_en, allow_redirects=False,
+                                                     data=self.address_confirmation_data)
+            self.assertLogLine(cm, "Service failed to build eQ payload")
+
+        # then error handler catches exception and renders error.html
+        self.assertEqual(response.status, 500)
+        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @build_eq_raises
+    @unittest_run_loop
+    async def test_post_index_build_raises_InvalidEqPayLoad_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.post(self.rhsvc_url_surveylaunched)
+
+            response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/address-confirmation', response.headers['Location'])
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                # decorator makes URL constructor raise InvalidEqPayLoad when build() is called in handler
+                response = await self.client.request("POST", self.post_address_confirmation_ni, allow_redirects=False,
                                                      data=self.address_confirmation_data)
             self.assertLogLine(cm, "Service failed to build eQ payload")
 
@@ -1174,8 +1384,8 @@ class TestHandlers(RHTestCase):
         # Then an InactiveCaseError is raised
 
     @unittest_run_loop
-    async def test_get_request_access_code(self):
-        response = await self.client.request("GET", self.get_requestcode)
+    async def test_get_request_access_code_en(self):
+        response = await self.client.request("GET", self.get_requestcode_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('What is your postcode?', contents)
@@ -1183,10 +1393,19 @@ class TestHandlers(RHTestCase):
         self.assertIn('UK postcode', contents)
 
     @unittest_run_loop
-    async def test_post_request_access_code_bad_postcode(self):
+    async def test_get_request_access_code_ni(self):
+        response = await self.client.request("GET", self.get_requestcode_ni)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('What is your postcode?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('UK postcode', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_bad_postcode_en(self):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
-            response = await self.client.request("POST", self.post_requestcode,
+            response = await self.client.request("POST", self.post_requestcode_en,
                                                  data=self.request_code_form_data_invalid)
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
@@ -1194,12 +1413,23 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_good_postcode(self):
+    async def test_post_request_access_code_bad_postcode_ni(self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request("POST", self.post_requestcode_ni,
+                                                 data=self.request_code_form_data_invalid)
+        self.assertLogLine(cm, "Attempt to use an invalid postcode")
+
+        self.assertEqual(response.status, 200)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_good_postcode_en(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Valid postcode")
 
@@ -1209,12 +1439,40 @@ class TestHandlers(RHTestCase):
             self.assertIn('1 Gate Reach', str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_not_found(self):
+    async def test_post_request_access_code_good_postcode_ni(self):
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_not_found_en(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
+                                                     data=self.request_code_form_data_valid)
+                self.assertLogLine(cm, "Valid postcode")
+
+                self.assertEqual(response.status, 200)
+                self.assertIn('We cannot find your address', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_not_found_ni(self):
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
                                                      data=self.request_code_form_data_valid)
                 self.assertLogLine(cm, "Valid postcode")
 
@@ -1242,12 +1500,12 @@ class TestHandlers(RHTestCase):
     #                 self.assertEqual(response.status, 200)
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_connection_error(self):
+    async def test_post_request_access_code_get_ai_postcode_connection_error_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
@@ -1255,12 +1513,25 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_500(self):
+    async def test_post_request_access_code_get_ai_postcode_connection_error_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
+
+        self.assertEqual(response.status, 500)
+        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_500_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=500)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=500)
 
@@ -1268,12 +1539,25 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_503(self):
+    async def test_post_request_access_code_get_ai_postcode_500_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=500)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Error in response", status_code=500)
+
+        self.assertEqual(response.status, 500)
+        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_503_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=503)
 
@@ -1281,12 +1565,25 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_403(self):
+    async def test_post_request_access_code_get_ai_postcode_503_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Error in response", status_code=503)
+
+        self.assertEqual(response.status, 500)
+        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_403_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=403)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=403)
 
@@ -1294,12 +1591,25 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_401(self):
+    async def test_post_request_access_code_get_ai_postcode_403_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=403)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Error in response", status_code=403)
+
+            self.assertEqual(response.status, 500)
+            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_401_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=401)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=401)
 
@@ -1307,12 +1617,38 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_400(self):
+    async def test_post_request_access_code_get_ai_postcode_401_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=401)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Error in response", status_code=401)
+
+            self.assertEqual(response.status, 500)
+            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_400_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=400)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode,
+                response = await self.client.request("POST", self.post_requestcode_en,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Error in response", status_code=400)
+
+            self.assertEqual(response.status, 500)
+            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_400_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=400)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=400)
 

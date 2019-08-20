@@ -320,9 +320,11 @@ class AddressConfirmationEN(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            # Correct address flow
-            attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            if case['region'] == 'N':
+                raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+            else:
+                attributes['language'] = 'en'
+                await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditEN:get'].url_for())
@@ -366,6 +368,7 @@ class AddressConfirmationNI(Start):
         session = await get_session(request)
         try:
             attributes = session["attributes"]
+            case = session["case"]
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
@@ -379,7 +382,11 @@ class AddressConfirmationNI(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+            if case['region'] == 'N':
+                raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+            else:
+                attributes['language'] = 'en'
+                await self.call_questionnaire(case, attributes, request.app)
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditNI:get'].url_for())
@@ -435,8 +442,11 @@ class AddressEditEN(Start):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
-        attributes['language'] = 'en'
-        await self.call_questionnaire(case, attributes, request.app)
+        if case['region'] == 'N':
+            raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+        else:
+            attributes['language'] = 'en'
+            await self.call_questionnaire(case, attributes, request.app)
 
 
 @routes.view('/ni/start/address-edit')
@@ -471,6 +481,7 @@ class AddressEditNI(Start):
         session = await get_session(request)
         try:
             attributes = session["attributes"]
+            case = session["case"]
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
@@ -482,7 +493,67 @@ class AddressEditNI(Start):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
-        raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+        if case['region'] == 'N':
+            raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+        else:
+            attributes['language'] = 'en'
+            await self.call_questionnaire(case, attributes, request.app)
+
+
+@routes.view('/start/language-options')
+class StartLanguageOptionsEN(Start):
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if language_option == 'Yes':
+            attributes['language'] = 'en'
+            await self.call_questionnaire(case, attributes, request.app)
+
+        elif language_option == 'No':
+            raise HTTPFound(self._request.app.router['StartSelectLanguageEN:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
 
 
 @routes.view('/ni/start/language-options')
@@ -539,6 +610,66 @@ class StartLanguageOptionsNI(Start):
             logger.warn("Address confirmation error", client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
+
+
+@routes.view('/start/select-language')
+class StartSelectLanguageEN(Start):
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if language_option == 'gaeilge':
+            attributes['language'] = 'ga'
+
+        elif language_option == 'ulster-scotch':
+            attributes['language'] = 'ul'
+
+        elif language_option == 'english':
+            attributes['language'] = 'en'
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        await self.call_questionnaire(case, attributes, request.app)
 
 
 @routes.view('/ni/start/select-language')

@@ -59,6 +59,11 @@ class EqPayloadConstructor(object):
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
 
+        try:
+            self._region = case["region"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
+
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
@@ -73,7 +78,7 @@ class EqPayloadConstructor(object):
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
             "case_type": self._case_type,
             "collection_exercise_sid": self._collex_id,  # required by eQ
-            "region_code": "GB-ENG",  # hardcoded for sprint 19.9
+            "region_code": self.convert_region_code(self._region),
             "ru_ref": self._uprn,  # new payload reuires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
             "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
@@ -110,3 +115,14 @@ class EqPayloadConstructor(object):
         if not display_address:
             raise InvalidEqPayLoad("Displayable address not in sample attributes")
         return display_address
+
+    @staticmethod
+    def convert_region_code(case_region):
+        region_value = ''
+        if case_region == 'N':
+            region_value = 'GB-NIR'
+        elif case_region == 'W':
+            region_value = 'GB-WLS'
+        else:
+            region_value = 'GB-ENG'
+        return region_value

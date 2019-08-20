@@ -211,6 +211,9 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
 
+        with open('tests/test_data/rhsvc/uac-ni.json') as fp:
+            self.uac_json_ni = json.load(fp)
+
         self.get_info = self.app.router['Info:get'].url_for()
         self.get_index_en = self.app.router['IndexEN:get'].url_for()
         self.post_index_en = self.app.router['IndexEN:post'].url_for()
@@ -408,12 +411,18 @@ class RHTestCase(AioHTTPTestCase):
 
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
-        self.get_requestcode = self.app.router['RequestCode:get'].url_for()
-        self.post_requestcode = self.app.router['RequestCode:post'].url_for()
-        self.get_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:get'].url_for()
-        self.post_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:post'].url_for()
-        self.get_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:get'].url_for()
-        self.post_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:post'].url_for()
+        self.get_requestcode_en = self.app.router['RequestCodeEN:get'].url_for()
+        self.get_requestcode_ni = self.app.router['RequestCodeNI:get'].url_for()
+        self.post_requestcode_en = self.app.router['RequestCodeEN:post'].url_for()
+        self.post_requestcode_ni = self.app.router['RequestCodeNI:post'].url_for()
+        self.get_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:get'].url_for()
+        self.get_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:get'].url_for()
+        self.post_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:post'].url_for()
+        self.post_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:post'].url_for()
+        self.get_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:get'].url_for()
+        self.get_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:get'].url_for()
+        self.post_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:post'].url_for()
+        self.post_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
