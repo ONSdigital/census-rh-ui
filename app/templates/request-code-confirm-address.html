@@ -1,5 +1,10 @@
-{% extends "base-en.html" %}
-{% set form_action = url('RequestCodeConfirmAddress:post') %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set form_action = url('RequestCodeConfirmAddressNI:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set form_action = url('RequestCodeConfirmAddressEN:post') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -15,7 +20,7 @@
     }
 } %}
 
-{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\"><em class="highlight">' + address + '</em></p>' %}
+{% set question_description = '<p><em class="highlight">' + address + '</em></p>' %}
 
 {% block main %}
 

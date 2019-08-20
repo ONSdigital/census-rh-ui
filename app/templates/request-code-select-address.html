@@ -1,4 +1,12 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set form_action = url('RequestCodeSelectAddressNI:post') %}
+    {% set request_code_link = url('RequestCodeNI:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set form_action = url('RequestCodeSelectAddressEN:post') %}
+    {% set request_code_link = url('RequestCodeEN:post') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -10,11 +18,11 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('RequestCodeSelectAddress:post')
+        "action": form_action
     }
 } %}
 
-{% set question_description = '<p class="js-piped-answer u-fs-r--b" data-question-to-pipe=\"/request-code/enter-mobile\">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
+{% set question_description = '<p class="u-fs-r--b">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
 
 {% block main %}
 
@@ -22,7 +30,7 @@
 
         <h1>We cannot find your address</h1>
 
-        <p>If this is incorrect you can <a href="{{ url('RequestCode:get') }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
+        <p>If this is incorrect you can <a href="{{ request_code_link }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
 
     {% else: %}
 

@@ -1,10 +1,12 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('IndexNI:post') %}
+    {% set request_code_link = url('RequestCodeNI:get') %}
     {% set webchat_link = url('WebChatNI:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('IndexEN:post') %}
+{% set request_code_link = url('RequestCodeEN:get') %}
     {% set webchat_link = url('WebChatEN:post') %}
 {% endif %}
 
@@ -75,7 +77,7 @@
 
     <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
     <p>
-        You can <a href="{{ url('RequestCode:get') }}">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
+        You can <a href="{{ request_code_link }}">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
     </p>
 
     <h2 class="u-fs-r--b u-mb-no">Need help?</h2>

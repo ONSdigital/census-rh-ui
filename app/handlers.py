@@ -1210,7 +1210,7 @@ class RequestCodeConfirmMobileEN(RequestCodeCommon):
 
 
 @routes.view('/ni/request-access-code/confirm-mobile')
-class RequestCodeConfirmMobile(RequestCodeCommon):
+class RequestCodeConfirmMobileNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):

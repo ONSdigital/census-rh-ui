@@ -1,9 +1,17 @@
-{% extends "base-en.html" %}
-{% set request_link = url('RequestCode:get') %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set start_survey_link = url('IndexNI:post') %}
+    {% set request_code_link = url('RequestCodeNI:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set start_survey_link = url('IndexEN:post') %}
+    {% set request_code_link = url('RequestCodeEN:post') %}
+{% endif %}
+
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% block main %}
-    <h1 class="u-mt-l js-piped-answer" data-question-to-pipe="{{ url('RequestCodeConfirmMobile:post') }}">We have sent an access code to {{mobile_number}}</h1>
+    <h1 class="u-mt-l">We have sent an access code to {{mobile_number}}</h1>
 
     <p>A text with the code should arrive shortly. Once you get the code, you can start the survey.</p>
 
@@ -12,13 +20,13 @@
             "type": 'button',
             "text": 'Start your survey',
             "classes": 'u-mb-m',
-            "url": url('Index:get'),
+            "url": start_survey_link,
             "innerClasses": "icon--chevron-right-white"
         })
     }}
 
     <h2>Didn't receive a text?</h2>
 
-    <p>It can take a few minutes for the text to arrive. If it doesn't arrive, you can <a href="{{ request_link }}">request a new code</a>.</p>
+    <p>It can take a few minutes for the text to arrive. If it doesn't arrive, you can <a href="{{ request_code_link }}">request a new code</a>.</p>
 
 {% endblock %}

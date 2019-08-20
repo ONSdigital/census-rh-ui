@@ -1,5 +1,10 @@
-{% extends "base-en.html" %}
-{% set form_action = url('RequestCodeEnterMobile:post') %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set form_action = url('RequestCodeEnterMobileNI:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set form_action = url('RequestCodeEnterMobileEN:post') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
