@@ -211,6 +211,9 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
 
+        with open('tests/test_data/rhsvc/uac-cy.json') as fp:
+            self.uac_json_cy = json.load(fp)
+
         with open('tests/test_data/rhsvc/uac-ni.json') as fp:
             self.uac_json_ni = json.load(fp)
 
@@ -290,6 +293,29 @@ class RHTestCase(AioHTTPTestCase):
             "survey": self.survey
         }
 
+        self.eq_payload_cy = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-WLS',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'cy',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "1234567890",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
         self.eq_payload_ni_ga = {
             "jti": self.jti,
             "tx_id": self.jti,
@@ -297,7 +323,7 @@ class RHTestCase(AioHTTPTestCase):
             "exp": int(time.time() + (5 * 60)),
             "case_type": self.case_type,
             "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-ENG',
+            "region_code": 'GB-NIR',
             "ru_ref": self.uprn,
             "case_id": self.case_id,
             "language_code": 'ga',
@@ -320,7 +346,7 @@ class RHTestCase(AioHTTPTestCase):
             "exp": int(time.time() + (5 * 60)),
             "case_type": self.case_type,
             "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-ENG',
+            "region_code": 'GB-NIR',
             "ru_ref": self.uprn,
             "case_id": self.case_id,
             "language_code": 'ul',
@@ -343,7 +369,7 @@ class RHTestCase(AioHTTPTestCase):
             "exp": int(time.time() + (5 * 60)),
             "case_type": self.case_type,
             "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-ENG',
+            "region_code": 'GB-NIR',
             "ru_ref": self.uprn,
             "case_id": self.case_id,
             "language_code": 'en',

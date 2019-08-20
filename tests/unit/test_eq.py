@@ -79,7 +79,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.attributes_ni, self.app).build()
+                    self.uac_json_ni, self.attributes_ni, self.app).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -107,6 +107,24 @@ class TestEq(RHTestCase):
 
         result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
         self.assertEqual(result, self.eq_payload_ni_ul['display_address'])
+
+    def test_convert_region_code_e(self):
+        from app import eq
+
+        result = eq.EqPayloadConstructor.convert_region_code(self.uac_json['region'])
+        self.assertEqual(result, self.eq_payload_en['region_code'])
+
+    def test_convert_region_code_w(self):
+        from app import eq
+
+        result = eq.EqPayloadConstructor.convert_region_code(self.uac_json_cy['region'])
+        self.assertEqual(result, self.eq_payload_cy['region_code'])
+
+    def test_convert_region_code_n(self):
+        from app import eq
+
+        result = eq.EqPayloadConstructor.convert_region_code(self.uac_json_ni['region'])
+        self.assertEqual(result, self.eq_payload_ni_en['region_code'])
 
     def test_build_display_address_raises(self):
         from app import eq
