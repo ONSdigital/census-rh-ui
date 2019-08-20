@@ -110,12 +110,6 @@ class View:
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
 
-    async def get_webchat_closed(self):
-        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'  # NOQA
-        return await self._make_request(
-            Request("GET", self._webchat_service_url + querystring, None,
-                    None, self._handle_response, None))
-
 
 class Start(View):
 
@@ -607,16 +601,7 @@ class StartSelectLanguageNI(Start):
         await self.call_questionnaire(case, attributes, request.app)
 
 
-@routes.view('/webchat/chat')
-class WebChatWindow:
-    @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, _):
-        return {}
-
-
-@routes.view('/webchat')
 class WebChat(View):
-
     @staticmethod
     def get_now():
         return datetime.utcnow()
@@ -675,13 +660,36 @@ class WebChat(View):
 
         return form_valid
 
+    async def get_webchat_closed(self):
+        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'  # NOQA
+        return await self._make_request(
+            Request("GET", self._webchat_service_url + querystring, None,
+                    None, self._handle_response, None))
+
+
+@routes.view('/webchat/chat')
+class WebChatWindowEN(WebChat):
+    @aiohttp_jinja2.template('webchat-window.html')
+    async def get(self, _):
+        return {'display_region': 'en'}
+
+
+@routes.view('/ni/webchat/chat')
+class WebChatWindowNI(WebChat):
+    @aiohttp_jinja2.template('webchat-window.html')
+    async def get(self, _):
+        return {'display_region': 'ni'}
+
+
+@routes.view('/webchat')
+class WebChatEN(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
 
         self._request = request
         logger.info("Date/time check", client_ip=self._client_ip)
         if WebChat.check_open():
-            return {}
+            return {'display_region': 'en'}
         else:
             try:
                 await self.get_webchat_closed()
@@ -689,7 +697,7 @@ class WebChat(View):
                 logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed'}
+            return {'webchat_status': 'closed', 'display_region': 'en'}
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
@@ -703,12 +711,14 @@ class WebChat(View):
             logger.info("Form submission error", client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
-                    'form_value_query': data.get('query')}
+                    'form_value_query': data.get('query'),
+                    'display_region': 'en'}
 
         context = {'screen_name': data.get('screen_name'),
                    'language': 'english',
                    'country': data.get('country'),
                    'query': data.get('query'),
+                   'display_region': 'en',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -721,7 +731,60 @@ class WebChat(View):
                 logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed'}
+            return {'webchat_status': 'closed', 'display_region': 'en'}
+
+
+@routes.view('/ni/webchat')
+class WebChatNI(WebChat):
+    @aiohttp_jinja2.template('webchat-form.html')
+    async def get(self, request):
+
+        self._request = request
+        logger.info("Date/time check", client_ip=self._client_ip)
+        if WebChat.check_open():
+            return {'display_region': 'ni'}
+        else:
+            try:
+                await self.get_webchat_closed()
+            except ClientError:
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+
+            logger.info("WebChat Closed", client_ip=self._client_ip)
+            return {'webchat_status': 'closed', 'display_region': 'ni'}
+
+    @aiohttp_jinja2.template('webchat-form.html')
+    async def post(self, request):
+
+        data = await request.post()
+        self._request = request
+
+        form_valid = self.validate_form(data)
+
+        if not form_valid:
+            logger.info("Form submission error", client_ip=self._client_ip)
+            return {'form_value_screen_name': data.get('screen_name'),
+                    'form_value_country': data.get('country'),
+                    'form_value_query': data.get('query'),
+                    'display_region': 'ni'}
+
+        context = {'screen_name': data.get('screen_name'),
+                   'language': 'english',
+                   'country': data.get('country'),
+                   'query': data.get('query'),
+                   'display_region': 'ni',
+                   'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
+
+        logger.info("Date/time check", client_ip=self._client_ip)
+        if WebChat.check_open():
+            return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
+        else:
+            try:
+                await self.get_webchat_closed()
+            except ClientError:
+                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+
+            logger.info("WebChat Closed", client_ip=self._client_ip)
+            return {'webchat_status': 'closed', 'display_region': 'ni'}
 
 
 class RequestCodeCommon(View):

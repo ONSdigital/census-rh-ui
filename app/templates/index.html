@@ -1,9 +1,11 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('IndexNI:post') %}
+    {% set webchat_link = url('WebChatNI:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('IndexEN:post') %}
+    {% set webchat_link = url('WebChatEN:post') %}
 {% endif %}
 
 {% from "components/uac/_macro.njk" import onsUACInput %}
@@ -78,6 +80,6 @@
 
     <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
 
-    <p><a href="{{ url('WebChat:get') }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web Chat</a></p>
+    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web Chat</a></p>
 
 {% endblock %}

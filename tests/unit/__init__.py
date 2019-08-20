@@ -392,9 +392,13 @@ class RHTestCase(AioHTTPTestCase):
             'language-option': 'english', 'action[save_continue]': ''
         }
 
-        self.get_webchat = self.app.router['WebChat:get'].url_for()
-        self.post_webchat = self.app.router['WebChat:post'].url_for()
-        self.get_webchat_chat = self.app.router['WebChatWindow:get'].url_for()
+        self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
+        self.get_webchat_ni = self.app.router['WebChatNI:get'].url_for()
+        self.post_webchat_en = self.app.router['WebChatEN:post'].url_for()
+        self.post_webchat_ni = self.app.router['WebChatNI:post'].url_for()
+        self.get_webchat_chat_en = self.app.router['WebChatWindowEN:get'].url_for()
+        self.get_webchat_chat_ni = self.app.router['WebChatWindowNI:get'].url_for()
+
 
         self.webchat_form_data = {
             'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help', 'country': 'england'
