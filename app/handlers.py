@@ -321,7 +321,7 @@ class AddressConfirmationEN(Start):
 
         if address_confirmation == 'Yes':
             if case['region'] == 'N':
-                raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+                raise HTTPFound(self._request.app.router['StartLanguageOptionsEN:get'].url_for())
             else:
                 attributes['language'] = 'en'
                 await self.call_questionnaire(case, attributes, request.app)
