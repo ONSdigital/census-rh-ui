@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
+    SESSION_TIMEOUT_MSG, SESSION_TIMEOUT_CODE_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
     ADDRESS_SELECT_CHECK_MSG)
 from .exceptions import InactiveCaseError
@@ -920,17 +920,23 @@ class WebChatNI(WebChat):
 
 class RequestCodeCommon(View):
 
-    async def get_check_attributes(self, request):
+    def request_code_check_session(self, display_region):
+        if self._request.cookies.get('RH_SESSION') is None:
+            logger.warn("Session timed out", client_ip=self._client_ip)
+            flash(self._request, SESSION_TIMEOUT_CODE_MSG)
+            raise HTTPFound(self._request.app.router['RequestCode' + display_region + ':get'].url_for())
+
+    async def get_check_attributes(self, request, display_region):
         self._request = request
 
-        self.check_session()
+        self.request_code_check_session(display_region)
         session = await get_session(request)
         try:
             attributes = session["attributes"]
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCode:get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCode' + display_region + ':get'].url_for())
 
         return attributes
 
@@ -1063,13 +1069,13 @@ class RequestCodeSelectAddressEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         data = await request.post()
 
         try:
@@ -1094,13 +1100,13 @@ class RequestCodeSelectAddressNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         address_content = await self.get_postcode_return(attributes["postcode"], attributes["display_region"])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         data = await request.post()
 
         try:
@@ -1125,12 +1131,12 @@ class RequestCodeConfirmAddressEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         data = await request.post()
 
         try:
@@ -1174,12 +1180,12 @@ class RequestCodeConfirmAddressNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         data = await request.post()
 
         try:
@@ -1222,7 +1228,7 @@ class RequestCodeConfirmAddressNI(RequestCodeCommon):
 class RequestCodeNotRequiredEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         return attributes
 
 
@@ -1230,7 +1236,7 @@ class RequestCodeNotRequiredEN(RequestCodeCommon):
 class RequestCodeNotRequiredNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         return attributes
 
 
@@ -1239,12 +1245,12 @@ class RequestCodeEnterMobileEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         data = await request.post()
 
         if RequestCodeCommon.mobile_validation_pattern.fullmatch(data['request-mobile-number']):
@@ -1266,12 +1272,12 @@ class RequestCodeEnterMobileNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         data = await request.post()
 
         if RequestCodeCommon.mobile_validation_pattern.fullmatch(data['request-mobile-number']):
@@ -1293,12 +1299,12 @@ class RequestCodeConfirmMobileEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         data = await request.post()
 
         try:
@@ -1345,12 +1351,12 @@ class RequestCodeConfirmMobileNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         data = await request.post()
 
         try:
@@ -1396,7 +1402,7 @@ class RequestCodeConfirmMobileNI(RequestCodeCommon):
 class RequestCodeCodeSentEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'EN')
         return attributes
 
 
@@ -1404,5 +1410,5 @@ class RequestCodeCodeSentEN(RequestCodeCommon):
 class RequestCodeCodeSentNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
-        attributes = await self.get_check_attributes(request)
+        attributes = await self.get_check_attributes(request, 'NI')
         return attributes
