@@ -76,18 +76,15 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request("POST", self.post_index, allow_redirects=False, data=self.form_data)
-            self.assertEqual(response.status, 200)
+            self.assertEqual(response.status, 302)
 
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request("POST", self.post_address_confirmation, allow_redirects=False,
                                                      data=self.address_confirmation_data_edit)
-                self.assertEqual(response.status, 200)
+                self.assertEqual(response.status, 302)
 
-                self.assertLogLine(logs_home, 'Address Edit Called')
-
-                with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
-                    response = await self.client.request("POST", self.post_address_edit, allow_redirects=False,
-                                                         data=self.address_edit_data)
+                response = await self.client.request("POST", self.post_address_edit, allow_redirects=False,
+                                                     data=self.address_edit_data)
 
                 self.assertLogLine(logs_home, 'Raising address modification call')
                 self.assertLogLine(logs_home, 'Redirecting to eQ')
