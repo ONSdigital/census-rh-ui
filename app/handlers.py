@@ -196,7 +196,7 @@ class IndexEN(Start):
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=401)
+                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'en'}, status=401)
             else:
                 raise ex
 
@@ -249,7 +249,7 @@ class IndexNI(Start):
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {}, status=401)
+                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'ni'}, status=401)
             else:
                 raise ex
 

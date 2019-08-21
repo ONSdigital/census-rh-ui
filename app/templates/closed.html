@@ -1,6 +1,8 @@
-{% extends "base-en.html" %}
-
-{% block title %}Closed - Census Rehearsal 2019{% endblock title %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+{% else %}
+    {% extends "base-en.html" %}
+{% endif %}
 
 {% block main %}
 

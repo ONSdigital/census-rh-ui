@@ -25,6 +25,7 @@ def create_error_middleware(overrides):
                 index_resource = request.app.router['IndexNI:get']
             else:
                 index_resource = request.app.router['IndexEN:get']
+
             if request.path + '/' == index_resource.canonical:
                 logger.debug('Redirecting to index', path=request.path)
                 raise web.HTTPMovedPermanently(index_resource.url_for())
@@ -51,39 +52,47 @@ def create_error_middleware(overrides):
 
 async def inactive_case(request):
     logger.warn("Attempt to use an inactive access code")
-    return aiohttp_jinja2.render_template("completed.html", request, {})
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("completed.html", request, attributes)
 
 
 async def ce_closed(request, collex_id):
     logger.warn("Attempt to access collection exercise that has already ended", collex_id=collex_id)
-    return aiohttp_jinja2.render_template("closed.html", request, {})
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("closed.html", request, attributes)
 
 
 async def eq_error(request, message: str):
     logger.error("Service failed to build eQ payload", message=message)
-    return aiohttp_jinja2.render_template("error.html", request, {}, status=500)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def connection_error(request, message: str):
     logger.error("Service connection error", message=message)
-    return aiohttp_jinja2.render_template("error.html", request, {}, status=500)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def payload_error(request, url: str):
     logger.error("Service failed to return expected JSON payload", url=url)
-    return aiohttp_jinja2.render_template("error.html", request, {}, status=500)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def response_error(request):
-    return aiohttp_jinja2.render_template("error.html", request, {}, status=500)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def not_found_error(request):
-    return aiohttp_jinja2.render_template("404.html", request, {}, status=404)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("404.html", request, attributes, status=404)
 
 
 async def forbidden(request):
-    return aiohttp_jinja2.render_template("index.html", request, {}, status=403)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("index.html", request, attributes, status=403)
 
 
 def setup(app):
@@ -94,3 +103,12 @@ def setup(app):
     }
     error_middleware = create_error_middleware(overrides)
     app.middlewares.append(error_middleware)
+
+
+def check_display_region(request):
+    if '/ni' in request.path:
+        attributes = {'display_region': 'ni'}
+    else:
+        attributes = {'display_region': 'en'}
+
+    return attributes
