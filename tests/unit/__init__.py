@@ -296,8 +296,7 @@ class RHTestCase(AioHTTPTestCase):
             "addressLine2": self.uac_json['address']['addressLine2'],
             "addressLine3": self.uac_json['address']['addressLine3'],
             "townName": self.uac_json['address']['townName'],
-            "postcode": self.uac_json['address']['postcode'],
-            "region": 'E'
+            "postcode": self.uac_json['address']['postcode']
             }
 
         self.get_webchat = self.app.router['WebChat:get'].url_for()

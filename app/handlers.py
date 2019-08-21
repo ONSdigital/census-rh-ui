@@ -282,8 +282,7 @@ class AddressEdit(View):
             "addressLine2": address['addressLine2'],
             "addressLine3": address['addressLine3'],
             "townName": address['townName'],
-            "postcode": address['postcode'],
-            "region": case['region']
+            "postcode": address['postcode']
             }
         return await self._make_request(
             Request("PUT", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
@@ -353,7 +352,7 @@ class AddressEdit(View):
             logger.info("Raising address modification call", client_ip=self._client_ip)
             await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
-            logger.info("Error raising address modification call", client_ip=self._client_ip)
+            logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
         logger.info("Raising call questionnaire", client_ip=self._client_ip)
