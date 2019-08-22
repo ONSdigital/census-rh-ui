@@ -1,15 +1,39 @@
 {% extends "layout/_template.njk" %}
 
 {% set page = {
-    "title": "Census 2019 Rehearsal",
+    "title": "Cyfrifiad 2019",
     "theme": "census",
+    "language": {
+        "languages": [
+            {
+                "url": "/start/",
+                "ISOCode": "en",
+                "text": "English",
+                "buttonAriaLabel": "Language selector. Current language: English",
+                "chooseLanguage": "Choose language",
+                "allLanguages": "All languages",
+                "current": false
+            },
+            {
+                "url": "/dechrau/",
+                "ISOCode": "cy",
+                "text": "Cymraeg",
+                "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
+                "chooseLanguage": "Dewiswch iaith",
+                "allLanguages": "Pob iaith",
+                "current": true
+            }
+        ]
+    },
     "header": {
-        "logo": "nisra-logo-en",
-        "logoAlt": "Northern Ireland Statistics and Research Agency logo",
-        "titleLogo": "/img/census-logo-en.svg",
-        "titleLogoAlt": "Census 2021",
+        "logoHref": "https://cy.ons.gov.uk/",
+        "language": "cy",
+        "titleLogo": "/img/census-logo-cy.svg",
+        "titleLogoAlt": "Cyfrifiad 2021",
+        "titleLogoHref": "https://www.cyfrifriad.gov.uk/"
     },
     "footer": {
+        "lang": "cy",
         "rows": [
             {
                 "itemsList": [
@@ -45,10 +69,10 @@
             }
         ],
         "OGLLink": {
-            "pre": 'All content is available under the',
-            "link": 'Open Government Licence v3.0',
-            "url": 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/',
-            "post": ', except where otherwise stated'
+            "pre": "Mae'r holl gynnwys ar gael o dan y",
+            "link": "Drwydded Llywodraeth Leol v3.0",
+            "url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+            "post": ", oni bai y nodir fel arall"
         }
     }
 } %}

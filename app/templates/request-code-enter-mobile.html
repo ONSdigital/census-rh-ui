@@ -1,7 +1,7 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('RequestCodeEnterMobileNI:post') %}
-{% if display_region == "cy" %}
+{% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
     {% set form_action = url('RequestCodeEnterMobileCY:post') %}
 {% else %}

@@ -1,15 +1,15 @@
 {% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+    {% extends "base-start-ni.html" %}
     {% set form_action = url('IndexNI:post') %}
     {% set request_code_link = url('RequestCodeNI:get') %}
     {% set webchat_link = url('WebChatNI:post') %}
 {% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+    {% extends "base-start-cy.html" %}
     {% set form_action = url('IndexCY:post') %}
     {% set request_code_link = url('RequestCodeCY:get') %}
     {% set webchat_link = url('WebChatCY:post') %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends "base-start-en.html" %}
     {% set form_action = url('IndexEN:post') %}
 {% set request_code_link = url('RequestCodeEN:get') %}
     {% set webchat_link = url('WebChatEN:post') %}
