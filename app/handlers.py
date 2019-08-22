@@ -141,6 +141,24 @@ class Start(View):
         return await self._make_request(
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
+    @property
+    def _rhsvc_modify_address(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/"
+
+    async def put_modify_address(self, case, address):
+        json = {
+            "caseId": case['caseId'],
+            "uprn": case['address']['uprn'],
+            "addressLine1": address['addressLine1'],
+            "addressLine2": address['addressLine2'],
+            "addressLine3": address['addressLine3'],
+            "townName": address['townName'],
+            "postcode": address['postcode']
+            }
+        return await self._make_request(
+            Request("PUT", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response, None))
+
     def get_address_details(self, data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
@@ -168,6 +186,7 @@ class IndexEN(Start):
     async def get(self, _):
         return {'display_region': 'en'}
 
+    @aiohttp_jinja2.template('index.html')
     async def post(self, request):
         """
         Forward to Address confirmation
@@ -553,6 +572,13 @@ class AddressEditEN(Start):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
+        try:
+            logger.info("Raising address modification call", client_ip=self._client_ip)
+            await self.put_modify_address(session["case"], attributes)
+        except ClientResponseError as ex:
+            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            raise ex
+
         if case['region'] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
@@ -604,6 +630,13 @@ class AddressEditCY(Start):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
+        try:
+            logger.info("Raising address modification call", client_ip=self._client_ip)
+            await self.put_modify_address(session["case"], attributes)
+        except ClientResponseError as ex:
+            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            raise ex
+
         if case['region'] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
         else:
@@ -654,6 +687,13 @@ class AddressEditNI(Start):
             logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
+
+        try:
+            logger.info("Raising address modification call", client_ip=self._client_ip)
+            await self.put_modify_address(session["case"], attributes)
+        except ClientResponseError as ex:
+            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            raise ex
 
         if case['region'] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
