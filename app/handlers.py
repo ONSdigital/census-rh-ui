@@ -161,6 +161,7 @@ class Index(View):
     async def get(self, _):
         return {}
 
+    @aiohttp_jinja2.template('index.html')
     async def post(self, request):
         """
         Forward to Address confirmation
@@ -269,6 +270,24 @@ class AddressConfirmation(View):
 @routes.view('/start/address-edit')
 class AddressEdit(View):
 
+    @property
+    def _rhsvc_modify_address(self):
+        return f"{self._request.app['RHSVC_URL']}/cases/"
+
+    async def put_modify_address(self, case, address):
+        json = {
+            "caseId": case['caseId'],
+            "uprn": case['address']['uprn'],
+            "addressLine1": address['addressLine1'],
+            "addressLine2": address['addressLine2'],
+            "addressLine3": address['addressLine3'],
+            "townName": address['townName'],
+            "postcode": address['postcode']
+            }
+        return await self._make_request(
+            Request("PUT", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
+                    json, self._handle_response, None))
+
     def get_address_details(self, data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
@@ -329,6 +348,14 @@ class AddressEdit(View):
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
+        try:
+            logger.info("Raising address modification call", client_ip=self._client_ip)
+            await self.put_modify_address(session["case"], attributes)
+        except ClientResponseError as ex:
+            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            raise ex
+
+        logger.info("Raising call questionnaire", client_ip=self._client_ip)
         await self.call_questionnaire(case, attributes, request.app)
 
 

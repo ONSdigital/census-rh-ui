@@ -265,6 +265,10 @@ class RHTestCase(AioHTTPTestCase):
             f"{self.app['RHSVC_URL']}/surveyLaunched"
         )
 
+        self.rhsvc_modify_address = (
+            f"{self.app['RHSVC_URL']}/cases/"
+        )
+
         self.form_data = {
             'uac': self.uac, 'action[save_continue]': '',
         }
@@ -272,6 +276,28 @@ class RHTestCase(AioHTTPTestCase):
         self.address_confirmation_data = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
+
+        self.address_confirmation_data_edit = {
+            'address-check-answer': 'No', 'action[save_continue]': ''
+        }
+
+        self.address_edit_data = {
+            'address-line-1': 'ONS',
+            'address-line-2': 'Segensworth Road',
+            'address-line-3': 'Titchfield',
+            'address-town': 'Fareham',
+            'address-postcode': 'PO15 5RR'
+        }
+
+        self.modify_address_data = {
+            "caseId": self.case_id,
+            "uprn": self.uprn,
+            "addressLine1": self.uac_json['address']['addressLine1'],
+            "addressLine2": self.uac_json['address']['addressLine2'],
+            "addressLine3": self.uac_json['address']['addressLine3'],
+            "townName": self.uac_json['address']['townName'],
+            "postcode": self.uac_json['address']['postcode']
+            }
 
         self.get_webchat = self.app.router['WebChat:get'].url_for()
         self.post_webchat = self.app.router['WebChat:post'].url_for()
