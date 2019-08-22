@@ -450,13 +450,13 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
-        # self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()
+        self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()
         self.get_webchat_ni = self.app.router['WebChatNI:get'].url_for()
         self.post_webchat_en = self.app.router['WebChatEN:post'].url_for()
-        # self.post_webchat_cy = self.app.router['WebChatCY:post'].url_for()
+        self.post_webchat_cy = self.app.router['WebChatCY:post'].url_for()
         self.post_webchat_ni = self.app.router['WebChatNI:post'].url_for()
         self.get_webchat_chat_en = self.app.router['WebChatWindowEN:get'].url_for()
-        # self.get_webchat_chat_cy = self.app.router['WebChatWindowCY:get'].url_for()
+        self.get_webchat_chat_cy = self.app.router['WebChatWindowCY:get'].url_for()
         self.get_webchat_chat_ni = self.app.router['WebChatWindowNI:get'].url_for()
 
 
@@ -475,22 +475,22 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
         self.get_requestcode_en = self.app.router['RequestCodeEN:get'].url_for()
-        # self.get_requestcode_cy = self.app.router['RequestCodeCY:get'].url_for()
+        self.get_requestcode_cy = self.app.router['RequestCodeCY:get'].url_for()
         self.get_requestcode_ni = self.app.router['RequestCodeNI:get'].url_for()
         self.post_requestcode_en = self.app.router['RequestCodeEN:post'].url_for()
-        # self.post_requestcode_cy = self.app.router['RequestCodeCY:post'].url_for()
+        self.post_requestcode_cy = self.app.router['RequestCodeCY:post'].url_for()
         self.post_requestcode_ni = self.app.router['RequestCodeNI:post'].url_for()
         self.get_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:get'].url_for()
-        # self.get_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:get'].url_for()
+        self.get_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:get'].url_for()
         self.get_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:get'].url_for()
         self.post_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:post'].url_for()
-        # self.post_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:post'].url_for()
+        self.post_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:post'].url_for()
         self.post_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:post'].url_for()
         self.get_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:get'].url_for()
-        # self.get_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:get'].url_for()
+        self.get_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:get'].url_for()
         self.get_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:get'].url_for()
         self.post_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:post'].url_for()
-        # self.post_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:post'].url_for()
+        self.post_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:post'].url_for()
         self.post_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
