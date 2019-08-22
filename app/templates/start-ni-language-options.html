@@ -1,6 +1,9 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('StartLanguageOptionsNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set form_action = url('StartLanguageOptionsCY:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('StartLanguageOptionsEN:post') %}
@@ -48,7 +51,7 @@
         "useFieldset": true
     }) %}
 
-        {% if 'language_option' in field_messages_dict %}
+        {% if 'language-option' in field_messages_dict %}
             {{
                 onsRadios({
                     "name": "language-option",
@@ -77,7 +80,7 @@
         })
     }}
 
-    <p><a href="/help/i-want-something/" onclick="window.open(this.href,'targetWindow','location=no,status=no,scrollbars=yes,resizable=yes'); return false;">Help in other languages</a>:<br>
+    <p class="u-mt-l"><a href="/help/i-want-something/" onclick="window.open(this.href,'targetWindow','location=no,status=no,scrollbars=yes,resizable=yes'); return false;">Help in other languages</a>:<br>
         including Polish (Jezvk polski), Lithuanian (Lietuvių), Cantonese (廣東話) and Manderin (普通話)</p>
 
 {% endblock %}

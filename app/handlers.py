@@ -14,7 +14,7 @@ from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
     SESSION_TIMEOUT_MSG, SESSION_TIMEOUT_CODE_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
-    ADDRESS_SELECT_CHECK_MSG)
+    ADDRESS_SELECT_CHECK_MSG, START_LANGUAGE_OPTION_MSG)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -73,12 +73,6 @@ class View:
             raise ex
         else:
             logger.debug("Successfully connected to service", url=str(response.url))
-
-    def check_session(self):
-        if self._request.cookies.get('RH_SESSION') is None:
-            logger.warn("Session timed out", client_ip=self._client_ip)
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['Index:get'].url_for())
 
     async def _make_request(self, request: Request):
         method, url, auth, json, func, response = request
@@ -172,7 +166,7 @@ class IndexEN(Start):
 
     @aiohttp_jinja2.template('index.html')
     async def get(self, _):
-        return {}
+        return {'display_region': 'en'}
 
     async def post(self, request):
         """
@@ -218,6 +212,61 @@ class IndexEN(Start):
         session["case"] = uac_json
 
         raise HTTPFound(self._request.app.router['AddressConfirmationEN:get'].url_for())
+
+
+@routes.view('/dechrau/')
+class IndexCY(Start):
+
+    @aiohttp_jinja2.template('index.html')
+    async def get(self, _):
+        return {'display_region': 'cy', 'locale': 'cy'}
+
+    async def post(self, request):
+        """
+        Forward to Address confirmation
+        :param request:
+        :return: address confirmation view
+        """
+        self._request = request
+        data = await self._request.post()
+
+        try:
+            self._uac = self.join_uac(data)
+        except TypeError:
+            logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
+            flash(self._request, BAD_CODE_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        try:
+            uac_json = await self.get_uac_details()
+        except ClientResponseError as ex:
+            if ex.status == 404:
+                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                flash(self._request, INVALID_CODE_MSG)
+                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy', 'locale': 'cy'}, status=401)
+            else:
+                raise ex
+
+        await remember(uac_json["caseId"], request)
+
+        # TODO: case is active, will need to look at for UACs handed out in field but not associated with address
+        self.validate_case(uac_json)
+
+        try:
+            attributes = uac_json["address"]
+        except KeyError:
+            raise InvalidEqPayLoad("Could not retrieve address details")
+
+        # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
+
+        logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
+        session = await get_session(request)
+        session["attributes"] = attributes
+        session["case"] = uac_json
+        session["attributes"]["display_region"] = 'cy'
+        session["attributes"]["locale"] = 'cy'
+
+        raise HTTPFound(self._request.app.router['AddressConfirmationCY:get'].url_for())
 
 
 @routes.view('/ni/start/')
@@ -328,6 +377,68 @@ class AddressConfirmationEN(Start):
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditEN:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+
+@routes.view('/dechrau/address-confirmation')
+class AddressConfirmationCY(Start):
+
+    @aiohttp_jinja2.template('address-confirmation.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('address-confirmation.html')
+    async def post(self, request):
+        """
+        Address Confirmation flow. If correct address will build EQ payload and send to EQ.
+        """
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        try:
+            address_confirmation = data["address-check-answer"]
+        except KeyError:
+            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'Yes':
+            if case['region'] == 'N':
+                raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
+            else:
+                attributes['language'] = 'cy'
+                await self.call_questionnaire(case, attributes, request.app)
+
+        elif address_confirmation == 'No':
+            raise HTTPFound(self._request.app.router['AddressEditCY:get'].url_for())
 
         else:
             # catch all just in case, should never get here
@@ -449,6 +560,57 @@ class AddressEditEN(Start):
             await self.call_questionnaire(case, attributes, request.app)
 
 
+@routes.view('/dechrau/address-edit')
+class AddressEditCY(Start):
+
+    @aiohttp_jinja2.template('address-edit.html')
+    async def get(self, request):
+        """
+        Address Edit get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('address-edit.html')
+    async def post(self, request):
+        """
+        Address Edit flow. Edited address details.
+        """
+        await check_permission(request)
+        data = await request.post()
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        try:
+            attributes = Start.get_address_details(self, data, attributes)
+        except InvalidEqPayLoad:
+            logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
+            flash(request, ADDRESS_EDIT_MSG)
+            return attributes
+
+        if case['region'] == 'N':
+            raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
+        else:
+            attributes['language'] = 'cy'
+            await self.call_questionnaire(case, attributes, request.app)
+
+
 @routes.view('/ni/start/address-edit')
 class AddressEditNI(Start):
 
@@ -539,7 +701,7 @@ class StartLanguageOptionsEN(Start):
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         if language_option == 'Yes':
@@ -551,8 +713,64 @@ class StartLanguageOptionsEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
+            return attributes
+
+
+@routes.view('/dechrau/language-options')
+class StartLanguageOptionsCY(Start):
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-language-options.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
+            return attributes
+
+        if language_option == 'Yes':
+            attributes['language'] = 'en'
+            await self.call_questionnaire(case, attributes, request.app)
+
+        elif language_option == 'No':
+            raise HTTPFound(self._request.app.router['StartSelectLanguageCY:get'].url_for())
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
 
@@ -595,7 +813,7 @@ class StartLanguageOptionsNI(Start):
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         if language_option == 'Yes':
@@ -607,8 +825,8 @@ class StartLanguageOptionsNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
 
@@ -651,7 +869,7 @@ class StartSelectLanguageEN(Start):
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         if language_option == 'gaeilge':
@@ -665,8 +883,68 @@ class StartSelectLanguageEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
+            return attributes
+
+        await self.call_questionnaire(case, attributes, request.app)
+
+
+@routes.view('/dechrau/select-language')
+class StartSelectLanguageCY(Start):
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def get(self, request):
+        """
+        Address Confirmation get.
+        """
+        await check_permission(request)
+        self._request = request
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-ni-select-language.html')
+    async def post(self, request):
+        await check_permission(request)
+        self._request = request
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session["attributes"]
+            case = session["case"]
+
+        except KeyError:
+            flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        try:
+            language_option = data["language-option"]
+        except KeyError:
+            logger.warn("NI language option error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
+            return attributes
+
+        if language_option == 'gaeilge':
+            attributes['language'] = 'ga'
+
+        elif language_option == 'ulster-scotch':
+            attributes['language'] = 'ul'
+
+        elif language_option == 'english':
+            attributes['language'] = 'en'
+
+        else:
+            # catch all just in case, should never get here
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
@@ -711,7 +989,7 @@ class StartSelectLanguageNI(Start):
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         if language_option == 'gaeilge':
@@ -725,8 +1003,8 @@ class StartSelectLanguageNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            logger.warn("Language selection error", client_ip=self._client_ip)
+            flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
@@ -987,16 +1265,18 @@ class RequestCodeCommon(View):
             Request("GET", self._rhsvc_get_cases_by_uprn + uprn, None,
                     None, self._handle_response, "json"))
 
-    async def get_fulfilment(self, caseType, region, deliveryChannel):
-        querystring = '?caseType=' + caseType + '&region=' + region + '&deliveryChannel=' + deliveryChannel # NOQA
+    async def get_fulfilment(self, case_type, region, delivery_channel):
+        querystring = '?caseType=' + case_type + '&region=' + region + '&deliveryChannel=' + delivery_channel  # NOQA
         return await self._make_request(
             Request("GET", self._rhsvc_get_fulfilments + querystring, None,
                     None, self._handle_response, "json"))
 
-    async def request_fulfilment(self, caseId, telNo, fulfilmentCode):
-        json = {'caseId': caseId, 'telNo': telNo, 'fulfilmentCode': fulfilmentCode, 'dateTime': datetime.now(timezone.utc).isoformat()}
+    async def request_fulfilment(self, case_id, tel_no, fulfilment_code):
+        json = {'caseId': case_id, 'telNo': tel_no, 'fulfilmentCode': fulfilment_code,
+                'dateTime': datetime.now(timezone.utc).isoformat()}
         return await self._make_request(
-            Request("POST", self._rhsvc_request_fulfilment + caseId + '/fulfilments/sms', self._request.app["RHSVC_AUTH"],
+            Request("POST", self._rhsvc_request_fulfilment + case_id + '/fulfilments/sms',
+                    self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
 
 

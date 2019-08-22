@@ -23,6 +23,8 @@ def create_error_middleware(overrides):
         except web.HTTPNotFound:
             if '/ni' in request.path:
                 index_resource = request.app.router['IndexNI:get']
+            elif '/dechrau' in request.path:
+                index_resource = request.app.router['IndexCY:get']
             else:
                 index_resource = request.app.router['IndexEN:get']
 
@@ -108,6 +110,8 @@ def setup(app):
 def check_display_region(request):
     if '/ni' in request.path:
         attributes = {'display_region': 'ni'}
+    elif '/dechrau' in request.path:
+        attributes = {'display_region': 'cy', 'locale': 'cy'}
     else:
         attributes = {'display_region': 'en'}
 

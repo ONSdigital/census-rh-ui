@@ -3,6 +3,11 @@
     {% set form_action = url('IndexNI:post') %}
     {% set request_code_link = url('RequestCodeNI:get') %}
     {% set webchat_link = url('WebChatNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set form_action = url('IndexCY:post') %}
+    {% set request_code_link = url('RequestCodeNI:get') %}
+    {% set webchat_link = url('WebChatNI:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('IndexEN:post') %}

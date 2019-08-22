@@ -224,6 +224,22 @@ class RHTestCase(AioHTTPTestCase):
         self.post_address_confirmation_en = self.app.router['AddressConfirmationEN:post'].url_for()
         self.get_address_edit_en = self.app.router['AddressEditEN:get'].url_for()
         self.post_address_edit_en = self.app.router['AddressEditEN:post'].url_for()
+        self.get_language_options_en = self.app.router['StartLanguageOptionsEN:get'].url_for()
+        self.post_language_options_en = self.app.router['StartLanguageOptionsEN:post'].url_for()
+        self.get_select_language_en = self.app.router['StartSelectLanguageEN:get'].url_for()
+        self.post_select_language_en = self.app.router['StartSelectLanguageEN:post'].url_for()
+
+        self.get_index_cy = self.app.router['IndexCY:get'].url_for()
+        self.post_index_cy = self.app.router['IndexCY:post'].url_for()
+        self.get_address_confirmation_cy = self.app.router['AddressConfirmationCY:get'].url_for()
+        self.post_address_confirmation_cy = self.app.router['AddressConfirmationCY:post'].url_for()
+        self.get_address_edit_cy = self.app.router['AddressEditCY:get'].url_for()
+        self.post_address_edit_cy = self.app.router['AddressEditCY:post'].url_for()
+        self.get_language_options_cy = self.app.router['StartLanguageOptionsCY:get'].url_for()
+        self.post_language_options_cy = self.app.router['StartLanguageOptionsCY:post'].url_for()
+        self.get_select_language_cy = self.app.router['StartSelectLanguageCY:get'].url_for()
+        self.post_select_language_cy = self.app.router['StartSelectLanguageCY:post'].url_for()
+
         self.get_index_ni = self.app.router['IndexNI:get'].url_for()
         self.post_index_ni = self.app.router['IndexNI:post'].url_for()
         self.get_address_confirmation_ni = self.app.router['AddressConfirmationNI:get'].url_for()
@@ -234,6 +250,7 @@ class RHTestCase(AioHTTPTestCase):
         self.post_language_options_ni = self.app.router['StartLanguageOptionsNI:post'].url_for()
         self.get_select_language_ni = self.app.router['StartSelectLanguageNI:get'].url_for()
         self.post_select_language_ni = self.app.router['StartSelectLanguageNI:post'].url_for()
+
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
         self.eq_id = "census"
@@ -259,6 +276,17 @@ class RHTestCase(AioHTTPTestCase):
             'uprn': self.uac_json['address']['uprn'],
             'language': 'en',
             'display_region': 'en'
+        }
+        self.attributes_cy = {
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
+            'language': 'cy',
+            'display_region': 'cy',
+            'locale': 'cy'
         }
         self.attributes_ni = {
             'addressLine1': self.uac_json['address']['addressLine1'],
@@ -422,15 +450,24 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
+        # self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()
         self.get_webchat_ni = self.app.router['WebChatNI:get'].url_for()
         self.post_webchat_en = self.app.router['WebChatEN:post'].url_for()
+        # self.post_webchat_cy = self.app.router['WebChatCY:post'].url_for()
         self.post_webchat_ni = self.app.router['WebChatNI:post'].url_for()
         self.get_webchat_chat_en = self.app.router['WebChatWindowEN:get'].url_for()
+        # self.get_webchat_chat_cy = self.app.router['WebChatWindowCY:get'].url_for()
         self.get_webchat_chat_ni = self.app.router['WebChatWindowNI:get'].url_for()
 
 
         self.webchat_form_data = {
-            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help', 'country': 'england'
+            'screen_name': 'Test', 'email': 'test@test.gov.uk',
+            'language': 'english', 'query': 'help', 'country': 'england'
+        }
+
+        self.webchat_form_data_cy = {
+            'screen_name': 'Test', 'email': 'test@test.gov.uk',
+            'language': 'welsh', 'query': 'help', 'country': 'wales'
         }
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
@@ -438,23 +475,31 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
         self.get_requestcode_en = self.app.router['RequestCodeEN:get'].url_for()
+        # self.get_requestcode_cy = self.app.router['RequestCodeCY:get'].url_for()
         self.get_requestcode_ni = self.app.router['RequestCodeNI:get'].url_for()
         self.post_requestcode_en = self.app.router['RequestCodeEN:post'].url_for()
+        # self.post_requestcode_cy = self.app.router['RequestCodeCY:post'].url_for()
         self.post_requestcode_ni = self.app.router['RequestCodeNI:post'].url_for()
         self.get_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:get'].url_for()
+        # self.get_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:get'].url_for()
         self.get_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:get'].url_for()
         self.post_requestcode_selectaddress_en = self.app.router['RequestCodeSelectAddressEN:post'].url_for()
+        # self.post_requestcode_selectaddress_cy = self.app.router['RequestCodeSelectAddressCY:post'].url_for()
         self.post_requestcode_selectaddress_ni = self.app.router['RequestCodeSelectAddressNI:post'].url_for()
         self.get_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:get'].url_for()
+        # self.get_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:get'].url_for()
         self.get_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:get'].url_for()
         self.post_requestcode_address_confirmation_en = self.app.router['RequestCodeConfirmAddressEN:post'].url_for()
+        # self.post_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:post'].url_for()
         self.post_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'
 
-        self.post_requestcode_address_confirmation_data = {'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"}
+        self.post_requestcode_address_confirmation_data = {
+            'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"
+        }
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()

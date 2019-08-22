@@ -1,6 +1,9 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('AddressEditNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set form_action = url('AddressEditCY:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('AddressEditEN:post') %}

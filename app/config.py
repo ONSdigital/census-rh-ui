@@ -84,7 +84,7 @@ class DevelopmentConfig:
 
     REDIS_PORT = env("REDIS_PORT", default="7379")
 
-    SESSION_AGE = env("SESSION_AGE", default="600")
+    SESSION_AGE = env("SESSION_AGE", default="300")  # 5 minutes
 
     WEBCHAT_SVC_URL = env.str("WEBCHAT_SVC_URL", default="https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221")  # NOQA
 

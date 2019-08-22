@@ -1,6 +1,9 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% set form_action = url('StartSelectLanguageNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set form_action = url('StartSelectLanguageCY:post') %}
 {% else %}
     {% extends "base-en.html" %}
     {% set form_action = url('StartSelectLanguageEN:post') %}
@@ -56,7 +59,7 @@
         "useFieldset": true
     }) %}
 
-        {% if 'language_option' in field_messages_dict %}
+        {% if 'language-option' in field_messages_dict %}
             {{
                 onsRadios({
                     "legend": radio_legend,

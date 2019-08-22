@@ -70,6 +70,23 @@ class TestEq(RHTestCase):
         self.assertEqual(payload, self.eq_payload_en)
 
     @unittest_run_loop
+    async def test_build_cy(self):
+        self.maxDiff = None  # for full payload comparison when running this test
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload_cy['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json_cy, self.attributes_cy, self.app).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, self.eq_payload_cy)
+
+    @unittest_run_loop
     async def test_build_ni(self):
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
@@ -101,6 +118,12 @@ class TestEq(RHTestCase):
 
         result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
         self.assertEqual(result, self.eq_payload_en['display_address'])
+
+    def test_build_display_address_cy(self):
+        from app import eq
+
+        result = eq.EqPayloadConstructor.build_display_address(self.uac_json['address'])
+        self.assertEqual(result, self.eq_payload_cy['display_address'])
 
     def test_build_display_address_ni(self):
         from app import eq
