@@ -519,6 +519,22 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_address_confirmation_cy = self.app.router['RequestCodeConfirmAddressCY:post'].url_for()
         self.post_requestcode_address_confirmation_ni = self.app.router['RequestCodeConfirmAddressNI:post'].url_for()
 
+        self.get_requestcode_household = self.app.router['RequestCodeHousehold:get'].url_for()
+        self.get_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
+        self.post_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
+        self.get_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:get'].url_for()
+        self.post_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:post'].url_for()
+        self.get_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:get'].url_for()
+        self.post_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:post'].url_for()
+
+        self.get_requestcode_individual = self.app.router['RequestCodeIndividual:get'].url_for()
+        self.get_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
+        self.post_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
+        self.get_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:get'].url_for()
+        self.post_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:post'].url_for()
+        self.get_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:get'].url_for()
+        self.post_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:post'].url_for()
+
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'

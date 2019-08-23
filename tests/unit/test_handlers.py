@@ -1764,7 +1764,7 @@ class TestHandlers(RHTestCase):
         mocked_now = datetime.datetime(2019, 6, 15, 9, 30, 00, 0)
         with mock.patch('app.handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
-            
+
             response = await self.client.request("POST", self.post_webchat_en, allow_redirects=False,
                                                  data=self.webchat_form_data)
 
@@ -2156,37 +2156,34 @@ class TestHandlers(RHTestCase):
         # Then an InactiveCaseError is raised
 
     @unittest_run_loop
-    async def test_get_request_access_code_en(self):
-        response = await self.client.request("GET", self.get_requestcode_en)
+    async def test_get_request_access_code_hh_en(self):
+        response = await self.client.request("GET", self.get_requestcode_household_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('What is your postcode?', contents)
-        self.assertEqual(contents.count('input--text'), 1)
-        self.assertIn('UK postcode', contents)
+        self.assertIn('Request a new access code', contents)
+        self.assertIn('You will need to provide:', contents)
 
     @unittest_run_loop
-    async def test_get_request_access_code_cy(self):
-        response = await self.client.request("GET", self.get_requestcode_cy)
+    async def test_get_request_access_code_hh_cy(self):
+        response = await self.client.request("GET", self.get_requestcode_household_cy)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('What is your postcode?', contents)
-        self.assertEqual(contents.count('input--text'), 1)
-        self.assertIn('UK postcode', contents)
+        self.assertIn('Request a new access code', contents)
+        self.assertIn('You will need to provide:', contents)
 
     @unittest_run_loop
-    async def test_get_request_access_code_ni(self):
-        response = await self.client.request("GET", self.get_requestcode_ni)
+    async def test_get_request_access_code_hh_ni(self):
+        response = await self.client.request("GET", self.get_requestcode_household_ni)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn('What is your postcode?', contents)
-        self.assertEqual(contents.count('input--text'), 1)
-        self.assertIn('UK postcode', contents)
+        self.assertIn('Request a new access code', contents)
+        self.assertIn('You will need to provide:', contents)
 
     @unittest_run_loop
-    async def test_post_request_access_code_bad_postcode_en(self):
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_en(self):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
-            response = await self.client.request("POST", self.post_requestcode_en,
+            response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                  data=self.request_code_form_data_invalid)
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
@@ -2194,10 +2191,10 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_bad_postcode_cy(self):
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_cy(self):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
-            response = await self.client.request("POST", self.post_requestcode_cy,
+            response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                  data=self.request_code_form_data_invalid)
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
@@ -2205,10 +2202,10 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_bad_postcode_ni(self):
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(self):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
-            response = await self.client.request("POST", self.post_requestcode_ni,
+            response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                  data=self.request_code_form_data_invalid)
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
@@ -2216,12 +2213,12 @@ class TestHandlers(RHTestCase):
         self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_good_postcode_en(self):
+    async def test_post_request_access_code_enter_address_good_postcode_hh_en(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Valid postcode")
 
@@ -2231,12 +2228,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('1 Gate Reach', str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_good_postcode_cy(self):
+    async def test_post_request_access_code_enter_address_good_postcode_hh_cy(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Valid postcode")
 
@@ -2246,12 +2243,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('1 Gate Reach', str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_good_postcode_ni(self):
+    async def test_post_request_access_code_enter_address_good_postcode_hh_ni(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Valid postcode")
 
@@ -2261,12 +2258,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('1 Gate Reach', str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_not_found_en(self):
+    async def test_post_request_access_code_enter_address_not_found_hh_en(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
                 self.assertLogLine(cm, "Valid postcode")
 
@@ -2274,12 +2271,12 @@ class TestHandlers(RHTestCase):
                 self.assertIn('We cannot find your address', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_not_found_cy(self):
+    async def test_post_request_access_code_enter_address_not_found_hh_cy(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
                 self.assertLogLine(cm, "Valid postcode")
 
@@ -2287,12 +2284,12 @@ class TestHandlers(RHTestCase):
                 self.assertIn('We cannot find your address', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_not_found_ni(self):
+    async def test_post_request_access_code_enter_address_not_found_hh_ni(self):
         with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
                 self.assertLogLine(cm, "Valid postcode")
 
@@ -2301,13 +2298,13 @@ class TestHandlers(RHTestCase):
 
     # Commented out as session not maintaining the new data between pages - to be revisited.
     # @unittest_run_loop
-    # async def test_get_request_code_confirm_address(self):
+    # async def test_get_request_code_confirm_address_hh(self):
     #
     #     with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
     #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
     #
     #         with self.assertLogs('respondent-home', 'INFO') as cm:
-    #             response = await self.client.request("POST", self.post_requestcode, data=self.request_code_form_data_valid)
+    #             response = await self.client.request("POST", self.post_requestcode_hh, data=self.request_code_form_data_valid)
     #             self.assertLogLine(cm, "Valid postcode")
     #
     #             self.assertEqual(response.status, 200)
@@ -2320,12 +2317,68 @@ class TestHandlers(RHTestCase):
     #                 self.assertEqual(response.status, 200)
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_connection_error_en(self):
+    async def test_get_request_access_code_hi(self):
+        response = await self.client.request("GET", self.get_requestcode_individual)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Request an individual access code', contents)
+        self.assertIn('You will need to provide:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_enter_address_hi(self):
+        response = await self.client.request("GET", self.get_requestcode_enter_address_hi)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('What is your postcode?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('UK postcode', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi(self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request("POST", self.post_requestcode_enter_address_hi,
+                                                 data=self.request_code_form_data_invalid)
+        self.assertLogLine(cm, "Attempt to use an invalid postcode")
+
+        self.assertEqual(response.status, 200)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hi(self):
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hi,
+                                                     data=self.request_code_form_data_valid)
+            self.assertLogLine(cm, "Valid postcode")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hi(self):
+        with mock.patch('app.handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hi,
+                                                     data=self.request_code_form_data_valid)
+                self.assertLogLine(cm, "Valid postcode")
+
+                self.assertEqual(response.status, 200)
+                self.assertIn('We cannot find your address', str(await response.content.read()))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
@@ -2333,12 +2386,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_connection_error_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
@@ -2346,12 +2399,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_connection_error_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, exception=ClientConnectionError('Failed'))
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
@@ -2359,12 +2412,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_500_en(self):
+    async def test_post_request_access_code_get_ai_postcode_500_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=500)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=500)
 
@@ -2372,12 +2425,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_500_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_500_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=500)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=500)
 
@@ -2385,12 +2438,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_500_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=500)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=500)
 
@@ -2398,12 +2451,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_503_en(self):
+    async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=503)
 
@@ -2411,12 +2464,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_503_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_503_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=503)
 
@@ -2424,12 +2477,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_503_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=503)
 
@@ -2437,12 +2490,12 @@ class TestHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_403_en(self):
+    async def test_post_request_access_code_get_ai_postcode_403_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=403)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=403)
 
@@ -2450,12 +2503,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_403_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_403_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=403)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=403)
 
@@ -2463,12 +2516,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_403_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_403_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=403)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=403)
 
@@ -2476,12 +2529,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_401_en(self):
+    async def test_post_request_access_code_get_ai_postcode_401_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=401)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=401)
 
@@ -2489,12 +2542,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_401_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_401_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=401)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=401)
 
@@ -2502,12 +2555,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_401_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_401_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=401)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=401)
 
@@ -2515,12 +2568,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_400_en(self):
+    async def test_post_request_access_code_get_ai_postcode_400_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=400)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_en,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_en,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=400)
 
@@ -2528,12 +2581,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_400_cy(self):
+    async def test_post_request_access_code_get_ai_postcode_400_hh_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=400)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_cy,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_cy,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=400)
 
@@ -2541,12 +2594,12 @@ class TestHandlers(RHTestCase):
             self.assertIn('Sorry, something went wrong', str(await response.content.read()))
 
     @unittest_run_loop
-    async def test_post_request_access_code_get_ai_postcode_400_ni(self):
+    async def test_post_request_access_code_get_ai_postcode_400_hh_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=400)
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
-                response = await self.client.request("POST", self.post_requestcode_ni,
+                response = await self.client.request("POST", self.post_requestcode_enter_address_hh_ni,
                                                      data=self.request_code_form_data_valid)
             self.assertLogLine(cm, "Error in response", status_code=400)
 
