@@ -1,4 +1,11 @@
 {% extends "base-en.html" %}
+{% if fulfillment_type == 'HI' %}
+    {% set form_action = url('RequestCodeSelectAddressHI:post') %}
+    {% set restart_link = url('RequestCodeEnterAddressHI:get') %}
+{% else %}
+    {% set form_action = url('RequestCodeSelectAddressHH:post') %}
+    {% set restart_link = url('RequestCodeEnterAddressHH:get') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -10,11 +17,11 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('RequestCodeSelectAddress:post')
+        "action": form_action
     }
 } %}
 
-{% set question_description = '<p class="js-piped-answer u-fs-r--b" data-question-to-pipe=\"/request-code/enter-mobile\">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
+{% set question_description = '<p class="u-fs-r--b">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
 
 {% block main %}
 
@@ -22,7 +29,7 @@
 
         <h1>We cannot find your address</h1>
 
-        <p>If this is incorrect you can <a href="{{ url('RequestCode:get') }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
+        <p>If this is incorrect you can <a href="{{ restart_link }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
 
     {% else: %}
 

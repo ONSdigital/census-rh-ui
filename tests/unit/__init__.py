@@ -311,18 +311,29 @@ class RHTestCase(AioHTTPTestCase):
 
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
-        self.get_requestcode = self.app.router['RequestCode:get'].url_for()
-        self.post_requestcode = self.app.router['RequestCode:post'].url_for()
-        self.get_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:get'].url_for()
-        self.post_requestcode_selectaddress = self.app.router['RequestCodeSelectAddress:post'].url_for()
-        self.get_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:get'].url_for()
-        self.post_requestcode_address_confirmation = self.app.router['RequestCodeConfirmAddress:post'].url_for()
+        self.get_requestcode_household = self.app.router['RequestCodeHousehold:get'].url_for()
+        self.get_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
+        self.post_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
+        self.get_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:get'].url_for()
+        self.post_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:post'].url_for()
+        self.get_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:get'].url_for()
+        self.post_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:post'].url_for()
+
+        self.get_requestcode_individual = self.app.router['RequestCodeIndividual:get'].url_for()
+        self.get_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
+        self.post_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
+        self.get_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:get'].url_for()
+        self.post_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:post'].url_for()
+        self.get_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:get'].url_for()
+        self.post_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'
 
-        self.post_requestcode_address_confirmation_data = {'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"}
+        self.post_requestcode_address_confirmation_data = {
+            'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"
+        }
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()

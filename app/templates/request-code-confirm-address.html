@@ -1,5 +1,9 @@
 {% extends "base-en.html" %}
-{% set form_action = url('RequestCodeConfirmAddress:post') %}
+{% if fulfillment_type == 'HI' %}
+    {% set form_action = url('RequestCodeConfirmAddressHI:post') %}
+{% else %}
+    {% set form_action = url('RequestCodeConfirmAddressHH:post') %}
+{% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -15,7 +19,7 @@
     }
 } %}
 
-{% set question_description = '<p class=\"js-piped-answer\" data-question-to-pipe=\"/request-code/enter-mobile\"><em class="highlight">' + address + '</em></p>' %}
+{% set question_description = '<p class="u-fs-r--b"><em class="highlight">' + address + '</em></p>' %}
 
 {% block main %}
 
