@@ -1,12 +1,24 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
-    {% set form_action = url('RequestCodeEnterMobileNI:post') %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeEnterMobileHINI:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeEnterMobileHHNI:post') %}
+    {% endif %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
-    {% set form_action = url('RequestCodeEnterMobileCY:post') %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeEnterMobileHICY:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeEnterMobileHHCY:post') %}
+    {% endif %}
 {% else %}
     {% extends "base-en.html" %}
-    {% set form_action = url('RequestCodeEnterMobileEN:post') %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeEnterMobileHIEN:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeEnterMobileHHEN:post') %}
+    {% endif %}
 {% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
