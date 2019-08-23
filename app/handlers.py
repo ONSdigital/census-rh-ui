@@ -1307,8 +1307,8 @@ class RequestCodeCommon(View):
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
-            flash(self._request, SESSION_TIMEOUT_CODE_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + fulfillment_type + display_region + ':get'].url_for())
+            # flash(self._request, SESSION_TIMEOUT_CODE_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
 
     async def get_check_attributes(self, request, fulfillment_type, display_region):
         self._request = request
@@ -1319,8 +1319,8 @@ class RequestCodeCommon(View):
             attributes = session["attributes"]
 
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + fulfillment_type + display_region + ':get'].url_for())
+            # flash(self._request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
 
         return attributes
 
@@ -1761,7 +1761,7 @@ class RequestCodeNotRequiredHHNI(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/request-individual-code/enter-mobile')
+@routes.view('/request-access-code/enter-mobile')
 class RequestCodeEnterMobileHHEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -1776,7 +1776,7 @@ class RequestCodeEnterMobileHHEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-individual-code/enter-mobile')
+@routes.view('/cy/request-access-code/enter-mobile')
 class RequestCodeEnterMobileHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -1791,7 +1791,7 @@ class RequestCodeEnterMobileHHCY(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/ni/request-individual-code/enter-mobile')
+@routes.view('/ni/request-access-code/enter-mobile')
 class RequestCodeEnterMobileHHNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -2568,18 +2568,18 @@ class RequestCodeCodeSentHINI(RequestCodeCommon):
 class RequestCodeTimeoutHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
-        return {'fulfillment_type': 'HI'}
+        return {'fulfillment_type': 'HI', 'display_region': 'en'}
 
 
 @routes.view('/cy/request-individual-code/timeout')
 class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
-        return {'fulfillment_type': 'HI'}
+        return {'fulfillment_type': 'HI', 'display_region': 'cy', 'locale': 'cy'}
 
 
 @routes.view('/ni/request-individual-code/timeout')
 class RequestCodeTimeoutHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
-        return {'fulfillment_type': 'HI'}
+        return {'fulfillment_type': 'HI', 'display_region': 'ni'}

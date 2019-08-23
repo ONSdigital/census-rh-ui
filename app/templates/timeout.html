@@ -1,10 +1,18 @@
-{% extends "base-en.html" %}
-{% if fulfillment_type == 'HH' %}
-    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHH:get')|string + '">re-enter your postcode</a>.' %}
-{% elif  fulfillment_type == 'HI' %}
-    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHI:get')|string + '">re-enter your postcode</a>.' %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set start_url = url('IndexNI:get') %}
+    {% set request_code_link = url('RequestCodeEnterAddressHHNI:get') %}
+    {% set request_individual_link = url('RequestCodeEnterAddressHIEN:get') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set start_url = url('IndexCY:get') %}
+    {% set request_code_link = url('RequestCodeEnterAddressHHCY:get') %}
+    {% set request_individual_link = url('RequestCodeEnterAddressHICY:get') %}
 {% else %}
-    {% set message = 'You will need to <a href="' + url('Index:get')|string + '">re-enter your access code</a>.' %}
+    {% extends "base-en.html" %}
+    {% set start_url = url('IndexEN:get') %}
+    {% set request_code_link = url('RequestCodeEnterAddressHHEN:get') %}
+    {% set request_individual_link = url('RequestCodeEnterAddressHIEN:get') %}
 {% endif %}
 
 {% from "components/panel/_macro.njk" import onsPanel %}
@@ -16,7 +24,12 @@
     }) %}
         <p>To protect your information we have timed you out.</p>
     {% endcall %}
-    {% autoescape false %}
-        <p>{{ message }}</p>
-    {% endautoescape %}
+
+    {% if fulfillment_type == 'HH' %}
+        <p>You will need to <a href="{{ request_code_link }}">re-enter your postcode</a></p>
+    {% elif  fulfillment_type == 'HI' %}
+        <p>You will need to <a href="{{ request_individual_link }}">re-enter your postcode</a></p>
+    {% else %}
+        <p>You will need to <a href="{{ start_url }}">re-enter your access code</a></p>
+    {% endif %}
 {% endblock %}
