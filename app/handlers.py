@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
-    SESSION_TIMEOUT_MSG, SESSION_TIMEOUT_CODE_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
+    SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
     ADDRESS_SELECT_CHECK_MSG, START_LANGUAGE_OPTION_MSG)
 from .exceptions import InactiveCaseError
@@ -1307,7 +1307,6 @@ class RequestCodeCommon(View):
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
-            # flash(self._request, SESSION_TIMEOUT_CODE_MSG)
             raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
 
     async def get_check_attributes(self, request, fulfillment_type, display_region):
@@ -1319,7 +1318,6 @@ class RequestCodeCommon(View):
             attributes = session["attributes"]
 
         except KeyError:
-            # flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
 
         return attributes
@@ -1360,12 +1358,14 @@ class RequestCodeCommon(View):
             session = await get_session(request)
             session["attributes"] = attributes
 
-            raise HTTPFound(self._request.app.router['RequestCodeSelectAddress' + fulfillment_type + display_region + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeSelectAddress' + fulfillment_type
+                                                     + display_region + ':get'].url_for())
 
         else:
             logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
             flash(self._request, POSTCODE_INVALID_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + fulfillment_type + display_region + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + fulfillment_type
+                                                     + display_region + ':get'].url_for())
 
     async def post_enter_mobile(self, attributes, data, request):
 
@@ -1375,12 +1375,14 @@ class RequestCodeCommon(View):
             session = await get_session(request)
             session["attributes"] = attributes
 
-            raise HTTPFound(self._request.app.router['RequestCodeConfirmMobile' + attributes["fulfillment_type"] + attributes["display_region"].upper() + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeConfirmMobile' + attributes["fulfillment_type"]
+                                                     + attributes["display_region"].upper() + ':get'].url_for())
 
         else:
             logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
             flash(self._request, MOBILE_ENTER_MSG)
-            raise HTTPFound(self._request.app.router['RequestCodeEnterMobile' + attributes["fulfillment_type"] + attributes["display_region"].upper() + ':post'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeEnterMobile' + attributes["fulfillment_type"]
+                                                     + attributes["display_region"].upper() + ':post'].url_for())
 
     @property
     def _ai_url_postcode(self):
@@ -2077,7 +2079,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                         attributes["display_region"])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
