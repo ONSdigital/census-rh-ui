@@ -62,7 +62,7 @@ class EqPayloadConstructor(object):
         try:
             self._region = case["region"]
         except KeyError:
-            raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
+            raise InvalidEqPayLoad(f"Could not retrieve region from case JSON ")
 
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
