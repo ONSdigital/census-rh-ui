@@ -577,3 +577,7 @@ class RHTestCase(AioHTTPTestCase):
         self.request_code_address_confirmation_data = {
             'request-address-confirmation': 'Yes', 'action[save_continue]': ''
         }
+
+        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
+        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
+        self.nisra_logo = '/img/nisra-logo-en.svg'

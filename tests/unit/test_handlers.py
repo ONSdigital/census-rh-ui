@@ -26,6 +26,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Enter the 16 character code printed on the letter', contents)
+        self.assertIn(self.ons_logo_en, contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('type="submit"', contents)
 
@@ -35,6 +36,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Enter the 16 character code printed on the letter', contents)
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('type="submit"', contents)
 
@@ -44,6 +46,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Enter the 16 character code printed on the letter', contents)
+        self.assertIn(self.nisra_logo, contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('type="submit"', contents)
 
@@ -744,7 +747,9 @@ class TestHandlers(RHTestCase):
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @build_eq_raises
     @unittest_run_loop
@@ -765,7 +770,9 @@ class TestHandlers(RHTestCase):
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @build_eq_raises
     @unittest_run_loop
@@ -786,7 +793,9 @@ class TestHandlers(RHTestCase):
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_en(self):
@@ -798,7 +807,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_cy(self):
@@ -810,7 +821,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_ni(self):
@@ -822,7 +835,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_en(self):
@@ -834,7 +849,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_cy(self):
@@ -846,7 +863,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_ni(self):
@@ -858,7 +877,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_en(self):
@@ -870,7 +891,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_cy(self):
@@ -882,7 +905,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_ni(self):
@@ -894,7 +919,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use a malformed access code")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(BAD_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_en(self):
@@ -909,7 +936,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_cy(self):
@@ -924,7 +953,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_ni(self):
@@ -939,7 +970,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_en(self):
@@ -954,7 +987,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_cy(self):
@@ -969,7 +1004,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_ni(self):
@@ -984,7 +1021,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Survey complete', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found_en(self):
@@ -999,7 +1038,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Service failed to build eQ payload")
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found_cy(self):
@@ -1013,8 +1054,11 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request("POST", self.post_index_cy, data=self.form_data)
             self.assertLogLine(cm, "Service failed to build eQ payload")
 
+
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found_ni(self):
@@ -1029,7 +1073,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Service failed to build eQ payload")
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_connection_error_en(self):
@@ -1041,7 +1087,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_connection_error_cy(self):
@@ -1053,7 +1101,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_connection_error_ni(self):
@@ -1065,7 +1115,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_500_en(self):
@@ -1077,7 +1129,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_500_cy(self):
@@ -1089,7 +1143,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_500_ni(self):
@@ -1101,7 +1157,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_503_en(self):
@@ -1113,7 +1171,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_503_cy(self):
@@ -1125,7 +1185,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_503_ni(self):
@@ -1137,7 +1199,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_404_en(self):
@@ -1149,7 +1213,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an invalid access code", client_ip=None)
 
         self.assertEqual(response.status, 401)
-        self.assertMessagePanel(INVALID_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_404_cy(self):
@@ -1161,7 +1227,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an invalid access code", client_ip=None)
 
         self.assertEqual(response.status, 401)
-        self.assertMessagePanel(INVALID_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_404_ni(self):
@@ -1173,7 +1241,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an invalid access code", client_ip=None)
 
         self.assertEqual(response.status, 401)
-        self.assertMessagePanel(INVALID_CODE_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_403_en(self):
@@ -1185,7 +1255,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_403_cy(self):
@@ -1197,7 +1269,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_403_ni(self):
@@ -1209,7 +1283,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_401_en(self):
@@ -1221,7 +1297,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_401_cy(self):
@@ -1233,7 +1311,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_401_ni(self):
@@ -1245,7 +1325,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_400_en(self):
@@ -1257,7 +1339,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_400_cy(self):
@@ -1269,7 +1353,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_400_ni(self):
@@ -1281,7 +1367,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @skip_encrypt
     @unittest_run_loop
@@ -1299,7 +1387,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.rhsvc_url_surveylaunched)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @skip_encrypt
     @unittest_run_loop
@@ -1317,7 +1407,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.rhsvc_url_surveylaunched)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_401_en(self):
@@ -1334,7 +1426,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_401_cy(self):
@@ -1351,7 +1445,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_404_en(self):
@@ -1366,7 +1462,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.address_confirmation_data)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_404_cy(self):
@@ -1381,7 +1479,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.address_confirmation_data)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_500_en(self):
@@ -1398,7 +1498,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_500_cy(self):
@@ -1415,7 +1517,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.ons_logo_cy, contents)
 
     def test_check_open_weekday_open_census_weekend(self):
         mocked_now = datetime.datetime(2019, 10, 12, 9, 30, 00, 0)
@@ -1468,6 +1572,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_webchat_en)
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Enter your name', contents)
             self.assertEqual(contents.count('radio__input'), 10)
             self.assertIn('type="submit"', contents)
@@ -1481,6 +1586,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_webchat_cy)
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Enter your name', contents)
             self.assertEqual(contents.count('radio__input'), 10)
             self.assertIn('type="submit"', contents)
@@ -1494,6 +1600,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_webchat_ni)
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Enter your name', contents)
             self.assertEqual(contents.count('radio__input'), 10)
             self.assertIn('type="submit"', contents)
@@ -1511,6 +1618,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1526,6 +1634,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1541,6 +1650,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1559,6 +1669,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1577,6 +1688,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1595,6 +1707,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1613,6 +1726,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1631,6 +1745,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1649,6 +1764,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1661,7 +1777,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_cy(self):
@@ -1673,7 +1791,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_ni(self):
@@ -1685,7 +1805,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_en(self):
@@ -1697,7 +1819,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_cy(self):
@@ -1709,7 +1833,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_ni(self):
@@ -1721,7 +1847,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_en(self):
@@ -1733,7 +1861,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_cy(self):
@@ -1745,7 +1875,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_ni(self):
@@ -1757,7 +1889,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Form submission error")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_en(self):
@@ -1769,7 +1903,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.webchat_form_data)
 
         self.assertEqual(response.status, 200)
-        self.assertIn('iframe', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('iframe', contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_cy(self):
@@ -1781,7 +1917,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.webchat_form_data)
 
         self.assertEqual(response.status, 200)
-        self.assertIn('iframe', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('iframe', contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_ni(self):
@@ -1793,7 +1931,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.webchat_form_data)
 
         self.assertEqual(response.status, 200)
-        self.assertIn('iframe', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('iframe', contents)
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_en(self):
@@ -1809,6 +1949,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
         self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1825,6 +1966,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1841,6 +1983,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
         self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1860,6 +2003,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1879,6 +2023,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1898,6 +2043,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1916,6 +2062,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1934,6 +2081,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('Bank Holidays', contents)
 
     @unittest_run_loop
@@ -1952,6 +2100,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
     def test_join_uac_en(self):
@@ -2160,6 +2309,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_household_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
         self.assertIn('Request a new access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2168,6 +2318,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_household_cy)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('Request a new access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2176,6 +2327,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_household_ni)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
         self.assertIn('Request a new access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2188,7 +2340,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hh_cy(self):
@@ -2199,7 +2353,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(self):
@@ -2210,7 +2366,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_good_postcode_hh_en(self):
@@ -2224,6 +2382,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2239,6 +2398,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2254,6 +2414,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2268,7 +2429,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('We cannot find your address', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_cy(self):
@@ -2281,7 +2444,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('We cannot find your address', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_ni(self):
@@ -2294,7 +2459,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('We cannot find your address', contents)
 
     # Commented out as session not maintaining the new data between pages - to be revisited.
     # @unittest_run_loop
@@ -2321,6 +2488,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_individual_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
         self.assertIn('Request an individual access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2329,6 +2497,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_individual_cy)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('Request an individual access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2337,6 +2506,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_individual_ni)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
         self.assertIn('Request an individual access code', contents)
         self.assertIn('You will need to provide:', contents)
 
@@ -2345,6 +2515,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_enter_address_hi_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
         self.assertIn('What is your postcode?', contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('UK postcode', contents)
@@ -2354,6 +2525,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_enter_address_hi_cy)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('What is your postcode?', contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('UK postcode', contents)
@@ -2363,6 +2535,7 @@ class TestHandlers(RHTestCase):
         response = await self.client.request("GET", self.get_requestcode_enter_address_hi_ni)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
         self.assertIn('What is your postcode?', contents)
         self.assertEqual(contents.count('input--text'), 1)
         self.assertIn('UK postcode', contents)
@@ -2376,7 +2549,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_cy(self):
@@ -2387,7 +2562,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(self):
@@ -2398,7 +2575,9 @@ class TestHandlers(RHTestCase):
         self.assertLogLine(cm, "Attempt to use an invalid postcode")
 
         self.assertEqual(response.status, 200)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_good_postcode_hi_en(self):
@@ -2412,6 +2591,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2427,6 +2607,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2442,6 +2623,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn('Select your address', str(resp_content))
             self.assertIn('1 Gate Reach', str(resp_content))
 
@@ -2456,7 +2638,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('We cannot find your address', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_cy(self):
@@ -2469,7 +2653,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('We cannot find your address', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_ni(self):
@@ -2482,7 +2668,9 @@ class TestHandlers(RHTestCase):
                 self.assertLogLine(cm, "Valid postcode")
 
                 self.assertEqual(response.status, 200)
-                self.assertIn('We cannot find your address', str(await response.content.read()))
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('We cannot find your address', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_en(self):
@@ -2495,7 +2683,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(self):
@@ -2508,7 +2698,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(self):
@@ -2521,7 +2713,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Client failed to connect", url=self.addressindexsvc_url + self.postcode_valid)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_en(self):
@@ -2534,7 +2728,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_cy(self):
@@ -2547,7 +2743,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
@@ -2560,7 +2758,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=500)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
@@ -2573,7 +2773,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_cy(self):
@@ -2586,7 +2788,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
@@ -2599,7 +2803,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=503)
 
         self.assertEqual(response.status, 500)
-        self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_en(self):
@@ -2612,7 +2818,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_cy(self):
@@ -2625,7 +2833,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_ni(self):
@@ -2638,7 +2848,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=403)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_en(self):
@@ -2651,7 +2863,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_cy(self):
@@ -2664,7 +2878,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_ni(self):
@@ -2677,7 +2893,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=401)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_en(self):
@@ -2690,7 +2908,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_cy(self):
@@ -2703,7 +2923,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_ni(self):
@@ -2716,7 +2938,9 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Error in response", status_code=400)
 
             self.assertEqual(response.status, 500)
-            self.assertIn('Sorry, something went wrong', str(await response.content.read()))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
 
     @unittest_run_loop
     async def test_get_address_confirmation_direct_access_en(self):
@@ -2724,7 +2948,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_confirmation_en, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_get_address_confirmation_direct_access_cy(self):
@@ -2732,7 +2958,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_confirmation_cy, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_get_address_confirmation_direct_access_ni(self):
@@ -2740,7 +2968,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_confirmation_ni, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_en(self):
@@ -2749,7 +2979,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.address_confirmation_data)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_cy(self):
@@ -2758,7 +2990,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.address_confirmation_data)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_ni(self):
@@ -2767,7 +3001,9 @@ class TestHandlers(RHTestCase):
                                                  data=self.address_confirmation_data)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_get_address_edit_direct_access_en(self):
@@ -2775,7 +3011,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_edit_en, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_get_address_edit_direct_access_cy(self):
@@ -2783,7 +3021,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_edit_cy, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_get_address_edit_direct_access_ni(self):
@@ -2791,7 +3031,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.get_address_edit_ni, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_edit_direct_access_en(self):
@@ -2799,7 +3041,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.post_address_edit_en, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_edit_direct_access_cy(self):
@@ -2807,7 +3051,9 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.post_address_edit_cy, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
 
     @unittest_run_loop
     async def test_post_address_edit_direct_access_ni(self):
@@ -2815,4 +3061,6 @@ class TestHandlers(RHTestCase):
             response = await self.client.request("GET", self.post_address_edit_ni, allow_redirects=False)
         self.assertLogLine(cm, "Permission denied")
         self.assertEqual(response.status, 403)
-        self.assertIn('Enter the 16 character code printed on the letter', str(await response.content.read()))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Enter the 16 character code printed on the letter', contents)
