@@ -170,7 +170,7 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        self.assertIn('Your unique access code has expired', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_uac_inactive(self):
@@ -185,7 +185,7 @@ class TestHandlers(RHTestCase):
             self.assertLogLine(cm, "Attempt to use an inactive access code")
 
         self.assertEqual(response.status, 200)
-        self.assertIn('Survey complete', str(await response.content.read()))
+        self.assertIn('Your unique access code has expired', str(await response.content.read()))
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found(self):
