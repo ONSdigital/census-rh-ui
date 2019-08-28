@@ -14,7 +14,11 @@ from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
     SESSION_TIMEOUT_MSG, WEBCHAT_MISSING_NAME_MSG, WEBCHAT_MISSING_COUNTRY_MSG,
     WEBCHAT_MISSING_QUERY_MSG, MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
-    ADDRESS_SELECT_CHECK_MSG, START_LANGUAGE_OPTION_MSG)
+    ADDRESS_SELECT_CHECK_MSG, START_LANGUAGE_OPTION_MSG,
+    BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY, ADDRESS_EDIT_MSG_CY,
+    SESSION_TIMEOUT_MSG_CY, WEBCHAT_MISSING_NAME_MSG_CY, WEBCHAT_MISSING_COUNTRY_MSG_CY,
+    WEBCHAT_MISSING_QUERY_MSG_CY, MOBILE_ENTER_MSG_CY, MOBILE_CHECK_MSG_CY, POSTCODE_INVALID_MSG_CY,
+    ADDRESS_SELECT_CHECK_MSG_CY, START_LANGUAGE_OPTION_MSG_CY)
 from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
@@ -209,7 +213,8 @@ class IndexEN(Start):
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'en'}, status=401)
+                return aiohttp_jinja2.render_template("index.html", self._request,
+                                                      {'display_region': 'en'}, status=401)
             else:
                 raise ex
 
@@ -252,7 +257,7 @@ class IndexCY(Start):
             self._uac = self.join_uac(data)
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
-            flash(self._request, BAD_CODE_MSG)
+            flash(self._request, BAD_CODE_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         try:
@@ -260,8 +265,9 @@ class IndexCY(Start):
         except ClientResponseError as ex:
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
-                flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy', 'locale': 'cy'}, status=401)
+                flash(self._request, INVALID_CODE_MSG_CY)
+                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy',
+                                                                                    'locale': 'cy'}, status=401)
             else:
                 raise ex
 
@@ -416,7 +422,7 @@ class AddressConfirmationCY(Start):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         return attributes
@@ -436,14 +442,14 @@ class AddressConfirmationCY(Start):
             case = session["case"]
 
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         try:
             address_confirmation = data["address-check-answer"]
         except KeyError:
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
         if address_confirmation == 'Yes':
@@ -459,7 +465,7 @@ class AddressConfirmationCY(Start):
         else:
             # catch all just in case, should never get here
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
 
@@ -598,7 +604,7 @@ class AddressEditCY(Start):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         return attributes
@@ -617,14 +623,14 @@ class AddressEditCY(Start):
             attributes = session["attributes"]
             case = session["case"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         try:
             attributes = Start.get_address_details(self, data, attributes)
         except InvalidEqPayLoad:
             logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
-            flash(request, ADDRESS_EDIT_MSG)
+            flash(request, ADDRESS_EDIT_MSG_CY)
             return attributes
 
         try:
@@ -770,7 +776,7 @@ class StartLanguageOptionsCY(Start):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         return attributes
@@ -787,14 +793,14 @@ class StartLanguageOptionsCY(Start):
             case = session["case"]
 
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         try:
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, START_LANGUAGE_OPTION_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
         if language_option == 'Yes':
@@ -807,7 +813,7 @@ class StartLanguageOptionsCY(Start):
         else:
             # catch all just in case, should never get here
             logger.warn("Language selection error", client_ip=self._client_ip)
-            flash(request, START_LANGUAGE_OPTION_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
 
@@ -942,7 +948,7 @@ class StartSelectLanguageCY(Start):
         try:
             attributes = session["attributes"]
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         return attributes
@@ -959,14 +965,14 @@ class StartSelectLanguageCY(Start):
             case = session["case"]
 
         except KeyError:
-            flash(self._request, SESSION_TIMEOUT_MSG)
+            flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         try:
             language_option = data["language-option"]
         except KeyError:
             logger.warn("NI language option error", client_ip=self._client_ip)
-            flash(request, START_LANGUAGE_OPTION_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
         if language_option == 'gaeilge':
@@ -981,7 +987,7 @@ class StartSelectLanguageCY(Start):
         else:
             # catch all just in case, should never get here
             logger.warn("Language selection error", client_ip=self._client_ip)
-            flash(request, START_LANGUAGE_OPTION_MSG)
+            flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
         await self.call_questionnaire(case, attributes, request.app)
@@ -1095,20 +1101,29 @@ class WebChat(View):
 
         return True
 
-    def validate_form(self, data):
+    def validate_form(self, data, display_region):
 
         form_valid = True
 
         if not data.get('screen_name'):
-            flash(self._request, WEBCHAT_MISSING_NAME_MSG)
+            if display_region == 'cy':
+                flash(self._request, WEBCHAT_MISSING_NAME_MSG_CY)
+            else:
+                flash(self._request, WEBCHAT_MISSING_NAME_MSG)
             form_valid = False
 
         if not(data.get('country')):
-            flash(self._request, WEBCHAT_MISSING_COUNTRY_MSG)
+            if display_region == 'cy':
+                flash(self._request, WEBCHAT_MISSING_COUNTRY_MSG_CY)
+            else:
+                flash(self._request, WEBCHAT_MISSING_COUNTRY_MSG)
             form_valid = False
 
         if not(data.get('query')):
-            flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
+            if display_region == 'cy':
+                flash(self._request, WEBCHAT_MISSING_QUERY_MSG_CY)
+            else:
+                flash(self._request, WEBCHAT_MISSING_QUERY_MSG)
             form_valid = False
 
         return form_valid
@@ -1165,7 +1180,7 @@ class WebChatEN(WebChat):
         data = await request.post()
         self._request = request
 
-        form_valid = self.validate_form(data)
+        form_valid = self.validate_form(data, 'en')
 
         if not form_valid:
             logger.info("Form submission error", client_ip=self._client_ip)
@@ -1218,7 +1233,7 @@ class WebChatCY(WebChat):
         data = await request.post()
         self._request = request
 
-        form_valid = self.validate_form(data)
+        form_valid = self.validate_form(data, 'cy')
 
         if not form_valid:
             logger.info("Form submission error", client_ip=self._client_ip)
@@ -1273,7 +1288,7 @@ class WebChatNI(WebChat):
         data = await request.post()
         self._request = request
 
-        form_valid = self.validate_form(data)
+        form_valid = self.validate_form(data, 'ni')
 
         if not form_valid:
             logger.info("Form submission error", client_ip=self._client_ip)
@@ -1307,7 +1322,7 @@ class RequestCodeCommon(View):
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
             logger.warn("Session timed out", client_ip=self._client_ip)
-            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())  # NOQA
 
     async def get_check_attributes(self, request, fulfillment_type, display_region):
         self._request = request
@@ -1318,7 +1333,7 @@ class RequestCodeCommon(View):
             attributes = session["attributes"]
 
         except KeyError:
-            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())
+            raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())  # NOQA
 
         return attributes
 
@@ -1363,7 +1378,10 @@ class RequestCodeCommon(View):
 
         else:
             logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
-            flash(self._request, POSTCODE_INVALID_MSG)
+            if display_region == 'CY':
+                flash(self._request, POSTCODE_INVALID_MSG_CY)
+            else:
+                flash(self._request, POSTCODE_INVALID_MSG)
             raise HTTPFound(self._request.app.router['RequestCodeEnterAddress' + fulfillment_type
                                                      + display_region + ':get'].url_for())
 
@@ -1380,7 +1398,10 @@ class RequestCodeCommon(View):
 
         else:
             logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
-            flash(self._request, MOBILE_ENTER_MSG)
+            if attributes['display_region'] == 'cy':
+                flash(self._request, MOBILE_ENTER_MSG_CY)
+            else:
+                flash(self._request, MOBILE_ENTER_MSG)
             raise HTTPFound(self._request.app.router['RequestCodeEnterMobile' + attributes["fulfillment_type"]
                                                      + attributes["display_region"].upper() + ':post'].url_for())
 
@@ -1543,7 +1564,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
             form_return = ast.literal_eval(data["request-address-select"])
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
-            flash(request, ADDRESS_SELECT_CHECK_MSG)
+            flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"])
@@ -1659,7 +1680,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
         if address_confirmation == 'yes':
@@ -1687,7 +1708,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
         else:
             # catch all just in case, should never get here
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
 
@@ -1876,7 +1897,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
         if mobile_confirmation == 'yes':
@@ -1907,7 +1928,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
         else:
             # catch all just in case, should never get here
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
 
@@ -2126,7 +2147,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
             form_return = ast.literal_eval(data["request-address-select"])
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
-            flash(request, ADDRESS_SELECT_CHECK_MSG)
+            flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"])
@@ -2240,7 +2261,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
         if address_confirmation == 'yes':
@@ -2268,7 +2289,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
         else:
             # catch all just in case, should never get here
             logger.warn("Address confirmation error", client_ip=self._client_ip)
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
 
@@ -2411,7 +2432,8 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
         if mobile_confirmation == 'yes':
 
             try:
-                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"], attributes['region'], 'SMS')
+                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"],
+                                                                  attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'].startswith(attributes['display_region']):
@@ -2456,13 +2478,14 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
         if mobile_confirmation == 'yes':
 
             try:
-                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"], attributes['region'], 'SMS')
+                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"],
+                                                                  attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'].startswith(attributes['display_region']):
@@ -2487,7 +2510,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
         else:
             # catch all just in case, should never get here
             logger.warn("Mobile confirmation error", client_ip=self._client_ip)
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
 
@@ -2513,7 +2536,8 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
         if mobile_confirmation == 'yes':
 
             try:
-                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"], attributes['region'], 'SMS')
+                available_fulfilments = await self.get_fulfilment(attributes["fulfillment_type"],
+                                                                  attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'].startswith(attributes['display_region']):

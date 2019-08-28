@@ -10,7 +10,9 @@ from aioresponses import aioresponses
 
 from app import (
     BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG, WEBCHAT_MISSING_COUNTRY_MSG, WEBCHAT_MISSING_NAME_MSG,
-    POSTCODE_INVALID_MSG)
+    POSTCODE_INVALID_MSG,
+    BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, WEBCHAT_MISSING_QUERY_MSG_CY, WEBCHAT_MISSING_COUNTRY_MSG_CY,
+    WEBCHAT_MISSING_NAME_MSG_CY, POSTCODE_INVALID_MSG_CY)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import IndexEN, IndexCY, IndexNI, WebChat
 
@@ -823,7 +825,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_ni(self):
@@ -865,7 +867,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_ni(self):
@@ -907,7 +909,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_ni(self):
@@ -1229,7 +1231,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 401)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(INVALID_CODE_MSG, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_index_get_uac_404_ni(self):
@@ -1793,7 +1795,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_ni(self):
@@ -1835,7 +1837,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_ni(self):
@@ -1877,7 +1879,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
+        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_ni(self):
@@ -2355,7 +2357,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(self):
@@ -2564,7 +2566,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(self):
