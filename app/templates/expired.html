@@ -1,0 +1,17 @@
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+{% else %}
+    {% extends "base-en.html" %}
+{% endif %}
+
+{% block main %}
+
+<h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message" data-ga-label="info_type = CODE_USED">
+    Your unique access code has expired
+</h1>
+
+<p>You can <a href="">request a new code</a> if you have not submitted a census yet.</p>
+
+{% endblock main %}
