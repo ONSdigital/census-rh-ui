@@ -96,18 +96,20 @@ class View:
             logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
             raise ex
 
-    async def call_questionnaire(self, case, attributes, app):
-        eq_payload = await EqPayloadConstructor(case, attributes, app).build()
+    async def call_questionnaire(self, case, attributes, app, adlocation):
+        eq_payload = await EqPayloadConstructor(case, attributes, app, adlocation).build()
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-        await self.get_surveylaunched(case)
+        await self.post_surveylaunched(case, adlocation)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
-    async def get_surveylaunched(self, case):
-        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
+    async def post_surveylaunched(self, case, adlocation):
+        if not adlocation:
+            adlocation = ''
+        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId'], 'agentId': adlocation}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
@@ -157,7 +159,25 @@ class Index(View):
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
     @aiohttp_jinja2.template('index.html')
-    async def get(self, _):
+    async def get(self, request):
+        """
+        RH home page to enter a UAC. Checks if URL carries query string assisted digital location and stores to session
+        :param request:
+        :return:
+        """
+        query_string = request.query
+        session = await get_session(request)
+        try:
+            adlocation = query_string['adlocation']
+            if adlocation.isdigit():
+                session['adlocation'] = adlocation
+                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+            else:
+                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                session.pop('adlocation', None)
+        except KeyError:
+            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            session.pop('adlocation', None)
         return {}
 
     @aiohttp_jinja2.template('index.html')
@@ -239,7 +259,6 @@ class AddressConfirmation(View):
         try:
             attributes = session["attributes"]
             case = session["case"]
-
         except KeyError:
             raise HTTPFound(self._request.app.router['UACTimeout:get'].url_for())
 
@@ -252,7 +271,7 @@ class AddressConfirmation(View):
 
         if address_confirmation == 'Yes':
             # Correct address flow
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEdit:get'].url_for())
@@ -351,7 +370,7 @@ class AddressEdit(View):
             raise ex
 
         logger.info("Raising call questionnaire", client_ip=self._client_ip)
-        await self.call_questionnaire(case, attributes, request.app)
+        await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/start/timeout')
