@@ -115,7 +115,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+                    self.uac_json, self.attributes_en, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -134,7 +134,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+                    self.uac_json_cy, self.attributes_cy, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -153,7 +153,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+                    self.uac_json_ni, self.attributes_ni, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
