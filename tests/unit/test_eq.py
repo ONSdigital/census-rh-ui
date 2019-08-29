@@ -10,14 +10,14 @@ class TestEq(RHTestCase):
 
     def test_create_eq_constructor(self):
         self.assertIsInstance(EqPayloadConstructor(
-            self.uac_json, self.uac_json['address'], self.app), EqPayloadConstructor)
+            self.uac_json, self.uac_json['address'], self.app, None), EqPayloadConstructor)
 
     def test_create_eq_constructor_missing_case_id(self):
         uac_json = self.uac_json.copy()
         del uac_json['caseId']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app )
+            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app, None)
         self.assertIn('No case id in supplied case JSON', ex.exception.message)
 
     def test_create_eq_constructor_missing_ce_id(self):
@@ -25,7 +25,7 @@ class TestEq(RHTestCase):
         del uac_json["collectionExerciseId"]
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app )
+            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app, None)
         self.assertIn(f'No collection id in supplied case JSON', ex.exception.message)
 
     def test_create_eq_constructor_missing_questionnaire_id(self):
@@ -33,7 +33,7 @@ class TestEq(RHTestCase):
         del uac_json["questionnaireId"]
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app)
+            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app, None)
             self.assertIn(f'No questionnaireId in supplied case JSON', ex.exception.message)
 
     def test_create_eq_constructor_missing_case_type(self):
@@ -41,7 +41,7 @@ class TestEq(RHTestCase):
         del uac_json["caseType"]
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app)
+            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app, None)
             self.assertIn(f'No case type in supplied case JSON', ex.exception.message)
 
     def test_create_eq_constructor_missing_uprn(self):
@@ -49,7 +49,7 @@ class TestEq(RHTestCase):
         del uac_json["address"]["uprn"]
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app)
+            EqPayloadConstructor(uac_json, self.uac_json['address'], self.app, None)
             self.assertIn(f'Could not retrieve address uprn from case JSON', ex.exception.message)
 
     @unittest_run_loop
@@ -62,7 +62,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json, self.attributes_en, self.app).build()
+                    self.uac_json, self.attributes_en, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -79,7 +79,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json_cy, self.attributes_cy, self.app).build()
+                    self.uac_json_cy, self.attributes_cy, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
@@ -96,12 +96,69 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('app.eq', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json_ni, self.attributes_ni, self.app).build()
+                    self.uac_json_ni, self.attributes_ni, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
 
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, self.eq_payload_ni_ul)
+
+    @unittest_run_loop
+    async def test_build_assisted_digital_en(self):
+        eq_payload = self.eq_payload_en.copy()
+        eq_payload['channel'] = 'ad'
+        eq_payload['user_id'] = '1000007'
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload_en['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, eq_payload)
+
+    @unittest_run_loop
+    async def test_build_assisted_digital_cy(self):
+        eq_payload = self.eq_payload_cy.copy()
+        eq_payload['channel'] = 'ad'
+        eq_payload['user_id'] = '1000007'
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload_cy['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, eq_payload)
+
+    @unittest_run_loop
+    async def test_build_assisted_digital_ni(self):
+        eq_payload = self.eq_payload_ni_ul.copy()
+        eq_payload['channel'] = 'ad'
+        eq_payload['user_id'] = '1000007'
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload_ni_ul['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, eq_payload)
 
     @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
@@ -110,7 +167,7 @@ class TestEq(RHTestCase):
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
             await eq.EqPayloadConstructor(
-                self.uac_json, None, self.app).build()
+                self.uac_json, None, self.app, None).build()
         self.assertIn('Attributes is empty', ex.exception.message)
 
     def test_build_display_address_en(self):

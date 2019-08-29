@@ -313,7 +313,7 @@ class RHTestCase(AioHTTPTestCase):
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
@@ -336,7 +336,7 @@ class RHTestCase(AioHTTPTestCase):
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
@@ -359,7 +359,7 @@ class RHTestCase(AioHTTPTestCase):
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
@@ -382,7 +382,7 @@ class RHTestCase(AioHTTPTestCase):
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
@@ -405,12 +405,18 @@ class RHTestCase(AioHTTPTestCase):
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
             "form_type": self.form_type,
             "survey": self.survey
+        }
+
+        self.survey_launched_json = {
+            "questionnaireId": self.questionnaire_id,
+            "caseId": self.case_id,
+            "agentId": ''
         }
 
         self.rhsvc_url = (

@@ -14,7 +14,7 @@ Request = namedtuple("Request", ["method", "path", "auth", "func"])
 
 class EqPayloadConstructor(object):
 
-    def __init__(self, case: dict, attributes: dict, app: Application):
+    def __init__(self, case: dict, attributes: dict, app: Application, adlocation: str):
         """
         Creates the payload needed to communicate with EQ, built from the RH service
         """
@@ -28,6 +28,13 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad("Attributes is empty")
 
         self._sample_attributes = attributes
+
+        if adlocation:
+            self._channel = 'ad'
+            self._user_id = adlocation
+        else:
+            self._channel = 'rh'
+            self._user_id = ''
 
         try:
             self._case_id = case["caseId"]
@@ -79,14 +86,14 @@ class EqPayloadConstructor(object):
             "case_type": self._case_type,
             "collection_exercise_sid": self._collex_id,  # required by eQ
             "region_code": self.convert_region_code(self._region),
-            "ru_ref": self._uprn,  # new payload reuires uprn to be ru_ref
+            "ru_ref": self._uprn,  # new payload requires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
             "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
             "display_address": self.build_display_address(self._sample_attributes),
             "response_id": self._response_id,
             "account_service_url": self._account_service_url,  # required for save/continue
-            "channel": "rh",  # from claims sent from RH channel will always by rh,
-            "user_id": "1234567890",  # for 19.9 will be hardcoded. This will be set to empty when eq reasdy to accept as empty
+            "channel": self._channel,
+            "user_id": self._user_id,
             "questionnaire_id": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original

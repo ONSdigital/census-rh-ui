@@ -92,18 +92,20 @@ class View:
             logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
             raise ex
 
-    async def call_questionnaire(self, case, attributes, app):
-        eq_payload = await EqPayloadConstructor(case, attributes, app).build()
+    async def call_questionnaire(self, case, attributes, app, adlocation):
+        eq_payload = await EqPayloadConstructor(case, attributes, app, adlocation).build()
 
         token = encrypt(eq_payload, key_store=app['key_store'], key_purpose="authentication")
 
-        await self.get_surveylaunched(case)
+        await self.post_surveylaunched(case, adlocation)
 
         logger.debug('Redirecting to eQ', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
-    async def get_surveylaunched(self, case):
-        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId']}
+    async def post_surveylaunched(self, case, adlocation):
+        if not adlocation:
+            adlocation = ''
+        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId'], 'agentId': adlocation}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
                     json, self._handle_response, None))
@@ -187,7 +189,25 @@ class Start(View):
 class IndexEN(Start):
 
     @aiohttp_jinja2.template('index.html')
-    async def get(self, _):
+    async def get(self, request):
+        """
+        RH home page to enter a UAC. Checks if URL carries query string assisted digital location and stores to session
+        :param request:
+        :return:
+        """
+        query_string = request.query
+        session = await get_session(request)
+        try:
+            adlocation = query_string['adlocation']
+            if adlocation.isdigit():
+                session['adlocation'] = adlocation
+                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+            else:
+                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                session.pop('adlocation', None)
+        except KeyError:
+            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            session.pop('adlocation', None)
         return {'display_region': 'en'}
 
     @aiohttp_jinja2.template('index.html')
@@ -241,7 +261,25 @@ class IndexEN(Start):
 class IndexCY(Start):
 
     @aiohttp_jinja2.template('index.html')
-    async def get(self, _):
+    async def get(self, request):
+        """
+        RH home page to enter a UAC. Checks if URL carries query string assisted digital location and stores to session
+        :param request:
+        :return:
+        """
+        query_string = request.query
+        session = await get_session(request)
+        try:
+            adlocation = query_string['adlocation']
+            if adlocation.isdigit():
+                session['adlocation'] = adlocation
+                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+            else:
+                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                session.pop('adlocation', None)
+        except KeyError:
+            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            session.pop('adlocation', None)
         return {'display_region': 'cy', 'locale': 'cy'}
 
     async def post(self, request):
@@ -296,7 +334,25 @@ class IndexCY(Start):
 class IndexNI(Start):
 
     @aiohttp_jinja2.template('index.html')
-    async def get(self, _):
+    async def get(self, request):
+        """
+        RH home page to enter a UAC. Checks if URL carries query string assisted digital location and stores to session
+        :param request:
+        :return:
+        """
+        query_string = request.query
+        session = await get_session(request)
+        try:
+            adlocation = query_string['adlocation']
+            if adlocation.isdigit():
+                session['adlocation'] = adlocation
+                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+            else:
+                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                session.pop('adlocation', None)
+        except KeyError:
+            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            session.pop('adlocation', None)
         return {'display_region': 'ni'}
 
     async def post(self, request):
@@ -395,7 +451,7 @@ class AddressConfirmationEN(Start):
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsEN:get'].url_for())
             else:
                 attributes['language'] = 'en'
-                await self.call_questionnaire(case, attributes, request.app)
+                await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditEN:get'].url_for())
@@ -457,7 +513,7 @@ class AddressConfirmationCY(Start):
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
             else:
                 attributes['language'] = 'cy'
-                await self.call_questionnaire(case, attributes, request.app)
+                await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditCY:get'].url_for())
@@ -519,7 +575,7 @@ class AddressConfirmationNI(Start):
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
             else:
                 attributes['language'] = 'en'
-                await self.call_questionnaire(case, attributes, request.app)
+                await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif address_confirmation == 'No':
             raise HTTPFound(self._request.app.router['AddressEditNI:get'].url_for())
@@ -586,7 +642,7 @@ class AddressEditEN(Start):
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/dechrau/address-edit')
@@ -644,7 +700,7 @@ class AddressEditCY(Start):
             raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
         else:
             attributes['language'] = 'cy'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/ni/start/address-edit')
@@ -702,7 +758,7 @@ class AddressEditNI(Start):
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/start/language-options')
@@ -749,7 +805,7 @@ class StartLanguageOptionsEN(Start):
 
         if language_option == 'Yes':
             attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif language_option == 'No':
             raise HTTPFound(self._request.app.router['StartSelectLanguageEN:get'].url_for())
@@ -805,7 +861,7 @@ class StartLanguageOptionsCY(Start):
 
         if language_option == 'Yes':
             attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif language_option == 'No':
             raise HTTPFound(self._request.app.router['StartSelectLanguageCY:get'].url_for())
@@ -861,7 +917,7 @@ class StartLanguageOptionsNI(Start):
 
         if language_option == 'Yes':
             attributes['language'] = 'en'
-            await self.call_questionnaire(case, attributes, request.app)
+            await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
         elif language_option == 'No':
             raise HTTPFound(self._request.app.router['StartSelectLanguageNI:get'].url_for())
@@ -930,7 +986,7 @@ class StartSelectLanguageEN(Start):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
-        await self.call_questionnaire(case, attributes, request.app)
+        await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/dechrau/select-language')
@@ -990,7 +1046,7 @@ class StartSelectLanguageCY(Start):
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
-        await self.call_questionnaire(case, attributes, request.app)
+        await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/ni/start/select-language')
@@ -1050,7 +1106,7 @@ class StartSelectLanguageNI(Start):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
-        await self.call_questionnaire(case, attributes, request.app)
+        await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
 @routes.view('/start/timeout')
