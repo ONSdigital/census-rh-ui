@@ -260,7 +260,6 @@ class RHTestCase(AioHTTPTestCase):
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = "1"
-        self.user_id = "1234567890"
         self.uac = self.uac_json['uac']
         self.uprn = self.uac_json['address']['uprn']
         self.response_id = self.uac_json['questionnaireId']
@@ -342,6 +341,11 @@ class RHTestCase(AioHTTPTestCase):
             "period_id": self.period_id,
             "form_type": self.form_type,
             "survey": self.survey
+        }
+        self.survey_launched_json = {
+            "questionnaireId": self.questionnaire_id,
+            "caseId": self.case_id,
+            "agentId": ''
         }
 
         self.eq_payload_ni_ga = {

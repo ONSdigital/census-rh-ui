@@ -434,7 +434,6 @@ class AddressConfirmationEN(Start):
         try:
             attributes = session["attributes"]
             case = session["case"]
-
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())

@@ -161,6 +161,25 @@ class TestEq(RHTestCase):
         self.assertEqual(payload, eq_payload)
 
     @unittest_run_loop
+    async def test_build_assisted_digital(self):
+        eq_payload = self.eq_payload.copy()
+        eq_payload['channel'] = 'ad'
+        eq_payload['user_id'] = '1000007'
+        with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
+            # NB: has to be mocked after setup but before import
+            mocked_time.return_value = self.eq_payload['iat']
+            mocked_uuid4.return_value = self.jti
+
+            with self.assertLogs('app.eq', 'DEBUG') as cm:
+                payload = await EqPayloadConstructor(
+                    self.uac_json, self.uac_json['address'], self.app, eq_payload['user_id']).build()
+            self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
+
+        mocked_uuid4.assert_called()
+        mocked_time.assert_called()
+        self.assertEqual(payload, eq_payload)
+
+    @unittest_run_loop
     async def test_build_raises_InvalidEqPayLoad_missing_attributes(self):
 
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
