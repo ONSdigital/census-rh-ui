@@ -22,12 +22,28 @@ class EqPayloadConstructor(object):
         self._app = app
 
         self._tx_id = str(uuid4())
-        self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}'
 
         if not attributes:
             raise InvalidEqPayLoad("Attributes is empty")
 
         self._sample_attributes = attributes
+
+        # if not self._sample_attributes['display_region']:
+        #
+        #     self._account_service_url = \
+        #         f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitEN:get"].url_for}'
+        #
+        # else:
+        #
+        #     if self._sample_attributes['display_region'] == 'ni':
+        #         self._account_service_url = \
+        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitNI:get"].url_for}'
+        #     elif self._sample_attributes['display_region'] == 'cy':
+        #         self._account_service_url = \
+        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitCY:get"].url_for}'
+        #     else:
+        #         self._account_service_url = \
+        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitEN:get"].url_for}'
 
         if adlocation:
             self._channel = 'ad'
