@@ -35,6 +35,24 @@
     }
 } %}
 
+{% set form_options = [
+                {
+                    "id": "yes",
+                    "label": {
+                        "text": _("Yes, this address is correct")
+                    },
+                    "value": "yes"
+                },
+                {
+                    "id": "no",
+                    "label": {
+                        "text": _("No, I need to change it")
+                    },
+                    "value": "no"
+                }
+            ]
+%}
+
 {% set question_description = '<p class="u-fs-r--b"><em class="highlight">' + address + '</em></p>' %}
 
 {% block main %}
@@ -44,31 +62,16 @@
     {% endif %}
 
     {% call onsQuestion({
-        "title": "Is this address correct?",
+        "title": _("Is this address correct?"),
         "description": question_description
     }) %}
 {% if 'address' in field_messages_dict %}
     {{
         onsRadios({
             "name": "request-address-confirmation",
-            "radios": [
-                {
-                    "id": "yes",
-                    "label": {
-                        "text": "Yes, this address is correct"
-                    },
-                    "value": "yes"
-                },
-                {
-                    "id": "no",
-                    "label": {
-                        "text": "No, I need to change it"
-                    },
-                    "value": "no"
-                }
-            ],
+            "radios": form_options,
             "error": {
-                "text": "Check and confirm the address"
+                "text": _("Check and confirm the address")
             }
         })
     }}
@@ -76,22 +79,7 @@
     {{
         onsRadios({
             "name": "request-address-confirmation",
-            "radios": [
-                {
-                    "id": "yes",
-                    "label": {
-                        "text": "Yes, this address is correct"
-                    },
-                    "value": "yes"
-                },
-                {
-                    "id": "no",
-                    "label": {
-                        "text": "No, I need to change it"
-                    },
-                    "value": "no"
-                }
-            ]
+            "radios": form_options
         })
     }}
 {% endif %}
@@ -99,7 +87,7 @@
 
     {{
         onsButton({
-            "text": "Continue",
+            "text": _("Continue"),
             "classes": "u-mt-l"
         })
     }}

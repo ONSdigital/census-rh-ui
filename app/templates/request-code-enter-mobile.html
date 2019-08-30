@@ -42,8 +42,8 @@
     {% endif %}
 
     {% call onsQuestion({
-        "title": "What is your mobile phone number?",
-        "description": "<p>We will send an access code by text to this number.</p>"
+        "title": _("What is your mobile phone number?"),
+        "description": _("<p>We will send an access code by text to this number.</p>")
     }) %}
 
         {% if 'mobile' in field_messages_dict %}
@@ -55,11 +55,11 @@
                     "autocomplete": "tel",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK mobile phone number"
+                        "text": _("UK mobile phone number")
                     },
                     "name": "request-mobile-number",
                     "error": {
-                        "text": "Enter a valid UK mobile phone number"
+                        "text": _("Enter a valid UK mobile phone number")
                     }
                 })
             }}
@@ -72,7 +72,7 @@
                     "autocomplete": "tel",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK mobile phone number"
+                        "text": _("UK mobile phone number")
                     },
                     "name": "request-mobile-number"
                 })
@@ -83,7 +83,7 @@
     
     {{
         onsButton({
-            "text": "Continue",
+            "text": _("Continue"),
             "classes": "u-mt-l"
         })
     }}

@@ -1392,7 +1392,7 @@ class RequestCodeCommon(View):
 
         return attributes
 
-    async def get_postcode_return(self, postcode, fulfillment_type, display_region):
+    async def get_postcode_return(self, postcode, fulfillment_type, display_region, locale):
         postcode_return = await self.get_ai_postcode(postcode)
 
         address_options = []
@@ -1406,6 +1406,7 @@ class RequestCodeCommon(View):
         address_content = {'postcode': postcode,
                            'addresses': address_options,
                            'display_region': display_region,
+                           'locale': locale,
                            'fulfillment_type': fulfillment_type,
                            'total_matches': postcode_return['response']['total']}
 
@@ -1572,7 +1573,8 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1587,7 +1589,8 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -1607,7 +1610,8 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1622,7 +1626,8 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -1642,7 +1647,8 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1657,7 +1663,8 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2155,7 +2162,8 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2170,7 +2178,8 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2190,7 +2199,8 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2205,7 +2215,8 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2225,7 +2236,8 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2240,7 +2252,8 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)

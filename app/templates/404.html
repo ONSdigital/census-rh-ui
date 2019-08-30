@@ -1,18 +1,22 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
+	{% set contact_us_link = '#' %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
+	{% set contact_us_link = '#' %}
 {% else %}
     {% extends "base-en.html" %}
+	{% set contact_us_link = '#' %}
 {% endif %}
 
 {% block main %}
 
-	<h1>Page not found</h1>
+	<h1>{{ _("Page not found") }}</h1>
 
-	<p>If you entered a web address, check it is correct.</p>
-	<p>If you pasted the web address, check that you copied the entire address.</p>
-	<p>If you still encounter problems please <a href="#">contact us</a>. We apologise for any inconvenience this may have caused.</p>
-
+	<p>{{ _("If you entered a web address, check it is correct.") }}</p>
+	<p>{{ _("If you pasted the web address, check that you copied the entire address.") }}</p>
+	{% autoescape false %}
+		<p>{{ _("If you still encounter problems please %(open)scontact us%(close)s. We apologise for any inconvenience this may have caused.", open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+	{% endautoescape %}
 
 {% endblock %}
