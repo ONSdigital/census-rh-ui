@@ -88,7 +88,7 @@ class EqPayloadConstructor(object):
             "region_code": self.convert_region_code(self._region),
             "ru_ref": self._uprn,  # new payload requires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
-            "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
+            "language_code": self._language_code,
             "display_address": self.build_display_address(self._sample_attributes),
             "response_id": self._response_id,
             "account_service_url": self._account_service_url,  # required for save/continue

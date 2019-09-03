@@ -1453,7 +1453,7 @@ class RequestCodeCommon(View):
                                                      + attributes["display_region"].upper() + ':get'].url_for())
 
         else:
-            logger.warn("Attempt to use an invalid mobile number", client_ip=self._client_ip)
+            logger.warn("Attempt to use an invalid mobile phone number", client_ip=self._client_ip)
             if attributes['display_region'] == 'cy':
                 flash(self._request, MOBILE_ENTER_MSG_CY)
             else:
