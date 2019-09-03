@@ -1,8 +1,24 @@
-{% extends "base-en.html" %}
-{% if fulfillment_type == 'HI' %}
-    {% set request_link = url('RequestCodeEnterAddressHI:get') %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHNI:post') %}
+    {% endif %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHCY:post') %}
+    {% endif %}
 {% else %}
-    {% set request_link = url('RequestCodeEnterAddressHH:get') %}
+    {% extends "base-en.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHEN:post') %}
+    {% endif %}
 {% endif %}
 
 {% block main %}
@@ -11,6 +27,6 @@
 
     <p>{{ address }}</p>
 
-    <p>Based on the address you have provided you are not required to take part. If this is incorrect you can <a href="{{ request_link }}">enter the address</a> again or find out more <a href="#">about the census rehearsal.</a></p>
+    <p>Based on the address you have provided you are not required to take part. If this is incorrect you can <a href="{{ request_code_link }}">enter the address</a> again or find out more <a href="#">about the census rehearsal.</a></p>
 
 {% endblock %}

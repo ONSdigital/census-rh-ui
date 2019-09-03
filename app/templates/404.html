@@ -1,4 +1,10 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+{% else %}
+    {% extends "base-en.html" %}
+{% endif %}
 
 {% block main %}
 
