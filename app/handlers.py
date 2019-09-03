@@ -462,7 +462,7 @@ class AddressConfirmationEN(Start):
             return attributes
 
 
-@routes.view('/dechrau/address-confirmation')
+@routes.view('/dechrau/cadarnhad-o-gyfeiriad')
 class AddressConfirmationCY(Start):
 
     @aiohttp_jinja2.template('address-confirmation.html')
@@ -644,7 +644,7 @@ class AddressEditEN(Start):
             await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
-@routes.view('/dechrau/address-edit')
+@routes.view('/dechrau/golygu-cyfeiriad')
 class AddressEditCY(Start):
 
     @aiohttp_jinja2.template('address-edit.html')
@@ -1197,7 +1197,7 @@ class WebChatWindowEN(WebChat):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/webchat/chat')
+@routes.view('/gwe-sgwrs/chat')
 class WebChatWindowCY(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
@@ -1264,7 +1264,7 @@ class WebChatEN(WebChat):
             return {'webchat_status': 'closed', 'display_region': 'en'}
 
 
-@routes.view('/cy/webchat')
+@routes.view('/gwe-sgwrs')
 class WebChatCY(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
@@ -1509,7 +1509,7 @@ class RequestCodeHouseholdEN(RequestCodeCommon):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/request-access-code')
+@routes.view('/gofyn-am-god-mynediad')
 class RequestCodeHouseholdCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, _):
@@ -1537,7 +1537,7 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
         await RequestCodeCommon.get_postcode(self, request, data, 'HH', 'EN', 'en')
 
 
-@routes.view('/cy/request-access-code/enter-address')
+@routes.view('/gofyn-am-god-mynediad/nodi-cyfeiriad')
 class RequestCodeEnterAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -1602,7 +1602,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHHEN:get'].url_for())
 
 
-@routes.view('/cy/request-access-code/select-address')
+@routes.view('/gofyn-am-god-mynediad/dewis-cyfeiriad')
 class RequestCodeSelectAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1725,7 +1725,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-access-code/confirm-address')
+@routes.view('/gofyn-am-god-mynediad/cadarnhau-cyfeiriad')
 class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
@@ -1830,7 +1830,7 @@ class RequestCodeNotRequiredHHEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-access-code/not-required')
+@routes.view('/gofyn-am-god-mynediad/dim-angen')
 class RequestCodeNotRequiredHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
@@ -1861,7 +1861,7 @@ class RequestCodeEnterMobileHHEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-access-code/enter-mobile')
+@routes.view('/gofyn-am-god-mynediad/nodi-rhif-ffon-symudol')
 class RequestCodeEnterMobileHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -1942,7 +1942,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-access-code/confirm-mobile')
+@routes.view('/gofyn-am-god-mynediad/cadarnhau-rhif-ffon-symudol')
 class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
@@ -2054,7 +2054,7 @@ class RequestCodeCodeSentHHEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-access-code/code-sent')
+@routes.view('/gofyn-am-god-mynediad/wedi-anfon-cod')
 class RequestCodeCodeSentHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
@@ -2077,14 +2077,14 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
         return {'fulfillment_type': 'HH', 'display_region': 'en'}
 
 
-@routes.view('/request-access-code/timeout')
+@routes.view('/gofyn-am-god-mynediad/timeout')
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
         return {'fulfillment_type': 'HH', 'display_region': 'cy', 'locale': 'cy'}
 
 
-@routes.view('/request-access-code/timeout')
+@routes.view('/ni/request-access-code/timeout')
 class RequestCodeTimeoutHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
@@ -2126,7 +2126,7 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'EN', 'en')
 
 
-@routes.view('/cy/request-individual-code/enter-address')
+@routes.view('/cy/request-individual-code/nodi-cyfeiriad')
 class RequestCodeEnterAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2191,7 +2191,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHIEN:get'].url_for())
 
 
-@routes.view('/cy/request-individual-code/select-address')
+@routes.view('/cy/request-individual-code/dewis-cyfeiriad')
 class RequestCodeSelectAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2313,7 +2313,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/confirm-address')
+@routes.view('/cy/request-individual-code/cadarnhau-cyfeiriad')
 class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
@@ -2417,7 +2417,7 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/not-required')
+@routes.view('/cy/request-individual-code/dim-angen')
 class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
@@ -2448,7 +2448,7 @@ class RequestCodeEnterMobileHIEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-individual-code/enter-mobile')
+@routes.view('/cy/request-individual-code/nodi-rhif-ffon-symudol')
 class RequestCodeEnterMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -2530,7 +2530,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/confirm-mobile')
+@routes.view('/cy/request-individual-code/cadarnhau-rhif-ffon-symudol')
 class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
@@ -2642,7 +2642,7 @@ class RequestCodeCodeSentHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/code-sent')
+@routes.view('/cy/request-individual-code/wedi-anfon-cod')
 class RequestCodeCodeSentHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):

@@ -22,23 +22,23 @@ msgstr ""
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42
 msgid "Yes, this address is correct"
-msgstr "WELSH Yes, this address is correct"
+msgstr "Ydy, mae'r cyfeiriad hwn yn gywir"
 
 #: app/templates/address-confirmation.html:37
 #: app/templates/request-code-confirm-address.html:49
 #: app/templates/request-code-confirm-mobile.html:49
 msgid "No, I need to change it"
-msgstr "WELSH No, I need to change it"
+msgstr "Nac ydy, mae angen i mi ei newid"
 
 #: app/templates/address-confirmation.html:50
 #: app/templates/request-code-confirm-address.html:65
 msgid "Is this address correct?"
-msgstr "WELSH Is this address correct?"
+msgstr "Ydy'r cyfeiriad hwn yn gywir?"
 
 #: app/templates/address-confirmation.html:69
 #: app/templates/request-code-confirm-address.html:74
 msgid "Check and confirm the address"
-msgstr "WELSH Check and confirm the address"
+msgstr "Edrychwch eto ar y cyfeiriad a'i gadarnhau"
 
 #: app/templates/address-confirmation.html:86
 #: app/templates/request-code-confirm-address.html:90
@@ -47,35 +47,35 @@ msgstr "WELSH Check and confirm the address"
 #: app/templates/request-code-enter-mobile.html:86
 #: app/templates/request-code-select-address.html:86
 msgid "Continue"
-msgstr "WELSH Continue"
+msgstr "Parhau"
 
 #: app/templates/address-edit.html:26
 msgid "Change your address"
-msgstr "WELSH Change your address"
+msgstr "Newid eich cyfeiriad"
 
 #: app/templates/address-edit.html:31
 msgid "Building and street"
-msgstr "WELSH Building and street"
+msgstr "Adeilad a stryd"
 
 #: app/templates/address-edit.html:35
 msgid "Line 2"
-msgstr "WELSH Line 2"
+msgstr "Llinell 2"
 
 #: app/templates/address-edit.html:39
 msgid "Line 3"
-msgstr "WELSH LINE 3"
+msgstr "Llinell 3"
 
 #: app/templates/address-edit.html:43
 msgid "Town or City"
-msgstr "WELSH Town or City"
+msgstr "Tref neu Ddinas"
 
 #: app/templates/address-edit.html:47
 msgid "Postcode"
-msgstr "WELSH Postcode"
+msgstr "Cod post"
 
 #: app/templates/address-edit.html:55
 msgid "Save and continue"
-msgstr "WELSH Save and continue"
+msgstr "Cadw a pharhaue"
 
 #: app/templates/closed.html:12
 msgid "This survey has closed"
@@ -99,35 +99,34 @@ msgstr ""
 
 #: app/templates/index.html:39
 msgid "Enter the 16 character code printed on the letter"
-msgstr "WELSH Enter the 16 character code printed on the letter"
+msgstr "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
 
 #: app/templates/index.html:40
 msgid "Keep this code safe and only share it with others in your household"
-msgstr "WELSH Keep this code safe and only share it with others in your household"
+msgstr "Cadwch y cod hwn yn ddiogel a pheidiwch â'i rannu ag unrhyw un heblaw aelodau eraill eich cartref"
 
 #: app/templates/index.html:42
 msgid ""
 "Your personal information is protected by law and will be kept "
 "confidential."
 msgstr ""
-"WELSH Your personal information is protected by law and will be kept "
-"confidential."
+"Mae eich gwybodaeth bersonol yn cael ei diogelu gan y gyfraith a chaiff ei chadw'n gyfrinachol."
 
 #: app/templates/index.html:48
 msgid "Start survey"
-msgstr "WELSH Start survey"
+msgstr "Dechrau'r arolwg"
 
 #: app/templates/index.html:66
 msgid "Enter a valid code"
-msgstr "WELSH Enter a valid code"
+msgstr "Rhowch god dilys"
 
 #: app/templates/index.html:78
 msgid "Access survey"
-msgstr "WELSH Access survey"
+msgstr "Mynediad at yr arolwg"
 
 #: app/templates/index.html:83
 msgid "Don't have a code?"
-msgstr "WELSH Don't have a code?"
+msgstr "Dim cod gennych chi?"
 
 #: app/templates/index.html:85
 #, python-format
@@ -135,38 +134,38 @@ msgid ""
 "You can %(open)srequest a new code%(close)s to start a new survey if you "
 "have lost, forgotten or not received an access code."
 msgstr ""
-"WELSH You can %(open)srequest a new code%(close)s to start a new survey "
-"if you have lost, forgotten or not received an access code."
+"Gallwch chi %(open)sofyn am god newydd%(close)s i ddechrau arolwg newydd "
+"os ydych chi wedi colli, anghofio neu heb gael cod mynediad."
 
 #: app/templates/index.html:88
 msgid "Need help?"
-msgstr "WELSH Need help?"
+msgstr "Angen help?"
 
 #: app/templates/index.html:90 app/templates/webchat-form.html:37
 #: app/templates/webchat-form.html:144 app/templates/webchat-window.html:11
 msgid "Web chat"
-msgstr "WELSH Web chat"
+msgstr "Gwe-sgwrs"
 
 #: app/templates/request-code-code-sent.html:30
 #, python-format
 msgid "We have sent an access code to %(mobile_no)s"
-msgstr "WELSH We have sent an access code to %(mobile_no)s"
+msgstr "Rydym ni wedi anfon cod mynediad i %(mobile_no)s"
 
 #: app/templates/request-code-code-sent.html:32
 msgid ""
 "A text with the code should arrive shortly. Once you get the code, you "
 "can start the survey."
 msgstr ""
-"WELSH A text with the code should arrive shortly. Once you get the code, "
-"you can start the survey."
+"Dylai neges destun yn cynnwys y cod gyrraedd cyn bo hir. Ar ôl "
+"i chi gael y cod, gallwch chi ddechrau'r arolwg."
 
 #: app/templates/request-code-code-sent.html:37
 msgid "Start your survey"
-msgstr "WELSH Start your survey"
+msgstr "Dechrau eich arolwg"
 
 #: app/templates/request-code-code-sent.html:44
 msgid "Didn't receive a text?"
-msgstr "WELSH Didn't receive a text?"
+msgstr "Heb gael neges destun?"
 
 #: app/templates/request-code-code-sent.html:47
 #, python-format
@@ -174,12 +173,12 @@ msgid ""
 "It can take a few minutes for the text to arrive. If it doesn't arrive, "
 "you can %(open)srequest a new code%(close)s."
 msgstr ""
-"WELSH It can take a few minutes for the text to arrive. If it doesn't "
-"arrive, you can %(open)srequest a new code%(close)s."
+"Gall gymryd ychydig funudau i'r neges destun gyrraedd. Os na fydd yn "
+"cyrraedd, gallwch chi %(open)sofyn am god newydd%(close)s."
 
 #: app/templates/request-code-confirm-mobile.html:42
 msgid "Yes, send the text now"
-msgstr "WELSH Yes, send the text now"
+msgstr "Ydy, anfonwch y neges destun nawr"
 
 #: app/templates/request-code-confirm-mobile.html:65
 msgid "Is this mobile phone number correct?"
@@ -191,28 +190,28 @@ msgstr "WELSH Check and confirm your mobile phone number"
 
 #: app/templates/request-code-enter-address.html:45
 msgid "What is your postcode?"
-msgstr "WELSH What is your postcode?"
+msgstr "Beth yw eich cod post?"
 
 #: app/templates/request-code-enter-address.html:46
 msgid ""
 "<p>To text you a new code we need to know the address for which you are "
 "answering.</p>"
 msgstr ""
-"<p>WELSH To text you a new code we need to know the address for which you"
-" are answering.</p>"
+"<p>Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar "
+"gyfer pa gyfeiriad rydych chi'n ateb.</p>"
 
 #: app/templates/request-code-enter-address.html:57
 #: app/templates/request-code-enter-address.html:73
 msgid "UK postcode"
-msgstr "WELSH UK postcode"
+msgstr "Cod post yn y Deyrnas Unedig"
 
 #: app/templates/request-code-enter-address.html:61
 msgid "Enter a valid UK postcode"
-msgstr "WELSH Enter a valid UK postcode"
+msgstr "Nodwch god post dilys yn y Deyrnas Unedig"
 
 #: app/templates/request-code-enter-mobile.html:45
 msgid "What is your mobile phone number?"
-msgstr "WELSH What is your mobile phone number?"
+msgstr "Beth yw eich rhif ffôn symudol?"
 
 #: app/templates/request-code-enter-mobile.html:46
 msgid "<p>We will send an access code by text to this number.</p>"
@@ -350,24 +349,24 @@ msgid ""
 "Contact Centre is closed. Please contact during the working hours or "
 "%(open)sGet Help Online%(close)s."
 msgstr ""
-"WELSH Contact Centre is closed. Please contact during the working hours "
-"or %(open)sGet Help Online%(close)s."
+"Mae'r Ganolfan Gyswllt ar gau. Cysylltwch â ni yn ystod yr oriau gwaith neu gallwch chi "
+"""%(open)sGael Help Ar Lein%(close)s."
 
 #: app/templates/webchat-form.html:41
 msgid "Opening times"
-msgstr "WELSH Opening times"
+msgstr "Amseroedd agor"
 
 #: app/templates/webchat-form.html:43
 msgid "Monday to Friday: 8am to 7pm"
-msgstr "WELSH Monday to Friday: 8am to 7pm"
+msgstr "O ddydd Llun i ddydd Gwener: 8am tan 7pm"
 
 #: app/templates/webchat-form.html:44
 msgid "Saturday: 8am to 1pm"
-msgstr "WELSH Saturday: 8am to 1pm"
+msgstr "Dydd Sadwrn: 8am tan 1pm"
 
 #: app/templates/webchat-form.html:45
 msgid "Sunday / Bank Holidays: Closed"
-msgstr "WELSH Sunday / Bank Holidays: Closed"
+msgstr "Dydd Sul / Gwyliau Banc: Ar Gau"
 
 #: app/templates/webchat-form.html:46
 msgid "Census weekend: 8am to 4pm"
