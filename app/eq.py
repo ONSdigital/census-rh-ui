@@ -14,7 +14,7 @@ Request = namedtuple("Request", ["method", "path", "auth", "func"])
 
 class EqPayloadConstructor(object):
 
-    def __init__(self, case: dict, attributes: dict, app: Application):
+    def __init__(self, case: dict, attributes: dict, app: Application, adlocation: str):
         """
         Creates the payload needed to communicate with EQ, built from the RH service
         """
@@ -28,6 +28,13 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad("Attributes is empty")
 
         self._sample_attributes = attributes
+
+        if adlocation:
+            self._channel = 'ad'
+            self._user_id = adlocation
+        else:
+            self._channel = 'rh'
+            self._user_id = ''
 
         try:
             self._case_id = case["caseId"]
@@ -59,12 +66,17 @@ class EqPayloadConstructor(object):
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
 
+        try:
+            self._region = case["region"]
+        except KeyError:
+            raise InvalidEqPayLoad(f"Could not retrieve region from case JSON ")
+
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
         logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
 
-        self._language_code = 'en'  # hardcoded for 19.9 until we know how to derive
+        self._language_code = self._sample_attributes['language']
 
         self._payload = {
             "jti": str(uuid4()),  # required by eQ for creating a new claim
@@ -73,15 +85,15 @@ class EqPayloadConstructor(object):
             "exp": int(time.time() + (5 * 60)),  # required by eQ for creating a new claim
             "case_type": self._case_type,
             "collection_exercise_sid": self._collex_id,  # required by eQ
-            "region_code": "GB-ENG",  # hardcoded for sprint 19.9
-            "ru_ref": self._uprn,  # new payload reuires uprn to be ru_ref
+            "region_code": self.convert_region_code(self._region),
+            "ru_ref": self._uprn,  # new payload requires uprn to be ru_ref
             "case_id": self._case_id,  # not required by eQ but useful for downstream
-            "language_code": self._language_code,  # set as 'en' for 19.9 until we know how to set
+            "language_code": self._language_code,
             "display_address": self.build_display_address(self._sample_attributes),
             "response_id": self._response_id,
             "account_service_url": self._account_service_url,  # required for save/continue
-            "channel": "rh",  # from claims sent from RH channel will always by rh,
-            "user_id": "1234567890",  # for 19.9 will be hardcoded. This will be set to empty when eq reasdy to accept as empty
+            "channel": self._channel,
+            "user_id": self._user_id,
             "questionnaire_id": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
@@ -110,3 +122,14 @@ class EqPayloadConstructor(object):
         if not display_address:
             raise InvalidEqPayLoad("Displayable address not in sample attributes")
         return display_address
+
+    @staticmethod
+    def convert_region_code(case_region):
+        region_value = ''
+        if case_region == 'N':
+            region_value = 'GB-NIR'
+        elif case_region == 'W':
+            region_value = 'GB-WLS'
+        else:
+            region_value = 'GB-ENG'
+        return region_value

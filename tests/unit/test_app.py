@@ -58,7 +58,7 @@ class TestCreateAppURLPathPrefix(TestCase):
 
     config = 'TestingConfig'
 
-    def test_create_app_with_url_path_prefix(self):
+    def test_create_app_with_url_path_prefix_en(self):
         from app import config
 
         url_prefix = '/url-path-prefix'
@@ -67,11 +67,24 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], url_prefix)
 
-        self.assertEqual(app.router['Index:get'].canonical, '/url-path-prefix/start/')
-        self.assertEqual(app.router['Index:post'].canonical, '/url-path-prefix/start/')
+        self.assertEqual(app.router['IndexEN:get'].canonical, '/url-path-prefix/start/')
+        self.assertEqual(app.router['IndexEN:post'].canonical, '/url-path-prefix/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
-    def test_create_app_without_url_path_prefix(self):
+    def test_create_app_with_url_path_prefix_ni(self):
+        from app import config
+
+        url_prefix = '/url-path-prefix'
+        config.TestingConfig.URL_PATH_PREFIX = url_prefix
+
+        app = create_app(self.config)
+        self.assertEqual(app['URL_PATH_PREFIX'], url_prefix)
+
+        self.assertEqual(app.router['IndexNI:get'].canonical, '/url-path-prefix/ni/start/')
+        self.assertEqual(app.router['IndexNI:post'].canonical, '/url-path-prefix/ni/start/')
+        self.assertEqual(app.router['Info:get'].canonical, '/info')
+
+    def test_create_app_without_url_path_prefix_en(self):
         from app import config
 
         config.TestingConfig.URL_PATH_PREFIX = ''
@@ -79,8 +92,20 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], '')
 
-        self.assertEqual(app.router['Index:get'].canonical, '/start/')
-        self.assertEqual(app.router['Index:post'].canonical, '/start/')
+        self.assertEqual(app.router['IndexEN:get'].canonical, '/start/')
+        self.assertEqual(app.router['IndexEN:post'].canonical, '/start/')
+        self.assertEqual(app.router['Info:get'].canonical, '/info')
+
+    def test_create_app_without_url_path_prefix_ni(self):
+        from app import config
+
+        config.TestingConfig.URL_PATH_PREFIX = ''
+
+        app = create_app(self.config)
+        self.assertEqual(app['URL_PATH_PREFIX'], '')
+
+        self.assertEqual(app.router['IndexNI:get'].canonical, '/ni/start/')
+        self.assertEqual(app.router['IndexNI:post'].canonical, '/ni/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
 

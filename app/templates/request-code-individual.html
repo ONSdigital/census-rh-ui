@@ -1,4 +1,13 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set button_url = url('RequestCodeEnterAddressHINI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set button_url = url('RequestCodeEnterAddressHICY:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set button_url = url('RequestCodeEnterAddressHIEN:post') %}
+{% endif %}
 
 {% from "components/button/_macro.njk" import onsButton %}
 
@@ -11,7 +20,7 @@
 
     <p>You will need to provide:</p>
     <ul>
-        <li>your mobile number so we can send you the code by text</li>
+        <li>your mobile phone number so we can send you the code by text</li>
         <li>your address so we can confirm you are in the rehearsal area</li>
     </ul>
 
@@ -20,7 +29,7 @@
             "type": 'button',
             "text": 'Request an individual code',
             "classes": 'u-mb-m',
-            "url": url('RequestCodeEnterAddressHI:get'),
+            "url": button_url,
             "innerClasses": "icon--chevron-right-white"
         })
     }}

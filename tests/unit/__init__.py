@@ -211,13 +211,46 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac.json') as fp:
             self.uac_json = json.load(fp)
 
-        self.get_index = self.app.router['Index:get'].url_for()
+        with open('tests/test_data/rhsvc/uac-cy.json') as fp:
+            self.uac_json_cy = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac-ni.json') as fp:
+            self.uac_json_ni = json.load(fp)
+
         self.get_info = self.app.router['Info:get'].url_for()
-        self.post_index = self.app.router['Index:post'].url_for()
-        self.get_address_confirmation = self.app.router['AddressConfirmation:get'].url_for()
-        self.post_address_confirmation = self.app.router['AddressConfirmation:post'].url_for()
-        self.get_address_edit = self.app.router['AddressEdit:get'].url_for()
-        self.post_address_edit = self.app.router['AddressEdit:post'].url_for()
+        self.get_index_en = self.app.router['IndexEN:get'].url_for()
+        self.post_index_en = self.app.router['IndexEN:post'].url_for()
+        self.get_address_confirmation_en = self.app.router['AddressConfirmationEN:get'].url_for()
+        self.post_address_confirmation_en = self.app.router['AddressConfirmationEN:post'].url_for()
+        self.get_address_edit_en = self.app.router['AddressEditEN:get'].url_for()
+        self.post_address_edit_en = self.app.router['AddressEditEN:post'].url_for()
+        self.get_language_options_en = self.app.router['StartLanguageOptionsEN:get'].url_for()
+        self.post_language_options_en = self.app.router['StartLanguageOptionsEN:post'].url_for()
+        self.get_select_language_en = self.app.router['StartSelectLanguageEN:get'].url_for()
+        self.post_select_language_en = self.app.router['StartSelectLanguageEN:post'].url_for()
+
+        self.get_index_cy = self.app.router['IndexCY:get'].url_for()
+        self.post_index_cy = self.app.router['IndexCY:post'].url_for()
+        self.get_address_confirmation_cy = self.app.router['AddressConfirmationCY:get'].url_for()
+        self.post_address_confirmation_cy = self.app.router['AddressConfirmationCY:post'].url_for()
+        self.get_address_edit_cy = self.app.router['AddressEditCY:get'].url_for()
+        self.post_address_edit_cy = self.app.router['AddressEditCY:post'].url_for()
+        self.get_language_options_cy = self.app.router['StartLanguageOptionsCY:get'].url_for()
+        self.post_language_options_cy = self.app.router['StartLanguageOptionsCY:post'].url_for()
+        self.get_select_language_cy = self.app.router['StartSelectLanguageCY:get'].url_for()
+        self.post_select_language_cy = self.app.router['StartSelectLanguageCY:post'].url_for()
+
+        self.get_index_ni = self.app.router['IndexNI:get'].url_for()
+        self.post_index_ni = self.app.router['IndexNI:post'].url_for()
+        self.get_address_confirmation_ni = self.app.router['AddressConfirmationNI:get'].url_for()
+        self.post_address_confirmation_ni = self.app.router['AddressConfirmationNI:post'].url_for()
+        self.get_address_edit_ni = self.app.router['AddressEditNI:get'].url_for()
+        self.post_address_edit_ni = self.app.router['AddressEditNI:post'].url_for()
+        self.get_language_options_ni = self.app.router['StartLanguageOptionsNI:get'].url_for()
+        self.post_language_options_ni = self.app.router['StartLanguageOptionsNI:post'].url_for()
+        self.get_select_language_ni = self.app.router['StartSelectLanguageNI:get'].url_for()
+        self.post_select_language_ni = self.app.router['StartSelectLanguageNI:post'].url_for()
+
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
         self.eq_id = "census"
@@ -227,14 +260,44 @@ class RHTestCase(AioHTTPTestCase):
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = "1"
-        self.user_id = "1234567890"
         self.uac = self.uac_json['uac']
         self.uprn = self.uac_json['address']['uprn']
         self.response_id = self.uac_json['questionnaireId']
         self.questionnaire_id = self.uac_json['questionnaireId']
         self.case_type = self.uac_json['caseType']
         self.channel = "rh"
-        self.eq_payload = {
+        self.attributes_en = {
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
+            'language': 'en',
+            'display_region': 'en'
+        }
+        self.attributes_cy = {
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
+            'language': 'cy',
+            'display_region': 'cy',
+            'locale': 'cy'
+        }
+        self.attributes_ni = {
+            'addressLine1': self.uac_json['address']['addressLine1'],
+            'addressLine2': self.uac_json['address']['addressLine2'],
+            'addressLine3': self.uac_json['address']['addressLine3'],
+            'townName': self.uac_json['address']['townName'],
+            'postcode': self.uac_json['address']['postcode'],
+            'uprn': self.uac_json['address']['uprn'],
+            'language': 'ul',
+            'display_region': 'ni'
+        }
+        self.eq_payload_en = {
             "jti": self.jti,
             "tx_id": self.jti,
             "iat": int(time.time()),
@@ -244,18 +307,121 @@ class RHTestCase(AioHTTPTestCase):
             "region_code": 'GB-ENG',
             "ru_ref": self.uprn,
             "case_id": self.case_id,
-            "language_code": self.language_code,
+            "language_code": 'en',
             "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "response_id": self.response_id,
             "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
             "channel": self.channel,
-            "user_id": "1234567890",
+            "user_id": "",
             "questionnaire_id": self.questionnaire_id,
             "eq_id": self.eq_id,
             "period_id": self.period_id,
             "form_type": self.form_type,
             "survey": self.survey
- }
+        }
+
+        self.eq_payload_cy = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-WLS',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'cy',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+        self.survey_launched_json = {
+            "questionnaireId": self.questionnaire_id,
+            "caseId": self.case_id,
+            "agentId": ''
+        }
+
+        self.eq_payload_ni_ga = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-NIR',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'ga',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
+        self.eq_payload_ni_ul = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-NIR',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'ul',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
+        self.eq_payload_ni_en = {
+            "jti": self.jti,
+            "tx_id": self.jti,
+            "iat": int(time.time()),
+            "exp": int(time.time() + (5 * 60)),
+            "case_type": self.case_type,
+            "collection_exercise_sid": self.collection_exercise_id,
+            "region_code": 'GB-NIR',
+            "ru_ref": self.uprn,
+            "case_id": self.case_id,
+            "language_code": 'en',
+            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
+            "response_id": self.response_id,
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "channel": self.channel,
+            "user_id": "",
+            "questionnaire_id": self.questionnaire_id,
+            "eq_id": self.eq_id,
+            "period_id": self.period_id,
+            "form_type": self.form_type,
+            "survey": self.survey
+        }
+
+        self.survey_launched_json = {
+            "questionnaireId": self.questionnaire_id,
+            "caseId": self.case_id,
+            "agentId": ''
+        }
 
         self.rhsvc_url = (
             f"{self.app['RHSVC_URL']}/uacs/{self.uac}"
@@ -299,33 +465,94 @@ class RHTestCase(AioHTTPTestCase):
             "postcode": self.uac_json['address']['postcode']
             }
 
-        self.get_webchat = self.app.router['WebChat:get'].url_for()
-        self.post_webchat = self.app.router['WebChat:post'].url_for()
-        self.get_webchat_chat = self.app.router['WebChatWindow:get'].url_for()
+        self.language_options_ni_eng_data = {
+            'language-option': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.language_options_ni_not_eng_data = {
+            'language-option': 'No', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_ul_data = {
+            'language-option': 'ulster-scotch', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_ga_data = {
+            'language-option': 'gaeilge', 'action[save_continue]': ''
+        }
+
+        self.select_language_ni_en_data = {
+            'language-option': 'english', 'action[save_continue]': ''
+        }
+
+        self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
+        self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()
+        self.get_webchat_ni = self.app.router['WebChatNI:get'].url_for()
+        self.post_webchat_en = self.app.router['WebChatEN:post'].url_for()
+        self.post_webchat_cy = self.app.router['WebChatCY:post'].url_for()
+        self.post_webchat_ni = self.app.router['WebChatNI:post'].url_for()
+        self.get_webchat_chat_en = self.app.router['WebChatWindowEN:get'].url_for()
+        self.get_webchat_chat_cy = self.app.router['WebChatWindowCY:get'].url_for()
+        self.get_webchat_chat_ni = self.app.router['WebChatWindowNI:get'].url_for()
+
 
         self.webchat_form_data = {
-            'screen_name': 'Test', 'email': 'test@test.gov.uk', 'language': 'english', 'query': 'help', 'country': 'england'
+            'screen_name': 'Test', 'email': 'test@test.gov.uk',
+            'language': 'english', 'query': 'help', 'country': 'england'
+        }
+
+        self.webchat_form_data_cy = {
+            'screen_name': 'Test', 'email': 'test@test.gov.uk',
+            'language': 'welsh', 'query': 'help', 'country': 'wales'
         }
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
         self.addressindexsvc_url = f"{self.app['ADDRESS_INDEX_SVC_URL']}/addresses/postcode/"
 
-        self.get_requestcode_household = self.app.router['RequestCodeHousehold:get'].url_for()
-        self.get_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
-        self.post_requestcode_enter_address_hh = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
-        self.get_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:get'].url_for()
-        self.post_requestcode_selectaddress_hh = self.app.router['RequestCodeSelectAddressHH:post'].url_for()
-        self.get_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:get'].url_for()
-        self.post_requestcode_address_confirmation_hh = self.app.router['RequestCodeConfirmAddressHH:post'].url_for()
+        self.get_requestcode_household_en = self.app.router['RequestCodeHouseholdEN:get'].url_for()
+        self.get_requestcode_household_cy = self.app.router['RequestCodeHouseholdCY:get'].url_for()
+        self.get_requestcode_household_ni = self.app.router['RequestCodeHouseholdNI:get'].url_for()
+        self.get_requestcode_enter_address_hh_en = self.app.router['RequestCodeEnterAddressHHEN:get'].url_for()
+        self.get_requestcode_enter_address_hh_cy = self.app.router['RequestCodeEnterAddressHHCY:get'].url_for()
+        self.get_requestcode_enter_address_hh_ni = self.app.router['RequestCodeEnterAddressHHNI:get'].url_for()
+        self.post_requestcode_enter_address_hh_en = self.app.router['RequestCodeEnterAddressHHEN:post'].url_for()
+        self.post_requestcode_enter_address_hh_cy = self.app.router['RequestCodeEnterAddressHHCY:post'].url_for()
+        self.post_requestcode_enter_address_hh_ni = self.app.router['RequestCodeEnterAddressHHNI:post'].url_for()
+        self.get_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddressHHEN:get'].url_for()
+        self.get_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddressHHCY:get'].url_for()
+        self.get_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddressHHNI:get'].url_for()
+        self.post_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddressHHEN:post'].url_for()
+        self.post_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddressHHCY:post'].url_for()
+        self.post_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddressHHNI:post'].url_for()
+        self.get_requestcode_address_confirmation_hh_en = self.app.router['RequestCodeConfirmAddressHHEN:get'].url_for()
+        self.get_requestcode_address_confirmation_hh_cy = self.app.router['RequestCodeConfirmAddressHHCY:get'].url_for()
+        self.get_requestcode_address_confirmation_hh_ni = self.app.router['RequestCodeConfirmAddressHHNI:get'].url_for()
+        self.post_requestcode_address_confirmation_hh_en = self.app.router['RequestCodeConfirmAddressHHEN:post'].url_for()
+        self.post_requestcode_address_confirmation_hh_cy = self.app.router['RequestCodeConfirmAddressHHCY:post'].url_for()
+        self.post_requestcode_address_confirmation_hh_ni = self.app.router['RequestCodeConfirmAddressHHNI:post'].url_for()
 
-        self.get_requestcode_individual = self.app.router['RequestCodeIndividual:get'].url_for()
-        self.get_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:get'].url_for()
-        self.post_requestcode_enter_address_hi = self.app.router['RequestCodeEnterAddressHH:post'].url_for()
-        self.get_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:get'].url_for()
-        self.post_requestcode_selectaddress_hi = self.app.router['RequestCodeSelectAddressHI:post'].url_for()
-        self.get_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:get'].url_for()
-        self.post_requestcode_address_confirmation_hi = self.app.router['RequestCodeConfirmAddressHI:post'].url_for()
+        self.get_requestcode_individual_en = self.app.router['RequestCodeIndividualEN:get'].url_for()
+        self.get_requestcode_individual_cy = self.app.router['RequestCodeIndividualCY:get'].url_for()
+        self.get_requestcode_individual_ni = self.app.router['RequestCodeIndividualNI:get'].url_for()
+        self.get_requestcode_enter_address_hi_en = self.app.router['RequestCodeEnterAddressHIEN:get'].url_for()
+        self.get_requestcode_enter_address_hi_cy = self.app.router['RequestCodeEnterAddressHICY:get'].url_for()
+        self.get_requestcode_enter_address_hi_ni = self.app.router['RequestCodeEnterAddressHINI:get'].url_for()
+        self.post_requestcode_enter_address_hi_en = self.app.router['RequestCodeEnterAddressHIEN:post'].url_for()
+        self.post_requestcode_enter_address_hi_cy = self.app.router['RequestCodeEnterAddressHICY:post'].url_for()
+        self.post_requestcode_enter_address_hi_ni = self.app.router['RequestCodeEnterAddressHINI:post'].url_for()
+        self.get_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddressHIEN:get'].url_for()
+        self.get_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddressHICY:get'].url_for()
+        self.get_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddressHINI:get'].url_for()
+        self.post_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddressHIEN:post'].url_for()
+        self.post_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddressHICY:post'].url_for()
+        self.post_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddressHINI:post'].url_for()
+        # self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:get'].url_for()
+        # self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:get'].url_for()
+        # self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:get'].url_for()
+        # self.post_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:post'].url_for()
+        # self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
+        # self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
@@ -360,3 +587,7 @@ class RHTestCase(AioHTTPTestCase):
         self.request_code_address_confirmation_data = {
             'request-address-confirmation': 'Yes', 'action[save_continue]': ''
         }
+
+        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
+        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
+        self.nisra_logo = '/img/nisra-logo-en.svg'
