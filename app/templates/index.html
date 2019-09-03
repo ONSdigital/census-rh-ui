@@ -11,7 +11,7 @@
 {% else %}
     {% extends "base-start-en.html" %}
     {% set form_action = url('IndexEN:post') %}
-{% set request_code_link = url('RequestCodeHouseholdEN:get') %}
+    {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
     {% set webchat_link = url('WebChatEN:post') %}
 {% endif %}
 

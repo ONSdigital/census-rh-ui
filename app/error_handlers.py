@@ -21,11 +21,10 @@ def create_error_middleware(overrides):
             override = overrides.get(resp.status)
             return await override(request) if override else resp
         except web.HTTPNotFound:
-            if '/ni' in request.path:
+            path_prefix = request.app['URL_PATH_PREFIX']
+            if request.path.startswith(path_prefix + '/ni'):
                 index_resource = request.app.router['IndexNI:get']
-            elif '/dechrau' in request.path:
-                index_resource = request.app.router['IndexCY:get']
-            elif '/cy' in request.path:
+            elif request.path.startswith(path_prefix + '/dechrau') or request.path.startswith(path_prefix + '/cy'):
                 index_resource = request.app.router['IndexCY:get']
             else:
                 index_resource = request.app.router['IndexEN:get']
@@ -110,11 +109,10 @@ def setup(app):
 
 
 def check_display_region(request):
-    if '/ni' in request.path:
+    path_prefix = request.app['URL_PATH_PREFIX']
+    if request.url.path.startswith(path_prefix + '/ni'):
         attributes = {'display_region': 'ni'}
-    elif '/dechrau' in request.path:
-        attributes = {'display_region': 'cy', 'locale': 'cy'}
-    elif '/cy' in request.path:
+    elif request.url.path.startswith(path_prefix + '/dechrau') or request.url.path.startswith(path_prefix + '/cy'):
         attributes = {'display_region': 'cy', 'locale': 'cy'}
     else:
         attributes = {'display_region': 'en'}
