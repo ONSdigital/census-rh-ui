@@ -1,23 +1,23 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
     {% if case_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeIndividual:get') %}
+        {% set request_code_link = url('RequestCodeIndividualNI:get') %}
     {% else %}
-        {% set request_code_link = url('RequestCodeHousehold:get') %}
+        {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
     {% endif %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
     {% if case_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeIndividual:get') %}
+        {% set request_code_link = url('RequestCodeIndividualCY:get') %}
     {% else %}
-        {% set request_code_link = url('RequestCodeHousehold:get') %}
+        {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
     {% endif %}
 {% else %}
     {% extends "base-en.html" %}
     {% if case_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeIndividual:get') %}
+        {% set request_code_link = url('RequestCodeIndividualEN:get') %}
     {% else %}
-        {% set request_code_link = url('RequestCodeHousehold:get') %}
+        {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
     {% endif %}
 {% endif %}
 

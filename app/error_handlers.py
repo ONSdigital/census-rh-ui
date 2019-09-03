@@ -56,7 +56,7 @@ def create_error_middleware(overrides):
 async def inactive_case(request, case_type):
     logger.warn("Attempt to use an inactive access code")
     attributes = check_display_region(request)
-    attributes['case_type': case_type]
+    attributes['case_type'] = case_type
     return aiohttp_jinja2.render_template("expired.html", request, attributes)
 
 
