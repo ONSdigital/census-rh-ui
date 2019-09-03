@@ -2,7 +2,6 @@ import logging
 
 import aiohttp_jinja2
 import re
-import ast
 import json
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
@@ -654,13 +653,7 @@ class RequestCodeSelectAddressHH(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = data["request-address-select"].replace("\'", "\"")
-            try:
-                form_return = json.loads(form_return)
-                # form_return = ast.literal_eval(data["request-address-select"])
-                print(form_return)
-            except Exception as e:
-                print("Error is " + e)
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -851,7 +844,7 @@ class RequestCodeSelectAddressHI(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
