@@ -446,7 +446,7 @@ class AddressConfirmationEN(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsEN:get'].url_for())
             else:
                 attributes['language'] = 'en'
@@ -508,7 +508,7 @@ class AddressConfirmationCY(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
             else:
                 attributes['language'] = 'cy'
@@ -570,7 +570,7 @@ class AddressConfirmationNI(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
             else:
                 attributes['language'] = 'en'
@@ -637,7 +637,7 @@ class AddressEditEN(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
@@ -695,7 +695,7 @@ class AddressEditCY(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
         else:
             attributes['language'] = 'cy'
@@ -753,7 +753,7 @@ class AddressEditNI(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
