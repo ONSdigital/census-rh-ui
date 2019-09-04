@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-30 16:18+0100\n"
+"POT-Creation-Date: 2019-09-04 11:10+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -18,6 +18,25 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: app/templates/404.html:14
+msgid "Page not found"
+msgstr ""
+
+#: app/templates/404.html:16
+msgid "If you entered a web address, check it is correct."
+msgstr ""
+
+#: app/templates/404.html:17
+msgid "If you pasted the web address, check that you copied the entire address."
+msgstr ""
+
+#: app/templates/404.html:19
+#, python-format
+msgid ""
+"If you still encounter problems please %(open)scontact us%(close)s. We "
+"apologise for any inconvenience this may have caused."
+msgstr ""
 
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42
@@ -97,20 +116,38 @@ msgstr ""
 msgid "Your access code has been used to complete this survey."
 msgstr ""
 
+#: app/templates/error.html:15
+msgid "Sorry, something went wrong"
+msgstr ""
+
+#: app/templates/error.html:18
+msgid "We are experiencing some technical problems."
+msgstr ""
+
+#: app/templates/error.html:21
+#, python-format
+msgid ""
+"Please try again later, or %(open)scontact us%(close)s if the problem "
+"continues."
+msgstr ""
+
 #: app/templates/index.html:39
 msgid "Enter the 16 character code printed on the letter"
 msgstr "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
 
 #: app/templates/index.html:40
 msgid "Keep this code safe and only share it with others in your household"
-msgstr "Cadwch y cod hwn yn ddiogel a pheidiwch â'i rannu ag unrhyw un heblaw aelodau eraill eich cartref"
+msgstr ""
+"Cadwch y cod hwn yn ddiogel a pheidiwch â'i rannu ag unrhyw un heblaw "
+"aelodau eraill eich cartref"
 
 #: app/templates/index.html:42
 msgid ""
 "Your personal information is protected by law and will be kept "
 "confidential."
 msgstr ""
-"Mae eich gwybodaeth bersonol yn cael ei diogelu gan y gyfraith a chaiff ei chadw'n gyfrinachol."
+"Mae eich gwybodaeth bersonol yn cael ei diogelu gan y gyfraith a chaiff "
+"ei chadw'n gyfrinachol."
 
 #: app/templates/index.html:48
 msgid "Start survey"
@@ -156,8 +193,8 @@ msgid ""
 "A text with the code should arrive shortly. Once you get the code, you "
 "can start the survey."
 msgstr ""
-"Dylai neges destun yn cynnwys y cod gyrraedd cyn bo hir. Ar ôl "
-"i chi gael y cod, gallwch chi ddechrau'r arolwg."
+"Dylai neges destun yn cynnwys y cod gyrraedd cyn bo hir. Ar ôl i chi gael"
+" y cod, gallwch chi ddechrau'r arolwg."
 
 #: app/templates/request-code-code-sent.html:37
 msgid "Start your survey"
@@ -182,11 +219,11 @@ msgstr "Ydy, anfonwch y neges destun nawr"
 
 #: app/templates/request-code-confirm-mobile.html:65
 msgid "Is this mobile phone number correct?"
-msgstr "WELSH Is this mobile phone number correct?"
+msgstr "Ydy'r rhif ffôn symudol hwn yn gywir?"
 
 #: app/templates/request-code-confirm-mobile.html:76
 msgid "Check and confirm your mobile phone number"
-msgstr "WELSH Check and confirm your mobile phone number"
+msgstr ""
 
 #: app/templates/request-code-enter-address.html:45
 msgid "What is your postcode?"
@@ -197,8 +234,8 @@ msgid ""
 "<p>To text you a new code we need to know the address for which you are "
 "answering.</p>"
 msgstr ""
-"<p>Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar "
-"gyfer pa gyfeiriad rydych chi'n ateb.</p>"
+"<p>Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer"
+" pa gyfeiriad rydych chi'n ateb.</p>"
 
 #: app/templates/request-code-enter-address.html:57
 #: app/templates/request-code-enter-address.html:73
@@ -215,28 +252,26 @@ msgstr "Beth yw eich rhif ffôn symudol?"
 
 #: app/templates/request-code-enter-mobile.html:46
 msgid "<p>We will send an access code by text to this number.</p>"
-msgstr "<p>WELSH We will send an access code by text to this number.</p>"
+msgstr "<p>Byddwn ni'n anfon cod mynediad drwy neges destun i'r rhif hwn.</p>"
 
 #: app/templates/request-code-enter-mobile.html:58
 #: app/templates/request-code-enter-mobile.html:75
 msgid "UK mobile phone number"
-msgstr "WELSH UK mobile phone number"
+msgstr "Rhif ffôn symudol yn y Deyrnas Unedig"
 
 #: app/templates/request-code-enter-mobile.html:62
 msgid "Enter a valid UK mobile phone number"
-msgstr "WELSH Enter a valid UK mobile phone number"
+msgstr "Nodwch rif ffôn dilys yn y Deyrnas Unedig"
 
 #: app/templates/request-code-household.html:15
 msgid "Request a new access code"
-msgstr "WELSH Request a new access code"
+msgstr ""
 
 #: app/templates/request-code-household.html:17
 msgid ""
 "To do the census online you need a 16 character unique access code which "
 "we have sent you in a letter."
 msgstr ""
-"WELSH To do the census online you need a 16 character unique access code "
-"which we have sent you in a letter."
 
 #: app/templates/request-code-household.html:19
 #: app/templates/request-code-individual.html:19
@@ -244,43 +279,41 @@ msgid ""
 "If you are in a rehearsal area and don’t have a code you can get a new "
 "one."
 msgstr ""
-"WELSH If you are in a rehearsal area and don’t have a code you can get a "
-"new one."
 
 #: app/templates/request-code-household.html:21
 #: app/templates/request-code-individual.html:21
 msgid "You will need to provide:"
-msgstr "WELSH You will need to provide:"
+msgstr ""
 
 #: app/templates/request-code-household.html:23
 #: app/templates/request-code-individual.html:23
 msgid "your mobile phone number so we can send you the code by text"
-msgstr "WELSH your mobile phone number so we can send you the code by text"
+msgstr ""
 
 #: app/templates/request-code-household.html:24
 #: app/templates/request-code-individual.html:24
 msgid "your address so we can confirm you are in the rehearsal area"
-msgstr "WELSH your address so we can confirm you are in the rehearsal area"
+msgstr ""
 
 #: app/templates/request-code-household.html:30
 msgid "Request a new code"
-msgstr "WELSH Request a new code"
+msgstr ""
 
 #: app/templates/request-code-individual.html:15
 msgid "Request an individual access code"
-msgstr "WELSH Request an individual access code"
+msgstr ""
 
 #: app/templates/request-code-individual.html:17
 msgid "To do the census online you need a 16 character unique access code."
-msgstr "WELSH To do the census online you need a 16 character unique access code."
+msgstr ""
 
 #: app/templates/request-code-individual.html:30
 msgid "Request an individual code"
-msgstr "WELSH Request an individual code"
+msgstr ""
 
 #: app/templates/request-code-not-required.html:26
 msgid "Your address is not part of the 2019 rehearsal"
-msgstr "WELSH Your address is not part of the 2019 rehearsal"
+msgstr "Nid yw eich cyfeiriad yn rhan o ymarfer 2019"
 
 #: app/templates/request-code-not-required.html:31
 #, python-format
@@ -290,21 +323,15 @@ msgid ""
 "address%(end_link)s  again or find out more "
 "%(start_about_census_link)sabout the census rehearsal%(end_link)s."
 msgstr ""
-"WELSH Based on the address you have provided you are not required to take"
-" part. If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or find out more "
-"%(start_about_census_link)sabout the census rehearsal%(end_link)s."
 
 #: app/templates/request-code-select-address.html:44
 #, python-format
 msgid "<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>"
 msgstr ""
-"<p class='u-fs-r--b'>WELSH %(total)s addresses found for postcode "
-"%(pcode)s</p>"
 
 #: app/templates/request-code-select-address.html:50
 msgid "We cannot find your address"
-msgstr "WELSH We cannot find your address"
+msgstr "Allwn ni ddim dod o hyd i'ch cyfeiriad"
 
 #: app/templates/request-code-select-address.html:53
 #, python-format
@@ -313,17 +340,17 @@ msgid ""
 "address%(end_link)s  again or %(start_contact_link)scontact "
 "us%(end_link)s."
 msgstr ""
-"WELSH If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or %(start_contact_link)scontact "
-"us%(end_link)s."
+"Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
+"cyfeiriad%(end_link)s eto neu %(start_contact_link)sgysylltu "
+"â ni%(end_link)s."
 
 #: app/templates/request-code-select-address.html:59
 msgid "Select your address"
-msgstr "WELSH Select your address"
+msgstr "Dewiswch eich cyfeiriad"
 
 #: app/templates/request-code-select-address.html:69
 msgid "Select an address"
-msgstr "WELSH Select an address"
+msgstr "Dewiswch gyfeiriad"
 
 #: app/templates/timeout.html:21
 msgid "Your session has timed out due to inactivity"
@@ -333,14 +360,14 @@ msgstr ""
 msgid "To protect your information we have timed you out."
 msgstr ""
 
-#: app/templates/timeout.html:30 app/templates/timeout.html:34
+#: app/templates/timeout.html:30 app/templates/timeout.html:32
 #, python-format
-msgid "You will need to %(open)sre-enter your postcode%(close)s."
+msgid "You will need to %(open)sre-enter your postcode%(close)s"
 msgstr ""
 
-#: app/templates/timeout.html:38
+#: app/templates/timeout.html:34
 #, python-format
-msgid "You will need to %(open)sre-enter your access code%(close)s."
+msgid "You will need to %(open)sre-enter your access code%(close)s"
 msgstr ""
 
 #: app/templates/webchat-form.html:39
@@ -349,8 +376,8 @@ msgid ""
 "Contact Centre is closed. Please contact during the working hours or "
 "%(open)sGet Help Online%(close)s."
 msgstr ""
-"Mae'r Ganolfan Gyswllt ar gau. Cysylltwch â ni yn ystod yr oriau gwaith neu gallwch chi "
-"""%(open)sGael Help Ar Lein%(close)s."
+"Mae'r Ganolfan Gyswllt ar gau. Cysylltwch â ni yn ystod yr oriau gwaith "
+"neu gallwch chi \"\"%(open)sGael Help Ar Lein%(close)s."
 
 #: app/templates/webchat-form.html:41
 msgid "Opening times"
@@ -370,106 +397,99 @@ msgstr "Dydd Sul / Gwyliau Banc: Ar Gau"
 
 #: app/templates/webchat-form.html:46
 msgid "Census weekend: 8am to 4pm"
-msgstr "WELSH Census weekend: 8am to 4pm"
+msgstr "Penwythnos y cyfrifiad: 8am tan 4pm"
 
 #: app/templates/webchat-form.html:52
 msgid "Javascript disabled"
-msgstr "WELSH Javascript disabled"
+msgstr "JavaScript wedi'i analluogi"
 
 #: app/templates/webchat-form.html:54
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
 msgstr ""
-"WELSH Javascript on your browser is disabled. To start a Webchat session "
-"javascript needs to be enabled on your browser."
+"Mae JavaScript wedi'i analluogi ar eich porwr. I ddechrau sesiwn Gwe-"
+"sgwrs, mae angen i JavaScript fod wedi'i alluogi ar eich porwr."
 
 #: app/templates/webchat-form.html:56
 msgid "Get Help"
-msgstr "WELSH Get Help"
+msgstr "Cael Help"
 
 #: app/templates/webchat-form.html:68
 msgid "England"
-msgstr "WELSH England"
+msgstr "Lloegr"
 
 #: app/templates/webchat-form.html:75
 msgid "Wales"
-msgstr "WELSH Wales"
+msgstr "Cymru"
 
 #: app/templates/webchat-form.html:82
 msgid "Northern Ireland"
-msgstr "WELSH Northern Ireland"
+msgstr "Gogledd Iwerddon"
 
 #: app/templates/webchat-form.html:94
 msgid "I have a question about my census form"
-msgstr "WELSH I have a question about my census form"
+msgstr "Mae gen i gwestiwn am ffurflen y cyfrifiad"
 
 #: app/templates/webchat-form.html:101
 msgid "I am having technical difficulties"
-msgstr "WELSH I am having technical difficulties"
+msgstr "Rwy'n cael anawsterau technegol"
 
 #: app/templates/webchat-form.html:108
 msgid "I have a complaint"
-msgstr "WELSH I have a complaint"
+msgstr "Mae gen i gŵyn"
 
 #: app/templates/webchat-form.html:115
 msgid "I have a question about my address"
-msgstr "WELSH I have a question about my address"
+msgstr "Mae gen i gwestiwn am fy nghyfeiriad"
 
 #: app/templates/webchat-form.html:122
 msgid "I need something sent to me"
-msgstr "WELSH I need something sent to me"
+msgstr "Mae angen i rywbeth gael ei anfon ataf i"
 
 #: app/templates/webchat-form.html:129
 msgid "I need to speak to an adviser face-to-face"
-msgstr "WELSH I need to speak to an adviser face-to-face"
+msgstr "Mae angen i mi siarad â chynghorydd wyneb yn wyneb"
 
 #: app/templates/webchat-form.html:136
 msgid "I need some help"
-msgstr "WELSH I need some help"
+msgstr "Mae angen help arnaf i"
 
 #: app/templates/webchat-form.html:146
 msgid "Our advisers can help you with your census survey."
-msgstr "WELSH Our advisers can help you with your census survey."
+msgstr "Gall ein cynghorwyr eich helpu chi gydag arolwg y cyfrifiad."
 
 #: app/templates/webchat-form.html:154 app/templates/webchat-form.html:159
 #: app/templates/webchat-form.html:169
 msgid "Enter your name"
-msgstr "WELSH Enter your name"
+msgstr "Nodwch eich enw"
 
 #: app/templates/webchat-form.html:180 app/templates/webchat-form.html:193
 msgid "Select your country"
-msgstr "WELSH Select your country"
+msgstr "Dewiswch eich gwlad"
 
 #: app/templates/webchat-form.html:186 app/templates/webchat-form.html:211
 msgid "Select an option"
-msgstr "WELSH Select an option"
+msgstr "Dewiswch opsiwn"
 
 #: app/templates/webchat-form.html:205 app/templates/webchat-form.html:218
 msgid "What type of query do you have"
-msgstr "WELSH What type of query do you have"
+msgstr "Pa fath o ymholiad sydd gennych chi?"
 
 #: app/templates/webchat-form.html:229
 msgid "Start chat"
-msgstr "WELSH Start chat"
+msgstr "Dechrau'r sgwrs"
 
 #: app/templates/partials/messages.html:7
 msgid "This page has an error"
-msgstr "WELSH This page has an error"
+msgstr "Mae gwall ar y dudalen hon"
 
 #: app/templates/partials/messages.html:9
 #, python-format
 msgid "This page has %(errorcount)s errors"
-msgstr "WELSH This page has %(errorcount)s errors"
+msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 
 #: app/templates/partials/messages.html:36
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
-msgstr "WELSH These %(startbold)smust be corrected%(endbold)s to continue."
-
-#~ msgid "total_matches|string + ' addresses found for postcode ' + postcode"
-#~ msgstr ""
-
-#~ msgid "%(total)s addresses found for postcode $(pcode)s"
-#~ msgstr ""
-
+msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
