@@ -323,6 +323,10 @@ msgid ""
 "address%(end_link)s  again or find out more "
 "%(start_about_census_link)sabout the census rehearsal%(end_link)s."
 msgstr ""
+"Ar sail y cyfeiriad rydych chi wedi'i roi, nid oes angen i chi gymryd rhan."
+" Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
+"cyfeiriad%(end_link)s eto neu gael gwybod rhagor "
+"%(start_about_census_link)sam ymarfer y cyfrifiad%(end_link)s."
 
 #: app/templates/request-code-select-address.html:44
 #, python-format
