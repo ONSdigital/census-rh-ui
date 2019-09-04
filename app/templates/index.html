@@ -1,4 +1,19 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-start-ni.html" %}
+    {% set form_action = url('IndexNI:post') %}
+    {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
+    {% set webchat_link = url('WebChatNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-start-cy.html" %}
+    {% set form_action = url('IndexCY:post') %}
+    {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
+    {% set webchat_link = url('WebChatCY:post') %}
+{% else %}
+    {% extends "base-start-en.html" %}
+    {% set form_action = url('IndexEN:post') %}
+    {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
+    {% set webchat_link = url('WebChatEN:post') %}
+{% endif %}
 
 {% from "components/uac/_macro.njk" import onsUACInput %}
 {% from "components/button/_macro.njk" import onsButton %}
@@ -13,7 +28,7 @@
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('Index:post')
+        "action": form_action
     }
 } %}
 
@@ -67,11 +82,11 @@
 
     <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
     <p>
-        You can <a href="{{ url('RequestCodeHousehold:get') }}">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
+        You can <a href="{{ request_code_link }}">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
     </p>
 
     <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
 
-    <p><a href="{{ url('WebChat:get') }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web Chat</a></p>
+    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web chat</a></p>
 
 {% endblock %}

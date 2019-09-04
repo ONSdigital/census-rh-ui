@@ -18,7 +18,9 @@ script:
   - pipenv run coverage report
 
 after_success:
-  - ./scripts/docker_push.sh
+  - if [ "$TRAVIS_BRANCH" != "master" ]; then
+      ./scripts/docker_push.sh;
+    fi
   - pipenv run codecov
 
 branches:

@@ -1,0 +1,32 @@
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% if case_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeIndividualNI:get') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
+    {% endif %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% if case_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeIndividualCY:get') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
+    {% endif %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% if case_type == 'HI' %}
+        {% set request_code_link = url('RequestCodeIndividualEN:get') %}
+    {% else %}
+        {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
+    {% endif %}
+{% endif %}
+
+{% block main %}
+
+<h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message" data-ga-label="info_type = CODE_USED">
+    Your unique access code has expired
+</h1>
+
+<p>You can <a href="{{ request_code_link }}">request a new code</a> if you have not submitted a census yet.</p>
+
+{% endblock main %}

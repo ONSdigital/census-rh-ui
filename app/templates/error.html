@@ -1,8 +1,14 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+{% else %}
+    {% extends "base-en.html" %}
+{% endif %}
 
 {% block main %}
 
-<h1 class="saturn" data-ga="error" data-ga-category="error" data-ga-action="error-message-shown" data-ga-label="system-error">
+<h1 data-ga="error" data-ga-category="error" data-ga-action="error-message-shown" data-ga-label="system-error">
     Sorry, something went wrong
 </h1>
 
