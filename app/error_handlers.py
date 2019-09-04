@@ -35,8 +35,8 @@ def create_error_middleware(overrides):
             return await not_found_error(request)
         except web.HTTPForbidden:
             return await forbidden(request)
-        except InactiveCaseError:
-            return await inactive_case(request)
+        except InactiveCaseError as ex:
+            return await inactive_case(request, ex.case_type)
         except ExerciseClosedError as ex:
             return await ce_closed(request, ex.collection_exercise_id)
         except InvalidEqPayLoad as ex:
@@ -53,10 +53,11 @@ def create_error_middleware(overrides):
     return middleware_handler
 
 
-async def inactive_case(request):
+async def inactive_case(request, case_type):
     logger.warn("Attempt to use an inactive access code")
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("completed.html", request, attributes)
+    attributes['case_type'] = case_type
+    return aiohttp_jinja2.render_template("expired.html", request, attributes)
 
 
 async def ce_closed(request, collex_id):

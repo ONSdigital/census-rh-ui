@@ -940,7 +940,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_cy(self):
@@ -957,7 +957,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_ni(self):
@@ -974,7 +974,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_en(self):
@@ -991,7 +991,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_cy(self):
@@ -1008,7 +1008,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_ni(self):
@@ -1025,7 +1025,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Survey complete', contents)
+        self.assertIn('Your unique access code has expired', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found_en(self):

@@ -138,7 +138,7 @@ class Start(View):
     @staticmethod
     def validate_case(case_json):
         if not case_json.get("active", False):
-            raise InactiveCaseError
+            raise InactiveCaseError(case_json.get("caseType"))
         if not case_json.get("caseStatus", None) == "OK":
             raise InvalidEqPayLoad("CaseStatus is not OK")
 
