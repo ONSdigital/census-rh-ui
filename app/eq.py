@@ -28,22 +28,14 @@ class EqPayloadConstructor(object):
 
         self._sample_attributes = attributes
 
-        # if not self._sample_attributes['display_region']:
-        #
-        #     self._account_service_url = \
-        #         f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitEN:get"].url_for}'
-        #
-        # else:
-        #
-        #     if self._sample_attributes['display_region'] == 'ni':
-        #         self._account_service_url = \
-        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitNI:get"].url_for}'
-        #     elif self._sample_attributes['display_region'] == 'cy':
-        #         self._account_service_url = \
-        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitCY:get"].url_for}'
-        #     else:
-        #         self._account_service_url = \
-        #             f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{self._app.router["SaveAndExitEN:get"].url_for}'
+        if self._sample_attributes['display_region'] == 'ni':
+            save_and_exit_url = '/ni/start/save-and-exit'
+        elif self._sample_attributes['display_region'] == 'cy':
+            save_and_exit_url = '/dechrau/save-and-exit'
+        else:
+            save_and_exit_url = '/start/save-and-exit'
+
+        self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
 
         if adlocation:
             self._channel = 'ad'

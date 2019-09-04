@@ -253,6 +253,7 @@ class IndexEN(Start):
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
+        session["attributes"]["display_region"] = 'en'
 
         raise HTTPFound(self._request.app.router['AddressConfirmationEN:get'].url_for())
 
@@ -1115,6 +1116,30 @@ class UACTimeout(View):
         return {}
 
 
+@routes.view('/start/save-and-exit')
+class SaveAndExitEN(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'en'}
+
+
+@routes.view('/dechrau/save-and-exit')
+class SaveAndExitCY(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'cy', 'locale': 'cy'}
+
+
+@routes.view('/ni/start/save-and-exit')
+class SaveAndExitNI(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'ni'}
+
+
 class WebChat(View):
     @staticmethod
     def get_now():
@@ -1188,30 +1213,6 @@ class WebChat(View):
         return await self._make_request(
             Request("GET", self._webchat_service_url + querystring, None,
                     None, self._handle_response, None))
-
-
-@routes.view('/start/save-and-exit')
-class SaveAndExitEN(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        await forget(request)
-        return {'display_region': 'en'}
-
-
-@routes.view('/dechrau/save-and-exit')
-class SaveAndExitCY(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        await forget(request)
-        return {'display_region': 'cy', 'locale': 'cy'}
-
-
-@routes.view('/ni/start/save-and-exit')
-class SaveAndExitNI(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        await forget(request)
-        return {'display_region': 'ni'}
 
 
 @routes.view('/webchat/chat')
