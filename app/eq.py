@@ -67,7 +67,7 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad(f"Could not retrieve address uprn from case JSON ")
 
         try:
-            self._region = case["region"]
+            self._region = case["region"][0]
         except KeyError:
             raise InvalidEqPayLoad(f"Could not retrieve region from case JSON ")
 
