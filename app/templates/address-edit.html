@@ -1,15 +1,22 @@
-{% extends "base-en.html" %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% set form_action = url('AddressEditNI:post') %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% set form_action = url('AddressEditCY:post') %}
+{% else %}
+    {% extends "base-en.html" %}
+    {% set form_action = url('AddressEditEN:post') %}
+{% endif %}
+
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/address/_macro.njk" import onsAddressInput %}
 {% from "components/button/_macro.njk" import onsButton %}
-{% set page = {
-    "title": "Change your address"
-} %}
 
 {% set form =  {
     "method": "POST",
     "attributes": {
-        "action": url('AddressEdit:post')
+        "action": form_action
     }
 } %}
 

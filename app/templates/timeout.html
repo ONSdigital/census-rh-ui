@@ -1,10 +1,30 @@
-{% extends "base-en.html" %}
-{% if fulfillment_type == 'HH' %}
-    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHH:get')|string + '">re-enter your postcode</a>.' %}
-{% elif  fulfillment_type == 'HI' %}
-    {% set message = 'You will need to <a href="' + url('RequestCodeEnterAddressHI:get')|string + '">re-enter your postcode</a>.' %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% if fulfillment_type == 'HH' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHHNI:get') }}">re-enter your postcode</a>' %}
+    {% elif  fulfillment_type == 'HI' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHINI:get') }}">re-enter your postcode</a>' %}
+    {% else %}
+        {% set next_message = 'You will need to <a href="{{ url('IndexNI:get') }}">re-enter your access code</a>' %}
+    {% endif %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% if fulfillment_type == 'HH' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHHCY:get') }}">re-enter your postcode</a>' %}
+    {% elif  fulfillment_type == 'HI' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHICY:get') }}">re-enter your postcode</a>' %}
+    {% else %}
+        {% set next_message = 'You will need to <a href="{{ url('IndexCY:get') }}">re-enter your access code</a>' %}
+    {% endif %}
 {% else %}
-    {% set message = 'You will need to <a href="' + url('Index:get')|string + '">re-enter your access code</a>.' %}
+    {% extends "base-en.html" %}
+    {% if fulfillment_type == 'HH' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHHEN:get') }}">re-enter your postcode</a>' %}
+    {% elif  fulfillment_type == 'HI' %}
+        {% set next_message = 'You will need to <a href="{{ url('RequestCodeEnterAddressHIEN:get') }}">re-enter your postcode</a>' %}
+    {% else %}
+        {% set next_message = 'You will need to <a href="{{ url('IndexEN:get') }}">re-enter your access code</a>' %}
+    {% endif %}
 {% endif %}
 
 {% from "components/panel/_macro.njk" import onsPanel %}
@@ -16,7 +36,6 @@
     }) %}
         <p>To protect your information we have timed you out.</p>
     {% endcall %}
-    {% autoescape false %}
-        <p>{{ message }}</p>
-    {% endautoescape %}
+
+    <p>{{ next_message }}</p>
 {% endblock %}

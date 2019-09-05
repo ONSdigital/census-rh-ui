@@ -1,10 +1,30 @@
-{% extends "base-en.html" %}
-{% if fulfillment_type == 'HI' %}
-    {% set form_action = url('RequestCodeSelectAddressHI:post') %}
-    {% set restart_link = url('RequestCodeEnterAddressHI:get') %}
+{% if display_region == "ni" %}
+    {% extends "base-ni.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeSelectAddressHINI:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeSelectAddressHHNI:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHNI:post') %}
+    {% endif %}
+{% elif display_region == "cy" %}
+    {% extends "base-cy.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeSelectAddressHICY:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeSelectAddressHHCY:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHCY:post') %}
+    {% endif %}
 {% else %}
-    {% set form_action = url('RequestCodeSelectAddressHH:post') %}
-    {% set restart_link = url('RequestCodeEnterAddressHH:get') %}
+    {% extends "base-en.html" %}
+    {% if fulfillment_type == 'HI' %}
+        {% set form_action = url('RequestCodeSelectAddressHIEN:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
+    {% else %}
+        {% set form_action = url('RequestCodeSelectAddressHHEN:post') %}
+        {% set request_code_link = url('RequestCodeEnterAddressHHEN:post') %}
+    {% endif %}
 {% endif %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
@@ -29,7 +49,7 @@
 
         <h1>We cannot find your address</h1>
 
-        <p>If this is incorrect you can <a href="{{ restart_link }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
+        <p>If this is incorrect you can <a href="{{ request_code_link }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
 
     {% else: %}
 
