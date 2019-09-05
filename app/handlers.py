@@ -23,7 +23,7 @@ from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
-from .security import remember, check_permission
+from .security import remember, check_permission, forget
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
@@ -138,7 +138,7 @@ class Start(View):
     @staticmethod
     def validate_case(case_json):
         if not case_json.get("active", False):
-            raise InactiveCaseError
+            raise InactiveCaseError(case_json.get("caseType"))
         if not case_json.get("caseStatus", None) == "OK":
             raise InvalidEqPayLoad("CaseStatus is not OK")
 
@@ -253,6 +253,7 @@ class IndexEN(Start):
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
+        session["attributes"]["display_region"] = 'en'
 
         raise HTTPFound(self._request.app.router['AddressConfirmationEN:get'].url_for())
 
@@ -446,7 +447,7 @@ class AddressConfirmationEN(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsEN:get'].url_for())
             else:
                 attributes['language'] = 'en'
@@ -508,7 +509,7 @@ class AddressConfirmationCY(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
             else:
                 attributes['language'] = 'cy'
@@ -570,7 +571,7 @@ class AddressConfirmationNI(Start):
             return attributes
 
         if address_confirmation == 'Yes':
-            if case['region'] == 'N':
+            if case['region'][0] == 'N':
                 raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
             else:
                 attributes['language'] = 'en'
@@ -637,7 +638,7 @@ class AddressEditEN(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
@@ -695,7 +696,7 @@ class AddressEditCY(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
         else:
             attributes['language'] = 'cy'
@@ -753,7 +754,7 @@ class AddressEditNI(Start):
             logger.error("Error raising address modification call", client_ip=self._client_ip)
             raise ex
 
-        if case['region'] == 'N':
+        if case['region'][0] == 'N':
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
@@ -1113,6 +1114,30 @@ class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
         return {}
+
+
+@routes.view('/start/save-and-exit')
+class SaveAndExitEN(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'en'}
+
+
+@routes.view('/dechrau/save-and-exit')
+class SaveAndExitCY(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'cy', 'locale': 'cy'}
+
+
+@routes.view('/ni/start/save-and-exit')
+class SaveAndExitNI(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'ni'}
 
 
 class WebChat(View):

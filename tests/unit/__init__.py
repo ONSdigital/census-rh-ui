@@ -297,7 +297,8 @@ class RHTestCase(AioHTTPTestCase):
             'language': 'ul',
             'display_region': 'ni'
         }
-        self.eq_payload_en = {
+
+        self.eq_payload = {
             "jti": self.jti,
             "tx_id": self.jti,
             "iat": int(time.time()),
@@ -310,7 +311,7 @@ class RHTestCase(AioHTTPTestCase):
             "language_code": 'en',
             "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}/start/save-and-exit",
             "channel": self.channel,
             "user_id": "",
             "questionnaire_id": self.questionnaire_id,
@@ -320,101 +321,14 @@ class RHTestCase(AioHTTPTestCase):
             "survey": self.survey
         }
 
-        self.eq_payload_cy = {
-            "jti": self.jti,
-            "tx_id": self.jti,
-            "iat": int(time.time()),
-            "exp": int(time.time() + (5 * 60)),
-            "case_type": self.case_type,
-            "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-WLS',
-            "ru_ref": self.uprn,
-            "case_id": self.case_id,
-            "language_code": 'cy',
-            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
-            "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
-            "channel": self.channel,
-            "user_id": "",
-            "questionnaire_id": self.questionnaire_id,
-            "eq_id": self.eq_id,
-            "period_id": self.period_id,
-            "form_type": self.form_type,
-            "survey": self.survey
-        }
+        self.account_service_url_en = '/start/save-and-exit'
+        self.account_service_url_cy = '/dechrau/save-and-exit'
+        self.account_service_url_ni = '/ni/start/save-and-exit'
+
         self.survey_launched_json = {
             "questionnaireId": self.questionnaire_id,
             "caseId": self.case_id,
             "agentId": ''
-        }
-
-        self.eq_payload_ni_ga = {
-            "jti": self.jti,
-            "tx_id": self.jti,
-            "iat": int(time.time()),
-            "exp": int(time.time() + (5 * 60)),
-            "case_type": self.case_type,
-            "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-NIR',
-            "ru_ref": self.uprn,
-            "case_id": self.case_id,
-            "language_code": 'ga',
-            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
-            "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
-            "channel": self.channel,
-            "user_id": "",
-            "questionnaire_id": self.questionnaire_id,
-            "eq_id": self.eq_id,
-            "period_id": self.period_id,
-            "form_type": self.form_type,
-            "survey": self.survey
-        }
-
-        self.eq_payload_ni_ul = {
-            "jti": self.jti,
-            "tx_id": self.jti,
-            "iat": int(time.time()),
-            "exp": int(time.time() + (5 * 60)),
-            "case_type": self.case_type,
-            "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-NIR',
-            "ru_ref": self.uprn,
-            "case_id": self.case_id,
-            "language_code": 'ul',
-            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
-            "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
-            "channel": self.channel,
-            "user_id": "",
-            "questionnaire_id": self.questionnaire_id,
-            "eq_id": self.eq_id,
-            "period_id": self.period_id,
-            "form_type": self.form_type,
-            "survey": self.survey
-        }
-
-        self.eq_payload_ni_en = {
-            "jti": self.jti,
-            "tx_id": self.jti,
-            "iat": int(time.time()),
-            "exp": int(time.time() + (5 * 60)),
-            "case_type": self.case_type,
-            "collection_exercise_sid": self.collection_exercise_id,
-            "region_code": 'GB-NIR',
-            "ru_ref": self.uprn,
-            "case_id": self.case_id,
-            "language_code": 'en',
-            "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
-            "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}",
-            "channel": self.channel,
-            "user_id": "",
-            "questionnaire_id": self.questionnaire_id,
-            "eq_id": self.eq_id,
-            "period_id": self.period_id,
-            "form_type": self.form_type,
-            "survey": self.survey
         }
 
         self.survey_launched_json = {
