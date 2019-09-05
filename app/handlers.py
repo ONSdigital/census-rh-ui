@@ -2,7 +2,7 @@ import logging
 
 import aiohttp_jinja2
 import re
-import ast
+import json
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
@@ -105,10 +105,10 @@ class View:
     async def post_surveylaunched(self, case, adlocation):
         if not adlocation:
             adlocation = ''
-        json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId'], 'agentId': adlocation}
+        launch_json = {'questionnaireId': case['questionnaireId'], 'caseId': case['caseId'], 'agentId': adlocation}
         return await self._make_request(
             Request("POST", self._rhsvc_url_surveylaunched, self._request.app["RHSVC_AUTH"],
-                    json, self._handle_response, None))
+                    launch_json, self._handle_response, None))
 
 
 class Start(View):
@@ -152,7 +152,7 @@ class Start(View):
         return f"{self._request.app['RHSVC_URL']}/cases/"
 
     async def put_modify_address(self, case, address):
-        json = {
+        case_json = {
             "caseId": case['caseId'],
             "uprn": case['address']['uprn'],
             "addressLine1": address['addressLine1'],
@@ -163,7 +163,7 @@ class Start(View):
             }
         return await self._make_request(
             Request("PUT", self._rhsvc_modify_address + case['caseId'] + '/address', self._request.app["RHSVC_AUTH"],
-                    json, self._handle_response, None))
+                    case_json, self._handle_response, None))
 
     def get_address_details(self, data: dict, attributes: dict):
         """
@@ -1608,7 +1608,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -1645,7 +1645,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -1682,7 +1682,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2197,7 +2197,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2234,7 +2234,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -2271,7 +2271,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = ast.literal_eval(data["request-address-select"])
+            form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
             logger.warn("No address selected", client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
