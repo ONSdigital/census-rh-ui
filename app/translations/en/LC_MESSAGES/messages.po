@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-04 11:47+0100\n"
+"POT-Creation-Date: 2019-09-05 16:14+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -103,16 +103,8 @@ msgstr ""
 msgid "Your access code is for a survey that has now closed."
 msgstr ""
 
-#: app/templates/closed.html:17 app/templates/completed.html:17
+#: app/templates/closed.html:17
 msgid "Thank you for your help."
-msgstr ""
-
-#: app/templates/completed.html:12
-msgid "Survey complete"
-msgstr ""
-
-#: app/templates/completed.html:15
-msgid "Your access code has been used to complete this survey."
 msgstr ""
 
 #: app/templates/error.html:15
@@ -128,6 +120,17 @@ msgstr ""
 msgid ""
 "Please try again later, or %(open)scontact us%(close)s if the problem "
 "continues."
+msgstr ""
+
+#: app/templates/expired.html:27
+msgid "Your unique access code has expired"
+msgstr ""
+
+#: app/templates/expired.html:31
+#, python-format
+msgid ""
+"You can %(open)srequest a new code%(close)s if you have not submitted a "
+"census yet."
 msgstr ""
 
 #: app/templates/index.html:39
@@ -336,6 +339,17 @@ msgstr ""
 msgid "Select an address"
 msgstr ""
 
+#: app/templates/save-and-exit.html:15
+msgid "Your progress has been saved"
+msgstr ""
+
+#: app/templates/save-and-exit.html:19
+#, python-format
+msgid ""
+"You will need to %(open)senter your unique access code%(close)s to access"
+" the census again."
+msgstr ""
+
 #: app/templates/timeout.html:21
 msgid "Your session has timed out due to inactivity"
 msgstr ""
@@ -473,16 +487,3 @@ msgstr ""
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr ""
-
-#~ msgid "total_matches|string + ' addresses found for postcode ' + postcode"
-#~ msgstr ""
-
-#~ msgid "%(total)s addresses found for postcode $(pcode)s"
-#~ msgstr ""
-
-#~ msgid "You will need to %(open)sre-enter your postcode%(close)s."
-#~ msgstr ""
-
-#~ msgid "You will need to %(open)sre-enter your access code%(close)s."
-#~ msgstr ""
-

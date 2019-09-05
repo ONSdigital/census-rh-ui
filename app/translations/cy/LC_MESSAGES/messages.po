@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-04 11:47+0100\n"
+"POT-Creation-Date: 2019-09-05 16:14+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -104,16 +104,8 @@ msgstr ""
 msgid "Your access code is for a survey that has now closed."
 msgstr ""
 
-#: app/templates/closed.html:17 app/templates/completed.html:17
+#: app/templates/closed.html:17
 msgid "Thank you for your help."
-msgstr ""
-
-#: app/templates/completed.html:12
-msgid "Survey complete"
-msgstr ""
-
-#: app/templates/completed.html:15
-msgid "Your access code has been used to complete this survey."
 msgstr ""
 
 #: app/templates/error.html:15
@@ -129,6 +121,17 @@ msgstr ""
 msgid ""
 "Please try again later, or %(open)scontact us%(close)s if the problem "
 "continues."
+msgstr ""
+
+#: app/templates/expired.html:27
+msgid "Your unique access code has expired"
+msgstr ""
+
+#: app/templates/expired.html:31
+#, python-format
+msgid ""
+"You can %(open)srequest a new code%(close)s if you have not submitted a "
+"census yet."
 msgstr ""
 
 #: app/templates/index.html:39
@@ -323,10 +326,11 @@ msgid ""
 "address%(end_link)s  again or find out more "
 "%(start_about_census_link)sabout the census rehearsal%(end_link)s."
 msgstr ""
-"Ar sail y cyfeiriad rydych chi wedi'i roi, nid oes angen i chi gymryd rhan."
-" Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
-"cyfeiriad%(end_link)s eto neu gael gwybod rhagor "
-"%(start_about_census_link)sam ymarfer y cyfrifiad%(end_link)s."
+"Ar sail y cyfeiriad rydych chi wedi'i roi, nid oes angen i chi gymryd "
+"rhan. Os yw hyn yn anghywir, gallwch chi "
+"%(start_request_code_link)snodi'r cyfeiriad%(end_link)s eto neu gael "
+"gwybod rhagor %(start_about_census_link)sam ymarfer y "
+"cyfrifiad%(end_link)s."
 
 #: app/templates/request-code-select-address.html:44
 #, python-format
@@ -356,6 +360,17 @@ msgstr "Dewiswch eich cyfeiriad"
 msgid "Select an address"
 msgstr "Dewiswch gyfeiriad"
 
+#: app/templates/save-and-exit.html:15
+msgid "Your progress has been saved"
+msgstr ""
+
+#: app/templates/save-and-exit.html:19
+#, python-format
+msgid ""
+"You will need to %(open)senter your unique access code%(close)s to access"
+" the census again."
+msgstr ""
+
 #: app/templates/timeout.html:21
 msgid "Your session has timed out due to inactivity"
 msgstr ""
@@ -381,7 +396,7 @@ msgid ""
 "%(open)sGet Help Online%(close)s."
 msgstr ""
 "Mae'r Ganolfan Gyswllt ar gau. Cysylltwch â ni yn ystod yr oriau gwaith "
-"neu gallwch chi \"\"%(open)sGael Help Ar Lein%(close)s."
+"neu gallwch chi %(open)sGael Help Ar Lein%(close)s."
 
 #: app/templates/webchat-form.html:41
 msgid "Opening times"
@@ -497,4 +512,3 @@ msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
-

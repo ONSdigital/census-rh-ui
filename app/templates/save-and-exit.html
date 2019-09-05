@@ -11,10 +11,12 @@
 
 {% block main %}
 
-<h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message">
-    Your progress has been saved
-</h1>
+    <h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message">
+        {{ _("Your progress has been saved") }}
+    </h1>
 
-<p>You will need to <a href="{{ start_link }}">enter your unique access code</a> to access the census again.</p>
+    {% autoescape false %}
+        <p>{{ _("You will need to %(open)senter your unique access code%(close)s to access the census again.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
 
 {% endblock main %}

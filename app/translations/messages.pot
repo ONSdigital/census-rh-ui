@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-04 11:47+0100\n"
+"POT-Creation-Date: 2019-09-05 16:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,16 +102,8 @@ msgstr ""
 msgid "Your access code is for a survey that has now closed."
 msgstr ""
 
-#: app/templates/closed.html:17 app/templates/completed.html:17
+#: app/templates/closed.html:17
 msgid "Thank you for your help."
-msgstr ""
-
-#: app/templates/completed.html:12
-msgid "Survey complete"
-msgstr ""
-
-#: app/templates/completed.html:15
-msgid "Your access code has been used to complete this survey."
 msgstr ""
 
 #: app/templates/error.html:15
@@ -127,6 +119,17 @@ msgstr ""
 msgid ""
 "Please try again later, or %(open)scontact us%(close)s if the problem "
 "continues."
+msgstr ""
+
+#: app/templates/expired.html:27
+msgid "Your unique access code has expired"
+msgstr ""
+
+#: app/templates/expired.html:31
+#, python-format
+msgid ""
+"You can %(open)srequest a new code%(close)s if you have not submitted a "
+"census yet."
 msgstr ""
 
 #: app/templates/index.html:39
@@ -333,6 +336,17 @@ msgstr ""
 
 #: app/templates/request-code-select-address.html:69
 msgid "Select an address"
+msgstr ""
+
+#: app/templates/save-and-exit.html:15
+msgid "Your progress has been saved"
+msgstr ""
+
+#: app/templates/save-and-exit.html:19
+#, python-format
+msgid ""
+"You will need to %(open)senter your unique access code%(close)s to access"
+" the census again."
 msgstr ""
 
 #: app/templates/timeout.html:21
