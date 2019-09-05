@@ -113,7 +113,10 @@ def check_display_region(request):
     path_prefix = request.app['URL_PATH_PREFIX']
     if request.url.path.startswith(path_prefix + '/ni'):
         attributes = {'display_region': 'ni'}
-    elif request.url.path.startswith(path_prefix + '/dechrau') or request.url.path.startswith(path_prefix + '/cy'):
+    elif request.url.path.startswith(path_prefix + '/dechrau') \
+            or request.url.path.startswith(path_prefix + '/gwe-sgwrs') \
+            or request.url.path.startswith(path_prefix + '/gofyn-am-god-mynediad')\
+            or request.url.path.startswith(path_prefix + '/cy'):
         attributes = {'display_region': 'cy', 'locale': 'cy'}
     else:
         attributes = {'display_region': 'en'}
