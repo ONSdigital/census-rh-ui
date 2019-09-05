@@ -23,7 +23,7 @@ from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
-from .security import remember, check_permission
+from .security import remember, check_permission, forget
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
@@ -253,6 +253,7 @@ class IndexEN(Start):
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
+        session["attributes"]["display_region"] = 'en'
 
         raise HTTPFound(self._request.app.router['AddressConfirmationEN:get'].url_for())
 
@@ -1113,6 +1114,30 @@ class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
         return {}
+
+
+@routes.view('/start/save-and-exit')
+class SaveAndExitEN(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'en'}
+
+
+@routes.view('/dechrau/save-and-exit')
+class SaveAndExitCY(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'cy', 'locale': 'cy'}
+
+
+@routes.view('/ni/start/save-and-exit')
+class SaveAndExitNI(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        await forget(request)
+        return {'display_region': 'ni'}
 
 
 class WebChat(View):

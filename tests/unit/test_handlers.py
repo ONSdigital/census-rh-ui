@@ -88,6 +88,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-ENG'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -104,11 +109,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -116,6 +121,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-WLS'
+            eq_payload['language_code'] = 'cy'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -132,11 +142,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_cy.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_cy.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_cy[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -144,6 +154,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-ENG'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -160,11 +175,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -172,6 +187,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -194,12 +214,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        # Using eq_payload_en to test for language 'en' option in ni journey
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -207,6 +226,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -229,12 +253,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        # Using eq_payload_en to test for language 'en' option in ni journey
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -242,6 +265,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -264,12 +292,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        # Using eq_payload_en to test for language 'en' option in ni journey
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -277,6 +304,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ul'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -305,11 +337,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ul.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ul.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -317,6 +349,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ul'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -345,11 +382,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ul.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ul.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -357,6 +394,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ul'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -385,11 +427,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ul.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ul.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ul[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -397,6 +439,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ga'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -425,11 +472,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ga.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ga.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ga[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -437,6 +484,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ga'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -465,11 +517,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ga.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ga.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ga[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -477,6 +529,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'ga'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -505,11 +562,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_ga.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_ga.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_ga[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -517,6 +574,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -545,11 +607,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -557,6 +619,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -585,11 +652,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -597,6 +664,11 @@ class TestHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -625,11 +697,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_ni_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_ni_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_ni_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -638,6 +710,9 @@ class TestHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.uac_json)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address', payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -658,11 +733,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -671,6 +746,11 @@ class TestHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address', payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-WLS'
+            eq_payload['language_code'] = 'cy'
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -691,11 +771,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_cy.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_cy.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_cy[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @skip_encrypt
     @unittest_run_loop
@@ -704,6 +784,9 @@ class TestHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.uac_json)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address', payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['account_service_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -724,11 +807,11 @@ class TestHandlers(RHTestCase):
         self.assertTrue(redirected_url.startswith(self.app['EQ_URL']), redirected_url)  # outputs url on fail
         _, _, _, query, *_ = urlsplit(redirected_url)  # we only care about the query string
         token = json.loads(parse_qs(query)['token'][0])  # convert token to dict
-        self.assertEqual(self.eq_payload_en.keys(), token.keys())  # fail early if payload keys differ
-        for key in self.eq_payload_en.keys():
+        self.assertEqual(eq_payload.keys(), token.keys())  # fail early if payload keys differ
+        for key in eq_payload.keys():
             if key in ['jti', 'tx_id', 'iat', 'exp']:
                 continue  # skip uuid / time generated values
-            self.assertEqual(self.eq_payload_en[key], token[key], key)  # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)  # outputs failed key as msg
 
     @build_eq_raises
     @unittest_run_loop
