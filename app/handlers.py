@@ -1270,7 +1270,7 @@ class WebChatEN(WebChat):
                     'display_region': 'en'}
 
         context = {'screen_name': data.get('screen_name'),
-                   'language': 'english',
+                   'language': 'en',
                    'country': data.get('country'),
                    'query': data.get('query'),
                    'display_region': 'en',
@@ -1324,7 +1324,7 @@ class WebChatCY(WebChat):
                     'locale': 'cy'}
 
         context = {'screen_name': data.get('screen_name'),
-                   'language': 'welsh',
+                   'language': 'cy',
                    'country': data.get('country'),
                    'query': data.get('query'),
                    'display_region': 'cy',
@@ -1378,7 +1378,7 @@ class WebChatNI(WebChat):
                     'display_region': 'ni'}
 
         context = {'screen_name': data.get('screen_name'),
-                   'language': 'english',
+                   'language': 'en',
                    'country': data.get('country'),
                    'query': data.get('query'),
                    'display_region': 'ni',
@@ -2095,14 +2095,14 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
         return {'fulfillment_type': 'HH', 'display_region': 'en'}
 
 
-@routes.view('/request-access-code/timeout')
+@routes.view('/cy/request-access-code/timeout')
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
         return {'fulfillment_type': 'HH', 'display_region': 'cy', 'locale': 'cy'}
 
 
-@routes.view('/request-access-code/timeout')
+@routes.view('/ni/request-access-code/timeout')
 class RequestCodeTimeoutHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
