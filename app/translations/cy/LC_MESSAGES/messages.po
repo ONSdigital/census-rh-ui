@@ -21,22 +21,22 @@ msgstr ""
 
 #: app/templates/404.html:14
 msgid "Page not found"
-msgstr ""
+msgstr "Heb ddod o hyd i'r dudalen"
 
 #: app/templates/404.html:16
 msgid "If you entered a web address, check it is correct."
-msgstr ""
+msgstr "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn siŵr ei fod yn gywir."
 
 #: app/templates/404.html:17
 msgid "If you pasted the web address, check that you copied the entire address."
-msgstr ""
+msgstr "Os gwnaethoch ludo cyfeiriad y wefan, gwnewch yn siŵr eich bod wedi copïo'r cyfeiriad cyfan."
 
 #: app/templates/404.html:19
 #, python-format
 msgid ""
 "If you still encounter problems please %(open)scontact us%(close)s. We "
 "apologise for any inconvenience this may have caused."
-msgstr ""
+msgstr "Os ydych chi'n cael problemau o hyd, %(open)scysylltwch â ni%(close)s."
 
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42
@@ -98,41 +98,41 @@ msgstr "Cadw a pharhaue"
 
 #: app/templates/closed.html:12
 msgid "This survey has closed"
-msgstr ""
+msgstr "Mae'r arolwg hwn wedi cau"
 
 #: app/templates/closed.html:15
 msgid "Your access code is for a survey that has now closed."
-msgstr ""
+msgstr "Mae eich cod mynediad ar gyfer arolwg sydd bellach wedi cau."
 
 #: app/templates/closed.html:17
 msgid "Thank you for your help."
-msgstr ""
+msgstr "Diolch am eich help."
 
 #: app/templates/error.html:15
 msgid "Sorry, something went wrong"
-msgstr ""
+msgstr "Mae'n flin gennym, aeth rhywbeth o'i le"
 
 #: app/templates/error.html:18
 msgid "We are experiencing some technical problems."
-msgstr ""
+msgstr "Rydym yn profi rhai problemau technegol."
 
 #: app/templates/error.html:21
 #, python-format
 msgid ""
 "Please try again later, or %(open)scontact us%(close)s if the problem "
 "continues."
-msgstr ""
+msgstr "Rhowch gynnig arall arni yn nes ymlaen, neu %(open)scysylltwch â ni%(close)s os yw'r broblem yn parhau."
 
 #: app/templates/expired.html:27
 msgid "Your unique access code has expired"
-msgstr ""
+msgstr "Mae eich cod mynediad unigryw wedi dod i ben"
 
 #: app/templates/expired.html:31
 #, python-format
 msgid ""
 "You can %(open)srequest a new code%(close)s if you have not submitted a "
 "census yet."
-msgstr ""
+msgstr "Gallwch %(open)sofyn am god newydd%(close)s os nad ydych chi wedi cyflwyno cyfrifiad eto."
 
 #: app/templates/index.html:39
 msgid "Enter the 16 character code printed on the letter"
@@ -226,7 +226,7 @@ msgstr "Ydy'r rhif ffôn symudol hwn yn gywir?"
 
 #: app/templates/request-code-confirm-mobile.html:76
 msgid "Check and confirm your mobile phone number"
-msgstr ""
+msgstr "Edrychwch eto ar eich rhif ffôn symudol a'i gadarnhau"
 
 #: app/templates/request-code-enter-address.html:45
 msgid "What is your postcode?"
@@ -268,51 +268,51 @@ msgstr "Nodwch rif ffôn dilys yn y Deyrnas Unedig"
 
 #: app/templates/request-code-household.html:15
 msgid "Request a new access code"
-msgstr ""
+msgstr "Gofyn am god mynediad newydd"
 
 #: app/templates/request-code-household.html:17
 msgid ""
 "To do the census online you need a 16 character unique access code which "
 "we have sent you in a letter."
-msgstr ""
+msgstr "I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
 
 #: app/templates/request-code-household.html:19
 #: app/templates/request-code-individual.html:19
 msgid ""
 "If you are in a rehearsal area and don’t have a code you can get a new "
 "one."
-msgstr ""
+msgstr "Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, gallwch ofyn am un newydd."
 
 #: app/templates/request-code-household.html:21
 #: app/templates/request-code-individual.html:21
 msgid "You will need to provide:"
-msgstr ""
+msgstr "Bydd angen i chi ddarparu:"
 
 #: app/templates/request-code-household.html:23
 #: app/templates/request-code-individual.html:23
 msgid "your mobile phone number so we can send you the code by text"
-msgstr ""
+msgstr "eich rhif ffôn symudol fel y gallwn anfon y cod atoch mewn neges destun"
 
 #: app/templates/request-code-household.html:24
 #: app/templates/request-code-individual.html:24
 msgid "your address so we can confirm you are in the rehearsal area"
-msgstr ""
+msgstr "eich cyfeiriad fel y gallwn gadarnhau eich bod yn ardal yr ymarfer"
 
 #: app/templates/request-code-household.html:30
 msgid "Request a new code"
-msgstr ""
+msgstr "Gofyn am god newydd"
 
 #: app/templates/request-code-individual.html:15
 msgid "Request an individual access code"
-msgstr ""
+msgstr "Gofyn am god mynediad unigryw"
 
 #: app/templates/request-code-individual.html:17
 msgid "To do the census online you need a 16 character unique access code."
-msgstr ""
+msgstr "I wneud y cyfrifiad ar lein, mae angen cod mynediad unigryw 16 nod arnoch chi."
 
 #: app/templates/request-code-individual.html:30
 msgid "Request an individual code"
-msgstr ""
+msgstr "Gofyn am god unigol"
 
 #: app/templates/request-code-not-required.html:26
 msgid "Your address is not part of the 2019 rehearsal"
@@ -335,7 +335,7 @@ msgstr ""
 #: app/templates/request-code-select-address.html:44
 #, python-format
 msgid "<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>"
-msgstr ""
+msgstr "<p class='u-fs-r--b'>Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y cod post %(pcode)s</p>"
 
 #: app/templates/request-code-select-address.html:50
 msgid "We cannot find your address"
@@ -362,32 +362,32 @@ msgstr "Dewiswch gyfeiriad"
 
 #: app/templates/save-and-exit.html:15
 msgid "Your progress has been saved"
-msgstr ""
+msgstr "Mae eich cynnydd wedi cael ei gadw"
 
 #: app/templates/save-and-exit.html:19
 #, python-format
 msgid ""
 "You will need to %(open)senter your unique access code%(close)s to access"
 " the census again."
-msgstr ""
+msgstr "Bydd angen i chi %(open)snodi eich cod mynediad unigryw%(close)s i gael mynediad at y cyfrifiad eto."
 
 #: app/templates/timeout.html:21
 msgid "Your session has timed out due to inactivity"
-msgstr ""
+msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
 
 #: app/templates/timeout.html:25
 msgid "To protect your information we have timed you out."
-msgstr ""
+msgstr "Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser"
 
 #: app/templates/timeout.html:30 app/templates/timeout.html:32
 #, python-format
 msgid "You will need to %(open)sre-enter your postcode%(close)s"
-msgstr ""
+msgstr "Bydd angen i chi %(open)snodi eich cod post eto%(close)s"
 
 #: app/templates/timeout.html:34
 #, python-format
 msgid "You will need to %(open)sre-enter your access code%(close)s"
-msgstr ""
+msgstr "Bydd angen i chi %(open)snodi eich cod mynediad eto%(close)s"
 
 #: app/templates/webchat-form.html:39
 #, python-format

@@ -37,4 +37,4 @@ MOBILE_CHECK_MSG_CY = {'text': "Edrychwch eto ar eich rhif ffôn symudol a'i gad
 POSTCODE_INVALID_MSG_CY = {'text': "Nodwch god post dilys yn y Deyrnas Unedig i barhau", "level": "ERROR", "type": "POSTCODE_ENTER_ERROR", "field": "postcode"}  # NOQA
 ADDRESS_SELECT_CHECK_MSG_CY = {'text': "Dewiswch gyfeiriad", "level": "ERROR", "type": "ADDRESS_SELECT_CHECK_MSG", "field": "address-select"}  # NOQA
 VALIDATION_FAILURE_MSG_CY = {'text': "Mae'r sesiwn wedi cyrraedd y terfyn amser neu nid oes caniatâd wedi cael ei roi", "level": "ERROR", "type": "VALIDATION_FAILURE_MSG", "field": "uac"}  # NOQA
-START_LANGUAGE_OPTION_MSG_CY = {'text': 'Select a WELSH language option', "level": "ERROR", "type": "START_LANGUAGE_OPTION_MSG", "field": "language-option"}  # NOQA
+START_LANGUAGE_OPTION_MSG_CY = {'text': 'Dewiswch opsiwn iaith', "level": "ERROR", "type": "START_LANGUAGE_OPTION_MSG", "field": "language-option"}  # NOQA

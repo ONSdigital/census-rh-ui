@@ -32,7 +32,7 @@ class EqPayloadConstructor(object):
             save_and_exit_url = '/ni/start/save-and-exit'
             start_url = '/ni/start/'
         elif self._sample_attributes['display_region'] == 'cy':
-            save_and_exit_url = '/dechrau/save-and-exit'
+            save_and_exit_url = '/dechrau/cadw-a-gadael'
             start_url = '/dechrau/'
         else:
             save_and_exit_url = '/start/save-and-exit'

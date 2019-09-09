@@ -1124,7 +1124,7 @@ class SaveAndExitEN(View):
         return {'display_region': 'en'}
 
 
-@routes.view('/dechrau/save-and-exit')
+@routes.view('/dechrau/cadw-a-gadael')
 class SaveAndExitCY(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
@@ -2102,7 +2102,7 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
         return {'fulfillment_type': 'HH', 'display_region': 'en'}
 
 
-@routes.view('/gofyn-am-god-mynediad/timeout')
+@routes.view('/gofyn-am-god-mynediad/terfyn-amser')
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
@@ -2123,7 +2123,7 @@ class RequestCodeIndividualEN(RequestCodeCommon):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/request-individual-code')
+@routes.view('/gofyn-am-god-unigol')
 class RequestCodeIndividualCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, _):
@@ -2151,7 +2151,7 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'EN', 'en')
 
 
-@routes.view('/cy/request-individual-code/nodi-cyfeiriad')
+@routes.view('/gofyn-am-god-unigol/nodi-cyfeiriad')
 class RequestCodeEnterAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2216,7 +2216,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHIEN:get'].url_for())
 
 
-@routes.view('/cy/request-individual-code/dewis-cyfeiriad')
+@routes.view('/gofyn-am-god-unigol/dewis-cyfeiriad')
 class RequestCodeSelectAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2338,7 +2338,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/cadarnhau-cyfeiriad')
+@routes.view('/gofyn-am-god-unigol/cadarnhau-cyfeiriad')
 class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
@@ -2442,7 +2442,7 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/dim-angen')
+@routes.view('/gofyn-am-god-unigol/dim-angen')
 class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
@@ -2473,7 +2473,7 @@ class RequestCodeEnterMobileHIEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-individual-code/nodi-rhif-ffon-symudol')
+@routes.view('/gofyn-am-god-unigol/nodi-rhif-ffon-symudol')
 class RequestCodeEnterMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -2555,7 +2555,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/cadarnhau-rhif-ffon-symudol')
+@routes.view('/gofyn-am-god-unigol/cadarnhau-rhif-ffon-symudol')
 class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
@@ -2667,7 +2667,7 @@ class RequestCodeCodeSentHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/wedi-anfon-cod')
+@routes.view('/gofyn-am-god-unigol/wedi-anfon-cod')
 class RequestCodeCodeSentHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
@@ -2690,7 +2690,7 @@ class RequestCodeTimeoutHIEN(RequestCodeCommon):
         return {'fulfillment_type': 'HI', 'display_region': 'en'}
 
 
-@routes.view('/cy/request-individual-code/timeout')
+@routes.view('/gofyn-am-god-unigol/terfyn-amser')
 class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
