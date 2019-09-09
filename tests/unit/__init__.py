@@ -311,7 +311,8 @@ class RHTestCase(AioHTTPTestCase):
             "language_code": 'en',
             "display_address": f"{self.uac_json['address']['addressLine1']}, {self.uac_json['address']['addressLine2']}",
             "response_id": self.response_id,
-            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}/start/save-and-exit",
+            "account_service_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}/start/",
+            "account_service_log_out_url": f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}/start/save-and-exit",
             "channel": self.channel,
             "user_id": "",
             "questionnaire_id": self.questionnaire_id,
@@ -321,9 +322,12 @@ class RHTestCase(AioHTTPTestCase):
             "survey": self.survey
         }
 
-        self.account_service_url_en = '/start/save-and-exit'
-        self.account_service_url_cy = '/dechrau/save-and-exit'
-        self.account_service_url_ni = '/ni/start/save-and-exit'
+        self.account_service_url_en = '/start/'
+        self.account_service_url_cy = '/dechrau/'
+        self.account_service_url_ni = '/ni/start/'
+        self.account_service_log_out_url_en = '/start/save-and-exit'
+        self.account_service_log_out_url_cy = '/dechrau/save-and-exit'
+        self.account_service_log_out_url_ni = '/ni/start/save-and-exit'
 
         self.survey_launched_json = {
             "questionnaireId": self.questionnaire_id,

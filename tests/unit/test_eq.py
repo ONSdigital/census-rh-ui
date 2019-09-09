@@ -59,6 +59,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'en'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
@@ -81,6 +83,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'cy'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
@@ -103,6 +107,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'ul'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
         self.maxDiff = None  # for full payload comparison when running this test
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
@@ -127,6 +133,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'en'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
             mocked_time.return_value = self.eq_payload['iat']
@@ -150,6 +158,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'cy'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
             mocked_time.return_value = self.eq_payload['iat']
@@ -173,6 +183,8 @@ class TestEq(RHTestCase):
         eq_payload['language_code'] = 'ul'
         eq_payload['account_service_url'] = \
             f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+        eq_payload['account_service_log_out_url'] = \
+            f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
         with mock.patch('app.eq.uuid4') as mocked_uuid4, mock.patch('app.eq.time.time') as mocked_time:
             # NB: has to be mocked after setup but before import
             mocked_time.return_value = self.eq_payload['iat']
