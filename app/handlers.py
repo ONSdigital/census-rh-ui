@@ -1934,7 +1934,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith('eng'):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -1988,7 +1988,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith('wel'):
+                        if fulfilment['language'] == 'wel':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2042,7 +2042,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith('eng'):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2522,7 +2522,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith('eng'):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2630,7 +2630,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith('eng'):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
