@@ -30,12 +30,16 @@ class EqPayloadConstructor(object):
 
         if self._sample_attributes['display_region'] == 'ni':
             save_and_exit_url = '/ni/start/save-and-exit'
+            start_url = '/ni/start/'
         elif self._sample_attributes['display_region'] == 'cy':
             save_and_exit_url = '/dechrau/save-and-exit'
+            start_url = '/dechrau/'
         else:
             save_and_exit_url = '/start/save-and-exit'
+            start_url = '/start/'
 
-        self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
+        self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{start_url}'
+        self._account_service_log_out_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
 
         if adlocation:
             self._channel = 'ad'
@@ -99,7 +103,8 @@ class EqPayloadConstructor(object):
             "language_code": self._language_code,
             "display_address": self.build_display_address(self._sample_attributes),
             "response_id": self._response_id,
-            "account_service_url": self._account_service_url,  # required for save/continue
+            "account_service_url": self._account_service_url,
+            "account_service_log_out_url": self._account_service_log_out_url,  # required for save/continue
             "channel": self._channel,
             "user_id": self._user_id,
             "questionnaire_id": self._questionnaire_id,
