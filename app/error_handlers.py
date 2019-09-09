@@ -47,6 +47,8 @@ def create_error_middleware(overrides):
             return await connection_error(request, ex.os_error.strerror)
         except ContentTypeError as ex:
             return await payload_error(request, str(ex.request_info.url))
+        except KeyError:
+            return await response_error(request)
         except ClientResponseError:
             return await response_error(request)
 

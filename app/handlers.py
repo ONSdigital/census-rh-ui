@@ -1934,7 +1934,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'].startswith('eng'):
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -1943,6 +1943,8 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
@@ -1986,7 +1988,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'].startswith('wel'):
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -1995,6 +1997,8 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
@@ -2038,7 +2042,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'].startswith('eng'):
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2047,6 +2051,8 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
@@ -2516,7 +2522,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'].startswith('eng'):
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2525,6 +2531,8 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
@@ -2568,7 +2576,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'wel':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2577,6 +2585,8 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
@@ -2620,7 +2630,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'].startswith('eng'):
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2629,6 +2639,8 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
+                except KeyError as ex:
+                    raise ex
                 except ClientResponseError as ex:
                     raise ex
 
