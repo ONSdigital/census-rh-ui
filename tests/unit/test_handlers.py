@@ -93,6 +93,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -126,6 +128,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'cy'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -159,6 +163,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -192,6 +198,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -231,6 +239,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -270,6 +280,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -309,6 +321,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ul'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -354,6 +368,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ul'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -399,6 +415,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ul'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -444,6 +462,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ga'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -489,6 +509,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ga'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -534,6 +556,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'ga'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -579,6 +603,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -624,6 +650,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -669,6 +697,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -713,6 +743,8 @@ class TestHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_en}"
 
             response = await self.client.request("POST", self.post_index_en, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -751,6 +783,8 @@ class TestHandlers(RHTestCase):
             eq_payload['language_code'] = 'cy'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_cy}"
 
             response = await self.client.request("POST", self.post_index_cy, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -787,6 +821,8 @@ class TestHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
+            eq_payload['account_service_log_out_url'] = \
+                f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_log_out_url_ni}"
 
             response = await self.client.request("POST", self.post_index_ni, allow_redirects=False, data=self.form_data)
             self.assertEqual(response.status, 302)
