@@ -1941,7 +1941,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -1950,7 +1950,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHEN:get'].url_for())
@@ -1993,7 +1993,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'wel':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2002,7 +2002,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHCY:get'].url_for())
@@ -2045,7 +2045,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                 available_fulfilments = await self.get_fulfilment('HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2054,7 +2054,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHNI:get'].url_for())
@@ -2529,7 +2529,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2538,7 +2538,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHIEN:get'].url_for())
@@ -2581,7 +2581,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'wel':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2590,7 +2590,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHICY:get'].url_for())
@@ -2633,7 +2633,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                                                                   attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
-                        if fulfilment['language'].startswith(attributes['display_region']):
+                        if fulfilment['language'] == 'eng':
                             attributes['fulfilmentCode'] = fulfilment['fulfilmentCode']
                 else:
                     attributes['fulfilmentCode'] = available_fulfilments[0]['fulfilmentCode']
@@ -2642,7 +2642,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHINI:get'].url_for())
