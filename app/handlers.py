@@ -1943,9 +1943,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHEN:get'].url_for())
@@ -1997,9 +1995,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHCY:get'].url_for())
@@ -2051,9 +2047,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHHNI:get'].url_for())
@@ -2531,9 +2525,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHIEN:get'].url_for())
@@ -2585,9 +2577,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHICY:get'].url_for())
@@ -2639,9 +2629,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
                     await self.request_fulfilment(attributes['case_id'],
                                                   attributes['mobile_number'],
                                                   attributes['fulfilmentCode'])
-                except KeyError as ex:
-                    raise ex
-                except ClientResponseError as ex:
+                except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(self._request.app.router['RequestCodeCodeSentHINI:get'].url_for())

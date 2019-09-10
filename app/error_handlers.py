@@ -48,7 +48,7 @@ def create_error_middleware(overrides):
         except ContentTypeError as ex:
             return await payload_error(request, str(ex.request_info.url))
         except KeyError:
-            return await response_error(request)
+            return await key_error(request)
         except ClientResponseError:
             return await response_error(request)
 
@@ -82,6 +82,12 @@ async def connection_error(request, message: str):
 
 async def payload_error(request, url: str):
     logger.error("Service failed to return expected JSON payload", url=url)
+    attributes = check_display_region(request)
+    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+
+
+async def key_error(request):
+    logger.error("Required value missing")
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
