@@ -639,7 +639,13 @@ class AddressEditEN(Start):
             raise ex
 
         if case['region'][0] == 'N':
-            raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
+            session["attributes"]["addressLine1"] = attributes["addressLine1"]
+            session["attributes"]["addressLine2"] = attributes["addressLine2"]
+            session["attributes"]["addressLine3"] = attributes["addressLine3"]
+            session["attributes"]["townName"] = attributes["townName"]
+            session["attributes"]["postcode"] = attributes["postcode"]
+            session.changed()
+            raise HTTPFound(self._request.app.router['StartLanguageOptionsEN:get'].url_for())
         else:
             attributes['language'] = 'en'
             await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
@@ -697,6 +703,12 @@ class AddressEditCY(Start):
             raise ex
 
         if case['region'][0] == 'N':
+            session["attributes"]["addressLine1"] = attributes["addressLine1"]
+            session["attributes"]["addressLine2"] = attributes["addressLine2"]
+            session["attributes"]["addressLine3"] = attributes["addressLine3"]
+            session["attributes"]["townName"] = attributes["townName"]
+            session["attributes"]["postcode"] = attributes["postcode"]
+            session.changed()
             raise HTTPFound(self._request.app.router['StartLanguageOptionsCY:get'].url_for())
         else:
             attributes['language'] = 'cy'
@@ -755,6 +767,12 @@ class AddressEditNI(Start):
             raise ex
 
         if case['region'][0] == 'N':
+            session["attributes"]["addressLine1"] = attributes["addressLine1"]
+            session["attributes"]["addressLine2"] = attributes["addressLine2"]
+            session["attributes"]["addressLine3"] = attributes["addressLine3"]
+            session["attributes"]["townName"] = attributes["townName"]
+            session["attributes"]["postcode"] = attributes["postcode"]
+            session.changed()
             raise HTTPFound(self._request.app.router['StartLanguageOptionsNI:get'].url_for())
         else:
             attributes['language'] = 'en'
