@@ -72,8 +72,8 @@ class DevelopmentConfig:
     PORT = env.int("PORT", default="9092")
     LOG_LEVEL = env("LOG_LEVEL", default="INFO")
 
-    DOMAIN_URL_EN = env("DOMAIN_URL_EN", default="http://0.0.0.0:9092")
-    DOMAIN_URL_CY = env("DOMAIN_URL_CY", default="http://0.0.0.0:9092")
+    DOMAIN_URL_EN = env.str("DOMAIN_URL_EN", default="http://localhost:9092")
+    DOMAIN_URL_CY = env.str("DOMAIN_URL_CY", default="http://localhost:9092")
 
     ACCOUNT_SERVICE_URL = env.str("ACCOUNT_SERVICE_URL", default="http://localhost:9092")
     EQ_URL = env.str("EQ_URL", default="http://localhost:5000")
