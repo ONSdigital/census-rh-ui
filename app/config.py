@@ -37,6 +37,9 @@ class BaseConfig:
     PORT = env("PORT")
     LOG_LEVEL = env("LOG_LEVEL")
 
+    DOMAIN_URL_EN = env("DOMAIN_URL_EN")
+    DOMAIN_URL_CY = env("DOMAIN_URL_CY")
+
     ACCOUNT_SERVICE_URL = env("ACCOUNT_SERVICE_URL")
     EQ_URL = env("EQ_URL")
     JSON_SECRET_KEYS = env("JSON_SECRET_KEYS")
@@ -69,6 +72,9 @@ class DevelopmentConfig:
     PORT = env.int("PORT", default="9092")
     LOG_LEVEL = env("LOG_LEVEL", default="INFO")
 
+    DOMAIN_URL_EN = env("DOMAIN_URL_EN", default="http://0.0.0.0:9092")
+    DOMAIN_URL_CY = env("DOMAIN_URL_CY", default="http://0.0.0.0:9092")
+
     ACCOUNT_SERVICE_URL = env.str("ACCOUNT_SERVICE_URL", default="http://localhost:9092")
     EQ_URL = env.str("EQ_URL", default="http://localhost:5000")
     JSON_SECRET_KEYS = env.str("JSON_SECRET_KEYS", default=None) or open("./tests/test_data/test_keys.json").read()
@@ -95,6 +101,9 @@ class TestingConfig:
     HOST = "0.0.0.0"
     PORT = "9092"
     LOG_LEVEL = "INFO"
+
+    DOMAIN_URL_EN = "http://localhost:9092"
+    DOMAIN_URL_CY = "http://localhost:9092"
 
     ACCOUNT_SERVICE_URL = "http://localhost:9092"
     EQ_URL = "http://localhost:5000"
