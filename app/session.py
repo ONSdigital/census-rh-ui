@@ -1,14 +1,13 @@
-import logging
 import time
 
 from asyncio import get_event_loop
 from aioredis import create_pool, RedisError
 from aiohttp_session import session_middleware, Session
 from aiohttp_session.redis_storage import RedisStorage
-from structlog import wrap_logger
+from structlog import get_logger
 
 
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 
 # Please see https://github.com/aio-libs/aiohttp-session/issues/344
 # Anomalous behaviour can arise where you have a valid session cookie from the client as if a session was created by

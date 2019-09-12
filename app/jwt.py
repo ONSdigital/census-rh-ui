@@ -1,11 +1,10 @@
 import json
-import logging
 
 from sdc.crypto.key_store import KeyStore
 from sdc.crypto.key_store import validate_required_keys
-from structlog import wrap_logger
+from structlog import get_logger
 
-logger = wrap_logger(logging.getLogger('respondent-home'))
+logger = get_logger('respondent-home')
 
 
 def key_store(keys: str) -> KeyStore:

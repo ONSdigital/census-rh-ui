@@ -1,15 +1,14 @@
-import logging
-
 import aiohttp_jinja2
+
 from aiohttp import web
 from aiohttp.client_exceptions import (
     ClientResponseError, ClientConnectorError, ClientConnectionError, ContentTypeError)
-from structlog import wrap_logger
 
 from .exceptions import ExerciseClosedError, InactiveCaseError, InvalidEqPayLoad
+from structlog import get_logger
 
 
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 
 
 def create_error_middleware(overrides):

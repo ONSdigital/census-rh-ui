@@ -1,4 +1,3 @@
-import logging
 import types
 
 import aiohttp_jinja2
@@ -7,7 +6,7 @@ from aiohttp import BasicAuth, ClientSession, ClientTimeout
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError
 from aiohttp.web import Application
 from aiohttp_utils import negotiation, routing
-from structlog import wrap_logger
+from structlog import get_logger
 
 from . import config
 from . import error_handlers
@@ -21,9 +20,7 @@ from . import settings
 from .app_logging import logger_initial_config
 
 
-logger = wrap_logger(logging.getLogger("respondent-home"))
-server_logger = logging.getLogger("aiohttp.server")
-server_logger.setLevel("INFO")
+logger = get_logger('respondent-home')
 
 
 async def on_startup(app):

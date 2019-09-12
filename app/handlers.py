@@ -1,14 +1,14 @@
-import logging
-
 import aiohttp_jinja2
 import re
 import json
+
 from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
-from structlog import wrap_logger
 from aiohttp_session import get_session
 from datetime import datetime, timezone
+from structlog import get_logger
+
 
 from . import (
     BAD_CODE_MSG, INVALID_CODE_MSG, VERSION, ADDRESS_CHECK_MSG, ADDRESS_EDIT_MSG,
@@ -26,7 +26,7 @@ from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget
 from collections import namedtuple
 
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 Request = namedtuple("Request", ["method", "url", "auth", "json", "func", "response"])
 routes = RouteTableDef()
 

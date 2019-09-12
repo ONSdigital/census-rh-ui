@@ -1,13 +1,12 @@
-import logging
 import time
 from collections import namedtuple
 from uuid import uuid4
 from aiohttp.web import Application
-from structlog import wrap_logger
+from structlog import get_logger
 
 from .exceptions import InvalidEqPayLoad
 
-logger = wrap_logger(logging.getLogger(__name__))
+logger = get_logger('respondent-home')
 
 Request = namedtuple("Request", ["method", "path", "auth", "func"])
 

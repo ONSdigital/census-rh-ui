@@ -2,29 +2,28 @@ import logging
 import os
 import sys
 
+
 from structlog import configure
 from structlog.processors import JSONRenderer, TimeStamper
-from structlog.stdlib import add_log_level, filter_by_level
+from structlog.stdlib import add_log_level, LoggerFactory, ProcessorFormatter
 
 
-def logger_initial_config(
-    service_name=None, log_level=None, logger_format=None, logger_date_format=None
-):
+def logger_initial_config(service_name=None, log_level=None,):
 
-    if not logger_date_format:
-        logger_date_format = os.getenv("LOGGING_DATE_FORMAT", "%Y-%m-%dT%H:%M%s")
     if not log_level:
-        log_level = os.getenv("SMS_LOG_LEVEL", "DEBUG")
-    if not logger_format:
-        logger_format = "%(message)s"
+        log_level = os.getenv("LOG_LEVEL", "INFO")
     if not service_name:
-        service_name = os.getenv("NAME", "respondent-home")
-    try:
-        indent = int(os.getenv("JSON_INDENT_LOGGING"))
-    except TypeError:
-        indent = None
-    except ValueError:
-        indent = None
+        service_name = "respondent-home"
+
+    levels = {
+        'CRITICAL': logging.CRITICAL,
+        'ERROR': logging.ERROR,
+        'WARNING': logging.WARNING,
+        'INFO': logging.INFO,
+        'DEBUG': logging.DEBUG,
+    }
+
+    logger_date_format = "%Y-%m-%dT%H:%M:%s"
 
     def add_service(_1, _2, event_dict):
         """
@@ -33,14 +32,26 @@ def logger_initial_config(
         event_dict["service"] = service_name
         return event_dict
 
-    logging.basicConfig(stream=sys.stdout, level=log_level, format=logger_format)
+    shared_processors = [
+            add_log_level,
+            TimeStamper(fmt=logger_date_format, utc=True, key="created"),
+            add_service,
+    ]
 
     configure(
-        processors=[
-            add_log_level,
-            filter_by_level,
-            add_service,
-            TimeStamper(fmt=logger_date_format, utc=True, key="created_at"),
-            JSONRenderer(indent=indent),
-        ]
+        processors=shared_processors + [
+            ProcessorFormatter.wrap_for_formatter
+        ],
+        logger_factory=LoggerFactory(),
     )
+
+    formatter = ProcessorFormatter(
+        processor=JSONRenderer(),
+        foreign_pre_chain=shared_processors,
+    )
+
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(levels[log_level])

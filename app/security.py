@@ -1,14 +1,13 @@
 import random
 import string
-import logging
 
-from structlog import wrap_logger
 from aiohttp import web
 from aiohttp_session import get_session
 from aiohttp.web import HTTPForbidden
 
 from . import VALIDATION_FAILURE_MSG
 from .flash import flash
+from structlog import get_logger
 
 
 DEFAULT_RESPONSE_HEADERS = {
@@ -30,7 +29,7 @@ SESSION_KEY = 'identity'
 
 rnd = random.SystemRandom()
 
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 
 
 def get_random_string(length):
