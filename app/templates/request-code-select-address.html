@@ -41,20 +41,22 @@
     }
 } %}
 
-{% set question_description = '<p class="u-fs-r--b">' + total_matches|string + ' addresses found for postcode ' + postcode + '</p>' %}
+{% set question_description = _("<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>", total=total_matches|string, pcode=postcode) %}
 
 {% block main %}
 
     {% if total_matches == 0: %}
 
-        <h1>We cannot find your address</h1>
+        <h1>{{ _("We cannot find your address") }}</h1>
 
-        <p>If this is incorrect you can <a href="{{ request_code_link }}">enter the address</a> again or <a href="#">contact us</a> for help.</p>
+        {% autoescape false %}
+            <p>{{ _("If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="#">', end_link='</a>')|safe }}</p>
+        {% endautoescape %}
 
     {% else: %}
 
         {% call onsQuestion({
-            "title": "Select your address",
+            "title": _("Select your address"),
             "description": question_description
         }) %}
 
@@ -64,7 +66,7 @@
                         "name": "request-address-select",
                         "radios": addresses,
                         "error": {
-                            "text": "Select an address"
+                            "text": _("Select an address")
                         }
                     })
                 }}
@@ -81,7 +83,7 @@
 
         {{
             onsButton({
-                "text": "Continue",
+                "text": _("Continue"),
                 "classes": "u-mt-l"
             })
         }}

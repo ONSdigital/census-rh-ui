@@ -463,7 +463,7 @@ class AddressConfirmationEN(Start):
             return attributes
 
 
-@routes.view('/dechrau/address-confirmation')
+@routes.view('/dechrau/cadarnhad-o-gyfeiriad')
 class AddressConfirmationCY(Start):
 
     @aiohttp_jinja2.template('address-confirmation.html')
@@ -651,7 +651,7 @@ class AddressEditEN(Start):
             await self.call_questionnaire(case, attributes, request.app, session.get('adlocation'))
 
 
-@routes.view('/dechrau/address-edit')
+@routes.view('/dechrau/golygu-cyfeiriad')
 class AddressEditCY(Start):
 
     @aiohttp_jinja2.template('address-edit.html')
@@ -1142,7 +1142,7 @@ class SaveAndExitEN(View):
         return {'display_region': 'en'}
 
 
-@routes.view('/dechrau/save-and-exit')
+@routes.view('/dechrau/cadw-a-gadael')
 class SaveAndExitCY(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
@@ -1240,7 +1240,7 @@ class WebChatWindowEN(WebChat):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/webchat/chat')
+@routes.view('/gwe-sgwrs/chat')
 class WebChatWindowCY(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
@@ -1307,7 +1307,7 @@ class WebChatEN(WebChat):
             return {'webchat_status': 'closed', 'display_region': 'en'}
 
 
-@routes.view('/cy/webchat')
+@routes.view('/gwe-sgwrs')
 class WebChatCY(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
@@ -1435,7 +1435,7 @@ class RequestCodeCommon(View):
 
         return attributes
 
-    async def get_postcode_return(self, postcode, fulfillment_type, display_region):
+    async def get_postcode_return(self, postcode, fulfillment_type, display_region, locale):
         postcode_return = await self.get_ai_postcode(postcode)
 
         address_options = []
@@ -1449,6 +1449,7 @@ class RequestCodeCommon(View):
         address_content = {'postcode': postcode,
                            'addresses': address_options,
                            'display_region': display_region,
+                           'locale': locale,
                            'fulfillment_type': fulfillment_type,
                            'total_matches': postcode_return['response']['total']}
 
@@ -1551,7 +1552,7 @@ class RequestCodeHouseholdEN(RequestCodeCommon):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/request-access-code')
+@routes.view('/gofyn-am-god-mynediad')
 class RequestCodeHouseholdCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, _):
@@ -1579,7 +1580,7 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
         await RequestCodeCommon.get_postcode(self, request, data, 'HH', 'EN', 'en')
 
 
-@routes.view('/cy/request-access-code/enter-address')
+@routes.view('/gofyn-am-god-mynediad/nodi-cyfeiriad')
 class RequestCodeEnterAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -1615,7 +1616,8 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1630,7 +1632,8 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -1642,7 +1645,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHHEN:get'].url_for())
 
 
-@routes.view('/cy/request-access-code/select-address')
+@routes.view('/gofyn-am-god-mynediad/dewis-cyfeiriad')
 class RequestCodeSelectAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1650,7 +1653,8 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1665,7 +1669,8 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -1685,7 +1690,8 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1700,7 +1706,8 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -1761,7 +1768,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-access-code/confirm-address')
+@routes.view('/gofyn-am-god-mynediad/cadarnhau-cyfeiriad')
 class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
@@ -1866,7 +1873,7 @@ class RequestCodeNotRequiredHHEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-access-code/not-required')
+@routes.view('/gofyn-am-god-mynediad/dim-angen')
 class RequestCodeNotRequiredHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
@@ -1897,7 +1904,7 @@ class RequestCodeEnterMobileHHEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-access-code/enter-mobile')
+@routes.view('/gofyn-am-god-mynediad/nodi-rhif-ffon-symudol')
 class RequestCodeEnterMobileHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -1978,7 +1985,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-access-code/confirm-mobile')
+@routes.view('/gofyn-am-god-mynediad/cadarnhau-rhif-ffon-symudol')
 class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
@@ -2090,7 +2097,7 @@ class RequestCodeCodeSentHHEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-access-code/code-sent')
+@routes.view('/gofyn-am-god-mynediad/wedi-anfon-cod')
 class RequestCodeCodeSentHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
@@ -2113,7 +2120,7 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
         return {'fulfillment_type': 'HH', 'display_region': 'en'}
 
 
-@routes.view('/cy/request-access-code/timeout')
+@routes.view('/gofyn-am-god-mynediad/terfyn-amser')
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
@@ -2134,7 +2141,7 @@ class RequestCodeIndividualEN(RequestCodeCommon):
         return {'display_region': 'en'}
 
 
-@routes.view('/cy/request-individual-code')
+@routes.view('/gofyn-am-god-unigol')
 class RequestCodeIndividualCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, _):
@@ -2162,7 +2169,7 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'EN', 'en')
 
 
-@routes.view('/cy/request-individual-code/enter-address')
+@routes.view('/gofyn-am-god-unigol/nodi-cyfeiriad')
 class RequestCodeEnterAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2198,7 +2205,8 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2213,7 +2221,8 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2225,7 +2234,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHIEN:get'].url_for())
 
 
-@routes.view('/cy/request-individual-code/select-address')
+@routes.view('/gofyn-am-god-unigol/dewis-cyfeiriad')
 class RequestCodeSelectAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2233,7 +2242,8 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2248,7 +2258,8 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2268,7 +2279,8 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         address_content = await self.get_postcode_return(attributes["postcode"],
                                                          attributes["fulfillment_type"],
-                                                         attributes["display_region"])
+                                                         attributes["display_region"],
+                                                         attributes['locale'])
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2283,7 +2295,8 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
-                                                             attributes["display_region"])
+                                                             attributes["display_region"],
+                                                             attributes['locale'])
             return address_content
 
         session = await get_session(request)
@@ -2343,7 +2356,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/confirm-address')
+@routes.view('/gofyn-am-god-unigol/cadarnhau-cyfeiriad')
 class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
@@ -2447,7 +2460,7 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/not-required')
+@routes.view('/gofyn-am-god-unigol/dim-angen')
 class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
@@ -2478,7 +2491,7 @@ class RequestCodeEnterMobileHIEN(RequestCodeCommon):
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
 
-@routes.view('/cy/request-individual-code/enter-mobile')
+@routes.view('/gofyn-am-god-unigol/nodi-rhif-ffon-symudol')
 class RequestCodeEnterMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
@@ -2560,7 +2573,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
             return attributes
 
 
-@routes.view('/cy/request-individual-code/confirm-mobile')
+@routes.view('/gofyn-am-god-unigol/cadarnhau-rhif-ffon-symudol')
 class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
@@ -2672,7 +2685,7 @@ class RequestCodeCodeSentHIEN(RequestCodeCommon):
         return attributes
 
 
-@routes.view('/cy/request-individual-code/code-sent')
+@routes.view('/gofyn-am-god-unigol/wedi-anfon-cod')
 class RequestCodeCodeSentHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
@@ -2695,7 +2708,7 @@ class RequestCodeTimeoutHIEN(RequestCodeCommon):
         return {'fulfillment_type': 'HI', 'display_region': 'en'}
 
 
-@routes.view('/cy/request-individual-code/timeout')
+@routes.view('/gofyn-am-god-unigol/terfyn-amser')
 class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):

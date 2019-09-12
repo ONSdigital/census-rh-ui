@@ -42,8 +42,8 @@
     {% endif %}
 
     {% call onsQuestion({
-        "title": "What is your postcode?",
-        "description": "<p>To text you a new code we need to know the address for which you are answering.</p>"
+        "title": _("What is your postcode?"),
+        "description": _("<p>To text you a new code we need to know the address for which you are answering.</p>")
     }) %}
 
         {% if 'postcode' in field_messages_dict %}
@@ -54,11 +54,11 @@
                     "autocomplete": "postcode",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK postcode"
+                        "text": _("UK postcode")
                     },
                     "name": "request-postcode",
                     "error": {
-                        "text": "Enter a valid UK postcode"
+                        "text": _("Enter a valid UK postcode")
                     },
                 })
             }}
@@ -70,7 +70,7 @@
                     "autocomplete": "postcode",
                     "classes": "input--w-8",
                     "label": {
-                        "text": "UK postcode"
+                        "text": _("UK postcode")
                     },
                     "name": "request-postcode"
                 })
@@ -81,7 +81,7 @@
 
     {{
         onsButton({
-            "text": "Continue",
+            "text": _("Continue"),
             "classes": "u-mt-l"
         })
     }}

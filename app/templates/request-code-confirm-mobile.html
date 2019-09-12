@@ -35,6 +35,24 @@
     }
 } %}
 
+{% set form_options = [
+                {
+                    "id": "yes",
+                    "label": {
+                        "text": _("Yes, send the text now")
+                    },
+                    "value": "yes"
+                },
+                {
+                    "id": "no",
+                    "label": {
+                        "text": _("No, I need to change it")
+                    },
+                    "value": "no"
+                }
+            ]
+%}
+
 {% set question_description = '<p class="u-fs-r--b"><em class="highlight">' + mobile_number + '</em></p>' %}
 
 {% block main %}
@@ -44,7 +62,7 @@
     {% endif %}
 
     {% call onsQuestion({
-        "title": "Is this mobile phone number correct?",
+        "title": _("Is this mobile phone number correct?"),
         "description": question_description
     }) %}
 
@@ -53,24 +71,9 @@
     {{
         onsRadios({
             "name": "request-mobile-confirmation",
-            "radios": [
-                {
-                    "id": "yes",
-                    "label": {
-                        "text": "Yes, send the text now"
-                    },
-                    "value": "yes"
-                },
-                {
-                    "id": "no",
-                    "label": {
-                        "text": "No, I need to change it"
-                    },
-                    "value": "no"
-                }
-            ],
+            "radios": form_options,
             "error": {
-                "text": "Check and confirm your mobile phone number"
+                "text": _("Check and confirm your mobile phone number")
             }
         })
     }}
@@ -78,22 +81,7 @@
     {{
         onsRadios({
             "name": "request-mobile-confirmation",
-            "radios": [
-                {
-                    "id": "yes",
-                    "label": {
-                        "text": "Yes, send the text now"
-                    },
-                    "value": "yes"
-                },
-                {
-                    "id": "no",
-                    "label": {
-                        "text": "No, I need to change it"
-                    },
-                    "value": "no"
-                }
-            ]
+            "radios": form_options
         })
     }}
 {% endif %}
@@ -101,7 +89,7 @@
 
     {{
         onsButton({
-            "text": "Continue",
+            "text": _("Continue"),
             "classes": "u-mt-l"
         })
     }}
