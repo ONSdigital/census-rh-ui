@@ -23,29 +23,28 @@
 {% block main %}
 
     {% call onsQuestion({
-        "title": "Change your address"
+        "title": _("Change your address")
     }) %}
         {{ onsAddressInput({
             "id": "address",
-            "legend": "Change your address",
             "line1": {
-                "label": "Building and street",
+                "label": _("Building and street"),
                 "value": addressLine1
             },
             "line2": {
-                "label": "Line 2",
+                "label": _("Line 2"),
                 "value": addressLine2
             },
             "line3": {
-                "label": "Line 3",
+                "label": _("Line 3"),
                 "value": addressLine3
             },
             "town": {
-                "label": "Town or City",
+                "label": _("Town or City"),
                 "value": townName
             },
             "postcode": {
-                "label": "Postcode",
+                "label": _("Postcode"),
                 "value": postcode
             }
         }) }}
@@ -53,7 +52,7 @@
 
     {{
         onsButton({
-            "text": "Save and continue",
+            "text": _("Save and continue"),
             "classes": "u-mt-l",
             "name": "action[save_continue]"
         })

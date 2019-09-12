@@ -8,6 +8,7 @@ from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorErro
 from aiohttp.web import Application
 from aiohttp_utils import negotiation, routing
 from structlog import wrap_logger
+from app import i18n
 
 from . import config
 from . import error_handlers
@@ -105,10 +106,12 @@ def create_app(config_name=None) -> Application:
             flash.context_processor,
             aiohttp_jinja2.request_processor,
             google_analytics.ga_ua_id_processor],
-        extensions=['jinja2.ext.i18n'],
+        # extensions=['jinja2.ext.i18n'],
+        extensions=['app.i18n.i18n']
     )
     # Required to add the default gettext and ngettext functions for rendering
-    env.install_null_translations()
+    # env.install_null_translations()
+    env.install_gettext_translations(i18n, newstyle=True)
 
     # JWT KeyStore
     app["key_store"] = jwt.key_store(app["JSON_SECRET_KEYS"])

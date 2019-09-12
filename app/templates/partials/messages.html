@@ -4,9 +4,9 @@
 {% from "./components/lists/_macro.njk" import onsList %}
 
 {% if messages | length == 1 %}
-{% set errorTitle = "This page has an error" %}
+    {% set errorTitle = _("This page has an error") %}
 {% else %}
-{% set errorTitle = "This page has " + messages | length | string + " errors" %}
+    {% set errorTitle = _("This page has %(errorcount)s errors", errorcount= messages | length | string ) %}
 {% endif %}
 
 {% set itemsList = [] %}
@@ -32,7 +32,9 @@
     })
 %}
 
-<p>These <strong>must be corrected</strong> to continue.</p>
+{% autoescape false %}
+    <p>{{ _("These %(startbold)smust be corrected%(endbold)s to continue.", startbold='<strong>', endbold='</strong>')|safe }}</p>
+{% endautoescape %}
 
 {{
     onsList({
@@ -43,21 +45,4 @@
 {% endcall %}
 {% endif %}
 
-
-  <div class="u-mt-s">
-
-
-    {% if group=='INFO' %}
-      {% for message in messages %}
-      <div class="panel panel--simple panel--info" {% if message.type %}data-ga="error" data-ga-category="info" data-ga-action="info-message" data-ga-label="info_type = {{ message.type }}" {% endif %}>
-        <div class="panel__body">
-          {% for para in message.text.split('\n') %}
-            <h2 class="mars">{{ para }}</h2>
-          {% endfor %}
-        </div>
-      </div>
-      {% endfor %}
-    {% endif %}
-
-  </div>
 {% endfor %}

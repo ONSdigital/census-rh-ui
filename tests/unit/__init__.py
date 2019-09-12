@@ -326,7 +326,7 @@ class RHTestCase(AioHTTPTestCase):
         self.account_service_url_cy = '/dechrau/'
         self.account_service_url_ni = '/ni/start/'
         self.account_service_log_out_url_en = '/start/save-and-exit'
-        self.account_service_log_out_url_cy = '/dechrau/save-and-exit'
+        self.account_service_log_out_url_cy = '/dechrau/cadw-a-gadael'
         self.account_service_log_out_url_ni = '/ni/start/save-and-exit'
 
         self.survey_launched_json = {
