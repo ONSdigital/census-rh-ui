@@ -246,7 +246,9 @@ class IndexEN(Start):
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
                 return aiohttp_jinja2.render_template("index.html", self._request,
-                                                      {'display_region': 'en'}, status=401)
+                                                      {'display_region': 'en', 'domain_url_en': self._domain_url_en,
+                                                       'domain_url_cy': self._domain_url_cy,
+                                                       'page_title': 'Start survey'}, status=401)
             else:
                 raise ex
 
@@ -323,7 +325,10 @@ class IndexCY(Start):
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG_CY)
                 return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy',
-                                                                                    'locale': 'cy'}, status=401)
+                                                                                    'locale': 'cy',
+                                                                                    'domain_url_en': self._domain_url_en,
+                                                                                    'domain_url_cy': self._domain_url_cy,
+                                                                                    'page_title': "Dechrau'r arolwg"}, status=401)
             else:
                 raise ex
 
@@ -399,7 +404,10 @@ class IndexNI(Start):
             if ex.status == 404:
                 logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'ni'}, status=401)
+                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'ni',
+                                                                                    'domain_url_en': self._domain_url_en,
+                                                                                    'domain_url_cy': self._domain_url_cy,
+                                                                                    'page_title': 'Start survey'}, status=401)
             else:
                 raise ex
 
