@@ -442,6 +442,7 @@ class AddressConfirmationEN(Start):
             raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
         attributes['domain_url'] = self._domain_url_en
+        attributes['page_title'] = 'Is this address correct?'
 
         return attributes
 
@@ -505,6 +506,7 @@ class AddressConfirmationCY(Start):
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
         attributes['domain_url'] = self._domain_url_cy
+        attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
 
         return attributes
 
@@ -569,6 +571,7 @@ class AddressConfirmationNI(Start):
             raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
 
         attributes['domain_url'] = self._domain_url_en
+        attributes['page_title'] = 'Is this address correct?'
 
         return attributes
 
