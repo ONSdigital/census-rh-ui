@@ -67,6 +67,14 @@ class View:
     def _webchat_service_url(self):
         return self._request.app['WEBCHAT_SVC_URL']
 
+    @property
+    def _domain_url_en(self):
+        return self._request.app['DOMAIN_URL_EN']
+
+    @property
+    def _domain_url_cy(self):
+        return self._request.app['DOMAIN_URL_CY']
+
     @staticmethod
     def _handle_response(response):
         try:
@@ -208,7 +216,8 @@ class IndexEN(Start):
         except KeyError:
             logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'en'}
+        return {'display_region': 'en', 'page_title': 'Start your Census',
+                'domain_url': self._domain_url_en}
 
     @aiohttp_jinja2.template('index.html')
     async def post(self, request):
