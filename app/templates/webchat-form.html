@@ -1,12 +1,15 @@
 {% if display_region == "cy" %}
     {% extends "base-webchat-cy.html" %}
     {% set form_action = url('WebChatCY:post') %}
+    {% set help_url = '/help/' %}
 {% elif display_region == "ni" %}
     {% extends "base-webchat-ni.html" %}
     {% set form_action = url('WebChatNI:post') %}
+    {% set help_url = '/help/' %}
 {% else %}
     {% extends "base-webchat-en.html" %}
     {% set form_action = url('WebChatEN:post') %}
+    {% set help_url = '/help/' %}
 {% endif %}
 
 {% from "components/input/_macro.njk" import onsInput %}
@@ -31,24 +34,26 @@
 
     {% if webchat_status == 'closed' %}
 
-        <h2 class="u-mt-m u-mb-no">Web chat</h2>
-        <p>Contact Centre is closed. Please contact during the working hours or <a href="/help/">Get Help Online</a></p>
-        <h3 class="u-mt-m u-mb-no">Opening times</h3>
+        <h2 class="u-mt-m u-mb-no">{{_("Web chat")}}</h2>
+        {% autoescape false %}
+            <p>{{ _("Contact Centre is closed. Please contact during the working hours or %(open)sGet Help Online%(close)s.", open='<a href="%s">' %  help_url, close='</a>')|safe }}</p>
+        {% endautoescape %}
+        <h3 class="u-mt-m u-mb-no">{{_("Opening times")}}</h3>
         <p>
-            Monday to Friday: 8am to 7pm<br/>
-            Saturday: 8am to 1pm<br/>
-            Sunday / Bank Holidays: Closed<br>
-            Census weekend: 8am to 4pm
+            {{_("Monday to Friday: 8am to 7pm")}}<br/>
+            {{_("Saturday: 8am to 1pm")}}<br/>
+            {{_("Sunday / Bank Holidays: Closed")}}<br>
+            {{_("Census weekend: 8am to 4pm")}}
         </p>
 
     {% else %}
 
         <noscript>
-            <h1>Javascript disabled</h1>
+            <h1>{{_("Javascript disabled")}}</h1>
 
-            <p>Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.</p>
+            <p>{{_("Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.")}}</p>
 
-            <p><a href="#">Get Help</a></p>
+            <p><a href="{{ help_url }}">{{_("Get Help")}}</a></p>
         </noscript>
 
         {% if messages_dict %}
@@ -60,21 +65,21 @@
                 {
                     "id": "england",
                     "label": {
-                        "text": "England"
+                        "text": _("England")
                     },
                     "value": "england"
                 },
                 {
                     "id": "wales",
                     "label": {
-                        "text": "Wales"
+                        "text": _("Wales")
                     },
                     "value": "wales"
                 },
                 {
                     "id": "northern_ireland",
                     "label": {
-                        "text": "Northern Ireland"
+                        "text": _("Northern Ireland")
                     },
                     "value": "northern_ireland"
                 }
@@ -86,49 +91,49 @@
                 {
                     "id": "form",
                     "label": {
-                        "text": "I have a question about my census form"
+                        "text": _("I have a question about my census form")
                     },
                     "value": "form"
                 },
                 {
                     "id": "technical",
                     "label": {
-                        "text": "I am having technical difficulties"
+                        "text": _("I am having technical difficulties")
                     },
                     "value": "technical"
                 },
                 {
                     "id": "complaint",
                     "label": {
-                        "text": "I have a complaint"
+                        "text": _("I have a complaint")
                     },
                     "value": "complaint"
                 },
                 {
                     "id": "address",
                     "label": {
-                        "text": "I have a question about my address"
+                        "text": _("I have a question about my address")
                     },
                     "value": "address"
                 },
                 {
                     "id": "send-something",
                     "label": {
-                        "text": "I need something sent to me"
+                        "text": _("I need something sent to me")
                     },
                     "value": "send-something"
                 },
                 {
                     "id": "face-to-face",
                     "label": {
-                        "text": "I need to speak to an adviser face-to-face"
+                        "text": _("I need to speak to an adviser face-to-face")
                     },
                     "value": "face-to-face"
                 },
                 {
                     "id": "help",
                     "label": {
-                        "text": "I need some help"
+                        "text": _("I need some help")
                     },
                     "value": "help"
                 }
@@ -136,9 +141,9 @@
         %}
 
         <div id="web-chat-form-display" class="web-chat-form__body" style="display:none;">
-            <h1>Web chat</h1>
+            <h1>{{_("Web chat")}}</h1>
 
-            <p>Our advisers can help you with your census survey.</p>
+            <p>{{_("Our advisers can help you with your census survey.")}}</p>
 
             {% if 'screen_name' in field_messages_dict %}
                 {{
@@ -146,12 +151,12 @@
                         "id": "screen_name",
                         "name": "screen_name",
                         "label": {
-                            "text": "Enter your name"
+                            "text": _("Enter your name")
                         },
                         "value": form_value_screen_name,
                         "classes": "input--w-20@m js-name",
                         "error": {
-                            "text": "Enter your name"
+                            "text": _("Enter your name")
                         }
                     })
                 }}
@@ -161,7 +166,7 @@
                         "id": "screen_name",
                         "name": "screen_name",
                         "label": {
-                            "text": "Enter your name"
+                            "text": _("Enter your name")
                         },
                         "value": form_value_screen_name,
                         "classes": "input--w-20@m js-name"
@@ -172,20 +177,20 @@
             {% if 'country' in field_messages_dict %}
                 {{
                     onsRadios({
-                        "legend": "Select your country",
+                        "legend": _("Select your country"),
                         "name": "country",
                         "dontVisuallyHideLegend": true,
                         "value": form_value_country,
                         "radios": country_options,
                         "error": {
-                            "text": "Select an option"
+                            "text": _("Select an option")
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsRadios({
-                        "legend": "Select your country",
+                        "legend": _("Select your country"),
                         "name": "country",
                         "dontVisuallyHideLegend": true,
                         "value": form_value_country,
@@ -197,20 +202,20 @@
             {% if 'query' in field_messages_dict %}
                 {{
                     onsRadios({
-                        "legend": "What type of query do you have",
+                        "legend": _("What type of query do you have"),
                         "name": "query",
                         "dontVisuallyHideLegend": true,
                         "value": form_value_query,
                         "radios": query_options,
                         "error": {
-                            "text": "Select an option"
+                            "text": _("Select an option")
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsRadios({
-                        "legend": "What type of query do you have",
+                        "legend": _("What type of query do you have"),
                         "name": "query",
                         "dontVisuallyHideLegend": true,
                         "value": form_value_query,
@@ -221,7 +226,7 @@
 
             {{
                 onsButton({
-                    "text": "Start chat",
+                    "text": _("Start chat"),
                     "classes": "btn-group__btn u-mb-m u-mt-m"
                 })
 
