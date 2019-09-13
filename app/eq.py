@@ -41,8 +41,8 @@ class EqPayloadConstructor(object):
             save_and_exit_url = '/start/save-and-exit'
             start_url = '/start/'
 
-        self._account_service_url = f'{domain_url}{app["URL_PATH_PREFIX"]}{start_url}'
-        self._account_service_log_out_url = f'{domain_url}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
+        self._account_service_url = f'{app["DOMAIN_URL_PROTOCOL"]}{domain_url}{app["URL_PATH_PREFIX"]}{start_url}'
+        self._account_service_log_out_url = f'{app["DOMAIN_URL_PROTOCOL"]}{domain_url}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
 
         if adlocation:
             self._channel = 'ad'
