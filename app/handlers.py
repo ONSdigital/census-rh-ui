@@ -69,11 +69,11 @@ class View:
 
     @property
     def _domain_url_en(self):
-        return self._request.app['DOMAIN_URL_EN']
+        return f"{self._request.app['DOMAIN_URL_PROTOCOL']}{self._request.app['DOMAIN_URL_EN']}"
 
     @property
     def _domain_url_cy(self):
-        return self._request.app['DOMAIN_URL_CY']
+        return f"{self._request.app['DOMAIN_URL_PROTOCOL']}{self._request.app['DOMAIN_URL_CY']}"
 
     @staticmethod
     def _handle_response(response):
@@ -203,6 +203,7 @@ class IndexEN(Start):
         :param request:
         :return:
         """
+        self._request = request
         query_string = request.query
         session = await get_session(request)
         try:
@@ -216,8 +217,10 @@ class IndexEN(Start):
         except KeyError:
             logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'en', 'page_title': 'Start your Census',
-                'domain_url': self._domain_url_en}
+        return {'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Start survey'}
 
     @aiohttp_jinja2.template('index.html')
     async def post(self, request):
@@ -277,6 +280,7 @@ class IndexCY(Start):
         :param request:
         :return:
         """
+        self._request = request
         query_string = request.query
         session = await get_session(request)
         try:
@@ -290,7 +294,11 @@ class IndexCY(Start):
         except KeyError:
             logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'cy', 'locale': 'cy'}
+        return {'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': "Dechrau'r arolwg"}
 
     async def post(self, request):
         """
@@ -350,6 +358,7 @@ class IndexNI(Start):
         :param request:
         :return:
         """
+        self._request = request
         query_string = request.query
         session = await get_session(request)
         try:
@@ -363,7 +372,10 @@ class IndexNI(Start):
         except KeyError:
             logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'ni'}
+        return {'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Start survey'}
 
     async def post(self, request):
         """
@@ -429,6 +441,8 @@ class AddressConfirmationEN(Start):
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
+        attributes['domain_url'] = self._domain_url_en
+
         return attributes
 
     @aiohttp_jinja2.template('address-confirmation.html')
@@ -489,6 +503,8 @@ class AddressConfirmationCY(Start):
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
+
+        attributes['domain_url'] = self._domain_url_cy
 
         return attributes
 
@@ -551,6 +567,8 @@ class AddressConfirmationNI(Start):
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
+
+        attributes['domain_url'] = self._domain_url_en
 
         return attributes
 
