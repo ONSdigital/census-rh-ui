@@ -318,7 +318,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'ul'
+            eq_payload['language_code'] = 'en_US'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
             eq_payload['account_service_log_out_url'] = \
@@ -365,7 +365,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'ul'
+            eq_payload['language_code'] = 'en_US'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
             eq_payload['account_service_log_out_url'] = \
@@ -412,7 +412,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'ul'
+            eq_payload['language_code'] = 'en_US'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
             eq_payload['account_service_log_out_url'] = \
@@ -892,7 +892,7 @@ class TestHandlers(RHTestCase):
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @build_eq_raises
@@ -1076,7 +1076,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Your unique access code has expired', contents)
+        self.assertIn('Mae eich cod mynediad unigryw wedi dod i ben', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_ni(self):
@@ -1127,7 +1127,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Your unique access code has expired', contents)
+        self.assertIn('Mae eich cod mynediad unigryw wedi dod i ben', contents)
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_ni(self):
@@ -1178,7 +1178,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1223,7 +1223,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1265,7 +1265,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1307,7 +1307,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1391,7 +1391,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1433,7 +1433,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1475,7 +1475,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1529,7 +1529,7 @@ class TestHandlers(RHTestCase):
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
         self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1567,7 +1567,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1601,7 +1601,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     @unittest_run_loop
@@ -1639,7 +1639,7 @@ class TestHandlers(RHTestCase):
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
             self.assertIn(self.ons_logo_cy, contents)
 
     def test_check_open_weekday_open_census_weekend(self):
@@ -2440,8 +2440,8 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Request a new access code', contents)
-        self.assertIn('You will need to provide:', contents)
+        self.assertIn('Gofyn am god mynediad newydd', contents)
+        self.assertIn('Bydd angen i chi ddarparu:', contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_hh_ni(self):
@@ -2619,8 +2619,8 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Request an individual access code', contents)
-        self.assertIn('You will need to provide:', contents)
+        self.assertIn('Gofyn am god mynediad unigryw', contents)
+        self.assertIn('Bydd angen i chi ddarparu:', contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_hi_ni(self):
@@ -2821,7 +2821,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(self):
@@ -2866,7 +2866,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
@@ -2911,7 +2911,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
@@ -2956,7 +2956,7 @@ class TestHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_ni(self):
@@ -3001,7 +3001,7 @@ class TestHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_ni(self):
@@ -3046,7 +3046,7 @@ class TestHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn("Mae\\\'n flin gennym, aeth rhywbeth o\\\'i le", contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_ni(self):
