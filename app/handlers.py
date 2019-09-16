@@ -1242,6 +1242,7 @@ class UACTimeout(View):
 class SaveAndExitEN(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        self._request = request
         await forget(request)
         return {'display_region': 'en',
                 'domain_url_en': self._domain_url_en,
@@ -1253,6 +1254,7 @@ class SaveAndExitEN(View):
 class SaveAndExitCY(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        self._request = request
         await forget(request)
         return {'display_region': 'cy',
                 'locale': 'cy',
@@ -1265,6 +1267,7 @@ class SaveAndExitCY(View):
 class SaveAndExitNI(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        self._request = request
         await forget(request)
         return {'display_region': 'ni',
                 'domain_url_en': self._domain_url_en,
@@ -1415,13 +1418,18 @@ class WebChatEN(WebChat):
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
-                    'display_region': 'en'}
+                    'display_region': 'en',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
         context = {'screen_name': data.get('screen_name'),
                    'language': 'en',
                    'country': data.get('country'),
                    'query': data.get('query'),
                    'display_region': 'en',
+                   'domain_url_en': self._domain_url_en,
+                   'domain_url_cy': self._domain_url_cy,
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1434,7 +1442,11 @@ class WebChatEN(WebChat):
                 logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed', 'display_region': 'en'}
+            return {'webchat_status': 'closed',
+                    'display_region': 'en',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
 
 @routes.view('/gwe-sgwrs')
@@ -1478,7 +1490,10 @@ class WebChatCY(WebChat):
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
                     'display_region': 'cy',
-                    'locale': 'cy'}
+                    'locale': 'cy',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
         context = {'screen_name': data.get('screen_name'),
                    'language': 'cy',
@@ -1486,6 +1501,8 @@ class WebChatCY(WebChat):
                    'query': data.get('query'),
                    'display_region': 'cy',
                    'locale': 'cy',
+                   'domain_url_en': self._domain_url_en,
+                   'domain_url_cy': self._domain_url_cy,
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1498,7 +1515,12 @@ class WebChatCY(WebChat):
                 logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed', 'display_region': 'cy', 'locale': 'cy'}
+            return {'webchat_status': 'closed',
+                    'display_region': 'cy',
+                    'locale': 'cy',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
 
 @routes.view('/ni/webchat')
@@ -1539,13 +1561,18 @@ class WebChatNI(WebChat):
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
-                    'display_region': 'ni'}
+                    'display_region': 'ni',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
         context = {'screen_name': data.get('screen_name'),
                    'language': 'en',
                    'country': data.get('country'),
                    'query': data.get('query'),
                    'display_region': 'ni',
+                   'domain_url_en': self._domain_url_en,
+                   'domain_url_cy': self._domain_url_cy,
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1558,7 +1585,11 @@ class WebChatNI(WebChat):
                 logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
 
             logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed', 'display_region': 'ni'}
+            return {'webchat_status': 'closed',
+                    'display_region': 'ni',
+                    'domain_url_en': self._domain_url_en,
+                    'domain_url_cy': self._domain_url_cy
+                    }
 
 
 class RequestCodeCommon(View):
@@ -1801,6 +1832,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Select your address'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1817,6 +1849,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Select your address'
             return address_content
 
         session = await get_session(request)
@@ -1838,6 +1871,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Dewiswch eich cyfeiriad'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1854,6 +1888,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Dewiswch eich cyfeiriad'
             return address_content
 
         session = await get_session(request)
@@ -1875,6 +1910,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Select your address'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -1891,6 +1927,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Select your address'
             return address_content
 
         session = await get_session(request)
@@ -1908,11 +1945,13 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
 
         try:
@@ -1957,11 +1996,13 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         data = await request.post()
 
         try:
@@ -2006,11 +2047,13 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
         try:
             address_confirmation = data["request-address-confirmation"]
@@ -2053,6 +2096,7 @@ class RequestCodeNotRequiredHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2061,6 +2105,7 @@ class RequestCodeNotRequiredHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
         return attributes
 
 
@@ -2069,6 +2114,7 @@ class RequestCodeNotRequiredHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2078,11 +2124,13 @@ class RequestCodeEnterMobileHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2093,11 +2141,13 @@ class RequestCodeEnterMobileHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2108,11 +2158,13 @@ class RequestCodeEnterMobileHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2123,11 +2175,13 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
@@ -2174,11 +2228,13 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         data = await request.post()
 
         try:
@@ -2226,11 +2282,13 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
 
         try:
@@ -2277,6 +2335,7 @@ class RequestCodeCodeSentHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
+        attributes['page_title'] = 'We have sent an access code'
         return attributes
 
 
@@ -2285,6 +2344,7 @@ class RequestCodeCodeSentHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
+        attributes['page_title'] = 'Rydym ni wedi anfon cod mynediad'
         return attributes
 
 
@@ -2293,28 +2353,48 @@ class RequestCodeCodeSentHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
+        attributes['page_title'] = 'We have sent an access code'
         return attributes
 
 
 @routes.view('/request-access-code/timeout')
 class RequestCodeTimeoutHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HH', 'display_region': 'en'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HH',
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Your session has timed out due to inactivity'
+                }
 
 
 @routes.view('/gofyn-am-god-mynediad/terfyn-amser')
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HH', 'display_region': 'cy', 'locale': 'cy'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HH',
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+                }
 
 
 @routes.view('/ni/request-access-code/timeout')
 class RequestCodeTimeoutHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HH', 'display_region': 'ni'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HH',
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Your session has timed out due to inactivity'
+                }
 
 
 @routes.view('/request-individual-code')
@@ -2324,7 +2404,8 @@ class RequestCodeIndividualEN(RequestCodeCommon):
         self._request = request
         return {'display_region': 'en',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Request an individual access code'
                 }
 
 
@@ -2336,7 +2417,8 @@ class RequestCodeIndividualCY(RequestCodeCommon):
         return {'display_region': 'cy',
                 'locale': 'cy',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gofyn am god mynediad unigryw'
                 }
 
 
@@ -2347,7 +2429,8 @@ class RequestCodeIndividualNI(RequestCodeCommon):
         self._request = request
         return {'display_region': 'ni',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Request an individual access code'
                 }
 
 
@@ -2360,7 +2443,8 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
         return {'fulfillment_type': 'HI',
                 'display_region': 'en',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'What is your postcode?'
                 }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2380,7 +2464,8 @@ class RequestCodeEnterAddressHICY(RequestCodeCommon):
                 'display_region': 'cy',
                 'locale': 'cy',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Beth yw eich cod post?'
                 }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2399,7 +2484,8 @@ class RequestCodeEnterAddressHINI(RequestCodeCommon):
         return {'fulfillment_type': 'HI',
                 'display_region': 'ni',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'What is your postcode?'
                 }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
@@ -2419,6 +2505,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Select your address'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2435,6 +2522,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Select your address'
             return address_content
 
         session = await get_session(request)
@@ -2456,6 +2544,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Dewiswch eich cyfeiriad'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2472,6 +2561,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Dewiswch eich cyfeiriad'
             return address_content
 
         session = await get_session(request)
@@ -2493,6 +2583,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
                                                          attributes["fulfillment_type"],
                                                          attributes["display_region"],
                                                          attributes['locale'])
+        address_content['page_title'] = 'Select your address'
         return address_content
 
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -2509,6 +2600,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
                                                              attributes["fulfillment_type"],
                                                              attributes["display_region"],
                                                              attributes['locale'])
+            address_content['page_title'] = 'Select your address'
             return address_content
 
         session = await get_session(request)
@@ -2526,11 +2618,13 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
         try:
             address_confirmation = data["request-address-confirmation"]
@@ -2574,11 +2668,13 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         data = await request.post()
         try:
             address_confirmation = data["request-address-confirmation"]
@@ -2622,11 +2718,13 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
         try:
             address_confirmation = data["request-address-confirmation"]
@@ -2669,6 +2767,7 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2677,6 +2776,7 @@ class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
         return attributes
 
 
@@ -2685,6 +2785,7 @@ class RequestCodeNotRequiredHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2694,11 +2795,13 @@ class RequestCodeEnterMobileHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2709,11 +2812,13 @@ class RequestCodeEnterMobileHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2724,11 +2829,13 @@ class RequestCodeEnterMobileHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
         await RequestCodeCommon.post_enter_mobile(self, attributes, data, request)
 
@@ -2739,11 +2846,13 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
@@ -2791,11 +2900,13 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         data = await request.post()
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
@@ -2843,11 +2954,13 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
@@ -2894,6 +3007,7 @@ class RequestCodeCodeSentHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
+        attributes['page_title'] = 'We have sent an access code'
         return attributes
 
 
@@ -2902,6 +3016,7 @@ class RequestCodeCodeSentHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
+        attributes['page_title'] = 'Rydym ni wedi anfon cod mynediad'
         return attributes
 
 
@@ -2910,25 +3025,45 @@ class RequestCodeCodeSentHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
+        attributes['page_title'] = 'We have sent an access code'
         return attributes
 
 
 @routes.view('/request-individual-code/timeout')
 class RequestCodeTimeoutHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HI', 'display_region': 'en'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HI',
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Your session has timed out due to inactivity'
+                }
 
 
 @routes.view('/gofyn-am-god-unigol/terfyn-amser')
 class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HI', 'display_region': 'cy', 'locale': 'cy'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HI',
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+                }
 
 
 @routes.view('/ni/request-individual-code/timeout')
 class RequestCodeTimeoutHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
-        return {'fulfillment_type': 'HI', 'display_region': 'ni'}
+    async def get(self, request):
+        self._request = request
+        return {'fulfillment_type': 'HI',
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Your session has timed out due to inactivity'
+                }

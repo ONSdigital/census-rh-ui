@@ -112,7 +112,7 @@ class EqPayloadConstructor(object):
             "user_id": self._user_id,
             "questionnaire_id": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
-            "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
+            "period_id": "2019",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "form_type": "individual_gb_eng",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "survey": "CENSUS"  # hardcoded for census
         }
