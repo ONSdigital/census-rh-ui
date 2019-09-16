@@ -1,7 +1,13 @@
 {% extends "layout/_template.njk" %}
 
+{% if page_title %}
+    {% set page_title_value = page_title + ' - Census 2021' %}
+{% else %}
+    {% set page_title_value = 'Census 2021' %}
+{% endif %}
+
 {% set page = {
-    "title": "Census Webchat",
+    "title": page_title_value,
     "theme": "census",
     "header": {
         "titleLogo": "/img/census-logo-en.svg",

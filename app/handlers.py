@@ -1356,7 +1356,8 @@ class WebChatWindowEN(WebChat):
     async def get(self, _):
         return {'display_region': 'en',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
                 }
 
 
@@ -1367,7 +1368,8 @@ class WebChatWindowCY(WebChat):
         return {'display_region': 'cy',
                 'locale': 'cy',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gwe-sgwrs'
                 }
 
 
@@ -1377,7 +1379,8 @@ class WebChatWindowNI(WebChat):
     async def get(self, _):
         return {'display_region': 'ni',
                 'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
                 }
 
 
@@ -1391,7 +1394,8 @@ class WebChatEN(WebChat):
         if WebChat.check_open():
             return {'display_region': 'en',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
         else:
             try:
@@ -1403,7 +1407,9 @@ class WebChatEN(WebChat):
             return {'webchat_status': 'closed',
                     'display_region': 'en',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy}
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
+                    }
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
@@ -1420,7 +1426,8 @@ class WebChatEN(WebChat):
                     'form_value_query': data.get('query'),
                     'display_region': 'en',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
 
         context = {'screen_name': data.get('screen_name'),
@@ -1430,6 +1437,7 @@ class WebChatEN(WebChat):
                    'display_region': 'en',
                    'domain_url_en': self._domain_url_en,
                    'domain_url_cy': self._domain_url_cy,
+                   'page_title': 'Web Chat',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1445,7 +1453,8 @@ class WebChatEN(WebChat):
             return {'webchat_status': 'closed',
                     'display_region': 'en',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
 
 
@@ -1460,7 +1469,8 @@ class WebChatCY(WebChat):
             return {'display_region': 'cy',
                     'locale': 'cy',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Gwe-sgwrs'
                     }
         else:
             try:
@@ -1473,7 +1483,8 @@ class WebChatCY(WebChat):
                     'display_region': 'cy',
                     'locale': 'cy',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Gwe-sgwrs'
                     }
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -1492,7 +1503,8 @@ class WebChatCY(WebChat):
                     'display_region': 'cy',
                     'locale': 'cy',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Gwe-sgwrs'
                     }
 
         context = {'screen_name': data.get('screen_name'),
@@ -1503,6 +1515,7 @@ class WebChatCY(WebChat):
                    'locale': 'cy',
                    'domain_url_en': self._domain_url_en,
                    'domain_url_cy': self._domain_url_cy,
+                   'page_title': 'Gwe-sgwrs',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1519,7 +1532,8 @@ class WebChatCY(WebChat):
                     'display_region': 'cy',
                     'locale': 'cy',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Gwe-sgwrs'
                     }
 
 
@@ -1533,7 +1547,8 @@ class WebChatNI(WebChat):
         if WebChat.check_open():
             return {'display_region': 'ni',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
         else:
             try:
@@ -1545,7 +1560,8 @@ class WebChatNI(WebChat):
             return {'webchat_status': 'closed',
                     'display_region': 'ni',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -1563,7 +1579,8 @@ class WebChatNI(WebChat):
                     'form_value_query': data.get('query'),
                     'display_region': 'ni',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
 
         context = {'screen_name': data.get('screen_name'),
@@ -1573,6 +1590,7 @@ class WebChatNI(WebChat):
                    'display_region': 'ni',
                    'domain_url_en': self._domain_url_en,
                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
@@ -1588,7 +1606,8 @@ class WebChatNI(WebChat):
             return {'webchat_status': 'closed',
                     'display_region': 'ni',
                     'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy
+                    'domain_url_cy': self._domain_url_cy,
+                    'page_title': 'Web Chat'
                     }
 
 
