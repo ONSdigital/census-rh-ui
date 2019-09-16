@@ -1590,7 +1590,7 @@ class WebChatNI(WebChat):
                    'display_region': 'ni',
                    'domain_url_en': self._domain_url_en,
                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat',
+                   'page_title': 'Web Chat',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
         logger.info("Date/time check", client_ip=self._client_ip)
