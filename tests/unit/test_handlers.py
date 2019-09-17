@@ -318,7 +318,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'en_US'
+            eq_payload['language_code'] = 'eo'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_en}"
             eq_payload['account_service_log_out_url'] = \
@@ -365,7 +365,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'en_US'
+            eq_payload['language_code'] = 'eo'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_cy}"
             eq_payload['account_service_log_out_url'] = \
@@ -412,7 +412,7 @@ class TestHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-NIR'
-            eq_payload['language_code'] = 'en_US'
+            eq_payload['language_code'] = 'eo'
             eq_payload['account_service_url'] = \
                 f"{self.app['ACCOUNT_SERVICE_URL']}{self.app['URL_PATH_PREFIX']}{self.account_service_url_ni}"
             eq_payload['account_service_log_out_url'] = \
