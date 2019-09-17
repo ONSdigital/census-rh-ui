@@ -167,7 +167,7 @@ class RHTestCase(AioHTTPTestCase):
         if hasattr(test_method, 'tearDown'):
             await test_method.tearDown(self)
 
-    def assertLogLine(self, watcher, event, **kwargs):
+    def assertLogJson(self, watcher, event, **kwargs):
         """
         Helper method for asserting the contents of structlog records caught by self.assertLogs.
 
@@ -190,6 +190,29 @@ class RHTestCase(AioHTTPTestCase):
                 pass
         else:
             self.fail(f'No matching log records present: {event}')
+
+    def assertLogEvent(self, watcher, event, **kwargs):
+        """
+        Helper method for asserting the contents of RH records caught by self.assertLogs.
+
+        Fails if no match is found. A match is based on the static message string (event) and all additional
+        items passed in kwargs.
+
+        :param watcher: context manager returned by `with self.assertLogs(LOGGER, LEVEL)`
+        :param event: event logged; use empty string to ignore or no message
+        :param kwargs: other structlog key value pairs to assert for
+        """
+        for record in watcher.records:
+            try:
+                if (
+                    event in record.message
+                    and all(record.__dict__[key] == val for key, val in kwargs.items())
+                ):
+                    break
+            except KeyError:
+                pass
+        else:
+            self.fail(f'No matching log records with event: \'{event}\' and parameters: {kwargs}')
 
     def assertMessagePanel(self, message, content):
         """

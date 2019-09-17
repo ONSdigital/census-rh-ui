@@ -68,13 +68,13 @@ async def ce_closed(request, collex_id):
 
 
 async def eq_error(request, message: str):
-    logger.error("Service failed to build eQ payload", message=message)
+    logger.error("Service failed to build eQ payload", exception=message)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def connection_error(request, message: str):
-    logger.error("Service connection error", message=message)
+    logger.error("Service connection error", exception=message)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 

@@ -36,7 +36,7 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
                 del dict_from[old_name]
 
         def extract(dict_from, name):
-            if not name in dict_from:
+            if name not in dict_from:
                 return None
             else:
                 val = dict_from[name]
