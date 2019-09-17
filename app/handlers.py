@@ -993,7 +993,7 @@ class StartSelectLanguageEN(Start):
             attributes['language'] = 'ga'
 
         elif language_option == 'ulster-scotch':
-            attributes['language'] = 'en_US'
+            attributes['language'] = 'eo'
 
         elif language_option == 'english':
             attributes['language'] = 'en'
@@ -1053,7 +1053,7 @@ class StartSelectLanguageCY(Start):
             attributes['language'] = 'ga'
 
         elif language_option == 'ulster-scotch':
-            attributes['language'] = 'en_US'
+            attributes['language'] = 'eo'
 
         elif language_option == 'english':
             attributes['language'] = 'en'
@@ -1113,7 +1113,7 @@ class StartSelectLanguageNI(Start):
             attributes['language'] = 'ga'
 
         elif language_option == 'ulster-scotch':
-            attributes['language'] = 'en_US'
+            attributes['language'] = 'eo'
 
         elif language_option == 'english':
             attributes['language'] = 'en'
