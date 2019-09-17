@@ -67,7 +67,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json, self.attributes_en, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
@@ -91,7 +91,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json_cy, self.attributes_cy, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
@@ -115,7 +115,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json_ni, self.attributes_ni, self.app, None).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
@@ -140,7 +140,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json, self.attributes_en, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
@@ -165,7 +165,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json_cy, self.attributes_cy, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)
@@ -190,7 +190,7 @@ class TestEq(RHTestCase):
             mocked_time.return_value = self.eq_payload['iat']
             mocked_uuid4.return_value = self.jti
 
-            with self.assertLogs('app.eq', 'DEBUG') as cm:
+            with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
                     self.uac_json_ni, self.attributes_ni, self.app, eq_payload['user_id']).build()
             self.assertLogLine(cm, 'Creating payload for JWT', case_id=self.case_id, tx_id=self.jti)

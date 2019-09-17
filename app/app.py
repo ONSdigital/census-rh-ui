@@ -84,9 +84,7 @@ def create_app(config_name=None) -> Application:
     app.check_services = types.MethodType(check_services, app)
 
     # Bind logger
-    logger_initial_config(service_name="respondent-home", log_level=app["LOG_LEVEL"])
-
-    logger.info("Logging configured", log_level=app['LOG_LEVEL'])
+    logger_initial_config(log_level=app["LOG_LEVEL"], ext_log_level=app["EXT_LOG_LEVEL"])
 
     # Set up routes
     routes.setup(app, url_path_prefix=app['URL_PATH_PREFIX'])
