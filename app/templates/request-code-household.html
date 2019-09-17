@@ -12,22 +12,22 @@
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% block main %}
-    <h1 class="u-mb-l u-fs-xxl">Request a new access code</h1>
+    <h1 class="u-mb-l u-fs-xxl">{{ _("Request a new access code") }}</h1>
 
-    <p>To do the census online you need a 16 character unique access code which we have sent you in a letter.</p>
+    <p>{{ _("To do the census online you need a 16 character unique access code which we have sent you in a letter.") }}</p>
 
-    <p>If you are in a rehearsal area and don’t have a code you can get a new one.</p>
+    <p>{{ _("If you are in a rehearsal area and don’t have a code you can get a new one.") }}</p>
 
-    <p>You will need to provide:</p>
+    <p>{{ _("You will need to provide:") }}</p>
     <ul>
-        <li>your mobile phone number so we can send you the code by text</li>
-        <li>your address so we can confirm you are in the rehearsal area</li>
+        <li>{{ _("your mobile phone number so we can send you the code by text") }}</li>
+        <li>{{ _("your address so we can confirm you are in the rehearsal area") }}</li>
     </ul>
 
     {{
         onsButton({
             "type": 'button',
-            "text": 'Request a new code',
+            "text": _('Request a new code'),
             "classes": 'u-mb-m',
             "url": button_url,
             "innerClasses": "icon--chevron-right-white"

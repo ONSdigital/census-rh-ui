@@ -24,7 +24,7 @@ class TestErrorHandlers(RHTestCase):
         self.assertLogEvent(cm, 'Redirecting to index')
         self.assertEqual(response.status, 200)
         contents = await response.content.read()
-        self.assertIn(b'Enter the 16 character code printed on the letter', contents)
+        self.assertIn(b'Rhowch y cod 16 nod sydd', contents)
         self.assertEqual(contents.count(b'input--text'), 1)
         self.assertIn(b'type="submit"', contents)
 

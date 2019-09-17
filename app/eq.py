@@ -28,17 +28,20 @@ class EqPayloadConstructor(object):
         self._sample_attributes = attributes
 
         if self._sample_attributes['display_region'] == 'ni':
+            domain_url = app["DOMAIN_URL_EN"]
             save_and_exit_url = '/ni/start/save-and-exit'
             start_url = '/ni/start/'
         elif self._sample_attributes['display_region'] == 'cy':
-            save_and_exit_url = '/dechrau/save-and-exit'
+            domain_url = app["DOMAIN_URL_CY"]
+            save_and_exit_url = '/dechrau/cadw-a-gadael'
             start_url = '/dechrau/'
         else:
+            domain_url = app["DOMAIN_URL_EN"]
             save_and_exit_url = '/start/save-and-exit'
             start_url = '/start/'
 
-        self._account_service_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{start_url}'
-        self._account_service_log_out_url = f'{app["ACCOUNT_SERVICE_URL"]}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
+        self._account_service_url = f'{app["DOMAIN_URL_PROTOCOL"]}{domain_url}{app["URL_PATH_PREFIX"]}{start_url}'
+        self._account_service_log_out_url = f'{app["DOMAIN_URL_PROTOCOL"]}{domain_url}{app["URL_PATH_PREFIX"]}{save_and_exit_url}'
 
         if adlocation:
             self._channel = 'ad'
@@ -108,7 +111,7 @@ class EqPayloadConstructor(object):
             "user_id": self._user_id,
             "questionnaire_id": self._questionnaire_id,
             "eq_id": "census",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
-            "period_id": "1",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
+            "period_id": "2019",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "form_type": "individual_gb_eng",  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
             "survey": "CENSUS"  # hardcoded for census
         }

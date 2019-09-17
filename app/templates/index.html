@@ -36,16 +36,16 @@
         "id": "uac",
         "name": "uac",
         "label": {
-            "text": "Enter the 16 character code printed on the letter",
-            "description": "Keep this code safe and only share it with others in your household"
+            "text": _("Enter the 16 character code printed on the letter"),
+            "description": _("Keep this code safe and only share it with others in your household")
         },
-        "securityMessage": "Your personal information is protected by law and will be kept confidential."
+        "securityMessage": _("Your personal information is protected by law and will be kept confidential.")
     })
 %}
 
 {% block main %}
 
-    <h1 class="u-mt-l">Start survey</h1>
+    <h1 class="u-mt-l">{{_("Start survey")}}</h1>
 
     {% if messages_dict %}
         {% include "partials/messages.html" with context %}
@@ -63,7 +63,7 @@
                 "classes": 'list--bare list--errors u-mb-s',
                 "itemsList": [
                     {
-                        "text": 'Enter a valid code'
+                        "text": _('Enter a valid code')
                     }
                 ]
             })
@@ -75,18 +75,18 @@
     {% endif %}
 
     {{ onsButton({
-        "text": "Access survey",
+        "text": _("Access survey"),
         "classes": "u-mb-xl",
         "name": "action[save_continue]"
     }) }}
 
-    <h2 class="u-fs-r--b u-mb-no">Don't have a code?</h2>
-    <p>
-        You can <a href="{{ request_code_link }}">request a new code</a> to start a new survey if you have lost, forgotten or not received an access code.
-    </p>
+    <h2 class="u-fs-r--b u-mb-no">{{_("Don't have a code?")}}</h2>
+    {% autoescape false %}
+        <p>{{ _("You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
 
-    <h2 class="u-fs-r--b u-mb-no">Need help?</h2>
+    <h2 class="u-fs-r--b u-mb-no">{{_("Need help?")}}</h2>
 
-    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">Web chat</a></p>
+    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">{{_("Web chat")}}</a></p>
 
 {% endblock %}

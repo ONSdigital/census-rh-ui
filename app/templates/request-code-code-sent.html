@@ -27,22 +27,24 @@
 {% from "components/button/_macro.njk" import onsButton %}
 
 {% block main %}
-    <h1 class="u-mt-l">We have sent an access code to {{mobile_number}}</h1>
+    <h1 class="u-mt-l">{{ _("We have sent an access code to %(mobile_no)s", mobile_no=mobile_number)|safe }}</h1>
 
-    <p>A text with the code should arrive shortly. Once you get the code, you can start the survey.</p>
+    <p>{{ _("A text with the code should arrive shortly. Once you get the code, you can start the survey.") }}</p>
 
     {{
         onsButton({
             "type": 'button',
-            "text": 'Start your survey',
+            "text": _('Start your survey'),
             "classes": 'u-mb-m',
             "url": start_survey_link,
             "innerClasses": "icon--chevron-right-white"
         })
     }}
 
-    <h2>Didn't receive a text?</h2>
+    <h2>{{ _("Didn't receive a text?") }}</h2>
 
-    <p>It can take a few minutes for the text to arrive. If it doesn't arrive, you can <a href="{{ request_code_link }}">request a new code</a>.</p>
+    {% autoescape false %}
+        <p>{{ _("It can take a few minutes for the text to arrive. If it doesn't arrive, you can %(open)srequest a new code%(close)s.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
 
 {% endblock %}

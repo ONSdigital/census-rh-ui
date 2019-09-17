@@ -17,6 +17,7 @@ aiodns = "*"
 invoke = "*"
 aioredis = "*"
 python-json-logger = "*"
+babel = "*"
 
 [dev-packages]
 codecov = "*"

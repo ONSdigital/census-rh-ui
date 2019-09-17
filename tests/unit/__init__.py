@@ -282,7 +282,7 @@ class RHTestCase(AioHTTPTestCase):
         self.jti = str(uuid.uuid4())
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
-        self.period_id = "1"
+        self.period_id = "2019"
         self.uac = self.uac_json['uac']
         self.uprn = self.uac_json['address']['uprn']
         self.response_id = self.uac_json['questionnaireId']
@@ -349,7 +349,7 @@ class RHTestCase(AioHTTPTestCase):
         self.account_service_url_cy = '/dechrau/'
         self.account_service_url_ni = '/ni/start/'
         self.account_service_log_out_url_en = '/start/save-and-exit'
-        self.account_service_log_out_url_cy = '/dechrau/save-and-exit'
+        self.account_service_log_out_url_cy = '/dechrau/cadw-a-gadael'
         self.account_service_log_out_url_ni = '/ni/start/save-and-exit'
 
         self.survey_launched_json = {
