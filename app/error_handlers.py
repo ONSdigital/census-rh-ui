@@ -120,13 +120,23 @@ def setup(app):
 def check_display_region(request):
     path_prefix = request.app['URL_PATH_PREFIX']
     if request.url.path.startswith(path_prefix + '/ni'):
-        attributes = {'display_region': 'ni'}
+        attributes = {'display_region': 'ni',
+                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
+                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
+                      'page_title': 'Error'}
     elif request.url.path.startswith(path_prefix + '/dechrau') \
             or request.url.path.startswith(path_prefix + '/gwe-sgwrs') \
             or request.url.path.startswith(path_prefix + '/gofyn-am-god-mynediad')\
             or request.url.path.startswith(path_prefix + '/cy'):
-        attributes = {'display_region': 'cy', 'locale': 'cy'}
+        attributes = {'display_region': 'cy',
+                      'locale': 'cy',
+                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
+                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
+                      'page_title': 'Error'}
     else:
-        attributes = {'display_region': 'en'}
+        attributes = {'display_region': 'en',
+                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
+                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
+                      'page_title': 'Error'}
 
     return attributes
