@@ -3091,7 +3091,8 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
 @routes.view('/start/accessibility/')
 class AccessibilityEN(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
-    async def get(self, _):
+    async def get(self, request):
+        self._request = request
         return {'display_region': 'en',
                 'domain_url_en': self._domain_url_en,
                 'domain_url_cy': self._domain_url_cy,
@@ -3101,7 +3102,8 @@ class AccessibilityEN(RequestCodeCommon):
 @routes.view('/dechrau/hygyrchedd/')
 class AccessibilityCY(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
-    async def get(self, _):
+    async def get(self, request):
+        self._request = request
         return {'display_region': 'cy',
                 'locale': 'cy',
                 'domain_url_en': self._domain_url_en,
@@ -3112,7 +3114,8 @@ class AccessibilityCY(RequestCodeCommon):
 @routes.view('/ni/start/accessibility/')
 class AccessibilityNI(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
-    async def get(self, _):
+    async def get(self, request):
+        self._request = request
         return {'display_region': 'ni',
                 'domain_url_en': self._domain_url_en,
                 'domain_url_cy': self._domain_url_cy,
