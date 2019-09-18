@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-18 13:23+0100\n"
+"POT-Creation-Date: 2019-09-18 15:06+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -178,6 +178,141 @@ msgstr ""
 msgid ""
 "%(start_equalityni_link)sEqualities Commission for Northern Ireland "
 "(ECNI)%(end_link)s if you live in Northern Ireland"
+msgstr ""
+
+#: app/templates/accessibility.html:73
+msgid "Technical information about this questionnaire’s accessibility"
+msgstr ""
+
+#: app/templates/accessibility.html:75
+msgid ""
+"The Office for National Statistics is committed to making its website "
+"accessible, in accordance with the Public Sector Bodies (Website and "
+"Mobile Applications) (No. 2) Accessibility Regulations 2018."
+msgstr ""
+
+#: app/templates/accessibility.html:78
+#, python-format
+msgid ""
+"This service is partially compliant with the %(start_wcag_link)sWeb "
+"Content Accessibility Guidelines version 2.1%(end_link)s AA standard, due"
+" to the non-compliances listed."
+msgstr ""
+
+#: app/templates/accessibility.html:81
+msgid "Non-accessible content"
+msgstr ""
+
+#: app/templates/accessibility.html:83
+msgid ""
+"The content listed is non-accessible for the following reasons. We are "
+"planning to fix the following issues for Census 2021."
+msgstr ""
+
+#: app/templates/accessibility.html:85
+msgid "Non-compliance with the accessibility regulations"
+msgstr ""
+
+#: app/templates/accessibility.html:87
+msgid ""
+"Non-descriptive form elements. On the ‘Check your answers’ summary page "
+"there is an option to “change” items, but the link does not describe "
+"where it goes to. Fails on WCAG 2.1 A number 1.3.1."
+msgstr ""
+
+#: app/templates/accessibility.html:89
+msgid ""
+"Error messages are too generic. If the text in a field is incorrect or in"
+" the wrong format, the answer validation page says the answer is "
+"incorrect without explaining what you need to do. Fails on WCAG 2.1 A "
+"number 3.3.1."
+msgstr ""
+
+#: app/templates/accessibility.html:91
+msgid ""
+"Form label issue. On the ‘What is your name?’ page, middle name is "
+"optional but this is not clear to the user. Fails on WCAG 2.1 A number "
+"3.3.2."
+msgstr ""
+
+#: app/templates/accessibility.html:93
+msgid ""
+"Form label issue. When selecting the appropriate relationship, it is "
+"possible to ‘Save and continue’ without selecting an option. Fails on "
+"WCAG 2.1 A number 2.4.6."
+msgstr ""
+
+#: app/templates/accessibility.html:95
+msgid ""
+"On the ‘Is this address correct?’ page, the title may not accurately "
+"reflect the content on the page for audio users. The ‘Submit survey’ page"
+" does not have a page title. Fails on WCAG 2.1 A number 2.4.2."
+msgstr ""
+
+#: app/templates/accessibility.html:97
+msgid ""
+"Timeout issue. Users are not informed of a time limit and service times "
+"out without warning. During the validation process there is no return "
+"link on the session timeout page. Fails on WCAG 2.1 A number 2.2.1 and "
+"AAA number 2.2.6."
+msgstr ""
+
+#: app/templates/accessibility.html:99
+msgid ""
+"The ‘Hide this’ button text on accordions such as ‘What does “usually "
+"live” mean?’ is non-descriptive for JAWS users as the text above it is "
+"read back to users. Fails on WCAG 2.1 AA number 2.4.6."
+msgstr ""
+
+#: app/templates/accessibility.html:101
+msgid ""
+"Screen readers may not let users know when an accordion is expanded or "
+"collapsed. Fails on WCAG 2.1 A number 2.4.4."
+msgstr ""
+
+#: app/templates/accessibility.html:103
+msgid ""
+"Non-descriptive headings. On the relationships page, the heading does not"
+" accurately describe the content for screen readers. Fails on WCAG 2.1 A "
+"number 2.4.6."
+msgstr ""
+
+#: app/templates/accessibility.html:105
+msgid ""
+"Some links are not descriptive enough for screen reader users. Fails on "
+"WCAG 2.1 AAA number 2.4.9."
+msgstr ""
+
+#: app/templates/accessibility.html:107
+msgid ""
+"Some headings do not follow a logical hierarchical structure. Fails on "
+"WCAG AAA 2.1 number 2.4.10."
+msgstr ""
+
+#: app/templates/accessibility.html:109
+msgid ""
+"Some text is highlighted, such as addresses and names that a user has "
+"confirmed. Highlighting is not accessible for some users. This does not "
+"conform to Government Digital Service (GDS) guidelines."
+msgstr ""
+
+#: app/templates/accessibility.html:111
+msgid ""
+"Some radio inputs on the relationships page do not conform to GDS "
+"guidelines. When selected, three different elements on the page are "
+"updated."
+msgstr ""
+
+#: app/templates/accessibility.html:113
+msgid ""
+"On ‘Who lives here?’ there is a ‘Previous’ link on the page that does not"
+" conform with GDS guidelines. The text used should read as ‘Back’."
+msgstr ""
+
+#: app/templates/accessibility.html:115
+msgid ""
+"Error messages do not result in a change to the page title to reflect "
+"that an error has been made. This does not conform to GDS guidelines."
 msgstr ""
 
 #: app/templates/address-confirmation.html:30

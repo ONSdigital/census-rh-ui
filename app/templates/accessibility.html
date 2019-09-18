@@ -70,47 +70,49 @@
     {% endautoescape %}
 </ul>
 
-<h2>Technical information about this questionnaire’s accessibility</h2>
+<h2>{{ _("Technical information about this questionnaire’s accessibility") }}</h2>
 
-<p>The Office for National Statistics is committed to making its website accessible, in accordance with the Public Sector Bodies (Website and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
+<p>{{ _("The Office for National Statistics is committed to making its website accessible, in accordance with the Public Sector Bodies (Website and Mobile Applications) (No. 2) Accessibility Regulations 2018.") }}</p>
 
-<p>This service is partially compliant with the <a href="https://www.w3.org/TR/WCAG21/">Web Content Accessibility Guidelines version 2.1</a> AA standard, due to the non-compliances listed.</p>
+{% autoescape false %}
+    <p>{{ _("This service is partially compliant with the %(start_wcag_link)sWeb Content Accessibility Guidelines version 2.1%(end_link)s AA standard, due to the non-compliances listed.", start_wcag_link='<a href="https://www.w3.org/TR/WCAG21/">', end_link='</a>') }}</p>
+{% endautoescape %}
 
-<h2>Non-accessible content</h2>
+<h2>{{ _("Non-accessible content") }}</h2>
 
-<p>The content listed is non-accessible for the following reasons. We are planning to fix the following issues for Census 2021.</p>
+<p>{{ _("The content listed is non-accessible for the following reasons. We are planning to fix the following issues for Census 2021.") }}</p>
 
-<h3>Non-compliance with the accessibility regulations</h3>
+<h3>{{ _("Non-compliance with the accessibility regulations") }}</h3>
 
-<p>Non-descriptive form elements. On the ‘Check your answers’ summary page there is an option to “change” items, but the link does not describe where it goes to. Fails on WCAG 2.1 A number 1.3.1.</p>
+<p>{{ _("Non-descriptive form elements. On the ‘Check your answers’ summary page there is an option to “change” items, but the link does not describe where it goes to. Fails on WCAG 2.1 A number 1.3.1.") }}</p>
 
-<p>Error messages are too generic. If the text in a field is incorrect or in the wrong format, the answer validation page says the answer is incorrect without explaining what you need to do. Fails on WCAG 2.1 A number 3.3.1.</p>
+<p>{{ _("Error messages are too generic. If the text in a field is incorrect or in the wrong format, the answer validation page says the answer is incorrect without explaining what you need to do. Fails on WCAG 2.1 A number 3.3.1.") }}</p>
 
-<p>Form label issue. On the ‘What is your name?’ page, middle name is optional but this is not clear to the user. Fails on WCAG 2.1 A number 3.3.2.</p>
+<p>{{ _("Form label issue. On the ‘What is your name?’ page, middle name is optional but this is not clear to the user. Fails on WCAG 2.1 A number 3.3.2.") }}</p>
 
-<p>Form label issue. When selecting the appropriate relationship, it is possible to ‘Save and continue’ without selecting an option. Fails on WCAG 2.1 A number 2.4.6.</p>
+<p>{{ _("Form label issue. When selecting the appropriate relationship, it is possible to ‘Save and continue’ without selecting an option. Fails on WCAG 2.1 A number 2.4.6.") }}</p>
 
-<p>On the ‘Is this address correct?’ page, the title may not accurately reflect the content on the page for audio users. The ‘Submit survey’ page does not have a page title. Fails on WCAG 2.1 A number 2.4.2.</p>
+<p>{{ _("On the ‘Is this address correct?’ page, the title may not accurately reflect the content on the page for audio users. The ‘Submit survey’ page does not have a page title. Fails on WCAG 2.1 A number 2.4.2.") }}</p>
 
-<p>Timeout issue. Users are not informed of a time limit and service times out without warning. During the validation process there is no return link on the session timeout page. Fails on WCAG 2.1 A number 2.2.1 and AAA number 2.2.6.</p>
+<p>{{ _("Timeout issue. Users are not informed of a time limit and service times out without warning. During the validation process there is no return link on the session timeout page. Fails on WCAG 2.1 A number 2.2.1 and AAA number 2.2.6.") }}</p>
 
-<p>The ‘Hide this’ button text on accordions such as ‘What does “usually live” mean?’ is non-descriptive for JAWS users as the text above it is read back to users. Fails on WCAG 2.1 AA number 2.4.6.</p>
+<p>{{ _("The ‘Hide this’ button text on accordions such as ‘What does “usually live” mean?’ is non-descriptive for JAWS users as the text above it is read back to users. Fails on WCAG 2.1 AA number 2.4.6.") }}</p>
 
-<p>Screen readers may not let users know when an accordion is expanded or collapsed. Fails on WCAG 2.1 A number 2.4.4.</p>
+<p>{{ _("Screen readers may not let users know when an accordion is expanded or collapsed. Fails on WCAG 2.1 A number 2.4.4.") }}</p>
 
-<p>Non-descriptive headings. On the relationships page, the heading does not accurately describe the content for screen readers. Fails on WCAG 2.1 A number 2.4.6.</p>
+<p>{{ _("Non-descriptive headings. On the relationships page, the heading does not accurately describe the content for screen readers. Fails on WCAG 2.1 A number 2.4.6.") }}</p>
 
-<p>Some links are not descriptive enough for screen reader users. Fails on WCAG 2.1 AAA number 2.4.9.</p>
+<p>{{ _("Some links are not descriptive enough for screen reader users. Fails on WCAG 2.1 AAA number 2.4.9.") }}</p>
 
-<p>Some headings do not follow a logical hierarchical structure. Fails on WCAG AAA 2.1 number 2.4.10.</p>
+<p>{{ _("Some headings do not follow a logical hierarchical structure. Fails on WCAG AAA 2.1 number 2.4.10.") }}</p>
 
-<p>Some text is highlighted, such as addresses and names that a user has confirmed. Highlighting is not accessible for some users. This does not conform to Government Digital Service (GDS) guidelines.</p>
+<p>{{ _("Some text is highlighted, such as addresses and names that a user has confirmed. Highlighting is not accessible for some users. This does not conform to Government Digital Service (GDS) guidelines.") }}</p>
 
-<p>Some radio inputs on the relationships page do not conform to GDS guidelines. When selected, three different elements on the page are updated.</p>
+<p>{{ _("Some radio inputs on the relationships page do not conform to GDS guidelines. When selected, three different elements on the page are updated.") }}</p>
 
-<p>On ‘Who lives here?’ there is a ‘Previous’ link on the page that does not conform with GDS guidelines. The text used should read as ‘Back’.</p>
+<p>{{ _("On ‘Who lives here?’ there is a ‘Previous’ link on the page that does not conform with GDS guidelines. The text used should read as ‘Back’.") }}</p>
 
-<p>Error messages do not result in a change to the page title to reflect that an error has been made. This does not conform to GDS guidelines.</p>
+<p>{{ _("Error messages do not result in a change to the page title to reflect that an error has been made. This does not conform to GDS guidelines.") }}</p>
 
 <h2>How we tested this questionnaire</h2>
 
