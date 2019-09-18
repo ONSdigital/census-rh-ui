@@ -2720,3 +2720,24 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
         return {'fulfillment_type': 'HI', 'display_region': 'ni'}
+
+
+@routes.view('/start/accessibility')
+class AccessibilityEN(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, _):
+        return {'display_region': 'en', 'page_title': 'Census questionnaire accessibility statement'}
+
+
+@routes.view('/dechrau/accessibility')
+class AccessibilityCY(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, _):
+        return {'display_region': 'cy', 'locale': 'cy', 'page_title': 'Census questionnaire accessibility statement'}
+
+
+@routes.view('/ni/start/accessibility')
+class AccessibilityNI(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, _):
+        return {'display_region': 'ni', 'page_title': 'Census questionnaire accessibility statement'}
