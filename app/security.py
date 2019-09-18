@@ -1,6 +1,7 @@
 import random
 import string
 import logging
+import hashlib
 
 from structlog import wrap_logger
 from aiohttp import web
@@ -99,3 +100,7 @@ async def remember(identity, request):
     session = await get_session(request)
     session[SESSION_KEY] = identity
     logger.info("Identity remembered", client_ip=request.headers.get("X-Forwarded-For"), identity=identity)
+
+
+def get_sha256_hash(uac: str):
+    return hashlib.sha256(uac.encode()).hexdigest()

@@ -2224,35 +2224,35 @@ class TestHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn('Bank Holidays', contents)
 
-    def test_join_uac_en(self):
+    def test_uac_hash_en(self):
         # Given some post data
-        post_data = {'uac': '1234567890121314', 'action[save_continue]': ''}
+        post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
 
         # When join_uac is called
-        result = IndexEN.join_uac(post_data)
+        result = IndexEN.uac_hash(post_data)
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, post_data['uac'])
+        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
 
     def test_join_uac_cy(self):
         # Given some post data
-        post_data = {'uac': '1234567890121314', 'action[save_continue]': ''}
+        post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
 
         # When join_uac is called
-        result = IndexCY.join_uac(post_data)
+        result = IndexCY.uac_hash(post_data)
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, post_data['uac'])
+        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
 
     def test_join_uac_ni(self):
         # Given some post data
-        post_data = {'uac': '1234567890121314', 'action[save_continue]': ''}
+        post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
 
         # When join_uac is called
-        result = IndexNI.join_uac(post_data)
+        result = IndexNI.uac_hash(post_data)
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, post_data['uac'])
+        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
 
     def test_join_uac_missing_en(self):
         # Given some missing post data
@@ -2260,7 +2260,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexEN.join_uac(post_data)
+            IndexEN.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_join_uac_missing_cy(self):
@@ -2269,7 +2269,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexCY.join_uac(post_data)
+            IndexCY.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_join_uac_missing_ni(self):
@@ -2278,7 +2278,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexNI.join_uac(post_data)
+            IndexNI.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_join_uac_some_missing_en(self):
@@ -2287,7 +2287,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexEN.join_uac(post_data)
+            IndexEN.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_join_uac_some_missing_cy(self):
@@ -2296,7 +2296,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexCY.join_uac(post_data)
+            IndexCY.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_join_uac_some_missing_ni(self):
@@ -2305,7 +2305,7 @@ class TestHandlers(RHTestCase):
 
         # When join_uac is called
         with self.assertRaises(TypeError):
-            IndexNI.join_uac(post_data)
+            IndexNI.uac_hash(post_data)
         # Then a TypeError is raised
 
     def test_validate_case_en(self):
