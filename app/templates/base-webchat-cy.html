@@ -1,7 +1,13 @@
 {% extends "layout/_template.njk" %}
 
+{% if page_title %}
+    {% set page_title_value = page_title + ' - Cyfrifiad 2021' %}
+{% else %}
+    {% set page_title_value = 'Cyfrifiad 2021' %}
+{% endif %}
+
 {% set page = {
-    "title": "Cyfrifiad Webchat",
+    "title": page_title_value,
     "theme": "census",
     "header": {
         "titleLogo": "/img/census-logo-cy.svg",

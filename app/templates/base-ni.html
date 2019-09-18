@@ -1,7 +1,13 @@
 {% extends "layout/_template.njk" %}
 
+{% if page_title %}
+    {% set page_title_value = page_title + ' - Census 2021' %}
+{% else %}
+    {% set page_title_value = 'Census 2021' %}
+{% endif %}
+
 {% set page = {
-    "title": "Census 2019 Rehearsal",
+    "title": page_title_value,
     "theme": "census",
     "header": {
         "logo": "nisra-logo-en",
@@ -15,31 +21,31 @@
                 "itemsList": [
                     {
                         "text": 'About the census',
-                        "url": '/about-census'
+                        "url": domain_url_en + '/ni/about-census'
                     },
                     {
                         "text": 'Help with your census',
-                        "url": '/help'
+                        "url": domain_url_en + '/ni/help'
                     },
                     {
                         "text": 'Contact us',
-                        "url": '/contact-us'
+                        "url": domain_url_en + '/ni/contact-us'
                     },
                     {
                         "text": 'Cookies',
-                        "url": '/cookies'
+                        "url": domain_url_en + '/ni/cookies'
                     },
                     {
                         "text": 'Accessibility',
-                        "url": '/accessibility'
+                        "url": domain_url_en + '/ni/accessibility'
                     },
                     {
                         "text": 'Privacy policy',
-                        "url": '/privacy-policy'
+                        "url": domain_url_en + '/ni/privacy-policy'
                     },
                     {
                         "text": 'Terms and conditions',
-                        "url": '/terms-and-conditions'
+                        "url": domain_url_en + '/ni/terms-and-conditions'
                     }
                 ]
             }
@@ -70,4 +76,14 @@
     {% endif %}
     <!-- End Google Analytics -->
 
+{% endblock %}
+
+{% block preHeader %}
+    {% from "components/cookies-banner/_macro.njk" import onsCookiesBanner %}
+    {{
+        onsCookiesBanner({
+            "html": 'We use cookies to improve your experience of census.gov.uk',
+            "secondaryButtonUrl": domain_url_en + '/ni/cookies'
+        })
+    }}
 {% endblock %}

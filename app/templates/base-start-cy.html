@@ -1,12 +1,18 @@
 {% extends "layout/_template.njk" %}
 
+{% if page_title %}
+    {% set page_title_value = page_title + ' - Cyfrifiad 2021' %}
+{% else %}
+    {% set page_title_value = 'Cyfrifiad 2021' %}
+{% endif %}
+
 {% set page = {
-    "title": "Cyfrifiad 2019",
+    "title": page_title_value,
     "theme": "census",
     "language": {
         "languages": [
             {
-                "url": "/start/",
+                "url": domain_url_en + "/start/",
                 "ISOCode": "en",
                 "text": "English",
                 "buttonAriaLabel": "Language selector. Current language: English",
@@ -15,7 +21,7 @@
                 "current": false
             },
             {
-                "url": "/dechrau/",
+                "url": domain_url_cy + "/dechrau/",
                 "ISOCode": "cy",
                 "text": "Cymraeg",
                 "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
@@ -30,7 +36,7 @@
         "language": "cy",
         "titleLogo": "/img/census-logo-cy.svg",
         "titleLogoAlt": "Cyfrifiad 2021",
-        "titleLogoHref": "https://www.cyfrifiad.gov.uk/"
+        "titleLogoHref": domain_url_cy + '/'
     },
     "footer": {
         "lang": "cy",
@@ -39,31 +45,31 @@
                 "itemsList": [
                     {
                         "text": 'About the census',
-                        "url": '/about-census'
+                        "url": domain_url_cy + '/about-census'
                     },
                     {
                         "text": 'Help with your census',
-                        "url": '/help'
+                        "url": domain_url_cy + '/help'
                     },
                     {
                         "text": 'Contact us',
-                        "url": '/contact-us'
+                        "url": domain_url_cy + '/contact-us'
                     },
                     {
                         "text": 'Cookies',
-                        "url": '/cookies'
+                        "url": domain_url_cy + '/cookies'
                     },
                     {
                         "text": 'Accessibility',
-                        "url": '/accessibility'
+                        "url": domain_url_cy + '/accessibility'
                     },
                     {
                         "text": 'Privacy policy',
-                        "url": '/privacy-policy'
+                        "url": domain_url_cy + '/privacy-policy'
                     },
                     {
                         "text": 'Terms and conditions',
-                        "url": '/terms-and-conditions'
+                        "url": domain_url_cy + '/terms-and-conditions'
                     }
                 ]
             }
@@ -94,4 +100,16 @@
     {% endif %}
     <!-- End Google Analytics -->
 
+{% endblock %}
+
+{% block preHeader %}
+    {% from "components/cookies-banner/_macro.njk" import onsCookiesBanner %}
+    {{
+        onsCookiesBanner({
+            "html": 'Rydym yn defnyddio cwcis i wella eich profiad o cyfrifiad.gov.uk',
+            "primaryButtonText": 'Derbyn cwcis',
+            "secondaryButtonText": 'Gosodiadau cwcis',
+            "secondaryButtonUrl": domain_url_cy + '/cwcis'
+        })
+    }}
 {% endblock %}
