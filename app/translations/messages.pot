@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-18 15:06+0100\n"
+"POT-Creation-Date: 2019-09-18 16:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -312,6 +312,101 @@ msgstr ""
 msgid ""
 "Error messages do not result in a change to the page title to reflect "
 "that an error has been made. This does not conform to GDS guidelines."
+msgstr ""
+
+#: app/templates/accessibility.html:117
+msgid "How we tested this questionnaire"
+msgstr ""
+
+#: app/templates/accessibility.html:119
+msgid "Over the last few years we have tested the full questionnaire, including:"
+msgstr ""
+
+#: app/templates/accessibility.html:123
+#, python-format
+msgid ""
+"%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying"
+" out a professional, technical audit"
+msgstr ""
+
+#: app/templates/accessibility.html:125
+msgid ""
+"user testing with the public on different devices, different locations, "
+"in their homes with various assistive technologies including free and "
+"paid versions"
+msgstr ""
+
+#: app/templates/accessibility.html:126
+msgid "testing with charities, such as Scope and RNIB in their labs"
+msgstr ""
+
+#: app/templates/accessibility.html:127
+msgid "using job centres and libraries for pop-up testing"
+msgstr ""
+
+#: app/templates/accessibility.html:128
+msgid "covering a wide range of ages, additional needs and disabilities"
+msgstr ""
+
+#: app/templates/accessibility.html:129
+msgid ""
+"making sure the offline journey and non-digital products were considered "
+"in the end-to-end journey"
+msgstr ""
+
+#: app/templates/accessibility.html:130
+msgid ""
+"changing designs based on feedback from user testing, such as letter "
+"structure and the summary of sections and progress through questionnaire"
+msgstr ""
+
+#: app/templates/accessibility.html:133
+msgid "Digital Accessibility Centre testing"
+msgstr ""
+
+#: app/templates/accessibility.html:135
+msgid ""
+"Parts of this questionnaire were last tested on 3 September 2019 by the "
+"Digital Accessibility Centre (DAC)."
+msgstr ""
+
+#: app/templates/accessibility.html:138
+msgid "DAC Report - September 2019"
+msgstr ""
+
+#: app/templates/accessibility.html:141
+msgid "You can read the last full accessibility test report from 28 June 2019."
+msgstr ""
+
+#: app/templates/accessibility.html:144
+msgid "DAC Report - June 2019"
+msgstr ""
+
+#: app/templates/accessibility.html:147
+msgid "What we’re doing to improve accessibility"
+msgstr ""
+
+#: app/templates/accessibility.html:149
+msgid ""
+"We are continuing to work with various charities and local deaf "
+"communities to understand their needs for the census."
+msgstr ""
+
+#: app/templates/accessibility.html:151
+msgid ""
+"We are looking at designs to see if it is possible to have British Sign "
+"Language on every page. This is challenging as we have been unable to "
+"find another service that does this, but we continue to investigate."
+msgstr ""
+
+#: app/templates/accessibility.html:153
+msgid "We will act on feedback from the 2019 Rehearsal in October."
+msgstr ""
+
+#: app/templates/accessibility.html:155
+msgid ""
+"This statement was prepared on 17 September. It was last updated on 17 "
+"September."
 msgstr ""
 
 #: app/templates/address-confirmation.html:30

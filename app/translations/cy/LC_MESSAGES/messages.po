@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-18 15:06+0100\n"
+"POT-Creation-Date: 2019-09-18 16:48+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -232,9 +232,10 @@ msgid ""
 "Content Accessibility Guidelines version 2.1%(end_link)s AA standard, due"
 " to the non-compliances listed."
 msgstr ""
-"Mae'r wefan hon yn cydymffurfio'n rhannol â %(start_wcag_link)sChanllawiau "
-"Hygyrchedd Cynnwys y We fersiwn 2.1%(end_link)s safon AA, oherwydd "
-"yr achosion o ddiffyg cydymffurfio a restrir."
+"Mae'r wefan hon yn cydymffurfio'n rhannol â "
+"%(start_wcag_link)sChanllawiau Hygyrchedd Cynnwys y We fersiwn "
+"2.1%(end_link)s safon AA, oherwydd yr achosion o ddiffyg cydymffurfio a "
+"restrir."
 
 #: app/templates/accessibility.html:81
 msgid "Non-accessible content"
@@ -259,8 +260,8 @@ msgid ""
 "where it goes to. Fails on WCAG 2.1 A number 1.3.1."
 msgstr ""
 "Elfennau o'r ffurflen nad ydynt yn ddisgrifiadol. Ar dudalen grynhoi "
-"‘Edrych dros eich atebion‘, mae opsiwn i “newid“ eitemau, ond "
-"nid yw'r ddolen yn disgrifio i ble mae'n mynd. Methu ar WCAG 2.1 A rhif 1.3.1."
+"‘Edrych dros eich atebion‘, mae opsiwn i “newid“ eitemau, ond nid yw'r "
+"ddolen yn disgrifio i ble mae'n mynd. Methu ar WCAG 2.1 A rhif 1.3.1."
 
 #: app/templates/accessibility.html:89
 msgid ""
@@ -270,9 +271,9 @@ msgid ""
 "number 3.3.1."
 msgstr ""
 "Mae'r negeseuon gwall yn rhy generig. Os yw'r testun mewn blwch yn "
-"anghywir neu yn y fformat anghywir, mae tudalen dilysu'r ateb yn "
-"dweud bod yr ateb yn anghywir heb esbonio'r hyn y mae angen "
-"i chi ei wneud. Methu ar WCAG 2.1 A rhif 3.3.1."
+"anghywir neu yn y fformat anghywir, mae tudalen dilysu'r ateb yn dweud "
+"bod yr ateb yn anghywir heb esbonio'r hyn y mae angen i chi ei wneud. "
+"Methu ar WCAG 2.1 A rhif 3.3.1."
 
 #: app/templates/accessibility.html:91
 msgid ""
@@ -280,9 +281,9 @@ msgid ""
 "optional but this is not clear to the user. Fails on WCAG 2.1 A number "
 "3.3.2."
 msgstr ""
-"Problem gyda label ar y ffurflen. Ar y dudalen ‘Beth yw eich enw?’ "
-"mae'r enw canol yn ddewisol ond nid yw hyn yn glir i'r defnyddiwr. "
-"Methu ar WCAG 2.1 A rhif 3.3.2."
+"Problem gyda label ar y ffurflen. Ar y dudalen ‘Beth yw eich enw?’ mae'r "
+"enw canol yn ddewisol ond nid yw hyn yn glir i'r defnyddiwr. Methu ar "
+"WCAG 2.1 A rhif 3.3.2."
 
 #: app/templates/accessibility.html:93
 msgid ""
@@ -290,9 +291,9 @@ msgid ""
 "possible to ‘Save and continue’ without selecting an option. Fails on "
 "WCAG 2.1 A number 2.4.6."
 msgstr ""
-"Problem gyda label ar y ffurflen. Wrth ddewis y berthynas briodol, "
-"mae'n bosibl clicio ar 'Cadw a pharhau' heb ddewis opsiwn. Methu "
-"ar WCAG 2.1 A rhif 2.4.6."
+"Problem gyda label ar y ffurflen. Wrth ddewis y berthynas briodol, mae'n "
+"bosibl clicio ar 'Cadw a pharhau' heb ddewis opsiwn. Methu ar WCAG 2.1 A "
+"rhif 2.4.6."
 
 #: app/templates/accessibility.html:95
 msgid ""
@@ -300,10 +301,10 @@ msgid ""
 "reflect the content on the page for audio users. The ‘Submit survey’ page"
 " does not have a page title. Fails on WCAG 2.1 A number 2.4.2."
 msgstr ""
-"Ar dudalen 'Ydy'r cyfeiriad hwn yn gywir?', mae'n bosibl nad yw'r "
-"teitl yn adlewyrchu'r cynnwys ar y dudalen yn gywir ar gyfer defnyddwyr "
-"clywedol. Nid oes teitl ar dudalen 'Cyflwyno holiadur'. Methu ar "
-"WCAG 2.1 A rhif 2.4.2."
+"Ar dudalen 'Ydy'r cyfeiriad hwn yn gywir?', mae'n bosibl nad yw'r teitl "
+"yn adlewyrchu'r cynnwys ar y dudalen yn gywir ar gyfer defnyddwyr "
+"clywedol. Nid oes teitl ar dudalen 'Cyflwyno holiadur'. Methu ar WCAG 2.1"
+" A rhif 2.4.2."
 
 #: app/templates/accessibility.html:97
 msgid ""
@@ -312,11 +313,11 @@ msgid ""
 "link on the session timeout page. Fails on WCAG 2.1 A number 2.2.1 and "
 "AAA number 2.2.6."
 msgstr ""
-"Problem gyda therfyn amser. Nid yw'r defnyddwyr yn cael gwybod bod "
-"terfyn amser ac mae'r gwasanaeth yn cyrraedd ei derfyn amser heb "
-"rybudd. Yn ystod y broses ddilysu, nid yw'r dudalen sy'n nodi bod "
-"y sesiwn wedi cyrraedd ei therfyn amser yn cynnwys dolen i fynd yn ôl. "
-"Methu ar WCAG 2.1 A rhif 2.2.1 ac AAA rhif 2.2.6."
+"Problem gyda therfyn amser. Nid yw'r defnyddwyr yn cael gwybod bod terfyn"
+" amser ac mae'r gwasanaeth yn cyrraedd ei derfyn amser heb rybudd. Yn "
+"ystod y broses ddilysu, nid yw'r dudalen sy'n nodi bod y sesiwn wedi "
+"cyrraedd ei therfyn amser yn cynnwys dolen i fynd yn ôl. Methu ar WCAG "
+"2.1 A rhif 2.2.1 ac AAA rhif 2.2.6."
 
 #: app/templates/accessibility.html:99
 msgid ""
@@ -324,10 +325,10 @@ msgid ""
 "live” mean?’ is non-descriptive for JAWS users as the text above it is "
 "read back to users. Fails on WCAG 2.1 AA number 2.4.6."
 msgstr ""
-"Nid yw testun y botwm 'Cuddio hyn' ar acordiynau megis ‘Beth mae “byw "
-"fel arfer” yn ei olygu?’ yn ddisgrifiadol ar gyfer defnyddwyr JAWS "
-"gan fod y testun uwch ei ben yn cael ei ddarllen yn ôl i ddefnyddwyr. "
-"Methu ar WCAG 2.1 AA rhif 2.4.6."
+"Nid yw testun y botwm 'Cuddio hyn' ar acordiynau megis ‘Beth mae “byw fel"
+" arfer” yn ei olygu?’ yn ddisgrifiadol ar gyfer defnyddwyr JAWS gan fod y"
+" testun uwch ei ben yn cael ei ddarllen yn ôl i ddefnyddwyr. Methu ar "
+"WCAG 2.1 AA rhif 2.4.6."
 
 #: app/templates/accessibility.html:101
 msgid ""
@@ -343,25 +344,25 @@ msgid ""
 " accurately describe the content for screen readers. Fails on WCAG 2.1 A "
 "number 2.4.6."
 msgstr ""
-"Penawdau nad ydynt yn ddisgrifiadol. Ar y dudalen ar gyfer nodi perthynas, "
-"nid yw'r pennawd yn disgrifio'r cynnwys yn gywir i ddefnyddwyr "
-"darllenwyr sgrin. Methu ar WCAG 2.1 A rhif 2.4.6."
+"Penawdau nad ydynt yn ddisgrifiadol. Ar y dudalen ar gyfer nodi "
+"perthynas, nid yw'r pennawd yn disgrifio'r cynnwys yn gywir i ddefnyddwyr"
+" darllenwyr sgrin. Methu ar WCAG 2.1 A rhif 2.4.6."
 
 #: app/templates/accessibility.html:105
 msgid ""
 "Some links are not descriptive enough for screen reader users. Fails on "
 "WCAG 2.1 AAA number 2.4.9."
 msgstr ""
-"Nid yw rhai dolenni yn ddigon disgrifiadol ar gyfer defnyddwyr "
-"darllenwyr sgrin. Methu ar WCAG AAA 2.1 rhif 2.4.9."
+"Nid yw rhai dolenni yn ddigon disgrifiadol ar gyfer defnyddwyr darllenwyr"
+" sgrin. Methu ar WCAG AAA 2.1 rhif 2.4.9."
 
 #: app/templates/accessibility.html:107
 msgid ""
 "Some headings do not follow a logical hierarchical structure. Fails on "
 "WCAG AAA 2.1 number 2.4.10."
 msgstr ""
-"Nid yw rhai penawdau yn dilyn strwythur hierarchaidd rhesymegol. "
-"Methu ar WCAG AAA 2.1 rhif 2.4.10."
+"Nid yw rhai penawdau yn dilyn strwythur hierarchaidd rhesymegol. Methu ar"
+" WCAG AAA 2.1 rhif 2.4.10."
 
 #: app/templates/accessibility.html:109
 msgid ""
@@ -369,9 +370,9 @@ msgid ""
 "confirmed. Highlighting is not accessible for some users. This does not "
 "conform to Government Digital Service (GDS) guidelines."
 msgstr ""
-"Mae rhywfaint o'r testun wedi'i amlygu, megis cyfeiriadau ac enwau y "
-"mae defnyddiwr wedi'u cadarnhau. Nid yw rhai defnyddwyr yn cael hyn. "
-"Nid yw hyn yn cydymffurfio â chanllawiau Gwasanaeth Digidol y Llywodraeth (GDS)."
+"Mae rhywfaint o'r testun wedi'i amlygu, megis cyfeiriadau ac enwau y mae "
+"defnyddiwr wedi'u cadarnhau. Nid yw rhai defnyddwyr yn cael hyn. Nid yw "
+"hyn yn cydymffurfio â chanllawiau Gwasanaeth Digidol y Llywodraeth (GDS)."
 
 #: app/templates/accessibility.html:111
 msgid ""
@@ -380,8 +381,8 @@ msgid ""
 "updated."
 msgstr ""
 "Nid yw rhai mewnbynnau radio ar y dudalen ar gyfer nodi perthynas yn "
-"cydymffurfio â chanllawiau GDS. Wrth ddewis, caiff tair elfen wahanol "
-"ar y sgrin eu diweddaru."
+"cydymffurfio â chanllawiau GDS. Wrth ddewis, caiff tair elfen wahanol ar "
+"y sgrin eu diweddaru."
 
 #: app/templates/accessibility.html:113
 msgid ""
@@ -397,8 +398,112 @@ msgid ""
 "Error messages do not result in a change to the page title to reflect "
 "that an error has been made. This does not conform to GDS guidelines."
 msgstr ""
-"Nid yw negeseuon gwall yn newid teitl y dudalen er mwyn dangos bod "
-"gwall wedi'i wneud. Nid yw hyn yn cydymffurfio â chanllawiau GDS."
+"Nid yw negeseuon gwall yn newid teitl y dudalen er mwyn dangos bod gwall "
+"wedi'i wneud. Nid yw hyn yn cydymffurfio â chanllawiau GDS."
+
+#: app/templates/accessibility.html:117
+msgid "How we tested this questionnaire"
+msgstr "Sut y gwnaethom brofi'r holiadur hwn"
+
+#: app/templates/accessibility.html:119
+msgid "Over the last few years we have tested the full questionnaire, including:"
+msgstr "Dros y blynyddoedd diwethaf, rydym wedi profi'r holiadur llawn, gan gynnwys:"
+
+#: app/templates/accessibility.html:123
+#, python-format
+msgid ""
+"%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying"
+" out a professional, technical audit"
+msgstr ""
+"Cael y %(start_dac_link)sGanolfan Hygyrchedd Digidol (DAC)%(end_link)s i gynnal "
+"archwiliad technegol proffesiynol"
+
+#: app/templates/accessibility.html:125
+msgid ""
+"user testing with the public on different devices, different locations, "
+"in their homes with various assistive technologies including free and "
+"paid versions"
+msgstr ""
+"cynnal profion defnyddwyr gyda'r cyhoedd ar ddyfeisiau gwahanol, mewn "
+"lleoliadau gwahanol, yn eu cartrefi gyda thechnolegau cynorthwyol amrywiol, "
+"gan gynnwys fersiynau am ddim a rhai y mae'n rhaid talu amdanynt"
+
+#: app/templates/accessibility.html:126
+msgid "testing with charities, such as Scope and RNIB in their labs"
+msgstr "cynnal profion gydag elusennau, megis Scope a Sefydliad Cenedlaethol "
+"Brenhinol Pobl Ddall (RNIB) yn eu labordai"
+
+#: app/templates/accessibility.html:127
+msgid "using job centres and libraries for pop-up testing"
+msgstr "defnyddio canolfannau gwaith a llyfrgelloedd i gynnal profion ar adegau penodol"
+
+#: app/templates/accessibility.html:128
+msgid "covering a wide range of ages, additional needs and disabilities"
+msgstr "cwmpasu ystod eang o oedrannau, anghenion ychwanegol ac anableddau"
+
+#: app/templates/accessibility.html:129
+msgid ""
+"making sure the offline journey and non-digital products were considered "
+"in the end-to-end journey"
+msgstr "sicrhau bod y daith all-lein a chynhyrchion nad ydynt yn "
+"ddigidol yn cael eu hystyried o'r dechrau i'r diwedd"
+
+#: app/templates/accessibility.html:130
+msgid ""
+"changing designs based on feedback from user testing, such as letter "
+"structure and the summary of sections and progress through questionnaire"
+msgstr ""
+"newid dyluniadau yn seiliedig ar adborth o brofion defnyddwyr, megis "
+"strwythur llythyrau, crynodeb o adrannau a chynnydd drwy'r holiadur"
+
+#: app/templates/accessibility.html:133
+msgid "Digital Accessibility Centre testing"
+msgstr ""
+
+#: app/templates/accessibility.html:135
+msgid ""
+"Parts of this questionnaire were last tested on 3 September 2019 by the "
+"Digital Accessibility Centre (DAC)."
+msgstr ""
+
+#: app/templates/accessibility.html:138
+msgid "DAC Report - September 2019"
+msgstr ""
+
+#: app/templates/accessibility.html:141
+msgid "You can read the last full accessibility test report from 28 June 2019."
+msgstr ""
+
+#: app/templates/accessibility.html:144
+msgid "DAC Report - June 2019"
+msgstr ""
+
+#: app/templates/accessibility.html:147
+msgid "What we’re doing to improve accessibility"
+msgstr ""
+
+#: app/templates/accessibility.html:149
+msgid ""
+"We are continuing to work with various charities and local deaf "
+"communities to understand their needs for the census."
+msgstr ""
+
+#: app/templates/accessibility.html:151
+msgid ""
+"We are looking at designs to see if it is possible to have British Sign "
+"Language on every page. This is challenging as we have been unable to "
+"find another service that does this, but we continue to investigate."
+msgstr ""
+
+#: app/templates/accessibility.html:153
+msgid "We will act on feedback from the 2019 Rehearsal in October."
+msgstr ""
+
+#: app/templates/accessibility.html:155
+msgid ""
+"This statement was prepared on 17 September. It was last updated on 17 "
+"September."
+msgstr ""
 
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42

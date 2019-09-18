@@ -114,38 +114,44 @@
 
 <p>{{ _("Error messages do not result in a change to the page title to reflect that an error has been made. This does not conform to GDS guidelines.") }}</p>
 
-<h2>How we tested this questionnaire</h2>
+<h2>{{ _("How we tested this questionnaire") }}</h2>
 
-<p>Over the last few years we have tested the full questionnaire, including:</p>
+<p>{{ _("Over the last few years we have tested the full questionnaire, including:") }}</p>
 
 <ul class="list">
-    <li><a href="https://digitalaccessibilitycentre.org/">Digital Accessibility Centre (DAC)</a> carrying out a professional, technical audit</li>
-    <li>user testing with the public on different devices, different locations, in their homes with various assistive technologies including free and paid versions</li>
-    <li>testing with charities, such as Scope and RNIB in their labs</li>
-    <li>using job centres and libraries for pop-up testing</li>
-    <li>covering a wide range of ages, additional needs and disabilities</li>
-    <li>making sure the offline journey and non-digital products were considered in the end-to-end journey</li>
-    <li>changing designs based on feedback from user testing, such as letter structure and the summary of sections and progress through questionnaire</li>
+    {% autoescape false %}
+        <li>{{ _("%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying out a professional, technical audit", start_dac_link='<a href="https://digitalaccessibilitycentre.org/">', end_link='</a>') }}</li>
+    {% endautoescape %}
+    <li>{{ _("user testing with the public on different devices, different locations, in their homes with various assistive technologies including free and paid versions") }}</li>
+    <li>{{ _("testing with charities, such as Scope and RNIB in their labs") }}</li>
+    <li>{{ _("using job centres and libraries for pop-up testing") }}</li>
+    <li>{{ _("covering a wide range of ages, additional needs and disabilities") }}</li>
+    <li>{{ _("making sure the offline journey and non-digital products were considered in the end-to-end journey") }}</li>
+    <li>{{ _("changing designs based on feedback from user testing, such as letter structure and the summary of sections and progress through questionnaire") }}</li>
 </ul>
 
-<h3>Digital Accessibility Centre testing</h3>
+<h3>{{ _("Digital Accessibility Centre testing") }}</h3>
 
-<p>Parts of this questionnaire were last tested on 3 September 2019 by the Digital Accessibility Centre (DAC).</p>
+<p>{{ _("Parts of this questionnaire were last tested on 3 September 2019 by the Digital Accessibility Centre (DAC).") }}</p>
 
-<p><a href="https://storage.cloud.google.com/census-ci-craftcms/assets/ONS-Census-Survey-2021-DAC-Accessibility-Report-Sept-2019.pdf" download>DAC Report - September 2019</a></p>
+{% autoescape false %}
+    <p><a href="https://storage.cloud.google.com/census-ci-craftcms/assets/ONS-Census-Survey-2021-DAC-Accessibility-Report-Sept-2019.pdf" download>{{ _("DAC Report - September 2019") }}</a></p>
+{% endautoescape %}
 
-<p>You can read the last full accessibility test report from 28 June 2019.</p>
+<p>{{ _("You can read the last full accessibility test report from 28 June 2019.") }}</p>
 
-<p><a href="https://storage.cloud.google.com/census-ci-craftcms/assets/ONS-Census-Survey-2021-DAC-Accessibility-Report-June-2019.pdf" download>DAC Report - June 2019</a></p>
+{% autoescape false %}
+    <p><a href="https://storage.cloud.google.com/census-ci-craftcms/assets/ONS-Census-Survey-2021-DAC-Accessibility-Report-June-2019.pdf" download>{{ _("DAC Report - June 2019") }}</a></p>
+{% endautoescape %}
 
-<h2>What we’re doing to improve accessibility</h2>
+<h2>{{ _("What we’re doing to improve accessibility") }}</h2>
 
-<p>We are continuing to work with various charities and local deaf communities to understand their needs for the census.</p>
+<p>{{ _("We are continuing to work with various charities and local deaf communities to understand their needs for the census.") }}</p>
 
-<p>We are looking at designs to see if it is possible to have British Sign Language on every page. This is challenging as we have been unable to find another service that does this, but we continue to investigate.</p>
+<p>{{ _("We are looking at designs to see if it is possible to have British Sign Language on every page. This is challenging as we have been unable to find another service that does this, but we continue to investigate.") }}</p>
 
-<p>We will act on feedback from the 2019 Rehearsal in October.</p>
+<p>{{ _("We will act on feedback from the 2019 Rehearsal in October.") }}</p>
 
-<p>This statement was prepared on 17 September. It was last updated on 17 September.</p>
+<p>{{ _("This statement was prepared on 17 September. It was last updated on 17 September.") }}</p>
 
 {% endblock main %}
