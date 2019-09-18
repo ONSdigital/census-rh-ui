@@ -29,7 +29,7 @@ def create_error_middleware(overrides):
                 index_resource = request.app.router['IndexEN:get']
 
             if request.path + '/' == index_resource.canonical:
-                logger.debug('Redirecting to index', path=request.path)
+                logger.debug('redirecting to index', path=request.path)
                 raise web.HTTPMovedPermanently(index_resource.url_for())
             return await not_found_error(request)
         except web.HTTPForbidden:
@@ -55,38 +55,38 @@ def create_error_middleware(overrides):
 
 
 async def inactive_case(request, case_type):
-    logger.warn("Attempt to use an inactive access code")
+    logger.warn('attempt to use an inactive access code')
     attributes = check_display_region(request)
     attributes['case_type'] = case_type
     return aiohttp_jinja2.render_template("expired.html", request, attributes)
 
 
 async def ce_closed(request, collex_id):
-    logger.warn("Attempt to access collection exercise that has already ended", collex_id=collex_id)
+    logger.warn('attempt to access collection exercise that has already ended', collex_id=collex_id)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("closed.html", request, attributes)
 
 
 async def eq_error(request, message: str):
-    logger.error("Service failed to build eQ payload", exception=message)
+    logger.error('service failed to build eq payload', exception=message)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def connection_error(request, message: str):
-    logger.error("Service connection error", exception=message)
+    logger.error('service connection error', exception=message)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def payload_error(request, url: str):
-    logger.error("Service failed to return expected JSON payload", url=url)
+    logger.error('service failed to return expected json payload', url=url)
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 
 
 async def key_error(request):
-    logger.error("Required value missing")
+    logger.error('required value missing')
     attributes = check_display_region(request)
     return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
 

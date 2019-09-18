@@ -88,7 +88,7 @@ class EqPayloadConstructor(object):
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
-        logger.debug("Creating payload for JWT", case_id=self._case_id, tx_id=self._tx_id)
+        logger.debug('creating payload for jwt', case_id=self._case_id, tx_id=self._tx_id)
 
         self._language_code = self._sample_attributes['language']
 

@@ -147,6 +147,6 @@ def logger_initial_config(log_level=os.getenv('LOG_LEVEL', 'INFO'),
 
     logger = structlog.get_logger('respondent-home')
     logger.setLevel(log_level)
-    logger.info('Logging configured',
+    logger.info('logging configured',
                 log_level=log_level,
                 ext_log_level=ext_log_level)

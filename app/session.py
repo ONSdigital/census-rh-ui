@@ -54,4 +54,4 @@ async def make_redis_pool(host, port):
         )
         return redis_pool
     except (OSError, RedisError):
-        logger.error("Failed to create Redis connection")
+        logger.error('failed to create redis connection')

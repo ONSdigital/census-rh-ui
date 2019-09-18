@@ -27,55 +27,55 @@ class TestRespondentHome(AioHTTPTestCase):
         return create_app('BaseConfig' if self.live_test else 'TestingConfig')
 
     def get_sample_summary_id_from_kwargs(self, **kwargs):
-        logger.debug('Retrieving sample summaries')
+        logger.debug('retrieving sample summaries')
         url = f'{self.app["SAMPLE_URL"]}/samples/samplesummaries'
         response = requests.get(url, auth=self.app["SAMPLE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved sample summaries')
+        logger.debug('successfully retrieved sample summaries')
         for sample_summary in response.json():
             if all(sample_summary[key] == val for key, val in kwargs.items()):
                 return sample_summary['id']
 
     def get_first_sample_summary_id(self):
-        logger.debug('Retrieving sample summaries')
+        logger.debug('retrieving sample summaries')
         url = f'{self.app["SAMPLE_URL"]}/samples/samplesummaries'
         response = requests.get(url, auth=self.app["SAMPLE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved sample summaries')
+        logger.debug('successfully retrieved sample summaries')
         return response.json()[0]['id']
 
     def get_first_sample_unit_id_by_summary(self, sample_summary_id):
-        logger.debug('Retrieving sample unit id', sample_summary_id=sample_summary_id)
+        logger.debug('retrieving sample unit id', sample_summary_id=sample_summary_id)
         url = f'{self.app["SAMPLE_URL"]}/samples/{sample_summary_id}/sampleunits'
         response = requests.get(url, auth=self.app["SAMPLE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved sample units', sample_summary_id=sample_summary_id)
+        logger.debug('successfully retrieved sample units', sample_summary_id=sample_summary_id)
         return response.json()[0]['id']
 
     def get_actionable_case_by_sample_unit_id(self, sample_unit_id):
-        logger.debug('Retrieving case by id', sample_unit_id=sample_unit_id)
+        logger.debug('retrieving case by id', sample_unit_id=sample_unit_id)
         url = f'{self.app["CASE_URL"]}/cases?sampleUnitId={sample_unit_id}&iac=true'
         response = requests.get(url, auth=self.app["CASE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved case', sample_unit_id=sample_unit_id)
+        logger.debug('successfully retrieved case', sample_unit_id=sample_unit_id)
         for case in response.json():
             if case['state'] == 'ACTIONABLE':
                 return case
 
     def get_address_by_sample_unit_id(self, sample_unit_id):
-        logger.debug('Retrieving sample unit', sample_unit_id=sample_unit_id)
+        logger.debug('retrieving sample unit', sample_unit_id=sample_unit_id)
         url = f'{self.app["SAMPLE_URL"]}/samples/{sample_unit_id}'
         response = requests.get(url, auth=self.app["SAMPLE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved sample unit', sample_unit_id=sample_unit_id)
+        logger.debug('successfully retrieved sample unit', sample_unit_id=sample_unit_id)
         return response.json()['sampleAttributes']['attributes']['ADDRESS_LINE1']
 
     def get_iacs_by_case_id(self, case_id):
-        logger.debug('Retrieving IACs', case_id=case_id)
+        logger.debug('retrieving iacs', case_id=case_id)
         url = f"{self.app['CASE_URL']}/cases/{case_id}/iac"
         response = requests.get(url, auth=self.app["CASE_AUTH"][:2])
         response.raise_for_status()
-        logger.debug('Successfully retrieved IACs for case', case_id=case_id)
+        logger.debug('successfully retrieved iacs for case', case_id=case_id)
         return response.json()
 
     def poll_case_for_iacs(self, case, retries=20):

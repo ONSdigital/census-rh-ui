@@ -73,14 +73,14 @@ class View:
             response.raise_for_status()
         except ClientResponseError as ex:
             if not ex.status == 404:
-                logger.error("Error in response", url=response.url, status_code=response.status)
+                logger.error('error in response', url=response.url, status_code=response.status)
             raise ex
         else:
-            logger.debug("Successfully connected to service", url=str(response.url))
+            logger.debug('successfully connected to service', url=str(response.url))
 
     async def _make_request(self, request: Request):
         method, url, auth, json, func, response = request
-        logger.debug(f"Making {method} request to {url} and handling with {func.__name__}")
+        logger.debug('making request with handler', method=method, url=url, handler=func.__name__)
         try:
             async with self._request.app.http_session_pool.request(method, url, auth=auth, json=json, ssl=False) as resp:
                 func(resp)
@@ -89,7 +89,7 @@ class View:
                 else:
                     return None
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error("Client failed to connect", url=url, client_ip=self._client_ip)
+            logger.error('client failed to connect', url=url, client_ip=self._client_ip)
             raise ex
 
     async def call_questionnaire(self, case, attributes, app, adlocation):
@@ -99,7 +99,7 @@ class View:
 
         await self.post_surveylaunched(case, adlocation)
 
-        logger.debug('Redirecting to eQ', client_ip=self._client_ip)
+        logger.debug('redirecting to eq', client_ip=self._client_ip)
         raise HTTPFound(f"{app['EQ_URL']}/session?token={token}")
 
     async def post_surveylaunched(self, case, adlocation):
@@ -143,7 +143,7 @@ class Start(View):
             raise InvalidEqPayLoad("CaseStatus is not OK")
 
     async def get_uac_details(self):
-        logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
+        logger.debug('making get request for uac details', client_ip=self._client_ip, rhsvc_url=self._rhsvc_url)
         return await self._make_request(
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
@@ -201,12 +201,12 @@ class IndexEN(Start):
             adlocation = query_string['adlocation']
             if adlocation.isdigit():
                 session['adlocation'] = adlocation
-                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+                logger.debug('assisted digital query parameter set', adlocation=adlocation, client_ip=self._client_ip)
             else:
-                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                logger.warn('assisted digital query parameter not numeric', client_ip=self._client_ip)
                 session.pop('adlocation', None)
         except KeyError:
-            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            logger.debug('assisted digital query parameter not present', client_ip=self._client_ip)
             session.pop('adlocation', None)
         return {'display_region': 'en'}
 
@@ -223,7 +223,7 @@ class IndexEN(Start):
         try:
             self._uac = self.join_uac(data)
         except TypeError:
-            logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
+            logger.warn('attempt to use a malformed access code', client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
             raise HTTPFound(self._request.app.router['IndexEN:get'].url_for())
 
@@ -231,7 +231,7 @@ class IndexEN(Start):
             uac_json = await self.get_uac_details()
         except ClientResponseError as ex:
             if ex.status == 404:
-                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                logger.warn('attempt to use an invalid access code', client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
                 return aiohttp_jinja2.render_template("index.html", self._request,
                                                       {'display_region': 'en'}, status=401)
@@ -249,7 +249,7 @@ class IndexEN(Start):
 
         # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
-        logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
+        logger.debug('address confirmation displayed', client_ip=self._client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
@@ -274,12 +274,12 @@ class IndexCY(Start):
             adlocation = query_string['adlocation']
             if adlocation.isdigit():
                 session['adlocation'] = adlocation
-                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+                logger.debug('assisted digital query parameter set', adlocation=adlocation, client_ip=self._client_ip)
             else:
-                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                logger.warn('assisted digital query parameter not numeric', client_ip=self._client_ip)
                 session.pop('adlocation', None)
         except KeyError:
-            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            logger.debug('assisted digital query parameter not present', client_ip=self._client_ip)
             session.pop('adlocation', None)
         return {'display_region': 'cy', 'locale': 'cy'}
 
@@ -295,7 +295,7 @@ class IndexCY(Start):
         try:
             self._uac = self.join_uac(data)
         except TypeError:
-            logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
+            logger.warn('attempt to use a malformed access code', client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG_CY)
             raise HTTPFound(self._request.app.router['IndexCY:get'].url_for())
 
@@ -303,7 +303,7 @@ class IndexCY(Start):
             uac_json = await self.get_uac_details()
         except ClientResponseError as ex:
             if ex.status == 404:
-                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                logger.warn('attempt to use an invalid access code', client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG_CY)
                 return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy',
                                                                                     'locale': 'cy'}, status=401)
@@ -321,7 +321,7 @@ class IndexCY(Start):
 
         # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
-        logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
+        logger.debug('address confirmation displayed', client_ip=self._client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
@@ -347,12 +347,12 @@ class IndexNI(Start):
             adlocation = query_string['adlocation']
             if adlocation.isdigit():
                 session['adlocation'] = adlocation
-                logger.debug("Assisted digital query parameter set", adlocation=adlocation, client_ip=self._client_ip)
+                logger.debug('assisted digital query parameter set', adlocation=adlocation, client_ip=self._client_ip)
             else:
-                logger.warn("Assisted digital query parameter not numeric", client_ip=self._client_ip)
+                logger.warn('assisted digital query parameter not numeric', client_ip=self._client_ip)
                 session.pop('adlocation', None)
         except KeyError:
-            logger.debug("Assisted digital query parameter not present", client_ip=self._client_ip)
+            logger.debug('assisted digital query parameter not present', client_ip=self._client_ip)
             session.pop('adlocation', None)
         return {'display_region': 'ni'}
 
@@ -368,7 +368,7 @@ class IndexNI(Start):
         try:
             self._uac = self.join_uac(data)
         except TypeError:
-            logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
+            logger.warn('attempt to use a malformed access code', client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
             raise HTTPFound(self._request.app.router['IndexNI:get'].url_for())
 
@@ -376,7 +376,7 @@ class IndexNI(Start):
             uac_json = await self.get_uac_details()
         except ClientResponseError as ex:
             if ex.status == 404:
-                logger.warn("Attempt to use an invalid access code", client_ip=self._client_ip)
+                logger.warn('attempt to use an invalid access code', client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
                 return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'ni'}, status=401)
             else:
@@ -393,7 +393,7 @@ class IndexNI(Start):
 
         # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
 
-        logger.debug("Address Confirmation displayed", client_ip=self._client_ip)
+        logger.debug('address confirmation displayed', client_ip=self._client_ip)
         session = await get_session(request)
         session["attributes"] = attributes
         session["case"] = uac_json
@@ -442,7 +442,7 @@ class AddressConfirmationEN(Start):
         try:
             address_confirmation = data["address-check-answer"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -458,7 +458,7 @@ class AddressConfirmationEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -504,7 +504,7 @@ class AddressConfirmationCY(Start):
         try:
             address_confirmation = data["address-check-answer"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -520,7 +520,7 @@ class AddressConfirmationCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -566,7 +566,7 @@ class AddressConfirmationNI(Start):
         try:
             address_confirmation = data["address-check-answer"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -582,7 +582,7 @@ class AddressConfirmationNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -627,15 +627,15 @@ class AddressEditEN(Start):
         try:
             attributes = Start.get_address_details(self, data, attributes)
         except InvalidEqPayLoad:
-            logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
+            logger.info('error editing address, mandatory field required by eq', client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
         try:
-            logger.info("Raising address modification call", client_ip=self._client_ip)
+            logger.info('raising address modification call', client_ip=self._client_ip)
             await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
-            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            logger.error('error raising address modification call', client_ip=self._client_ip)
             raise ex
 
         if case['region'][0] == 'N':
@@ -691,15 +691,15 @@ class AddressEditCY(Start):
         try:
             attributes = Start.get_address_details(self, data, attributes)
         except InvalidEqPayLoad:
-            logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
+            logger.info('error editing address, mandatory field required by eq', client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG_CY)
             return attributes
 
         try:
-            logger.info("Raising address modification call", client_ip=self._client_ip)
+            logger.info('raising address modification call', client_ip=self._client_ip)
             await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
-            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            logger.error('error raising address modification call', client_ip=self._client_ip)
             raise ex
 
         if case['region'][0] == 'N':
@@ -755,15 +755,15 @@ class AddressEditNI(Start):
         try:
             attributes = Start.get_address_details(self, data, attributes)
         except InvalidEqPayLoad:
-            logger.info("Error editing address, mandatory field required by EQ", client_ip=self._client_ip)
+            logger.info('error editing address, mandatory field required by eq', client_ip=self._client_ip)
             flash(request, ADDRESS_EDIT_MSG)
             return attributes
 
         try:
-            logger.info("Raising address modification call", client_ip=self._client_ip)
+            logger.info('raising address modification call', client_ip=self._client_ip)
             await self.put_modify_address(session["case"], attributes)
         except ClientResponseError as ex:
-            logger.error("Error raising address modification call", client_ip=self._client_ip)
+            logger.error('error raising address modification call', client_ip=self._client_ip)
             raise ex
 
         if case['region'][0] == 'N':
@@ -817,7 +817,7 @@ class StartLanguageOptionsEN(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -830,7 +830,7 @@ class StartLanguageOptionsEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -873,7 +873,7 @@ class StartLanguageOptionsCY(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -886,7 +886,7 @@ class StartLanguageOptionsCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -929,7 +929,7 @@ class StartLanguageOptionsNI(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -942,7 +942,7 @@ class StartLanguageOptionsNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -985,7 +985,7 @@ class StartSelectLanguageEN(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1000,7 +1000,7 @@ class StartSelectLanguageEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1045,7 +1045,7 @@ class StartSelectLanguageCY(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1060,7 +1060,7 @@ class StartSelectLanguageCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1105,7 +1105,7 @@ class StartSelectLanguageNI(Start):
         try:
             language_option = data["language-option"]
         except KeyError:
-            logger.warn("NI language option error", client_ip=self._client_ip)
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1120,7 +1120,7 @@ class StartSelectLanguageNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Language selection error", client_ip=self._client_ip)
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1182,7 +1182,7 @@ class WebChat(View):
         timezone_offset = 0
 
         if WebChat.get_now() < datetime(2019, 10, 27):
-            logger.info("Before switch to GMT - adjusting time", client_ip='')
+            logger.info('before switch to gmt - adjusting time', client_ip='')
             timezone_offset = 1
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
@@ -1260,16 +1260,16 @@ class WebChatEN(WebChat):
     async def get(self, request):
 
         self._request = request
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {'display_region': 'en'}
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'en'}
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -1281,7 +1281,7 @@ class WebChatEN(WebChat):
         form_valid = self.validate_form(data, 'en')
 
         if not form_valid:
-            logger.info("Form submission error", client_ip=self._client_ip)
+            logger.info('form submission error', client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
@@ -1294,16 +1294,16 @@ class WebChatEN(WebChat):
                    'display_region': 'en',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'en'}
 
 
@@ -1313,16 +1313,16 @@ class WebChatCY(WebChat):
     async def get(self, request):
 
         self._request = request
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {'display_region': 'cy', 'locale': 'cy'}
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'cy', 'locale': 'cy'}
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -1334,7 +1334,7 @@ class WebChatCY(WebChat):
         form_valid = self.validate_form(data, 'cy')
 
         if not form_valid:
-            logger.info("Form submission error", client_ip=self._client_ip)
+            logger.info('form submission error', client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
@@ -1349,16 +1349,16 @@ class WebChatCY(WebChat):
                    'locale': 'cy',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'cy', 'locale': 'cy'}
 
 
@@ -1368,16 +1368,16 @@ class WebChatNI(WebChat):
     async def get(self, request):
 
         self._request = request
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {'display_region': 'ni'}
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'ni'}
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -1389,7 +1389,7 @@ class WebChatNI(WebChat):
         form_valid = self.validate_form(data, 'ni')
 
         if not form_valid:
-            logger.info("Form submission error", client_ip=self._client_ip)
+            logger.info('form submission error', client_ip=self._client_ip)
             return {'form_value_screen_name': data.get('screen_name'),
                     'form_value_country': data.get('country'),
                     'form_value_query': data.get('query'),
@@ -1402,16 +1402,16 @@ class WebChatNI(WebChat):
                    'display_region': 'ni',
                    'webchat_url': f"{self._request.app['WEBCHAT_SVC_URL']}"}
 
-        logger.info("Date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template("webchat-window.html", self._request, context)
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("Failed to send WebChat Closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed', client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {'webchat_status': 'closed', 'display_region': 'ni'}
 
 
@@ -1419,7 +1419,7 @@ class RequestCodeCommon(View):
 
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
-            logger.warn("Session timed out", client_ip=self._client_ip)
+            logger.warn('session timed out', client_ip=self._client_ip)
             raise HTTPFound(self._request.app.router['RequestCodeTimeout' + fulfillment_type + display_region + ':get'].url_for())  # NOQA
 
     async def get_check_attributes(self, request, fulfillment_type, display_region):
@@ -1461,7 +1461,7 @@ class RequestCodeCommon(View):
     async def get_postcode(self, request, data, fulfillment_type, display_region, locale):
         if RequestCodeCommon.postcode_validation_pattern.fullmatch(data["request-postcode"].upper()):
 
-            logger.info("Valid postcode", client_ip=self._client_ip)
+            logger.info('valid postcode', client_ip=self._client_ip)
 
             attributes = {}
             attributes["postcode"] = data["request-postcode"].upper()
@@ -1476,7 +1476,7 @@ class RequestCodeCommon(View):
                                                      + display_region + ':get'].url_for())
 
         else:
-            logger.warn("Attempt to use an invalid postcode", client_ip=self._client_ip)
+            logger.warn('attempt to use an invalid postcode', client_ip=self._client_ip)
             if display_region == 'CY':
                 flash(self._request, POSTCODE_INVALID_MSG_CY)
             else:
@@ -1496,7 +1496,7 @@ class RequestCodeCommon(View):
                                                      + attributes["display_region"].upper() + ':get'].url_for())
 
         else:
-            logger.warn("Attempt to use an invalid mobile phone number", client_ip=self._client_ip)
+            logger.warn('attempt to use an invalid mobile phone number', client_ip=self._client_ip)
             if attributes['display_region'] == 'cy':
                 flash(self._request, MOBILE_ENTER_MSG_CY)
             else:
@@ -1628,7 +1628,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -1640,7 +1640,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHHEN:get'].url_for())
 
@@ -1665,7 +1665,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -1677,7 +1677,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHHCY:get'].url_for())
 
@@ -1702,7 +1702,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -1714,7 +1714,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHHNI:get'].url_for())
 
@@ -1735,7 +1735,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -1753,7 +1753,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHHEN:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHHEN:get'].url_for())
                 else:
                     raise ex
@@ -1763,7 +1763,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -1784,7 +1784,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -1802,7 +1802,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHHCY:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHHCY:get'].url_for())
                 else:
                     raise ex
@@ -1812,7 +1812,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -1832,7 +1832,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -1850,7 +1850,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHHNI:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHHNI:get'].url_for())
                 else:
                     raise ex
@@ -1860,7 +1860,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -1949,7 +1949,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -1980,7 +1980,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2001,7 +2001,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2032,7 +2032,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2053,7 +2053,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2084,7 +2084,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2217,7 +2217,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -2229,7 +2229,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHIEN:get'].url_for())
 
@@ -2254,7 +2254,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -2266,7 +2266,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHICY:get'].url_for())
 
@@ -2291,7 +2291,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         try:
             form_return = json.loads(data["request-address-select"].replace("\'", "\""))
         except KeyError:
-            logger.warn("No address selected", client_ip=self._client_ip)
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(attributes["postcode"],
                                                              attributes["fulfillment_type"],
@@ -2303,7 +2303,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         session["attributes"]["address"] = form_return["address"]
         session["attributes"]["uprn"] = form_return["uprn"]
         session.changed()
-        logger.info("Session updated", client_ip=self._client_ip)
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.router['RequestCodeConfirmAddressHINI:get'].url_for())
 
@@ -2323,7 +2323,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -2341,7 +2341,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHIEN:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHIEN:get'].url_for())
                 else:
                     raise ex
@@ -2351,7 +2351,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -2371,7 +2371,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -2389,7 +2389,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHICY:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHICY:get'].url_for())
                 else:
                     raise ex
@@ -2399,7 +2399,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
 
@@ -2419,7 +2419,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
         try:
             address_confirmation = data["request-address-confirmation"]
         except KeyError:
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -2437,7 +2437,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
                 raise HTTPFound(self._request.app.router['RequestCodeEnterMobileHINI:get'].url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn("Unable to match UPRN", client_ip=self._client_ip)
+                    logger.warn('unable to match uprn', client_ip=self._client_ip)
                     raise HTTPFound(self._request.app.router['RequestCodeNotRequiredHINI:get'].url_for())
                 else:
                     raise ex
@@ -2447,7 +2447,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Address confirmation error", client_ip=self._client_ip)
+            logger.warn('address confirmation error', client_ip=self._client_ip)
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
@@ -2536,7 +2536,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2568,7 +2568,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2588,7 +2588,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2620,7 +2620,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2640,7 +2640,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
         try:
             mobile_confirmation = data["request-mobile-confirmation"]
         except KeyError:
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2672,7 +2672,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn("Mobile confirmation error", client_ip=self._client_ip)
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 

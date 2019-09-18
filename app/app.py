@@ -35,15 +35,15 @@ async def on_cleanup(app):
 async def check_services(app: Application) -> bool:
     for service_name in app.service_status_urls:
         url = app.service_status_urls[service_name]
-        logger.info(f"Making health check GET request to {url}")
+        logger.info('making health check get request', url=ur)
         try:
             async with app.http_session_pool.get(url) as resp:
                 resp.raise_for_status()
         except (ClientConnectorError, ClientConnectionError, ClientResponseError):
-            logger.error('Failed to connect to required service', config=service_name, url=url)
+            logger.error('failed to connect to required service', config=service_name, url=url)
             return False
     else:
-        logger.info('All required services are healthy')
+        logger.info('all required services are healthy')
         return True
 
 
@@ -116,6 +116,6 @@ def create_app(config_name=None) -> Application:
     if not app.debug:
         app.on_response_prepare.append(security.on_prepare)
 
-    logger.info("App setup complete", config=config_name)
+    logger.info('app setup complete', config=config_name)
 
     return app
