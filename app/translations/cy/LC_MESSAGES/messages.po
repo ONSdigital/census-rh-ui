@@ -458,13 +458,15 @@ msgstr ""
 
 #: app/templates/accessibility.html:133
 msgid "Digital Accessibility Centre testing"
-msgstr ""
+msgstr "Profion y Ganolfan Hygyrchedd Digidol"
 
 #: app/templates/accessibility.html:135
 msgid ""
 "Parts of this questionnaire were last tested on 3 September 2019 by the "
 "Digital Accessibility Centre (DAC)."
 msgstr ""
+"Cafodd rhannau o'r holiadur hwn eu profi ddiwethaf ar 3 Medi 2019 gan y "
+"Ganolfan Hygyrchedd Digidol (DAC)."
 
 #: app/templates/accessibility.html:138
 msgid "DAC Report - September 2019"
@@ -472,7 +474,7 @@ msgstr ""
 
 #: app/templates/accessibility.html:141
 msgid "You can read the last full accessibility test report from 28 June 2019."
-msgstr ""
+msgstr "Gallwch ddarllen yr adroddiad ar y prawf hygyrchedd llawn diwethaf o 28 Mehefin 2019."
 
 #: app/templates/accessibility.html:144
 msgid "DAC Report - June 2019"
@@ -480,13 +482,15 @@ msgstr ""
 
 #: app/templates/accessibility.html:147
 msgid "What we’re doing to improve accessibility"
-msgstr ""
+msgstr "Yr hyn rydym yn ei wneud i wella hygyrchedd"
 
 #: app/templates/accessibility.html:149
 msgid ""
 "We are continuing to work with various charities and local deaf "
 "communities to understand their needs for the census."
 msgstr ""
+"Rydym yn parhau i weithio gydag elusennau amrywiol a chymunedau "
+"byddar lleol i ddeall eu hanghenion ar gyfer y cyfrifiad."
 
 #: app/templates/accessibility.html:151
 msgid ""
@@ -494,16 +498,22 @@ msgid ""
 "Language on every page. This is challenging as we have been unable to "
 "find another service that does this, but we continue to investigate."
 msgstr ""
+"Rydym yn edrych ar ddyluniadau er mwyn gweld a yw hi'n bosibl cael Iaith "
+"Arwyddion Prydain ar bob tudalen. Mae hyn yn heriol oherwydd nid ydym "
+"wedi llwyddo i ddod o hyd i wasanaeth arall sy'n gwneud hyn, ond rydym "
+"yn parhau i ymchwilio."
 
 #: app/templates/accessibility.html:153
 msgid "We will act on feedback from the 2019 Rehearsal in October."
-msgstr ""
+msgstr "Byddwn yn gweithredu ar adborth o Ymarfer 2019 ym mis Hydref."
 
 #: app/templates/accessibility.html:155
 msgid ""
 "This statement was prepared on 17 September. It was last updated on 17 "
 "September."
 msgstr ""
+"Cafodd y datganiad hwn ei lunio ar 17 Medi. Cafodd ei ddiweddaru "
+"ddiwethaf ar 17 Medi."
 
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42

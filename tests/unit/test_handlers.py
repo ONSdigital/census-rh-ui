@@ -3200,7 +3200,7 @@ class TestHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Census questionnaire accessibility statement', contents)
+        self.assertIn('Datganiad hygyrchedd holiadur y cyfrifiad', contents)
 
     @unittest_run_loop
     async def test_get_accessibility_statement_ni(self):
