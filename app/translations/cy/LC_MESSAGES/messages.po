@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-05 16:14+0100\n"
+"POT-Creation-Date: 2019-09-18 13:23+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -29,7 +29,9 @@ msgstr "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn siŵr ei fod yn gywir."
 
 #: app/templates/404.html:17
 msgid "If you pasted the web address, check that you copied the entire address."
-msgstr "Os gwnaethoch ludo cyfeiriad y wefan, gwnewch yn siŵr eich bod wedi copïo'r cyfeiriad cyfan."
+msgstr ""
+"Os gwnaethoch ludo cyfeiriad y wefan, gwnewch yn siŵr eich bod wedi "
+"copïo'r cyfeiriad cyfan."
 
 #: app/templates/404.html:19
 #, python-format
@@ -37,6 +39,175 @@ msgid ""
 "If you still encounter problems please %(open)scontact us%(close)s. We "
 "apologise for any inconvenience this may have caused."
 msgstr "Os ydych chi'n cael problemau o hyd, %(open)scysylltwch â ni%(close)s."
+
+#: app/templates/accessibility.html:14
+msgid "Census questionnaire accessibility statement"
+msgstr "Datganiad hygyrchedd holiadur y cyfrifiad"
+
+#: app/templates/accessibility.html:16
+msgid ""
+"This census is run by the Office for National Statistics. We want as many"
+" people as possible to be able to do the census online. For example, that"
+" means you should be able to:"
+msgstr ""
+"Cynhelir y cyfrifiad hwn gan y Swyddfa Ystadegau Gwladol. Rydym am i "
+"gynifer o bobl â phosibl allu gwneud y cyfrifiad ar lein. Er enghraifft, "
+"mae hynny'n golygu y dylech fod yn gallu:"
+
+#: app/templates/accessibility.html:19
+msgid "change colours, contrast levels and fonts"
+msgstr "newid lliwiau, lefelau cyferbyniad a ffontiau"
+
+#: app/templates/accessibility.html:20
+#, python-format
+msgid "zoom in up to 300%% without the text spilling off the screen"
+msgstr "chwyddo'r testun hyd at 300%% heb iddo ddiflannu oddi ar y sgrin"
+
+#: app/templates/accessibility.html:21
+msgid "navigate most of the questionnaire using just a keyboard"
+msgstr "defnyddio'r rhan fwyaf o'r holiadur â bysellfwrdd yn unig"
+
+#: app/templates/accessibility.html:22
+msgid "navigate most of the questionnaire using speech recognition software"
+msgstr "defnyddio'r rhan fwyaf o'r holiadur â meddalwedd adnabod lleferydd"
+
+#: app/templates/accessibility.html:23
+msgid ""
+"listen to most of the questionnaire using a screen reader (including the "
+"most recent versions of JAWS, NVDA and VoiceOver)"
+msgstr ""
+"gwrando ar y rhan fwyaf o'r holiadur gan ddefnyddio rhaglen darllen sgrin"
+" (gan gynnwys fersiynau diweddaraf JAWS, NVDA a VoiceOver)"
+
+#: app/templates/accessibility.html:26
+msgid "We’ve used simple language as much as possible."
+msgstr "Rydym wedi defnyddio iaith syml cymaint â phosibl."
+
+#: app/templates/accessibility.html:29
+#, python-format
+msgid ""
+"%(start_abilitynet_link)sAbilityNet%(end_link)s has advice on making your"
+" device easier to use if you have a disability."
+msgstr ""
+"Mae gan %(start_abilitynet_link)sAbilityNet%(end_link)s gyngor ar wneud "
+"eich dyfais yn haws i'w defnyddio os oes gennych chi anabledd"
+
+#: app/templates/accessibility.html:32
+msgid "How accessible is this questionnaire?"
+msgstr "Pa mor hygyrch yw'r holiadur hwn?"
+
+#: app/templates/accessibility.html:34
+msgid ""
+"We know that the following parts of this questionnaire are not fully "
+"accessible:"
+msgstr "Rydym yn gwybod nad yw'r rhannau canlynol o'r holiadur yn gwbl hygyrch:"
+
+#: app/templates/accessibility.html:37
+msgid "you cannot modify the line height or spacing of text"
+msgstr "ni allwch addasu uchder llinellau na'r bylchau rhwng testun"
+
+#: app/templates/accessibility.html:38
+msgid ""
+"the online system for getting a new census code has not been fully tested"
+" so parts of it may not be accessible to all users"
+msgstr ""
+"nid yw'r system ar-lein ar gyfer cael cod cyfrifiad newydd wedi cael ei "
+"phrofi'n llawn felly mae'n bosibl na fydd rhannau ohoni yn hygyrch i bob "
+"defnyddiwr"
+
+#: app/templates/accessibility.html:39
+msgid "the Web chat tool may not be fully accessible"
+msgstr "mae'n bosibl na fydd yr adnodd sgwrs dros y we yn gwbl hygyrch"
+
+#: app/templates/accessibility.html:40
+msgid ""
+"some page titles may not accurately reflect the content on the page for "
+"audio users"
+msgstr ""
+"mae'n bosibl na fydd teitlau rhai tudalennau yn adlewyrchu cynnwys y "
+"dudalen yn gywir i ddefnyddwyr clywedol"
+
+#: app/templates/accessibility.html:44
+msgid "What to do if you need guidance"
+msgstr "Beth i'w wneud os bydd angen arweiniad arnoch"
+
+#: app/templates/accessibility.html:47
+#, python-format
+msgid ""
+"Our %(start_languages_and_accessibility_link)sguidance leaflets about the"
+" census%(end_link)s are available:"
+msgstr ""
+"Mae ein %(start_languages_and_accessibility_link)staflenni canllaw am y "
+"cyfrifiad%(end_link)s ar gael:"
+
+#: app/templates/accessibility.html:51
+msgid "in Braille"
+msgstr "mewn Braille"
+
+#: app/templates/accessibility.html:52
+msgid "in British Sign Language (BSL)"
+msgstr "yn Iaith Arwyddion Prydain"
+
+#: app/templates/accessibility.html:53
+msgid "as an easy read version (which uses pictures to explain the census)"
+msgstr "mewn fersiwn hawdd ei darllen (sy'n defnyddio lluniau i esbonio'r cyfrifiad)"
+
+#: app/templates/accessibility.html:54
+msgid "as a Welsh audio"
+msgstr "fel fersiwn glywedol Gymraeg"
+
+#: app/templates/accessibility.html:55
+msgid "as large print in English or large print in Welsh"
+msgstr "mewn print mawr yn Gymraeg neu'n Saesneg"
+
+#: app/templates/accessibility.html:58
+msgid "Reporting accessibility problems"
+msgstr "Rhoi gwybod am broblemau hygyrchedd"
+
+#: app/templates/accessibility.html:60
+msgid ""
+"We’re always looking to improve the accessibility of this service. If you"
+" find any problems that are not listed on this page or think we’re not "
+"meeting accessibility requirements, you can contact us."
+msgstr ""
+"Rydym bob amser yn ceisio gwella hygyrchedd y gwasanaeth hwn. Os byddwch "
+"yn dod ar draws unrhyw broblemau sydd heb eu rhestru ar y dudalen hon neu "
+"os na fyddwch chi'n credu ein bod ni'n bodloni ein gofynion hygyrchedd, "
+"gallwch gysylltu â ni."
+
+#: app/templates/accessibility.html:62
+msgid "Enforcement procedure"
+msgstr "Gweithdrefn gorfodi"
+
+#: app/templates/accessibility.html:64
+msgid ""
+"The Equality and Human Rights Commission (EHRC) is responsible for "
+"enforcing the Public Sector Bodies (Website and Mobile Applications) (No."
+" 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If "
+"you’re not happy with how we respond to your complaint, contact the:"
+msgstr ""
+"Y Comisiwn Cydraddoldeb a Hawliau Dynol sy'n gyfrifol am orfodi "
+"Rheoliadau Hygyrchedd Cyrff y Sector Cyhoeddus (Gwefannau a Chymwysiadau "
+"Symudol) (Rhif 2) 2018 (y 'rheoliadau hygyrchedd').  Os na fyddwch yn "
+"fodlon ar y ffordd rydym yn ymateb i'ch cwyn, cysylltwch â'r canlynol:"
+
+#: app/templates/accessibility.html:68
+#, python-format
+msgid ""
+"%(start_equalityadvisoryservice_link)sEquality Advisory and Support "
+"Service (EASS)%(end_link)s if you live in England or Wales"
+msgstr ""
+"%(start_equalityadvisoryservice_link)sGwasanaeth Cynghori a Chymorth "
+"Cydraddoldeb (EASS)%(end_link)s os ydych chi'n byw yng Nghymru neu Loegr"
+
+#: app/templates/accessibility.html:69
+#, python-format
+msgid ""
+"%(start_equalityni_link)sEqualities Commission for Northern Ireland "
+"(ECNI)%(end_link)s if you live in Northern Ireland"
+msgstr ""
+"%(start_equalityni_link)sComisiwn Cydraddoldeb dros Ogledd Iwerddon "
+"(ECNI)%(end_link)s os ydych chi'n byw yng Ngogledd Iwerddon"
 
 #: app/templates/address-confirmation.html:30
 #: app/templates/request-code-confirm-address.html:42
@@ -121,7 +292,9 @@ msgstr "Rydym yn profi rhai problemau technegol."
 msgid ""
 "Please try again later, or %(open)scontact us%(close)s if the problem "
 "continues."
-msgstr "Rhowch gynnig arall arni yn nes ymlaen, neu %(open)scysylltwch â ni%(close)s os yw'r broblem yn parhau."
+msgstr ""
+"Rhowch gynnig arall arni yn nes ymlaen, neu %(open)scysylltwch â "
+"ni%(close)s os yw'r broblem yn parhau."
 
 #: app/templates/expired.html:27
 msgid "Your unique access code has expired"
@@ -132,7 +305,9 @@ msgstr "Mae eich cod mynediad unigryw wedi dod i ben"
 msgid ""
 "You can %(open)srequest a new code%(close)s if you have not submitted a "
 "census yet."
-msgstr "Gallwch %(open)sofyn am god newydd%(close)s os nad ydych chi wedi cyflwyno cyfrifiad eto."
+msgstr ""
+"Gallwch %(open)sofyn am god newydd%(close)s os nad ydych chi wedi "
+"cyflwyno cyfrifiad eto."
 
 #: app/templates/index.html:39
 msgid "Enter the 16 character code printed on the letter"
@@ -274,14 +449,18 @@ msgstr "Gofyn am god mynediad newydd"
 msgid ""
 "To do the census online you need a 16 character unique access code which "
 "we have sent you in a letter."
-msgstr "I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
+msgstr ""
+"I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad "
+"unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
 
 #: app/templates/request-code-household.html:19
 #: app/templates/request-code-individual.html:19
 msgid ""
 "If you are in a rehearsal area and don’t have a code you can get a new "
 "one."
-msgstr "Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, gallwch ofyn am un newydd."
+msgstr ""
+"Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, "
+"gallwch ofyn am un newydd."
 
 #: app/templates/request-code-household.html:21
 #: app/templates/request-code-individual.html:21
@@ -308,7 +487,9 @@ msgstr "Gofyn am god mynediad unigryw"
 
 #: app/templates/request-code-individual.html:17
 msgid "To do the census online you need a 16 character unique access code."
-msgstr "I wneud y cyfrifiad ar lein, mae angen cod mynediad unigryw 16 nod arnoch chi."
+msgstr ""
+"I wneud y cyfrifiad ar lein, mae angen cod mynediad unigryw 16 nod arnoch"
+" chi."
 
 #: app/templates/request-code-individual.html:30
 msgid "Request an individual code"
@@ -335,7 +516,9 @@ msgstr ""
 #: app/templates/request-code-select-address.html:44
 #, python-format
 msgid "<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>"
-msgstr "<p class='u-fs-r--b'>Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y cod post %(pcode)s</p>"
+msgstr ""
+"<p class='u-fs-r--b'>Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y "
+"cod post %(pcode)s</p>"
 
 #: app/templates/request-code-select-address.html:50
 msgid "We cannot find your address"
@@ -369,7 +552,9 @@ msgstr "Mae eich cynnydd wedi cael ei gadw"
 msgid ""
 "You will need to %(open)senter your unique access code%(close)s to access"
 " the census again."
-msgstr "Bydd angen i chi %(open)snodi eich cod mynediad unigryw%(close)s i gael mynediad at y cyfrifiad eto."
+msgstr ""
+"Bydd angen i chi %(open)snodi eich cod mynediad unigryw%(close)s i gael "
+"mynediad at y cyfrifiad eto."
 
 #: app/templates/timeout.html:21
 msgid "Your session has timed out due to inactivity"
@@ -377,7 +562,9 @@ msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
 
 #: app/templates/timeout.html:25
 msgid "To protect your information we have timed you out."
-msgstr "Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser"
+msgstr ""
+"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
+"amser"
 
 #: app/templates/timeout.html:30 app/templates/timeout.html:32
 #, python-format
@@ -512,3 +699,4 @@ msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
+

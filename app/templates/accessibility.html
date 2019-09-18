@@ -1,63 +1,73 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
+    {% set languages_and_accessibility_link = '/ni/help/languages-and-accessibility/' %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
+    {% set languages_and_accessibility_link = '/help/ieithoedd-a-hygyrchedd/' %}
 {% else %}
     {% extends "base-en.html" %}
+    {% set languages_and_accessibility_link = '/help/languages-and-accessibility/' %}
 {% endif %}
 
 {% block main %}
 
-<h1>Census questionnaire accessibility statement</h1>
+<h1>{{ _("Census questionnaire accessibility statement") }}</h1>
 
-<p>This census is run by the Office for National Statistics. We want as many people as possible to be able to do the census online. For example, that means you should be able to:</p>
+<p>{{ _("This census is run by the Office for National Statistics. We want as many people as possible to be able to do the census online. For example, that means you should be able to:") }}</p>
 
 <ul class="list">
-    <li>change colours, contrast levels and fonts</li>
-    <li>zoom in up to 300% without the text spilling off the screen</li>
-    <li>navigate most of the questionnaire using just a keyboard</li>
-    <li>navigate most of the questionnaire using speech recognition software</li>
-    <li>listen to most of the questionnaire using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
+    <li>{{ _("change colours, contrast levels and fonts") }}</li>
+    <li>{{ _("zoom in up to 300%% without the text spilling off the screen") }}</li>
+    <li>{{ _("navigate most of the questionnaire using just a keyboard") }}</li>
+    <li>{{ _("navigate most of the questionnaire using speech recognition software") }}</li>
+    <li>{{ _("listen to most of the questionnaire using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)") }}</li>
 </ul>
 
-<p>We’ve used simple language as much as possible.</p>
+<p>{{ _("We’ve used simple language as much as possible.") }}</p>
 
-<p><a href="https://mcmw.abilitynet.org.uk/">AbilityNet</a> has advice on making your device easier to use if you have a disability.</p>
+{% autoescape false %}
+    <p>{{ _("%(start_abilitynet_link)sAbilityNet%(end_link)s has advice on making your device easier to use if you have a disability.", start_abilitynet_link='<a href="https://mcmw.abilitynet.org.uk/">', end_link='</a>') }}</p>
+{% endautoescape %}
 
-<h3>How accessible is this questionnaire?</h3>
+<h3>{{ _("How accessible is this questionnaire?") }}</h3>
 
-<p>We know that the following parts of this questionnaire are not fully accessible:</p>
+<p>{{ _("We know that the following parts of this questionnaire are not fully accessible:") }}</p>
 
 <ul class="list">
-    <li>you cannot modify the line height or spacing of text</li>
-    <li>the online system for getting a new census code has not been fully tested so parts of it may not be accessible to all users</li>
-    <li>the Web chat tool may not be fully accessible</li>
-    <li>some page titles may not accurately reflect the content on the page for audio users</li>
+    <li>{{ _("you cannot modify the line height or spacing of text") }}</li>
+    <li>{{ _("the online system for getting a new census code has not been fully tested so parts of it may not be accessible to all users") }}</li>
+    <li>{{ _("the Web chat tool may not be fully accessible") }}</li>
+    <li>{{ _("some page titles may not accurately reflect the content on the page for audio users") }}</li>
 </ul>
 
-<h3>What to do if you need guidance</h3>
 
-<p>Our <a href="https://census.gov.uk/help/languages-and-accessibility">guidance leaflets about the census</a> are available:</p>
+<h3>{{ _("What to do if you need guidance") }}</h3>
+
+{% autoescape false %}
+    <p>{{ _("Our %(start_languages_and_accessibility_link)sguidance leaflets about the census%(end_link)s are available:", start_languages_and_accessibility_link='<a href="%s">' % languages_and_accessibility_link, end_link='</a>') }}</p>
+{% endautoescape %}
 
 <ul class="list">
-    <li>in Braille</li>
-    <li>in British Sign Language (BSL)</li>
-    <li>as an easy read version (which uses pictures to explain the census)</li>
-    <li>as a Welsh audio</li>
-    <li>as large print in English or large print in Welsh</li>
+    <li>{{ _("in Braille") }}</li>
+    <li>{{ _("in British Sign Language (BSL)") }}</li>
+    <li>{{ _("as an easy read version (which uses pictures to explain the census)") }}</li>
+    <li>{{ _("as a Welsh audio") }}</li>
+    <li>{{ _("as large print in English or large print in Welsh") }}</li>
 </ul>
 
-<h3>Reporting accessibility problems</h3>
+<h3>{{ _("Reporting accessibility problems") }}</h3>
 
-<p>We’re always looking to improve the accessibility of this service. If you find any problems that are not listed on this page or think we’re not meeting accessibility requirements, you can contact us.</p>
+<p>{{ _("We’re always looking to improve the accessibility of this service. If you find any problems that are not listed on this page or think we’re not meeting accessibility requirements, you can contact us.") }}</p>
 
-<h3>Enforcement procedure</h3>
+<h3>{{ _("Enforcement procedure") }}</h3>
 
-<p>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Website and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the:</p>
+<p>{{ _("The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Website and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the:") }}</p>
 
 <ul class="list">
-    <li><a href="https://www.equalityadvisoryservice.com/">Equality Advisory and Support Service (EASS)</a> if you live in England or Wales</li>
-    <li><a href="https://www.equalityni.org/Home">Equalities Commission for Northern Ireland (ECNI)</a> if you live in Northern Ireland</li>
+    {% autoescape false %}
+        <li>{{ _("%(start_equalityadvisoryservice_link)sEquality Advisory and Support Service (EASS)%(end_link)s if you live in England or Wales", start_equalityadvisoryservice_link='<a href="https://www.equalityadvisoryservice.com/">', end_link='</a>') }}</li>
+        <li>{{ _("%(start_equalityni_link)sEqualities Commission for Northern Ireland (ECNI)%(end_link)s if you live in Northern Ireland", start_equalityni_link='<a href="https://www.equalityni.org/Home">', end_link='</a>') }}</li>
+    {% endautoescape %}
 </ul>
 
 <h2>Technical information about this questionnaire’s accessibility</h2>

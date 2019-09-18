@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-05 16:14+0100\n"
+"POT-Creation-Date: 2019-09-18 13:23+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -35,6 +35,149 @@ msgstr ""
 msgid ""
 "If you still encounter problems please %(open)scontact us%(close)s. We "
 "apologise for any inconvenience this may have caused."
+msgstr ""
+
+#: app/templates/accessibility.html:14
+msgid "Census questionnaire accessibility statement"
+msgstr ""
+
+#: app/templates/accessibility.html:16
+msgid ""
+"This census is run by the Office for National Statistics. We want as many"
+" people as possible to be able to do the census online. For example, that"
+" means you should be able to:"
+msgstr ""
+
+#: app/templates/accessibility.html:19
+msgid "change colours, contrast levels and fonts"
+msgstr ""
+
+#: app/templates/accessibility.html:20
+#, python-format
+msgid "zoom in up to 300%% without the text spilling off the screen"
+msgstr ""
+
+#: app/templates/accessibility.html:21
+msgid "navigate most of the questionnaire using just a keyboard"
+msgstr ""
+
+#: app/templates/accessibility.html:22
+msgid "navigate most of the questionnaire using speech recognition software"
+msgstr ""
+
+#: app/templates/accessibility.html:23
+msgid ""
+"listen to most of the questionnaire using a screen reader (including the "
+"most recent versions of JAWS, NVDA and VoiceOver)"
+msgstr ""
+
+#: app/templates/accessibility.html:26
+msgid "We’ve used simple language as much as possible."
+msgstr ""
+
+#: app/templates/accessibility.html:29
+#, python-format
+msgid ""
+"%(start_abilitynet_link)sAbilityNet%(end_link)s has advice on making your"
+" device easier to use if you have a disability."
+msgstr ""
+
+#: app/templates/accessibility.html:32
+msgid "How accessible is this questionnaire?"
+msgstr ""
+
+#: app/templates/accessibility.html:34
+msgid ""
+"We know that the following parts of this questionnaire are not fully "
+"accessible:"
+msgstr ""
+
+#: app/templates/accessibility.html:37
+msgid "you cannot modify the line height or spacing of text"
+msgstr ""
+
+#: app/templates/accessibility.html:38
+msgid ""
+"the online system for getting a new census code has not been fully tested"
+" so parts of it may not be accessible to all users"
+msgstr ""
+
+#: app/templates/accessibility.html:39
+msgid "the Web chat tool may not be fully accessible"
+msgstr ""
+
+#: app/templates/accessibility.html:40
+msgid ""
+"some page titles may not accurately reflect the content on the page for "
+"audio users"
+msgstr ""
+
+#: app/templates/accessibility.html:44
+msgid "What to do if you need guidance"
+msgstr ""
+
+#: app/templates/accessibility.html:47
+#, python-format
+msgid ""
+"Our %(start_languages_and_accessibility_link)sguidance leaflets about the"
+" census%(end_link)s are available:"
+msgstr ""
+
+#: app/templates/accessibility.html:51
+msgid "in Braille"
+msgstr ""
+
+#: app/templates/accessibility.html:52
+msgid "in British Sign Language (BSL)"
+msgstr ""
+
+#: app/templates/accessibility.html:53
+msgid "as an easy read version (which uses pictures to explain the census)"
+msgstr ""
+
+#: app/templates/accessibility.html:54
+msgid "as a Welsh audio"
+msgstr ""
+
+#: app/templates/accessibility.html:55
+msgid "as large print in English or large print in Welsh"
+msgstr ""
+
+#: app/templates/accessibility.html:58
+msgid "Reporting accessibility problems"
+msgstr ""
+
+#: app/templates/accessibility.html:60
+msgid ""
+"We’re always looking to improve the accessibility of this service. If you"
+" find any problems that are not listed on this page or think we’re not "
+"meeting accessibility requirements, you can contact us."
+msgstr ""
+
+#: app/templates/accessibility.html:62
+msgid "Enforcement procedure"
+msgstr ""
+
+#: app/templates/accessibility.html:64
+msgid ""
+"The Equality and Human Rights Commission (EHRC) is responsible for "
+"enforcing the Public Sector Bodies (Website and Mobile Applications) (No."
+" 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If "
+"you’re not happy with how we respond to your complaint, contact the:"
+msgstr ""
+
+#: app/templates/accessibility.html:68
+#, python-format
+msgid ""
+"%(start_equalityadvisoryservice_link)sEquality Advisory and Support "
+"Service (EASS)%(end_link)s if you live in England or Wales"
+msgstr ""
+
+#: app/templates/accessibility.html:69
+#, python-format
+msgid ""
+"%(start_equalityni_link)sEqualities Commission for Northern Ireland "
+"(ECNI)%(end_link)s if you live in Northern Ireland"
 msgstr ""
 
 #: app/templates/address-confirmation.html:30
@@ -487,3 +630,7 @@ msgstr ""
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr ""
+
+#~ msgid "zoom in up to 300% without the text spilling off the screen"
+#~ msgstr ""
+

@@ -2722,21 +2722,21 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
         return {'fulfillment_type': 'HI', 'display_region': 'ni'}
 
 
-@routes.view('/start/accessibility')
+@routes.view('/start/accessibility/')
 class AccessibilityEN(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, _):
         return {'display_region': 'en', 'page_title': 'Census questionnaire accessibility statement'}
 
 
-@routes.view('/dechrau/accessibility')
+@routes.view('/dechrau/hygyrchedd/')
 class AccessibilityCY(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, _):
-        return {'display_region': 'cy', 'locale': 'cy', 'page_title': 'Census questionnaire accessibility statement'}
+        return {'display_region': 'cy', 'locale': 'cy', 'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'}
 
 
-@routes.view('/ni/start/accessibility')
+@routes.view('/ni/start/accessibility/')
 class AccessibilityNI(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, _):
