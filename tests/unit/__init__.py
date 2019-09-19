@@ -472,6 +472,10 @@ class RHTestCase(AioHTTPTestCase):
         # self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
         # self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
 
+        self.get_accessibility_statement_en = self.app.router['AccessibilityEN:get'].url_for()
+        self.get_accessibility_statement_cy = self.app.router['AccessibilityCY:get'].url_for()
+        self.get_accessibility_statement_ni = self.app.router['AccessibilityNI:get'].url_for()
+
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'

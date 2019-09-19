@@ -3086,3 +3086,37 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
                 'domain_url_cy': self._domain_url_cy,
                 'page_title': 'Your session has timed out due to inactivity'
                 }
+
+
+@routes.view('/start/accessibility/')
+class AccessibilityEN(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, request):
+        self._request = request
+        return {'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Census questionnaire accessibility statement'}
+
+
+@routes.view('/dechrau/hygyrchedd/')
+class AccessibilityCY(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, request):
+        self._request = request
+        return {'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'}
+
+
+@routes.view('/ni/start/accessibility/')
+class AccessibilityNI(RequestCodeCommon):
+    @aiohttp_jinja2.template('accessibility.html')
+    async def get(self, request):
+        self._request = request
+        return {'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Census questionnaire accessibility statement'}
