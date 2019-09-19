@@ -1,27 +1,29 @@
 from importlib import reload
+
 from unittest import TestCase, mock
 
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from aiohttp.web_app import Application
+from aiohttp_session import session_middleware
+from aiohttp_session import SimpleCookieStorage
 from aioresponses import aioresponses
+
 from envparse import ConfigurationError, env
 
 from app.app import create_app
 
 from app import session
-from aiohttp_session import session_middleware
-from aiohttp_session import SimpleCookieStorage
 
 
 class TestCreateApp(AioHTTPTestCase):
-
     config = 'TestingConfig'
 
     def session_storage(self, app_config):
-        self.assertIn("REDIS_SERVER", app_config)
-        self.assertIn("REDIS_PORT", app_config)
-        self.assertIn("SESSION_AGE", app_config)
-        return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
+        self.assertIn('REDIS_SERVER', app_config)
+        self.assertIn('REDIS_PORT', app_config)
+        self.assertIn('SESSION_AGE', app_config)
+        return session_middleware(
+            SimpleCookieStorage(cookie_name='RH_SESSION'))
 
     async def get_application(self):
         from app import settings
@@ -39,23 +41,28 @@ class TestCreateApp(AioHTTPTestCase):
         nonce = '123456'
         with mock.patch('app.security.get_random_string') as mocked_rando:
             mocked_rando.return_value = nonce
-            response = await self.client.request("GET", "/")
-        self.assertEqual(response.headers['Strict-Transport-Security'], 'max-age=31536000 includeSubDomains')
-        self.assertIn("default-src 'self' https://cdn.ons.gov.uk", response.headers['Content-Security-Policy'])
-        self.assertIn("font-src 'self' data: https://cdn.ons.gov.uk", response.headers['Content-Security-Policy'])
-        self.assertIn(f"script-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk 'nonce-{nonce}'",
+            response = await self.client.request('GET', '/')
+        self.assertEqual(response.headers['Strict-Transport-Security'],
+                         'max-age=31536000 includeSubDomains')
+        self.assertIn("default-src 'self' https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
-        self.assertIn("connect-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk",
+        self.assertIn("font-src 'self' data: https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
-        self.assertIn("img-src 'self' data: https://www.google-analytics.com https://cdn.ons.gov.uk",
-                      response.headers['Content-Security-Policy'])
+        self.assertIn(
+            f"script-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk 'nonce-{nonce}'",
+            response.headers['Content-Security-Policy'])
+        self.assertIn(
+            "connect-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk",
+            response.headers['Content-Security-Policy'])
+        self.assertIn(
+            "img-src 'self' data: https://www.google-analytics.com https://cdn.ons.gov.uk",
+            response.headers['Content-Security-Policy'])
         self.assertEqual(response.headers['X-XSS-Protection'], '1')
         self.assertEqual(response.headers['X-Content-Type-Options'], 'nosniff')
         self.assertEqual(response.headers['Referrer-Policy'], 'same-origin')
 
 
 class TestCreateAppURLPathPrefix(TestCase):
-
     config = 'TestingConfig'
 
     def test_create_app_with_url_path_prefix_en(self):
@@ -67,8 +74,10 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], url_prefix)
 
-        self.assertEqual(app.router['IndexEN:get'].canonical, '/url-path-prefix/start/')
-        self.assertEqual(app.router['IndexEN:post'].canonical, '/url-path-prefix/start/')
+        self.assertEqual(app.router['IndexEN:get'].canonical,
+                         '/url-path-prefix/start/')
+        self.assertEqual(app.router['IndexEN:post'].canonical,
+                         '/url-path-prefix/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
     def test_create_app_with_url_path_prefix_ni(self):
@@ -80,8 +89,10 @@ class TestCreateAppURLPathPrefix(TestCase):
         app = create_app(self.config)
         self.assertEqual(app['URL_PATH_PREFIX'], url_prefix)
 
-        self.assertEqual(app.router['IndexNI:get'].canonical, '/url-path-prefix/ni/start/')
-        self.assertEqual(app.router['IndexNI:post'].canonical, '/url-path-prefix/ni/start/')
+        self.assertEqual(app.router['IndexNI:get'].canonical,
+                         '/url-path-prefix/ni/start/')
+        self.assertEqual(app.router['IndexNI:post'].canonical,
+                         '/url-path-prefix/ni/start/')
         self.assertEqual(app.router['Info:get'].canonical, '/info')
 
     def test_create_app_without_url_path_prefix_en(self):
@@ -110,7 +121,6 @@ class TestCreateAppURLPathPrefix(TestCase):
 
 
 class TestCreateAppMissingConfig(TestCase):
-
     config = 'ProductionConfig'
     env_file = 'tests/test_data/local.env'
 
@@ -129,15 +139,15 @@ class TestCreateAppMissingConfig(TestCase):
 
 
 class TestCheckServices(AioHTTPTestCase):
-
     config = 'TestingConfig'
     # required_services = ('case', 'collection_exercise', 'collection_instrument', 'iac', 'sample', 'survey')
     required_services = ['rhsvc']
 
     def session_storage(self, app_config):
-        self.assertIn("REDIS_SERVER", app_config)
-        self.assertIn("REDIS_PORT", app_config)
-        return session_middleware(SimpleCookieStorage(cookie_name='RH_SESSION'))
+        self.assertIn('REDIS_SERVER', app_config)
+        self.assertIn('REDIS_PORT', app_config)
+        return session_middleware(
+            SimpleCookieStorage(cookie_name='RH_SESSION'))
 
     async def get_application(self):
         # Monkey patch the session setup function to remove Redis dependency for unit tests
@@ -148,13 +158,15 @@ class TestCheckServices(AioHTTPTestCase):
     async def test_service_status_urls(self):
         from app.config import TestingConfig
 
-        self.assertEqual(len(self.required_services), len(self.app.service_status_urls))
+        self.assertEqual(len(self.required_services),
+                         len(self.app.service_status_urls))
 
         for service in self.required_services:
             config_name = f'{service}_url'.upper()
             self.assertIn(config_name, self.app.service_status_urls)
-            self.assertEqual(getattr(TestingConfig, config_name) + '/info',
-                             self.app.service_status_urls[config_name])
+            self.assertEqual(
+                getattr(TestingConfig, config_name) + '/info',
+                self.app.service_status_urls[config_name])
 
     @unittest_run_loop
     async def test_check_services(self):

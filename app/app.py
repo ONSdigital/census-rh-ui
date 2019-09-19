@@ -35,7 +35,7 @@ async def on_cleanup(app):
 async def check_services(app: Application) -> bool:
     for service_name in app.service_status_urls:
         url = app.service_status_urls[service_name]
-        logger.info('making health check get request', url=ur)
+        logger.info('making health check get request', url=url)
         try:
             async with app.http_session_pool.get(url) as resp:
                 resp.raise_for_status()
@@ -48,13 +48,14 @@ async def check_services(app: Application) -> bool:
 
 
 def create_app(config_name=None) -> Application:
-    """App factory. Sets up routes and all plugins.
+    """
+    App factory. Sets up routes and all plugins.
     """
     app_config = config.Config()
     app_config.from_object(settings)
 
     # NB: raises ConfigurationError if an object attribute is None
-    config_name = (config_name or app_config["ENV"])
+    config_name = (config_name or app_config['ENV'])
     app_config.from_object(getattr(config, config_name))
 
     # Create basic auth for services
@@ -85,7 +86,7 @@ def create_app(config_name=None) -> Application:
     app.check_services = types.MethodType(check_services, app)
 
     # Bind logger
-    logger_initial_config(log_level=app["LOG_LEVEL"], ext_log_level=app["EXT_LOG_LEVEL"])
+    logger_initial_config(log_level=app['LOG_LEVEL'], ext_log_level=app['EXT_LOG_LEVEL'])
 
     # Set up routes
     routes.setup(app, url_path_prefix=app['URL_PATH_PREFIX'])
@@ -96,7 +97,7 @@ def create_app(config_name=None) -> Application:
     # Setup jinja2 environment
     env = aiohttp_jinja2.setup(
         app,
-        loader=jinja2.PackageLoader("app", "templates"),
+        loader=jinja2.PackageLoader('app', 'templates'),
         context_processors=[
             flash.context_processor,
             aiohttp_jinja2.request_processor,
@@ -109,7 +110,7 @@ def create_app(config_name=None) -> Application:
     env.install_gettext_translations(i18n, newstyle=True)
 
     # JWT KeyStore
-    app["key_store"] = jwt.key_store(app["JSON_SECRET_KEYS"])
+    app['key_store'] = jwt.key_store(app['JSON_SECRET_KEYS'])
 
     app.on_startup.append(on_startup)
     app.on_cleanup.append(on_cleanup)

@@ -150,8 +150,7 @@ class Start(View):
 
         uac_validation_pattern = re.compile(r'^[a-z0-9]{16}$')
 
-        if (len(combined) < expected_length
-            ) or not (uac_validation_pattern.fullmatch(combined)):
+        if (len(combined) < expected_length) or not (uac_validation_pattern.fullmatch(combined)):  # yapf: disable
             raise TypeError
         return combined
 
@@ -1319,7 +1318,7 @@ class WebChat(View):
         return form_valid
 
     async def get_webchat_closed(self):
-        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'  # NOQA
+        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'
         return await self._make_request(
             Request('GET', self._webchat_service_url + querystring, None, None,
                     self._handle_response, None))
@@ -1546,7 +1545,7 @@ class RequestCodeCommon(View):
             raise HTTPFound(
                 self._request.app.router['RequestCodeTimeout' +
                                          fulfillment_type + display_region +
-                                         ':get'].url_for())  # NOQA
+                                         ':get'].url_for())
 
     async def get_check_attributes(self, request, fulfillment_type,
                                    display_region):
@@ -1561,7 +1560,7 @@ class RequestCodeCommon(View):
             raise HTTPFound(
                 self._request.app.router['RequestCodeTimeout' +
                                          fulfillment_type + display_region +
-                                         ':get'].url_for())  # NOQA
+                                         ':get'].url_for())
 
         return attributes
 
@@ -1595,8 +1594,8 @@ class RequestCodeCommon(View):
         return address_content
 
     postcode_validation_pattern = re.compile(
-        r'^((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}$'
-    )  # NOQA
+        r'^((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}$'  # NOQA
+    )
     mobile_validation_pattern = re.compile(
         r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
 
@@ -1692,7 +1691,7 @@ class RequestCodeCommon(View):
                     self._handle_response, 'json'))
 
     async def get_fulfilment(self, case_type, region, delivery_channel):
-        querystring = '?caseType=' + case_type + '&region=' + region + '&deliveryChannel=' + delivery_channel  # NOQA
+        querystring = '?caseType=' + case_type + '&region=' + region + '&deliveryChannel=' + delivery_channel
         return await self._make_request(
             Request('GET', self._rhsvc_get_fulfilments + querystring, None,
                     None, self._handle_response, 'json'))
@@ -1792,7 +1791,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -1828,7 +1827,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -1864,7 +1863,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2425,7 +2424,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2461,7 +2460,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -2497,7 +2496,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
 
         try:
             form_return = json.loads(data['request-address-select'].replace(
-                "\'", "\""))
+                "'", '"'))
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)

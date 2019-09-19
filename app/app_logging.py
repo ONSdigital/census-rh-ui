@@ -82,7 +82,7 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
                     log_record['event'] = message_dict['event']
                     del message_dict['event']
                 else:
-                    log_record['event'] = "No event supplied"
+                    log_record['event'] = 'No event supplied'
             else:
                 log_record['event'] = record.message
         else:

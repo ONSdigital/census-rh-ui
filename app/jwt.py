@@ -11,6 +11,6 @@ def key_store(keys: str) -> KeyStore:
     secrets = json.loads(keys)
 
     logger.info('validating key file')
-    validate_required_keys(secrets, "authentication")
+    validate_required_keys(secrets, 'authentication')
 
     return KeyStore(secrets)

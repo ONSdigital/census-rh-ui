@@ -5,7 +5,6 @@ import requests
 
 
 class TestRespondentHome(unittest.TestCase):
-
     def test_can_access_respondent_home_homepage(self):
         # Given
         respondent_home_url = os.getenv('RESPONDENT_HOME_URL')
@@ -33,4 +32,4 @@ class TestRespondentHome(unittest.TestCase):
 
         # Then
         self.assertEqual(resp['ready'], True, resp)
-        self.assertEqual(resp['name'], "respondent-home-ui", resp)
+        self.assertEqual(resp['name'], 'respondent-home-ui', resp)
