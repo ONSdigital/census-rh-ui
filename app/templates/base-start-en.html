@@ -1,12 +1,18 @@
 {% extends "layout/_template.njk" %}
 
+{% if page_title %}
+    {% set page_title_value = page_title + ' - Census 2021' %}
+{% else %}
+    {% set page_title_value = 'Census 2021' %}
+{% endif %}
+
 {% set page = {
-    "title": "Census 2019 Rehearsal",
+    "title": page_title_value,
     "theme": "census",
     "language": {
         "languages": [
             {
-                "url": "/start/",
+                "url": domain_url_en + "/start/",
                 "ISOCode": "en",
                 "text": "English",
                 "buttonAriaLabel": "Language selector. Current language: English",
@@ -15,7 +21,7 @@
                 "current": true
             },
             {
-                "url": "/dechrau/",
+                "url": domain_url_cy + "/dechrau/",
                 "ISOCode": "cy",
                 "text": "Cymraeg",
                 "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
@@ -29,50 +35,45 @@
         "logoHref": "https://www.ons.gov.uk/",
         "titleLogo": "/img/census-logo-en.svg",
         "titleLogoAlt": "Census 2021",
-        "titleLogoHref": "https://www.census.gov.uk/"
+        "titleLogoHref": domain_url_en + "/"
     },
     "footer": {
+        "poweredBy": true,
         "lang": "en",
         "rows": [
             {
                 "itemsList": [
                     {
                         "text": 'About the census',
-                        "url": '/about-census'
+                        "url": domain_url_en + '/about-the-census/'
                     },
                     {
                         "text": 'Help with your census',
-                        "url": '/help'
+                        "url": domain_url_en + '/help/'
                     },
                     {
                         "text": 'Contact us',
-                        "url": '/contact-us'
-                    },
+                        "url": domain_url_en + '/contact-us/'
+                    }
+                ]
+            },
+            {
+                "itemsList": [
                     {
                         "text": 'Cookies',
-                        "url": '/cookies'
+                        "url": domain_url_en + '/cookies/'
                     },
                     {
                         "text": 'Accessibility',
-                        "url": '/accessibility'
+                        "url": domain_url_en + '/start/accessibility/'
                     },
                     {
-                        "text": 'Privacy policy',
-                        "url": '/privacy-policy'
-                    },
-                    {
-                        "text": 'Terms and conditions',
-                        "url": '/terms-and-conditions'
+                        "text": 'Privacy and data protection',
+                        "url": domain_url_en + '/privacy-and-data-protection/'
                     }
                 ]
             }
-        ],
-        "OGLLink": {
-            "pre": 'All content is available under the',
-            "link": 'Open Government Licence v3.0',
-            "url": 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/',
-            "post": ', except where otherwise stated'
-        }
+        ]
     }
 } %}
 
@@ -98,4 +99,14 @@
 
     <!-- End Google Analytics -->
 
+{% endblock %}
+
+{% block preHeader %}
+    {% from "components/cookies-banner/_macro.njk" import onsCookiesBanner %}
+    {{
+        onsCookiesBanner({
+            "html": 'We use cookies to improve your experience of census.gov.uk',
+            "secondaryButtonUrl": domain_url_en + '/cookies'
+        })
+    }}
 {% endblock %}

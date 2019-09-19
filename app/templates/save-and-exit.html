@@ -16,7 +16,7 @@
     </h1>
 
     {% autoescape false %}
-        <p>{{ _("You will need to %(open)senter your unique access code%(close)s to access the census again.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+        <p>{{ _("You will need to %(open)senter your unique access code%(close)s to access the census again.", open='<a href="%s">' % start_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
 {% endblock main %}
