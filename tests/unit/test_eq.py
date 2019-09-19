@@ -79,7 +79,7 @@ class TestEq(RHTestCase):
                                                      self.attributes_en,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
@@ -110,7 +110,7 @@ class TestEq(RHTestCase):
                                                      self.attributes_cy,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
@@ -141,7 +141,7 @@ class TestEq(RHTestCase):
                                                      self.attributes_ni,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
@@ -173,7 +173,7 @@ class TestEq(RHTestCase):
                     self.uac_json, self.attributes_en, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
@@ -205,7 +205,7 @@ class TestEq(RHTestCase):
                     self.uac_json_cy, self.attributes_cy, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
@@ -237,7 +237,7 @@ class TestEq(RHTestCase):
                     self.uac_json_ni, self.attributes_ni, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
-                                'Creating payload for JWT',
+                                'creating payload for jwt',
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 

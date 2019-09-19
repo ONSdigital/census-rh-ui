@@ -70,11 +70,15 @@ class View:
 
     @property
     def _domain_url_en(self):
-        return f"{self._request.app['DOMAIN_URL_PROTOCOL']}{self._request.app['DOMAIN_URL_EN']}"
+        domain_url_protocol = self._request.app['DOMAIN_URL_PROTOCOL']
+        domain_url_en = self._request.app['DOMAIN_URL_EN']
+        return domain_url_protocol + domain_url_en
 
     @property
     def _domain_url_cy(self):
-        return f"{self._request.app['DOMAIN_URL_PROTOCOL']}{self._request.app['DOMAIN_URL_CY']}"
+        domain_url_protocol = self._request.app['DOMAIN_URL_PROTOCOL']
+        domain_url_cy = self._request.app['DOMAIN_URL_CY']
+        return domain_url_protocol + domain_url_cy
 
     @staticmethod
     def _handle_response(response):
@@ -247,10 +251,12 @@ class IndexEN(Start):
             logger.debug('assisted digital query parameter not present',
                          client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Start survey'}
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Start survey'
+        }
 
     @aiohttp_jinja2.template('index.html')
     async def post(self, request):
@@ -277,10 +283,15 @@ class IndexEN(Start):
                 logger.warn('attempt to use an invalid access code',
                             client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request,
-                                                      {'display_region': 'en', 'domain_url_en': self._domain_url_en,
-                                                       'domain_url_cy': self._domain_url_cy,
-                                                       'page_title': 'Start survey'}, status=401)
+                return aiohttp_jinja2.render_template(
+                    'index.html',
+                    self._request, {
+                        'display_region': 'en',
+                        'domain_url_en': self._domain_url_en,
+                        'domain_url_cy': self._domain_url_cy,
+                        'page_title': 'Start survey'
+                    },
+                    status=401)
             else:
                 raise ex
 
@@ -333,11 +344,13 @@ class IndexCY(Start):
             logger.debug('assisted digital query parameter not present',
                          client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': "Dechrau'r arolwg"}
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': "Dechrau'r arolwg"
+        }
 
     async def post(self, request):
         """
@@ -363,11 +376,16 @@ class IndexCY(Start):
                 logger.warn('attempt to use an invalid access code',
                             client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG_CY)
-                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'cy',
-                                                                                    'locale': 'cy',
-                                                                                    'domain_url_en': self._domain_url_en,
-                                                                                    'domain_url_cy': self._domain_url_cy,
-                                                                                    'page_title': "Dechrau'r arolwg"}, status=401)
+                return aiohttp_jinja2.render_template(
+                    'index.html',
+                    self._request, {
+                        'display_region': 'cy',
+                        'locale': 'cy',
+                        'domain_url_en': self._domain_url_en,
+                        'domain_url_cy': self._domain_url_cy,
+                        'page_title': "Dechrau'r arolwg"
+                    },
+                    status=401)
             else:
                 raise ex
 
@@ -421,10 +439,12 @@ class IndexNI(Start):
             logger.debug('assisted digital query parameter not present',
                          client_ip=self._client_ip)
             session.pop('adlocation', None)
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Start survey'}
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Start survey'
+        }
 
     async def post(self, request):
         """
@@ -450,10 +470,15 @@ class IndexNI(Start):
                 logger.warn('attempt to use an invalid access code',
                             client_ip=self._client_ip)
                 flash(self._request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template("index.html", self._request, {'display_region': 'ni',
-                                                                                    'domain_url_en': self._domain_url_en,
-                                                                                    'domain_url_cy': self._domain_url_cy,
-                                                                                    'page_title': 'Start survey'}, status=401)
+                return aiohttp_jinja2.render_template(
+                    'index.html',
+                    self._request, {
+                        'display_region': 'ni',
+                        'domain_url_en': self._domain_url_en,
+                        'domain_url_cy': self._domain_url_cy,
+                        'page_title': 'Start survey'
+                    },
+                    status=401)
             else:
                 raise ex
 
@@ -513,8 +538,8 @@ class AddressConfirmationEN(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = 'Is this address correct?'
@@ -585,11 +610,11 @@ class AddressConfirmationCY(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
+            attributes = session['attributes']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
-            case = session["case"]
+            case = session['case']
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG_CY)
@@ -658,8 +683,8 @@ class AddressConfirmationNI(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = 'Is this address correct?'
@@ -935,7 +960,8 @@ class StartLanguageOptionsEN(Start):
 
         attributes['domain_url_en'] = self._domain_url_en
         attributes['domain_url_cy'] = self._domain_url_cy
-        attributes['page_title'] = 'Would you like to complete the census in English?'
+        attributes[
+            'page_title'] = 'Would you like to complete the census in English?'
 
         return attributes
 
@@ -947,11 +973,12 @@ class StartLanguageOptionsEN(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
-            attributes['page_title'] = 'Would you like to complete the census in English?'
+            attributes[
+                'page_title'] = 'Would you like to complete the census in English?'
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
@@ -999,7 +1026,8 @@ class StartLanguageOptionsCY(Start):
 
         attributes['domain_url_en'] = self._domain_url_en
         attributes['domain_url_cy'] = self._domain_url_cy
-        attributes['page_title'] = 'Would you like to complete the census in English?'
+        attributes[
+            'page_title'] = 'Would you like to complete the census in English?'
 
         return attributes
 
@@ -1011,11 +1039,12 @@ class StartLanguageOptionsCY(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
-            attributes['page_title'] = 'Would you like to complete the census in English?'
+            attributes[
+                'page_title'] = 'Would you like to complete the census in English?'
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG_CY)
@@ -1063,7 +1092,8 @@ class StartLanguageOptionsNI(Start):
 
         attributes['domain_url_en'] = self._domain_url_en
         attributes['domain_url_cy'] = self._domain_url_cy
-        attributes['page_title'] = 'Would you like to complete the census in English?'
+        attributes[
+            'page_title'] = 'Would you like to complete the census in English?'
 
         return attributes
 
@@ -1075,11 +1105,12 @@ class StartLanguageOptionsNI(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
-            attributes['page_title'] = 'Would you like to complete the census in English?'
+            attributes[
+                'page_title'] = 'Would you like to complete the census in English?'
 
         except KeyError:
             flash(self._request, SESSION_TIMEOUT_MSG)
@@ -1139,8 +1170,8 @@ class StartSelectLanguageEN(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = 'Choose your language'
@@ -1206,8 +1237,8 @@ class StartSelectLanguageCY(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = 'Choose your language'
@@ -1273,8 +1304,8 @@ class StartSelectLanguageNI(Start):
 
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
-            case = session["case"]
+            attributes = session['attributes']
+            case = session['case']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
             attributes['page_title'] = 'Choose your language'
@@ -1322,10 +1353,11 @@ class SaveAndExitEN(View):
     async def get(self, request):
         self._request = request
         await forget(request)
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
-                }
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy
+        }
 
 
 @routes.view('/dechrau/cadw-a-gadael')
@@ -1334,11 +1366,12 @@ class SaveAndExitCY(View):
     async def get(self, request):
         self._request = request
         await forget(request)
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
-                }
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy
+        }
 
 
 @routes.view('/ni/start/save-and-exit')
@@ -1347,10 +1380,11 @@ class SaveAndExitNI(View):
     async def get(self, request):
         self._request = request
         await forget(request)
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy
-                }
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy
+        }
 
 
 class WebChat(View):
@@ -1435,34 +1469,37 @@ class WebChat(View):
 class WebChatWindowEN(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Web Chat'
-                }
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Web Chat'
+        }
 
 
 @routes.view('/gwe-sgwrs/chat')
 class WebChatWindowCY(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Gwe-sgwrs'
-                }
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Gwe-sgwrs'
+        }
 
 
 @routes.view('/ni/webchat/chat')
 class WebChatWindowNI(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Web Chat'
-                }
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Web Chat'
+        }
 
 
 @routes.view('/webchat')
@@ -1473,11 +1510,12 @@ class WebChatEN(WebChat):
         self._request = request
         logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
-            return {'display_region': 'en',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            return {
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
         else:
             try:
                 await self.get_webchat_closed()
@@ -1485,13 +1523,14 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'en',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
@@ -1502,27 +1541,30 @@ class WebChatEN(WebChat):
         form_valid = self.validate_form(data, 'en')
 
         if not form_valid:
-            logger.info("form submission error", client_ip=self._client_ip)
-            return {'form_value_screen_name': data.get('screen_name'),
-                    'form_value_country': data.get('country'),
-                    'form_value_query': data.get('query'),
-                    'display_region': 'en',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('form submission error', client_ip=self._client_ip)
+            return {
+                'form_value_screen_name': data.get('screen_name'),
+                'form_value_country': data.get('country'),
+                'form_value_query': data.get('query'),
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
-        context = {'screen_name': data.get('screen_name'),
-                   'language': 'en',
-                   'country': data.get('country'),
-                   'query': data.get('query'),
-                   'display_region': 'en',
-                   'domain_url_en': self._domain_url_en,
-                   'domain_url_cy': self._domain_url_cy,
-                   'page_title': 'Web Chat',
-                   'webchat_url': self._request.app['WEBCHAT_SVC_URL']}
+        context = {
+            'screen_name': data.get('screen_name'),
+            'language': 'en',
+            'country': data.get('country'),
+            'query': data.get('query'),
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Web Chat',
+            'webchat_url': self._request.app['WEBCHAT_SVC_URL']
+        }
 
-        logger.info("date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1533,13 +1575,14 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'en',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'en',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
 
 @routes.view('/gwe-sgwrs')
@@ -1550,26 +1593,29 @@ class WebChatCY(WebChat):
         self._request = request
         logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
-            return {'display_region': 'cy',
-                    'locale': 'cy',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Gwe-sgwrs'
-                    }
+            return {
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gwe-sgwrs'
+            }
         else:
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("failed to send webchat closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed',
+                             client_ip=self._client_ip)
 
-            logger.info("webchat closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'cy',
-                    'locale': 'cy',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Gwe-sgwrs'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gwe-sgwrs'
+            }
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
@@ -1580,29 +1626,32 @@ class WebChatCY(WebChat):
         form_valid = self.validate_form(data, 'cy')
 
         if not form_valid:
-            logger.info("form submission error", client_ip=self._client_ip)
-            return {'form_value_screen_name': data.get('screen_name'),
-                    'form_value_country': data.get('country'),
-                    'form_value_query': data.get('query'),
-                    'display_region': 'cy',
-                    'locale': 'cy',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Gwe-sgwrs'
-                    }
+            logger.info('form submission error', client_ip=self._client_ip)
+            return {
+                'form_value_screen_name': data.get('screen_name'),
+                'form_value_country': data.get('country'),
+                'form_value_query': data.get('query'),
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gwe-sgwrs'
+            }
 
-        context = {'screen_name': data.get('screen_name'),
-                   'language': 'cy',
-                   'country': data.get('country'),
-                   'query': data.get('query'),
-                   'display_region': 'cy',
-                   'locale': 'cy',
-                   'domain_url_en': self._domain_url_en,
-                   'domain_url_cy': self._domain_url_cy,
-                   'page_title': 'Gwe-sgwrs',
-                   'webchat_url': self._request.app['WEBCHAT_SVC_URL']}
+        context = {
+            'screen_name': data.get('screen_name'),
+            'language': 'cy',
+            'country': data.get('country'),
+            'query': data.get('query'),
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Gwe-sgwrs',
+            'webchat_url': self._request.app['WEBCHAT_SVC_URL']
+        }
 
-        logger.info("date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1610,16 +1659,18 @@ class WebChatCY(WebChat):
             try:
                 await self.get_webchat_closed()
             except ClientError:
-                logger.error("failed to send webchat closed", client_ip=self._client_ip)
+                logger.error('failed to send webchat closed',
+                             client_ip=self._client_ip)
 
-            logger.info("webchat closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'cy',
-                    'locale': 'cy',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Gwe-sgwrs'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'cy',
+                'locale': 'cy',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Gwe-sgwrs'
+            }
 
 
 @routes.view('/ni/webchat')
@@ -1630,11 +1681,12 @@ class WebChatNI(WebChat):
         self._request = request
         logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
-            return {'display_region': 'ni',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            return {
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
         else:
             try:
                 await self.get_webchat_closed()
@@ -1642,13 +1694,14 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info("webchat closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'ni',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
@@ -1659,27 +1712,30 @@ class WebChatNI(WebChat):
         form_valid = self.validate_form(data, 'ni')
 
         if not form_valid:
-            logger.info("form submission error", client_ip=self._client_ip)
-            return {'form_value_screen_name': data.get('screen_name'),
-                    'form_value_country': data.get('country'),
-                    'form_value_query': data.get('query'),
-                    'display_region': 'ni',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('form submission error', client_ip=self._client_ip)
+            return {
+                'form_value_screen_name': data.get('screen_name'),
+                'form_value_country': data.get('country'),
+                'form_value_query': data.get('query'),
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
-        context = {'screen_name': data.get('screen_name'),
-                   'language': 'en',
-                   'country': data.get('country'),
-                   'query': data.get('query'),
-                   'display_region': 'ni',
-                   'domain_url_en': self._domain_url_en,
-                   'domain_url_cy': self._domain_url_cy,
-                   'page_title': 'Web Chat',
-                   'webchat_url': self._request.app['WEBCHAT_SVC_URL']}
+        context = {
+            'screen_name': data.get('screen_name'),
+            'language': 'en',
+            'country': data.get('country'),
+            'query': data.get('query'),
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Web Chat',
+            'webchat_url': self._request.app['WEBCHAT_SVC_URL']
+        }
 
-        logger.info("date/time check", client_ip=self._client_ip)
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1690,13 +1746,14 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info("WebChat Closed", client_ip=self._client_ip)
-            return {'webchat_status': 'closed',
-                    'display_region': 'ni',
-                    'domain_url_en': self._domain_url_en,
-                    'domain_url_cy': self._domain_url_cy,
-                    'page_title': 'Web Chat'
-                    }
+            logger.info('webchat closed', client_ip=self._client_ip)
+            return {
+                'webchat_status': 'closed',
+                'display_region': 'ni',
+                'domain_url_en': self._domain_url_en,
+                'domain_url_cy': self._domain_url_cy,
+                'page_title': 'Web Chat'
+            }
 
 
 class RequestCodeCommon(View):
@@ -1715,7 +1772,7 @@ class RequestCodeCommon(View):
         self.request_code_check_session(fulfillment_type, display_region)
         session = await get_session(request)
         try:
-            attributes = session["attributes"]
+            attributes = session['attributes']
             attributes['domain_url_en'] = self._domain_url_en
             attributes['domain_url_cy'] = self._domain_url_cy
 
@@ -1734,20 +1791,27 @@ class RequestCodeCommon(View):
         address_options = []
 
         for singleAddress in postcode_return['response']['addresses']:
-            address_options.append(
-                {"value": {"uprn": singleAddress['uprn'], "address": singleAddress['formattedAddress']},
-                 "label": {"text": singleAddress['formattedAddress']},
-                 "id": singleAddress['uprn']})
+            address_options.append({
+                'value': {
+                    'uprn': singleAddress['uprn'],
+                    'address': singleAddress['formattedAddress']
+                },
+                'label': {
+                    'text': singleAddress['formattedAddress']
+                },
+                'id': singleAddress['uprn']
+            })
 
-        address_content = {'postcode': postcode,
-                           'addresses': address_options,
-                           'display_region': display_region,
-                           'locale': locale,
-                           'fulfillment_type': fulfillment_type,
-                           'total_matches': postcode_return['response']['total'],
-                           'domain_url_en': self._domain_url_en,
-                           'domain_url_cy': self._domain_url_cy
-                           }
+        address_content = {
+            'postcode': postcode,
+            'addresses': address_options,
+            'display_region': display_region,
+            'locale': locale,
+            'fulfillment_type': fulfillment_type,
+            'total_matches': postcode_return['response']['total'],
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy
+        }
 
         return address_content
 
@@ -1874,11 +1938,12 @@ class RequestCodeHouseholdEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Request a new access code'
-                }
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Request a new access code'
+        }
 
 
 @routes.view('/gofyn-am-god-mynediad')
@@ -1886,12 +1951,13 @@ class RequestCodeHouseholdCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Gofyn am god mynediad newydd'
-                }
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Gofyn am god mynediad newydd'
+        }
 
 
 @routes.view('/ni/request-access-code')
@@ -1899,11 +1965,12 @@ class RequestCodeHouseholdNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Request a new access code'
-                }
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Request a new access code'
+        }
 
 
 @routes.view('/request-access-code/enter-address')
@@ -1911,11 +1978,12 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'What is your postcode?'
-                }
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'What is your postcode?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -1930,12 +1998,13 @@ class RequestCodeEnterAddressHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Beth yw eich cod post?'
-                }
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Beth yw eich cod post?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -1950,11 +2019,12 @@ class RequestCodeEnterAddressHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'What is your postcode?'
-                }
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'What is your postcode?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -2259,7 +2329,8 @@ class RequestCodeNotRequiredHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
-        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
+        attributes[
+            'page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2268,7 +2339,8 @@ class RequestCodeNotRequiredHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
-        attributes['page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+        attributes[
+            'page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
         return attributes
 
 
@@ -2277,7 +2349,8 @@ class RequestCodeNotRequiredHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
-        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
+        attributes[
+            'page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2540,12 +2613,13 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HH',
-                'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Your session has timed out due to inactivity'
-                }
+        return {
+            'fulfillment_type': 'HH',
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Your session has timed out due to inactivity'
+        }
 
 
 @routes.view('/gofyn-am-god-mynediad/terfyn-amser')
@@ -2553,13 +2627,20 @@ class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HH',
-                'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-                }
+        return {
+            'fulfillment_type':
+            'HH',
+            'display_region':
+            'cy',
+            'locale':
+            'cy',
+            'domain_url_en':
+            self._domain_url_en,
+            'domain_url_cy':
+            self._domain_url_cy,
+            'page_title':
+            'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        }
 
 
 @routes.view('/ni/request-access-code/timeout')
@@ -2567,12 +2648,13 @@ class RequestCodeTimeoutHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HH',
-                'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Your session has timed out due to inactivity'
-                }
+        return {
+            'fulfillment_type': 'HH',
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Your session has timed out due to inactivity'
+        }
 
 
 @routes.view('/request-individual-code')
@@ -2580,11 +2662,12 @@ class RequestCodeIndividualEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Request an individual access code'
-                }
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Request an individual access code'
+        }
 
 
 @routes.view('/gofyn-am-god-unigol')
@@ -2592,12 +2675,13 @@ class RequestCodeIndividualCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Gofyn am god mynediad unigryw'
-                }
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Gofyn am god mynediad unigryw'
+        }
 
 
 @routes.view('/ni/request-individual-code')
@@ -2605,11 +2689,12 @@ class RequestCodeIndividualNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Request an individual access code'
-                }
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Request an individual access code'
+        }
 
 
 @routes.view('/request-individual-code/enter-address')
@@ -2617,12 +2702,13 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'What is your postcode?'
-                }
+        return {
+            'fulfillment_type': 'HI',
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'What is your postcode?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -2637,13 +2723,14 @@ class RequestCodeEnterAddressHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Beth yw eich cod post?'
-                }
+        return {
+            'fulfillment_type': 'HI',
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Beth yw eich cod post?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -2658,12 +2745,13 @@ class RequestCodeEnterAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'What is your postcode?'
-                }
+        return {
+            'fulfillment_type': 'HI',
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'What is your postcode?'
+        }
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
@@ -2733,10 +2821,9 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
-            address_content = await self.get_postcode_return(attributes["postcode"],
-                                                             attributes["fulfillment_type"],
-                                                             attributes["display_region"],
-                                                             attributes['locale'])
+            address_content = await self.get_postcode_return(
+                attributes['postcode'], attributes['fulfillment_type'],
+                attributes['display_region'], attributes['locale'])
             address_content['page_title'] = 'Dewiswch eich cyfeiriad'
             return address_content
 
@@ -2755,10 +2842,9 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
-        address_content = await self.get_postcode_return(attributes["postcode"],
-                                                         attributes["fulfillment_type"],
-                                                         attributes["display_region"],
-                                                         attributes['locale'])
+        address_content = await self.get_postcode_return(
+            attributes['postcode'], attributes['fulfillment_type'],
+            attributes['display_region'], attributes['locale'])
         address_content['page_title'] = 'Select your address'
         return address_content
 
@@ -2773,10 +2859,9 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         except KeyError:
             logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
-            address_content = await self.get_postcode_return(attributes["postcode"],
-                                                             attributes["fulfillment_type"],
-                                                             attributes["display_region"],
-                                                             attributes['locale'])
+            address_content = await self.get_postcode_return(
+                attributes['postcode'], attributes['fulfillment_type'],
+                attributes['display_region'], attributes['locale'])
             address_content['page_title'] = 'Select your address'
             return address_content
 
@@ -2969,7 +3054,8 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
-        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
+        attributes[
+            'page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -2978,7 +3064,8 @@ class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
-        attributes['page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+        attributes[
+            'page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
         return attributes
 
 
@@ -2987,7 +3074,8 @@ class RequestCodeNotRequiredHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
-        attributes['page_title'] = 'Your address is not part of the 2019 rehearsal'
+        attributes[
+            'page_title'] = 'Your address is not part of the 2019 rehearsal'
         return attributes
 
 
@@ -3251,12 +3339,13 @@ class RequestCodeTimeoutHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Your session has timed out due to inactivity'
-                }
+        return {
+            'fulfillment_type': 'HI',
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Your session has timed out due to inactivity'
+        }
 
 
 @routes.view('/gofyn-am-god-unigol/terfyn-amser')
@@ -3264,13 +3353,20 @@ class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-                }
+        return {
+            'fulfillment_type':
+            'HI',
+            'display_region':
+            'cy',
+            'locale':
+            'cy',
+            'domain_url_en':
+            self._domain_url_en,
+            'domain_url_cy':
+            self._domain_url_cy,
+            'page_title':
+            'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        }
 
 
 @routes.view('/ni/request-individual-code/timeout')
@@ -3278,12 +3374,13 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self._request = request
-        return {'fulfillment_type': 'HI',
-                'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Your session has timed out due to inactivity'
-                }
+        return {
+            'fulfillment_type': 'HI',
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Your session has timed out due to inactivity'
+        }
 
 
 @routes.view('/start/accessibility/')
@@ -3291,10 +3388,12 @@ class AccessibilityEN(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'en',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Census questionnaire accessibility statement'}
+        return {
+            'display_region': 'en',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Census questionnaire accessibility statement'
+        }
 
 
 @routes.view('/dechrau/hygyrchedd/')
@@ -3302,11 +3401,13 @@ class AccessibilityCY(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'cy',
-                'locale': 'cy',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'}
+        return {
+            'display_region': 'cy',
+            'locale': 'cy',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'
+        }
 
 
 @routes.view('/ni/start/accessibility/')
@@ -3314,7 +3415,9 @@ class AccessibilityNI(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
         self._request = request
-        return {'display_region': 'ni',
-                'domain_url_en': self._domain_url_en,
-                'domain_url_cy': self._domain_url_cy,
-                'page_title': 'Census questionnaire accessibility statement'}
+        return {
+            'display_region': 'ni',
+            'domain_url_en': self._domain_url_en,
+            'domain_url_cy': self._domain_url_cy,
+            'page_title': 'Census questionnaire accessibility statement'
+        }

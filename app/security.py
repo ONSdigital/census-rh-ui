@@ -76,13 +76,13 @@ async def check_permission(request):
     session = await get_session(request)
     try:
         identity = session[SESSION_KEY]
-        logger.info('Permission granted',
+        logger.info('permission granted',
                     identity=identity,
                     url=request.rel_url.human_repr(),
                     client_ip=request.headers.get('X-Forwarded-For'))
     except KeyError:
         flash(request, VALIDATION_FAILURE_MSG)
-        logger.warn('Permission denied',
+        logger.warn('permission denied',
                     url=request.rel_url.human_repr(),
                     client_ip=request.headers.get('X-Forwarded-For'))
         raise HTTPForbidden
@@ -97,11 +97,11 @@ async def forget(request):
     try:
         identity = session[SESSION_KEY]
         session.pop(SESSION_KEY, None)
-        logger.info('Identity forgotten',
+        logger.info('identity forgotten',
                     identity=identity,
                     client_ip=request.headers.get('X-Forwarded-For'))
     except KeyError:
-        logger.warn('Identity not previously remembered',
+        logger.warn('identity not previously remembered',
                     url=request.rel_url.human_repr(),
                     client_ip=request.headers.get('X-Forwarded-For'))
 
@@ -113,6 +113,6 @@ async def remember(identity, request):
     """
     session = await get_session(request)
     session[SESSION_KEY] = identity
-    logger.info('Identity remembered',
+    logger.info('identity remembered',
                 client_ip=request.headers.get('X-Forwarded-For'),
                 identity=identity)

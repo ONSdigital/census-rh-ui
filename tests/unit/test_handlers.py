@@ -125,7 +125,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.address_confirmation_data)
 
-            self.assertLogEvent(logs_home, 'Redirecting to eQ')
+            self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -176,7 +176,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.address_confirmation_data)
 
-            self.assertLogEvent(logs_home, 'Redirecting to eQ')
+            self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -227,7 +227,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.address_confirmation_data)
 
-            self.assertLogEvent(logs_home, 'Redirecting to eQ')
+            self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -288,7 +288,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.language_options_ni_eng_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -349,7 +349,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.language_options_ni_eng_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -410,7 +410,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.language_options_ni_eng_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -481,7 +481,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ul_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -552,7 +552,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ul_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -623,7 +623,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ul_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -694,7 +694,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ga_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -765,7 +765,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ga_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -836,7 +836,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_ga_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -907,7 +907,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_en_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -978,7 +978,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_en_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -1049,7 +1049,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.select_language_ni_en_data)
 
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -1106,8 +1106,8 @@ class TestHandlers(RHTestCase):
                     data=self.address_edit_data)
 
                 self.assertLogEvent(logs_home,
-                                    'Raising address modification call')
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                                    'raising address modification call')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -1166,8 +1166,8 @@ class TestHandlers(RHTestCase):
                     data=self.address_edit_data)
 
                 self.assertLogEvent(logs_home,
-                                    'Raising address modification call')
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                                    'raising address modification call')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -1224,8 +1224,8 @@ class TestHandlers(RHTestCase):
                     data=self.address_edit_data)
 
                 self.assertLogEvent(logs_home,
-                                    'Raising address modification call')
-                self.assertLogEvent(logs_home, 'Redirecting to eQ')
+                                    'raising address modification call')
+                self.assertLogEvent(logs_home, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
         redirected_url = response.headers['location']
@@ -1267,7 +1267,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_en,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
@@ -1297,7 +1297,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_cy,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
@@ -1327,7 +1327,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_ni,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
         self.assertEqual(response.status, 500)
@@ -1344,7 +1344,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1360,7 +1360,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1376,7 +1376,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1392,7 +1392,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1408,7 +1408,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1424,7 +1424,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1440,7 +1440,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1456,7 +1456,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1472,7 +1472,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_index_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Attempt to use a malformed access code')
+        self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1491,7 +1491,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1510,7 +1510,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1529,7 +1529,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1548,7 +1548,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1567,7 +1567,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1586,7 +1586,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Attempt to use an inactive access code')
+            self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -1605,7 +1605,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1624,7 +1624,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1643,7 +1643,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Service failed to build eQ payload')
+            self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1661,7 +1661,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
@@ -1680,7 +1680,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
@@ -1699,7 +1699,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.rhsvc_url)
 
         self.assertEqual(response.status, 500)
@@ -1716,7 +1716,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1732,7 +1732,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1748,7 +1748,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1764,7 +1764,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1780,7 +1780,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1796,7 +1796,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1813,7 +1813,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Attempt to use an invalid access code',
+                                'attempt to use an invalid access code',
                                 client_ip=None)
 
         self.assertEqual(response.status, 401)
@@ -1831,7 +1831,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Attempt to use an invalid access code',
+                                'attempt to use an invalid access code',
                                 client_ip=None)
 
         self.assertEqual(response.status, 401)
@@ -1849,7 +1849,7 @@ class TestHandlers(RHTestCase):
                                                      self.post_index_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
-                                'Attempt to use an invalid access code',
+                                'attempt to use an invalid access code',
                                 client_ip=None)
 
         self.assertEqual(response.status, 401)
@@ -1866,7 +1866,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1882,7 +1882,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1899,7 +1899,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1915,7 +1915,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1931,7 +1931,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1948,7 +1948,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1964,7 +1964,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_en,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1980,7 +1980,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_cy,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1997,7 +1997,7 @@ class TestHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_index_ni,
                                                      data=self.form_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2025,7 +2025,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.address_confirmation_data)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
 
         self.assertEqual(response.status, 500)
@@ -2054,7 +2054,7 @@ class TestHandlers(RHTestCase):
                     allow_redirects=False,
                     data=self.address_confirmation_data)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
 
         self.assertEqual(response.status, 500)
@@ -2079,7 +2079,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_en,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2103,7 +2103,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_cy,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2173,7 +2173,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_en,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2197,7 +2197,7 @@ class TestHandlers(RHTestCase):
                     self.post_address_confirmation_cy,
                     allow_redirects=False,
                     data=self.address_confirmation_data)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2353,8 +2353,8 @@ class TestHandlers(RHTestCase):
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request(
                         'GET', self.get_webchat_en)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2374,8 +2374,8 @@ class TestHandlers(RHTestCase):
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request(
                         'GET', self.get_webchat_cy)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2395,8 +2395,8 @@ class TestHandlers(RHTestCase):
                 with self.assertLogs('respondent-home', 'ERROR') as cm:
                     response = await self.client.request(
                         'GET', self.get_webchat_ni)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2416,7 +2416,7 @@ class TestHandlers(RHTestCase):
                     response = await self.client.request(
                         'GET', self.get_webchat_en)
 
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2436,7 +2436,7 @@ class TestHandlers(RHTestCase):
                     response = await self.client.request(
                         'GET', self.get_webchat_cy)
 
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2456,7 +2456,7 @@ class TestHandlers(RHTestCase):
                     response = await self.client.request(
                         'GET', self.get_webchat_ni)
 
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2472,7 +2472,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2488,7 +2488,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2504,7 +2504,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2520,7 +2520,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2536,7 +2536,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2552,7 +2552,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2568,7 +2568,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_en,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2584,7 +2584,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_cy,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2600,7 +2600,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_webchat_ni,
                                                  data=form_data)
-        self.assertLogEvent(cm, 'Form submission error')
+        self.assertLogEvent(cm, 'form submission error')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -2731,8 +2731,8 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_en,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2755,8 +2755,8 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_cy,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2779,8 +2779,8 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_ni,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Client failed to connect')
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'client failed to connect')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2802,7 +2802,7 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_en,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2824,7 +2824,7 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_cy,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -2846,7 +2846,7 @@ class TestHandlers(RHTestCase):
                         self.post_webchat_ni,
                         allow_redirects=False,
                         data=self.webchat_form_data)
-                self.assertLogEvent(cm, 'Failed to send WebChat Closed')
+                self.assertLogEvent(cm, 'failed to send webchat closed')
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -3093,7 +3093,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3109,7 +3109,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3125,7 +3125,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3144,7 +3144,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3164,7 +3164,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3184,7 +3184,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3204,7 +3204,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3223,7 +3223,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3242,7 +3242,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3258,7 +3258,7 @@ class TestHandlers(RHTestCase):
     #
     #         with self.assertLogs('respondent-home', 'INFO') as cm:
     #             response = await self.client.request('POST', self.post_requestcode_hh, data=self.request_code_form_data_valid)
-    #             self.assertLogEvent(cm, 'Valid postcode')
+    #             self.assertLogEvent(cm, 'valid postcode')
     #
     #             self.assertEqual(response.status, 200)
     #             self.assertIn('1 Gate Reach', str(await response.content.read()))
@@ -3266,7 +3266,7 @@ class TestHandlers(RHTestCase):
     #             with self.assertLogs('respondent-home', 'INFO') as cm:
     #                 response = await self.client.request('POST', self.post_requestcode_selectaddress,
     #                                                      data=self.post_requestcode_address_confirmation_data)
-    #                 self.assertLogEvent(cm, 'Session updated')
+    #                 self.assertLogEvent(cm, 'session updated')
     #                 self.assertEqual(response.status, 200)
 
     @unittest_run_loop
@@ -3341,7 +3341,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3357,7 +3357,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3373,7 +3373,7 @@ class TestHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'Attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3392,7 +3392,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3412,7 +3412,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3432,7 +3432,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Valid postcode')
+            self.assertLogEvent(cm, 'valid postcode')
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -3452,7 +3452,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_en,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3471,7 +3471,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_cy,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3490,7 +3490,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hi_ni,
                     data=self.request_code_form_data_valid)
-                self.assertLogEvent(cm, 'Valid postcode')
+                self.assertLogEvent(cm, 'valid postcode')
 
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
@@ -3510,7 +3510,7 @@ class TestHandlers(RHTestCase):
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.addressindexsvc_url +
                                 self.postcode_valid)
 
@@ -3532,7 +3532,7 @@ class TestHandlers(RHTestCase):
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.addressindexsvc_url +
                                 self.postcode_valid)
 
@@ -3554,7 +3554,7 @@ class TestHandlers(RHTestCase):
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm,
-                                'Client failed to connect',
+                                'client failed to connect',
                                 url=self.addressindexsvc_url +
                                 self.postcode_valid)
 
@@ -3574,7 +3574,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3592,7 +3592,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3610,7 +3610,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=500)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3628,7 +3628,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3646,7 +3646,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3664,7 +3664,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -3682,7 +3682,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3700,7 +3700,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3719,7 +3719,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=403)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3737,7 +3737,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3755,7 +3755,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3774,7 +3774,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=401)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3792,7 +3792,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3810,7 +3810,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3829,7 +3829,7 @@ class TestHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_code_form_data_valid)
-            self.assertLogEvent(cm, 'Error in response', status_code=400)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3841,7 +3841,7 @@ class TestHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'GET', self.get_address_confirmation_en, allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3853,7 +3853,7 @@ class TestHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'GET', self.get_address_confirmation_cy, allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3864,7 +3864,7 @@ class TestHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'GET', self.get_address_confirmation_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
@@ -3879,7 +3879,7 @@ class TestHandlers(RHTestCase):
                 self.post_address_confirmation_en,
                 allow_redirects=False,
                 data=self.address_confirmation_data)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3894,7 +3894,7 @@ class TestHandlers(RHTestCase):
                 self.post_address_confirmation_cy,
                 allow_redirects=False,
                 data=self.address_confirmation_data)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3908,7 +3908,7 @@ class TestHandlers(RHTestCase):
                 self.post_address_confirmation_ni,
                 allow_redirects=False,
                 data=self.address_confirmation_data)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
@@ -3921,7 +3921,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.get_address_edit_en,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3934,7 +3934,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.get_address_edit_cy,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3946,7 +3946,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.get_address_edit_ni,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
@@ -3959,7 +3959,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.post_address_edit_en,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3972,7 +3972,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.post_address_edit_cy,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3984,7 +3984,7 @@ class TestHandlers(RHTestCase):
             response = await self.client.request('GET',
                                                  self.post_address_edit_ni,
                                                  allow_redirects=False)
-        self.assertLogEvent(cm, 'Permission denied')
+        self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)

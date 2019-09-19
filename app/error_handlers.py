@@ -126,29 +126,37 @@ def check_display_region(request):
     def path_starts_with(suffix):
         return request.path.startswith(path_prefix + suffix)
 
-    domain_url_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN']
-    domain_url_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY']
+    domain_url_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
+        'DOMAIN_URL_EN']
+    domain_url_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
+        'DOMAIN_URL_CY']
+
+    base_attributes = {
+        'domain_url_en': domain_url_en,
+        'domain_url_cy': domain_url_cy,
+        'page_title': 'Error'
+    }
 
     if path_starts_with('/ni'):
-        attributes = {'display_region': 'ni',
-                      'domain_url_en': domain_url_en,
-                      'domain_url_cy': domain_url_cy,
-                      'page_title': 'Error'}
+        attributes = {
+            **base_attributes,
+            'display_region': 'ni',
+        }
     elif any([
             path_starts_with('/dechrau'),
             path_starts_with('/gwe-sgwrs'),
             path_starts_with('/gofyn-am-god-mynediad'),
             path_starts_with('/cy')
     ]):
-        attributes = {'display_region': 'cy',
-                      'locale': 'cy',
-                      'domain_url_en': domain_url_en,
-                      'domain_url_cy': domain_url_cy,
-                      'page_title': 'Error'}
+        attributes = {
+            **base_attributes,
+            'display_region': 'cy',
+            'locale': 'cy',
+        }
     else:
-        attributes = {'display_region': 'en',
-                      'domain_url_en': domain_url_en,
-                      'domain_url_cy': domain_url_cy,
-                      'page_title': 'Error'}
+        attributes = {
+            **base_attributes,
+            'display_region': 'en',
+        }
 
     return attributes
