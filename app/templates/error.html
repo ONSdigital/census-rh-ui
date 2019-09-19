@@ -1,12 +1,12 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
-    {% set contact_us_link = '#' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
-    {% set contact_us_link = '#' %}
+    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
 {% else %}
     {% extends "base-en.html" %}
-    {% set contact_us_link = '#' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
 {% endif %}
 
 {% block main %}
