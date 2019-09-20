@@ -1439,7 +1439,7 @@ class StartSelectLanguageNI(Start):
 @routes.view('/start/timeout')
 class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
-    async def get(self, _):
+    async def get(self, request):
         logger.info('entered endpoint',
                     method=request.method,
                     path=request.path)
@@ -1576,7 +1576,7 @@ class WebChat(View):
 @routes.view('/webchat/chat')
 class WebChatWindowEN(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, _):
+    async def get(self, request):
         logger.info('entered endpoint',
                     method=request.method,
                     path=request.path)
@@ -1591,7 +1591,7 @@ class WebChatWindowEN(WebChat):
 @routes.view('/gwe-sgwrs/chat')
 class WebChatWindowCY(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, _):
+    async def get(self, request):
         logger.info('entered endpoint',
                     method=request.method,
                     path=request.path)
@@ -1607,7 +1607,7 @@ class WebChatWindowCY(WebChat):
 @routes.view('/ni/webchat/chat')
 class WebChatWindowNI(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, _):
+    async def get(self, request):
         logger.info('entered endpoint',
                     method=request.method,
                     path=request.path)

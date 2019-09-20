@@ -1,6 +1,5 @@
 import random
 import string
-import logging
 import hashlib
 
 from aiohttp import web

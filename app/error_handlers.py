@@ -1,5 +1,4 @@
 import aiohttp_jinja2 as jinja
-import traceback
 
 from aiohttp import web
 from aiohttp.client_exceptions import (ClientResponseError,
