@@ -1832,10 +1832,10 @@ class RequestCodeCommon(View):
 
         for singleAddress in postcode_return['response']['addresses']:
             address_options.append({
-                'value': {
+                'value': json.dumps({
                     'uprn': singleAddress['uprn'],
                     'address': singleAddress['formattedAddress']
-                },
+                }),
                 'label': {
                     'text': singleAddress['formattedAddress']
                 },
@@ -2104,8 +2104,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2144,8 +2143,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -2184,8 +2182,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2873,8 +2870,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
@@ -2913,8 +2909,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
@@ -2953,8 +2948,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'].replace(
-                "'", '"'))
+            form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
