@@ -23,7 +23,7 @@ from .exceptions import InactiveCaseError
 from .eq import EqPayloadConstructor
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
-from .security import remember, check_permission, forget
+from .security import remember, check_permission, forget, get_sha256_hash
 from collections import namedtuple
 
 logger = wrap_logger(logging.getLogger("respondent-home"))
@@ -122,16 +122,16 @@ class View:
 class Start(View):
 
     def __init__(self):
-        self._uac = None
+        self._uac_hash = None
         self._sample_unit_id = None
         super().__init__()
 
     @property
     def _rhsvc_url(self):
-        return f"{self._request.app['RHSVC_URL']}/uacs/{self._uac}"
+        return f"{self._request.app['RHSVC_URL']}/uacs/{self._uac_hash}"
 
     @staticmethod
-    def join_uac(data, expected_length=16):
+    def uac_hash(data, expected_length=16):
         if data.get('uac'):
             combined = data.get('uac').lower().replace(" ", "")
         else:
@@ -141,7 +141,8 @@ class Start(View):
 
         if (len(combined) < expected_length) or not (uac_validation_pattern.fullmatch(combined)):
             raise TypeError
-        return combined
+
+        return get_sha256_hash(combined)
 
     @staticmethod
     def validate_case(case_json):
@@ -151,7 +152,7 @@ class Start(View):
             raise InvalidEqPayLoad("CaseStatus is not OK")
 
     async def get_uac_details(self):
-        logger.debug(f"Making GET request to {self._rhsvc_url}", client_ip=self._client_ip)
+        logger.info("Making GET request for UAC", uac_hash=self._uac_hash, client_ip=self._client_ip)
         return await self._make_request(
             Request("GET", self._rhsvc_url, self._request.app["RHSVC_AUTH"], None, self._handle_response, "json"))
 
@@ -233,7 +234,7 @@ class IndexEN(Start):
         data = await self._request.post()
 
         try:
-            self._uac = self.join_uac(data)
+            self._uac_hash = self.uac_hash(data)
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
@@ -312,7 +313,7 @@ class IndexCY(Start):
         data = await self._request.post()
 
         try:
-            self._uac = self.join_uac(data)
+            self._uac_hash = self.uac_hash(data)
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG_CY)
@@ -392,7 +393,7 @@ class IndexNI(Start):
         data = await self._request.post()
 
         try:
-            self._uac = self.join_uac(data)
+            self._uac_hash = self.uac_hash(data)
         except TypeError:
             logger.warn("Attempt to use a malformed access code", client_ip=self._client_ip)
             flash(self._request, BAD_CODE_MSG)
