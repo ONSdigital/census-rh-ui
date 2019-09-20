@@ -129,7 +129,7 @@ class View:
 
         await self.post_surveylaunched(case, adlocation)
 
-        logger.debug('redirecting to eq')
+        logger.debug('redirecting to eq', client_ip=self._client_ip)
         eq_url = app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')
 
@@ -1053,7 +1053,7 @@ class StartLanguageOptionsEN(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1068,7 +1068,7 @@ class StartLanguageOptionsEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1125,7 +1125,7 @@ class StartLanguageOptionsCY(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1140,7 +1140,7 @@ class StartLanguageOptionsCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1197,7 +1197,7 @@ class StartLanguageOptionsNI(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1212,7 +1212,7 @@ class StartLanguageOptionsNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1267,7 +1267,7 @@ class StartSelectLanguageEN(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1282,7 +1282,7 @@ class StartSelectLanguageEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1340,7 +1340,7 @@ class StartSelectLanguageCY(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1355,7 +1355,7 @@ class StartSelectLanguageCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1413,7 +1413,7 @@ class StartSelectLanguageNI(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error')
+            logger.warn('ni language option error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1428,7 +1428,7 @@ class StartSelectLanguageNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error')
+            logger.warn('language selection error', client_ip=self._client_ip)
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1519,7 +1519,7 @@ class WebChat(View):
         timezone_offset = 0
 
         if WebChat.get_now() < datetime(2019, 10, 27):
-            logger.info('before switch to gmt - adjusting time')
+            logger.info('before switch to gmt - adjusting time', client_ip='')
             timezone_offset = 1
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
@@ -1627,7 +1627,7 @@ class WebChatEN(WebChat):
                     method=request.method,
                     path=request.path)
         self._request = request
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {
                 'display_region': 'en',
@@ -1642,7 +1642,7 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
@@ -1662,7 +1662,7 @@ class WebChatEN(WebChat):
         form_valid = self.validate_form(data, 'en')
 
         if not form_valid:
-            logger.info('form submission error')
+            logger.info('form submission error', client_ip=self._client_ip)
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1685,7 +1685,7 @@ class WebChatEN(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1696,7 +1696,7 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
@@ -1714,7 +1714,7 @@ class WebChatCY(WebChat):
                     method=request.method,
                     path=request.path)
         self._request = request
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {
                 'display_region': 'cy',
@@ -1730,7 +1730,7 @@ class WebChatCY(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'cy',
@@ -1751,7 +1751,7 @@ class WebChatCY(WebChat):
         form_valid = self.validate_form(data, 'cy')
 
         if not form_valid:
-            logger.info('form submission error')
+            logger.info('form submission error', client_ip=self._client_ip)
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1776,7 +1776,7 @@ class WebChatCY(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1787,7 +1787,7 @@ class WebChatCY(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'cy',
@@ -1806,7 +1806,7 @@ class WebChatNI(WebChat):
                     method=request.method,
                     path=request.path)
         self._request = request
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return {
                 'display_region': 'ni',
@@ -1821,7 +1821,7 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
@@ -1841,7 +1841,7 @@ class WebChatNI(WebChat):
         form_valid = self.validate_form(data, 'ni')
 
         if not form_valid:
-            logger.info('form submission error')
+            logger.info('form submission error', client_ip=self._client_ip)
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1864,7 +1864,7 @@ class WebChatNI(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check')
+        logger.info('date/time check', client_ip=self._client_ip)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1875,7 +1875,7 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed')
+            logger.info('webchat closed', client_ip=self._client_ip)
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
@@ -1888,7 +1888,7 @@ class WebChatNI(WebChat):
 class RequestCodeCommon(View):
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
-            logger.warn('session timed out')
+            logger.warn('session timed out', client_ip=self._client_ip)
             raise HTTPFound(
                 self._request.app.router['RequestCodeTimeout' +
                                          fulfillment_type + display_region +
@@ -1961,7 +1961,7 @@ class RequestCodeCommon(View):
         if RequestCodeCommon.postcode_validation_pattern.fullmatch(
                 data['request-postcode'].upper()):
 
-            logger.info('valid postcode')
+            logger.info('valid postcode', client_ip=self._client_ip)
 
             attributes = {}
             attributes['postcode'] = data['request-postcode'].upper()
@@ -2008,7 +2008,8 @@ class RequestCodeCommon(View):
                                          ':get'].url_for())
 
         else:
-            logger.warn('attempt to use an invalid mobile phone number')
+            logger.warn('attempt to use an invalid mobile phone number',
+                        client_ip=self._client_ip)
             if attributes['display_region'] == 'cy':
                 flash(self._request, MOBILE_ENTER_MSG_CY)
             else:
@@ -2223,7 +2224,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2235,7 +2236,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHEN:get'].url_for())
@@ -2266,7 +2267,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2278,7 +2279,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHCY:get'].url_for())
@@ -2309,7 +2310,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2321,7 +2322,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHNI:get'].url_for())
@@ -2651,7 +2652,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2688,7 +2689,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2716,7 +2717,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2753,7 +2754,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2781,7 +2782,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2818,7 +2819,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3073,7 +3074,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -3085,7 +3086,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHIEN:get'].url_for())
@@ -3116,7 +3117,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -3128,7 +3129,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHICY:get'].url_for())
@@ -3159,7 +3160,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected')
+            logger.warn('no address selected', client_ip=self._client_ip)
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -3171,7 +3172,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated')
+        logger.info('session updated', client_ip=self._client_ip)
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHINI:get'].url_for())
@@ -3499,7 +3500,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3537,7 +3538,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3564,7 +3565,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -3602,7 +3603,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -3629,7 +3630,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3667,7 +3668,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error')
+            logger.warn('mobile confirmation error', client_ip=self._client_ip)
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
