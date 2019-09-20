@@ -1,5 +1,7 @@
 import random
 import string
+import logging
+import hashlib
 
 from aiohttp import web
 from aiohttp_session import get_session
@@ -116,3 +118,7 @@ async def remember(identity, request):
     logger.info('identity remembered',
                 client_ip=request.headers.get('X-Forwarded-For'),
                 identity=identity)
+
+
+def get_sha256_hash(uac: str):
+    return hashlib.sha256(uac.encode()).hexdigest()
