@@ -1,5 +1,6 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
+    {% set about_census_link = domain_url_en + '/ni/about-the-census/2019-rehearsal/' %}
     {% if fulfillment_type == 'HI' %}
         {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
     {% else %}
@@ -7,6 +8,7 @@
     {% endif %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
+    {% set about_census_link = domain_url_cy + '/ynglyn-ar-cyfrifiad/ymarfer-2019/' %}
     {% if fulfillment_type == 'HI' %}
         {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
     {% else %}
@@ -14,6 +16,7 @@
     {% endif %}
 {% else %}
     {% extends "base-en.html" %}
+    {% set about_census_link = domain_url_en + '/about-the-census/2019-rehearsal/' %}
     {% if fulfillment_type == 'HI' %}
         {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
     {% else %}
@@ -28,7 +31,7 @@
     <p>{{ address }}</p>
 
     {% autoescape false %}
-        <p>{{ _("Based on the address you have provided you are not required to take part. If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or find out more %(start_about_census_link)sabout the census rehearsal%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_about_census_link='<a href="#">', end_link='</a>')|safe }}</p>
+        <p>{{ _("Based on the address you have provided you are not required to take part. If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or find out more %(start_about_census_link)sabout the census rehearsal%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_about_census_link='<a href="%s">' % about_census_link, end_link='</a>')|safe }}</p>
     {% endautoescape %}
 
 {% endblock %}

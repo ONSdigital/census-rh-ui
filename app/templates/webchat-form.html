@@ -5,7 +5,7 @@
 {% elif display_region == "ni" %}
     {% extends "base-webchat-ni.html" %}
     {% set form_action = url('WebChatNI:post') %}
-    {% set help_url = domain_url_en + '/help/' %}
+    {% set help_url = domain_url_en + '/ni/help/' %}
 {% else %}
     {% extends "base-webchat-en.html" %}
     {% set form_action = url('WebChatEN:post') %}

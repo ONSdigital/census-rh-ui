@@ -1,5 +1,6 @@
 {% if display_region == "ni" %}
     {% extends "base-ni.html" %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHINI:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
@@ -9,6 +10,7 @@
     {% endif %}
 {% elif display_region == "cy" %}
     {% extends "base-cy.html" %}
+    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHICY:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
@@ -18,6 +20,7 @@
     {% endif %}
 {% else %}
     {% extends "base-en.html" %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHIEN:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
@@ -50,7 +53,7 @@
         <h1>{{ _("We cannot find your address") }}</h1>
 
         {% autoescape false %}
-            <p>{{ _("If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="#">', end_link='</a>')|safe }}</p>
+            <p>{{ _("If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="%s">' % contact_us_link, end_link='</a>')|safe }}</p>
         {% endautoescape %}
 
     {% else: %}
