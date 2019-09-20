@@ -1,19 +1,18 @@
-import logging
+import aiohttp_jinja2 as jinja
 
-import aiohttp_jinja2
 from aiohttp import web
-from aiohttp.client_exceptions import (
-    ClientResponseError, ClientConnectorError, ClientConnectionError, ContentTypeError)
-from structlog import wrap_logger
+from aiohttp.client_exceptions import (ClientResponseError,
+                                       ClientConnectorError,
+                                       ClientConnectionError, ContentTypeError)
 
-from .exceptions import ExerciseClosedError, InactiveCaseError, InvalidEqPayLoad
+from .exceptions import (ExerciseClosedError, InactiveCaseError,
+                         InvalidEqPayLoad)
+from structlog import get_logger
 
-
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 
 
 def create_error_middleware(overrides):
-
     @web.middleware
     async def middleware_handler(request, handler):
         try:
@@ -22,15 +21,19 @@ def create_error_middleware(overrides):
             return await override(request) if override else resp
         except web.HTTPNotFound:
             path_prefix = request.app['URL_PATH_PREFIX']
-            if request.path.startswith(path_prefix + '/ni'):
+
+            def path_starts_with(suffix):
+                return request.path.startswith(path_prefix + suffix)
+
+            if path_starts_with('/ni'):
                 index_resource = request.app.router['IndexNI:get']
-            elif request.path.startswith(path_prefix + '/dechrau') or request.path.startswith(path_prefix + '/cy'):
+            elif path_starts_with('/dechrau') or path_starts_with('/cy'):
                 index_resource = request.app.router['IndexCY:get']
             else:
                 index_resource = request.app.router['IndexEN:get']
 
             if request.path + '/' == index_resource.canonical:
-                logger.debug('Redirecting to index', path=request.path)
+                logger.debug('redirecting to index', path=request.path)
                 raise web.HTTPMovedPermanently(index_resource.url_for())
             return await not_found_error(request)
         except web.HTTPForbidden:
@@ -51,60 +54,62 @@ def create_error_middleware(overrides):
             return await key_error(request)
         except ClientResponseError:
             return await response_error(request)
+        # TODO fallthrough error here
 
     return middleware_handler
 
 
 async def inactive_case(request, case_type):
-    logger.warn("Attempt to use an inactive access code")
+    logger.warn('attempt to use an inactive access code')
     attributes = check_display_region(request)
     attributes['case_type'] = case_type
-    return aiohttp_jinja2.render_template("expired.html", request, attributes)
+    return jinja.render_template('expired.html', request, attributes)
 
 
 async def ce_closed(request, collex_id):
-    logger.warn("Attempt to access collection exercise that has already ended", collex_id=collex_id)
+    logger.warn('attempt to access collection exercise that has already ended',
+                collex_id=collex_id)
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("closed.html", request, attributes)
+    return jinja.render_template('closed.html', request, attributes)
 
 
 async def eq_error(request, message: str):
-    logger.error("Service failed to build eQ payload", message=message)
+    logger.error('service failed to build eq payload', exception=message)
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+    return jinja.render_template('error.html', request, attributes, status=500)
 
 
 async def connection_error(request, message: str):
-    logger.error("Service connection error", message=message)
+    logger.error('service connection error', exception=message)
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+    return jinja.render_template('error.html', request, attributes, status=500)
 
 
 async def payload_error(request, url: str):
-    logger.error("Service failed to return expected JSON payload", url=url)
+    logger.error('service failed to return expected json payload', url=url)
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+    return jinja.render_template('error.html', request, attributes, status=500)
 
 
 async def key_error(request):
-    logger.error("Required value missing")
+    logger.error('required value missing')
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+    return jinja.render_template('error.html', request, attributes, status=500)
 
 
 async def response_error(request):
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("error.html", request, attributes, status=500)
+    return jinja.render_template('error.html', request, attributes, status=500)
 
 
 async def not_found_error(request):
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("404.html", request, attributes, status=404)
+    return jinja.render_template('404.html', request, attributes, status=404)
 
 
 async def forbidden(request):
     attributes = check_display_region(request)
-    return aiohttp_jinja2.render_template("index.html", request, attributes, status=403)
+    return jinja.render_template('index.html', request, attributes, status=403)
 
 
 def setup(app):
@@ -119,24 +124,41 @@ def setup(app):
 
 def check_display_region(request):
     path_prefix = request.app['URL_PATH_PREFIX']
-    if request.url.path.startswith(path_prefix + '/ni'):
-        attributes = {'display_region': 'ni',
-                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
-                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
-                      'page_title': 'Error'}
-    elif request.url.path.startswith(path_prefix + '/dechrau') \
-            or request.url.path.startswith(path_prefix + '/gwe-sgwrs') \
-            or request.url.path.startswith(path_prefix + '/gofyn-am-god-mynediad')\
-            or request.url.path.startswith(path_prefix + '/cy'):
-        attributes = {'display_region': 'cy',
-                      'locale': 'cy',
-                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
-                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
-                      'page_title': 'Error'}
+
+    def path_starts_with(suffix):
+        return request.path.startswith(path_prefix + suffix)
+
+    domain_url_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
+        'DOMAIN_URL_EN']
+    domain_url_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
+        'DOMAIN_URL_CY']
+
+    base_attributes = {
+        'domain_url_en': domain_url_en,
+        'domain_url_cy': domain_url_cy,
+        'page_title': 'Error'
+    }
+
+    if path_starts_with('/ni'):
+        attributes = {
+            **base_attributes,
+            'display_region': 'ni',
+        }
+    elif any([
+            path_starts_with('/dechrau'),
+            path_starts_with('/gwe-sgwrs'),
+            path_starts_with('/gofyn-am-god-mynediad'),
+            path_starts_with('/cy')
+    ]):
+        attributes = {
+            **base_attributes,
+            'display_region': 'cy',
+            'locale': 'cy',
+        }
     else:
-        attributes = {'display_region': 'en',
-                      'domain_url_en': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'],
-                      'domain_url_cy': request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY'],
-                      'page_title': 'Error'}
+        attributes = {
+            **base_attributes,
+            'display_region': 'en',
+        }
 
     return attributes

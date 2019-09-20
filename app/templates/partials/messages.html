@@ -1,12 +1,12 @@
 {% for group, messages in messages_dict.items() %}
 
-{% from "./components/panel/_macro.njk" import onsPanel %}
-{% from "./components/lists/_macro.njk" import onsList %}
+{% from './components/panel/_macro.njk' import onsPanel %}
+{% from './components/lists/_macro.njk' import onsList %}
 
 {% if messages | length == 1 %}
-    {% set errorTitle = _("This page has an error") %}
+    {% set errorTitle = _('This page has an error') %}
 {% else %}
-    {% set errorTitle = _("This page has %(errorcount)s errors", errorcount= messages | length | string ) %}
+    {% set errorTitle = _('This page has %(errorcount)s errors', errorcount= messages | length | string ) %}
 {% endif %}
 
 {% set itemsList = [] %}
@@ -14,10 +14,10 @@
 {% for message in messages %}
 
 {% if itemsList.append( {
-                "text": message.text,
-                "index": true,
-                "url": "#" + message.field,
-                "classes": "js-inpagelink"
+                'text': message.text,
+                'index': true,
+                'url': '#' + message.field,
+                'classes': 'js-inpagelink'
             } )
 %} {% endif %}
 
@@ -27,19 +27,19 @@
 {% if group=='ERROR' %}
 {% call
     onsPanel({
-        "title": errorTitle,
-        "type": "error"
+        'title': errorTitle,
+        'type': 'error'
     })
 %}
 
 {% autoescape false %}
-    <p>{{ _("These %(startbold)smust be corrected%(endbold)s to continue.", startbold='<strong>', endbold='</strong>')|safe }}</p>
+    <p>{{ _('These %(startbold)smust be corrected%(endbold)s to continue.', startbold='<strong>', endbold='</strong>')|safe }}</p>
 {% endautoescape %}
 
 {{
     onsList({
-        "classes": "list--bare",
-        "itemsList": itemsList
+        'classes': 'list--bare',
+        'itemsList': itemsList
     })
 }}
 {% endcall %}

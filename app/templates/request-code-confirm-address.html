@@ -1,19 +1,19 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeConfirmAddressHINI:post') %}
     {% else %}
         {% set form_action = url('RequestCodeConfirmAddressHHNI:post') %}
     {% endif %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeConfirmAddressHICY:post') %}
     {% else %}
         {% set form_action = url('RequestCodeConfirmAddressHHCY:post') %}
     {% endif %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends 'base-en.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeConfirmAddressHIEN:post') %}
     {% else %}
@@ -24,31 +24,31 @@
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
-{% from "components/question/_macro.njk" import onsQuestion %}
-{% from "components/button/_macro.njk" import onsButton %}
-{% from "components/radios/_macro.njk" import onsRadios %}
+{% from 'components/question/_macro.njk' import onsQuestion %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/radios/_macro.njk' import onsRadios %}
 
 {% set form =  {
-    "method": "POST",
-    "attributes": {
-        "action": form_action
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
     }
 } %}
 
 {% set form_options = [
                 {
-                    "id": "yes",
-                    "label": {
-                        "text": _("Yes, this address is correct")
+                    'id': 'yes',
+                    'label': {
+                        'text': _('Yes, this address is correct')
                     },
-                    "value": "yes"
+                    'value': 'yes'
                 },
                 {
-                    "id": "no",
-                    "label": {
-                        "text": _("No, I need to change it")
+                    'id': 'no',
+                    'label': {
+                        'text': _('No, I need to change it')
                     },
-                    "value": "no"
+                    'value': 'no'
                 }
             ]
 %}
@@ -58,28 +58,28 @@
 {% block main %}
 
     {% if messages_dict %}
-        {% include "partials/messages.html" with context %}
+        {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% call onsQuestion({
-        "title": _("Is this address correct?"),
-        "description": question_description
+        'title': _('Is this address correct?'),
+        'description': question_description
     }) %}
 {% if 'address' in field_messages_dict %}
     {{
         onsRadios({
-            "name": "request-address-confirmation",
-            "radios": form_options,
-            "error": {
-                "text": _("Check and confirm the address")
+            'name': 'request-address-confirmation',
+            'radios': form_options,
+            'error': {
+                'text': _('Check and confirm the address')
             }
         })
     }}
 {% else %}
     {{
         onsRadios({
-            "name": "request-address-confirmation",
-            "radios": form_options
+            'name': 'request-address-confirmation',
+            'radios': form_options
         })
     }}
 {% endif %}
@@ -87,8 +87,8 @@
 
     {{
         onsButton({
-            "text": _("Continue"),
-            "classes": "u-mt-l"
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
         })
     }}
 

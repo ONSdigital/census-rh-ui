@@ -1,14 +1,12 @@
-import logging
 import time
 
 from asyncio import get_event_loop
 from aioredis import create_pool, RedisError
 from aiohttp_session import session_middleware, Session
 from aiohttp_session.redis_storage import RedisStorage
-from structlog import wrap_logger
+from structlog import get_logger
 
-
-logger = wrap_logger(logging.getLogger("respondent-home"))
+logger = get_logger('respondent-home')
 
 # Please see https://github.com/aio-libs/aiohttp-session/issues/344
 # Anomalous behaviour can arise where you have a valid session cookie from the client as if a session was created by
@@ -17,7 +15,8 @@ logger = wrap_logger(logging.getLogger("respondent-home"))
 # Monkey patch aiohttp_session Session.__init__ method to remove suspect behaviour.
 
 
-def aiohttp_session_pr_331_rollback(self, identity, *, data, new, max_age=None):
+def aiohttp_session_pr_331_rollback(self, identity, *, data, new,
+                                    max_age=None):
     self._changed = False
     self._mapping = {}
     self._identity = identity if data != {} else None
@@ -41,9 +40,12 @@ def setup(app_config):
     Session.__init__ = aiohttp_session_pr_331_rollback
 
     loop = get_event_loop()
-    redis_pool = loop.run_until_complete(make_redis_pool(app_config["REDIS_SERVER"], app_config["REDIS_PORT"]))
-    return session_middleware(RedisStorage(redis_pool, cookie_name='RH_SESSION',
-                                           max_age=int(app_config["SESSION_AGE"])))
+    redis_pool = loop.run_until_complete(
+        make_redis_pool(app_config['REDIS_SERVER'], app_config['REDIS_PORT']))
+    return session_middleware(
+        RedisStorage(redis_pool,
+                     cookie_name='RH_SESSION',
+                     max_age=int(app_config['SESSION_AGE'])))
 
 
 async def make_redis_pool(host, port):
@@ -55,4 +57,4 @@ async def make_redis_pool(host, port):
         )
         return redis_pool
     except (OSError, RedisError):
-        logger.error("Failed to create Redis connection")
+        logger.error('failed to create redis connection')

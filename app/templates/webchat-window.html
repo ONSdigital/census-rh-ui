@@ -1,14 +1,14 @@
 {% if display_region == 'cy' %}
-    {% extends "base-webchat-cy.html" %}
-{% elif display_region == "ni" %}
-    {% extends "base-webchat-ni.html" %}
+    {% extends 'base-webchat-cy.html' %}
+{% elif display_region == 'ni' %}
+    {% extends 'base-webchat-ni.html' %}
 {% else %}
-    {% extends "base-webchat-en.html" %}
+    {% extends 'base-webchat-en.html' %}
 {% endif %}
 
 {% block main %}
 
-<h1>{{ _("Web chat") }}</h1>
+<h1>{{ _('Web chat') }}</h1>
 
 {% set webchat_url = webchat_url %}
 {% set screen_name_param = 'im_name=' + screen_name %}

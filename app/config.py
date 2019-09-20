@@ -4,7 +4,6 @@ from envparse import Env, ConfigurationError
 
 
 class Config(dict):
-
     def from_object(self, obj):
         for key in dir(obj):
             if key.isupper():
@@ -13,17 +12,22 @@ class Config(dict):
                     raise ConfigurationError(f'{key} not set')
                 self[key] = config
 
-    def get_service_urls_mapped_with_path(self, path='/', suffix='URL', excludes=None) -> dict:
-        return {service_name: f"{self[service_name]}{path}"
-                for service_name in self
-                if service_name.endswith(suffix)
-                and service_name not in (excludes if excludes else [])}
+    def get_service_urls_mapped_with_path(self,
+                                          path='/',
+                                          suffix='URL',
+                                          excludes=None) -> dict:
+        return {
+            service_name: f'{self[service_name]}{path}'
+            for service_name in self
+            if service_name.endswith(suffix) and service_name not in (
+                excludes if excludes else [])
+        }
 
     def __getattr__(self, name):
         try:
             return self[name]
         except KeyError:
-            raise AttributeError('"{}" not found'.format(name))
+            raise AttributeError(f'"{name}" not found')
 
     def __setattr__(self, name, value):
         self[name] = value
@@ -33,34 +37,35 @@ class BaseConfig:
     env = Env()
     env = partial(env, default=None)
 
-    HOST = env("HOST")
-    PORT = env("PORT")
-    LOG_LEVEL = env("LOG_LEVEL")
+    HOST = env('HOST')
+    PORT = env('PORT')
+    LOG_LEVEL = env('LOG_LEVEL')
+    EXT_LOG_LEVEL = env('EXT_LOG_LEVEL')
 
-    DOMAIN_URL_PROTOCOL = env("DOMAIN_URL_PROTOCOL", default="https://")
-    DOMAIN_URL_EN = env("DOMAIN_URL_EN")
-    DOMAIN_URL_CY = env("DOMAIN_URL_CY")
+    DOMAIN_URL_PROTOCOL = env('DOMAIN_URL_PROTOCOL', default='https://')
+    DOMAIN_URL_EN = env('DOMAIN_URL_EN')
+    DOMAIN_URL_CY = env('DOMAIN_URL_CY')
 
-    ACCOUNT_SERVICE_URL = env("ACCOUNT_SERVICE_URL")
-    EQ_URL = env("EQ_URL")
-    JSON_SECRET_KEYS = env("JSON_SECRET_KEYS")
+    ACCOUNT_SERVICE_URL = env('ACCOUNT_SERVICE_URL')
+    EQ_URL = env('EQ_URL')
+    JSON_SECRET_KEYS = env('JSON_SECRET_KEYS')
 
-    RHSVC_URL = env("RHSVC_URL")
-    RHSVC_AUTH = (env("RHSVC_USERNAME"), env("RHSVC_PASSWORD"))
+    RHSVC_URL = env('RHSVC_URL')
+    RHSVC_AUTH = (env('RHSVC_USERNAME'), env('RHSVC_PASSWORD'))
 
-    URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
+    URL_PATH_PREFIX = env('URL_PATH_PREFIX', default='')
 
-    ANALYTICS_UA_ID = env("ANALYTICS_UA_ID", default="")
+    ANALYTICS_UA_ID = env('ANALYTICS_UA_ID', default='')
 
-    REDIS_SERVER = env("REDIS_SERVER", default="localhost")
+    REDIS_SERVER = env('REDIS_SERVER', default='localhost')
 
-    REDIS_PORT = env("REDIS_PORT", default="7379")
+    REDIS_PORT = env('REDIS_PORT', default='7379')
 
-    SESSION_AGE = env("SESSION_AGE", default="600")
+    SESSION_AGE = env('SESSION_AGE', default='600')
 
-    WEBCHAT_SVC_URL = env("WEBCHAT_SVC_URL")
+    WEBCHAT_SVC_URL = env('WEBCHAT_SVC_URL')
 
-    ADDRESS_INDEX_SVC_URL = env("ADDRESS_INDEX_SVC_URL")
+    ADDRESS_INDEX_SVC_URL = env('ADDRESS_INDEX_SVC_URL')
 
 
 class ProductionConfig(BaseConfig):
@@ -69,62 +74,71 @@ class ProductionConfig(BaseConfig):
 
 class DevelopmentConfig:
     env = Env()
-    HOST = env.str("HOST", default="0.0.0.0")
-    PORT = env.int("PORT", default="9092")
-    LOG_LEVEL = env("LOG_LEVEL", default="INFO")
+    HOST = env.str('HOST', default='0.0.0.0')
+    PORT = env.int('PORT', default='9092')
+    LOG_LEVEL = env('LOG_LEVEL', default='INFO')
+    EXT_LOG_LEVEL = env('EXT_LOG_LEVEL', default='WARN')
 
-    DOMAIN_URL_PROTOCOL = "http://"
-    DOMAIN_URL_EN = env.str("DOMAIN_URL_EN", default="localhost:9092")
-    DOMAIN_URL_CY = env.str("DOMAIN_URL_CY", default="localhost:9092")
+    DOMAIN_URL_PROTOCOL = 'http://'
+    DOMAIN_URL_EN = env.str('DOMAIN_URL_EN', default='localhost:9092')
+    DOMAIN_URL_CY = env.str('DOMAIN_URL_CY', default='localhost:9092')
 
-    ACCOUNT_SERVICE_URL = env.str("ACCOUNT_SERVICE_URL", default="http://localhost:9092")
-    EQ_URL = env.str("EQ_URL", default="http://localhost:5000")
-    JSON_SECRET_KEYS = env.str("JSON_SECRET_KEYS", default=None) or open("./tests/test_data/test_keys.json").read()
+    ACCOUNT_SERVICE_URL = env.str('ACCOUNT_SERVICE_URL',
+                                  default='http://localhost:9092')
+    EQ_URL = env.str('EQ_URL', default='http://localhost:5000')
+    JSON_SECRET_KEYS = env.str(
+        'JSON_SECRET_KEYS',
+        default=None) or open('./tests/test_data/test_keys.json').read()
 
-    RHSVC_URL = env.str("RHSVC_URL", default="http://localhost:8071")
-    RHSVC_AUTH = (env.str("RHSVC_USERNAME", default="admin"), env.str("RHSVC_PASSWORD", default="secret"))
+    RHSVC_URL = env.str('RHSVC_URL', default='http://localhost:8071')
+    RHSVC_AUTH = (env.str('RHSVC_USERNAME', default='admin'),
+                  env.str('RHSVC_PASSWORD', default='secret'))
 
-    URL_PATH_PREFIX = env("URL_PATH_PREFIX", default="")
+    URL_PATH_PREFIX = env('URL_PATH_PREFIX', default='')
 
-    ANALYTICS_UA_ID = env("ANALYTICS_UA_ID", default="")
+    ANALYTICS_UA_ID = env('ANALYTICS_UA_ID', default='')
 
-    REDIS_SERVER = env("REDIS_SERVER", default="localhost")
+    REDIS_SERVER = env('REDIS_SERVER', default='localhost')
 
-    REDIS_PORT = env("REDIS_PORT", default="7379")
+    REDIS_PORT = env('REDIS_PORT', default='7379')
 
-    SESSION_AGE = env("SESSION_AGE", default="300")  # 5 minutes
+    SESSION_AGE = env('SESSION_AGE', default='300')  # 5 minutes
 
-    WEBCHAT_SVC_URL = env.str("WEBCHAT_SVC_URL", default="https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221")  # NOQA
+    WEBCHAT_SVC_URL = env.str(
+        'WEBCHAT_SVC_URL',
+        default='https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221'
+    )  # yapf: disable
 
-    ADDRESS_INDEX_SVC_URL = env.str("ADDRESS_INDEX_SVC_URL", default="http://addressindex-api-beta.apps.devtest.onsclofo.uk")  # NOQA
+    ADDRESS_INDEX_SVC_URL = env.str('ADDRESS_INDEX_SVC_URL', default='http://addressindex-api-beta.apps.devtest.onsclofo.uk')  # yapf: disable
 
 
 class TestingConfig:
-    HOST = "0.0.0.0"
-    PORT = "9092"
-    LOG_LEVEL = "INFO"
+    HOST = '0.0.0.0'
+    PORT = '9092'
+    LOG_LEVEL = 'DEBUG'
+    EXT_LOG_LEVEL = 'DEBUG'
 
-    DOMAIN_URL_PROTOCOL = "http://"
-    DOMAIN_URL_EN = "localhost:9092"
-    DOMAIN_URL_CY = "localhost:9092"
+    DOMAIN_URL_PROTOCOL = 'http://'
+    DOMAIN_URL_EN = 'localhost:9092'
+    DOMAIN_URL_CY = 'localhost:9092'
 
-    ACCOUNT_SERVICE_URL = "http://localhost:9092"
-    EQ_URL = "http://localhost:5000"
-    JSON_SECRET_KEYS = open("./tests/test_data/test_keys.json").read()
+    ACCOUNT_SERVICE_URL = 'http://localhost:9092'
+    EQ_URL = 'http://localhost:5000'
+    JSON_SECRET_KEYS = open('./tests/test_data/test_keys.json').read()
 
-    RHSVC_URL = "http://localhost:8071"
-    RHSVC_AUTH = ("admin", "secret")
+    RHSVC_URL = 'http://localhost:8071'
+    RHSVC_AUTH = ('admin', 'secret')
 
-    URL_PATH_PREFIX = ""
+    URL_PATH_PREFIX = ''
 
-    ANALYTICS_UA_ID = ""
+    ANALYTICS_UA_ID = ''
 
-    REDIS_SERVER = ""
+    REDIS_SERVER = ''
 
-    REDIS_PORT = ""
+    REDIS_PORT = ''
 
-    SESSION_AGE = ""
+    SESSION_AGE = ''
 
-    WEBCHAT_SVC_URL = "https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221"  # NOQA
+    WEBCHAT_SVC_URL = 'https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221'
 
-    ADDRESS_INDEX_SVC_URL = "http://addressindex-api-beta.apps.devtest.onsclofo.uk"  # NOQA
+    ADDRESS_INDEX_SVC_URL = 'http://addressindex-api-beta.apps.devtest.onsclofo.uk'

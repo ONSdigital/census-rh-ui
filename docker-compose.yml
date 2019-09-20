@@ -8,12 +8,10 @@ services:
     depends_on:
       - redis
     environment:
-      - REDIS_HOST=redis
+      - REDIS_SERVER=redis
       - REDIS_PORT=6379
       - APP_SETTINGS=DevelopmentConfig
       - PORT=9092
-    links:
-      - redis
     ports:
       - "9092:9092"
 

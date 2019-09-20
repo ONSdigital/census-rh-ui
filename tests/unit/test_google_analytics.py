@@ -5,7 +5,6 @@ from . import RHTestCase
 
 
 class TestGoogleAnalytics(RHTestCase):
-
     @unittest_run_loop
     async def test_google_analytics_context(self):
         self.app['ANALYTICS_UA_ID'] = '12345'
@@ -16,33 +15,33 @@ class TestGoogleAnalytics(RHTestCase):
     @unittest_run_loop
     async def test_google_analytics_script_rendered_en(self):
         self.app['ANALYTICS_UA_ID'] = '12345'
-        response = await self.client.request("GET", self.get_index_en)
+        response = await self.client.request('GET', self.get_index_en)
         self.assertEqual(response.status, 200)
-        self.assertIn(f"ga('create', '12345', 'auto');".encode(),
-                      await response.content.read())
+        self.assertIn(f"ga('create', '12345', 'auto');".encode(), await
+                      response.content.read())
 
     @unittest_run_loop
     async def test_google_analytics_script_rendered_ni(self):
         self.app['ANALYTICS_UA_ID'] = '12345'
-        response = await self.client.request("GET", self.get_index_ni)
+        response = await self.client.request('GET', self.get_index_ni)
         self.assertEqual(response.status, 200)
-        self.assertIn(f"ga('create', '12345', 'auto');".encode(),
-                      await response.content.read())
+        self.assertIn(f"ga('create', '12345', 'auto');".encode(), await
+                      response.content.read())
 
     @unittest_run_loop
     async def test_google_analytics_script_not_rendered_en(self):
         self.app['ANALYTICS_UA_ID'] = ''
 
-        response = await self.client.request("GET", self.get_index_en)
+        response = await self.client.request('GET', self.get_index_en)
         self.assertEqual(response.status, 200)
-        self.assertNotIn(f"ga('create', '', 'auto');".encode(),
-                         await response.content.read())
+        self.assertNotIn(f"ga('create', '', 'auto');".encode(), await
+                         response.content.read())
 
     @unittest_run_loop
     async def test_google_analytics_script_not_rendered_ni(self):
         self.app['ANALYTICS_UA_ID'] = ''
 
-        response = await self.client.request("GET", self.get_index_ni)
+        response = await self.client.request('GET', self.get_index_ni)
         self.assertEqual(response.status, 200)
-        self.assertNotIn(f"ga('create', '', 'auto');".encode(),
-                         await response.content.read())
+        self.assertNotIn(f"ga('create', '', 'auto');".encode(), await
+                         response.content.read())
