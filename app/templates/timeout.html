@@ -1,37 +1,37 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
     {% set request_individual_url = url('RequestCodeEnterAddressHINI:get') %}
     {% set request_household_url = url('RequestCodeEnterAddressHHNI:get') %}
     {% set index_url = url('IndexNI:get') %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
     {% set request_individual_url = url('RequestCodeEnterAddressHICY:get') %}
     {% set request_household_url = url('RequestCodeEnterAddressHHCY:get') %}
     {% set index_url = url('IndexCY:get') %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends 'base-en.html' %}
     {% set request_individual_url = url('RequestCodeEnterAddressHIEN:get') %}
     {% set request_household_url = url('RequestCodeEnterAddressHHEN:get') %}
     {% set index_url = url('IndexEN:get') %}
 {% endif %}
 
-{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
 
 {% block main %}
-    <h1>{{ _("Your session has timed out due to inactivity") }}</h1>
+    <h1>{{ _('Your session has timed out due to inactivity') }}</h1>
     {% call onsPanel({
-        "classes": "u-mb-m"
+        'classes': 'u-mb-m'
     }) %}
-        <p>{{ _("To protect your information we have timed you out.") }}</p>
+        <p>{{ _('To protect your information we have timed you out.') }}</p>
     {% endcall %}
 
     {% autoescape false %}
         {% if fulfillment_type == 'HH' %}
-            <p>{{ _("You will need to %(open)sre-enter your postcode%(close)s", open='<a href="%s">' % request_household_url, close='</a>')|safe }}</p>
+            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_household_url, close='</a>')|safe }}</p>
         {% elif  fulfillment_type == 'HI' %}
-            <p>{{ _("You will need to %(open)sre-enter your postcode%(close)s", open='<a href="%s">' % request_individual_url, close='</a>')|safe }}</p>
+            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_individual_url, close='</a>')|safe }}</p>
         {% else %}
-            <p>{{ _("You will need to %(open)sre-enter your access code%(close)s", open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
+            <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
         {% endif %}
     {% endautoescape %}
 

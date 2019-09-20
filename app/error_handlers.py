@@ -1,11 +1,13 @@
 import aiohttp_jinja2 as jinja
+import traceback
 
 from aiohttp import web
 from aiohttp.client_exceptions import (ClientResponseError,
                                        ClientConnectorError,
                                        ClientConnectionError, ContentTypeError)
 
-from .exceptions import ExerciseClosedError, InactiveCaseError, InvalidEqPayLoad
+from .exceptions import (ExerciseClosedError, InactiveCaseError,
+                         InvalidEqPayLoad)
 from structlog import get_logger
 
 logger = get_logger('respondent-home')
@@ -53,6 +55,7 @@ def create_error_middleware(overrides):
             return await key_error(request)
         except ClientResponseError:
             return await response_error(request)
+        # TODO fallthrough error here
 
     return middleware_handler
 

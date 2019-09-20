@@ -1,4 +1,4 @@
-{% extends "layout/_template.njk" %}
+{% extends 'layout/_template.njk' %}
 
 {% if page_title %}
     {% set page_title_value = page_title + ' - Cyfrifiad 2021' %}
@@ -7,70 +7,70 @@
 {% endif %}
 
 {% set page = {
-    "title": page_title_value,
-    "theme": "census",
-    "language": {
-        "languages": [
+    'title': page_title_value,
+    'theme': 'census',
+    'language': {
+        'languages': [
             {
-                "url": domain_url_en + "/start/",
-                "ISOCode": "en",
-                "text": "English",
-                "buttonAriaLabel": "Language selector. Current language: English",
-                "chooseLanguage": "Choose language",
-                "allLanguages": "All languages",
-                "current": false
+                'url': domain_url_en + '/start/',
+                'ISOCode': 'en',
+                'text': 'English',
+                'buttonAriaLabel': 'Language selector. Current language: English',
+                'chooseLanguage': 'Choose language',
+                'allLanguages': 'All languages',
+                'current': false
             },
             {
-                "url": domain_url_cy + "/dechrau/",
-                "ISOCode": "cy",
-                "text": "Cymraeg",
-                "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
-                "chooseLanguage": "Dewiswch iaith",
-                "allLanguages": "Pob iaith",
-                "current": true
+                'url': domain_url_cy + '/dechrau/',
+                'ISOCode': 'cy',
+                'text': 'Cymraeg',
+                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
+                'chooseLanguage': 'Dewiswch iaith',
+                'allLanguages': 'Pob iaith',
+                'current': true
             }
         ]
     },
-    "header": {
-        "logoHref": "https://cy.ons.gov.uk/",
-        "language": "cy",
-        "titleLogo": "/img/census-logo-cy.svg",
-        "titleLogoAlt": "Cyfrifiad 2021",
-        "titleLogoHref": domain_url_cy + '/'
+    'header': {
+        'logoHref': 'https://cy.ons.gov.uk/',
+        'language': 'cy',
+        'titleLogo': '/img/census-logo-cy.svg',
+        'titleLogoAlt': 'Cyfrifiad 2021',
+        'titleLogoHref': domain_url_cy + '/'
     },
-    "footer": {
-        "poweredBy": true,
-        "lang": "cy",
-        "rows": [
+    'footer': {
+        'poweredBy': true,
+        'lang': 'cy',
+        'rows': [
             {
-                "itemsList": [
+                'itemsList': [
                     {
-                        "text": "Ynglŷn â'r cyfrifiad",
-                        "url": domain_url_cy + '/ynglyn-ar-cyfrifiad/'
+                        'text': "Ynglŷn â'r cyfrifiad",
+                        'url': domain_url_cy + '/ynglyn-ar-cyfrifiad/'
                     },
                     {
-                        "text": "Help gyda'ch cyfrifiad",
-                        "url": domain_url_cy + '/help/'
+                        'text': "Help gyda'ch cyfrifiad",
+                        'url': domain_url_cy + '/help/'
                     },
                     {
-                        "text": "Cysylltu â ni",
-                        "url": domain_url_cy + '/cysylltu-a-ni/'
+                        'text': 'Cysylltu â ni',
+                        'url': domain_url_cy + '/cysylltu-a-ni/'
                     }
                 ]
             },
             {
-                "itemsList": [
+                'itemsList': [
                     {
-                        "text": 'Cwcis',
-                        "url": domain_url_cy + '/cwcis/'
+                        'text': 'Cwcis',
+                        'url': domain_url_cy + '/cwcis/'
                     },
                     {
-                        "text": 'Hygyrchedd',
-                        "url": domain_url_cy + '/dechrau/hygyrchedd/'
+                        'text': 'Hygyrchedd',
+                        'url': domain_url_cy + '/dechrau/hygyrchedd/'
                     },
                     {
-                        "text": "Preifatrwydd a diogelu data",
-                        "url": domain_url_cy + '/preifatrwydd-a-diogelu-data/'
+                        'text': 'Preifatrwydd a diogelu data',
+                        'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/'
                     }
                 ]
             }
@@ -98,13 +98,13 @@
 {% endblock %}
 
 {% block preHeader %}
-    {% from "components/cookies-banner/_macro.njk" import onsCookiesBanner %}
+    {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            "html": 'Rydym yn defnyddio cwcis i wella eich profiad o cyfrifiad.gov.uk',
-            "primaryButtonText": 'Derbyn cwcis',
-            "secondaryButtonText": 'Gosodiadau cwcis',
-            "secondaryButtonUrl": domain_url_cy + '/cwcis'
+            'html': 'Rydym yn defnyddio cwcis i wella eich profiad o cyfrifiad.gov.uk',
+            'primaryButtonText': 'Derbyn cwcis',
+            'secondaryButtonText': 'Gosodiadau cwcis',
+            'secondaryButtonUrl': domain_url_cy + '/cwcis'
         })
     }}
 {% endblock %}

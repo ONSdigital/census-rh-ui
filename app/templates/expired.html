@@ -1,19 +1,19 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
     {% if case_type == 'HI' %}
         {% set request_code_link = url('RequestCodeIndividualNI:get') %}
     {% else %}
         {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
     {% endif %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
     {% if case_type == 'HI' %}
         {% set request_code_link = url('RequestCodeIndividualCY:get') %}
     {% else %}
         {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
     {% endif %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends 'base-en.html' %}
     {% if case_type == 'HI' %}
         {% set request_code_link = url('RequestCodeIndividualEN:get') %}
     {% else %}
@@ -24,11 +24,11 @@
 {% block main %}
 
 <h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message" data-ga-label="info_type = CODE_USED">
-    {{ _("Your unique access code has expired") }}
+    {{ _('Your unique access code has expired') }}
 </h1>
 
 {% autoescape false %}
-    <p>{{ _("You can %(open)srequest a new code%(close)s if you have not submitted a census yet.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+    <p>{{ _('You can %(open)srequest a new code%(close)s if you have not submitted a census yet.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
 {% endautoescape %}
 
 {% endblock main %}

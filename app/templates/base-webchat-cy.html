@@ -1,4 +1,4 @@
-{% extends "layout/_template.njk" %}
+{% extends 'layout/_template.njk' %}
 
 {% if page_title %}
     {% set page_title_value = page_title + ' - Cyfrifiad 2021' %}
@@ -7,26 +7,26 @@
 {% endif %}
 
 {% set page = {
-    "title": page_title_value,
-    "theme": "census",
-    "header": {
-        "titleLogo": "/img/census-logo-cy.svg",
-        "titleLogoAlt": "Cyfrifiad 2021",
+    'title': page_title_value,
+    'theme': 'census',
+    'header': {
+        'titleLogo': '/img/census-logo-cy.svg',
+        'titleLogoAlt': 'Cyfrifiad 2021',
     },
-    "language": {
-        "languages": [
+    'language': {
+        'languages': [
             {
-                "url": "#",
-                "ISOCode": "cy",
-                "text": "Cymraeg",
-                "buttonAriaLabel": "Dewisydd iaith. Iaith gyfredol: Cymraeg",
-                "chooseLanguage": "Dewiswch iaith",
-                "allLanguages": "Pob iaith",
-                "current": true
+                'url': '#',
+                'ISOCode': 'cy',
+                'text': 'Cymraeg',
+                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
+                'chooseLanguage': 'Dewiswch iaith',
+                'allLanguages': 'Pob iaith',
+                'current': true
             }
         ]
     },
-    "footer": {}
+    'footer': {}
 } %}
 
 {% block head %}

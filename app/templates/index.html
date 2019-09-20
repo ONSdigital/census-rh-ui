@@ -1,69 +1,69 @@
-{% if display_region == "ni" %}
-    {% extends "base-start-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-start-ni.html' %}
     {% set form_action = url('IndexNI:post') %}
     {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
     {% set webchat_link = url('WebChatNI:post') %}
-{% elif display_region == "cy" %}
-    {% extends "base-start-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-start-cy.html' %}
     {% set form_action = url('IndexCY:post') %}
     {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
     {% set webchat_link = url('WebChatCY:post') %}
 {% else %}
-    {% extends "base-start-en.html" %}
+    {% extends 'base-start-en.html' %}
     {% set form_action = url('IndexEN:post') %}
     {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
     {% set webchat_link = url('WebChatEN:post') %}
 {% endif %}
 
-{% from "components/uac/_macro.njk" import onsUACInput %}
-{% from "components/button/_macro.njk" import onsButton %}
-{% from "components/panel/_macro.njk" import onsPanel %}
-{% from "components/lists/_macro.njk" import onsList %}
+{% from 'components/uac/_macro.njk' import onsUACInput %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/lists/_macro.njk' import onsList %}
 
-{% set page = {"title": "Start Survey"} %}
+{% set page = {'title': 'Start Survey'} %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
 {% set form =  {
-    "method": "POST",
-    "attributes": {
-        "action": form_action
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
     }
 } %}
 
 {% set uac_input = onsUACInput({
-        "id": "uac",
-        "name": "uac",
-        "label": {
-            "text": _("Enter the 16 character code printed on the letter"),
-            "description": _("Keep this code safe and only share it with others in your household")
+        'id': 'uac',
+        'name': 'uac',
+        'label': {
+            'text': _('Enter the 16 character code printed on the letter'),
+            'description': _('Keep this code safe and only share it with others in your household')
         },
-        "securityMessage": _("Your personal information is protected by law and will be kept confidential.")
+        'securityMessage': _('Your personal information is protected by law and will be kept confidential.')
     })
 %}
 
 {% block main %}
 
-    <h1 class="u-mt-l">{{_("Start survey")}}</h1>
+    <h1 class="u-mt-l">{{_('Start survey')}}</h1>
 
     {% if messages_dict %}
-        {% include "partials/messages.html" with context %}
+        {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% if 'uac' in field_messages_dict %}
         {% call
             onsPanel({
-                "type": "error"
+                'type': 'error'
             })
         %}
         {{
             onsList({
-                "id": 'link-uac',
-                "classes": 'list--bare list--errors u-mb-s',
-                "itemsList": [
+                'id': 'link-uac',
+                'classes': 'list--bare list--errors u-mb-s',
+                'itemsList': [
                     {
-                        "text": _('Enter a valid code')
+                        'text': _('Enter a valid code')
                     }
                 ]
             })
@@ -75,18 +75,18 @@
     {% endif %}
 
     {{ onsButton({
-        "text": _("Access survey"),
-        "classes": "u-mb-xl",
-        "name": "action[save_continue]"
+        'text': _('Access survey'),
+        'classes': 'u-mb-xl',
+        'name': 'action[save_continue]'
     }) }}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_("Don't have a code?")}}</h2>
+    <h2 class="u-fs-r--b u-mb-no">{{_('Don't have a code?')}}</h2>
     {% autoescape false %}
-        <p>{{ _("You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_("Need help?")}}</h2>
+    <h2 class="u-fs-r--b u-mb-no">{{_('Need help?')}}</h2>
 
-    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">{{_("Web chat")}}</a></p>
+    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">{{_('Web chat')}}</a></p>
 
 {% endblock %}

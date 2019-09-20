@@ -2,7 +2,9 @@ import aiohttp_jinja2
 import re
 import json
 
-from aiohttp.client_exceptions import ClientConnectionError, ClientConnectorError, ClientResponseError, ClientError
+from aiohttp.client_exceptions import (ClientConnectionError,
+                                       ClientConnectorError,
+                                       ClientResponseError, ClientError)
 from aiohttp.web import HTTPFound, RouteTableDef, json_response
 from sdc.crypto.encrypter import encrypt
 from aiohttp_session import get_session
@@ -36,6 +38,7 @@ routes = RouteTableDef()
 @routes.view('/info', use_prefix=False)
 class Info:
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         info = {
             'name': 'respondent-home-ui',
             'version': VERSION,
@@ -124,7 +127,7 @@ class View:
 
         await self.post_surveylaunched(case, adlocation)
 
-        logger.debug('redirecting to eq', client_ip=self._client_ip)
+        logger.debug('redirecting to eq')
         eq_url = app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')
 
@@ -233,6 +236,7 @@ class IndexEN(Start):
         :param request:
         :return:
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         query_string = request.query
         session = await get_session(request)
@@ -265,6 +269,7 @@ class IndexEN(Start):
         :param request:
         :return: address confirmation view
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
 
@@ -326,6 +331,7 @@ class IndexCY(Start):
         :param request:
         :return:
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         query_string = request.query
         session = await get_session(request)
@@ -358,6 +364,7 @@ class IndexCY(Start):
         :param request:
         :return: address confirmation view
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
 
@@ -421,6 +428,7 @@ class IndexNI(Start):
         :param request:
         :return:
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         query_string = request.query
         session = await get_session(request)
@@ -452,6 +460,7 @@ class IndexNI(Start):
         :param request:
         :return: address confirmation view
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
 
@@ -511,6 +520,7 @@ class AddressConfirmationEN(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -532,6 +542,7 @@ class AddressConfirmationEN(Start):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -583,6 +594,7 @@ class AddressConfirmationCY(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -604,6 +616,7 @@ class AddressConfirmationCY(Start):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -656,6 +669,7 @@ class AddressConfirmationNI(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -677,6 +691,7 @@ class AddressConfirmationNI(Start):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -729,6 +744,7 @@ class AddressEditEN(Start):
         """
         Address Edit get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -750,6 +766,7 @@ class AddressEditEN(Start):
         """
         Address Edit flow. Edited address details.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         data = await request.post()
         self._request = request
@@ -802,6 +819,7 @@ class AddressEditCY(Start):
         """
         Address Edit get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -823,6 +841,7 @@ class AddressEditCY(Start):
         """
         Address Edit flow. Edited address details.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         data = await request.post()
         self._request = request
@@ -875,6 +894,7 @@ class AddressEditNI(Start):
         """
         Address Edit get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -896,6 +916,7 @@ class AddressEditNI(Start):
         """
         Address Edit flow. Edited address details.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         data = await request.post()
         self._request = request
@@ -948,6 +969,7 @@ class StartLanguageOptionsEN(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -967,6 +989,7 @@ class StartLanguageOptionsEN(Start):
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -987,7 +1010,7 @@ class StartLanguageOptionsEN(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1002,7 +1025,7 @@ class StartLanguageOptionsEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1014,6 +1037,7 @@ class StartLanguageOptionsCY(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -1033,6 +1057,7 @@ class StartLanguageOptionsCY(Start):
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -1053,7 +1078,7 @@ class StartLanguageOptionsCY(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1068,7 +1093,7 @@ class StartLanguageOptionsCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1080,6 +1105,7 @@ class StartLanguageOptionsNI(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -1099,6 +1125,7 @@ class StartLanguageOptionsNI(Start):
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -1119,7 +1146,7 @@ class StartLanguageOptionsNI(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1134,7 +1161,7 @@ class StartLanguageOptionsNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1146,6 +1173,7 @@ class StartSelectLanguageEN(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -1164,6 +1192,7 @@ class StartSelectLanguageEN(Start):
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -1183,7 +1212,7 @@ class StartSelectLanguageEN(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1198,7 +1227,7 @@ class StartSelectLanguageEN(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1213,6 +1242,7 @@ class StartSelectLanguageCY(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -1231,6 +1261,7 @@ class StartSelectLanguageCY(Start):
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -1250,7 +1281,7 @@ class StartSelectLanguageCY(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1265,7 +1296,7 @@ class StartSelectLanguageCY(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG_CY)
             return attributes
 
@@ -1280,6 +1311,7 @@ class StartSelectLanguageNI(Start):
         """
         Address Confirmation get.
         """
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
 
@@ -1298,6 +1330,7 @@ class StartSelectLanguageNI(Start):
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         await check_permission(request)
         self._request = request
         data = await request.post()
@@ -1317,7 +1350,7 @@ class StartSelectLanguageNI(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error', client_ip=self._client_ip)
+            logger.warn('ni language option error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1332,7 +1365,7 @@ class StartSelectLanguageNI(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error', client_ip=self._client_ip)
+            logger.warn('language selection error')
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
 
@@ -1344,6 +1377,7 @@ class StartSelectLanguageNI(Start):
 class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, _):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         return {}
 
 
@@ -1351,6 +1385,7 @@ class UACTimeout(View):
 class SaveAndExitEN(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         await forget(request)
         return {
@@ -1364,6 +1399,7 @@ class SaveAndExitEN(View):
 class SaveAndExitCY(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         await forget(request)
         return {
@@ -1378,6 +1414,7 @@ class SaveAndExitCY(View):
 class SaveAndExitNI(View):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         await forget(request)
         return {
@@ -1411,7 +1448,7 @@ class WebChat(View):
         timezone_offset = 0
 
         if WebChat.get_now() < datetime(2019, 10, 27):
-            logger.info('before switch to gmt - adjusting time', client_ip='')
+            logger.info('before switch to gmt - adjusting time')
             timezone_offset = 1
 
         if year == 2019 and month == 10 and (day == 12 or day == 13):
@@ -1469,6 +1506,7 @@ class WebChat(View):
 class WebChatWindowEN(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         return {
             'display_region': 'en',
             'domain_url_en': self._domain_url_en,
@@ -1481,6 +1519,7 @@ class WebChatWindowEN(WebChat):
 class WebChatWindowCY(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         return {
             'display_region': 'cy',
             'locale': 'cy',
@@ -1494,6 +1533,7 @@ class WebChatWindowCY(WebChat):
 class WebChatWindowNI(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, _):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         return {
             'display_region': 'ni',
             'domain_url_en': self._domain_url_en,
@@ -1506,9 +1546,9 @@ class WebChatWindowNI(WebChat):
 class WebChatEN(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return {
                 'display_region': 'en',
@@ -1523,7 +1563,7 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
@@ -1534,14 +1574,14 @@ class WebChatEN(WebChat):
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         data = await request.post()
         self._request = request
 
         form_valid = self.validate_form(data, 'en')
 
         if not form_valid:
-            logger.info('form submission error', client_ip=self._client_ip)
+            logger.info('form submission error')
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1564,7 +1604,7 @@ class WebChatEN(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1575,7 +1615,7 @@ class WebChatEN(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
@@ -1589,9 +1629,9 @@ class WebChatEN(WebChat):
 class WebChatCY(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return {
                 'display_region': 'cy',
@@ -1607,7 +1647,7 @@ class WebChatCY(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'cy',
@@ -1619,14 +1659,14 @@ class WebChatCY(WebChat):
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         data = await request.post()
         self._request = request
 
         form_valid = self.validate_form(data, 'cy')
 
         if not form_valid:
-            logger.info('form submission error', client_ip=self._client_ip)
+            logger.info('form submission error')
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1651,7 +1691,7 @@ class WebChatCY(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1662,7 +1702,7 @@ class WebChatCY(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'cy',
@@ -1677,9 +1717,9 @@ class WebChatCY(WebChat):
 class WebChatNI(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return {
                 'display_region': 'ni',
@@ -1694,7 +1734,7 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
@@ -1705,14 +1745,14 @@ class WebChatNI(WebChat):
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
-
+        logger.info(f'entered endpoint {request.method} {request.path}')
         data = await request.post()
         self._request = request
 
         form_valid = self.validate_form(data, 'ni')
 
         if not form_valid:
-            logger.info('form submission error', client_ip=self._client_ip)
+            logger.info('form submission error')
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -1735,7 +1775,7 @@ class WebChatNI(WebChat):
             'webchat_url': self._request.app['WEBCHAT_SVC_URL']
         }
 
-        logger.info('date/time check', client_ip=self._client_ip)
+        logger.info('date/time check')
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   self._request, context)
@@ -1746,7 +1786,7 @@ class WebChatNI(WebChat):
                 logger.error('failed to send webchat closed',
                              client_ip=self._client_ip)
 
-            logger.info('webchat closed', client_ip=self._client_ip)
+            logger.info('webchat closed')
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
@@ -1759,7 +1799,7 @@ class WebChatNI(WebChat):
 class RequestCodeCommon(View):
     def request_code_check_session(self, fulfillment_type, display_region):
         if self._request.cookies.get('RH_SESSION') is None:
-            logger.warn('session timed out', client_ip=self._client_ip)
+            logger.warn('session timed out')
             raise HTTPFound(
                 self._request.app.router['RequestCodeTimeout' +
                                          fulfillment_type + display_region +
@@ -1823,10 +1863,12 @@ class RequestCodeCommon(View):
 
     async def get_postcode(self, request, data, fulfillment_type,
                            display_region, locale):
+        logger.info(f'entered endpoint {request.method} {request.path}')
+
         if RequestCodeCommon.postcode_validation_pattern.fullmatch(
                 data['request-postcode'].upper()):
 
-            logger.info('valid postcode', client_ip=self._client_ip)
+            logger.info('valid postcode')
 
             attributes = {}
             attributes['postcode'] = data['request-postcode'].upper()
@@ -1855,6 +1897,7 @@ class RequestCodeCommon(View):
                                          ':get'].url_for())
 
     async def post_enter_mobile(self, attributes, data, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
 
         if RequestCodeCommon.mobile_validation_pattern.fullmatch(
                 data['request-mobile-number']):
@@ -1870,8 +1913,7 @@ class RequestCodeCommon(View):
                                          ':get'].url_for())
 
         else:
-            logger.warn('attempt to use an invalid mobile phone number',
-                        client_ip=self._client_ip)
+            logger.warn('attempt to use an invalid mobile phone number')
             if attributes['display_region'] == 'cy':
                 flash(self._request, MOBILE_ENTER_MSG_CY)
             else:
@@ -1937,6 +1979,7 @@ class RequestCodeCommon(View):
 class RequestCodeHouseholdEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'en',
@@ -1950,6 +1993,7 @@ class RequestCodeHouseholdEN(RequestCodeCommon):
 class RequestCodeHouseholdCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'cy',
@@ -1964,6 +2008,7 @@ class RequestCodeHouseholdCY(RequestCodeCommon):
 class RequestCodeHouseholdNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'ni',
@@ -1977,6 +2022,7 @@ class RequestCodeHouseholdNI(RequestCodeCommon):
 class RequestCodeEnterAddressHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'en',
@@ -1987,6 +2033,7 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HH', 'EN',
@@ -1997,6 +2044,7 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
 class RequestCodeEnterAddressHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'cy',
@@ -2008,6 +2056,7 @@ class RequestCodeEnterAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HH', 'CY',
@@ -2018,6 +2067,7 @@ class RequestCodeEnterAddressHHCY(RequestCodeCommon):
 class RequestCodeEnterAddressHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'ni',
@@ -2028,6 +2078,7 @@ class RequestCodeEnterAddressHHNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HH', 'NI',
@@ -2038,6 +2089,7 @@ class RequestCodeEnterAddressHHNI(RequestCodeCommon):
 class RequestCodeSelectAddressHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2047,6 +2099,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         data = await request.post()
 
@@ -2054,7 +2107,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2066,7 +2119,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHEN:get'].url_for())
@@ -2076,6 +2129,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
 class RequestCodeSelectAddressHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2085,6 +2139,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         data = await request.post()
 
@@ -2092,7 +2147,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2104,7 +2159,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHCY:get'].url_for())
@@ -2114,6 +2169,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
 class RequestCodeSelectAddressHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2123,6 +2179,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         data = await request.post()
 
@@ -2130,7 +2187,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2142,7 +2199,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHHNI:get'].url_for())
@@ -2152,12 +2209,14 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
 class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
@@ -2211,12 +2270,14 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
 class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         data = await request.post()
@@ -2270,12 +2331,14 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
 class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
@@ -2328,6 +2391,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
 class RequestCodeNotRequiredHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes[
             'page_title'] = 'Your address is not part of the 2019 rehearsal'
@@ -2338,6 +2402,7 @@ class RequestCodeNotRequiredHHEN(RequestCodeCommon):
 class RequestCodeNotRequiredHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes[
             'page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
@@ -2348,6 +2413,7 @@ class RequestCodeNotRequiredHHCY(RequestCodeCommon):
 class RequestCodeNotRequiredHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes[
             'page_title'] = 'Your address is not part of the 2019 rehearsal'
@@ -2358,12 +2424,14 @@ class RequestCodeNotRequiredHHNI(RequestCodeCommon):
 class RequestCodeEnterMobileHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
@@ -2375,12 +2443,14 @@ class RequestCodeEnterMobileHHEN(RequestCodeCommon):
 class RequestCodeEnterMobileHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         data = await request.post()
@@ -2392,12 +2462,14 @@ class RequestCodeEnterMobileHHCY(RequestCodeCommon):
 class RequestCodeEnterMobileHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
@@ -2409,19 +2481,21 @@ class RequestCodeEnterMobileHHNI(RequestCodeCommon):
 class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2458,7 +2532,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2467,12 +2541,14 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         data = await request.post()
@@ -2480,7 +2556,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2517,7 +2593,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -2526,12 +2602,14 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
@@ -2539,7 +2617,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2576,7 +2654,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -2585,6 +2663,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 class RequestCodeCodeSentHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'EN')
         attributes['page_title'] = 'We have sent an access code'
         return attributes
@@ -2594,6 +2673,7 @@ class RequestCodeCodeSentHHEN(RequestCodeCommon):
 class RequestCodeCodeSentHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'CY')
         attributes['page_title'] = 'Rydym ni wedi anfon cod mynediad'
         return attributes
@@ -2603,6 +2683,7 @@ class RequestCodeCodeSentHHCY(RequestCodeCommon):
 class RequestCodeCodeSentHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HH', 'NI')
         attributes['page_title'] = 'We have sent an access code'
         return attributes
@@ -2612,6 +2693,7 @@ class RequestCodeCodeSentHHNI(RequestCodeCommon):
 class RequestCodeTimeoutHHEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HH',
@@ -2626,6 +2708,7 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
 class RequestCodeTimeoutHHCY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type':
@@ -2647,6 +2730,7 @@ class RequestCodeTimeoutHHCY(RequestCodeCommon):
 class RequestCodeTimeoutHHNI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HH',
@@ -2661,6 +2745,7 @@ class RequestCodeTimeoutHHNI(RequestCodeCommon):
 class RequestCodeIndividualEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'en',
@@ -2674,6 +2759,7 @@ class RequestCodeIndividualEN(RequestCodeCommon):
 class RequestCodeIndividualCY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'cy',
@@ -2688,6 +2774,7 @@ class RequestCodeIndividualCY(RequestCodeCommon):
 class RequestCodeIndividualNI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'ni',
@@ -2701,6 +2788,7 @@ class RequestCodeIndividualNI(RequestCodeCommon):
 class RequestCodeEnterAddressHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HI',
@@ -2712,6 +2800,7 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'EN',
@@ -2722,6 +2811,7 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
 class RequestCodeEnterAddressHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HI',
@@ -2734,6 +2824,7 @@ class RequestCodeEnterAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'CY',
@@ -2744,6 +2835,7 @@ class RequestCodeEnterAddressHICY(RequestCodeCommon):
 class RequestCodeEnterAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HI',
@@ -2755,6 +2847,7 @@ class RequestCodeEnterAddressHINI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         data = await self._request.post()
         await RequestCodeCommon.get_postcode(self, request, data, 'HI', 'NI',
@@ -2765,6 +2858,7 @@ class RequestCodeEnterAddressHINI(RequestCodeCommon):
 class RequestCodeSelectAddressHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2774,6 +2868,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         data = await request.post()
 
@@ -2781,7 +2876,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2793,7 +2888,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHIEN:get'].url_for())
@@ -2803,6 +2898,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
 class RequestCodeSelectAddressHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2812,6 +2908,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         data = await request.post()
 
@@ -2819,7 +2916,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2831,7 +2928,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHICY:get'].url_for())
@@ -2841,6 +2938,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
 class RequestCodeSelectAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         address_content = await self.get_postcode_return(
             attributes['postcode'], attributes['fulfillment_type'],
@@ -2850,6 +2948,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
 
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         data = await request.post()
 
@@ -2857,7 +2956,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'].replace(
                 "'", '"'))
         except KeyError:
-            logger.warn('no address selected', client_ip=self._client_ip)
+            logger.warn('no address selected')
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 attributes['postcode'], attributes['fulfillment_type'],
@@ -2869,7 +2968,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         session['attributes']['address'] = form_return['address']
         session['attributes']['uprn'] = form_return['uprn']
         session.changed()
-        logger.info('session updated', client_ip=self._client_ip)
+        logger.info('session updated')
 
         raise HTTPFound(self._request.app.
                         router['RequestCodeConfirmAddressHINI:get'].url_for())
@@ -2879,12 +2978,14 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
 class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
@@ -2937,12 +3038,14 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
 class RequestCodeConfirmAddressHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
         data = await request.post()
@@ -2995,12 +3098,14 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 class RequestCodeConfirmAddressHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'Is this address correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'Is this address correct?'
         data = await request.post()
@@ -3053,6 +3158,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
 class RequestCodeNotRequiredHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes[
             'page_title'] = 'Your address is not part of the 2019 rehearsal'
@@ -3063,6 +3169,7 @@ class RequestCodeNotRequiredHIEN(RequestCodeCommon):
 class RequestCodeNotRequiredHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes[
             'page_title'] = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
@@ -3073,6 +3180,7 @@ class RequestCodeNotRequiredHICY(RequestCodeCommon):
 class RequestCodeNotRequiredHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-not-required.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes[
             'page_title'] = 'Your address is not part of the 2019 rehearsal'
@@ -3083,12 +3191,14 @@ class RequestCodeNotRequiredHINI(RequestCodeCommon):
 class RequestCodeEnterMobileHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
@@ -3100,12 +3210,14 @@ class RequestCodeEnterMobileHIEN(RequestCodeCommon):
 class RequestCodeEnterMobileHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = 'Beth yw eich rhif ffôn symudol?'
         data = await request.post()
@@ -3117,12 +3229,14 @@ class RequestCodeEnterMobileHICY(RequestCodeCommon):
 class RequestCodeEnterMobileHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'What is your mobile phone number?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'What is your mobile phone number?'
         data = await request.post()
@@ -3134,19 +3248,21 @@ class RequestCodeEnterMobileHINI(RequestCodeCommon):
 class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3184,7 +3300,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3193,19 +3309,21 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 class RequestCodeConfirmMobileHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = "Ydy'r rhif ffôn symudol hwn yn gywir?"
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -3243,7 +3361,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
 
@@ -3252,19 +3370,21 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 class RequestCodeConfirmMobileHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         return attributes
 
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def post(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'Is this mobile phone number correct?'
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3302,7 +3422,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error', client_ip=self._client_ip)
+            logger.warn('mobile confirmation error')
             flash(request, MOBILE_CHECK_MSG)
             return attributes
 
@@ -3311,6 +3431,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
 class RequestCodeCodeSentHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'EN')
         attributes['page_title'] = 'We have sent an access code'
         return attributes
@@ -3320,6 +3441,7 @@ class RequestCodeCodeSentHIEN(RequestCodeCommon):
 class RequestCodeCodeSentHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'CY')
         attributes['page_title'] = 'Rydym ni wedi anfon cod mynediad'
         return attributes
@@ -3329,6 +3451,7 @@ class RequestCodeCodeSentHICY(RequestCodeCommon):
 class RequestCodeCodeSentHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         attributes = await self.get_check_attributes(request, 'HI', 'NI')
         attributes['page_title'] = 'We have sent an access code'
         return attributes
@@ -3338,6 +3461,7 @@ class RequestCodeCodeSentHINI(RequestCodeCommon):
 class RequestCodeTimeoutHIEN(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HI',
@@ -3352,6 +3476,7 @@ class RequestCodeTimeoutHIEN(RequestCodeCommon):
 class RequestCodeTimeoutHICY(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type':
@@ -3373,6 +3498,7 @@ class RequestCodeTimeoutHICY(RequestCodeCommon):
 class RequestCodeTimeoutHINI(RequestCodeCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'fulfillment_type': 'HI',
@@ -3387,6 +3513,7 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
 class AccessibilityEN(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'en',
@@ -3400,6 +3527,7 @@ class AccessibilityEN(RequestCodeCommon):
 class AccessibilityCY(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'cy',
@@ -3414,6 +3542,7 @@ class AccessibilityCY(RequestCodeCommon):
 class AccessibilityNI(RequestCodeCommon):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
+        logger.info(f'entered endpoint {request.method} {request.path}')
         self._request = request
         return {
             'display_region': 'ni',
