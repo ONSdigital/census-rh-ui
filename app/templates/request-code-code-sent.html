@@ -41,7 +41,7 @@
         })
     }}
 
-    <h2>{{ _('Didn't receive a text?') }}</h2>
+    <h2>{{ _("Didn't receive a text?") }}</h2>
 
     {% autoescape false %}
         <p>{{ _('It can take a few minutes for the text to arrive. If it doesn't arrive, you can %(open)srequest a new code%(close)s.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
