@@ -80,7 +80,7 @@
         'name': 'action[save_continue]'
     }) }}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_('Don't have a code?')}}</h2>
+    <h2 class="u-fs-r--b u-mb-no">{{_("Don't have a code?")}}</h2>
     {% autoescape false %}
         <p>{{ _('You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
