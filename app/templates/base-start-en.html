@@ -103,10 +103,12 @@
 
 {% block preHeader %}
 
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PV39S5K&gtm_auth={{ gtm_auth }}&gtm_preview={{ gtm_preview }}&gtm_cookies_win={{ gtm_cookies_win }}"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    {% if gtm_auth and gtm_preview and gtm_cookies_win %}
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PV39S5K&gtm_auth={{ gtm_auth }}&gtm_preview={{ gtm_preview }}&gtm_cookies_win={{ gtm_cookies_win }}"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    {% endif %}
 
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
