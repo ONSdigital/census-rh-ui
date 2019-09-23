@@ -65,7 +65,7 @@ def create_app(config_name=None) -> Application:
     # Create basic auth for services
     [
         app_config.__setitem__(key, BasicAuth(*app_config[key]))
-        for key in app_config if key.endswith('_AUTH') and not key == "GTM_AUTH"]
+        for key in app_config if key.endswith('_AUTH') and not key == "GTM_AUTH"
     ]
 
     app = Application(
