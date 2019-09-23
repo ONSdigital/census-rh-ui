@@ -1,32 +1,32 @@
-{% if display_region == "cy" %}
-    {% extends "base-webchat-cy.html" %}
+{% if display_region == 'cy' %}
+    {% extends 'base-webchat-cy.html' %}
     {% set form_action = url('WebChatCY:post') %}
     {% set help_url = domain_url_cy + '/help/' %}
-{% elif display_region == "ni" %}
-    {% extends "base-webchat-ni.html" %}
+{% elif display_region == 'ni' %}
+    {% extends 'base-webchat-ni.html' %}
     {% set form_action = url('WebChatNI:post') %}
-    {% set help_url = domain_url_en + '/help/' %}
+    {% set help_url = domain_url_en + '/ni/help/' %}
 {% else %}
-    {% extends "base-webchat-en.html" %}
+    {% extends 'base-webchat-en.html' %}
     {% set form_action = url('WebChatEN:post') %}
     {% set help_url = domain_url_en + '/help/' %}
 {% endif %}
 
-{% from "components/input/_macro.njk" import onsInput %}
-{% from "components/button/_macro.njk" import onsButton %}
-{% from "components/select/_macro.njk" import onsSelect %}
-{% from "components/radios/_macro.njk" import onsRadios %}
-{% from "components/textarea/_macro.njk" import onsTextarea %}
-{% from "components/lists/_macro.njk" import onsList %}
-{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/select/_macro.njk' import onsSelect %}
+{% from 'components/radios/_macro.njk' import onsRadios %}
+{% from 'components/textarea/_macro.njk' import onsTextarea %}
+{% from 'components/lists/_macro.njk' import onsList %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
 {% set form =  {
-    "method": "POST",
-    "attributes": {
-        "action": form_action
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
     }
 } %}
 
@@ -34,54 +34,54 @@
 
     {% if webchat_status == 'closed' %}
 
-        <h2 class="u-mt-m u-mb-no">{{_("Web chat")}}</h2>
+        <h2 class="u-mt-m u-mb-no">{{_('Web chat')}}</h2>
         {% autoescape false %}
-            <p>{{ _("Contact Centre is closed. Please contact during the working hours or %(open)sGet Help Online%(close)s.", open='<a href="%s">' %  help_url, close='</a>')|safe }}</p>
+            <p>{{ _('Contact Centre is closed. Please contact during the working hours or %(open)sGet Help Online%(close)s.', open='<a href="%s">' %  help_url, close='</a>')|safe }}</p>
         {% endautoescape %}
-        <h3 class="u-mt-m u-mb-no">{{_("Opening times")}}</h3>
+        <h3 class="u-mt-m u-mb-no">{{_('Opening times')}}</h3>
         <p>
-            {{_("Monday to Friday: 8am to 7pm")}}<br/>
-            {{_("Saturday: 8am to 1pm")}}<br/>
-            {{_("Sunday / Bank Holidays: Closed")}}<br>
-            {{_("Census weekend: 8am to 4pm")}}
+            {{_('Monday to Friday: 8am to 7pm')}}<br/>
+            {{_('Saturday: 8am to 1pm')}}<br/>
+            {{_('Sunday / Bank Holidays: Closed')}}<br>
+            {{_('Census weekend: 8am to 4pm')}}
         </p>
 
     {% else %}
 
         <noscript>
-            <h1>{{_("Javascript disabled")}}</h1>
+            <h1>{{_('Javascript disabled')}}</h1>
 
-            <p>{{_("Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.")}}</p>
+            <p>{{_('Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.')}}</p>
 
-            <p><a href="{{ help_url }}">{{_("Get Help")}}</a></p>
+            <p><a href="{{ help_url }}">{{_('Get Help')}}</a></p>
         </noscript>
 
         {% if messages_dict %}
-            {% include "partials/messages.html" with context %}
+            {% include 'partials/messages.html' with context %}
         {% endif %}
 
         {% set country_options =
             [
                 {
-                    "id": "england",
-                    "label": {
-                        "text": _("England")
+                    'id': 'england',
+                    'label': {
+                        'text': _('England')
                     },
-                    "value": "england"
+                    'value': 'england'
                 },
                 {
-                    "id": "wales",
-                    "label": {
-                        "text": _("Wales")
+                    'id': 'wales',
+                    'label': {
+                        'text': _('Wales')
                     },
-                    "value": "wales"
+                    'value': 'wales'
                 },
                 {
-                    "id": "northern_ireland",
-                    "label": {
-                        "text": _("Northern Ireland")
+                    'id': 'northern_ireland',
+                    'label': {
+                        'text': _('Northern Ireland')
                     },
-                    "value": "northern_ireland"
+                    'value': 'northern_ireland'
                 }
             ]
         %}
@@ -89,87 +89,87 @@
         {% set query_options =
             [
                 {
-                    "id": "form",
-                    "label": {
-                        "text": _("I have a question about my census form")
+                    'id': 'form',
+                    'label': {
+                        'text': _('I have a question about my census form')
                     },
-                    "value": "form"
+                    'value': 'form'
                 },
                 {
-                    "id": "technical",
-                    "label": {
-                        "text": _("I am having technical difficulties")
+                    'id': 'technical',
+                    'label': {
+                        'text': _('I am having technical difficulties')
                     },
-                    "value": "technical"
+                    'value': 'technical'
                 },
                 {
-                    "id": "complaint",
-                    "label": {
-                        "text": _("I have a complaint")
+                    'id': 'complaint',
+                    'label': {
+                        'text': _('I have a complaint')
                     },
-                    "value": "complaint"
+                    'value': 'complaint'
                 },
                 {
-                    "id": "address",
-                    "label": {
-                        "text": _("I have a question about my address")
+                    'id': 'address',
+                    'label': {
+                        'text': _('I have a question about my address')
                     },
-                    "value": "address"
+                    'value': 'address'
                 },
                 {
-                    "id": "send-something",
-                    "label": {
-                        "text": _("I need something sent to me")
+                    'id': 'send-something',
+                    'label': {
+                        'text': _('I need something sent to me')
                     },
-                    "value": "send-something"
+                    'value': 'send-something'
                 },
                 {
-                    "id": "face-to-face",
-                    "label": {
-                        "text": _("I need to speak to an adviser face-to-face")
+                    'id': 'face-to-face',
+                    'label': {
+                        'text': _('I need to speak to an adviser face-to-face')
                     },
-                    "value": "face-to-face"
+                    'value': 'face-to-face'
                 },
                 {
-                    "id": "help",
-                    "label": {
-                        "text": _("I need some help")
+                    'id': 'help',
+                    'label': {
+                        'text': _('I need some help')
                     },
-                    "value": "help"
+                    'value': 'help'
                 }
             ]
         %}
 
         <div id="web-chat-form-display" class="web-chat-form__body" style="display:none;">
-            <h1>{{_("Web chat")}}</h1>
+            <h1>{{_('Web chat')}}</h1>
 
-            <p>{{_("Our advisers can help you with your census survey.")}}</p>
+            <p>{{_('Our advisers can help you with your census survey.')}}</p>
 
             {% if 'screen_name' in field_messages_dict %}
                 {{
                     onsInput({
-                        "id": "screen_name",
-                        "name": "screen_name",
-                        "label": {
-                            "text": _("Enter your name")
+                        'id': 'screen_name',
+                        'name': 'screen_name',
+                        'label': {
+                            'text': _('Enter your name')
                         },
-                        "value": form_value_screen_name,
-                        "classes": "input--w-20@m js-name",
-                        "error": {
-                            "text": _("Enter your name")
+                        'value': form_value_screen_name,
+                        'classes': 'input--w-20@m js-name',
+                        'error': {
+                            'text': _('Enter your name')
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsInput({
-                        "id": "screen_name",
-                        "name": "screen_name",
-                        "label": {
-                            "text": _("Enter your name")
+                        'id': 'screen_name',
+                        'name': 'screen_name',
+                        'label': {
+                            'text': _('Enter your name')
                         },
-                        "value": form_value_screen_name,
-                        "classes": "input--w-20@m js-name"
+                        'value': form_value_screen_name,
+                        'classes': 'input--w-20@m js-name'
                     })
                 }}
             {% endif %}
@@ -177,24 +177,24 @@
             {% if 'country' in field_messages_dict %}
                 {{
                     onsRadios({
-                        "legend": _("Select your country"),
-                        "name": "country",
-                        "dontVisuallyHideLegend": true,
-                        "value": form_value_country,
-                        "radios": country_options,
-                        "error": {
-                            "text": _("Select an option")
+                        'legend': _('Select your country'),
+                        'name': 'country',
+                        'dontVisuallyHideLegend': true,
+                        'value': form_value_country,
+                        'radios': country_options,
+                        'error': {
+                            'text': _('Select an option')
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsRadios({
-                        "legend": _("Select your country"),
-                        "name": "country",
-                        "dontVisuallyHideLegend": true,
-                        "value": form_value_country,
-                        "radios": country_options
+                        'legend': _('Select your country'),
+                        'name': 'country',
+                        'dontVisuallyHideLegend': true,
+                        'value': form_value_country,
+                        'radios': country_options
                     })
                 }}
             {% endif %}
@@ -202,32 +202,32 @@
             {% if 'query' in field_messages_dict %}
                 {{
                     onsRadios({
-                        "legend": _("What type of query do you have"),
-                        "name": "query",
-                        "dontVisuallyHideLegend": true,
-                        "value": form_value_query,
-                        "radios": query_options,
-                        "error": {
-                            "text": _("Select an option")
+                        'legend': _('What type of query do you have'),
+                        'name': 'query',
+                        'dontVisuallyHideLegend': true,
+                        'value': form_value_query,
+                        'radios': query_options,
+                        'error': {
+                            'text': _('Select an option')
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsRadios({
-                        "legend": _("What type of query do you have"),
-                        "name": "query",
-                        "dontVisuallyHideLegend": true,
-                        "value": form_value_query,
-                        "radios": query_options
+                        'legend': _('What type of query do you have'),
+                        'name': 'query',
+                        'dontVisuallyHideLegend': true,
+                        'value': form_value_query,
+                        'radios': query_options
                     })
                 }}
             {% endif %}
 
             {{
                 onsButton({
-                    "text": _("Start chat"),
-                    "classes": "btn-group__btn u-mb-m u-mt-m"
+                    'text': _('Start chat'),
+                    'classes': 'btn-group__btn u-mb-m u-mt-m'
                 })
 
             }}

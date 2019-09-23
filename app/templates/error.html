@@ -1,25 +1,25 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
-    {% set contact_us_link = '#' %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
-    {% set contact_us_link = '#' %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
+    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
 {% else %}
-    {% extends "base-en.html" %}
-    {% set contact_us_link = '#' %}
+    {% extends 'base-en.html' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
 {% endif %}
 
 {% block main %}
 
     <h1 data-ga="error" data-ga-category="error" data-ga-action="error-message-shown" data-ga-label="system-error">
-        {{ _("Sorry, something went wrong") }}
+        {{ _('Sorry, something went wrong') }}
     </h1>
 
-    <p>{{ _("We are experiencing some technical problems.") }}</p>
+    <p>{{ _('We are experiencing some technical problems.') }}</p>
 
-	{% autoescape false %}
-		<p>{{ _("Please try again later, or %(open)scontact us%(close)s if the problem continues.", open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
-	{% endautoescape %}
-
+    {% autoescape false %}
+        <p>{{ _('Please try again later, or %(open)scontact us%(close)s if the problem continues.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
 
 {% endblock main %}
+

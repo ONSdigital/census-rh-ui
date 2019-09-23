@@ -1,19 +1,19 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeEnterAddressHINI:post') %}
     {% else %}
         {% set form_action = url('RequestCodeEnterAddressHHNI:post') %}
     {% endif %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeEnterAddressHICY:post') %}
     {% else %}
         {% set form_action = url('RequestCodeEnterAddressHHCY:post') %}
     {% endif %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends 'base-en.html' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeEnterAddressHIEN:post') %}
     {% else %}
@@ -24,55 +24,55 @@
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
-{% from "components/question/_macro.njk" import onsQuestion %}
-{% from "components/button/_macro.njk" import onsButton %}
-{% from "components/input/_macro.njk" import onsInput %}
+{% from 'components/question/_macro.njk' import onsQuestion %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/input/_macro.njk' import onsInput %}
 
 {% set form =  {
-    "method": "POST",
-    "attributes": {
-        "action": form_action
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
     }
 } %}
 
 {% block main %}
 
     {% if messages_dict %}
-        {% include "partials/messages.html" with context %}
+        {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% call onsQuestion({
-        "title": _("What is your postcode?"),
-        "description": _("<p>To text you a new code we need to know the address for which you are answering.</p>")
+        'title': _('What is your postcode?'),
+        'description': _('<p>To text you a new code we need to know the address for which you are answering.</p>')
     }) %}
 
         {% if 'postcode' in field_messages_dict %}
             {{
                 onsInput({
-                    "id": "postcode",
-                    "type": "postcode",
-                    "autocomplete": "postcode",
-                    "classes": "input--w-8",
-                    "label": {
-                        "text": _("UK postcode")
+                    'id': 'postcode',
+                    'type': 'postcode',
+                    'autocomplete': 'postcode',
+                    'classes': 'input--w-8',
+                    'label': {
+                        'text': _('UK postcode')
                     },
-                    "name": "request-postcode",
-                    "error": {
-                        "text": _("Enter a valid UK postcode")
+                    'name': 'request-postcode',
+                    'error': {
+                        'text': _('Enter a valid UK postcode')
                     },
                 })
             }}
         {% else %}
             {{
                 onsInput({
-                    "id": "postcode",
-                    "type": "postcode",
-                    "autocomplete": "postcode",
-                    "classes": "input--w-8",
-                    "label": {
-                        "text": _("UK postcode")
+                    'id': 'postcode',
+                    'type': 'postcode',
+                    'autocomplete': 'postcode',
+                    'classes': 'input--w-8',
+                    'label': {
+                        'text': _('UK postcode')
                     },
-                    "name": "request-postcode"
+                    'name': 'request-postcode'
                 })
             }}
         {% endif %}
@@ -81,8 +81,8 @@
 
     {{
         onsButton({
-            "text": _("Continue"),
-            "classes": "u-mt-l"
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
         })
     }}
 

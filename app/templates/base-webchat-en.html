@@ -1,4 +1,4 @@
-{% extends "layout/_template.njk" %}
+{% extends 'layout/_template.njk' %}
 
 {% if page_title %}
     {% set page_title_value = page_title + ' - Census 2021' %}
@@ -7,13 +7,13 @@
 {% endif %}
 
 {% set page = {
-    "title": page_title_value,
-    "theme": "census",
-    "header": {
-        "titleLogo": "/img/census-logo-en.svg",
-        "titleLogoAlt": "Census 2021",
+    'title': page_title_value,
+    'theme': 'census',
+    'header': {
+        'titleLogo': '/img/census-logo-en.svg',
+        'titleLogoAlt': 'Census 2021',
     },
-    "footer": {}
+    'footer': {}
 } %}
 
 {% block head %}

@@ -1,5 +1,6 @@
-{% if display_region == "ni" %}
-    {% extends "base-ni.html" %}
+{% if display_region == 'ni' %}
+    {% extends 'base-ni.html' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHINI:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
@@ -7,8 +8,9 @@
         {% set form_action = url('RequestCodeSelectAddressHHNI:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHHNI:post') %}
     {% endif %}
-{% elif display_region == "cy" %}
-    {% extends "base-cy.html" %}
+{% elif display_region == 'cy' %}
+    {% extends 'base-cy.html' %}
+    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHICY:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
@@ -17,7 +19,8 @@
         {% set request_code_link = url('RequestCodeEnterAddressHHCY:post') %}
     {% endif %}
 {% else %}
-    {% extends "base-en.html" %}
+    {% extends 'base-en.html' %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
     {% if fulfillment_type == 'HI' %}
         {% set form_action = url('RequestCodeSelectAddressHIEN:post') %}
         {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
@@ -30,51 +33,51 @@
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
-{% from "components/question/_macro.njk" import onsQuestion %}
-{% from "components/button/_macro.njk" import onsButton %}
-{% from "components/radios/_macro.njk" import onsRadios %}
+{% from 'components/question/_macro.njk' import onsQuestion %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/radios/_macro.njk' import onsRadios %}
 
 {% set form =  {
-    "method": "POST",
-    "attributes": {
-        "action": form_action
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
     }
 } %}
 
-{% set question_description = _("<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>", total=total_matches|string, pcode=postcode) %}
+{% set question_description = _('<p class="u-fs-r--b">%(total)s addresses found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) %}
 
 {% block main %}
 
     {% if total_matches == 0: %}
 
-        <h1>{{ _("We cannot find your address") }}</h1>
+        <h1>{{ _('We cannot find your address') }}</h1>
 
         {% autoescape false %}
-            <p>{{ _("If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.", start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="#">', end_link='</a>')|safe }}</p>
+            <p>{{ _('If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.', start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="%s">' % contact_us_link, end_link='</a>')|safe }}</p>
         {% endautoescape %}
 
     {% else: %}
 
         {% call onsQuestion({
-            "title": _("Select your address"),
-            "description": question_description
+            'title': _('Select your address'),
+            'description': question_description
         }) %}
 
             {% if 'address-select' in field_messages_dict %}
                 {{
                     onsRadios({
-                        "name": "request-address-select",
-                        "radios": addresses,
-                        "error": {
-                            "text": _("Select an address")
+                        'name': 'request-address-select',
+                        'radios': addresses,
+                        'error': {
+                            'text': _('Select an address')
                         }
                     })
                 }}
             {% else %}
                 {{
                     onsRadios({
-                        "name": "request-address-select",
-                        "radios": addresses
+                        'name': 'request-address-select',
+                        'radios': addresses
                     })
                 }}
             {% endif %}
@@ -83,8 +86,8 @@
 
         {{
             onsButton({
-                "text": _("Continue"),
-                "classes": "u-mt-l"
+                'text': _('Continue'),
+                'classes': 'u-mt-l'
             })
         }}
 

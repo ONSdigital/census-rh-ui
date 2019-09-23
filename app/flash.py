@@ -4,8 +4,7 @@ from functools import partial
 from aiohttp import web
 from aiohttp_session import get_session
 
-
-SESSION_KEY = REQUEST_KEY = "flash"
+SESSION_KEY = REQUEST_KEY = 'flash'
 
 
 def flash(request, message):
@@ -22,7 +21,8 @@ def pop_flash(request):
 async def flash_middleware(request, handler):
     session = await get_session(request)
     flash_incoming = session.get(SESSION_KEY, [])
-    request[REQUEST_KEY] = deepcopy(flash_incoming)  # copy flash for modification
+    request[REQUEST_KEY] = deepcopy(
+        flash_incoming)  # copy flash for modification
     try:
         response = await handler(request)
     finally:
