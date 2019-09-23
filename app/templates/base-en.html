@@ -56,24 +56,9 @@
 {% block head %}
 
     <!-- Google Analytics -->
-
     {% if gtm_auth and gtm_preview and gtm_cookies_win %}
-
-        <!-- Google Tag Manager -->
-        <script nonce="{{ request.csp_nonce }}">
-            var a = /^(.*)?\s*'usage':true\s*[^;]+(.*)?$/;
-            if (document.cookie.match(a)) {
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth={{ gtm_auth }}&gtm_preview={{ gtm_preview }}&gtm_cookies_win={{ gtm_cookies_win }}';f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','GTM-PR9MMKG');
-            }
-        </script>
-        <!-- End Google Tag Manager -->
-
+        {% include 'partials/gtm.html' with context %}
     {% endif %}
-
     <!-- End Google Analytics -->
 
 {% endblock %}
@@ -81,10 +66,7 @@
 {% block bodyStart %}
 
     {% if gtm_auth and gtm_preview and gtm_cookies_win %}
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PR9MMKG&gtm_auth={{ gtm_auth }}&gtm_preview={{ gtm_preview }}&gtm_cookies_win={{ gtm_cookies_win }}"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
+        {% include 'partials/gtm-no-script.html' with context %}
     {% endif %}
 
 {% endblock %}
