@@ -1,2 +1,4 @@
 async def ga_ua_id_processor(request):
-    return {'analytics_ua_id': request.app['ANALYTICS_UA_ID']}
+    return {'gtm_auth': request.app['GTM_AUTH'],
+            'gtm_preview': request.app['GTM_PREVIEW'],
+            'gtm_cookies_win': request.app['GTM_COOKIES_WIN']}
