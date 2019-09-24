@@ -2725,7 +2725,7 @@ class RequestCodeTimeoutHHCY(RequestCodeCommon):
             'domain_url_en': self._domain_url_en,
             'domain_url_cy': self._domain_url_cy,
             'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch',
-        } # yapf: disable
+        }  # yapf: disable
 
 
 @routes.view('/ni/request-access-code/timeout')
@@ -3484,7 +3484,7 @@ class RequestCodeTimeoutHICY(RequestCodeCommon):
             'domain_url_en': self._domain_url_en,
             'domain_url_cy': self._domain_url_cy,
             'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch',
-        } # yapf: disable
+        }  # yapf: disable
 
 
 @routes.view('/ni/request-individual-code/timeout')
