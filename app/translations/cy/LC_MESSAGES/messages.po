@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-18 16:48+0100\n"
+"POT-Creation-Date: 2019-09-24 13:35+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -407,7 +407,9 @@ msgstr "Sut y gwnaethom brofi'r holiadur hwn"
 
 #: app/templates/accessibility.html:119
 msgid "Over the last few years we have tested the full questionnaire, including:"
-msgstr "Dros y blynyddoedd diwethaf, rydym wedi profi'r holiadur llawn, gan gynnwys:"
+msgstr ""
+"Dros y blynyddoedd diwethaf, rydym wedi profi'r holiadur llawn, gan "
+"gynnwys:"
 
 #: app/templates/accessibility.html:123
 #, python-format
@@ -415,8 +417,8 @@ msgid ""
 "%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying"
 " out a professional, technical audit"
 msgstr ""
-"Cael y %(start_dac_link)sGanolfan Hygyrchedd Digidol (DAC)%(end_link)s i gynnal "
-"archwiliad technegol proffesiynol"
+"Cael y %(start_dac_link)sGanolfan Hygyrchedd Digidol (DAC)%(end_link)s i "
+"gynnal archwiliad technegol proffesiynol"
 
 #: app/templates/accessibility.html:125
 msgid ""
@@ -425,17 +427,21 @@ msgid ""
 "paid versions"
 msgstr ""
 "cynnal profion defnyddwyr gyda'r cyhoedd ar ddyfeisiau gwahanol, mewn "
-"lleoliadau gwahanol, yn eu cartrefi gyda thechnolegau cynorthwyol amrywiol, "
-"gan gynnwys fersiynau am ddim a rhai y mae'n rhaid talu amdanynt"
+"lleoliadau gwahanol, yn eu cartrefi gyda thechnolegau cynorthwyol "
+"amrywiol, gan gynnwys fersiynau am ddim a rhai y mae'n rhaid talu "
+"amdanynt"
 
 #: app/templates/accessibility.html:126
 msgid "testing with charities, such as Scope and RNIB in their labs"
-msgstr "cynnal profion gydag elusennau, megis Scope a Sefydliad Cenedlaethol "
+msgstr ""
+"cynnal profion gydag elusennau, megis Scope a Sefydliad Cenedlaethol "
 "Brenhinol Pobl Ddall (RNIB) yn eu labordai"
 
 #: app/templates/accessibility.html:127
 msgid "using job centres and libraries for pop-up testing"
-msgstr "defnyddio canolfannau gwaith a llyfrgelloedd i gynnal profion ar adegau penodol"
+msgstr ""
+"defnyddio canolfannau gwaith a llyfrgelloedd i gynnal profion ar adegau "
+"penodol"
 
 #: app/templates/accessibility.html:128
 msgid "covering a wide range of ages, additional needs and disabilities"
@@ -445,8 +451,9 @@ msgstr "cwmpasu ystod eang o oedrannau, anghenion ychwanegol ac anableddau"
 msgid ""
 "making sure the offline journey and non-digital products were considered "
 "in the end-to-end journey"
-msgstr "sicrhau bod y daith all-lein a chynhyrchion nad ydynt yn "
-"ddigidol yn cael eu hystyried o'r dechrau i'r diwedd"
+msgstr ""
+"sicrhau bod y daith all-lein a chynhyrchion nad ydynt yn ddigidol yn cael"
+" eu hystyried o'r dechrau i'r diwedd"
 
 #: app/templates/accessibility.html:130
 msgid ""
@@ -474,7 +481,9 @@ msgstr ""
 
 #: app/templates/accessibility.html:141
 msgid "You can read the last full accessibility test report from 28 June 2019."
-msgstr "Gallwch ddarllen yr adroddiad ar y prawf hygyrchedd llawn diwethaf o 28 Mehefin 2019."
+msgstr ""
+"Gallwch ddarllen yr adroddiad ar y prawf hygyrchedd llawn diwethaf o 28 "
+"Mehefin 2019."
 
 #: app/templates/accessibility.html:144
 msgid "DAC Report - June 2019"
@@ -489,8 +498,8 @@ msgid ""
 "We are continuing to work with various charities and local deaf "
 "communities to understand their needs for the census."
 msgstr ""
-"Rydym yn parhau i weithio gydag elusennau amrywiol a chymunedau "
-"byddar lleol i ddeall eu hanghenion ar gyfer y cyfrifiad."
+"Rydym yn parhau i weithio gydag elusennau amrywiol a chymunedau byddar "
+"lleol i ddeall eu hanghenion ar gyfer y cyfrifiad."
 
 #: app/templates/accessibility.html:151
 msgid ""
@@ -500,8 +509,8 @@ msgid ""
 msgstr ""
 "Rydym yn edrych ar ddyluniadau er mwyn gweld a yw hi'n bosibl cael Iaith "
 "Arwyddion Prydain ar bob tudalen. Mae hyn yn heriol oherwydd nid ydym "
-"wedi llwyddo i ddod o hyd i wasanaeth arall sy'n gwneud hyn, ond rydym "
-"yn parhau i ymchwilio."
+"wedi llwyddo i ddod o hyd i wasanaeth arall sy'n gwneud hyn, ond rydym yn"
+" parhau i ymchwilio."
 
 #: app/templates/accessibility.html:153
 msgid "We will act on feedback from the 2019 Rehearsal in October."
@@ -541,7 +550,7 @@ msgstr "Edrychwch eto ar y cyfeiriad a'i gadarnhau"
 #: app/templates/request-code-confirm-mobile.html:92
 #: app/templates/request-code-enter-address.html:84
 #: app/templates/request-code-enter-mobile.html:86
-#: app/templates/request-code-select-address.html:86
+#: app/templates/request-code-select-address.html:89
 msgid "Continue"
 msgstr "Parhau"
 
@@ -801,11 +810,11 @@ msgstr ""
 msgid "Request an individual code"
 msgstr "Gofyn am god unigol"
 
-#: app/templates/request-code-not-required.html:26
+#: app/templates/request-code-not-required.html:29
 msgid "Your address is not part of the 2019 rehearsal"
 msgstr "Nid yw eich cyfeiriad yn rhan o ymarfer 2019"
 
-#: app/templates/request-code-not-required.html:31
+#: app/templates/request-code-not-required.html:34
 #, python-format
 msgid ""
 "Based on the address you have provided you are not required to take part."
@@ -819,18 +828,20 @@ msgstr ""
 "gwybod rhagor %(start_about_census_link)sam ymarfer y "
 "cyfrifiad%(end_link)s."
 
-#: app/templates/request-code-select-address.html:44
+#: app/templates/request-code-select-address.html:47
 #, python-format
-msgid "<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>"
+msgid ""
+"<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
+"%(pcode)s</p>"
 msgstr ""
-"<p class='u-fs-r--b'>Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y "
-"cod post %(pcode)s</p>"
+"<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau "
+"ar gyfer y cod post %(pcode)s</p>"
 
-#: app/templates/request-code-select-address.html:50
+#: app/templates/request-code-select-address.html:53
 msgid "We cannot find your address"
 msgstr "Allwn ni ddim dod o hyd i'ch cyfeiriad"
 
-#: app/templates/request-code-select-address.html:53
+#: app/templates/request-code-select-address.html:56
 #, python-format
 msgid ""
 "If this is incorrect you can %(start_request_code_link)senter the "
@@ -841,11 +852,11 @@ msgstr ""
 "cyfeiriad%(end_link)s eto neu %(start_contact_link)sgysylltu â "
 "ni%(end_link)s."
 
-#: app/templates/request-code-select-address.html:59
+#: app/templates/request-code-select-address.html:62
 msgid "Select your address"
 msgstr "Dewiswch eich cyfeiriad"
 
-#: app/templates/request-code-select-address.html:69
+#: app/templates/request-code-select-address.html:72
 msgid "Select an address"
 msgstr "Dewiswch gyfeiriad"
 
@@ -1005,4 +1016,3 @@ msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
-
