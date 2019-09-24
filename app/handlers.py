@@ -39,16 +39,6 @@ class View:
     def setup_request(self, request):
         request['client_ip'] = request.headers.get('X-Forwarded-For', None)
 
-    def make_domain_url_en(self, request):
-        domain_url_protocol = request.app['DOMAIN_URL_PROTOCOL']
-        domain_url_en = request.app['DOMAIN_URL_EN']
-        return domain_url_protocol + domain_url_en
-
-    def make_domain_url_cy(self, request):
-        domain_url_protocol = request.app['DOMAIN_URL_PROTOCOL']
-        domain_url_cy = request.app['DOMAIN_URL_CY']
-        return domain_url_protocol + domain_url_cy
-
     @staticmethod
     def _handle_response(response):
         try:
@@ -278,8 +268,6 @@ class IndexEN(Start):
             session.pop('adlocation', None)
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Start survey'
         }
 
@@ -306,8 +294,6 @@ class IndexEN(Start):
                     'index.html',
                     request, {
                         'display_region': 'en',
-                        'domain_url_en': self.make_domain_url_en(request),
-                        'domain_url_cy': self.make_domain_url_cy(request),
                         'page_title': 'Start survey'
                     },
                     status=401)
@@ -367,8 +353,6 @@ class IndexCY(Start):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': "Dechrau'r arolwg"
         }
 
@@ -395,8 +379,6 @@ class IndexCY(Start):
                     request, {
                         'display_region': 'cy',
                         'locale': 'cy',
-                        'domain_url_en': self.make_domain_url_en(request),
-                        'domain_url_cy': self.make_domain_url_cy(request),
                         'page_title': "Dechrau'r arolwg"
                     },
                     status=401)
@@ -456,8 +438,6 @@ class IndexNI(Start):
             session.pop('adlocation', None)
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Start survey'
         }
 
@@ -483,8 +463,6 @@ class IndexNI(Start):
                     'index.html',
                     request, {
                         'display_region': 'ni',
-                        'domain_url_en': self.make_domain_url_en(request),
-                        'domain_url_cy': self.make_domain_url_cy(request),
                         'page_title': 'Start survey'
                     },
                     status=401)
@@ -531,8 +509,6 @@ class AddressConfirmationEN(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexEN:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Is this address correct?'
 
         return attributes
@@ -551,8 +527,6 @@ class AddressConfirmationEN(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = 'Is this address correct?'
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
@@ -605,8 +579,6 @@ class AddressConfirmationCY(Start):
             flash(request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(request.app.router['IndexCY:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
 
         return attributes
@@ -624,8 +596,6 @@ class AddressConfirmationCY(Start):
         session = await get_session(request)
         try:
             attributes = session['attributes']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
             case = session['case']
 
@@ -680,8 +650,6 @@ class AddressConfirmationNI(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexNI:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Is this address correct?'
 
         return attributes
@@ -700,8 +668,6 @@ class AddressConfirmationNI(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = 'Is this address correct?'
 
         except KeyError:
@@ -755,8 +721,6 @@ class AddressEditEN(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexEN:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Change your address'
 
         return attributes
@@ -832,8 +796,6 @@ class AddressEditCY(Start):
             flash(request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(request.app.router['IndexCY:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Newid eich cyfeiriad'
 
         return attributes
@@ -909,8 +871,6 @@ class AddressEditNI(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexNI:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Change your address'
 
         return attributes
@@ -986,8 +946,6 @@ class StartLanguageOptionsEN(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexEN:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes[
             'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1004,8 +962,6 @@ class StartLanguageOptionsEN(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1057,8 +1013,6 @@ class StartLanguageOptionsCY(Start):
             flash(request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(request.app.router['IndexCY:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes[
             'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1075,8 +1029,6 @@ class StartLanguageOptionsCY(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1128,8 +1080,6 @@ class StartLanguageOptionsNI(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexNI:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes[
             'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1146,8 +1096,6 @@ class StartLanguageOptionsNI(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
 
@@ -1199,8 +1147,6 @@ class StartSelectLanguageEN(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexEN:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Choose your language'
 
         return attributes
@@ -1216,8 +1162,6 @@ class StartSelectLanguageEN(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = 'Choose your language'
 
         except KeyError:
@@ -1270,8 +1214,6 @@ class StartSelectLanguageCY(Start):
             flash(request, SESSION_TIMEOUT_MSG_CY)
             raise HTTPFound(request.app.router['IndexCY:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Choose your language'
 
         return attributes
@@ -1287,8 +1229,6 @@ class StartSelectLanguageCY(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = 'Choose your language'
 
         except KeyError:
@@ -1341,8 +1281,6 @@ class StartSelectLanguageNI(Start):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['IndexNI:get'].url_for())
 
-        attributes['domain_url_en'] = self.make_domain_url_en(request)
-        attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = 'Choose your language'
 
         return attributes
@@ -1358,8 +1296,6 @@ class StartSelectLanguageNI(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
             attributes['page_title'] = 'Choose your language'
 
         except KeyError:
@@ -1411,9 +1347,7 @@ class SaveAndExitEN(View):
         self.log_entry(request, 'start/save-and-exit')
         await forget(request)
         return {
-            'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request)
+            'display_region': 'en'
         }
 
 
@@ -1426,9 +1360,7 @@ class SaveAndExitCY(View):
         await forget(request)
         return {
             'display_region': 'cy',
-            'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request)
+            'locale': 'cy'
         }
 
 
@@ -1440,9 +1372,7 @@ class SaveAndExitNI(View):
         self.log_entry(request, 'start/save-and-exit')
         await forget(request)
         return {
-            'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request)
+            'display_region': 'ni'
         }
 
 
@@ -1532,8 +1462,6 @@ class WebChatWindowEN(WebChat):
         self.log_entry(request, 'webchat/chat')
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Web Chat'
         }
 
@@ -1547,8 +1475,6 @@ class WebChatWindowCY(WebChat):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Gwe-sgwrs'
         }
 
@@ -1561,8 +1487,6 @@ class WebChatWindowNI(WebChat):
         self.log_entry(request, 'webchat/chat')
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Web Chat'
         }
 
@@ -1577,8 +1501,6 @@ class WebChatEN(WebChat):
         if WebChat.check_open():
             return {
                 'display_region': 'en',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
         else:
@@ -1592,8 +1514,6 @@ class WebChatEN(WebChat):
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1613,8 +1533,6 @@ class WebChatEN(WebChat):
                 'form_value_country': data.get('country'),
                 'form_value_query': data.get('query'),
                 'display_region': 'en',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1624,8 +1542,6 @@ class WebChatEN(WebChat):
             'country': data.get('country'),
             'query': data.get('query'),
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Web Chat',
             'webchat_url': request.app['WEBCHAT_SVC_URL']
         }
@@ -1645,8 +1561,6 @@ class WebChatEN(WebChat):
             return {
                 'webchat_status': 'closed',
                 'display_region': 'en',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1662,8 +1576,6 @@ class WebChatCY(WebChat):
             return {
                 'display_region': 'cy',
                 'locale': 'cy',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Gwe-sgwrs'
             }
         else:
@@ -1678,8 +1590,6 @@ class WebChatCY(WebChat):
                 'webchat_status': 'closed',
                 'display_region': 'cy',
                 'locale': 'cy',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Gwe-sgwrs'
             }
 
@@ -1700,8 +1610,6 @@ class WebChatCY(WebChat):
                 'form_value_query': data.get('query'),
                 'display_region': 'cy',
                 'locale': 'cy',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Gwe-sgwrs'
             }
 
@@ -1712,8 +1620,6 @@ class WebChatCY(WebChat):
             'query': data.get('query'),
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Gwe-sgwrs',
             'webchat_url': request.app['WEBCHAT_SVC_URL']
         }
@@ -1734,8 +1640,6 @@ class WebChatCY(WebChat):
                 'webchat_status': 'closed',
                 'display_region': 'cy',
                 'locale': 'cy',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Gwe-sgwrs'
             }
 
@@ -1750,8 +1654,6 @@ class WebChatNI(WebChat):
         if WebChat.check_open():
             return {
                 'display_region': 'ni',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
         else:
@@ -1765,8 +1667,6 @@ class WebChatNI(WebChat):
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1786,8 +1686,6 @@ class WebChatNI(WebChat):
                 'form_value_country': data.get('country'),
                 'form_value_query': data.get('query'),
                 'display_region': 'ni',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1797,8 +1695,6 @@ class WebChatNI(WebChat):
             'country': data.get('country'),
             'query': data.get('query'),
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Web Chat',
             'webchat_url': request.app['WEBCHAT_SVC_URL']
         }
@@ -1818,8 +1714,6 @@ class WebChatNI(WebChat):
             return {
                 'webchat_status': 'closed',
                 'display_region': 'ni',
-                'domain_url_en': self.make_domain_url_en(request),
-                'domain_url_cy': self.make_domain_url_cy(request),
                 'page_title': 'Web Chat'
             }
 
@@ -1840,8 +1734,6 @@ class RequestCodeCommon(View):
         session = await get_session(request)
         try:
             attributes = session['attributes']
-            attributes['domain_url_en'] = self.make_domain_url_en(request)
-            attributes['domain_url_cy'] = self.make_domain_url_cy(request)
 
         except KeyError:
             raise HTTPFound(
@@ -1876,9 +1768,7 @@ class RequestCodeCommon(View):
             'display_region': display_region,
             'locale': locale,
             'fulfillment_type': fulfillment_type,
-            'total_matches': postcode_return['response']['total'],
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request)
+            'total_matches': postcode_return['response']['total']
         }
 
         return address_content
@@ -2002,8 +1892,6 @@ class RequestCodeHouseholdEN(RequestCodeCommon):
         self.log_entry(request, 'request-access-code')
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Request a new access code'
         }
 
@@ -2017,8 +1905,6 @@ class RequestCodeHouseholdCY(RequestCodeCommon):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Gofyn am god mynediad newydd'
         }
 
@@ -2031,8 +1917,6 @@ class RequestCodeHouseholdNI(RequestCodeCommon):
         self.log_entry(request, 'request-access-code')
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Request a new access code'
         }
 
@@ -2045,8 +1929,6 @@ class RequestCodeEnterAddressHHEN(RequestCodeCommon):
         self.log_entry(request, 'request-access-code/enter-address')
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'What is your postcode?'
         }
 
@@ -2068,8 +1950,6 @@ class RequestCodeEnterAddressHHCY(RequestCodeCommon):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Beth yw eich cod post?'
         }
 
@@ -2090,8 +1970,6 @@ class RequestCodeEnterAddressHHNI(RequestCodeCommon):
         self.log_entry(request, 'request-access-code/enter-address')
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'What is your postcode?'
         }
 
@@ -2759,8 +2637,6 @@ class RequestCodeTimeoutHHEN(RequestCodeCommon):
         return {
             'fulfillment_type': 'HH',
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Your session has timed out due to inactivity'
         }
 
@@ -2775,8 +2651,6 @@ class RequestCodeTimeoutHHCY(RequestCodeCommon):
             'fulfillment_type': 'HH',
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch',
         }  # yapf: disable
 
@@ -2790,8 +2664,6 @@ class RequestCodeTimeoutHHNI(RequestCodeCommon):
         return {
             'fulfillment_type': 'HH',
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Your session has timed out due to inactivity'
         }
 
@@ -2804,8 +2676,6 @@ class RequestCodeIndividualEN(RequestCodeCommon):
         self.log_entry(request, 'request-individual-code')
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Request an individual access code'
         }
 
@@ -2819,8 +2689,6 @@ class RequestCodeIndividualCY(RequestCodeCommon):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Gofyn am god mynediad unigryw'
         }
 
@@ -2833,8 +2701,6 @@ class RequestCodeIndividualNI(RequestCodeCommon):
         self.log_entry(request, 'request-individual-code')
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Request an individual access code'
         }
 
@@ -2848,8 +2714,6 @@ class RequestCodeEnterAddressHIEN(RequestCodeCommon):
         return {
             'fulfillment_type': 'HI',
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'What is your postcode?'
         }
 
@@ -2872,8 +2736,6 @@ class RequestCodeEnterAddressHICY(RequestCodeCommon):
             'fulfillment_type': 'HI',
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Beth yw eich cod post?'
         }
 
@@ -2895,8 +2757,6 @@ class RequestCodeEnterAddressHINI(RequestCodeCommon):
         return {
             'fulfillment_type': 'HI',
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'What is your postcode?'
         }
 
@@ -3562,8 +3422,6 @@ class RequestCodeTimeoutHIEN(RequestCodeCommon):
         return {
             'fulfillment_type': 'HI',
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Your session has timed out due to inactivity'
         }
 
@@ -3578,8 +3436,6 @@ class RequestCodeTimeoutHICY(RequestCodeCommon):
             'fulfillment_type': 'HI',
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch',
         }  # yapf: disable
 
@@ -3593,8 +3449,6 @@ class RequestCodeTimeoutHINI(RequestCodeCommon):
         return {
             'fulfillment_type': 'HI',
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Your session has timed out due to inactivity'
         }
 
@@ -3607,8 +3461,6 @@ class AccessibilityEN(RequestCodeCommon):
         self.log_entry(request, 'start/accessibility')
         return {
             'display_region': 'en',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Census questionnaire accessibility statement'
         }
 
@@ -3622,8 +3474,6 @@ class AccessibilityCY(RequestCodeCommon):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'
         }
 
@@ -3636,7 +3486,5 @@ class AccessibilityNI(RequestCodeCommon):
         self.log_entry(request, 'start/accessibility')
         return {
             'display_region': 'ni',
-            'domain_url_en': self.make_domain_url_en(request),
-            'domain_url_cy': self.make_domain_url_cy(request),
             'page_title': 'Census questionnaire accessibility statement'
         }
