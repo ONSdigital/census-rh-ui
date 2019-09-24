@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-18 16:48+0100\n"
+"POT-Creation-Date: 2019-09-24 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -435,7 +435,7 @@ msgstr ""
 #: app/templates/request-code-confirm-mobile.html:92
 #: app/templates/request-code-enter-address.html:84
 #: app/templates/request-code-enter-mobile.html:86
-#: app/templates/request-code-select-address.html:86
+#: app/templates/request-code-select-address.html:89
 msgid "Continue"
 msgstr ""
 
@@ -673,11 +673,11 @@ msgstr ""
 msgid "Request an individual code"
 msgstr ""
 
-#: app/templates/request-code-not-required.html:26
+#: app/templates/request-code-not-required.html:29
 msgid "Your address is not part of the 2019 rehearsal"
 msgstr ""
 
-#: app/templates/request-code-not-required.html:31
+#: app/templates/request-code-not-required.html:34
 #, python-format
 msgid ""
 "Based on the address you have provided you are not required to take part."
@@ -686,16 +686,18 @@ msgid ""
 "%(start_about_census_link)sabout the census rehearsal%(end_link)s."
 msgstr ""
 
-#: app/templates/request-code-select-address.html:44
+#: app/templates/request-code-select-address.html:47
 #, python-format
-msgid "<p class='u-fs-r--b'>%(total)s addresses found for postcode %(pcode)s</p>"
-msgstr ""
-
-#: app/templates/request-code-select-address.html:50
-msgid "We cannot find your address"
+msgid ""
+"<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
+"%(pcode)s</p>"
 msgstr ""
 
 #: app/templates/request-code-select-address.html:53
+msgid "We cannot find your address"
+msgstr ""
+
+#: app/templates/request-code-select-address.html:56
 #, python-format
 msgid ""
 "If this is incorrect you can %(start_request_code_link)senter the "
@@ -703,11 +705,11 @@ msgid ""
 "us%(end_link)s."
 msgstr ""
 
-#: app/templates/request-code-select-address.html:59
+#: app/templates/request-code-select-address.html:62
 msgid "Select your address"
 msgstr ""
 
-#: app/templates/request-code-select-address.html:69
+#: app/templates/request-code-select-address.html:72
 msgid "Select an address"
 msgstr ""
 
