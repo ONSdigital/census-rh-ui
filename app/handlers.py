@@ -2546,6 +2546,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     'HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
@@ -2612,6 +2613,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     'HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
@@ -2678,6 +2680,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     'HH', attributes['region'], 'SMS')
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
@@ -3346,6 +3349,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     attributes['fulfillment_type'], attributes['region'],
                     'SMS')
                 if len(available_fulfilments) > 1:
@@ -3412,6 +3416,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     attributes['fulfillment_type'], attributes['region'],
                     'SMS')
                 if len(available_fulfilments) > 1:
@@ -3477,6 +3482,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
         if mobile_confirmation == 'yes':
             try:
                 available_fulfilments = await self.get_fulfilment(
+                    request,
                     attributes['fulfillment_type'], attributes['region'],
                     'SMS')
                 if len(available_fulfilments) > 1:
