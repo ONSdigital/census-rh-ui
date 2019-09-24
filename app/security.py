@@ -33,14 +33,14 @@ CSP = {
     ],
     'connect-src': [
         "'self'",
-        'https://www.google-analytics.com',
         'https://cdn.ons.gov.uk',
+        'https://www.google-analytics.com',
     ],
     'img-src': [
         "'self'",
         'data:',
-        'https://www.google-analytics.com',
         'https://cdn.ons.gov.uk',
+        'https://www.google-analytics.com',
     ],
 }
 

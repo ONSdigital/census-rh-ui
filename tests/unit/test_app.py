@@ -49,17 +49,17 @@ class TestCreateApp(AioHTTPTestCase):
         self.assertIn("font-src 'self' data: https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
         self.assertIn(
-            f"script-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk 'nonce-{nonce}'",
+            f"script-src 'self' https://cdn.ons.gov.uk https://www.google-analytics.com https://www.googletagmanager.com 'nonce-{nonce}'",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "connect-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk",
+            "connect-src 'self' https://cdn.ons.gov.uk https://www.google-analytics.com",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "img-src 'self' data: https://www.google-analytics.com https://cdn.ons.gov.uk",
+            "img-src 'self' data: https://cdn.ons.gov.uk https://www.google-analytics.com",
             response.headers['Content-Security-Policy'])
-        self.assertEqual(response.headers['X-XSS-Protection'], '1')
+        self.assertEqual(response.headers['X-XSS-Protection'], '1; mode=block')
         self.assertEqual(response.headers['X-Content-Type-Options'], 'nosniff')
-        self.assertEqual(response.headers['Referrer-Policy'], 'same-origin')
+        self.assertEqual(response.headers['Referrer-Policy'], 'strict-origin-when-cross-origin')
 
 
 class TestCreateAppURLPathPrefix(TestCase):
