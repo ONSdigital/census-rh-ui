@@ -1,15 +1,35 @@
 {% if display_region == 'ni' %}
     {% extends 'base-ni.html' %}
-    {% set languages_and_accessibility_link = '/ni/help/languages-and-accessibility/' %}
+    {% set languages_and_accessibility_link = domain_url_en + '/ni/help/languages-and-accessibility/' %}
+    {% set home_url = domain_url_en + '/ni' %}
 {% elif display_region == 'cy' %}
     {% extends 'base-cy.html' %}
-    {% set languages_and_accessibility_link = '/help/ieithoedd-a-hygyrchedd/' %}
+    {% set languages_and_accessibility_link = domain_url_cy + '/help/ieithoedd-a-hygyrchedd/' %}
+    {% set home_url = domain_url_cy %}
 {% else %}
     {% extends 'base-en.html' %}
-    {% set languages_and_accessibility_link = '/help/languages-and-accessibility/' %}
+    {% set languages_and_accessibility_link = domain_url_en + '/help/languages-and-accessibility/' %}
+    {% set home_url = domain_url_en %}
 {% endif %}
 
 {% block main %}
+
+{% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
+{{
+    onsBreadcrumb({
+        "ariaLabel": _('Accessibility'),
+        "itemsList": [
+            {
+                "url": home_url + '/',
+                "text": _('Home')
+            },
+            {
+                "text": _('Accessibility'),
+                "current": true
+            }
+        ]
+    })
+}}
 
 <h1>{{ _('Census questionnaire accessibility statement') }}</h1>
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-24 13:35+0100\n"
+"POT-Creation-Date: 2019-09-25 15:18+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -40,11 +40,19 @@ msgid ""
 "apologise for any inconvenience this may have caused."
 msgstr "Os ydych chi'n cael problemau o hyd, %(open)scysylltwch â ni%(close)s."
 
-#: app/templates/accessibility.html:14
+#: app/templates/accessibility.html:20 app/templates/accessibility.html:27
+msgid "Accessibility"
+msgstr "Hygyrchedd"
+
+#: app/templates/accessibility.html:24
+msgid "Home"
+msgstr "Hafan"
+
+#: app/templates/accessibility.html:34
 msgid "Census questionnaire accessibility statement"
 msgstr "Datganiad hygyrchedd holiadur y cyfrifiad"
 
-#: app/templates/accessibility.html:16
+#: app/templates/accessibility.html:36
 msgid ""
 "This census is run by the Office for National Statistics. We want as many"
 " people as possible to be able to do the census online. For example, that"
@@ -54,24 +62,24 @@ msgstr ""
 "gynifer o bobl â phosibl allu gwneud y cyfrifiad ar lein. Er enghraifft, "
 "mae hynny'n golygu y dylech fod yn gallu:"
 
-#: app/templates/accessibility.html:19
+#: app/templates/accessibility.html:39
 msgid "change colours, contrast levels and fonts"
 msgstr "newid lliwiau, lefelau cyferbyniad a ffontiau"
 
-#: app/templates/accessibility.html:20
+#: app/templates/accessibility.html:40
 #, python-format
 msgid "zoom in up to 300%% without the text spilling off the screen"
 msgstr "chwyddo'r testun hyd at 300%% heb iddo ddiflannu oddi ar y sgrin"
 
-#: app/templates/accessibility.html:21
+#: app/templates/accessibility.html:41
 msgid "navigate most of the questionnaire using just a keyboard"
 msgstr "defnyddio'r rhan fwyaf o'r holiadur â bysellfwrdd yn unig"
 
-#: app/templates/accessibility.html:22
+#: app/templates/accessibility.html:42
 msgid "navigate most of the questionnaire using speech recognition software"
 msgstr "defnyddio'r rhan fwyaf o'r holiadur â meddalwedd adnabod lleferydd"
 
-#: app/templates/accessibility.html:23
+#: app/templates/accessibility.html:43
 msgid ""
 "listen to most of the questionnaire using a screen reader (including the "
 "most recent versions of JAWS, NVDA and VoiceOver)"
@@ -79,11 +87,11 @@ msgstr ""
 "gwrando ar y rhan fwyaf o'r holiadur gan ddefnyddio rhaglen darllen sgrin"
 " (gan gynnwys fersiynau diweddaraf JAWS, NVDA a VoiceOver)"
 
-#: app/templates/accessibility.html:26
+#: app/templates/accessibility.html:46
 msgid "We’ve used simple language as much as possible."
 msgstr "Rydym wedi defnyddio iaith syml cymaint â phosibl."
 
-#: app/templates/accessibility.html:29
+#: app/templates/accessibility.html:49
 #, python-format
 msgid ""
 "%(start_abilitynet_link)sAbilityNet%(end_link)s has advice on making your"
@@ -92,21 +100,21 @@ msgstr ""
 "Mae gan %(start_abilitynet_link)sAbilityNet%(end_link)s gyngor ar wneud "
 "eich dyfais yn haws i'w defnyddio os oes gennych chi anabledd"
 
-#: app/templates/accessibility.html:32
+#: app/templates/accessibility.html:52
 msgid "How accessible is this questionnaire?"
 msgstr "Pa mor hygyrch yw'r holiadur hwn?"
 
-#: app/templates/accessibility.html:34
+#: app/templates/accessibility.html:54
 msgid ""
 "We know that the following parts of this questionnaire are not fully "
 "accessible:"
 msgstr "Rydym yn gwybod nad yw'r rhannau canlynol o'r holiadur yn gwbl hygyrch:"
 
-#: app/templates/accessibility.html:37
+#: app/templates/accessibility.html:57
 msgid "you cannot modify the line height or spacing of text"
 msgstr "ni allwch addasu uchder llinellau na'r bylchau rhwng testun"
 
-#: app/templates/accessibility.html:38
+#: app/templates/accessibility.html:58
 msgid ""
 "the online system for getting a new census code has not been fully tested"
 " so parts of it may not be accessible to all users"
@@ -115,11 +123,11 @@ msgstr ""
 "phrofi'n llawn felly mae'n bosibl na fydd rhannau ohoni yn hygyrch i bob "
 "defnyddiwr"
 
-#: app/templates/accessibility.html:39
+#: app/templates/accessibility.html:59
 msgid "the Web chat tool may not be fully accessible"
 msgstr "mae'n bosibl na fydd yr adnodd sgwrs dros y we yn gwbl hygyrch"
 
-#: app/templates/accessibility.html:40
+#: app/templates/accessibility.html:60
 msgid ""
 "some page titles may not accurately reflect the content on the page for "
 "audio users"
@@ -127,11 +135,11 @@ msgstr ""
 "mae'n bosibl na fydd teitlau rhai tudalennau yn adlewyrchu cynnwys y "
 "dudalen yn gywir i ddefnyddwyr clywedol"
 
-#: app/templates/accessibility.html:44
+#: app/templates/accessibility.html:64
 msgid "What to do if you need guidance"
 msgstr "Beth i'w wneud os bydd angen arweiniad arnoch"
 
-#: app/templates/accessibility.html:47
+#: app/templates/accessibility.html:67
 #, python-format
 msgid ""
 "Our %(start_languages_and_accessibility_link)sguidance leaflets about the"
@@ -140,33 +148,33 @@ msgstr ""
 "Mae ein %(start_languages_and_accessibility_link)staflenni canllaw am y "
 "cyfrifiad%(end_link)s ar gael:"
 
-#: app/templates/accessibility.html:51
+#: app/templates/accessibility.html:71
 msgid "in Braille"
 msgstr "mewn Braille"
 
-#: app/templates/accessibility.html:52
+#: app/templates/accessibility.html:72
 msgid "in British Sign Language (BSL)"
 msgstr "yn Iaith Arwyddion Prydain"
 
-#: app/templates/accessibility.html:53
+#: app/templates/accessibility.html:73
 msgid "as an easy read version (which uses pictures to explain the census)"
 msgstr ""
 "mewn fersiwn hawdd ei darllen (sy'n defnyddio lluniau i esbonio'r "
 "cyfrifiad)"
 
-#: app/templates/accessibility.html:54
+#: app/templates/accessibility.html:74
 msgid "as a Welsh audio"
 msgstr "fel fersiwn glywedol Gymraeg"
 
-#: app/templates/accessibility.html:55
+#: app/templates/accessibility.html:75
 msgid "as large print in English or large print in Welsh"
 msgstr "mewn print mawr yn Gymraeg neu'n Saesneg"
 
-#: app/templates/accessibility.html:58
+#: app/templates/accessibility.html:78
 msgid "Reporting accessibility problems"
 msgstr "Rhoi gwybod am broblemau hygyrchedd"
 
-#: app/templates/accessibility.html:60
+#: app/templates/accessibility.html:80
 msgid ""
 "We’re always looking to improve the accessibility of this service. If you"
 " find any problems that are not listed on this page or think we’re not "
@@ -177,11 +185,11 @@ msgstr ""
 " os na fyddwch chi'n credu ein bod ni'n bodloni ein gofynion hygyrchedd, "
 "gallwch gysylltu â ni."
 
-#: app/templates/accessibility.html:62
+#: app/templates/accessibility.html:82
 msgid "Enforcement procedure"
 msgstr "Gweithdrefn gorfodi"
 
-#: app/templates/accessibility.html:64
+#: app/templates/accessibility.html:84
 msgid ""
 "The Equality and Human Rights Commission (EHRC) is responsible for "
 "enforcing the Public Sector Bodies (Website and Mobile Applications) (No."
@@ -193,7 +201,7 @@ msgstr ""
 "Symudol) (Rhif 2) 2018 (y 'rheoliadau hygyrchedd').  Os na fyddwch yn "
 "fodlon ar y ffordd rydym yn ymateb i'ch cwyn, cysylltwch â'r canlynol:"
 
-#: app/templates/accessibility.html:68
+#: app/templates/accessibility.html:88
 #, python-format
 msgid ""
 "%(start_equalityadvisoryservice_link)sEquality Advisory and Support "
@@ -202,7 +210,7 @@ msgstr ""
 "%(start_equalityadvisoryservice_link)sGwasanaeth Cynghori a Chymorth "
 "Cydraddoldeb (EASS)%(end_link)s os ydych chi'n byw yng Nghymru neu Loegr"
 
-#: app/templates/accessibility.html:69
+#: app/templates/accessibility.html:89
 #, python-format
 msgid ""
 "%(start_equalityni_link)sEqualities Commission for Northern Ireland "
@@ -211,11 +219,11 @@ msgstr ""
 "%(start_equalityni_link)sComisiwn Cydraddoldeb dros Ogledd Iwerddon "
 "(ECNI)%(end_link)s os ydych chi'n byw yng Ngogledd Iwerddon"
 
-#: app/templates/accessibility.html:73
+#: app/templates/accessibility.html:93
 msgid "Technical information about this questionnaire’s accessibility"
 msgstr "Gwybodaeth dechnegol am hygyrchedd yr holiadur hwn"
 
-#: app/templates/accessibility.html:75
+#: app/templates/accessibility.html:95
 msgid ""
 "The Office for National Statistics is committed to making its website "
 "accessible, in accordance with the Public Sector Bodies (Website and "
@@ -225,7 +233,7 @@ msgstr ""
 "hygyrch, yn unol â Rheoliadau Hygyrchedd Cyrff y Sector Cyhoeddus "
 "(Gwefannau a Chymwysiadau Symudol) (Rhif 2) 2018."
 
-#: app/templates/accessibility.html:78
+#: app/templates/accessibility.html:98
 #, python-format
 msgid ""
 "This service is partially compliant with the %(start_wcag_link)sWeb "
@@ -237,11 +245,11 @@ msgstr ""
 "2.1%(end_link)s safon AA, oherwydd yr achosion o ddiffyg cydymffurfio a "
 "restrir."
 
-#: app/templates/accessibility.html:81
+#: app/templates/accessibility.html:101
 msgid "Non-accessible content"
 msgstr "Cynnwys nad yw'n hygyrch"
 
-#: app/templates/accessibility.html:83
+#: app/templates/accessibility.html:103
 msgid ""
 "The content listed is non-accessible for the following reasons. We are "
 "planning to fix the following issues for Census 2021."
@@ -249,11 +257,11 @@ msgstr ""
 "Nid yw'r cynnwys a restrir yn hygyrch am y rhesymau canlynol. Rydym yn "
 "bwriadu delio â'r problemau canlynol ar gyfer Cyfrifiad 2021."
 
-#: app/templates/accessibility.html:85
+#: app/templates/accessibility.html:105
 msgid "Non-compliance with the accessibility regulations"
 msgstr "Diffyg cydymffurfio â'r rheoliadau hygyrchedd"
 
-#: app/templates/accessibility.html:87
+#: app/templates/accessibility.html:107
 msgid ""
 "Non-descriptive form elements. On the ‘Check your answers’ summary page "
 "there is an option to “change” items, but the link does not describe "
@@ -263,7 +271,7 @@ msgstr ""
 "‘Edrych dros eich atebion‘, mae opsiwn i “newid“ eitemau, ond nid yw'r "
 "ddolen yn disgrifio i ble mae'n mynd. Methu ar WCAG 2.1 A rhif 1.3.1."
 
-#: app/templates/accessibility.html:89
+#: app/templates/accessibility.html:109
 msgid ""
 "Error messages are too generic. If the text in a field is incorrect or in"
 " the wrong format, the answer validation page says the answer is "
@@ -275,7 +283,7 @@ msgstr ""
 "bod yr ateb yn anghywir heb esbonio'r hyn y mae angen i chi ei wneud. "
 "Methu ar WCAG 2.1 A rhif 3.3.1."
 
-#: app/templates/accessibility.html:91
+#: app/templates/accessibility.html:111
 msgid ""
 "Form label issue. On the ‘What is your name?’ page, middle name is "
 "optional but this is not clear to the user. Fails on WCAG 2.1 A number "
@@ -285,7 +293,7 @@ msgstr ""
 "enw canol yn ddewisol ond nid yw hyn yn glir i'r defnyddiwr. Methu ar "
 "WCAG 2.1 A rhif 3.3.2."
 
-#: app/templates/accessibility.html:93
+#: app/templates/accessibility.html:113
 msgid ""
 "Form label issue. When selecting the appropriate relationship, it is "
 "possible to ‘Save and continue’ without selecting an option. Fails on "
@@ -295,7 +303,7 @@ msgstr ""
 "bosibl clicio ar 'Cadw a pharhau' heb ddewis opsiwn. Methu ar WCAG 2.1 A "
 "rhif 2.4.6."
 
-#: app/templates/accessibility.html:95
+#: app/templates/accessibility.html:115
 msgid ""
 "On the ‘Is this address correct?’ page, the title may not accurately "
 "reflect the content on the page for audio users. The ‘Submit survey’ page"
@@ -306,7 +314,7 @@ msgstr ""
 "clywedol. Nid oes teitl ar dudalen 'Cyflwyno holiadur'. Methu ar WCAG 2.1"
 " A rhif 2.4.2."
 
-#: app/templates/accessibility.html:97
+#: app/templates/accessibility.html:117
 msgid ""
 "Timeout issue. Users are not informed of a time limit and service times "
 "out without warning. During the validation process there is no return "
@@ -319,7 +327,7 @@ msgstr ""
 "cyrraedd ei therfyn amser yn cynnwys dolen i fynd yn ôl. Methu ar WCAG "
 "2.1 A rhif 2.2.1 ac AAA rhif 2.2.6."
 
-#: app/templates/accessibility.html:99
+#: app/templates/accessibility.html:119
 msgid ""
 "The ‘Hide this’ button text on accordions such as ‘What does “usually "
 "live” mean?’ is non-descriptive for JAWS users as the text above it is "
@@ -330,7 +338,7 @@ msgstr ""
 " testun uwch ei ben yn cael ei ddarllen yn ôl i ddefnyddwyr. Methu ar "
 "WCAG 2.1 AA rhif 2.4.6."
 
-#: app/templates/accessibility.html:101
+#: app/templates/accessibility.html:121
 msgid ""
 "Screen readers may not let users know when an accordion is expanded or "
 "collapsed. Fails on WCAG 2.1 A number 2.4.4."
@@ -338,7 +346,7 @@ msgstr ""
 "Mae'n bosibl na fydd darllenwyr sgrin yn rhoi gwybod i ddefnyddwyr pan "
 "fydd acordion wedi'i ehangu neu ei gau. Methu ar WCAG 2.1 A rhif 2.4.4."
 
-#: app/templates/accessibility.html:103
+#: app/templates/accessibility.html:123
 msgid ""
 "Non-descriptive headings. On the relationships page, the heading does not"
 " accurately describe the content for screen readers. Fails on WCAG 2.1 A "
@@ -348,7 +356,7 @@ msgstr ""
 "perthynas, nid yw'r pennawd yn disgrifio'r cynnwys yn gywir i ddefnyddwyr"
 " darllenwyr sgrin. Methu ar WCAG 2.1 A rhif 2.4.6."
 
-#: app/templates/accessibility.html:105
+#: app/templates/accessibility.html:125
 msgid ""
 "Some links are not descriptive enough for screen reader users. Fails on "
 "WCAG 2.1 AAA number 2.4.9."
@@ -356,7 +364,7 @@ msgstr ""
 "Nid yw rhai dolenni yn ddigon disgrifiadol ar gyfer defnyddwyr darllenwyr"
 " sgrin. Methu ar WCAG AAA 2.1 rhif 2.4.9."
 
-#: app/templates/accessibility.html:107
+#: app/templates/accessibility.html:127
 msgid ""
 "Some headings do not follow a logical hierarchical structure. Fails on "
 "WCAG AAA 2.1 number 2.4.10."
@@ -364,7 +372,7 @@ msgstr ""
 "Nid yw rhai penawdau yn dilyn strwythur hierarchaidd rhesymegol. Methu ar"
 " WCAG AAA 2.1 rhif 2.4.10."
 
-#: app/templates/accessibility.html:109
+#: app/templates/accessibility.html:129
 msgid ""
 "Some text is highlighted, such as addresses and names that a user has "
 "confirmed. Highlighting is not accessible for some users. This does not "
@@ -374,7 +382,7 @@ msgstr ""
 "defnyddiwr wedi'u cadarnhau. Nid yw rhai defnyddwyr yn cael hyn. Nid yw "
 "hyn yn cydymffurfio â chanllawiau Gwasanaeth Digidol y Llywodraeth (GDS)."
 
-#: app/templates/accessibility.html:111
+#: app/templates/accessibility.html:131
 msgid ""
 "Some radio inputs on the relationships page do not conform to GDS "
 "guidelines. When selected, three different elements on the page are "
@@ -384,7 +392,7 @@ msgstr ""
 "cydymffurfio â chanllawiau GDS. Wrth ddewis, caiff tair elfen wahanol ar "
 "y sgrin eu diweddaru."
 
-#: app/templates/accessibility.html:113
+#: app/templates/accessibility.html:133
 msgid ""
 "On ‘Who lives here?’ there is a ‘Previous’ link on the page that does not"
 " conform with GDS guidelines. The text used should read as ‘Back’."
@@ -393,7 +401,7 @@ msgstr ""
 "yw'n cydymffurfio â chanllawiau GDS. Dylai'r testun sy'n cael ei "
 "ddefnyddio ddweud ‘Yn ôl’."
 
-#: app/templates/accessibility.html:115
+#: app/templates/accessibility.html:135
 msgid ""
 "Error messages do not result in a change to the page title to reflect "
 "that an error has been made. This does not conform to GDS guidelines."
@@ -401,17 +409,17 @@ msgstr ""
 "Nid yw negeseuon gwall yn newid teitl y dudalen er mwyn dangos bod gwall "
 "wedi'i wneud. Nid yw hyn yn cydymffurfio â chanllawiau GDS."
 
-#: app/templates/accessibility.html:117
+#: app/templates/accessibility.html:137
 msgid "How we tested this questionnaire"
 msgstr "Sut y gwnaethom brofi'r holiadur hwn"
 
-#: app/templates/accessibility.html:119
+#: app/templates/accessibility.html:139
 msgid "Over the last few years we have tested the full questionnaire, including:"
 msgstr ""
 "Dros y blynyddoedd diwethaf, rydym wedi profi'r holiadur llawn, gan "
 "gynnwys:"
 
-#: app/templates/accessibility.html:123
+#: app/templates/accessibility.html:143
 #, python-format
 msgid ""
 "%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying"
@@ -420,7 +428,7 @@ msgstr ""
 "Cael y %(start_dac_link)sGanolfan Hygyrchedd Digidol (DAC)%(end_link)s i "
 "gynnal archwiliad technegol proffesiynol"
 
-#: app/templates/accessibility.html:125
+#: app/templates/accessibility.html:145
 msgid ""
 "user testing with the public on different devices, different locations, "
 "in their homes with various assistive technologies including free and "
@@ -431,23 +439,23 @@ msgstr ""
 "amrywiol, gan gynnwys fersiynau am ddim a rhai y mae'n rhaid talu "
 "amdanynt"
 
-#: app/templates/accessibility.html:126
+#: app/templates/accessibility.html:146
 msgid "testing with charities, such as Scope and RNIB in their labs"
 msgstr ""
 "cynnal profion gydag elusennau, megis Scope a Sefydliad Cenedlaethol "
 "Brenhinol Pobl Ddall (RNIB) yn eu labordai"
 
-#: app/templates/accessibility.html:127
+#: app/templates/accessibility.html:147
 msgid "using job centres and libraries for pop-up testing"
 msgstr ""
 "defnyddio canolfannau gwaith a llyfrgelloedd i gynnal profion ar adegau "
 "penodol"
 
-#: app/templates/accessibility.html:128
+#: app/templates/accessibility.html:148
 msgid "covering a wide range of ages, additional needs and disabilities"
 msgstr "cwmpasu ystod eang o oedrannau, anghenion ychwanegol ac anableddau"
 
-#: app/templates/accessibility.html:129
+#: app/templates/accessibility.html:149
 msgid ""
 "making sure the offline journey and non-digital products were considered "
 "in the end-to-end journey"
@@ -455,7 +463,7 @@ msgstr ""
 "sicrhau bod y daith all-lein a chynhyrchion nad ydynt yn ddigidol yn cael"
 " eu hystyried o'r dechrau i'r diwedd"
 
-#: app/templates/accessibility.html:130
+#: app/templates/accessibility.html:150
 msgid ""
 "changing designs based on feedback from user testing, such as letter "
 "structure and the summary of sections and progress through questionnaire"
@@ -463,11 +471,11 @@ msgstr ""
 "newid dyluniadau yn seiliedig ar adborth o brofion defnyddwyr, megis "
 "strwythur llythyrau, crynodeb o adrannau a chynnydd drwy'r holiadur"
 
-#: app/templates/accessibility.html:133
+#: app/templates/accessibility.html:153
 msgid "Digital Accessibility Centre testing"
 msgstr "Profion y Ganolfan Hygyrchedd Digidol"
 
-#: app/templates/accessibility.html:135
+#: app/templates/accessibility.html:155
 msgid ""
 "Parts of this questionnaire were last tested on 3 September 2019 by the "
 "Digital Accessibility Centre (DAC)."
@@ -475,25 +483,25 @@ msgstr ""
 "Cafodd rhannau o'r holiadur hwn eu profi ddiwethaf ar 3 Medi 2019 gan y "
 "Ganolfan Hygyrchedd Digidol (DAC)."
 
-#: app/templates/accessibility.html:138
+#: app/templates/accessibility.html:158
 msgid "DAC Report - September 2019"
 msgstr ""
 
-#: app/templates/accessibility.html:141
+#: app/templates/accessibility.html:161
 msgid "You can read the last full accessibility test report from 28 June 2019."
 msgstr ""
 "Gallwch ddarllen yr adroddiad ar y prawf hygyrchedd llawn diwethaf o 28 "
 "Mehefin 2019."
 
-#: app/templates/accessibility.html:144
+#: app/templates/accessibility.html:164
 msgid "DAC Report - June 2019"
 msgstr ""
 
-#: app/templates/accessibility.html:147
+#: app/templates/accessibility.html:167
 msgid "What we’re doing to improve accessibility"
 msgstr "Yr hyn rydym yn ei wneud i wella hygyrchedd"
 
-#: app/templates/accessibility.html:149
+#: app/templates/accessibility.html:169
 msgid ""
 "We are continuing to work with various charities and local deaf "
 "communities to understand their needs for the census."
@@ -501,7 +509,7 @@ msgstr ""
 "Rydym yn parhau i weithio gydag elusennau amrywiol a chymunedau byddar "
 "lleol i ddeall eu hanghenion ar gyfer y cyfrifiad."
 
-#: app/templates/accessibility.html:151
+#: app/templates/accessibility.html:171
 msgid ""
 "We are looking at designs to see if it is possible to have British Sign "
 "Language on every page. This is challenging as we have been unable to "
@@ -512,11 +520,11 @@ msgstr ""
 "wedi llwyddo i ddod o hyd i wasanaeth arall sy'n gwneud hyn, ond rydym yn"
 " parhau i ymchwilio."
 
-#: app/templates/accessibility.html:153
+#: app/templates/accessibility.html:173
 msgid "We will act on feedback from the 2019 Rehearsal in October."
 msgstr "Byddwn yn gweithredu ar adborth o Ymarfer 2019 ym mis Hydref."
 
-#: app/templates/accessibility.html:155
+#: app/templates/accessibility.html:175
 msgid ""
 "This statement was prepared on 17 September. It was last updated on 17 "
 "September."
@@ -834,8 +842,8 @@ msgid ""
 "<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
 "%(pcode)s</p>"
 msgstr ""
-"<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau "
-"ar gyfer y cod post %(pcode)s</p>"
+"<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer "
+"y cod post %(pcode)s</p>"
 
 #: app/templates/request-code-select-address.html:53
 msgid "We cannot find your address"
@@ -1016,3 +1024,4 @@ msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
+
