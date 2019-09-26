@@ -608,6 +608,10 @@ class AddressConfirmationCY(Start):
         attributes['domain_url_en'] = self.make_domain_url_en(request)
         attributes['domain_url_cy'] = self.make_domain_url_cy(request)
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
+        if session['case']['region'][0] == 'E':
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            attributes['display_region_warning'] = 'yes'
 
         return attributes
 
