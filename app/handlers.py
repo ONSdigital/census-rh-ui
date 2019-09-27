@@ -1781,13 +1781,15 @@ class RequestCodeCommon(View):
 
     async def get_postcode(self, request, data, fulfillment_type,
                            display_region, locale):
+        postcode_value = data['request-postcode'].upper().strip()
+        postcode_value = re.sub(' +', ' ', postcode_value)
         if RequestCodeCommon.postcode_validation_pattern.fullmatch(
-                data['request-postcode'].upper()):
+                postcode_value):
 
             logger.info('valid postcode', client_ip=request['client_ip'])
 
             attributes = {}
-            attributes['postcode'] = data['request-postcode'].upper()
+            attributes['postcode'] = postcode_value
             attributes['display_region'] = display_region.lower()
             attributes['locale'] = locale
             attributes['fulfillment_type'] = fulfillment_type
@@ -1813,10 +1815,14 @@ class RequestCodeCommon(View):
                                    ':get'].url_for())
 
     async def post_enter_mobile(self, request, attributes, data):
+        mobile_number = re.sub(' +', ' ', data['request-mobile-number'].strip())
         if RequestCodeCommon.mobile_validation_pattern.fullmatch(
-                data['request-mobile-number']):
+                mobile_number):
 
-            attributes['mobile_number'] = data['request-mobile-number']
+            logger.info('valid mobile number',
+                        client_ip=request['client_ip'])
+
+            attributes['mobile_number'] = mobile_number
             session = await get_session(request)
             session['attributes'] = attributes
 
