@@ -580,6 +580,10 @@ class AddressConfirmationCY(Start):
             raise HTTPFound(request.app.router['IndexCY:get'].url_for())
 
         attributes['page_title'] = "Ydy'r cyfeiriad hwn yn gywir?"
+        if session['case']['region'][0] == 'E':
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            attributes['display_region_warning'] = 'yes'
 
         return attributes
 
