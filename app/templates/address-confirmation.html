@@ -46,6 +46,17 @@
         {% include 'partials/messages.html' with context %}
     {% endif %}
 
+    {% if display_region_warning == 'yes' %}
+        {% set region_warning_message = _('Your address is in England, so you can only complete your census in English.') %}
+        {% from "components/panel/_macro.njk" import onsPanel %}
+        {% call onsPanel({
+                type: "branded"
+            })
+        %}
+           <p>{{ region_warning_message }}</p>
+        {% endcall %}
+    {% endif %}
+
     {% call onsQuestion({
         'title': _('Is this address correct?'),
         'useFieldset': true

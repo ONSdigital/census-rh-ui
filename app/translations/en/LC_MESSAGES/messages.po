@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-25 15:18+0100\n"
+"POT-Creation-Date: 2019-09-26 16:00+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -430,16 +430,22 @@ msgid "No, I need to change it"
 msgstr ""
 
 #: app/templates/address-confirmation.html:50
+msgid ""
+"Your address is in England, so you can only complete your census in "
+"English."
+msgstr ""
+
+#: app/templates/address-confirmation.html:61
 #: app/templates/request-code-confirm-address.html:65
 msgid "Is this address correct?"
 msgstr ""
 
-#: app/templates/address-confirmation.html:69
+#: app/templates/address-confirmation.html:80
 #: app/templates/request-code-confirm-address.html:74
 msgid "Check and confirm the address"
 msgstr ""
 
-#: app/templates/address-confirmation.html:86
+#: app/templates/address-confirmation.html:97
 #: app/templates/request-code-confirm-address.html:90
 #: app/templates/request-code-confirm-mobile.html:92
 #: app/templates/request-code-enter-address.html:84

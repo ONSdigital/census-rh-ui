@@ -96,7 +96,10 @@ class EqPayloadConstructor(object):
                      case_id=self._case_id,
                      tx_id=self._tx_id)
 
-        self._language_code = self._sample_attributes['language']
+        if self._region == 'E':
+            self._language_code = 'en'
+        else:
+            self._language_code = self._sample_attributes['language']
 
         self._payload = {
             'jti': str(uuid4()),  # required by eQ for creating a new claim
@@ -121,13 +124,10 @@ class EqPayloadConstructor(object):
             'channel': self._channel,
             'user_id': self._user_id,
             'questionnaire_id': self._questionnaire_id,
-            'eq_id':
-            'census',  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
-            'period_id':
-            '2019',  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
-            'form_type':
-            'individual_gb_eng',  # for 19.9 hardcoded as will not be needed for new payload but still needed for original
-            'survey': 'CENSUS'  # hardcoded for census
+            'eq_id': 'census',  # hardcoded for rehearsal
+            'period_id': '2019',  # hardcoded for rehearsal
+            'form_type': 'individual_gb_eng',  # hardcoded for rehearsal
+            'survey': 'CENSUS'  # hardcoded for rehearsal
         }
 
         return self._payload
