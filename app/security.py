@@ -28,7 +28,7 @@ CSP = {
         "'self'",
         "'unsafe-inline'",
         'https://www.googletagmanager.com',
-        'https://tagmanager.google.com/',
+        'https://tagmanager.google.com',
         'https://www.google-analytics.com',
         'https://cdn.ons.gov.uk',
         'https://connect.facebook.net',

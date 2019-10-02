@@ -49,13 +49,13 @@ class TestCreateApp(AioHTTPTestCase):
         self.assertIn("font-src 'self' data: https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
         self.assertIn(
-            f"script-src 'self' https://cdn.ons.gov.uk https://www.google-analytics.com https://www.googletagmanager.com 'nonce-{nonce}'",
+            "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://cdn.ons.gov.uk https://connect.facebook.net",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "connect-src 'self' https://cdn.ons.gov.uk https://www.google-analytics.com",
+            "connect-src 'self' https://www.googletagmanager.com https://tagmanager.google.com https://cdn.ons.gov.uk",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "img-src 'self' data: https://cdn.ons.gov.uk https://www.google-analytics.com",
+            "img-src 'self' data: https://www.googletagmanager.com https://cdn.ons.gov.uk https://www.google-analytics.com https://www.facebook.com",
             response.headers['Content-Security-Policy'])
         self.assertEqual(response.headers['X-XSS-Protection'], '1; mode=block')
         self.assertEqual(response.headers['X-Content-Type-Options'], 'nosniff')
