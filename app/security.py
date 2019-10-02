@@ -26,23 +26,30 @@ CSP = {
     ],
     'script-src': [
         "'self'",
-        'https://cdn.ons.gov.uk',
-        'https://www.google-analytics.com',
+        "'unsafe-inline'",
         'https://www.googletagmanager.com',
-        "'nonce-%(csp_nonce)s'",
+        'https://tagmanager.google.com/',
+        'https://www.google-analytics.com',
+        'https://cdn.ons.gov.uk',
+        'https://connect.facebook.net',
+        # "'nonce-%(csp_nonce)s'",
     ],
     'connect-src': [
         "'self'",
+        'https://www.googletagmanager.com',
+        'https://tagmanager.google.com',
         'https://cdn.ons.gov.uk',
-        'https://www.google-analytics.com',
     ],
     'img-src': [
         "'self'",
         'data:',
+        'https://www.googletagmanager.com',
         'https://cdn.ons.gov.uk',
         'https://www.google-analytics.com',
+        'https://www.facebook.com'
     ],
 }
+
 
 FEATURE_POLICY = [
     "layout-animations 'none';",
