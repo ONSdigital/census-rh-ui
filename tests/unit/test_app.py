@@ -38,9 +38,7 @@ class TestCreateApp(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_security_headers(self):
-        nonce = '123456'
         with mock.patch('app.security.get_random_string') as mocked_rando:
-            mocked_rando.return_value = nonce
             response = await self.client.request('GET', '/')
         self.assertEqual(response.headers['Strict-Transport-Security'],
                          'max-age=31536000 includeSubDomains')
@@ -49,17 +47,17 @@ class TestCreateApp(AioHTTPTestCase):
         self.assertIn("font-src 'self' data: https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
         self.assertIn(
-            f"script-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk 'nonce-{nonce}'",
+            "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://cdn.ons.gov.uk https://connect.facebook.net",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "connect-src 'self' https://www.google-analytics.com https://cdn.ons.gov.uk",
+            "connect-src 'self' https://www.googletagmanager.com https://tagmanager.google.com https://cdn.ons.gov.uk",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "img-src 'self' data: https://www.google-analytics.com https://cdn.ons.gov.uk",
+            "img-src 'self' data: https://www.googletagmanager.com https://cdn.ons.gov.uk https://www.google-analytics.com https://www.facebook.com",
             response.headers['Content-Security-Policy'])
-        self.assertEqual(response.headers['X-XSS-Protection'], '1')
+        self.assertEqual(response.headers['X-XSS-Protection'], '1; mode=block')
         self.assertEqual(response.headers['X-Content-Type-Options'], 'nosniff')
-        self.assertEqual(response.headers['Referrer-Policy'], 'same-origin')
+        self.assertEqual(response.headers['Referrer-Policy'], 'strict-origin-when-cross-origin')
 
 
 class TestCreateAppURLPathPrefix(TestCase):

@@ -98,8 +98,8 @@ class DevelopmentConfig:
 
     URL_PATH_PREFIX = env('URL_PATH_PREFIX', default='')
 
-    GTM_AUTH = env.str('GTM_AUTH', default='vuQRI_k4d1EW3h4EP_sXyw')
-    GTM_PREVIEW = env.str('GTM_PREVIEW', default='env-5')
+    GTM_AUTH = env.str('GTM_AUTH', default='QZTzNzZrlo_z0DCT4veo1A')
+    GTM_PREVIEW = env.str('GTM_PREVIEW', default='env-13')
     GTM_COOKIES_WIN = env.str('GTM_COOKIES_WIN', default='x')
 
     REDIS_SERVER = env('REDIS_SERVER', default='localhost')
@@ -135,8 +135,8 @@ class TestingConfig:
 
     URL_PATH_PREFIX = ''
 
-    GTM_AUTH = 'vuQRI_k4d1EW3h4EP_sXyw'
-    GTM_PREVIEW = 'env-5'
+    GTM_AUTH = 'QZTzNzZrlo_z0DCT4veo1A'
+    GTM_PREVIEW = 'env-13'
     GTM_COOKIES_WIN = 'x'
 
     REDIS_SERVER = ''
