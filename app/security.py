@@ -32,7 +32,6 @@ CSP = {
         'https://www.google-analytics.com',
         'https://cdn.ons.gov.uk',
         'https://connect.facebook.net',
-        # "'nonce-%(csp_nonce)s'",
     ],
     'connect-src': [
         "'self'",
@@ -87,16 +86,10 @@ def get_random_string(length):
     return ''.join(rnd.choice(allowed_chars) for _ in range(length))
 
 
-@web.middleware
-async def nonce_middleware(request, handler):
-    request.csp_nonce = get_random_string(16)
-    return await handler(request)
-
-
 async def on_prepare(request: web.BaseRequest, response: web.StreamResponse):
     for header, value in DEFAULT_RESPONSE_HEADERS.items():
         if isinstance(value, str):
-            response.headers[header] = value % {'csp_nonce': request.csp_nonce}
+            response.headers[header] = value
         else:
             logger.error('Invalid type for header content')
 
