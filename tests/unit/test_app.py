@@ -38,9 +38,7 @@ class TestCreateApp(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_security_headers(self):
-        nonce = '123456'
         with mock.patch('app.security.get_random_string') as mocked_rando:
-            mocked_rando.return_value = nonce
             response = await self.client.request('GET', '/')
         self.assertEqual(response.headers['Strict-Transport-Security'],
                          'max-age=31536000 includeSubDomains')
