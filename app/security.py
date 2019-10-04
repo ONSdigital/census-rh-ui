@@ -10,74 +10,38 @@ from . import VALIDATION_FAILURE_MSG
 from .flash import flash
 from structlog import get_logger
 
+DEFAULT_RESPONSE_HEADERS = {
+    'Strict-Transport-Security': ['max-age=31536000', 'includeSubDomains'],
+    'Content-Security-Policy': {
+        'default-src': ["'self'", 'https://cdn.ons.gov.uk'],
+        'font-src': ["'self'", 'data:', 'https://cdn.ons.gov.uk'],
+        'script-src': [
+            "'self'", 'https://www.google-analytics.com',
+            'https://cdn.ons.gov.uk'
+        ],
+        'connect-src': [
+            "'self'", 'https://www.google-analytics.com',
+            'https://cdn.ons.gov.uk'
+        ],
+        'img-src': [
+            "'self'", 'data:', 'https://www.google-analytics.com',
+            'https://cdn.ons.gov.uk'
+        ],
+    },
+    'X-XSS-Protection': '1',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'same-origin',
+}
+
+ADD_NONCE_SECTIONS = [
+    'script-src',
+]
+
+SESSION_KEY = 'identity'
+
 rnd = random.SystemRandom()
 
 logger = get_logger('respondent-home')
-
-CSP = {
-    'default-src': [
-        "'self'",
-        'https://cdn.ons.gov.uk',
-    ],
-    'font-src': [
-        "'self'",
-        'data:',
-        'https://cdn.ons.gov.uk',
-    ],
-    'script-src': [
-        "'self'",
-        "'unsafe-inline'",
-        'https://www.googletagmanager.com',
-        'https://tagmanager.google.com',
-        'https://www.google-analytics.com',
-        'https://cdn.ons.gov.uk',
-        'https://connect.facebook.net',
-    ],
-    'connect-src': [
-        "'self'",
-        'https://www.googletagmanager.com',
-        'https://tagmanager.google.com',
-        'https://cdn.ons.gov.uk',
-    ],
-    'img-src': [
-        "'self'",
-        'data:',
-        'https://www.googletagmanager.com',
-        'https://cdn.ons.gov.uk',
-        'https://www.google-analytics.com',
-        'https://www.facebook.com'
-    ],
-}
-
-
-FEATURE_POLICY = [
-    "layout-animations 'none';",
-    "unoptimized-images 'none';",
-    "oversized-images 'none';",
-    "sync-script 'none';",
-    "sync-xhr 'none';",
-    "unsized-media 'none';",
-]
-
-
-def _format_csp(csp_dict):
-    return ' '.join([
-        f"{section} {' '.join(content)};"
-        for section, content in csp_dict.items()
-    ])
-
-
-DEFAULT_RESPONSE_HEADERS = {
-    'Strict-Transport-Security': 'max-age=31536000 includeSubDomains',
-    'Content-Security-Policy': _format_csp(CSP),
-    'X-XSS-Protection': '1; mode=block',
-    'X-Frame-Options': 'DENY',
-    'X-Content-Type-Options': 'nosniff',
-    'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Feature-Policy': ' '.join(FEATURE_POLICY),
-}
-
-SESSION_KEY = 'identity'
 
 
 def get_random_string(length):
@@ -86,12 +50,24 @@ def get_random_string(length):
     return ''.join(rnd.choice(allowed_chars) for _ in range(length))
 
 
+@web.middleware
+async def nonce_middleware(request, handler):
+    request.csp_nonce = get_random_string(16)
+    return await handler(request)
+
+
 async def on_prepare(request: web.BaseRequest, response: web.StreamResponse):
     for header, value in DEFAULT_RESPONSE_HEADERS.items():
-        if isinstance(value, str):
-            response.headers[header] = value
-        else:
-            logger.error('Invalid type for header content')
+        if isinstance(value, dict):
+            value = '; '.join([
+                f"{section} {' '.join(content)} 'nonce-{request.csp_nonce}'"
+                if section in ADD_NONCE_SECTIONS else
+                f"{section} {' '.join(content)}"
+                for section, content in value.items()
+            ])
+        elif not isinstance(value, str):
+            value = ' '.join(value)
+        response.headers[header] = value
 
 
 async def check_permission(request):
