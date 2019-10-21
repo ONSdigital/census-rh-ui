@@ -689,7 +689,7 @@ msgstr ""
 
 #: app/templates/index.html:91
 msgid "Want to answer separately from your household?"
-msgstr ""
+msgstr "Am ateb ar wahân i aelodau'ch cartref?"
 
 #: app/templates/index.html:93
 #, python-format
@@ -697,6 +697,8 @@ msgid ""
 "If you prefer to answer separately from the people you live with, you can"
 "  %(open)srequest an individual access code%(close)s."
 msgstr ""
+"Os hoffech chi ateb ar wahân i'r bobl rydych chi'n byw gyda nhw, gallwch"
+" chi %(open)sofyn am god mynediad i unigolion%(close)s."
 
 #: app/templates/index.html:96
 msgid "Need help?"
