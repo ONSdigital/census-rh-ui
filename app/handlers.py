@@ -268,7 +268,7 @@ class IndexEN(Start):
             session.pop('adlocation', None)
         return {
             'display_region': 'en',
-            'page_title': 'Start survey'
+            'page_title': 'Start Census'
         }
 
     @aiohttp_jinja2.template('index.html')
@@ -294,7 +294,7 @@ class IndexEN(Start):
                     'index.html',
                     request, {
                         'display_region': 'en',
-                        'page_title': 'Start survey'
+                        'page_title': 'Start Census'
                     },
                     status=401)
             else:
@@ -353,7 +353,7 @@ class IndexCY(Start):
         return {
             'display_region': 'cy',
             'locale': 'cy',
-            'page_title': "Dechrau'r arolwg"
+            'page_title': "Dechrau'r Cyfrifiad"
         }
 
     async def post(self, request):
@@ -379,7 +379,7 @@ class IndexCY(Start):
                     request, {
                         'display_region': 'cy',
                         'locale': 'cy',
-                        'page_title': "Dechrau'r arolwg"
+                        'page_title': "Dechrau'r Cyfrifiad"
                     },
                     status=401)
             else:
@@ -438,7 +438,7 @@ class IndexNI(Start):
             session.pop('adlocation', None)
         return {
             'display_region': 'ni',
-            'page_title': 'Start survey'
+            'page_title': 'Start Census'
         }
 
     async def post(self, request):
@@ -463,7 +463,7 @@ class IndexNI(Start):
                     'index.html',
                     request, {
                         'display_region': 'ni',
-                        'page_title': 'Start survey'
+                        'page_title': 'Start Census'
                     },
                     status=401)
             else:

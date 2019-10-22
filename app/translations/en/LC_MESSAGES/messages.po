@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-26 16:00+0100\n"
+"POT-Creation-Date: 2019-10-18 10:46+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -454,31 +454,35 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: app/templates/address-edit.html:26
+#: app/templates/address-edit.html:33
 msgid "Change your address"
 msgstr ""
 
-#: app/templates/address-edit.html:31
+#: app/templates/address-edit.html:40 app/templates/address-edit.html:67
 msgid "Building and street"
 msgstr ""
 
-#: app/templates/address-edit.html:35
+#: app/templates/address-edit.html:43
+msgid "Enter address to continue"
+msgstr ""
+
+#: app/templates/address-edit.html:47 app/templates/address-edit.html:71
 msgid "Line 2"
 msgstr ""
 
-#: app/templates/address-edit.html:39
+#: app/templates/address-edit.html:51 app/templates/address-edit.html:75
 msgid "Line 3"
 msgstr ""
 
-#: app/templates/address-edit.html:43
+#: app/templates/address-edit.html:55 app/templates/address-edit.html:79
 msgid "Town or City"
 msgstr ""
 
-#: app/templates/address-edit.html:47
+#: app/templates/address-edit.html:59 app/templates/address-edit.html:83
 msgid "Postcode"
 msgstr ""
 
-#: app/templates/address-edit.html:55
+#: app/templates/address-edit.html:92
 msgid "Save and continue"
 msgstr ""
 
@@ -520,48 +524,59 @@ msgid ""
 "census yet."
 msgstr ""
 
-#: app/templates/index.html:39
+#: app/templates/index.html:42
 msgid "Enter the 16 character code printed on the letter"
 msgstr ""
 
-#: app/templates/index.html:40
+#: app/templates/index.html:43
 msgid "Keep this code safe and only share it with others in your household"
 msgstr ""
 
-#: app/templates/index.html:42
+#: app/templates/index.html:45
 msgid ""
 "Your personal information is protected by law and will be kept "
 "confidential."
 msgstr ""
 
-#: app/templates/index.html:48
-msgid "Start survey"
+#: app/templates/index.html:51
+msgid "Start Census"
 msgstr ""
 
-#: app/templates/index.html:66
+#: app/templates/index.html:69
 msgid "Enter a valid code"
 msgstr ""
 
-#: app/templates/index.html:78
-msgid "Access survey"
+#: app/templates/index.html:81
+msgid "Access Census"
 msgstr ""
 
-#: app/templates/index.html:83
+#: app/templates/index.html:86
 msgid "Don't have a code?"
 msgstr ""
 
-#: app/templates/index.html:85
+#: app/templates/index.html:88
 #, python-format
 msgid ""
 "You can %(open)srequest a new code%(close)s to start a new survey if you "
 "have lost, forgotten or not received an access code."
 msgstr ""
 
-#: app/templates/index.html:88
+#: app/templates/index.html:91
+msgid "Want to answer separately from your household?"
+msgstr ""
+
+#: app/templates/index.html:93
+#, python-format
+msgid ""
+"If you prefer to answer separately from the people you live with, you can"
+"  %(open)srequest an individual access code%(close)s."
+msgstr ""
+
+#: app/templates/index.html:96
 msgid "Need help?"
 msgstr ""
 
-#: app/templates/index.html:90 app/templates/webchat-form.html:37
+#: app/templates/index.html:98 app/templates/webchat-form.html:37
 #: app/templates/webchat-form.html:144 app/templates/webchat-window.html:11
 msgid "Web chat"
 msgstr ""
@@ -876,4 +891,3 @@ msgstr ""
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr ""
-
