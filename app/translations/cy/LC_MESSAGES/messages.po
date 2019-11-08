@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-18 10:46+0100\n"
+"POT-Creation-Date: 2019-11-08 15:39+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -666,19 +666,19 @@ msgstr ""
 msgid "Start Census"
 msgstr "Dechrau'r Cyfrifiad"
 
-#: app/templates/index.html:69
+#: app/templates/index.html:71
 msgid "Enter a valid code"
 msgstr "Rhowch god dilys"
 
-#: app/templates/index.html:81
+#: app/templates/index.html:83
 msgid "Access Census"
 msgstr "Mynediad at y Cyfrifiad"
 
-#: app/templates/index.html:86
+#: app/templates/index.html:88
 msgid "Don't have a code?"
 msgstr "Dim cod gennych chi?"
 
-#: app/templates/index.html:88
+#: app/templates/index.html:90
 #, python-format
 msgid ""
 "You can %(open)srequest a new code%(close)s to start a new survey if you "
@@ -687,24 +687,24 @@ msgstr ""
 "Gallwch chi %(open)sofyn am god newydd%(close)s i ddechrau arolwg newydd "
 "os ydych chi wedi colli, anghofio neu heb gael cod mynediad."
 
-#: app/templates/index.html:91
+#: app/templates/index.html:93
 msgid "Want to answer separately from your household?"
 msgstr "Am ateb ar wahân i aelodau'ch cartref?"
 
-#: app/templates/index.html:93
+#: app/templates/index.html:95
 #, python-format
 msgid ""
 "If you prefer to answer separately from the people you live with, you can"
 "  %(open)srequest an individual access code%(close)s."
 msgstr ""
-"Os hoffech chi ateb ar wahân i'r bobl rydych chi'n byw gyda nhw, gallwch"
-" chi %(open)sofyn am god mynediad i unigolion%(close)s."
+"Os hoffech chi ateb ar wahân i'r bobl rydych chi'n byw gyda nhw, gallwch "
+"chi %(open)sofyn am god mynediad i unigolion%(close)s."
 
-#: app/templates/index.html:96
+#: app/templates/index.html:98
 msgid "Need help?"
 msgstr "Angen help?"
 
-#: app/templates/index.html:98 app/templates/webchat-form.html:37
+#: app/templates/index.html:100 app/templates/webchat-form.html:37
 #: app/templates/webchat-form.html:144 app/templates/webchat-window.html:11
 msgid "Web chat"
 msgstr "Gwe-sgwrs"
@@ -793,7 +793,7 @@ msgstr "Nodwch rif ffôn dilys yn y Deyrnas Unedig"
 msgid "Request a new access code"
 msgstr "Gofyn am god mynediad newydd"
 
-#: app/templates/request-code-household.html:17
+#: app/templates/request-code-household.html:21
 msgid ""
 "To do the census online you need a 16 character unique access code which "
 "we have sent you in a letter."
@@ -801,8 +801,8 @@ msgstr ""
 "I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad "
 "unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
 
-#: app/templates/request-code-household.html:19
-#: app/templates/request-code-individual.html:19
+#: app/templates/request-code-household.html:23
+#: app/templates/request-code-individual.html:23
 msgid ""
 "If you are in a rehearsal area and don’t have a code you can get a new "
 "one."
@@ -810,22 +810,22 @@ msgstr ""
 "Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, "
 "gallwch ofyn am un newydd."
 
-#: app/templates/request-code-household.html:21
-#: app/templates/request-code-individual.html:21
+#: app/templates/request-code-household.html:25
+#: app/templates/request-code-individual.html:25
 msgid "You will need to provide:"
 msgstr "Bydd angen i chi ddarparu:"
 
-#: app/templates/request-code-household.html:23
-#: app/templates/request-code-individual.html:23
+#: app/templates/request-code-household.html:27
+#: app/templates/request-code-individual.html:27
 msgid "your mobile phone number so we can send you the code by text"
 msgstr "eich rhif ffôn symudol fel y gallwn anfon y cod atoch mewn neges destun"
 
-#: app/templates/request-code-household.html:24
-#: app/templates/request-code-individual.html:24
+#: app/templates/request-code-household.html:28
+#: app/templates/request-code-individual.html:28
 msgid "your address so we can confirm you are in the rehearsal area"
 msgstr "eich cyfeiriad fel y gallwn gadarnhau eich bod yn ardal yr ymarfer"
 
-#: app/templates/request-code-household.html:30
+#: app/templates/request-code-household.html:34
 msgid "Request a new code"
 msgstr "Gofyn am god newydd"
 
@@ -833,13 +833,13 @@ msgstr "Gofyn am god newydd"
 msgid "Request an individual access code"
 msgstr "Gofyn am god mynediad unigryw"
 
-#: app/templates/request-code-individual.html:17
+#: app/templates/request-code-individual.html:21
 msgid "To do the census online you need a 16 character unique access code."
 msgstr ""
 "I wneud y cyfrifiad ar lein, mae angen cod mynediad unigryw 16 nod arnoch"
 " chi."
 
-#: app/templates/request-code-individual.html:30
+#: app/templates/request-code-individual.html:34
 msgid "Request an individual code"
 msgstr "Gofyn am god unigol"
 
@@ -1036,6 +1036,17 @@ msgstr "Pa fath o ymholiad sydd gennych chi?"
 msgid "Start chat"
 msgstr "Dechrau'r sgwrs"
 
+#: app/templates/partials/closing-warning.html:6
+msgid "The census rehearsal is coming to an end."
+msgstr ""
+
+#: app/templates/partials/closing-warning.html:7
+msgid ""
+"Fill in your online questionnaire by <strong>November 15 (3pm)</strong>. "
+"<br>\n"
+"    Post any paper questionnaires by <strong>November 22</strong>."
+msgstr ""
+
 #: app/templates/partials/messages.html:7
 msgid "This page has an error"
 msgstr "Mae gwall ar y dudalen hon"
@@ -1049,3 +1060,11 @@ msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
 #, python-format
 msgid "These %(startbold)smust be corrected%(endbold)s to continue."
 msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
+
+#~ msgid ""
+#~ "Fill in your online questionnaire by "
+#~ "<strong>November 15 (3pm)</strong> and return"
+#~ " paper versions by <strong>November "
+#~ "22</strong>."
+#~ msgstr ""
+

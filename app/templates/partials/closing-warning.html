@@ -1,0 +1,9 @@
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% call onsPanel({
+        type: "branded"
+    })
+%}
+<p class="u-fs-m">{{ _('The census rehearsal is coming to an end.') }}</p>
+<p>{{ _('Fill in your online questionnaire by <strong>November 15 (3pm)</strong>. <br>
+    Post any paper questionnaires by <strong>November 22</strong>.') }}</p>
+{% endcall %}
