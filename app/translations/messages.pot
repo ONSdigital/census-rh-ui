@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-18 10:46+0100\n"
+"POT-Creation-Date: 2019-11-11 15:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -541,41 +541,41 @@ msgstr ""
 msgid "Start Census"
 msgstr ""
 
-#: app/templates/index.html:69
+#: app/templates/index.html:71
 msgid "Enter a valid code"
 msgstr ""
 
-#: app/templates/index.html:81
+#: app/templates/index.html:83
 msgid "Access Census"
 msgstr ""
 
-#: app/templates/index.html:86
+#: app/templates/index.html:88
 msgid "Don't have a code?"
 msgstr ""
 
-#: app/templates/index.html:88
+#: app/templates/index.html:90
 #, python-format
 msgid ""
 "You can %(open)srequest a new code%(close)s to start a new survey if you "
 "have lost, forgotten or not received an access code."
 msgstr ""
 
-#: app/templates/index.html:91
+#: app/templates/index.html:93
 msgid "Want to answer separately from your household?"
 msgstr ""
 
-#: app/templates/index.html:93
+#: app/templates/index.html:95
 #, python-format
 msgid ""
 "If you prefer to answer separately from the people you live with, you can"
 "  %(open)srequest an individual access code%(close)s."
 msgstr ""
 
-#: app/templates/index.html:96
+#: app/templates/index.html:98
 msgid "Need help?"
 msgstr ""
 
-#: app/templates/index.html:98 app/templates/webchat-form.html:37
+#: app/templates/index.html:100 app/templates/webchat-form.html:37
 #: app/templates/webchat-form.html:144 app/templates/webchat-window.html:11
 msgid "Web chat"
 msgstr ""
@@ -658,35 +658,35 @@ msgstr ""
 msgid "Request a new access code"
 msgstr ""
 
-#: app/templates/request-code-household.html:17
+#: app/templates/request-code-household.html:21
 msgid ""
 "To do the census online you need a 16 character unique access code which "
 "we have sent you in a letter."
 msgstr ""
 
-#: app/templates/request-code-household.html:19
-#: app/templates/request-code-individual.html:19
+#: app/templates/request-code-household.html:23
+#: app/templates/request-code-individual.html:23
 msgid ""
 "If you are in a rehearsal area and don’t have a code you can get a new "
 "one."
 msgstr ""
 
-#: app/templates/request-code-household.html:21
-#: app/templates/request-code-individual.html:21
+#: app/templates/request-code-household.html:25
+#: app/templates/request-code-individual.html:25
 msgid "You will need to provide:"
 msgstr ""
 
-#: app/templates/request-code-household.html:23
-#: app/templates/request-code-individual.html:23
+#: app/templates/request-code-household.html:27
+#: app/templates/request-code-individual.html:27
 msgid "your mobile phone number so we can send you the code by text"
 msgstr ""
 
-#: app/templates/request-code-household.html:24
-#: app/templates/request-code-individual.html:24
+#: app/templates/request-code-household.html:28
+#: app/templates/request-code-individual.html:28
 msgid "your address so we can confirm you are in the rehearsal area"
 msgstr ""
 
-#: app/templates/request-code-household.html:30
+#: app/templates/request-code-household.html:34
 msgid "Request a new code"
 msgstr ""
 
@@ -694,11 +694,11 @@ msgstr ""
 msgid "Request an individual access code"
 msgstr ""
 
-#: app/templates/request-code-individual.html:17
+#: app/templates/request-code-individual.html:21
 msgid "To do the census online you need a 16 character unique access code."
 msgstr ""
 
-#: app/templates/request-code-individual.html:30
+#: app/templates/request-code-individual.html:34
 msgid "Request an individual code"
 msgstr ""
 
@@ -875,6 +875,17 @@ msgstr ""
 
 #: app/templates/webchat-form.html:229
 msgid "Start chat"
+msgstr ""
+
+#: app/templates/partials/closing-warning.html:6
+msgid "The census rehearsal is coming to an end."
+msgstr ""
+
+#: app/templates/partials/closing-warning.html:7
+msgid ""
+"Fill in your online questionnaire by <strong>15 November (3pm)</strong>. "
+"<br>\n"
+"    Post any paper questionnaires by <strong>22 November</strong>."
 msgstr ""
 
 #: app/templates/partials/messages.html:7

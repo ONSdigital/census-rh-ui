@@ -50,6 +50,8 @@
 
     <h1 class="u-mt-l">{{_('Start Census')}}</h1>
 
+    {% include 'partials/closing-warning.html' with context %}
+
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
     {% endif %}
