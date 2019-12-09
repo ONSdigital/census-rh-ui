@@ -10,9 +10,9 @@ from aioresponses import aioresponses
 
 from app import (BAD_CODE_MSG, INVALID_CODE_MSG, WEBCHAT_MISSING_QUERY_MSG,
                  WEBCHAT_MISSING_COUNTRY_MSG, WEBCHAT_MISSING_NAME_MSG,
-                 POSTCODE_INVALID_MSG, BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY,
+                 BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY,
                  WEBCHAT_MISSING_QUERY_MSG_CY, WEBCHAT_MISSING_COUNTRY_MSG_CY,
-                 WEBCHAT_MISSING_NAME_MSG_CY, POSTCODE_INVALID_MSG_CY)
+                 WEBCHAT_MISSING_NAME_MSG_CY)
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.handlers import IndexEN, IndexCY, IndexNI, WebChat
 

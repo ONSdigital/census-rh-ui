@@ -1,9 +1,137 @@
-from app.utils import ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
+from app.utils import ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
 
 from . import RHTestCase
 
 
 class TestUtils(RHTestCase):
+
+    def test_validate_postcode_valid(self):
+        postcode = 'PO15 5RR'
+        locale = 'en'
+
+        # When validate_postcode is called
+        ProcessPostcode.validate_postcode(postcode, locale)
+        # Nothing happens
+
+    def test_validate_postcode_not_alphanumeric(self):
+        postcode = '?<>:{}'
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'The postcode must not contain symbols',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_short(self):
+        postcode = 'PO15'
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'The postcode does not contain enough characters',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_long(self):
+        postcode = 'PO15 5RRR'
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'The postcode contain too many characters',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_invalid(self):
+        postcode = 'ZZ99 9ZZ'
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'The postcode is not a valid UK postcode',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_valid_cy(self):
+        postcode = 'PO15 5RR'
+        locale = 'cy'
+
+        # When validate_postcode is called
+        ProcessPostcode.validate_postcode(postcode, locale)
+        # Nothing happens
+
+    def test_validate_postcode_not_alphanumeric_cy(self):
+        postcode = '?<>:{}'
+        locale = 'cy'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataErrorWelsh) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'WELSH The postcode must not contain symbols',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_short_cy(self):
+        postcode = 'PO15'
+        locale = 'cy'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataErrorWelsh) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'WELSH The postcode does not contain enough characters',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_long_cy(self):
+        postcode = 'PO15 5RRR'
+        locale = 'cy'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataErrorWelsh) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'WELSH The postcode contain too many characters',
+            str(cm.exception)
+        )
+        # With the correct message
+
+    def test_validate_postcode_invalid_cy(self):
+        postcode = 'ZZ99 9ZZ'
+        locale = 'cy'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataErrorWelsh) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'WELSH The postcode is not a valid UK postcode',
+            str(cm.exception)
+        )
+        # With the correct message
 
     def test_validate_uk_mobile_phone_number_valid(self):
         mobile_number = '070 1234 5678'
