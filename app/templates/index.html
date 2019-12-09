@@ -23,8 +23,6 @@
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/lists/_macro.njk' import onsList %}
 
-{% set page = {'title': 'Start Census'} %}
-
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
@@ -49,8 +47,6 @@
 {% block main %}
 
     <h1 class="u-mt-l">{{_('Start Census')}}</h1>
-
-    {% include 'partials/closing-warning.html' with context %}
 
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
