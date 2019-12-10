@@ -3088,49 +3088,61 @@ class TestHandlers(RHTestCase):
     async def test_post_request_access_code_enter_address_bad_postcode_hh_en(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        postcode_invalid_message = {'text': 'The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hh_cy(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
+        postcode_invalid_message = {'text': 'The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        postcode_invalid_message = {'text': 'The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_good_postcode_hh_en(
@@ -3336,49 +3348,61 @@ class TestHandlers(RHTestCase):
     async def test_post_request_access_code_enter_address_bad_postcode_hi_en(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        postcode_invalid_message = {'text': 'The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_cy(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
+        postcode_invalid_message = {'text': 'WELSH The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(
             self):
 
-        with self.assertLogs('respondent-home', 'WARNING') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+        postcode_invalid_message = {'text': 'The postcode is not a valid UK postcode',
+                                    'level': 'ERROR',
+                                    'type': 'POSTCODE_ENTER_ERROR',
+                                    'field': 'postcode'}
+        self.assertMessagePanel(postcode_invalid_message, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_good_postcode_hi_en(

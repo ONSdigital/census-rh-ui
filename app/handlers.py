@@ -1783,31 +1783,30 @@ class RequestCodeCommon(View):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['request-postcode'], locale)
-
             logger.info('valid postcode', client_ip=request['client_ip'])
 
-            attributes = {}
-            attributes['postcode'] = postcode
-            attributes['display_region'] = display_region.lower()
-            attributes['locale'] = locale
-            attributes['fulfillment_type'] = fulfillment_type
-
-            session = await get_session(request)
-            session['attributes'] = attributes
-
-            raise HTTPFound(
-                request.app.router['RequestCodeSelectAddress' +
-                                   fulfillment_type + display_region +
-                                   ':get'].url_for())
-
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info(exc, client_ip=request['client_ip'])
+            logger.info('invalid postcode', client_ip=request['client_ip'])
             flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
             flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['RequestCodeEnterAddress' +
                                    fulfillment_type + display_region +
                                    ':get'].url_for())
+
+        attributes = {}
+        attributes['postcode'] = postcode
+        attributes['display_region'] = display_region.lower()
+        attributes['locale'] = locale
+        attributes['fulfillment_type'] = fulfillment_type
+
+        session = await get_session(request)
+        session['attributes'] = attributes
+
+        raise HTTPFound(
+            request.app.router['RequestCodeSelectAddress' +
+                               fulfillment_type + display_region +
+                               ':get'].url_for())
 
     async def post_enter_mobile(self, request, attributes, data):
 
