@@ -10,7 +10,7 @@ from app import (POSTCODE_INVALID_MSG,
 from . import RHTestCase
 
 
-class TestHandlers(RHTestCase):
+class TestRequestsHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_get_request_access_code_hh_en(self):

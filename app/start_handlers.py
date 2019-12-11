@@ -1,6 +1,9 @@
 import aiohttp_jinja2
 import re
 
+from sdc.crypto.encrypter import encrypt
+from .eq import EqPayloadConstructor
+
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
@@ -17,7 +20,8 @@ from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-from .handlers import View
+# from .handlers import View
+from .utils import View
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -59,6 +63,37 @@ class Start(View):
             raise TypeError
 
         return get_sha256_hash(combined)
+
+    async def call_questionnaire(self, request, case, attributes, app,
+                                 adlocation):
+        eq_payload = await EqPayloadConstructor(case, attributes, app,
+                                                adlocation).build()
+
+        token = encrypt(eq_payload,
+                        key_store=app['key_store'],
+                        key_purpose='authentication')
+
+        await self.post_surveylaunched(request, case, adlocation)
+
+        logger.info('redirecting to eq', client_ip=request['client_ip'])
+        eq_url = app['EQ_URL']
+        raise HTTPFound(f'{eq_url}/session?token={token}')
+
+    async def post_surveylaunched(self, request, case, adlocation):
+        if not adlocation:
+            adlocation = ''
+        launch_json = {
+            'questionnaireId': case['questionnaireId'],
+            'caseId': case['caseId'],
+            'agentId': adlocation
+        }
+        rhsvc_url = request.app['RHSVC_URL']
+        return await self._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/surveyLaunched',
+                                        self._handle_response,
+                                        auth=request.app['RHSVC_AUTH'],
+                                        json=launch_json)
 
     @staticmethod
     def validate_case(case_json):

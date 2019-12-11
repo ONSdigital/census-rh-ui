@@ -1,15 +1,15 @@
 from aiohttp_utils.routing import add_resource_context
 
-from .handlers import routes
 from .webchat_handlers import webchat_routes
 from .requests_handlers import requests_routes
 from .start_handlers import start_routes
+from .handlers import static_routes
 
 
 def setup(app, url_path_prefix):
     """Set up routes as resources so we can use the `Index:get` notation for URL lookup."""
 
-    combined_routes = [*routes, *requests_routes, *start_routes, *webchat_routes]
+    combined_routes = [*requests_routes, *start_routes, *static_routes, *webchat_routes]
 
     for route in combined_routes:
         use_prefix = route.kwargs.get('use_prefix', True)

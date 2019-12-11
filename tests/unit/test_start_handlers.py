@@ -15,7 +15,7 @@ from app.start_handlers import IndexEN, IndexCY, IndexNI
 from . import RHTestCase, build_eq_raises, skip_encrypt
 
 
-class TestHandlers(RHTestCase):
+class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_get_index_en(self):
         response = await self.client.request('GET', self.get_index_en)

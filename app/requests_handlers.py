@@ -17,7 +17,7 @@ from . import (ADDRESS_CHECK_MSG,
                ADDRESS_SELECT_CHECK_MSG_CY)
 
 from .flash import flash
-from .handlers import View
+from .utils import View
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -95,12 +95,6 @@ class RequestCodeCommon(View):
                 postcode_value):
 
             logger.info('valid postcode', client_ip=request['client_ip'])
-
-            # attributes = {}
-            # attributes['postcode'] = postcode_value
-            # attributes['display_region'] = display_region.lower()
-            # attributes['locale'] = locale
-            # attributes['fulfillment_type'] = fulfillment_type
 
             attributes = {
                 'postcode': postcode_value,

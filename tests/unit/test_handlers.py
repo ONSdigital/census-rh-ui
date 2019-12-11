@@ -3,7 +3,7 @@ from aiohttp.test_utils import unittest_run_loop
 from . import RHTestCase
 
 
-class TestHandlers(RHTestCase):
+class TestStatic(RHTestCase):
 
     @unittest_run_loop
     async def test_get_accessibility_statement_en(self):

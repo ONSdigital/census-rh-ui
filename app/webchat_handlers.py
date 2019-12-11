@@ -7,7 +7,6 @@ from aiohttp.web import RouteTableDef
 from datetime import datetime
 from structlog import get_logger
 
-from .handlers import View
 from . import (WEBCHAT_MISSING_NAME_MSG,
                WEBCHAT_MISSING_COUNTRY_MSG,
                WEBCHAT_MISSING_QUERY_MSG,
@@ -15,6 +14,7 @@ from . import (WEBCHAT_MISSING_NAME_MSG,
                WEBCHAT_MISSING_COUNTRY_MSG_CY,
                WEBCHAT_MISSING_QUERY_MSG_CY)
 from .flash import flash
+from .utils import View
 
 logger = get_logger('respondent-home')
 webchat_routes = RouteTableDef()
