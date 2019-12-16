@@ -23,6 +23,3 @@ after_success:
     fi
   - pipenv run codecov
 
-branches:
-  only:
-    - master
