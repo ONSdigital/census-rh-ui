@@ -98,7 +98,7 @@ def build_eq_raises(func, *args, **kwargs):
 
 def skip_encrypt(func, *args, **kwargs):
     """
-    Helper decorator for manually patching the encrypt function in handlers.py.
+    Helper decorator for manually patching the encrypt function in start_handlers.py.
 
     This can be useful for tests that perform as a client but wish the server to skip encrypting a payload.
 
@@ -111,18 +111,18 @@ def skip_encrypt(func, *args, **kwargs):
     :return: new method with patching functions attached as attributes
     """
     async def _override_sdc_encrypt(*_):
-        from app import handlers
+        from app import start_handlers
 
         def encrypt(payload, **_):
             return json.dumps(payload)
 
-        handlers._bk_encrypt = handlers.encrypt
-        handlers.encrypt = encrypt
+        start_handlers._bk_encrypt = start_handlers.encrypt
+        start_handlers.encrypt = encrypt
 
     async def _reset_sdc_encrypt(*_):
-        from app import handlers
+        from app import start_handlers
 
-        handlers.encrypt = handlers._bk_encrypt
+        start_handlers.encrypt = start_handlers._bk_encrypt
 
     @functools.wraps(func, *args, **kwargs)
     def new_func(self, *inner_args, **inner_kwargs):
