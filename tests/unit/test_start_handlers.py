@@ -2556,3 +2556,36 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Enter the 16 character code printed on the letter',
                       contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_en)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Your progress has been saved', contents)
+        self.assertIn(self.ons_logo_en, contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_cy)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Mae eich cynnydd wedi cael ei gadw', contents)
+        self.assertIn(self.ons_logo_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_ni)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Your progress has been saved', contents)
+        self.assertIn(self.nisra_logo, contents)

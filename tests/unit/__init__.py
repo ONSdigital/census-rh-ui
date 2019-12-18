@@ -496,9 +496,34 @@ class RHTestCase(AioHTTPTestCase):
         # self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
         # self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
 
+        self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequiredHHEN:get'].url_for()
+        self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequiredHHCY:get'].url_for()
+        self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequiredHHNI:get'].url_for()
+        self.get_requestcode_notrequired_hi_en = self.app.router['RequestCodeNotRequiredHIEN:get'].url_for()
+        self.get_requestcode_notrequired_hi_cy = self.app.router['RequestCodeNotRequiredHICY:get'].url_for()
+        self.get_requestcode_notrequired_hi_ni = self.app.router['RequestCodeNotRequiredHINI:get'].url_for()
+
+        self.get_requestcode_codesent_hh_en = self.app.router['RequestCodeCodeSentHHEN:get'].url_for()
+        self.get_requestcode_codesent_hh_cy = self.app.router['RequestCodeCodeSentHHCY:get'].url_for()
+        self.get_requestcode_codesent_hh_ni = self.app.router['RequestCodeCodeSentHHNI:get'].url_for()
+        self.get_requestcode_codesent_hi_en = self.app.router['RequestCodeCodeSentHIEN:get'].url_for()
+        self.get_requestcode_codesent_hi_cy = self.app.router['RequestCodeCodeSentHICY:get'].url_for()
+        self.get_requestcode_codesent_hi_ni = self.app.router['RequestCodeCodeSentHINI:get'].url_for()
+
+        self.get_requestcode_household_timeout_en = self.app.router['RequestCodeTimeoutHHEN:get'].url_for()
+        self.get_requestcode_household_timeout_cy = self.app.router['RequestCodeTimeoutHHCY:get'].url_for()
+        self.get_requestcode_household_timeout_ni = self.app.router['RequestCodeTimeoutHHNI:get'].url_for()
+        self.get_requestcode_individual_timeout_en = self.app.router['RequestCodeTimeoutHIEN:get'].url_for()
+        self.get_requestcode_individual_timeout_cy = self.app.router['RequestCodeTimeoutHICY:get'].url_for()
+        self.get_requestcode_individual_timeout_ni = self.app.router['RequestCodeTimeoutHINI:get'].url_for()
+
         self.get_accessibility_statement_en = self.app.router['AccessibilityEN:get'].url_for()
         self.get_accessibility_statement_cy = self.app.router['AccessibilityCY:get'].url_for()
         self.get_accessibility_statement_ni = self.app.router['AccessibilityNI:get'].url_for()
+
+        self.get_start_saveandexit_en = self.app.router['SaveAndExitEN:get'].url_for()
+        self.get_start_saveandexit_cy = self.app.router['SaveAndExitCY:get'].url_for()
+        self.get_start_saveandexit_ni = self.app.router['SaveAndExitNI:get'].url_for()
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
