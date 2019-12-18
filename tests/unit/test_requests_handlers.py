@@ -1,0 +1,795 @@
+from unittest import mock
+
+from aiohttp.client_exceptions import ClientConnectionError
+from aiohttp.test_utils import unittest_run_loop
+from aioresponses import aioresponses
+
+from app import (POSTCODE_INVALID_MSG,
+                 POSTCODE_INVALID_MSG_CY)
+
+from . import RHTestCase
+
+
+class TestRequestsHandlers(RHTestCase):
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hh_en(self):
+        response = await self.client.request('GET',
+                                             self.get_requestcode_household_en)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Request a new access code', contents)
+        self.assertIn('You will need to provide:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hh_cy(self):
+        response = await self.client.request('GET',
+                                             self.get_requestcode_household_cy)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Gofyn am god mynediad newydd', contents)
+        self.assertIn('Bydd angen i chi ddarparu:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hh_ni(self):
+        response = await self.client.request('GET',
+                                             self.get_requestcode_household_ni)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Request a new access code', contents)
+        self.assertIn('You will need to provide:', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_en(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_en,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_cy(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_cy,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_ni,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hh_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hh_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hh_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hh_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('We cannot find your address', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hh_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('Allwn ni ddim dod o hyd', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hh_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('We cannot find your address', contents)
+
+    # Commented out as session not maintaining the new data between pages - to be revisited.
+    # @unittest_run_loop
+    # async def test_get_request_code_confirm_address_hh(self):
+    #
+    #     with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
+    #
+    #         with self.assertLogs('respondent-home', 'INFO') as cm:
+    #             response = await self.client.request('POST', self.post_requestcode_hh, data=self.request_code_form_data_valid)
+    #             self.assertLogEvent(cm, 'valid postcode')
+    #
+    #             self.assertEqual(response.status, 200)
+    #             self.assertIn('1 Gate Reach', str(await response.content.read()))
+    #
+    #             with self.assertLogs('respondent-home', 'INFO') as cm:
+    #                 response = await self.client.request('POST', self.post_requestcode_selectaddress,
+    #                                                      data=self.post_requestcode_address_confirmation_data)
+    #                 self.assertLogEvent(cm, 'session updated')
+    #                 self.assertEqual(response.status, 200)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hi_en(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_individual_en)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Request an individual access code', contents)
+        self.assertIn('You will need to provide:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hi_cy(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_individual_cy)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Gofyn am god mynediad unigryw', contents)
+        self.assertIn('Bydd angen i chi ddarparu:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_hi_ni(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_individual_ni)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Request an individual access code', contents)
+        self.assertIn('You will need to provide:', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_enter_address_hi_en(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_enter_address_hi_en)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('What is your postcode?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('UK postcode', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_enter_address_hi_cy(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_enter_address_hi_cy)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('Beth yw eich cod post?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('Cod post yn y Deyrnas Unedig', contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_enter_address_hi_ni(self):
+        response = await self.client.request(
+            'GET', self.get_requestcode_enter_address_hi_ni)
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('What is your postcode?', contents)
+        self.assertEqual(contents.count('input--text'), 1)
+        self.assertIn('UK postcode', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_en(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_en,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_cy(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_cy,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(
+            self):
+
+        with self.assertLogs('respondent-home', 'WARNING') as cm:
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_ni,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hi_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hi_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_good_postcode_hi_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn('Select your address', str(resp_content))
+            self.assertIn('1 Gate Reach', str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hi_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('We cannot find your address', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hi_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('Allwn ni ddim dod o hyd', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_not_found_hi_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+                self.assertLogEvent(cm, 'valid postcode')
+
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('We cannot find your address', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_en(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_500_hh_en(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=500)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_500_hh_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=500)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=500)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=500)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=503)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_503_hh_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=503)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=503)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_403_hh_en(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=403)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_403_hh_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=403)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+                          contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_403_hh_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=403)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=403)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_401_hh_en(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=401)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_401_hh_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=401)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+                          contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_401_hh_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=401)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=401)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_400_hh_en(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=400)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_400_hh_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=400)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+                          contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_400_hh_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       status=400)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
