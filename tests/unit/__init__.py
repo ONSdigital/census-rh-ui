@@ -581,6 +581,10 @@ class RHTestCase(AioHTTPTestCase):
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
         }
 
+        self.request_code_enter_mobile_form_data_invalid = {
+            'request-mobile-number': self.mobile_invalid_short, 'action[save_continue]': '',
+        }
+
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
         self.nisra_logo = '/img/nisra-logo-en.svg'

@@ -1384,3 +1384,147 @@ class TestRequestsHandlers(RHTestCase):
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
                 self.assertIn('Is this mobile phone number correct?', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hh_en(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hh_en,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('What is your mobile phone number?', contents)
+                self.assertIn('Enter a valid UK mobile phone number', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hh_cy(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hh_cy,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('Beth yw eich rhif', contents)
+                self.assertIn(' dilys yn y Deyrnas Unedig', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hh_ni(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hh_ni,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('What is your mobile phone number?', contents)
+                self.assertIn('Enter a valid UK mobile phone number', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hi_en(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hi_en,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_en, contents)
+                self.assertIn('What is your mobile phone number?', contents)
+                self.assertIn('Enter a valid UK mobile phone number', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hi_cy(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hi_cy,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.ons_logo_cy, contents)
+                self.assertIn('Beth yw eich rhif', contents)
+                self.assertIn(' dilys yn y Deyrnas Unedig', contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_mobile_invalid_hi_ni(self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            with self.assertLogs('respondent-home', 'INFO'):
+                await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+
+                with self.assertLogs('respondent-home', 'INFO') as cm:
+                    response = await self.client.request('POST',
+                                                         self.post_requestcode_entermobile_hi_ni,
+                                                         data=self.request_code_enter_mobile_form_data_invalid)
+                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertEqual(response.status, 200)
+                contents = str(await response.content.read())
+                self.assertIn(self.nisra_logo, contents)
+                self.assertIn('What is your mobile phone number?', contents)
+                self.assertIn('Enter a valid UK mobile phone number', contents)
