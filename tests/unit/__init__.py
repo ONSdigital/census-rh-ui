@@ -496,6 +496,19 @@ class RHTestCase(AioHTTPTestCase):
         # self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
         # self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
 
+        self.get_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:get'].url_for()
+        self.get_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:get'].url_for()
+        self.get_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:get'].url_for()
+        self.get_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:get'].url_for()
+        self.get_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:get'].url_for()
+        self.get_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:get'].url_for()
+        self.post_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:post'].url_for()
+        self.post_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:post'].url_for()
+        self.post_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:post'].url_for()
+        self.post_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:post'].url_for()
+        self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:post'].url_for()
+        self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:post'].url_for()
+
         self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequiredHHEN:get'].url_for()
         self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequiredHHCY:get'].url_for()
         self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequiredHHNI:get'].url_for()
@@ -533,6 +546,11 @@ class RHTestCase(AioHTTPTestCase):
             'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"
         }
 
+        self.mobile_valid = '07012345678'
+        self.mobile_invalid_short = '07012'
+        self.mobile_invalid_long = '0701234567890123456'
+        self.mobile_invalid_character = '0701234567$'
+
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -557,6 +575,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_address_confirmation_data = {
             'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.request_code_enter_mobile_form_data_valid = {
+            'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
         }
 
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
