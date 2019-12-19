@@ -110,25 +110,25 @@ class ProcessPostcode:
 
         if not postcode.isalnum():
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The postcode must not contain symbols')
+                raise InvalidDataErrorWelsh('The postcode must not contain symbols')
             else:
                 raise InvalidDataError('The postcode must not contain symbols')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The postcode does not contain enough characters')
+                raise InvalidDataErrorWelsh('The postcode does not contain enough characters')
             else:
                 raise InvalidDataError('The postcode does not contain enough characters')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The postcode contain too many characters')
+                raise InvalidDataErrorWelsh('The postcode contains too many characters')
             else:
-                raise InvalidDataError('The postcode contain too many characters')
+                raise InvalidDataError('The postcode contains too many characters')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The postcode is not a valid UK postcode')
+                raise InvalidDataErrorWelsh('The postcode is not a valid UK postcode')
             else:
                 raise InvalidDataError('The postcode is not a valid UK postcode')
 
@@ -147,7 +147,7 @@ class ProcessMobileNumber:
             list(map(int, number))
         except ValueError:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The mobile phone number must not contain letters or symbols')
+                raise InvalidDataErrorWelsh('The mobile phone number must not contain letters or symbols')
             else:
                 raise InvalidDataError('The mobile phone number must not contain letters or symbols')
 
@@ -160,19 +160,19 @@ class ProcessMobileNumber:
 
         if not number.startswith('7'):
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The mobile phone number is not a UK mobile number')
+                raise InvalidDataErrorWelsh('The mobile phone number is not a UK mobile number')
             else:
                 raise InvalidDataError('The mobile phone number is not a UK mobile number')
 
         if len(number) > 10:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The mobile phone number contains too many digits')
+                raise InvalidDataErrorWelsh('The mobile phone number contains too many digits')
             else:
                 raise InvalidDataError('The mobile phone number contains too many digits')
 
         if len(number) < 10:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh('WELSH The mobile phone number does not contain enough digits')
+                raise InvalidDataErrorWelsh('The mobile phone number does not contain enough digits')
             else:
                 raise InvalidDataError('The mobile phone number does not contain enough digits')
 
