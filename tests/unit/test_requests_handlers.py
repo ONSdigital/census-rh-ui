@@ -2267,3 +2267,234 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn('Is this address correct?', str(resp_content))
             self.assertIn('Check and confirm the address', str(resp_content))
             self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hh_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_en,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_en,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('What is your postcode?', str(resp_content))
+            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hh_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_en,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_en,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('What is your postcode?', str(resp_content))
+            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hh_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_cy,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('Beth yw eich cod post?', str(resp_content))
+            self.assertIn("Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.", str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hh_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_ni,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn('What is your postcode?', str(resp_content))
+            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hi_en(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_en,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_en,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('What is your postcode?', str(resp_content))
+            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hi_cy(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_cy,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('Beth yw eich cod post?', str(resp_content))
+            self.assertIn("Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.", str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_hi_ni(
+            self):
+        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
+                        ) as mocked_get_ai_postcode:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_ni,
+                    data=self.request_code_address_confirmation_data_no)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn('What is your postcode?', str(resp_content))
+            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))

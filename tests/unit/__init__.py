@@ -575,11 +575,11 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.request_code_address_confirmation_data_yes = {
-            'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+            'request-address-confirmation': 'yes', 'action[save_continue]': ''
         }
 
         self.request_code_address_confirmation_data_no = {
-            'request-address-confirmation': 'No', 'action[save_continue]': ''
+            'request-address-confirmation': 'no', 'action[save_continue]': ''
         }
 
         self.request_code_address_confirmation_data_invalid = {
