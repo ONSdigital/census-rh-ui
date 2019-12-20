@@ -574,8 +574,16 @@ class RHTestCase(AioHTTPTestCase):
             'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
-        self.request_code_address_confirmation_data = {
+        self.request_code_address_confirmation_data_yes = {
             'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+        }
+
+        self.request_code_address_confirmation_data_no = {
+            'request-address-confirmation': 'No', 'action[save_continue]': ''
+        }
+
+        self.request_code_address_confirmation_data_invalid = {
+            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
         self.request_code_select_address_form_data_empty = {}
