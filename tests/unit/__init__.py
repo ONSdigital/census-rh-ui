@@ -551,6 +551,8 @@ class RHTestCase(AioHTTPTestCase):
         self.mobile_invalid_long = '0701234567890123456'
         self.mobile_invalid_character = '0701234567$'
 
+        self.field_empty = None
+
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -576,6 +578,8 @@ class RHTestCase(AioHTTPTestCase):
         self.request_code_address_confirmation_data = {
             'request-address-confirmation': 'Yes', 'action[save_continue]': ''
         }
+
+        self.request_code_select_address_form_data_empty = {}
 
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',

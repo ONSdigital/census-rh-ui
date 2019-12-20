@@ -321,7 +321,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -363,7 +363,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -405,7 +405,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
