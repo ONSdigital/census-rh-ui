@@ -445,7 +445,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -508,7 +508,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
@@ -570,7 +570,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
