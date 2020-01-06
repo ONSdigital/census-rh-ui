@@ -562,6 +562,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
+        with open('tests/test_data/rhsvc/case_by_uprn.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_cases_by_uprn = f
+
         self.request_code_form_data_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
