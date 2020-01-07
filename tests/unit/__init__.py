@@ -509,6 +509,19 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:post'].url_for()
         self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:post'].url_for()
 
+        self.get_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:get'].url_for()
+        self.get_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:get'].url_for()
+        self.get_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:get'].url_for()
+        self.post_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:post'].url_for()
+        self.post_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:post'].url_for()
+        self.post_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:post'].url_for()
+
         self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequiredHHEN:get'].url_for()
         self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequiredHHCY:get'].url_for()
         self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequiredHHNI:get'].url_for()
@@ -567,6 +580,16 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_cases_by_uprn = f
 
+        with open('tests/test_data/rhsvc/get_fulfilment.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment = f
+
+        with open('tests/test_data/rhsvc/request_fulfilment.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_request_fulfilment = f
+
         self.request_code_form_data_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
@@ -607,6 +630,16 @@ class RHTestCase(AioHTTPTestCase):
         self.request_code_enter_mobile_form_data_invalid = {
             'request-mobile-number': self.mobile_invalid_short, 'action[save_continue]': '',
         }
+
+        self.request_code_mobile_confirmation_data_yes = {
+            'request-mobile-confirmation': 'yes', 'action[save_continue]': ''
+        }
+
+        self.request_code_mobile_confirmation_data_no = {
+            'request-mobile-confirmation': 'no', 'action[save_continue]': ''
+        }
+
+        self.request_code_mobile_confirmation_data_empty = {}
 
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
