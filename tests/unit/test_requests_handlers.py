@@ -78,7 +78,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn('We cannot find your address', contents)
+                self.assertIn(self.content_request_household_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_cy(
@@ -97,7 +97,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn('Allwn ni ddim dod o hyd', contents)
+                self.assertIn(self.content_request_household_select_address_no_results_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_ni(
@@ -116,7 +116,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn('We cannot find your address', contents)
+                self.assertIn(self.content_request_household_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_hi_en(
@@ -183,7 +183,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn('We cannot find your address', contents)
+                self.assertIn(self.content_request_individual_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_cy(
@@ -202,7 +202,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn('Allwn ni ddim dod o hyd', contents)
+                self.assertIn(self.content_request_individual_select_address_no_results_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_ni(
@@ -221,7 +221,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn('We cannot find your address', contents)
+                self.assertIn(self.content_request_individual_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_en(
@@ -243,7 +243,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(
@@ -265,7 +265,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+        self.assertIn(self.content_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(
@@ -287,7 +287,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_en(self):
@@ -305,7 +305,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_cy(self):
@@ -323,7 +323,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+        self.assertIn(self.content_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
@@ -341,7 +341,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
@@ -359,7 +359,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_cy(self):
@@ -377,7 +377,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le", contents)
+        self.assertIn(self.content_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
@@ -395,7 +395,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Sorry, something went wrong', contents)
+        self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_en(self):
@@ -413,7 +413,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_cy(self):
@@ -431,7 +431,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+            self.assertIn(self.content_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -450,7 +450,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_en(self):
@@ -468,7 +468,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_cy(self):
@@ -486,7 +486,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+            self.assertIn(self.content_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -505,7 +505,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_en(self):
@@ -523,7 +523,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_cy(self):
@@ -541,7 +541,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn("Mae\\'n flin gennym, aeth rhywbeth o\\'i le",
+            self.assertIn(self.content_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -560,133 +560,128 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Sorry, something went wrong', contents)
+            self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hh_en(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hh_en,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_en,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hh_en)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hh_en)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.ons_logo_en, contents)
-                    self.assertIn('Your address is not part of the 2019 rehearsal', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_request_household_not_required_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hh_cy(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hh_cy,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_cy,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hh_cy)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hh_cy)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.ons_logo_cy, contents)
-                    self.assertIn('Nid yw eich cyfeiriad yn rhan o ymarfer 2019', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_request_household_not_required_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hh_ni(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hh_ni,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_ni,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hh_ni)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hh_ni)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.nisra_logo, contents)
-                    self.assertIn('Your address is not part of the 2019 rehearsal', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_request_household_not_required_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hi_en(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hi_en,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_en,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hi_en)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hi_en)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.ons_logo_en, contents)
-                    self.assertIn('Your address is not part of the 2019 rehearsal', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_request_individual_not_required_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hi_cy(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hi_cy,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_cy,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hi_cy)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hi_cy)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.ons_logo_cy, contents)
-                    self.assertIn('Nid yw eich cyfeiriad yn rhan o ymarfer 2019', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_request_individual_not_required_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_not_required_hi_ni(self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
-            with self.assertLogs('respondent-home', 'INFO'):
-                await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hi_ni,
-                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_ni,
+                data=self.request_code_form_data_valid)
 
-                with self.assertLogs('respondent-home', 'INFO'):
-                    response = await self.client.request(
-                        'GET', self.get_requestcode_notrequired_hi_ni)
+            response = await self.client.request('GET', self.get_requestcode_notrequired_hi_ni)
 
-                    self.assertEqual(response.status, 200)
-                    contents = str(await response.content.read())
-                    self.assertIn(self.nisra_logo, contents)
-                    self.assertIn('Your address is not part of the 2019 rehearsal', contents)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_request_individual_not_required_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hh_en(self):
@@ -698,7 +693,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Your session has timed out due to inactivity', contents)
+        self.assertIn(self.content_timeout_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hh_cy(self):
@@ -710,7 +705,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch', contents)
+        self.assertIn(self.content_timeout_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hh_ni(self):
@@ -722,7 +717,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Your session has timed out due to inactivity', contents)
+        self.assertIn(self.content_timeout_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hi_en(self):
@@ -734,7 +729,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Your session has timed out due to inactivity', contents)
+        self.assertIn(self.content_timeout_en, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hi_cy(self):
@@ -746,7 +741,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch', contents)
+        self.assertIn(self.content_timeout_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_access_code_timeout_hi_ni(self):
@@ -758,7 +753,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Your session has timed out due to inactivity', contents)
+        self.assertIn(self.content_timeout_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_en(self):
@@ -781,8 +776,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn('What is your mobile phone number?', contents)
-                self.assertIn('Enter a valid UK mobile phone number', contents)
+                self.assertIn(self.content_request_household_enter_mobile_title_en, contents)
+                self.assertIn(self.content_request_household_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_cy(self):
@@ -805,8 +800,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn('Beth yw eich rhif', contents)
-                self.assertIn(' dilys yn y Deyrnas Unedig', contents)
+                self.assertIn(self.content_request_household_enter_mobile_title_cy, contents)
+                self.assertIn(self.content_request_household_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_ni(self):
@@ -829,8 +824,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn('What is your mobile phone number?', contents)
-                self.assertIn('Enter a valid UK mobile phone number', contents)
+                self.assertIn(self.content_request_household_enter_mobile_title_en, contents)
+                self.assertIn(self.content_request_household_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hi_en(self):
@@ -853,8 +848,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn('What is your mobile phone number?', contents)
-                self.assertIn('Enter a valid UK mobile phone number', contents)
+                self.assertIn(self.content_request_individual_enter_mobile_title_en, contents)
+                self.assertIn(self.content_request_individual_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hi_cy(self):
@@ -877,8 +872,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn('Beth yw eich rhif', contents)
-                self.assertIn(' dilys yn y Deyrnas Unedig', contents)
+                self.assertIn(self.content_request_individual_enter_mobile_title_cy, contents)
+                self.assertIn(self.content_request_individual_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hi_ni(self):
@@ -901,8 +896,8 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn('What is your mobile phone number?', contents)
-                self.assertIn('Enter a valid UK mobile phone number', contents)
+                self.assertIn(self.content_request_individual_enter_mobile_title_en, contents)
+                self.assertIn(self.content_request_individual_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hh_en(
@@ -928,9 +923,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('Select an address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hh_cy(
@@ -956,9 +951,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
-            self.assertIn('Dewiswch gyfeiriad', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hh_ni(
@@ -984,9 +979,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('Select an address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_en(
@@ -1012,9 +1007,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('Select an address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_cy(
@@ -1040,9 +1035,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
-            self.assertIn('Dewiswch gyfeiriad', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_ni(
@@ -1068,9 +1063,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('Select an address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_en(
@@ -1102,9 +1097,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_cy(
@@ -1136,9 +1131,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Ydy&#39;r cyfeiriad hwn yn gywir?', str(resp_content))
-            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_ni(
@@ -1170,9 +1165,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_en(
@@ -1204,9 +1199,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_cy(
@@ -1238,9 +1233,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Ydy&#39;r cyfeiriad hwn yn gywir?', str(resp_content))
-            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_ni(
@@ -1272,9 +1267,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hh_en(
@@ -1306,9 +1301,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
 
     @unittest_run_loop
@@ -1341,9 +1336,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Ydy&#39;r cyfeiriad hwn yn gywir?', str(resp_content))
-            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hh_ni(
@@ -1375,9 +1370,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_en(
@@ -1409,9 +1404,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_cy(
@@ -1443,9 +1438,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Ydy&#39;r cyfeiriad hwn yn gywir?', str(resp_content))
-            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_ni(
@@ -1477,9 +1472,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('Check and confirm the address', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_error_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hh_en(
@@ -1511,41 +1506,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your postcode?', str(resp_content))
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_no_hh_en(
-            self):
-        with mock.patch('app.requests_handlers.RequestCodeCommon.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_requestcode_enter_address_hh_en,
-                    data=self.request_code_form_data_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_requestcode_selectaddress_hh_en,
-                    data=self.request_code_select_address_form_data_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
-                    data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your postcode?', str(resp_content))
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hh_cy(
@@ -1577,8 +1539,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich cod post?', str(resp_content))
-            self.assertIn("Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.", str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hh_ni(
@@ -1610,8 +1572,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your postcode?', str(resp_content))
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_address_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hi_en(
@@ -1643,8 +1605,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your postcode?', str(resp_content))
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hi_cy(
@@ -1676,8 +1638,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich cod post?', str(resp_content))
-            self.assertIn("Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.", str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hi_ni(
@@ -1709,8 +1671,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your postcode?', str(resp_content))
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_address_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hh_en(
@@ -1719,7 +1681,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment:
+            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment\
+                :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
@@ -1732,8 +1695,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Request a new access code', contents)
-            self.assertIn('You will need to provide:', contents)
+            self.assertIn(self.content_request_household_title_en, contents)
+            self.assertIn(self.content_request_household_secondary_en, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_en)
@@ -1741,8 +1704,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('What is your postcode?', contents)
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', contents)
+            self.assertIn(self.content_request_household_enter_address_title_en, contents)
+            self.assertIn(self.content_request_household_enter_address_secondary_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1756,8 +1719,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1769,8 +1732,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1782,8 +1745,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1795,7 +1758,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this mobile phone number correct?', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1807,7 +1770,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('We have sent an access code', str(resp_content))
+            self.assertIn(self.content_request_household_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hh_cy(
@@ -1829,8 +1792,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Gofyn am god mynediad newydd', contents)
-            self.assertIn('Bydd angen i chi ddarparu:', contents)
+            self.assertIn(self.content_request_household_title_cy, contents)
+            self.assertIn(self.content_request_household_secondary_cy, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_cy)
@@ -1838,8 +1801,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Beth yw eich cod post?', contents)
-            self.assertIn('Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.', contents)
+            self.assertIn(self.content_request_household_enter_address_title_cy, contents)
+            self.assertIn(self.content_request_household_enter_address_secondary_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1853,8 +1816,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1866,8 +1829,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn("Ydy\\\'r cyfeiriad hwn yn gywir?", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1879,8 +1842,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich rhif ff\\xc3\\xb4n symudol?', str(resp_content))
-            self.assertIn("Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn.", str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1892,7 +1855,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn("Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?", str(resp_content))
+            self.assertIn(self.content_request_household_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1904,7 +1867,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Rydym ni wedi anfon cod mynediad', str(resp_content))
+            self.assertIn(self.content_request_household_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hh_ni(
@@ -1926,8 +1889,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Request a new access code', contents)
-            self.assertIn('You will need to provide:', contents)
+            self.assertIn(self.content_request_household_title_en, contents)
+            self.assertIn(self.content_request_household_secondary_en, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_ni)
@@ -1935,8 +1898,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('What is your postcode?', contents)
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', contents)
+            self.assertIn(self.content_request_household_enter_address_title_en, contents)
+            self.assertIn(self.content_request_household_enter_address_secondary_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1950,8 +1913,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_household_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1963,8 +1926,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1976,8 +1939,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1989,7 +1952,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this mobile phone number correct?', str(resp_content))
+            self.assertIn(self.content_request_household_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2001,7 +1964,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('We have sent an access code', str(resp_content))
+            self.assertIn(self.content_request_household_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hi_en(
@@ -2023,8 +1986,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Request an individual access code', contents)
-            self.assertIn('You will need to provide:', contents)
+            self.assertIn(self.content_request_individual_title_en, contents)
+            self.assertIn(self.content_request_individual_secondary_en, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_en)
@@ -2032,8 +1995,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('What is your postcode?', contents)
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', contents)
+            self.assertIn(self.content_request_individual_enter_address_title_en, contents)
+            self.assertIn(self.content_request_individual_enter_address_secondary_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -2047,8 +2010,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2060,8 +2023,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2073,8 +2036,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2086,7 +2049,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('Is this mobile phone number correct?', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2098,7 +2061,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('We have sent an access code', str(resp_content))
+            self.assertIn(self.content_request_individual_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hi_cy(
@@ -2120,8 +2083,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Gofyn am god mynediad unigryw', contents)
-            self.assertIn('Bydd angen i chi ddarparu:', contents)
+            self.assertIn(self.content_request_individual_title_cy, contents)
+            self.assertIn(self.content_request_individual_secondary_cy, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_cy)
@@ -2129,8 +2092,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Beth yw eich cod post?', contents)
-            self.assertIn('Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb.', contents)
+            self.assertIn(self.content_request_individual_enter_address_title_cy, contents)
+            self.assertIn(self.content_request_individual_enter_address_secondary_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -2144,8 +2107,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Dewiswch eich cyfeiriad', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2157,8 +2120,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn("Ydy\\\'r cyfeiriad hwn yn gywir?", str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2170,8 +2133,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich rhif ff\\xc3\\xb4n symudol?', str(resp_content))
-            self.assertIn("Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn.", str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2183,7 +2146,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn("Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?", str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2195,7 +2158,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Rydym ni wedi anfon cod mynediad', str(resp_content))
+            self.assertIn(self.content_request_individual_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_happy_path_hi_ni(
@@ -2217,8 +2180,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Request an individual access code', contents)
-            self.assertIn('You will need to provide:', contents)
+            self.assertIn(self.content_request_individual_title_en, contents)
+            self.assertIn(self.content_request_individual_secondary_en, contents)
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_ni)
@@ -2226,8 +2189,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn('What is your postcode?', contents)
-            self.assertIn('To text you a new code we need to know the address for which you are answering.', contents)
+            self.assertIn(self.content_request_individual_enter_address_title_en, contents)
+            self.assertIn(self.content_request_individual_enter_address_secondary_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -2241,8 +2204,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Select your address', str(resp_content))
-            self.assertIn('1 Gate Reach', str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2254,8 +2217,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this address correct?', str(resp_content))
-            self.assertIn('1 Gate Reach, Exeter, EX2 6GA', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2267,8 +2230,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2280,7 +2243,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('Is this mobile phone number correct?', str(resp_content))
+            self.assertIn(self.content_request_individual_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2292,7 +2255,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('We have sent an access code', str(resp_content))
+            self.assertIn(self.content_request_individual_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hh_en(
@@ -2339,8 +2302,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hh_cy(
@@ -2387,8 +2350,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich rhif ff\\xc3\\xb4n symudol?', str(resp_content))
-            self.assertIn("Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn.", str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hh_ni(
@@ -2435,8 +2398,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_household_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hi_en(
@@ -2483,8 +2446,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hi_cy(
@@ -2531,8 +2494,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('Beth yw eich rhif ff\\xc3\\xb4n symudol?', str(resp_content))
-            self.assertIn("Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn.", str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_no_hi_ni(
@@ -2579,5 +2542,5 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn('What is your mobile phone number?', str(resp_content))
-            self.assertIn('We will send an access code by text to this number.', str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_individual_enter_mobile_secondary_en, str(resp_content))

@@ -771,7 +771,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
