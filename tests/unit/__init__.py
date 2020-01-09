@@ -374,6 +374,10 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/cases/'
         )
 
+        self.rhsvc_cases_by_uprn_url = (
+            f'{rh_svc_url}/cases/uprn/'
+        )
+
         self.form_data = {
             'uac': self.uac, 'action[save_continue]': '',
         }
@@ -558,6 +562,8 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_select_address_form_data_valid = \
             '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
 
+        self.selected_uprn = '10023122451'
+
         self.mobile_valid = '07012345678'
         self.mobile_invalid_short = '07012'
         self.mobile_invalid_long = '0701234567890123456'
@@ -639,6 +645,10 @@ class RHTestCase(AioHTTPTestCase):
             'request-mobile-confirmation': 'no', 'action[save_continue]': ''
         }
 
+        self.request_code_mobile_confirmation_data_invalid = {
+            'request-mobile-confirmation': 'invalid', 'action[save_continue]': ''
+        }
+
         self.request_code_mobile_confirmation_data_empty = {}
 
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
@@ -646,79 +656,49 @@ class RHTestCase(AioHTTPTestCase):
         self.nisra_logo = '/img/nisra-logo-en.svg'
 
         self.content_request_household_title_en = 'Request a new access code'
-        self.content_request_household_secondary_en = 'You will need to provide:'
         self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
-        self.content_request_household_secondary_cy = 'Bydd angen i chi ddarparu:'
         self.content_request_individual_title_en = 'Request an individual access code'
-        self.content_request_individual_secondary_en = 'You will need to provide:'
         self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
-        self.content_request_individual_secondary_cy = 'Bydd angen i chi ddarparu:'
+        self.content_request_secondary_en = 'You will need to provide:'
+        self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
 
-        self.content_request_household_enter_address_title_en = 'What is your postcode?'
-        self.content_request_household_enter_address_secondary_en = \
+        self.content_request_enter_address_title_en = 'What is your postcode?'
+        self.content_request_enter_address_secondary_en = \
             'To text you a new code we need to know the address for which you are answering.'
-        self.content_request_household_enter_address_title_cy = 'Beth yw eich cod post?'
-        self.content_request_household_enter_address_secondary_cy = \
-            "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
-        self.content_request_individual_enter_address_title_en = 'What is your postcode?'
-        self.content_request_individual_enter_address_secondary_en = \
-            'To text you a new code we need to know the address for which you are answering.'
-        self.content_request_individual_enter_address_title_cy = 'Beth yw eich cod post?'
-        self.content_request_individual_enter_address_secondary_cy = \
+        self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
+        self.content_request_enter_address_secondary_cy = \
             "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
 
-        self.content_request_household_select_address_title_en = 'Select your address'
-        self.content_request_household_select_address_error_en = 'Select an address'
-        self.content_request_household_select_address_value_en = '1 Gate Reach'
-        self.content_request_household_select_address_no_results_en = 'We cannot find your address'
-        self.content_request_household_select_address_title_cy = 'Dewiswch eich cyfeiriad'
-        self.content_request_household_select_address_error_cy = 'Dewiswch gyfeiriad'
-        self.content_request_household_select_address_value_cy = '1 Gate Reach'
-        self.content_request_household_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
-        self.content_request_individual_select_address_title_en = 'Select your address'
-        self.content_request_individual_select_address_error_en = 'Select an address'
-        self.content_request_individual_select_address_value_en = '1 Gate Reach'
-        self.content_request_individual_select_address_no_results_en = 'We cannot find your address'
-        self.content_request_individual_select_address_title_cy = 'Dewiswch eich cyfeiriad'
-        self.content_request_individual_select_address_error_cy = 'Dewiswch gyfeiriad'
-        self.content_request_individual_select_address_value_cy = '1 Gate Reach'
-        self.content_request_individual_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+        self.content_request_select_address_title_en = 'Select your address'
+        self.content_request_select_address_error_en = 'Select an address'
+        self.content_request_select_address_value_en = '1 Gate Reach'
+        self.content_request_select_address_no_results_en = 'We cannot find your address'
+        self.content_request_select_address_title_cy = 'Dewiswch eich cyfeiriad'
+        self.content_request_select_address_error_cy = 'Dewiswch gyfeiriad'
+        self.content_request_select_address_value_cy = '1 Gate Reach'
+        self.content_request_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
-        self.content_request_household_confirm_address_title_en = 'Is this address correct?'
-        self.content_request_household_confirm_address_error_en = 'Check and confirm the address'
-        self.content_request_household_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
-        self.content_request_household_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_request_household_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
-        self.content_request_household_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
-        self.content_request_individual_confirm_address_title_en = 'Is this address correct?'
-        self.content_request_individual_confirm_address_error_en = 'Check and confirm the address'
-        self.content_request_individual_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
-        self.content_request_individual_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_request_individual_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
-        self.content_request_individual_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
+        self.content_request_confirm_address_title_en = 'Is this address correct?'
+        self.content_request_confirm_address_error_en = 'Check and confirm the address'
+        self.content_request_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
+        self.content_request_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_request_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        self.content_request_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
 
-        self.content_request_household_enter_mobile_title_en = 'What is your mobile phone number?'
-        self.content_request_household_enter_mobile_error_en = ''
-        self.content_request_household_enter_mobile_secondary_en = 'We will send an access code by text to this number.'
-        self.content_request_household_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
-        self.content_request_household_enter_mobile_error_cy = ""
-        self.content_request_household_enter_mobile_secondary_cy = "Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn."
-        self.content_request_individual_enter_mobile_title_en = 'What is your mobile phone number?'
-        self.content_request_individual_enter_mobile_error_en = ''
-        self.content_request_individual_enter_mobile_secondary_en = 'We will send an access code by text to this number.'
-        self.content_request_individual_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
-        self.content_request_individual_enter_mobile_error_cy = ""
-        self.content_request_individual_enter_mobile_secondary_cy = "Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn."
+        self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
+        self.content_request_enter_mobile_error_en = ''
+        self.content_request_enter_mobile_secondary_en = 'We will send an access code by text to this number.'
+        self.content_request_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
+        self.content_request_enter_mobile_error_cy = ""
+        self.content_request_enter_mobile_secondary_cy = "Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn."
 
-        self.content_request_household_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_household_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
-        self.content_request_individual_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_individual_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_confirm_mobile_title_en = 'Is this mobile phone number correct?'
+        self.content_request_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_confirm_mobile_error_cy = "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
 
-        self.content_request_household_code_sent_title_en = 'We have sent an access code'
-        self.content_request_household_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
-        self.content_request_individual_code_sent_title_en = 'We have sent an access code'
-        self.content_request_individual_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
+        self.content_request_code_sent_title_en = 'We have sent an access code'
+        self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
 
         self.content_500_error_en = 'Sorry, something went wrong'
         self.content_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
@@ -726,11 +706,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_timeout_en = 'Your session has timed out due to inactivity'
         self.content_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
-        self.content_request_household_not_required_en = 'Your address is not part of the 2019 rehearsal'
-        self.content_request_household_not_required_cy = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
-        self.content_request_individual_not_required_en = 'Your address is not part of the 2019 rehearsal'
-        self.content_request_individual_not_required_cy = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+        self.content_request_not_required_en = 'Your address is not part of the 2019 rehearsal'
+        self.content_request_not_required_cy = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
 
+        self.content_start_title_en = 'Start Census'
+        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
+        self.content_start_title_cy = "Dechrau'r Cyfrifiad"
+        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
 
+        self.content_start_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
 
         # yapf: enable
