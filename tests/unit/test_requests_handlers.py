@@ -1564,8 +1564,8 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -1658,11 +1658,12 @@ class TestRequestsHandlers(RHTestCase):
                 'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment:
+            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment\
+                :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -1755,11 +1756,12 @@ class TestRequestsHandlers(RHTestCase):
                 'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment:
+            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment\
+                :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -1852,11 +1854,12 @@ class TestRequestsHandlers(RHTestCase):
                 'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment:
+            'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment\
+                :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -1952,8 +1955,8 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -2051,8 +2054,8 @@ class TestRequestsHandlers(RHTestCase):
 
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
             response = await self.client.request('GET',
@@ -2147,7 +2150,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2195,7 +2198,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2243,7 +2246,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2291,7 +2294,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2339,7 +2342,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2387,7 +2390,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -2435,7 +2438,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2482,7 +2485,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2529,7 +2532,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2576,7 +2579,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2623,7 +2626,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2670,7 +2673,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -2716,7 +2719,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2762,7 +2765,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2808,7 +2811,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2854,7 +2857,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2900,7 +2903,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2946,7 +2949,7 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -3382,6 +3385,553 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_address_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
 
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hh_en(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=E&deliveryChannel=SMS',
+                                    status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_en)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_en,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_en,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hh_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=W&deliveryChannel=SMS', status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_cy)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_cy,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hh_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=N&deliveryChannel=SMS', status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_ni)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_ni,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hi_en(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=E&deliveryChannel=SMS', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_en)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_en,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_en,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hi_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=W&deliveryChannel=SMS', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_cy)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_cy,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_get_fulfilment_error_hi_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=N&deliveryChannel=SMS', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_ni)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_ni,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hh_en(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_en)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_en,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_en,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hh_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_cy)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_cy,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hh_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_household_ni)
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hh_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hh_ni,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hh_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hh_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hi_en(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_en)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_en,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_en,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_en,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hi_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_cy)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_cy,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_cy,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_cy,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_request_code_confirm_mobile_request_fulfilment_error_hi_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.requests_handlers.RequestCodeCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCodeCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]) as mocked_aioresponses\
+                :
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
+
+            await self.client.request('GET', self.get_requestcode_individual_ni)
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hi_ni,
+                    data=self.request_code_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_selectaddress_hi_ni,
+                    data=self.request_code_select_address_form_data_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_address_confirmation_hi_ni,
+                    data=self.request_code_address_confirmation_data_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_requestcode_entermobile_hi_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_confirm_mobile_hi_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)

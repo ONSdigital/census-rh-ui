@@ -370,6 +370,14 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/surveyLaunched'
         )
 
+        self.rhsvc_url_fulfilments = (
+            f'{rh_svc_url}/fulfilments'
+        )
+
+        self.rhsvc_url_request_fulfilment = (
+            f'{rh_svc_url}/cases/'
+        )
+
         self.rhsvc_modify_address = (
             f'{rh_svc_url}/cases/'
         )
@@ -581,15 +589,30 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
-        with open('tests/test_data/rhsvc/case_by_uprn.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn = f
+            self.rhsvc_cases_by_uprn_en = f
 
-        with open('tests/test_data/rhsvc/get_fulfilment.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_cy.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment = f
+            self.rhsvc_cases_by_uprn_cy = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_cases_by_uprn_ni = f
+
+        with open('tests/test_data/rhsvc/get_fulfilment_multi.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_multi = f
+
+        with open('tests/test_data/rhsvc/get_fulfilment_single.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_single = f
 
         with open('tests/test_data/rhsvc/request_fulfilment.json') as fp:
             f = asyncio.Future()
