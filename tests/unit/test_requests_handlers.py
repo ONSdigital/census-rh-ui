@@ -3,7 +3,6 @@ from unittest import mock
 from aiohttp.client_exceptions import ClientConnectionError
 from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
-from aiohttp_session import get_session
 
 from app import (POSTCODE_INVALID_MSG,
                  POSTCODE_INVALID_MSG_CY)
@@ -12,54 +11,6 @@ from . import RHTestCase
 
 
 class TestRequestsHandlers(RHTestCase):
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hh_en(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hh_en,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hh_cy(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hh_cy,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hh_ni(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hh_ni,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_en(
@@ -117,54 +68,6 @@ class TestRequestsHandlers(RHTestCase):
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
                 self.assertIn(self.content_request_select_address_no_results_en, contents)
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hi_en(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hi_en,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hi_cy(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hi_cy,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG_CY, contents)
-
-    @unittest_run_loop
-    async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(
-            self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_requestcode_enter_address_hi_ni,
-                data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
-
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(POSTCODE_INVALID_MSG, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_en(
@@ -561,78 +464,6 @@ class TestRequestsHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_500_error_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hh_en(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_household_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_timeout_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hh_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_household_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_timeout_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hh_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_household_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_timeout_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hi_en(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_individual_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_timeout_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hi_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_individual_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_timeout_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_timeout_hi_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_requestcode_individual_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_timeout_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_en(self):
@@ -3938,3 +3769,231 @@ class TestRequestsHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hh_en(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_household_timeout_en)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_timeout_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hh_cy(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_household_timeout_cy)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_timeout_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hh_ni(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_household_timeout_ni)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_timeout_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hi_en(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_individual_timeout_en)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_timeout_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hi_cy(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_individual_timeout_cy)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_timeout_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_request_code_timeout_hi_ni(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_requestcode_individual_timeout_ni)
+        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_timeout_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_code_enter_address_bad_postcode_hh_en(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_household_en)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_en,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_request_enter_address_title_en, contents)
+        self.assertIn(self.content_request_enter_address_error_en, contents)
+        self.assertIn(self.content_request_enter_address_secondary_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_code_enter_address_bad_postcode_hh_cy(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_household_cy)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_cy,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_request_enter_address_title_cy, contents)
+        self.assertIn(self.content_request_enter_address_error_cy, contents)
+        self.assertIn(self.content_request_enter_address_secondary_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_request_code_enter_address_bad_postcode_hh_ni(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_household_ni)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hh_ni,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_request_enter_address_title_en, contents)
+        self.assertIn(self.content_request_enter_address_error_en, contents)
+        self.assertIn(self.content_request_enter_address_secondary_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_en(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_individual_en)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_en,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_request_enter_address_title_en, contents)
+        self.assertIn(self.content_request_enter_address_error_en, contents)
+        self.assertIn(self.content_request_enter_address_secondary_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_cy(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_individual_cy)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_cy,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_request_enter_address_title_cy, contents)
+        self.assertIn(self.content_request_enter_address_error_cy, contents)
+        self.assertIn(self.content_request_enter_address_secondary_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_enter_address_bad_postcode_hi_ni(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_requestcode_individual_ni)
+
+            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+
+            response = await self.client.request(
+                'POST',
+                self.post_requestcode_enter_address_hi_ni,
+                data=self.request_code_form_data_invalid)
+        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_request_enter_address_title_en, contents)
+        self.assertIn(self.content_request_enter_address_error_en, contents)
+        self.assertIn(self.content_request_enter_address_secondary_en, contents)
