@@ -132,7 +132,9 @@ class ProcessPostcode:
             else:
                 raise InvalidDataError('The postcode is not a valid UK postcode')
 
-        return postcode
+        postcode_formatted = postcode[:-3] + ' ' + postcode[-3:]
+
+        return postcode_formatted
 
 
 class ProcessMobileNumber:
