@@ -109,7 +109,7 @@ async def not_found_error(request):
 
 async def forbidden(request):
     attributes = check_display_region(request)
-    return jinja.render_template('index.html', request, attributes, status=403)
+    return jinja.render_template('start.html', request, attributes, status=403)
 
 
 def setup(app):

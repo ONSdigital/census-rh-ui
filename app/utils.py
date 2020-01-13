@@ -7,6 +7,7 @@ logger = get_logger('respondent-home')
 
 
 class View:
+    valid_display_regions = r'{display_region:\ben|cy|ni\b}'
 
     @staticmethod
     def setup_request(request):
