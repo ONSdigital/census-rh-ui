@@ -26,15 +26,18 @@ def create_error_middleware(overrides):
                 return request.path.startswith(path_prefix + suffix)
 
             if path_starts_with('/ni'):
-                index_resource = request.app.router['IndexNI:get']
-            elif path_starts_with('/dechrau') or path_starts_with('/cy'):
-                index_resource = request.app.router['IndexCY:get']
+                index_resource = request.app.router['Start:get']
+                display_region = 'ni'
+            elif path_starts_with('/cy'):
+                index_resource = request.app.router['Start:get']
+                display_region = 'cy'
             else:
-                index_resource = request.app.router['IndexEN:get']
+                index_resource = request.app.router['Start:get']
+                display_region = 'en'
 
-            if request.path + '/' == index_resource.canonical:
+            if request.path + '/' == index_resource.canonical.replace('{display_region}', display_region):
                 logger.debug('redirecting to index', path=request.path)
-                raise web.HTTPMovedPermanently(index_resource.url_for())
+                raise web.HTTPMovedPermanently(index_resource.url_for(display_region=display_region))
             return await not_found_error(request)
         except web.HTTPForbidden:
             return await forbidden(request)

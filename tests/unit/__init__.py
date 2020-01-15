@@ -248,38 +248,34 @@ class RHTestCase(AioHTTPTestCase):
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
 
         self.get_info = self.app.router['Info:get'].url_for()
-        self.get_index_en = self.app.router['IndexEN:get'].url_for()
-        self.post_index_en = self.app.router['IndexEN:post'].url_for()
-        self.get_address_confirmation_en = self.app.router['AddressConfirmationEN:get'].url_for()
-        self.post_address_confirmation_en = self.app.router['AddressConfirmationEN:post'].url_for()
-        self.get_address_edit_en = self.app.router['AddressEditEN:get'].url_for()
-        self.post_address_edit_en = self.app.router['AddressEditEN:post'].url_for()
-        self.get_language_options_en = self.app.router['StartLanguageOptionsEN:get'].url_for()
-        self.post_language_options_en = self.app.router['StartLanguageOptionsEN:post'].url_for()
-        self.get_select_language_en = self.app.router['StartSelectLanguageEN:get'].url_for()
-        self.post_select_language_en = self.app.router['StartSelectLanguageEN:post'].url_for()
 
-        self.get_index_cy = self.app.router['IndexCY:get'].url_for()
-        self.post_index_cy = self.app.router['IndexCY:post'].url_for()
-        self.get_address_confirmation_cy = self.app.router['AddressConfirmationCY:get'].url_for()
-        self.post_address_confirmation_cy = self.app.router['AddressConfirmationCY:post'].url_for()
-        self.get_address_edit_cy = self.app.router['AddressEditCY:get'].url_for()
-        self.post_address_edit_cy = self.app.router['AddressEditCY:post'].url_for()
-        self.get_language_options_cy = self.app.router['StartLanguageOptionsCY:get'].url_for()
-        self.post_language_options_cy = self.app.router['StartLanguageOptionsCY:post'].url_for()
-        self.get_select_language_cy = self.app.router['StartSelectLanguageCY:get'].url_for()
-        self.post_select_language_cy = self.app.router['StartSelectLanguageCY:post'].url_for()
+        self.get_index_en = self.app.router['Start:get'].url_for(display_region='en')
+        self.post_index_en = self.app.router['Start:post'].url_for(display_region='en')
+        self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
+        self.get_address_confirmation_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
+        self.post_address_confirmation_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
+        self.get_address_edit_en = self.app.router['StartModifyAddress:get'].url_for(display_region='en')
+        self.post_address_edit_en = self.app.router['StartModifyAddress:post'].url_for(display_region='en')
 
-        self.get_index_ni = self.app.router['IndexNI:get'].url_for()
-        self.post_index_ni = self.app.router['IndexNI:post'].url_for()
-        self.get_address_confirmation_ni = self.app.router['AddressConfirmationNI:get'].url_for()
-        self.post_address_confirmation_ni = self.app.router['AddressConfirmationNI:post'].url_for()
-        self.get_address_edit_ni = self.app.router['AddressEditNI:get'].url_for()
-        self.post_address_edit_ni = self.app.router['AddressEditNI:post'].url_for()
-        self.get_language_options_ni = self.app.router['StartLanguageOptionsNI:get'].url_for()
-        self.post_language_options_ni = self.app.router['StartLanguageOptionsNI:post'].url_for()
-        self.get_select_language_ni = self.app.router['StartSelectLanguageNI:get'].url_for()
-        self.post_select_language_ni = self.app.router['StartSelectLanguageNI:post'].url_for()
+        self.get_index_cy = self.app.router['Start:get'].url_for(display_region='cy')
+        self.post_index_cy = self.app.router['Start:post'].url_for(display_region='cy')
+        self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
+        self.get_address_confirmation_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
+        self.post_address_confirmation_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
+        self.get_address_edit_cy = self.app.router['StartModifyAddress:get'].url_for(display_region='cy')
+        self.post_address_edit_cy = self.app.router['StartModifyAddress:post'].url_for(display_region='cy')
+
+        self.get_index_ni = self.app.router['Start:get'].url_for(display_region='ni')
+        self.post_index_ni = self.app.router['Start:post'].url_for(display_region='ni')
+        self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
+        self.get_address_confirmation_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
+        self.post_address_confirmation_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
+        self.get_address_edit_ni = self.app.router['StartModifyAddress:get'].url_for(display_region='ni')
+        self.post_address_edit_ni = self.app.router['StartModifyAddress:post'].url_for(display_region='ni')
+        self.get_language_options_ni = self.app.router['StartNILanguageOptions:get'].url_for()
+        self.post_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
+        self.get_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
+        self.post_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
 
         self.case_id = self.uac_json['caseId']
         self.collection_exercise_id = self.uac_json['collectionExerciseId']
@@ -384,6 +380,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.address_confirmation_data_edit = {
             'address-check-answer': 'No', 'action[save_continue]': ''
+        }
+
+        self.ni_language_option_data_yes = {
+            'language-option': 'Yes', 'action[save_continue]': ''
         }
 
         self.address_edit_data = {

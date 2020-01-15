@@ -13,8 +13,7 @@ from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
                ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
                START_LANGUAGE_OPTION_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY,
-               START_LANGUAGE_OPTION_MSG_CY)
+               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY)
 from .exceptions import InactiveCaseError
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
@@ -38,17 +37,12 @@ class StartCommon(View):
             logger.warn('attempt to use a malformed access code',
                         client_ip=request['client_ip'])
             message = {
-                'EN': BAD_CODE_MSG,
-                'CY': BAD_CODE_MSG_CY,
-                'NI': BAD_CODE_MSG,
-            }[lang]
-            endpoint = {
-                'EN': 'IndexEN:get',
-                'CY': 'IndexCY:get',
-                'NI': 'IndexNI:get',
+                'en': BAD_CODE_MSG,
+                'cy': BAD_CODE_MSG_CY,
+                'ni': BAD_CODE_MSG,
             }[lang]
             flash(request, message)
-            raise HTTPFound(request.app.router[endpoint].url_for())
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=lang))
 
     @staticmethod
     def uac_hash(uac, expected_length=16):
@@ -390,7 +384,7 @@ class StartConfirmAddress(StartCommon):
                                               session.get('adlocation'))
 
         elif address_confirmation == 'No':
-            raise HTTPFound(request.app.router['StartModifyEnterAddress:get'].url_for(display_region=display_region))
+            raise HTTPFound(request.app.router['StartModifyAddress:get'].url_for(display_region=display_region))
 
         else:
             # catch all just in case, should never get here
@@ -404,7 +398,7 @@ class StartConfirmAddress(StartCommon):
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/modify-address/')
-class StartModifyEnterAddress(StartCommon):
+class StartModifyAddress(StartCommon):
     @aiohttp_jinja2.template('start-modify-address.html')
     async def get(self, request):
         """
@@ -415,6 +409,13 @@ class StartModifyEnterAddress(StartCommon):
         await check_permission(request)
         display_region = request.match_info['display_region']
 
+        if display_region == 'cy':
+            locale = 'cy'
+            page_title = "Newid eich cyfeiriad"
+        else:
+            locale = 'en'
+            page_title = 'Change your address'
+
         session = await get_session(request)
         try:
             attributes = session['attributes']
@@ -422,9 +423,14 @@ class StartModifyEnterAddress(StartCommon):
             flash(request, SESSION_TIMEOUT_MSG)
             raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
 
-        attributes['page_title'] = 'Change your address'
-
-        return attributes
+        return {'locale': locale,
+                'page_title': page_title,
+                'display_region': display_region,
+                'addressLine1': attributes['addressLine1'],
+                'addressLine2': attributes['addressLine2'],
+                'addressLine3': attributes['addressLine3'],
+                'townName': attributes['townName'],
+                'postcode': attributes['postcode']}
 
     @aiohttp_jinja2.template('start-modify-address.html')
     async def post(self, request):
@@ -435,6 +441,14 @@ class StartModifyEnterAddress(StartCommon):
         self.log_entry(request, 'start/address-edit')
         await check_permission(request)
         data = await request.post()
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+            page_title = "Newid eich cyfeiriad"
+        else:
+            locale = 'en'
+            page_title = 'Change your address'
 
         session = await get_session(request)
         try:
@@ -451,8 +465,18 @@ class StartModifyEnterAddress(StartCommon):
             logger.info(
                 'error editing address, mandatory field required by eq',
                 client_ip=request['client_ip'])
-            flash(request, ADDRESS_EDIT_MSG)
-            return attributes
+            if display_region == 'cy':
+                flash(request, ADDRESS_EDIT_MSG_CY)
+            else:
+                flash(request, ADDRESS_EDIT_MSG)
+            return {'locale': locale,
+                    'page_title': page_title,
+                    'display_region': display_region,
+                    'addressLine1': attributes['addressLine1'],
+                    'addressLine2': attributes['addressLine2'],
+                    'addressLine3': attributes['addressLine3'],
+                    'townName': attributes['townName'],
+                    'postcode': attributes['postcode']}
 
         try:
             logger.info('raising address modification call',
@@ -473,13 +497,14 @@ class StartModifyEnterAddress(StartCommon):
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
         else:
-            attributes['language'] = 'en'
+            attributes['language'] = locale
+            attributes['display_region'] = display_region
             await self.call_questionnaire(request, case,
                                           attributes, request.app,
                                           session.get('adlocation'))
 
 
-@start_routes.view('/ni/start/language-options')
+@start_routes.view('/ni/start/language-options/')
 class StartNILanguageOptions(Start):
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def get(self, request):
@@ -546,7 +571,7 @@ class StartNILanguageOptions(Start):
             return attributes
 
 
-@start_routes.view('/ni/start/select-language')
+@start_routes.view('/ni/start/select-language/')
 class StartNISelectLanguage(Start):
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def get(self, request):

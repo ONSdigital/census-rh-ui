@@ -89,6 +89,15 @@
 
     <h2 class="u-fs-r--b u-mb-no">{{_('Need help?')}}</h2>
 
-    <p><a href="{{ webchat_link }}" onclick="window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;">{{_('Web chat')}}</a></p>
+    {{ onsButton({
+        'text': _('Web chat'),
+        "type": 'button',
+        "classes": 'u-mb-m, u-mt-s',
+        "url": webchat_link,
+        "newWindow": true,
+        'attributes':
+            {'onclick': "window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=360,height=680'); return false;"}
+        })
+    }}
 
 {% endblock %}
