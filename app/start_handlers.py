@@ -140,8 +140,7 @@ class StartCommon(View):
         """
 
         if not data['address-line-1'].strip():
-            ip = request['client_ip']
-            raise InvalidEqPayLoad(f'Mandatory address field not present {ip}')
+            raise KeyError
         else:
             attributes['addressLine1'] = data['address-line-1'].strip()
             attributes['addressLine2'] = data['address-line-2'].strip()
@@ -163,8 +162,8 @@ class Start(StartCommon):
         :return:
         """
         self.setup_request(request)
-        self.log_entry(request, 'start')
         display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
             page_title = "Dechrau'r Cyfrifiad"
@@ -201,8 +200,8 @@ class Start(StartCommon):
         :return: address confirmation view
         """
         self.setup_request(request)
-        self.log_entry(request, 'start')
         display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
             page_title = "Dechrau'r Cyfrifiad"
@@ -273,12 +272,12 @@ class StartRegionChange(StartCommon):
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        if display_region == 'cy':
-            locale = 'cy'
-            page_title = 'Change of region'
-        else:
-            locale = 'en'
-            page_title = 'Change of region'
+        self.log_entry(request, display_region + '/start/region-change')
+
+        await check_permission(request)
+
+        locale = 'en'
+        page_title = 'Change of region'
 
         self.log_entry(request, 'start/region-change')
         return {
@@ -297,7 +296,7 @@ class StartConfirmAddress(StartCommon):
         """
         display_region = request.match_info['display_region']
         self.setup_request(request)
-        self.log_entry(request, 'start/address-confirmation')
+        self.log_entry(request, display_region + '/start/confirm-address')
         await check_permission(request)
         if display_region == 'cy':
             locale = 'cy'
@@ -331,9 +330,9 @@ class StartConfirmAddress(StartCommon):
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
         self.setup_request(request)
-        self.log_entry(request, 'start/address-confirmation')
         await check_permission(request)
         display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/confirm-address')
         if display_region == 'cy':
             locale = 'cy'
             page_title = "Ydy'r cyfeiriad hwn yn gywir?"
@@ -394,7 +393,14 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG_CY)
             else:
                 flash(request, ADDRESS_CHECK_MSG)
-            return attributes
+            return {'locale': locale,
+                    'page_title': page_title,
+                    'display_region': display_region,
+                    'addressLine1': attributes['addressLine1'],
+                    'addressLine2': attributes['addressLine2'],
+                    'addressLine3': attributes['addressLine3'],
+                    'townName': attributes['townName'],
+                    'postcode': attributes['postcode']}
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/modify-address/')
@@ -405,9 +411,9 @@ class StartModifyAddress(StartCommon):
         Address Edit get.
         """
         self.setup_request(request)
-        self.log_entry(request, 'start/modify-address')
-        await check_permission(request)
         display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/modify-address')
+        await check_permission(request)
 
         if display_region == 'cy':
             locale = 'cy'
@@ -438,10 +444,10 @@ class StartModifyAddress(StartCommon):
         Address Edit flow. Edited address details.
         """
         self.setup_request(request)
-        self.log_entry(request, 'start/address-edit')
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/modify-address')
         await check_permission(request)
         data = await request.post()
-        display_region = request.match_info['display_region']
 
         if display_region == 'cy':
             locale = 'cy'
@@ -461,10 +467,8 @@ class StartModifyAddress(StartCommon):
         try:
             attributes = StartCommon.get_address_details(request, data,
                                                          attributes)
-        except InvalidEqPayLoad:
-            logger.info(
-                'error editing address, mandatory field required by eq',
-                client_ip=request['client_ip'])
+        except KeyError:
+            logger.info('address-line-1 has no value', client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, ADDRESS_EDIT_MSG_CY)
             else:
@@ -472,7 +476,6 @@ class StartModifyAddress(StartCommon):
             return {'locale': locale,
                     'page_title': page_title,
                     'display_region': display_region,
-                    'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
                     'addressLine3': attributes['addressLine3'],
                     'townName': attributes['townName'],
@@ -512,7 +515,7 @@ class StartNILanguageOptions(Start):
         Address Confirmation get.
         """
         self.setup_request(request)
-        self.log_entry(request, 'start/language-options')
+        self.log_entry(request, 'ni/start/language-options')
         await check_permission(request)
 
         session = await get_session(request)
@@ -529,7 +532,7 @@ class StartNILanguageOptions(Start):
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'start/language-options')
+        self.log_entry(request, 'ni/start/language-options')
         await check_permission(request)
         data = await request.post()
 

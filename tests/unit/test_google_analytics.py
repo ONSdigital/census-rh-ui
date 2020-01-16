@@ -21,7 +21,7 @@ class TestGoogleAnalytics(RHTestCase):
         self.app['GTM_AUTH'] = '12345'
         self.app['GTM_PREVIEW'] = 'env-5'
         self.app['GTM_COOKIES_WIN'] = 'x'
-        response = await self.client.request('GET', self.get_index_en)
+        response = await self.client.request('GET', self.get_start_en)
         self.assertEqual(response.status, 200)
         self.assertIn(f"gtm_auth=12345&gtm_preview=env-5&gtm_cookies_win=x".encode(), await
                       response.content.read())
@@ -31,7 +31,7 @@ class TestGoogleAnalytics(RHTestCase):
         self.app['GTM_AUTH'] = '12345'
         self.app['GTM_PREVIEW'] = 'env-5'
         self.app['GTM_COOKIES_WIN'] = 'x'
-        response = await self.client.request('GET', self.get_index_cy)
+        response = await self.client.request('GET', self.get_start_cy)
         self.assertEqual(response.status, 200)
         self.assertIn(f"gtm_auth=12345&gtm_preview=env-5&gtm_cookies_win=x".encode(), await
                       response.content.read())
@@ -41,7 +41,7 @@ class TestGoogleAnalytics(RHTestCase):
         self.app['GTM_AUTH'] = '12345'
         self.app['GTM_PREVIEW'] = 'env-5'
         self.app['GTM_COOKIES_WIN'] = 'x'
-        response = await self.client.request('GET', self.get_index_ni)
+        response = await self.client.request('GET', self.get_start_ni)
         self.assertEqual(response.status, 200)
         self.assertIn(f"gtm_auth=12345&gtm_preview=env-5&gtm_cookies_win=x".encode(), await
                       response.content.read())
@@ -50,7 +50,7 @@ class TestGoogleAnalytics(RHTestCase):
     async def test_google_analytics_script_not_rendered_base_start_en(self):
         self.app['GTM_AUTH'] = ''
 
-        response = await self.client.request('GET', self.get_index_en)
+        response = await self.client.request('GET', self.get_start_en)
         self.assertEqual(response.status, 200)
         self.assertNotIn(f"ga('gtm_auth', '', 'auto');".encode(), await
                          response.content.read())
@@ -59,7 +59,7 @@ class TestGoogleAnalytics(RHTestCase):
     async def test_google_analytics_script_not_rendered_base_start_cy(self):
         self.app['GTM_AUTH'] = ''
 
-        response = await self.client.request('GET', self.get_index_cy)
+        response = await self.client.request('GET', self.get_start_cy)
         self.assertEqual(response.status, 200)
         self.assertNotIn(f"ga('gtm_auth', '', 'auto');".encode(), await
                          response.content.read())
@@ -68,7 +68,7 @@ class TestGoogleAnalytics(RHTestCase):
     async def test_google_analytics_script_not_rendered_base_start_ni(self):
         self.app['GTM_AUTH'] = ''
 
-        response = await self.client.request('GET', self.get_index_ni)
+        response = await self.client.request('GET', self.get_start_ni)
         self.assertEqual(response.status, 200)
         self.assertNotIn(f"ga('gtm_auth', '', 'auto');".encode(), await
                          response.content.read())

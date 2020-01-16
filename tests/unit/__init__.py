@@ -232,8 +232,8 @@ class RHTestCase(AioHTTPTestCase):
         # This section gets ugly if YAPF reformats it
         # yapf: disable
         super().setUp()  # NB: setUp the server first so we can use self.app
-        with open('tests/test_data/rhsvc/uac.json') as fp:
-            self.uac_json = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_en.json') as fp:
+            self.uac_json_en = json.load(fp)
 
         with open('tests/test_data/rhsvc/uac-cy.json') as fp:
             self.uac_json_cy = json.load(fp)
@@ -249,36 +249,36 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_info = self.app.router['Info:get'].url_for()
 
-        self.get_index_en = self.app.router['Start:get'].url_for(display_region='en')
-        self.post_index_en = self.app.router['Start:post'].url_for(display_region='en')
+        self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
+        self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
         self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
-        self.get_address_confirmation_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
-        self.post_address_confirmation_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
-        self.get_address_edit_en = self.app.router['StartModifyAddress:get'].url_for(display_region='en')
-        self.post_address_edit_en = self.app.router['StartModifyAddress:post'].url_for(display_region='en')
+        self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
+        self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
+        self.get_start_modify_address_en = self.app.router['StartModifyAddress:get'].url_for(display_region='en')
+        self.post_start_modify_address_en = self.app.router['StartModifyAddress:post'].url_for(display_region='en')
 
-        self.get_index_cy = self.app.router['Start:get'].url_for(display_region='cy')
-        self.post_index_cy = self.app.router['Start:post'].url_for(display_region='cy')
+        self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
+        self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
         self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
-        self.get_address_confirmation_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
-        self.post_address_confirmation_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
-        self.get_address_edit_cy = self.app.router['StartModifyAddress:get'].url_for(display_region='cy')
-        self.post_address_edit_cy = self.app.router['StartModifyAddress:post'].url_for(display_region='cy')
+        self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
+        self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
+        self.get_start_modify_address_cy = self.app.router['StartModifyAddress:get'].url_for(display_region='cy')
+        self.post_start_modify_address_cy = self.app.router['StartModifyAddress:post'].url_for(display_region='cy')
 
-        self.get_index_ni = self.app.router['Start:get'].url_for(display_region='ni')
-        self.post_index_ni = self.app.router['Start:post'].url_for(display_region='ni')
+        self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
+        self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
         self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
-        self.get_address_confirmation_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
-        self.post_address_confirmation_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
-        self.get_address_edit_ni = self.app.router['StartModifyAddress:get'].url_for(display_region='ni')
-        self.post_address_edit_ni = self.app.router['StartModifyAddress:post'].url_for(display_region='ni')
-        self.get_language_options_ni = self.app.router['StartNILanguageOptions:get'].url_for()
-        self.post_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
-        self.get_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
-        self.post_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
+        self.get_start_confirm_address_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
+        self.post_start_confirm_address_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
+        self.get_start_modify_address_ni = self.app.router['StartModifyAddress:get'].url_for(display_region='ni')
+        self.post_start_modify_address_ni = self.app.router['StartModifyAddress:post'].url_for(display_region='ni')
+        self.get_start_language_options_ni = self.app.router['StartNILanguageOptions:get'].url_for()
+        self.post_start_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
+        self.get_start_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
+        self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
 
-        self.case_id = self.uac_json['caseId']
-        self.collection_exercise_id = self.uac_json['collectionExerciseId']
+        self.case_id = self.uac_json_en['caseId']
+        self.collection_exercise_id = self.uac_json_en['collectionExerciseId']
         self.eq_id = 'census'
         self.survey = 'CENSUS'
         self.form_type = 'individual_gb_eng'
@@ -287,19 +287,19 @@ class RHTestCase(AioHTTPTestCase):
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = '2019'
         self.uac = 'w4nwwpphjjptp7fn'
-        self.uacHash = self.uac_json['uacHash']
-        self.uprn = self.uac_json['address']['uprn']
-        self.response_id = self.uac_json['questionnaireId']
-        self.questionnaire_id = self.uac_json['questionnaireId']
-        self.case_type = self.uac_json['caseType']
+        self.uacHash = self.uac_json_en['uacHash']
+        self.uprn = self.uac_json_en['address']['uprn']
+        self.response_id = self.uac_json_en['questionnaireId']
+        self.questionnaire_id = self.uac_json_en['questionnaireId']
+        self.case_type = self.uac_json_en['caseType']
         self.channel = 'rh'
         self.attributes_en = {
-            'addressLine1': self.uac_json['address']['addressLine1'],
-            'addressLine2': self.uac_json['address']['addressLine2'],
-            'addressLine3': self.uac_json['address']['addressLine3'],
-            'townName': self.uac_json['address']['townName'],
-            'postcode': self.uac_json['address']['postcode'],
-            'uprn': self.uac_json['address']['uprn'],
+            'addressLine1': self.uac_json_en['address']['addressLine1'],
+            'addressLine2': self.uac_json_en['address']['addressLine2'],
+            'addressLine3': self.uac_json_en['address']['addressLine3'],
+            'townName': self.uac_json_en['address']['townName'],
+            'postcode': self.uac_json_en['address']['postcode'],
+            'uprn': self.uac_json_en['address']['uprn'],
             'language': 'en',
             'display_region': 'en'
         }
@@ -326,7 +326,7 @@ class RHTestCase(AioHTTPTestCase):
             'ru_ref': self.uprn,
             'case_id': self.case_id,
             'language_code': 'en',
-            'display_address': self.uac_json['address']['addressLine1'] + ', ' + self.uac_json['address']['addressLine2'],
+            'display_address': self.uac_json_en['address']['addressLine1'] + ', ' + self.uac_json_en['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
@@ -370,24 +370,51 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/cases/'
         )
 
+        self.rhsvc_put_modify_address = (
+            f'{rh_svc_url}/cases/e37b0d05-3643-445e-8e71-73f7df3ff95e/address'
+        )
+
         self.form_data = {
             'uac': self.uac, 'action[save_continue]': '',
         }
 
-        self.address_confirmation_data = {
+        self.start_address_confirmation_data_yes = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
-        self.address_confirmation_data_edit = {
+        self.start_address_confirmation_data_no = {
             'address-check-answer': 'No', 'action[save_continue]': ''
         }
 
-        self.ni_language_option_data_yes = {
+        self.start_address_confirmation_data_invalid = {
+            'address-check-answer': 'Invalid', 'action[save_continue]': ''
+        }
+
+        self.start_address_confirmation_data_empty = {}
+
+        self.start_ni_language_option_data_yes = {
             'language-option': 'Yes', 'action[save_continue]': ''
         }
 
-        self.address_edit_data = {
+        self.start_ni_language_option_data_no = {
+            'language-option': 'No', 'action[save_continue]': ''
+        }
+
+        self.start_ni_language_option_data_invalid = {
+            'language-option': 'Invalid', 'action[save_continue]': ''
+        }
+
+        self.start_ni_language_option_data_empty = {}
+
+        self.start_modify_address_data_valid = {
             'address-line-1': 'ONS',
+            'address-line-2': 'Segensworth Road',
+            'address-line-3': 'Titchfield',
+            'address-town': 'Fareham',
+            'address-postcode': 'PO15 5RR'
+        }
+
+        self.start_modify_address_data_incomplete = {
             'address-line-2': 'Segensworth Road',
             'address-line-3': 'Titchfield',
             'address-town': 'Fareham',
@@ -397,11 +424,11 @@ class RHTestCase(AioHTTPTestCase):
         self.modify_address_data = {
             'caseId': self.case_id,
             'uprn': self.uprn,
-            'addressLine1': self.uac_json['address']['addressLine1'],
-            'addressLine2': self.uac_json['address']['addressLine2'],
-            'addressLine3': self.uac_json['address']['addressLine3'],
-            'townName': self.uac_json['address']['townName'],
-            'postcode': self.uac_json['address']['postcode']
+            'addressLine1': self.uac_json_en['address']['addressLine1'],
+            'addressLine2': self.uac_json_en['address']['addressLine2'],
+            'addressLine3': self.uac_json_en['address']['addressLine3'],
+            'townName': self.uac_json_en['address']['townName'],
+            'postcode': self.uac_json_en['address']['postcode']
             }
 
         self.language_options_ni_eng_data = {

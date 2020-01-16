@@ -18,7 +18,7 @@ from . import RHTestCase, build_eq_raises, skip_encrypt
 class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_get_index_en(self):
-        response = await self.client.request('GET', self.get_index_en)
+        response = await self.client.request('GET', self.get_start_en)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Enter the 16 character code printed on the letter',
@@ -29,7 +29,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_get_index_cy(self):
-        response = await self.client.request('GET', self.get_index_cy)
+        response = await self.client.request('GET', self.get_start_cy)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Rhowch y cod 16 nod sydd', contents)
@@ -39,7 +39,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_get_index_ni(self):
-        response = await self.client.request('GET', self.get_index_ni)
+        response = await self.client.request('GET', self.get_start_ni)
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn('Enter the 16 character code printed on the letter',
@@ -51,10 +51,10 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  allow_redirects=False,
                                                  data=self.form_data)
 
@@ -68,7 +68,7 @@ class TestStartHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  allow_redirects=False,
                                                  data=self.form_data)
 
@@ -82,7 +82,7 @@ class TestStartHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
 
@@ -94,7 +94,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_with_build_en_region_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-ENG'
@@ -107,7 +107,7 @@ class TestStartHandlers(RHTestCase):
                 'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -117,9 +117,9 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
 
             self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -158,7 +158,7 @@ class TestStartHandlers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -168,9 +168,9 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_ni,
+                    self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -178,7 +178,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_language_options_ni,
+                    self.post_start_language_options_ni,
                     allow_redirects=False,
                     data=self.language_options_ni_eng_data)
 
@@ -219,7 +219,7 @@ class TestStartHandlers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -229,9 +229,9 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_ni,
+                    self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -239,7 +239,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_language_options_ni,
+                    self.post_start_language_options_ni,
                     allow_redirects=False,
                     data=self.language_options_ni_not_eng_data)
 
@@ -249,7 +249,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_select_language_ni,
+                    self.post_start_select_language_ni,
                     allow_redirects=False,
                     data=self.select_language_ni_ul_data)
 
@@ -290,7 +290,7 @@ class TestStartHandlers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -300,9 +300,9 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_ni,
+                    self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -310,7 +310,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_language_options_ni,
+                    self.post_start_language_options_ni,
                     allow_redirects=False,
                     data=self.language_options_ni_not_eng_data)
 
@@ -320,7 +320,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_select_language_ni,
+                    self.post_start_select_language_ni,
                     allow_redirects=False,
                     data=self.select_language_ni_ga_data)
 
@@ -361,7 +361,7 @@ class TestStartHandlers(RHTestCase):
                 'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -371,9 +371,9 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_ni,
+                    self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -381,7 +381,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_language_options_ni,
+                    self.post_start_language_options_ni,
                     allow_redirects=False,
                     data=self.language_options_ni_not_eng_data)
 
@@ -391,7 +391,7 @@ class TestStartHandlers(RHTestCase):
 
                 response = await self.client.request(
                     'POST',
-                    self.post_select_language_ni,
+                    self.post_start_select_language_ni,
                     allow_redirects=False,
                     data=self.select_language_ni_en_data)
 
@@ -419,7 +419,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_address_edit_with_build_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -432,7 +432,7 @@ class TestStartHandlers(RHTestCase):
                 'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -440,16 +440,16 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data_edit)
+                    data=self.start_address_confirmation_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
                     'POST',
-                    self.post_address_edit_en,
+                    self.post_start_modify_address_en,
                     allow_redirects=False,
-                    data=self.address_edit_data)
+                    data=self.start_modify_address_data_valid)
 
                 self.assertLogEvent(logs_home,
                                     'raising address modification call')
@@ -492,7 +492,7 @@ class TestStartHandlers(RHTestCase):
                 'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_cy}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -500,16 +500,16 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_cy,
+                    self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.address_confirmation_data_edit)
+                    data=self.start_address_confirmation_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
                     'POST',
-                    self.post_address_edit_cy,
+                    self.post_start_modify_address_cy,
                     allow_redirects=False,
-                    data=self.address_edit_data)
+                    data=self.start_modify_address_data_valid)
 
                 self.assertLogEvent(logs_home,
                                     'raising address modification call')
@@ -537,7 +537,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_address_edit_with_build_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -550,7 +550,7 @@ class TestStartHandlers(RHTestCase):
                 'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -558,16 +558,16 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_ni,
+                    self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.address_confirmation_data_edit)
+                    data=self.start_address_confirmation_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
                     'POST',
-                    self.post_address_edit_ni,
+                    self.post_start_modify_address_ni,
                     allow_redirects=False,
-                    data=self.address_edit_data)
+                    data=self.start_modify_address_data_valid)
 
                 self.assertLogEvent(logs_home,
                                     'raising address modification call')
@@ -595,11 +595,11 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_build_raises_InvalidEqPayLoad_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -610,9 +610,9 @@ class TestStartHandlers(RHTestCase):
                 # decorator makes URL constructor raise InvalidEqPayLoad when build() is called in handler
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
@@ -629,7 +629,7 @@ class TestStartHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -640,9 +640,9 @@ class TestStartHandlers(RHTestCase):
                 # decorator makes URL constructor raise InvalidEqPayLoad when build() is called in handler
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_cy,
+                    self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
@@ -659,7 +659,7 @@ class TestStartHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched)
 
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  allow_redirects=False,
                                                  data=self.form_data)
             self.assertEqual(response.status, 302)
@@ -667,9 +667,9 @@ class TestStartHandlers(RHTestCase):
                           response.headers['Location'])
 
             response = await self.client.request('POST',
-                                                 self.post_address_confirmation_ni,
+                                                 self.post_start_confirm_address_ni,
                                                  allow_redirects=False,
-                                                 data=self.address_confirmation_data)
+                                                 data=self.start_address_confirmation_data_yes)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/language-options/',
                           response.headers['Location'])
@@ -678,9 +678,9 @@ class TestStartHandlers(RHTestCase):
                 # decorator makes URL constructor raise InvalidEqPayLoad when build() is called in handler
                 response = await self.client.request(
                     'POST',
-                    self.post_language_options_ni,
+                    self.post_start_language_options_ni,
                     allow_redirects=False,
-                    data=self.ni_language_option_data_yes)
+                    data=self.start_ni_language_option_data_yes)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
@@ -696,7 +696,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -712,7 +712,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -728,7 +728,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -744,7 +744,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -760,7 +760,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -776,7 +776,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -792,7 +792,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -808,7 +808,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -824,7 +824,7 @@ class TestStartHandlers(RHTestCase):
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
-                                                 self.post_index_ni,
+                                                 self.post_start_ni,
                                                  data=form_data)
         self.assertLogEvent(cm, 'attempt to use a malformed access code')
 
@@ -835,7 +835,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_uac_active_missing_en(self):
-        uac_json = self.uac_json.copy()
+        uac_json = self.uac_json_en.copy()
         del uac_json['active']
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -843,7 +843,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -862,7 +862,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -881,7 +881,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -892,7 +892,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_uac_inactive_en(self):
-        uac_json = self.uac_json.copy()
+        uac_json = self.uac_json_en.copy()
         uac_json['active'] = False
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -900,7 +900,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -919,7 +919,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -938,7 +938,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
@@ -949,7 +949,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_uac_case_status_not_found_en(self):
-        uac_json = self.uac_json.copy()
+        uac_json = self.uac_json_en.copy()
         uac_json['caseStatus'] = 'NOT_FOUND'
 
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -957,7 +957,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
@@ -976,7 +976,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
@@ -995,7 +995,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
@@ -1012,7 +1012,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -1031,7 +1031,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -1050,7 +1050,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -1068,7 +1068,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -1084,7 +1084,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -1100,7 +1100,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -1116,7 +1116,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -1132,7 +1132,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -1148,7 +1148,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -1164,7 +1164,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
@@ -1182,7 +1182,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
@@ -1200,7 +1200,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
@@ -1218,7 +1218,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -1234,7 +1234,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -1251,7 +1251,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -1267,7 +1267,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -1283,7 +1283,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -1300,7 +1300,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -1316,7 +1316,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_en,
+                                                     self.post_start_en,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -1332,7 +1332,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_cy,
+                                                     self.post_start_cy,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -1349,7 +1349,7 @@ class TestStartHandlers(RHTestCase):
 
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
-                                                     self.post_index_ni,
+                                                     self.post_start_ni,
                                                      data=self.form_data)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -1363,21 +1363,21 @@ class TestStartHandlers(RHTestCase):
     async def test_post_address_confirmation_survey_launched_connection_error_en(
             self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched,
                         exception=ClientConnectionError('Failed'))
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
@@ -1397,16 +1397,16 @@ class TestStartHandlers(RHTestCase):
                         exception=ClientConnectionError('Failed'))
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_cy,
+                    self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
@@ -1419,20 +1419,20 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_401_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched, status=401)
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1447,16 +1447,16 @@ class TestStartHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched, status=401)
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_cy,
+                    self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1468,19 +1468,19 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_404_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched, status=404)
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             response = await self.client.request(
                 'POST',
-                self.post_address_confirmation_en,
+                self.post_start_confirm_address_en,
                 allow_redirects=False,
-                data=self.address_confirmation_data)
+                data=self.start_address_confirmation_data_yes)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1494,15 +1494,15 @@ class TestStartHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched, status=404)
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             response = await self.client.request(
                 'POST',
-                self.post_address_confirmation_cy,
+                self.post_start_confirm_address_cy,
                 allow_redirects=False,
-                data=self.address_confirmation_data)
+                data=self.start_address_confirmation_data_yes)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1513,20 +1513,20 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_address_confirmation_get_survey_launched_500_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.post(self.rhsvc_url_surveylaunched, status=500)
 
             response = await self.client.request('POST',
-                                                 self.post_index_en,
+                                                 self.post_start_en,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_en,
+                    self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
@@ -1541,16 +1541,16 @@ class TestStartHandlers(RHTestCase):
             mocked.post(self.rhsvc_url_surveylaunched, status=500)
 
             response = await self.client.request('POST',
-                                                 self.post_index_cy,
+                                                 self.post_start_cy,
                                                  data=self.form_data)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_address_confirmation_cy,
+                    self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.address_confirmation_data)
+                    data=self.start_address_confirmation_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
@@ -1764,7 +1764,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_confirmation_direct_access_en(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
-                'GET', self.get_address_confirmation_en, allow_redirects=False)
+                'GET', self.get_start_confirm_address_en, allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1776,7 +1776,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_confirmation_direct_access_cy(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
-                'GET', self.get_address_confirmation_cy, allow_redirects=False)
+                'GET', self.get_start_confirm_address_cy, allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1787,7 +1787,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_confirmation_direct_access_ni(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
-                'GET', self.get_address_confirmation_ni, allow_redirects=False)
+                'GET', self.get_start_confirm_address_ni, allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1800,9 +1800,9 @@ class TestStartHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'POST',
-                self.post_address_confirmation_en,
+                self.post_start_confirm_address_en,
                 allow_redirects=False,
-                data=self.address_confirmation_data)
+                data=self.start_address_confirmation_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1815,9 +1815,9 @@ class TestStartHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'POST',
-                self.post_address_confirmation_cy,
+                self.post_start_confirm_address_cy,
                 allow_redirects=False,
-                data=self.address_confirmation_data)
+                data=self.start_address_confirmation_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1829,9 +1829,9 @@ class TestStartHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request(
                 'POST',
-                self.post_address_confirmation_ni,
+                self.post_start_confirm_address_ni,
                 allow_redirects=False,
-                data=self.address_confirmation_data)
+                data=self.start_address_confirmation_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1843,7 +1843,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_edit_direct_access_en(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.get_address_edit_en,
+                                                 self.get_start_modify_address_en,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1856,7 +1856,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_edit_direct_access_cy(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.get_address_edit_cy,
+                                                 self.get_start_modify_address_cy,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1868,7 +1868,7 @@ class TestStartHandlers(RHTestCase):
     async def test_get_address_edit_direct_access_ni(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.get_address_edit_ni,
+                                                 self.get_start_modify_address_ni,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1881,7 +1881,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_address_edit_direct_access_en(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.post_address_edit_en,
+                                                 self.post_start_modify_address_en,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1894,7 +1894,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_address_edit_direct_access_cy(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.post_address_edit_cy,
+                                                 self.post_start_modify_address_cy,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1906,7 +1906,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_address_edit_direct_access_ni(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
             response = await self.client.request('GET',
-                                                 self.post_address_edit_ni,
+                                                 self.post_start_modify_address_ni,
                                                  allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
@@ -1914,3 +1914,548 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Enter the 16 character code printed on the letter',
                       contents)
+
+    @unittest_run_loop
+    async def test_get_change_of_region(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            response = await self.client.request('GET', self.get_start_region_change_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/region-change'")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Change of region', contents)
+
+    @unittest_run_loop
+    async def test_get_change_of_region_en_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            response = await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            self.assertIn('/ni/start/region-change/', response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_change_of_region_cy_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            response = await self.client.request('POST',
+                                                 self.post_start_cy,
+                                                 allow_redirects=False,
+                                                 data=self.form_data)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/ni/start/region-change/',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_change_of_region_cy_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            response = await self.client.request('POST',
+                                                 self.post_start_cy,
+                                                 allow_redirects=False,
+                                                 data=self.form_data)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/en/start/region-change/',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_change_of_region_ni_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            response = await self.client.request('POST',
+                                                 self.post_start_ni,
+                                                 allow_redirects=False,
+                                                 data=self.form_data)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/en/start/region-change/',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_change_of_region_ni_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            response = await self.client.request('POST',
+                                                 self.post_start_ni,
+                                                 allow_redirects=False,
+                                                 data=self.form_data)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/en/start/region-change/',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_empty_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_en,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Is this address correct?', contents)
+            self.assertIn('Please check and confirm address', contents)
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_empty_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_cy,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn("Ydy\\\'r cyfeiriad hwn yn gywir?", contents)
+            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau.", contents)
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_empty_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Is this address correct?', contents)
+            self.assertIn('Please check and confirm address', contents)
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_invalid_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_en,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Is this address correct?', contents)
+            self.assertIn('Please check and confirm address', contents)
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_invalid_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_cy,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn("Ydy\\\'r cyfeiriad hwn yn gywir?", contents)
+            self.assertIn("Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau.", contents)
+
+    @unittest_run_loop
+    async def test_post_start_address_confirm_invalid_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            response = await self.client.request('POST', self.post_start_confirm_address_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_address_confirmation_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Is this address correct?', contents)
+            self.assertIn('Please check and confirm address', contents)
+
+    @unittest_run_loop
+    async def test_get_start_modify_address_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_en,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+
+            response = await self.client.request('GET', self.get_start_modify_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Change your address', contents)
+
+    @unittest_run_loop
+    async def test_get_start_modify_address_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_cy,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+
+            response = await self.client.request('GET', self.get_start_modify_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('Newid eich cyfeiriad', contents)
+
+    @unittest_run_loop
+    async def test_get_start_modify_address_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            response = await self.client.request('GET', self.get_start_modify_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Change your address', contents)
+
+    @unittest_run_loop
+    async def test_post_start_modify_address_invalid_data_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_en,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+
+            response = await self.client.request('POST', self.post_start_modify_address_en,
+                                                 allow_redirects=False,
+                                                 data=self.start_modify_address_data_incomplete)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "address-line-1 has no value")
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('Change your address', contents)
+            self.assertIn('Enter address to continue', contents)
+
+    @unittest_run_loop
+    async def test_post_start_modify_address_invalid_data_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_cy,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+
+            response = await self.client.request('POST', self.post_start_modify_address_cy,
+                                                 allow_redirects=False,
+                                                 data=self.start_modify_address_data_incomplete)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "address-line-1 has no value")
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('Newid eich cyfeiriad', contents)
+            self.assertIn('Nodwch gyfeiriad i barhau', contents)
+
+    @unittest_run_loop
+    async def test_post_start_modify_address_invalid_data_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            response = await self.client.request('POST', self.post_start_modify_address_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_modify_address_data_incomplete)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
+
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "address-line-1 has no value")
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Change your address', contents)
+            self.assertIn('Enter address to continue', contents)
+
+    @unittest_run_loop
+    async def test_get_start_modify_address_put_error_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={}, status=400)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            response = await self.client.request('POST', self.post_start_modify_address_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_modify_address_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
+
+            self.assertLogEvent(cm, "error raising address modification call")
+
+            self.assertEqual(response.status, 500)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Sorry, something went wrong', contents)
+
+    @unittest_run_loop
+    async def test_get_start_ni_language_options(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            await self.client.request('POST', self.post_start_modify_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_modify_address_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
+
+            response = await self.client.request('GET', self.get_start_language_options_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
+
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Would you like to complete the census in English?', contents)
+
+    @unittest_run_loop
+    async def test_post_start_ni_language_options_invalid(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            await self.client.request('POST', self.post_start_modify_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_modify_address_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
+
+            response = await self.client.request('POST', self.post_start_language_options_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_ni_language_option_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
+
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Would you like to complete the census in English?', contents)
+            self.assertIn('Select a language option', contents)
+
+    @unittest_run_loop
+    async def test_post_start_ni_language_options_empty(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_address_confirmation_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            await self.client.request('POST', self.post_start_modify_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_modify_address_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
+
+            response = await self.client.request('POST', self.post_start_language_options_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_ni_language_option_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
+
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('Would you like to complete the census in English?', contents)
+            self.assertIn('Select a language option', contents)
