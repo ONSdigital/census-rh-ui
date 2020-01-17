@@ -374,23 +374,23 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/cases/e37b0d05-3643-445e-8e71-73f7df3ff95e/address'
         )
 
-        self.form_data = {
+        self.start_data_valid = {
             'uac': self.uac, 'action[save_continue]': '',
         }
 
-        self.start_address_confirmation_data_yes = {
+        self.start_confirm_address_data_yes = {
             'address-check-answer': 'Yes', 'action[save_continue]': ''
         }
 
-        self.start_address_confirmation_data_no = {
+        self.start_confirm_address_data_no = {
             'address-check-answer': 'No', 'action[save_continue]': ''
         }
 
-        self.start_address_confirmation_data_invalid = {
+        self.start_confirm_address_data_invalid = {
             'address-check-answer': 'Invalid', 'action[save_continue]': ''
         }
 
-        self.start_address_confirmation_data_empty = {}
+        self.start_confirm_address_data_empty = {}
 
         self.start_ni_language_option_data_yes = {
             'language-option': 'Yes', 'action[save_continue]': ''
@@ -421,7 +421,7 @@ class RHTestCase(AioHTTPTestCase):
             'address-postcode': 'PO15 5RR'
         }
 
-        self.modify_address_data = {
+        self.start_modify_address_data = {
             'caseId': self.case_id,
             'uprn': self.uprn,
             'addressLine1': self.uac_json_en['address']['addressLine1'],
@@ -431,25 +431,23 @@ class RHTestCase(AioHTTPTestCase):
             'postcode': self.uac_json_en['address']['postcode']
             }
 
-        self.language_options_ni_eng_data = {
-            'language-option': 'Yes', 'action[save_continue]': ''
-        }
-
-        self.language_options_ni_not_eng_data = {
-            'language-option': 'No', 'action[save_continue]': ''
-        }
-
-        self.select_language_ni_ul_data = {
+        self.start_ni_select_language_data_ul = {
             'language-option': 'ulster-scotch', 'action[save_continue]': ''
         }
 
-        self.select_language_ni_ga_data = {
+        self.start_ni_select_language_data_ga = {
             'language-option': 'gaeilge', 'action[save_continue]': ''
         }
 
-        self.select_language_ni_en_data = {
+        self.start_ni_select_language_data_en = {
             'language-option': 'english', 'action[save_continue]': ''
         }
+
+        self.start_ni_select_language_data_invalid = {
+            'language-option': 'invalid', 'action[save_continue]': ''
+        }
+
+        self.start_ni_select_language_data_empty = {}
 
         self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
         self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()

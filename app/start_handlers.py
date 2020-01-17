@@ -356,7 +356,7 @@ class StartConfirmAddress(StartCommon):
         try:
             address_confirmation = data['address-check-answer']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, ADDRESS_CHECK_MSG_CY)
@@ -387,7 +387,7 @@ class StartConfirmAddress(StartCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, ADDRESS_CHECK_MSG_CY)
@@ -462,7 +462,7 @@ class StartModifyAddress(StartCommon):
             case = session['case']
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for())
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
 
         try:
             attributes = StartCommon.get_address_details(request, data,
@@ -518,16 +518,9 @@ class StartNILanguageOptions(Start):
         self.log_entry(request, 'ni/start/language-options')
         await check_permission(request)
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region='ni'))
-
-        attributes['page_title'] = 'Would you like to complete the census in English?'
-
-        return attributes
+        return {'locale': 'en',
+                'page_title': 'Would you like to complete the census in English?',
+                'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
@@ -550,7 +543,7 @@ class StartNILanguageOptions(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error',
+            logger.info('ni language option error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
             return attributes
@@ -568,10 +561,12 @@ class StartNILanguageOptions(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error',
+            logger.info('language selection error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return attributes
+            return {'locale': 'en',
+                    'page_title': 'Would you like to complete the census in English?',
+                    'display_region': 'ni'}
 
 
 @start_routes.view('/ni/start/select-language/')
@@ -582,24 +577,17 @@ class StartNISelectLanguage(Start):
         Address Confirmation get.
         """
         self.setup_request(request)
-        self.log_entry(request, 'start/select-language')
+        self.log_entry(request, 'ni/start/ni-select-language')
         await check_permission(request)
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region='ni'))
-
-        attributes['page_title'] = 'Choose your language'
-
-        return attributes
+        return {'locale': 'en',
+                'page_title': 'Choose your language',
+                'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'start/select-language')
+        self.log_entry(request, 'ni/start/ni-select-language')
         await check_permission(request)
         data = await request.post()
 
@@ -607,7 +595,6 @@ class StartNISelectLanguage(Start):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes['page_title'] = 'Choose your language'
 
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
@@ -616,10 +603,12 @@ class StartNISelectLanguage(Start):
         try:
             language_option = data['language-option']
         except KeyError:
-            logger.warn('ni language option error',
+            logger.info('ni language option error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return attributes
+            return {'locale': 'en',
+                    'page_title': 'Choose your language',
+                    'display_region': 'ni'}
 
         if language_option == 'gaeilge':
             attributes['language'] = 'ga'
@@ -632,10 +621,12 @@ class StartNISelectLanguage(Start):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('language selection error',
+            logger.info('language selection error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return attributes
+            return {'locale': 'en',
+                    'page_title': 'Choose your language',
+                    'display_region': 'ni'}
 
         attributes['display_region'] = 'ni'
 

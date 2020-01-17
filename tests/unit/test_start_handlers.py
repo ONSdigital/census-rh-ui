@@ -56,7 +56,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_en,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/start/confirm-address',
@@ -70,7 +70,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_cy,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/cy/start/confirm-address/',
@@ -84,7 +84,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/ni/start/confirm-address',
@@ -109,7 +109,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_en,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/start/confirm-address',
                           response.headers['Location'])
@@ -119,7 +119,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
 
             self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -160,7 +160,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/confirm-address',
                           response.headers['Location'])
@@ -170,7 +170,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -180,7 +180,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_language_options_ni,
                     allow_redirects=False,
-                    data=self.language_options_ni_eng_data)
+                    data=self.start_ni_language_option_data_yes)
 
                 self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -221,7 +221,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/confirm-address',
                           response.headers['Location'])
@@ -231,7 +231,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -241,7 +241,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_language_options_ni,
                     allow_redirects=False,
-                    data=self.language_options_ni_not_eng_data)
+                    data=self.start_ni_language_option_data_no)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/select-language',
@@ -251,7 +251,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_select_language_ni,
                     allow_redirects=False,
-                    data=self.select_language_ni_ul_data)
+                    data=self.start_ni_select_language_data_ul)
 
                 self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -292,7 +292,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/confirm-address',
                           response.headers['Location'])
@@ -302,7 +302,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -312,7 +312,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_language_options_ni,
                     allow_redirects=False,
-                    data=self.language_options_ni_not_eng_data)
+                    data=self.start_ni_language_option_data_no)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/select-language',
@@ -322,7 +322,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_select_language_ni,
                     allow_redirects=False,
-                    data=self.select_language_ni_ga_data)
+                    data=self.start_ni_select_language_data_ga)
 
                 self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -363,7 +363,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/confirm-address',
                           response.headers['Location'])
@@ -373,7 +373,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/language-options',
@@ -383,7 +383,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_language_options_ni,
                     allow_redirects=False,
-                    data=self.language_options_ni_not_eng_data)
+                    data=self.start_ni_language_option_data_no)
 
                 self.assertEqual(response.status, 302)
                 self.assertIn('/ni/start/select-language',
@@ -393,7 +393,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_select_language_ni,
                     allow_redirects=False,
-                    data=self.select_language_ni_en_data)
+                    data=self.start_ni_select_language_data_en)
 
                 self.assertLogEvent(logs_home, 'redirecting to eq')
 
@@ -421,7 +421,7 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
-                       payload=self.modify_address_data)
+                       payload=self.start_modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
@@ -434,7 +434,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_en,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
 
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
@@ -442,7 +442,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_no)
+                    data=self.start_confirm_address_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
@@ -479,7 +479,7 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
-                       payload=self.modify_address_data)
+                       payload=self.start_modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             eq_payload['region_code'] = 'GB-WLS'
@@ -494,7 +494,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_cy,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
 
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
@@ -502,7 +502,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_no)
+                    data=self.start_confirm_address_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
@@ -539,7 +539,7 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_en)
             mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
-                       payload=self.modify_address_data)
+                       payload=self.start_modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
@@ -552,7 +552,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
 
             with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
@@ -560,7 +560,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_ni,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_no)
+                    data=self.start_confirm_address_data_no)
                 self.assertEqual(response.status, 302)
 
                 response = await self.client.request(
@@ -601,7 +601,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_en,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/start/confirm-address',
                           response.headers['Location'])
@@ -612,7 +612,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
@@ -631,7 +631,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_cy,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/cy/start/confirm-address/',
                           response.headers['Location'])
@@ -642,7 +642,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         # then error handler catches exception and renders error.html
@@ -661,7 +661,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/confirm-address/',
                           response.headers['Location'])
@@ -669,7 +669,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_confirm_address_ni,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_yes)
+                                                 data=self.start_confirm_address_data_yes)
             self.assertEqual(response.status, 302)
             self.assertIn('/ni/start/language-options/',
                           response.headers['Location'])
@@ -691,7 +691,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_en(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         del form_data['uac']
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -707,7 +707,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_cy(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         del form_data['uac']
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -723,7 +723,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_blank_ni(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         del form_data['uac']
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -739,7 +739,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_en(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'http://www.census.gov.uk/'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -755,7 +755,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_cy(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'http://www.census.gov.uk/'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -771,7 +771,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_url_ni(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'http://www.census.gov.uk/'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -787,7 +787,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_en(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'rT~l34u8{?nm4£#f'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -803,7 +803,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_cy(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'rT~l34u8{?nm4£#f'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -819,7 +819,7 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_index_invalid_text_random_ni(self):
-        form_data = self.form_data.copy()
+        form_data = self.start_data_valid.copy()
         form_data['uac'] = 'rT~l34u8{?nm4£#f'
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
@@ -844,7 +844,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -863,7 +863,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -882,7 +882,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -901,7 +901,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -920,7 +920,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -939,7 +939,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'attempt to use an inactive access code')
 
         self.assertEqual(response.status, 200)
@@ -958,7 +958,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
@@ -977,7 +977,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
@@ -996,7 +996,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'service failed to build eq payload')
 
         self.assertEqual(response.status, 500)
@@ -1013,7 +1013,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url)
@@ -1032,7 +1032,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url)
@@ -1051,7 +1051,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url)
@@ -1069,7 +1069,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
@@ -1085,7 +1085,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
@@ -1101,7 +1101,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
         self.assertEqual(response.status, 500)
@@ -1117,7 +1117,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
@@ -1133,7 +1133,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
@@ -1149,7 +1149,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
@@ -1165,7 +1165,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
                                 client_ip=None)
@@ -1183,7 +1183,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
                                 client_ip=None)
@@ -1201,7 +1201,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm,
                                 'attempt to use an invalid access code',
                                 client_ip=None)
@@ -1219,7 +1219,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
@@ -1235,7 +1235,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
@@ -1252,7 +1252,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
             self.assertEqual(response.status, 500)
@@ -1268,7 +1268,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1284,7 +1284,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1301,7 +1301,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1317,7 +1317,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -1333,7 +1333,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -1350,7 +1350,7 @@ class TestStartHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
-                                                     data=self.form_data)
+                                                     data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -1369,7 +1369,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1377,7 +1377,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
@@ -1398,7 +1398,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1406,7 +1406,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.rhsvc_url_surveylaunched)
@@ -1424,7 +1424,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1432,7 +1432,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1448,7 +1448,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1456,7 +1456,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
             self.assertEqual(response.status, 500)
@@ -1473,14 +1473,14 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             response = await self.client.request(
                 'POST',
                 self.post_start_confirm_address_en,
                 allow_redirects=False,
-                data=self.start_address_confirmation_data_yes)
+                data=self.start_confirm_address_data_yes)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1495,14 +1495,14 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             response = await self.client.request(
                 'POST',
                 self.post_start_confirm_address_cy,
                 allow_redirects=False,
-                data=self.start_address_confirmation_data_yes)
+                data=self.start_confirm_address_data_yes)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1518,7 +1518,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1526,7 +1526,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
@@ -1542,7 +1542,7 @@ class TestStartHandlers(RHTestCase):
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
@@ -1550,7 +1550,7 @@ class TestStartHandlers(RHTestCase):
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
-                    data=self.start_address_confirmation_data_yes)
+                    data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
             self.assertEqual(response.status, 500)
@@ -1802,7 +1802,7 @@ class TestStartHandlers(RHTestCase):
                 'POST',
                 self.post_start_confirm_address_en,
                 allow_redirects=False,
-                data=self.start_address_confirmation_data_yes)
+                data=self.start_confirm_address_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1817,7 +1817,7 @@ class TestStartHandlers(RHTestCase):
                 'POST',
                 self.post_start_confirm_address_cy,
                 allow_redirects=False,
-                data=self.start_address_confirmation_data_yes)
+                data=self.start_confirm_address_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1831,7 +1831,7 @@ class TestStartHandlers(RHTestCase):
                 'POST',
                 self.post_start_confirm_address_ni,
                 allow_redirects=False,
-                data=self.start_address_confirmation_data_yes)
+                data=self.start_confirm_address_data_yes)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
@@ -1924,10 +1924,10 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
-            response = await self.client.request('GET', self.get_start_region_change_ni, allow_redirects=False, data=self.form_data)
+            response = await self.client.request('GET', self.get_start_region_change_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/region-change'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1943,7 +1943,7 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            response = await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            response = await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             self.assertIn('/ni/start/region-change/', response.headers['Location'])
@@ -1960,7 +1960,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_cy,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/ni/start/region-change/',
@@ -1978,7 +1978,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_cy,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/en/start/region-change/',
@@ -1996,7 +1996,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/en/start/region-change/',
@@ -2014,7 +2014,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request('POST',
                                                  self.post_start_ni,
                                                  allow_redirects=False,
-                                                 data=self.form_data)
+                                                 data=self.start_data_valid)
 
         self.assertEqual(response.status, 302)
         self.assertIn('/en/start/region-change/',
@@ -2029,12 +2029,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_empty)
+                                                 data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2052,12 +2052,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
 
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_cy,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_empty)
+                                                 data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2075,12 +2075,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_ni,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_empty)
+                                                 data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2098,12 +2098,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_invalid)
+                                                 data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2121,12 +2121,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
 
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_cy,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_invalid)
+                                                 data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2144,12 +2144,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_ni,
                                                  allow_redirects=False,
-                                                 data=self.start_address_confirmation_data_invalid)
+                                                 data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
@@ -2167,12 +2167,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_en,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
 
             response = await self.client.request('GET', self.get_start_modify_address_en)
@@ -2192,12 +2192,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
 
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_cy,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
 
             response = await self.client.request('GET', self.get_start_modify_address_cy)
@@ -2217,12 +2217,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             response = await self.client.request('GET', self.get_start_modify_address_ni)
@@ -2242,12 +2242,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_en,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
 
             response = await self.client.request('POST', self.post_start_modify_address_en,
@@ -2272,12 +2272,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
 
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_cy,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
 
             response = await self.client.request('POST', self.post_start_modify_address_cy,
@@ -2302,12 +2302,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             response = await self.client.request('POST', self.post_start_modify_address_ni,
@@ -2334,12 +2334,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             response = await self.client.request('POST', self.post_start_modify_address_ni,
@@ -2366,12 +2366,12 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_no)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
 
             await self.client.request('POST', self.post_start_modify_address_ni,
@@ -2399,18 +2399,13 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            await self.client.request('POST', self.post_start_modify_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_modify_address_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
 
             response = await self.client.request('POST', self.post_start_language_options_ni,
                                                  allow_redirects=False,
@@ -2435,18 +2430,13 @@ class TestStartHandlers(RHTestCase):
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.form_data)
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             await self.client.request('POST', self.post_start_confirm_address_ni,
                                       allow_redirects=False,
-                                      data=self.start_address_confirmation_data_no)
+                                      data=self.start_confirm_address_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            await self.client.request('POST', self.post_start_modify_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_modify_address_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
 
             response = await self.client.request('POST', self.post_start_language_options_ni,
                                                  allow_redirects=False,
@@ -2459,3 +2449,108 @@ class TestStartHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn('Would you like to complete the census in English?', contents)
             self.assertIn('Select a language option', contents)
+
+    @unittest_run_loop
+    async def test_get_ni_select_language(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            response = await self.client.request('POST', self.post_start_language_options_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_ni_language_option_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
+
+            self.assertEqual(response.status, 302)
+            self.assertIn('/ni/start/select-language', response.headers['Location'])
+
+            response = await self.client.request('GET', self.get_start_select_language_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+
+            contents = str(await response.content.read())
+            self.assertIn('Choose your language', contents)
+            self.assertIn('You can change your language back to English at any time.', contents)
+            self.assertIn(self.nisra_logo, contents)
+
+    @unittest_run_loop
+    async def test_post_ni_select_language_empty(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            await self.client.request('POST', self.post_start_language_options_ni,
+                                      allow_redirects=False,
+                                      data=self.start_ni_language_option_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
+
+            response = await self.client.request('POST', self.post_start_select_language_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_ni_select_language_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+
+            contents = str(await response.content.read())
+            self.assertIn('Choose your language', contents)
+            self.assertIn('Select a language option', contents)
+            self.assertIn('You can change your language back to English at any time.', contents)
+            self.assertIn(self.nisra_logo, contents)
+
+    @unittest_run_loop
+    async def test_post_ni_select_language_invalid(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
+            mocked.put(self.rhsvc_put_modify_address, payload={})
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      allow_redirects=False,
+                                      data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+
+            await self.client.request('POST', self.post_start_language_options_ni,
+                                      allow_redirects=False,
+                                      data=self.start_ni_language_option_data_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
+
+            response = await self.client.request('POST', self.post_start_select_language_ni,
+                                                 allow_redirects=False,
+                                                 data=self.start_ni_select_language_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+
+            contents = str(await response.content.read())
+            self.assertIn('Choose your language', contents)
+            self.assertIn('Select a language option', contents)
+            self.assertIn('You can change your language back to English at any time.', contents)
+            self.assertIn(self.nisra_logo, contents)
