@@ -1,13 +1,6 @@
-{% if display_region == 'ni' %}
-    {% extends 'base-ni.html' %}
-    {% set start_link = url('IndexNI:get') %}
-{% elif display_region == 'cy' %}
-    {% extends 'base-cy.html' %}
-    {% set start_link = url('IndexCY:get') %}
-{% else %}
-    {% extends 'base-en.html' %}
-    {% set start_link = url('IndexEN:get') %}
-{% endif %}
+{% extends 'base-' + display_region + '.html' %}
+
+{% set start_link = url('Start:get', display_region=display_region) %}
 
 {% block main %}
 

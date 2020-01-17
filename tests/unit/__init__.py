@@ -256,6 +256,7 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
         self.get_start_modify_address_en = self.app.router['StartModifyAddress:get'].url_for(display_region='en')
         self.post_start_modify_address_en = self.app.router['StartModifyAddress:post'].url_for(display_region='en')
+        self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
@@ -264,6 +265,7 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
         self.get_start_modify_address_cy = self.app.router['StartModifyAddress:get'].url_for(display_region='cy')
         self.post_start_modify_address_cy = self.app.router['StartModifyAddress:post'].url_for(display_region='cy')
+        self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
         self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
@@ -276,6 +278,7 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
         self.get_start_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
+        self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.case_id = self.uac_json_en['caseId']
         self.collection_exercise_id = self.uac_json_en['collectionExerciseId']

@@ -634,6 +634,24 @@ class StartNISelectLanguage(Start):
                                       session.get('adlocation'))
 
 
+@start_routes.view(r'/' + View.valid_display_regions + '/start/save-and-exit/')
+class StartSaveAndExit(View):
+    @aiohttp_jinja2.template('save-and-exit.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/save-and-exit')
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+        await forget(request)
+        return {
+            'display_region': display_region,
+            'locale': locale
+        }
+
+
 @start_routes.view('/start/timeout')
 class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
@@ -641,40 +659,3 @@ class UACTimeout(View):
         self.setup_request(request)
         self.log_entry(request, 'start/timeout')
         return {}
-
-
-@start_routes.view('/start/save-and-exit')
-class SaveAndExitEN(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/save-and-exit')
-        await forget(request)
-        return {
-            'display_region': 'en'
-        }
-
-
-@start_routes.view('/dechrau/cadw-a-gadael')
-class SaveAndExitCY(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/save-and-exit')
-        await forget(request)
-        return {
-            'display_region': 'cy',
-            'locale': 'cy'
-        }
-
-
-@start_routes.view('/ni/start/save-and-exit')
-class SaveAndExitNI(View):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/save-and-exit')
-        await forget(request)
-        return {
-            'display_region': 'ni'
-        }

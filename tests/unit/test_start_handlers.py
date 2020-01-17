@@ -2554,3 +2554,39 @@ class TestStartHandlers(RHTestCase):
             self.assertIn('Select a language option', contents)
             self.assertIn('You can change your language back to English at any time.', contents)
             self.assertIn(self.nisra_logo, contents)
+
+    @unittest_run_loop
+    async def test_get_start_save_and_exit_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_save_and_exit_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/save-and-exit'")
+            self.assertLogEvent(cm, "identity not previously remembered")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Your progress has been saved',
+                          contents)
+            self.assertIn(self.ons_logo_en, contents)
+
+    @unittest_run_loop
+    async def test_get_start_save_and_exit_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_save_and_exit_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/save-and-exit'")
+            self.assertLogEvent(cm, "identity not previously remembered")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Mae eich cynnydd wedi cael ei gadw',
+                          contents)
+            self.assertIn(self.ons_logo_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_start_save_and_exit_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_save_and_exit_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/save-and-exit'")
+            self.assertLogEvent(cm, "identity not previously remembered")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn('Your progress has been saved',
+                          contents)
+            self.assertIn(self.nisra_logo, contents)
