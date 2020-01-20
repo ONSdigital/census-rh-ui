@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.org/simple"
+url = "https://user:apikey@ons.jfrog.io/ons/api/pypi/pypi/simple"
 verify_ssl = true
 name = "pypi"
 
