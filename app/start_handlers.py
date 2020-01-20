@@ -189,7 +189,8 @@ class Start(StartCommon):
         return {
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': '/start/'
         }
 
     @aiohttp_jinja2.template('start.html')
@@ -283,7 +284,7 @@ class StartRegionChange(StartCommon):
         return {
             'display_region': display_region,
             'locale': locale,
-            'page_title': page_title,
+            'page_title': page_title
         }
 
 
@@ -304,6 +305,7 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
             page_title = 'Is this address correct?'
+        page_url = '/start/confirm-address/'
 
         session = await get_session(request)
         try:
@@ -317,6 +319,7 @@ class StartConfirmAddress(StartCommon):
 
         return {'locale': locale,
                 'page_title': page_title,
+                'page_url': page_url,
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
                 'addressLine2': attributes['addressLine2'],
@@ -339,6 +342,8 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
             page_title = 'Is this address correct?'
+        page_url = '/start/confirm-address/'
+
         data = await request.post()
 
         session = await get_session(request)
@@ -364,6 +369,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': page_url,
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -395,6 +401,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': page_url,
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
