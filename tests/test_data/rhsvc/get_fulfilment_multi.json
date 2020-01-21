@@ -1,0 +1,40 @@
+[
+   {
+       "caseType": "HH",
+       "deliveryChannel": "SMS",
+       "description": "Household Unique Access Code for England",
+       "fieldDistributionCode": "",
+       "fulfilmentCode": "UACIT1",
+       "handler": "NOTIFY",
+       "initialContactCode": "",
+       "language": "eng",
+       "regions": [
+           "W"
+       ],
+       "reminderContactCode": "",
+       "requestChannels": [
+           "CC",
+           "FIELD",
+           "RH"
+       ]
+   },
+    {
+        "caseType": "HH",
+        "deliveryChannel": "SMS",
+        "description": "Household Unique Access Code for England",
+        "fieldDistributionCode": "",
+        "fulfilmentCode": "UACIT2",
+        "handler": "NOTIFY",
+        "initialContactCode": "",
+        "language": "wel",
+        "regions": [
+            "W"
+        ],
+        "reminderContactCode": "",
+        "requestChannels": [
+            "CC",
+            "FIELD",
+            "RH"
+        ]
+    }
+]

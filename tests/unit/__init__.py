@@ -370,7 +370,15 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/surveyLaunched'
         )
 
-        self.rhsvc_modify_address = (
+        self.rhsvc_url_fulfilments = (
+            f'{rh_svc_url}/fulfilments'
+        )
+
+        self.rhsvc_cases_by_uprn_url = (
+            f'{rh_svc_url}/cases/uprn/'
+        )
+
+        self.rhsvc_cases_url = (
             f'{rh_svc_url}/cases/'
         )
 
@@ -489,24 +497,83 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddressHIEN:post'].url_for()
         self.post_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddressHICY:post'].url_for()
         self.post_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddressHINI:post'].url_for()
-        # self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:get'].url_for()
-        # self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:get'].url_for()
-        # self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:get'].url_for()
-        # self.post_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:post'].url_for()
-        # self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
-        # self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
+        self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:get'].url_for()
+        self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:get'].url_for()
+        self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:get'].url_for()
+        self.post_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:post'].url_for()
+        self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
+        self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
+
+        self.get_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:get'].url_for()
+        self.get_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:get'].url_for()
+        self.get_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:get'].url_for()
+        self.get_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:get'].url_for()
+        self.get_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:get'].url_for()
+        self.get_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:get'].url_for()
+        self.post_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:post'].url_for()
+        self.post_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:post'].url_for()
+        self.post_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:post'].url_for()
+        self.post_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:post'].url_for()
+        self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:post'].url_for()
+        self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:post'].url_for()
+
+        self.get_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:get'].url_for()
+        self.get_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:get'].url_for()
+        self.get_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:get'].url_for()
+        self.get_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:get'].url_for()
+        self.post_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:post'].url_for()
+        self.post_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:post'].url_for()
+        self.post_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:post'].url_for()
+        self.post_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:post'].url_for()
+
+        self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequiredHHEN:get'].url_for()
+        self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequiredHHCY:get'].url_for()
+        self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequiredHHNI:get'].url_for()
+        self.get_requestcode_notrequired_hi_en = self.app.router['RequestCodeNotRequiredHIEN:get'].url_for()
+        self.get_requestcode_notrequired_hi_cy = self.app.router['RequestCodeNotRequiredHICY:get'].url_for()
+        self.get_requestcode_notrequired_hi_ni = self.app.router['RequestCodeNotRequiredHINI:get'].url_for()
+
+        self.get_requestcode_codesent_hh_en = self.app.router['RequestCodeCodeSentHHEN:get'].url_for()
+        self.get_requestcode_codesent_hh_cy = self.app.router['RequestCodeCodeSentHHCY:get'].url_for()
+        self.get_requestcode_codesent_hh_ni = self.app.router['RequestCodeCodeSentHHNI:get'].url_for()
+        self.get_requestcode_codesent_hi_en = self.app.router['RequestCodeCodeSentHIEN:get'].url_for()
+        self.get_requestcode_codesent_hi_cy = self.app.router['RequestCodeCodeSentHICY:get'].url_for()
+        self.get_requestcode_codesent_hi_ni = self.app.router['RequestCodeCodeSentHINI:get'].url_for()
+
+        self.get_requestcode_household_timeout_en = self.app.router['RequestCodeTimeoutHHEN:get'].url_for()
+        self.get_requestcode_household_timeout_cy = self.app.router['RequestCodeTimeoutHHCY:get'].url_for()
+        self.get_requestcode_household_timeout_ni = self.app.router['RequestCodeTimeoutHHNI:get'].url_for()
+        self.get_requestcode_individual_timeout_en = self.app.router['RequestCodeTimeoutHIEN:get'].url_for()
+        self.get_requestcode_individual_timeout_cy = self.app.router['RequestCodeTimeoutHICY:get'].url_for()
+        self.get_requestcode_individual_timeout_ni = self.app.router['RequestCodeTimeoutHINI:get'].url_for()
 
         self.get_accessibility_statement_en = self.app.router['AccessibilityEN:get'].url_for()
         self.get_accessibility_statement_cy = self.app.router['AccessibilityCY:get'].url_for()
         self.get_accessibility_statement_ni = self.app.router['AccessibilityNI:get'].url_for()
 
+        self.get_start_saveandexit_en = self.app.router['SaveAndExitEN:get'].url_for()
+        self.get_start_saveandexit_cy = self.app.router['SaveAndExitCY:get'].url_for()
+        self.get_start_saveandexit_ni = self.app.router['SaveAndExitNI:get'].url_for()
+
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 5DU'
 
-        self.post_requestcode_address_confirmation_data = {
-            'request-address-select': "{'uprn': '10023122451', 'address': '1 Gate Reach, Exeter, EX2 6GA'}"
-        }
+        self.post_requestcode_select_address_form_data_valid = \
+            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
+
+        self.selected_uprn = '10023122451'
+
+        self.mobile_valid = '07012345678'
+        self.mobile_invalid_short = '07012'
+        self.mobile_invalid_long = '0701234567890123456'
+        self.mobile_invalid_character = '0701234567$'
+
+        self.field_empty = None
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()
@@ -517,6 +584,36 @@ class RHTestCase(AioHTTPTestCase):
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_cases_by_uprn_en = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_cy.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_cases_by_uprn_cy = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_cases_by_uprn_ni = f
+
+        with open('tests/test_data/rhsvc/get_fulfilment_multi.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_multi = f
+
+        with open('tests/test_data/rhsvc/get_fulfilment_single.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_single = f
+
+        with open('tests/test_data/rhsvc/request_fulfilment.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_request_fulfilment = f
 
         self.request_code_form_data_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
@@ -530,12 +627,115 @@ class RHTestCase(AioHTTPTestCase):
             'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
-        self.request_code_address_confirmation_data = {
-            'request-address-confirmation': 'Yes', 'action[save_continue]': ''
+        self.request_code_address_confirmation_data_yes = {
+            'request-address-confirmation': 'yes', 'action[save_continue]': ''
         }
+
+        self.request_code_address_confirmation_data_no = {
+            'request-address-confirmation': 'no', 'action[save_continue]': ''
+        }
+
+        self.request_code_address_confirmation_data_invalid = {
+            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
+        }
+
+        self.request_code_select_address_form_data_empty = {}
+
+        self.request_code_confirm_address_form_data_empty = {}
+
+        self.request_code_select_address_form_data_valid = {
+            'request-address-select': self.post_requestcode_select_address_form_data_valid,
+            'action[save_continue]': '',
+        }
+
+        self.request_code_enter_mobile_form_data_valid = {
+            'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
+        }
+
+        self.request_code_enter_mobile_form_data_invalid = {
+            'request-mobile-number': self.mobile_invalid_short, 'action[save_continue]': '',
+        }
+
+        self.request_code_mobile_confirmation_data_yes = {
+            'request-mobile-confirmation': 'yes', 'action[save_continue]': ''
+        }
+
+        self.request_code_mobile_confirmation_data_no = {
+            'request-mobile-confirmation': 'no', 'action[save_continue]': ''
+        }
+
+        self.request_code_mobile_confirmation_data_invalid = {
+            'request-mobile-confirmation': 'invalid', 'action[save_continue]': ''
+        }
+
+        self.request_code_mobile_confirmation_data_empty = {}
 
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
         self.nisra_logo = '/img/nisra-logo-en.svg'
+
+        self.content_request_household_title_en = 'Request a new access code'
+        self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
+        self.content_request_individual_title_en = 'Request an individual access code'
+        self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
+        self.content_request_secondary_en = 'You will need to provide:'
+        self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
+
+        self.content_request_enter_address_title_en = 'What is your postcode?'
+        self.content_request_enter_address_error_en = 'Enter a valid UK postcode to continue'
+        self.content_request_enter_address_secondary_en = \
+            'To text you a new code we need to know the address for which you are answering.'
+        self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
+        self.content_request_enter_address_error_cy = 'Nodwch god post dilys yn y Deyrnas Unedig i barhau'
+        self.content_request_enter_address_secondary_cy = \
+            "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
+
+        self.content_request_select_address_title_en = 'Select your address'
+        self.content_request_select_address_error_en = 'Select an address'
+        self.content_request_select_address_value_en = '1 Gate Reach'
+        self.content_request_select_address_no_results_en = 'We cannot find your address'
+        self.content_request_select_address_title_cy = 'Dewiswch eich cyfeiriad'
+        self.content_request_select_address_error_cy = 'Dewiswch gyfeiriad'
+        self.content_request_select_address_value_cy = '1 Gate Reach'
+        self.content_request_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+
+        self.content_request_confirm_address_title_en = 'Is this address correct?'
+        self.content_request_confirm_address_error_en = 'Check and confirm the address'
+        self.content_request_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
+        self.content_request_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_request_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        self.content_request_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
+
+        self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
+        self.content_request_enter_mobile_error_en = ''
+        self.content_request_enter_mobile_secondary_en = 'We will send an access code by text to this number.'
+        self.content_request_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
+        self.content_request_enter_mobile_error_cy = ""
+        self.content_request_enter_mobile_secondary_cy = "Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn."
+
+        self.content_request_confirm_mobile_title_en = 'Is this mobile phone number correct?'
+        self.content_request_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_confirm_mobile_error_cy = "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
+
+        self.content_request_code_sent_title_en = 'We have sent an access code'
+        self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
+
+        self.content_500_error_en = 'Sorry, something went wrong'
+        self.content_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
+
+        self.content_timeout_en = 'Your session has timed out due to inactivity'
+        self.content_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+
+        self.content_request_not_required_en = 'Your address is not part of the 2019 rehearsal'
+        self.content_request_not_required_cy = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+
+        self.content_start_title_en = 'Start Census'
+        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
+        self.content_start_title_cy = "Dechrau'r Cyfrifiad"
+        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
+
+        self.content_start_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
 
         # yapf: enable

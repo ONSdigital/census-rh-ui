@@ -426,15 +426,19 @@ class TestWebChatHandlers(RHTestCase):
         with mock.patch('app.webchat_handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
 
-            response = await self.client.request('POST',
-                                                 self.post_webchat_en,
-                                                 allow_redirects=False,
-                                                 data=self.webchat_form_data)
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_en,
+                                                     allow_redirects=False,
+                                                     data=self.webchat_form_data)
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "received POST on endpoint 'webchat'")
+            self.assertLogEvent(cm, "date/time check")
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('iframe', contents)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('iframe', contents)
+            self.assertIn('Web Chat', contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_cy(self):
@@ -442,15 +446,19 @@ class TestWebChatHandlers(RHTestCase):
         with mock.patch('app.webchat_handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
 
-            response = await self.client.request('POST',
-                                                 self.post_webchat_cy,
-                                                 allow_redirects=False,
-                                                 data=self.webchat_form_data)
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_cy,
+                                                     allow_redirects=False,
+                                                     data=self.webchat_form_data)
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "received POST on endpoint 'webchat'")
+            self.assertLogEvent(cm, "date/time check")
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('iframe', contents)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('iframe', contents)
+            self.assertIn('Gwe-sgwrs', contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_ni(self):
@@ -458,15 +466,19 @@ class TestWebChatHandlers(RHTestCase):
         with mock.patch('app.webchat_handlers.WebChat.get_now') as mocked_get_now:
             mocked_get_now.return_value = mocked_now
 
-            response = await self.client.request('POST',
-                                                 self.post_webchat_ni,
-                                                 allow_redirects=False,
-                                                 data=self.webchat_form_data)
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_ni,
+                                                     allow_redirects=False,
+                                                     data=self.webchat_form_data)
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "received POST on endpoint 'webchat'")
+            self.assertLogEvent(cm, "date/time check")
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn('iframe', contents)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn('iframe', contents)
+            self.assertIn('Web Chat', contents)
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_en(self):

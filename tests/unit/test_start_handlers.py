@@ -1070,7 +1070,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
@@ -1128,7 +1128,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
@@ -1188,7 +1188,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
@@ -2556,3 +2556,36 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Enter the 16 character code printed on the letter',
                       contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_en)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Your progress has been saved', contents)
+        self.assertIn(self.ons_logo_en, contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_cy)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Mae eich cynnydd wedi cael ei gadw', contents)
+        self.assertIn(self.ons_logo_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_saveandexit_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_saveandexit_ni)
+
+        self.assertLogEvent(cm, "received GET on endpoint 'start/save-and-exit'")
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn('Your progress has been saved', contents)
+        self.assertIn(self.nisra_logo, contents)

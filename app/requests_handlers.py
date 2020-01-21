@@ -27,7 +27,7 @@ class RequestCodeCommon(View):
     def request_code_check_session(request, fulfillment_type,
                                    display_region):
         if request.cookies.get('RH_SESSION') is None:
-            logger.warn('session timed out', client_ip=request['client_ip'])
+            logger.info('session timed out', client_ip=request['client_ip'])
             raise HTTPFound(
                 request.app.router['RequestCodeTimeout' + fulfillment_type +
                                    display_region + ':get'].url_for())
@@ -109,6 +109,18 @@ class RequestCodeCommon(View):
             request.app.router['RequestCodeSelectAddress' +
                                fulfillment_type + display_region +
                                ':get'].url_for())
+
+        else:
+            logger.info('attempt to use an invalid postcode',
+                        client_ip=request['client_ip'])
+            if display_region == 'CY':
+                flash(request, POSTCODE_INVALID_MSG_CY)
+            else:
+                flash(request, POSTCODE_INVALID_MSG)
+            raise HTTPFound(
+                request.app.router['RequestCodeEnterAddress' +
+                                   fulfillment_type + display_region +
+                                   ':get'].url_for())
 
     @staticmethod
     async def post_enter_mobile(request, attributes, data):
@@ -306,7 +318,7 @@ class RequestCodeSelectAddressHHEN(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -348,7 +360,7 @@ class RequestCodeSelectAddressHHCY(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -390,7 +402,7 @@ class RequestCodeSelectAddressHHNI(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -430,7 +442,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -451,7 +463,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHHEN:get'].
@@ -466,7 +478,7 @@ class RequestCodeConfirmAddressHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -493,7 +505,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
@@ -514,7 +526,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHHCY:get'].
@@ -529,7 +541,7 @@ class RequestCodeConfirmAddressHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
@@ -555,7 +567,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -576,7 +588,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHHNI:get'].
@@ -591,7 +603,7 @@ class RequestCodeConfirmAddressHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -716,7 +728,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -756,7 +768,7 @@ class RequestCodeConfirmMobileHHEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -783,7 +795,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
@@ -823,7 +835,7 @@ class RequestCodeConfirmMobileHHCY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
@@ -850,7 +862,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -890,7 +902,7 @@ class RequestCodeConfirmMobileHHNI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -1093,7 +1105,7 @@ class RequestCodeSelectAddressHIEN(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -1135,7 +1147,7 @@ class RequestCodeSelectAddressHICY(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -1177,7 +1189,7 @@ class RequestCodeSelectAddressHINI(RequestCodeCommon):
         try:
             form_return = json.loads(data['request-address-select'])
         except KeyError:
-            logger.warn('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'])
             flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'],
@@ -1216,7 +1228,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -1237,7 +1249,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHIEN:get'].
@@ -1252,7 +1264,7 @@ class RequestCodeConfirmAddressHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -1278,7 +1290,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
@@ -1299,7 +1311,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHICY:get'].
@@ -1314,7 +1326,7 @@ class RequestCodeConfirmAddressHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG_CY)
             return attributes
@@ -1340,7 +1352,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
         try:
             address_confirmation = data['request-address-confirmation']
         except KeyError:
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -1361,7 +1373,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
                     url_for())
             except ClientResponseError as ex:
                 if ex.status == 404:
-                    logger.warn('unable to match uprn',
+                    logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestCodeNotRequiredHINI:get'].
@@ -1376,7 +1388,7 @@ class RequestCodeConfirmAddressHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('address confirmation error',
+            logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             flash(request, ADDRESS_CHECK_MSG)
             return attributes
@@ -1501,7 +1513,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -1542,7 +1554,7 @@ class RequestCodeConfirmMobileHIEN(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -1568,7 +1580,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
@@ -1609,7 +1621,7 @@ class RequestCodeConfirmMobileHICY(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG_CY)
             return attributes
@@ -1635,7 +1647,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
         try:
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
@@ -1675,7 +1687,7 @@ class RequestCodeConfirmMobileHINI(RequestCodeCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.warn('mobile confirmation error',
+            logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, MOBILE_CHECK_MSG)
             return attributes
