@@ -32,6 +32,10 @@ and access using [http://localhost:9092](http://localhost:9092).
 To run the unit tests for Respondent Home:
 
   `make test`
+  
+To run the unit tests and generate a coverage report for Respondent Home:
+
+  `make coverage`
 
 To bring up all the RAS/RM & eQ Runner services and run the integration tests against them and Respondent Home:
 
