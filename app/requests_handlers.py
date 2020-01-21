@@ -110,18 +110,6 @@ class RequestCodeCommon(View):
                                fulfillment_type + display_region +
                                ':get'].url_for())
 
-        else:
-            logger.info('attempt to use an invalid postcode',
-                        client_ip=request['client_ip'])
-            if display_region == 'CY':
-                flash(request, POSTCODE_INVALID_MSG_CY)
-            else:
-                flash(request, POSTCODE_INVALID_MSG)
-            raise HTTPFound(
-                request.app.router['RequestCodeEnterAddress' +
-                                   fulfillment_type + display_region +
-                                   ':get'].url_for())
-
     @staticmethod
     async def post_enter_mobile(request, attributes, data):
 

@@ -682,11 +682,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
-        self.content_request_enter_address_error_en = 'Enter a valid UK postcode to continue'
+        self.content_request_enter_address_error_en = 'The postcode is not a valid UK postcode'
         self.content_request_enter_address_secondary_en = \
             'To text you a new code we need to know the address for which you are answering.'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
-        self.content_request_enter_address_error_cy = 'Nodwch god post dilys yn y Deyrnas Unedig i barhau'
+        self.content_request_enter_address_error_cy = 'The postcode is not a valid UK postcode'
         self.content_request_enter_address_secondary_cy = \
             "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
 

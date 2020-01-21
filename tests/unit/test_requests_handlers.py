@@ -3861,7 +3861,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
 
         self.assertEqual(response.status, 200)
@@ -3886,7 +3886,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
 
         self.assertEqual(response.status, 200)
@@ -3911,7 +3911,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hh_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
 
         self.assertEqual(response.status, 200)
@@ -3936,7 +3936,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_en,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
@@ -3961,7 +3961,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_cy,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
@@ -3986,7 +3986,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_enter_address_hi_ni,
                 data=self.request_code_form_data_invalid)
-        self.assertLogEvent(cm, 'attempt to use an invalid postcode')
+        self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
