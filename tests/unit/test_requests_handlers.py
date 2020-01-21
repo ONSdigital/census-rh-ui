@@ -1883,7 +1883,6 @@ class TestRequestsHandlers(RHTestCase):
             'app.requests_handlers.RequestCodeCommon.request_fulfilment') as mocked_request_fulfilment\
                 :
 
-
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
@@ -3501,7 +3500,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_en)
@@ -3548,7 +3547,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
@@ -3595,7 +3594,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
@@ -3642,7 +3641,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
@@ -3689,7 +3688,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
@@ -3736,7 +3735,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
-            mocked_aioresponses.post(self.rhsvc_url_request_fulfilment +
+            mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)

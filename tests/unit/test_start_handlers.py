@@ -1070,7 +1070,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
@@ -1128,7 +1128,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
@@ -1188,7 +1188,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_address_edit_with_build_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json)
-            mocked.put(self.rhsvc_modify_address + self.case_id + '/address',
+            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
                        payload=self.modify_address_data)
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()

@@ -374,16 +374,12 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/fulfilments'
         )
 
-        self.rhsvc_url_request_fulfilment = (
-            f'{rh_svc_url}/cases/'
-        )
-
-        self.rhsvc_modify_address = (
-            f'{rh_svc_url}/cases/'
-        )
-
         self.rhsvc_cases_by_uprn_url = (
             f'{rh_svc_url}/cases/uprn/'
+        )
+
+        self.rhsvc_cases_url = (
+            f'{rh_svc_url}/cases/'
         )
 
         self.form_data = {
