@@ -170,28 +170,37 @@ class Start(StartCommon):
         else:
             locale = 'en'
             page_title = 'Start Census'
-        session = await get_session(request)
+
         try:
             adlocation = request.query['adlocation']
             if adlocation.isdigit():
-                session['adlocation'] = adlocation
-                logger.debug('assisted digital query parameter set',
-                             adlocation=adlocation,
-                             client_ip=request['client_ip'])
-            else:
-                logger.warn('assisted digital query parameter not numeric',
+                logger.info('assisted digital query parameter found',
+                            adlocation=adlocation,
                             client_ip=request['client_ip'])
-                session.pop('adlocation', None)
+                return {
+                    'display_region': display_region,
+                    'page_title': page_title,
+                    'adlocation': request.query['adlocation'],
+                    'locale': locale,
+                    'page_url': '/start/'
+                }
+            else:
+                logger.warn('assisted digital query parameter not numeric - ignoring',
+                            adlocation=adlocation,
+                            client_ip=request['client_ip'])
+                return {
+                    'display_region': display_region,
+                    'page_title': page_title,
+                    'locale': locale,
+                    'page_url': '/start/'
+                }
         except KeyError:
-            logger.debug('assisted digital query parameter not present',
-                         client_ip=request['client_ip'])
-            session.pop('adlocation', None)
-        return {
-            'display_region': display_region,
-            'page_title': page_title,
-            'locale': locale,
-            'page_url': '/start/'
-        }
+            return {
+                'display_region': display_region,
+                'page_title': page_title,
+                'locale': locale,
+                'page_url': '/start/'
+            }
 
     @aiohttp_jinja2.template('start.html')
     async def post(self, request):
@@ -249,6 +258,9 @@ class Start(StartCommon):
         session = await get_session(request)
         session['attributes'] = attributes
         session['case'] = uac_json
+
+        if data.get('adlocation'):
+            session['adlocation'] = data.get('adlocation')
 
         if session['case']['region'][0] == 'N':
             if display_region == 'ni':

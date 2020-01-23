@@ -18,6 +18,7 @@
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/lists/_macro.njk' import onsList %}
+{% from "components/input/_macro.njk" import onsInput %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -69,6 +70,22 @@
         {% endcall %}
     {% else %}
         {{ uac_input }}
+    {% endif %}
+
+    {% if adlocation %}
+        {{
+            onsInput({
+                "type": "hidden",
+                "classes": "u-d-no",
+                "id": "adlocation",
+                "name": "adlocation",
+                "value": adlocation,
+                "label": {
+                    "text": "Enter some text",
+                    "classes": "u-d-no"
+                }
+            })
+        }}
     {% endif %}
 
     {{ onsButton({
