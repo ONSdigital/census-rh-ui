@@ -1,5 +1,4 @@
 import aiohttp_jinja2
-import re
 import json
 
 from aiohttp.client_exceptions import (ClientResponseError)
@@ -9,15 +8,14 @@ from datetime import datetime, timezone
 from structlog import get_logger
 
 from . import (ADDRESS_CHECK_MSG,
-               MOBILE_ENTER_MSG, MOBILE_CHECK_MSG, POSTCODE_INVALID_MSG,
+               MOBILE_CHECK_MSG,
                ADDRESS_SELECT_CHECK_MSG,
                ADDRESS_CHECK_MSG_CY,
-               MOBILE_ENTER_MSG_CY,
-               MOBILE_CHECK_MSG_CY, POSTCODE_INVALID_MSG_CY,
+               MOBILE_CHECK_MSG_CY,
                ADDRESS_SELECT_CHECK_MSG_CY)
 
 from .flash import flash
-from .utils import View
+from .utils import View, ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -80,54 +78,44 @@ class RequestCodeCommon(View):
 
         return address_content
 
-    postcode_validation_pattern = re.compile(
-        r'^((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}$'  # NOQA
-    )
-    mobile_validation_pattern = re.compile(
-        r'^(\+44\s?7(\d ?){3}|\(?07(\d ?){3}\)?)\s?(\d ?){3}\s?(\d ?){3}$')
-
     @staticmethod
     async def get_postcode(request, data, fulfillment_type,
                            display_region, locale):
-        postcode_value = data['request-postcode'].upper().strip()
-        postcode_value = re.sub(' +', ' ', postcode_value)
-        if RequestCodeCommon.postcode_validation_pattern.fullmatch(
-                postcode_value):
 
+        try:
+            postcode = ProcessPostcode.validate_postcode(data['request-postcode'], locale)
             logger.info('valid postcode', client_ip=request['client_ip'])
 
-            attributes = {
-                'postcode': postcode_value,
-                'display_region': display_region.lower(),
-                'locale': locale,
-                'fulfillment_type': fulfillment_type
-            }
-
-            session = await get_session(request)
-            session['attributes'] = attributes
-
-            raise HTTPFound(
-                request.app.router['RequestCodeSelectAddress' +
-                                   fulfillment_type + display_region +
-                                   ':get'].url_for())
-
-        else:
-            logger.info('attempt to use an invalid postcode',
-                        client_ip=request['client_ip'])
-            if display_region == 'CY':
-                flash(request, POSTCODE_INVALID_MSG_CY)
-            else:
-                flash(request, POSTCODE_INVALID_MSG)
+        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
+            logger.info('invalid postcode', client_ip=request['client_ip'])
+            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
+            flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['RequestCodeEnterAddress' +
                                    fulfillment_type + display_region +
                                    ':get'].url_for())
 
+        attributes = {
+            'postcode': postcode,
+            'display_region': display_region.lower(),
+            'locale': locale,
+            'fulfillment_type': fulfillment_type
+        }
+
+        session = await get_session(request)
+        session['attributes'] = attributes
+
+        raise HTTPFound(
+            request.app.router['RequestCodeSelectAddress' +
+                               fulfillment_type + display_region +
+                               ':get'].url_for())
+
     @staticmethod
     async def post_enter_mobile(request, attributes, data):
-        mobile_number = re.sub(' +', ' ', data['request-mobile-number'].strip())
-        if RequestCodeCommon.mobile_validation_pattern.fullmatch(
-                mobile_number):
+
+        try:
+            mobile_number = ProcessMobileNumber.validate_uk_mobile_phone_number(data['request-mobile-number'],
+                                                                                attributes['locale'])
 
             logger.info('valid mobile number',
                         client_ip=request['client_ip'])
@@ -142,13 +130,10 @@ class RequestCodeCommon(View):
                                    attributes['display_region'].upper() +
                                    ':get'].url_for())
 
-        else:
-            logger.info('attempt to use an invalid mobile phone number',
-                        client_ip=request['client_ip'])
-            if attributes['display_region'] == 'cy':
-                flash(request, MOBILE_ENTER_MSG_CY)
-            else:
-                flash(request, MOBILE_ENTER_MSG)
+        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
+            logger.info(exc, client_ip=request['client_ip'])
+            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR', 'mobile')
+            flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['RequestCodeEnterMobile' +
                                    attributes['fulfillment_type'] +
