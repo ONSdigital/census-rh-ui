@@ -248,6 +248,20 @@ class RHTestCase(AioHTTPTestCase):
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
 
         self.get_info = self.app.router['Info:get'].url_for()
+
+        self.get_start_adlocation_valid_en = self.app.router['IndexEN:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_en = self.app.router['IndexEN:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+        self.get_start_adlocation_valid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+        self.get_start_adlocation_valid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+
         self.get_index_en = self.app.router['IndexEN:get'].url_for()
         self.post_index_en = self.app.router['IndexEN:post'].url_for()
         self.get_address_confirmation_en = self.app.router['AddressConfirmationEN:get'].url_for()
@@ -384,6 +398,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.form_data = {
             'uac': self.uac, 'action[save_continue]': '',
+        }
+
+        self.post_start_form_data_with_adlocation = {
+            'uac': self.uac, 'adlocation': '1234567890', 'action[save_continue]': '',
         }
 
         self.address_confirmation_data = {

@@ -170,26 +170,31 @@ class IndexEN(Start):
         """
         self.setup_request(request)
         self.log_entry(request, 'start')
-        session = await get_session(request)
+
         try:
             adlocation = request.query['adlocation']
             if adlocation.isdigit():
-                session['adlocation'] = adlocation
-                logger.debug('assisted digital query parameter set',
-                             adlocation=adlocation,
-                             client_ip=request['client_ip'])
-            else:
-                logger.warn('assisted digital query parameter not numeric',
+                logger.info('assisted digital query parameter found',
+                            adlocation=adlocation,
                             client_ip=request['client_ip'])
-                session.pop('adlocation', None)
+                return {
+                    'display_region': 'en',
+                    'page_title': 'Start Census',
+                    'adlocation': request.query['adlocation']
+                }
+            else:
+                logger.warn('assisted digital query parameter not numeric - ignoring',
+                            adlocation=adlocation,
+                            client_ip=request['client_ip'])
+                return {
+                    'display_region': 'en',
+                    'page_title': 'Start Census'
+                }
         except KeyError:
-            logger.debug('assisted digital query parameter not present',
-                         client_ip=request['client_ip'])
-            session.pop('adlocation', None)
-        return {
-            'display_region': 'en',
-            'page_title': 'Start Census'
-        }
+            return {
+                'display_region': 'en',
+                'page_title': 'Start Census'
+            }
 
     @aiohttp_jinja2.template('index.html')
     async def post(self, request):
@@ -238,6 +243,9 @@ class IndexEN(Start):
         session['case'] = uac_json
         session['attributes']['display_region'] = 'en'
 
+        if data.get('adlocation'):
+            session['adlocation'] = data.get('adlocation')
+
         raise HTTPFound(
             request.app.router['AddressConfirmationEN:get'].url_for())
 
@@ -253,28 +261,34 @@ class IndexCY(Start):
         """
         self.setup_request(request)
         self.log_entry(request, 'start')
-        query_string = request.query
-        session = await get_session(request)
+
         try:
-            adlocation = query_string['adlocation']
+            adlocation = request.query['adlocation']
             if adlocation.isdigit():
-                session['adlocation'] = adlocation
-                logger.debug('assisted digital query parameter set',
-                             adlocation=adlocation,
-                             client_ip=request['client_ip'])
-            else:
-                logger.warn('assisted digital query parameter not numeric',
+                logger.info('assisted digital query parameter found',
+                            adlocation=adlocation,
                             client_ip=request['client_ip'])
-                session.pop('adlocation', None)
+                return {
+                    'display_region': 'cy',
+                    'locale': 'cy',
+                    'page_title': "Dechrau'r Cyfrifiad",
+                    'adlocation': request.query['adlocation']
+                }
+            else:
+                logger.warn('assisted digital query parameter not numeric - ignoring',
+                            adlocation=adlocation,
+                            client_ip=request['client_ip'])
+                return {
+                    'display_region': 'cy',
+                    'locale': 'cy',
+                    'page_title': "Dechrau'r Cyfrifiad"
+                }
         except KeyError:
-            logger.debug('assisted digital query parameter not present',
-                         client_ip=request['client_ip'])
-            session.pop('adlocation', None)
-        return {
-            'display_region': 'cy',
-            'locale': 'cy',
-            'page_title': "Dechrau'r Cyfrifiad"
-        }
+            return {
+                'display_region': 'cy',
+                'locale': 'cy',
+                'page_title': "Dechrau'r Cyfrifiad"
+            }
 
     async def post(self, request):
         """
@@ -324,6 +338,9 @@ class IndexCY(Start):
         session['attributes']['display_region'] = 'cy'
         session['attributes']['locale'] = 'cy'
 
+        if data.get('adlocation'):
+            session['adlocation'] = data.get('adlocation')
+
         raise HTTPFound(
             request.app.router['AddressConfirmationCY:get'].url_for())
 
@@ -339,27 +356,31 @@ class IndexNI(Start):
         """
         self.setup_request(request)
         self.log_entry(request, 'start')
-        query_string = request.query
-        session = await get_session(request)
+
         try:
-            adlocation = query_string['adlocation']
+            adlocation = request.query['adlocation']
             if adlocation.isdigit():
-                session['adlocation'] = adlocation
-                logger.debug('assisted digital query parameter set',
-                             adlocation=adlocation,
-                             client_ip=request['client_ip'])
-            else:
-                logger.warn('assisted digital query parameter not numeric',
+                logger.info('assisted digital query parameter found',
+                            adlocation=adlocation,
                             client_ip=request['client_ip'])
-                session.pop('adlocation', None)
+                return {
+                    'display_region': 'ni',
+                    'page_title': 'Start Census',
+                    'adlocation': request.query['adlocation']
+                }
+            else:
+                logger.warn('assisted digital query parameter not numeric - ignoring',
+                            adlocation=adlocation,
+                            client_ip=request['client_ip'])
+                return {
+                    'display_region': 'ni',
+                    'page_title': 'Start Census'
+                }
         except KeyError:
-            logger.debug('assisted digital query parameter not present',
-                         client_ip=request['client_ip'])
-            session.pop('adlocation', None)
-        return {
-            'display_region': 'ni',
-            'page_title': 'Start Census'
-        }
+            return {
+                'display_region': 'ni',
+                'page_title': 'Start Census'
+            }
 
     async def post(self, request):
         """
@@ -406,6 +427,9 @@ class IndexNI(Start):
         session['attributes'] = attributes
         session['case'] = uac_json
         session['attributes']['display_region'] = 'ni'
+
+        if data.get('adlocation'):
+            session['adlocation'] = data.get('adlocation')
 
         raise HTTPFound(
             request.app.router['AddressConfirmationNI:get'].url_for())

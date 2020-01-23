@@ -2589,3 +2589,129 @@ class TestStartHandlers(RHTestCase):
         contents = str(await response.content.read())
         self.assertIn('Your progress has been saved', contents)
         self.assertIn(self.nisra_logo, contents)
+
+    @unittest_run_loop
+    async def test_get_index_with_valid_adlocation_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_valid_en)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter found")
+        contents = str(await response.content.read())
+        self.assertIn('Enter the 16 character code printed on the letter',
+                      contents)
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertIn('type="hidden"', contents)
+        self.assertIn('value="1234567890"', contents)
+
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+
+            response = await self.client.request('POST',
+                                                 self.post_index_en,
+                                                 allow_redirects=False,
+                                                 data=self.post_start_form_data_with_adlocation)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/start/address-confirmation',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_index_with_invalid_adlocation_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_invalid_en)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
+        contents = str(await response.content.read())
+        self.assertIn('Enter the 16 character code printed on the letter',
+                      contents)
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertNotIn('type="hidden"', contents)
+        self.assertNotIn('value="invalid"', contents)
+
+    @unittest_run_loop
+    async def test_get_index_with_valid_adlocation_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_valid_cy)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter found")
+        contents = str(await response.content.read())
+        self.assertIn('Rhowch y cod 16 nod sydd',
+                      contents)
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertIn('type="hidden"', contents)
+        self.assertIn('value="1234567890"', contents)
+
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+
+            response = await self.client.request('POST',
+                                                 self.post_index_cy,
+                                                 allow_redirects=False,
+                                                 data=self.post_start_form_data_with_adlocation)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/dechrau/cadarnhad-o-gyfeiriad',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_index_with_invalid_adlocation_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_invalid_cy)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
+        contents = str(await response.content.read())
+        self.assertIn('Rhowch y cod 16 nod sydd',
+                      contents)
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertNotIn('type="hidden"', contents)
+        self.assertNotIn('value="invalid"', contents)
+
+    @unittest_run_loop
+    async def test_get_index_with_valid_adlocation_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_valid_ni)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter found")
+        contents = str(await response.content.read())
+        self.assertIn('Enter the 16 character code printed on the letter',
+                      contents)
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertIn('type="hidden"', contents)
+        self.assertIn('value="1234567890"', contents)
+
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json)
+
+            response = await self.client.request('POST',
+                                                 self.post_index_ni,
+                                                 allow_redirects=False,
+                                                 data=self.post_start_form_data_with_adlocation)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/ni/start/address-confirmation',
+                      response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_get_index_with_invalid_adlocation_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', self.get_start_adlocation_invalid_ni)
+
+        self.assertEqual(response.status, 200)
+        self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
+        contents = str(await response.content.read())
+        self.assertIn('Enter the 16 character code printed on the letter',
+                      contents)
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn('type="submit"', contents)
+        self.assertNotIn('type="hidden"', contents)
+        self.assertNotIn('value="invalid"', contents)
