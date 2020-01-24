@@ -64,8 +64,7 @@ class TestRespondentHome(AioHTTPTestCase):
         logger.debug('successfully retrieved case',
                      sample_unit_id=sample_unit_id)
         for case in response.json():
-            if case['state'] == 'ACTIONABLE':
-                return case
+            return case
 
     def get_address_by_sample_unit_id(self, sample_unit_id):
         logger.debug('retrieving sample unit', sample_unit_id=sample_unit_id)
