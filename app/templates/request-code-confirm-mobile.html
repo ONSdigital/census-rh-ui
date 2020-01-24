@@ -27,6 +27,9 @@
 {% from 'components/question/_macro.njk' import onsQuestion %}
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'components/radios/_macro.njk' import onsRadios %}
+{% from 'macros/telephone/_macro.njk' import rhTelephone %}
+
+{% set formatted_mobile_number = rhTelephone({'number': mobile_number, 'highlight': 'true'}) %}
 
 {% set form =  {
     'method': 'POST',
@@ -53,8 +56,6 @@
             ]
 %}
 
-{% set question_description = '<p class="u-fs-r--b"><em class="highlight">' + mobile_number + '</em></p>' %}
-
 {% block main %}
 
     {% if messages_dict %}
@@ -63,7 +64,7 @@
 
     {% call onsQuestion({
         'title': _('Is this mobile phone number correct?'),
-        'description': question_description
+        'description': '<p class="u-fs-r--b">'|safe + formatted_mobile_number + '</p>'|safe
     }) %}
 
 

@@ -23,9 +23,12 @@
 {% set start_survey_link = url('Start:get', display_region=display_region) %}
 
 {% from 'components/button/_macro.njk' import onsButton %}
+{% from 'macros/telephone/_macro.njk' import rhTelephone %}
+
+{% set formatted_mobile_number = rhTelephone({'number': mobile_number}) %}
 
 {% block main %}
-    <h1 class="u-mt-l">{{ _('We have sent an access code to %(mobile_no)s', mobile_no=mobile_number)|safe }}</h1>
+    <h1 class="u-mt-l">{{ _('We have sent an access code to <br>%(mobile_no)s', mobile_no=formatted_mobile_number)|safe }}</h1>
 
     <p>{{ _('A text with the code should arrive shortly. Once you get the code, you can start the survey.') }}</p>
 
