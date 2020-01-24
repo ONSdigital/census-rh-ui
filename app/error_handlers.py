@@ -148,9 +148,9 @@ def check_display_region(request):
             'display_region': 'ni',
         }
     elif any([
-            path_starts_with('/dechrau'),
             path_starts_with('/gwe-sgwrs'),
             path_starts_with('/gofyn-am-god-mynediad'),
+            path_starts_with('/gofyn-am-god-unigol'),
             path_starts_with('/cy')
     ]):
         attributes = {
