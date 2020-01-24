@@ -651,9 +651,9 @@ class RHTestCase(AioHTTPTestCase):
         self.get_accessibility_statement_cy = self.app.router['AccessibilityCY:get'].url_for()
         self.get_accessibility_statement_ni = self.app.router['AccessibilityNI:get'].url_for()
 
-        self.get_start_saveandexit_en = self.app.router['SaveAndExitEN:get'].url_for()
-        self.get_start_saveandexit_cy = self.app.router['SaveAndExitCY:get'].url_for()
-        self.get_start_saveandexit_ni = self.app.router['SaveAndExitNI:get'].url_for()
+        self.get_start_saveandexit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
+        self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
+        self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
