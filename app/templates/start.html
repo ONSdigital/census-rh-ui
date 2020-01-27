@@ -1,15 +1,8 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% if display_region == 'ni' %}
-    {% set webchat_link = url('WebChatNI:post') %}
-{% elif display_region == 'cy' %}
-    {% set webchat_link = url('WebChatCY:post') %}
-{% else %}
-    {% set webchat_link = url('WebChatEN:post') %}
-{% endif %}
-
 {% set request_household_code_link = url('RequestCode:get', request_type='household', display_region=display_region) %}
 {% set request_individual_code_link = url('RequestCode:get', request_type='individual', display_region=display_region) %}
+{% set webchat_link = url('WebChat:get', display_region=display_region) %}
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}
 {% from 'components/button/_macro.njk' import onsButton %}

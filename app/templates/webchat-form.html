@@ -1,14 +1,10 @@
+{% extends 'base-webchat-' + display_region + '.html' %}
+
 {% if display_region == 'cy' %}
-    {% extends 'base-webchat-cy.html' %}
-    {% set form_action = url('WebChatCY:post') %}
     {% set help_url = domain_url_cy + '/help/' %}
 {% elif display_region == 'ni' %}
-    {% extends 'base-webchat-ni.html' %}
-    {% set form_action = url('WebChatNI:post') %}
     {% set help_url = domain_url_en + '/ni/help/' %}
 {% else %}
-    {% extends 'base-webchat-en.html' %}
-    {% set form_action = url('WebChatEN:post') %}
     {% set help_url = domain_url_en + '/help/' %}
 {% endif %}
 
@@ -26,7 +22,7 @@
 {% set form =  {
     'method': 'POST',
     'attributes': {
-        'action': form_action
+        'action': url('WebChat:post', display_region=display_region)
     }
 } %}
 
