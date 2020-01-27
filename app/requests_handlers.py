@@ -76,36 +76,6 @@ class RequestCodeCommon(View):
 
         return address_content
 
-    @staticmethod
-    async def post_enter_mobile(request, attributes, data):
-
-        try:
-            mobile_number = ProcessMobileNumber.validate_uk_mobile_phone_number(data['request-mobile-number'],
-                                                                                attributes['locale'])
-
-            logger.info('valid mobile number',
-                        client_ip=request['client_ip'])
-
-            attributes['mobile_number'] = mobile_number
-            session = await get_session(request)
-            session['attributes'] = attributes
-
-            raise HTTPFound(
-                request.app.router['RequestCodeConfirmMobile' +
-                                   attributes['fulfillment_type'] +
-                                   attributes['display_region'].upper() +
-                                   ':get'].url_for())
-
-        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info(exc, client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR', 'mobile')
-            flash(request, flash_message)
-            raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile' +
-                                   attributes['fulfillment_type'] +
-                                   attributes['display_region'].upper() +
-                                   ':post'].url_for())
-
     async def get_ai_postcode(self, request, postcode):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
         url = f'{ai_svc_url}/addresses/postcode/{postcode}'
@@ -299,7 +269,10 @@ class RequestCodeSelectAddress(RequestCodeCommon):
             form_return = json.loads(data['request-address-select'])
         except KeyError:
             logger.info('no address selected', client_ip=request['client_ip'])
-            flash(request, ADDRESS_SELECT_CHECK_MSG)
+            if display_region == 'cy':
+                flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
+            else:
+                flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
                 request, attributes['postcode'])
             address_content['page_title'] = page_title
@@ -364,6 +337,11 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['locale'] = locale
+        attributes['request_type'] = request_type
+
         data = await request.post()
 
         try:
@@ -371,7 +349,10 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
         except KeyError:
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
-            flash(request, ADDRESS_CHECK_MSG)
+            if display_region == 'cy':
+                flash(request, ADDRESS_CHECK_MSG_CY)
+            else:
+                flash(request, ADDRESS_CHECK_MSG)
             return attributes
 
         if address_confirmation == 'yes':
@@ -431,7 +412,7 @@ class RequestCodeNotRequired(RequestCodeCommon):
             page_title = 'Your address is not part of the 2019 rehearsal'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-address')
+        self.log_entry(request, display_region + '/request-' + request_type + '-code/not-required')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         attributes['page_title'] = page_title
@@ -558,7 +539,7 @@ class RequestCodeConfirmMobile(RequestCodeCommon):
             page_title = 'Is this mobile phone number correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-mobile/')
+        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 

@@ -478,8 +478,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hh_en,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
@@ -502,8 +502,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hh_cy,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
@@ -526,8 +526,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hh_ni,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
@@ -550,8 +550,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hi_en,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
@@ -574,8 +574,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hi_cy,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
@@ -598,8 +598,8 @@ class TestRequestsHandlers(RHTestCase):
                     response = await self.client.request('POST',
                                                          self.post_requestcode_entermobile_hi_ni,
                                                          data=self.request_code_enter_mobile_form_data_invalid)
-                self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-                self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/enter-mobile'")
+                self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/enter-mobile'")
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
@@ -624,7 +624,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_en,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'en/request-household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -652,7 +652,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_cy,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'cy/request-household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -680,7 +680,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_ni,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'ni/request-household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -708,7 +708,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_en,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'en/request-individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -736,7 +736,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_cy,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'cy/request-individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -764,7 +764,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_ni,
                     data=self.request_code_select_address_form_data_empty)
-            self.assertLogEvent(cm_select, "received POST on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm_select, "received POST on endpoint 'ni/request-individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
@@ -798,7 +798,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -832,7 +832,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -866,7 +866,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -900,7 +900,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -934,7 +934,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -968,7 +968,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_confirm_address_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1002,7 +1002,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1037,7 +1037,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1071,7 +1071,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1105,7 +1105,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1139,7 +1139,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1173,7 +1173,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_address_confirmation_data_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
 
             self.assertEqual(response.status, 200)
@@ -1207,8 +1207,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'en/request-household-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1240,8 +1240,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'cy/request-household-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1273,8 +1273,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'ni/request-household-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1306,8 +1306,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'en/request-individual-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1339,8 +1339,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'cy/request-individual-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1372,8 +1372,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_address_confirmation_data_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm, "received GET on endpoint 'ni/request-individual-code/enter-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1398,7 +1398,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
@@ -1407,7 +1407,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
@@ -1420,8 +1420,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1433,8 +1433,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_en,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1446,8 +1446,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1459,8 +1459,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hh_en,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1471,8 +1471,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1496,7 +1496,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
@@ -1505,7 +1505,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
@@ -1518,8 +1518,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1531,8 +1531,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_cy,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1544,8 +1544,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1557,8 +1557,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hh_cy,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1569,8 +1569,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1594,7 +1594,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
@@ -1603,7 +1603,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hh_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
@@ -1616,8 +1616,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1629,8 +1629,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hh_ni,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1642,8 +1642,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1655,8 +1655,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hh_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1667,8 +1667,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1692,7 +1692,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
@@ -1701,7 +1701,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
@@ -1714,8 +1714,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1727,8 +1727,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_en,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1740,8 +1740,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1753,8 +1753,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hi_en,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1765,8 +1765,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1789,7 +1789,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
@@ -1798,7 +1798,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
@@ -1811,8 +1811,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1824,8 +1824,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_cy,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1837,8 +1837,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1850,8 +1850,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hi_cy,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1862,8 +1862,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1887,7 +1887,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
@@ -1896,7 +1896,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_enter_address_hi_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
@@ -1909,8 +1909,8 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.request_code_form_data_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/select-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1922,8 +1922,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_selectaddress_hi_ni,
                     data=self.request_code_select_address_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/confirm-address'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1935,8 +1935,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1948,8 +1948,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_entermobile_hi_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1960,8 +1960,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/code-sent'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/code-sent'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2007,8 +2007,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_en,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2055,8 +2055,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_cy,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2103,8 +2103,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_ni,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2151,8 +2151,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_en,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2199,8 +2199,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_cy,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2247,8 +2247,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_ni,
                     data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2295,7 +2295,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_en,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2342,7 +2342,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_cy,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2389,7 +2389,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_ni,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2436,7 +2436,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_en,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2483,7 +2483,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_cy,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2530,7 +2530,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_ni,
                     data=self.request_code_mobile_confirmation_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2576,7 +2576,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hh_en,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2622,7 +2622,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hh_cy,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2668,7 +2668,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hh_ni,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2714,7 +2714,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hi_en,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2760,7 +2760,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hi_cy,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2806,7 +2806,7 @@ class TestRequestsHandlers(RHTestCase):
                 'POST',
                 self.post_requestcode_confirm_mobile_hi_ni,
                 data=self.request_code_mobile_confirmation_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2839,8 +2839,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/not-required'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2872,8 +2872,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/not-required'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2905,8 +2905,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/not-required'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2938,8 +2938,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/not-required'")
 
             self.assertEqual(response.status, 200)
 
@@ -2972,8 +2972,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/not-required'")
 
             self.assertEqual(response.status, 200)
 
@@ -3006,8 +3006,8 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/not-required'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/not-required'")
 
             self.assertEqual(response.status, 200)
 
@@ -3040,7 +3040,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3074,7 +3074,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3108,7 +3108,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3142,7 +3142,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3176,7 +3176,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3210,7 +3210,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_code_address_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-address'")
 
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -3256,7 +3256,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3300,7 +3300,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3344,7 +3344,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3388,7 +3388,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3432,7 +3432,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3476,7 +3476,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3523,7 +3523,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3570,7 +3570,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3617,7 +3617,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hh_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3664,7 +3664,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_en,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3711,7 +3711,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_cy,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3758,7 +3758,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_confirm_mobile_hi_ni,
                     data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/confirm-mobile'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/confirm-mobile'")
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -3773,7 +3773,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3786,7 +3786,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3799,7 +3799,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_household_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
@@ -3812,7 +3812,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
@@ -3825,7 +3825,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
@@ -3838,7 +3838,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request('GET',
                                                  self.get_requestcode_individual_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/timeout'")
+        self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
@@ -3853,14 +3853,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_household_en)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_en,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3878,14 +3878,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_household_cy)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_cy,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3903,14 +3903,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_household_ni)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hh_ni,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-access-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3928,14 +3928,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_individual_en)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_en,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3953,14 +3953,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_cy,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
@@ -3978,14 +3978,14 @@ class TestRequestsHandlers(RHTestCase):
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
             await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'request-individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
                 self.post_requestcode_enter_address_hi_ni,
                 data=self.request_code_form_data_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
-        self.assertLogEvent(cm, "received POST on endpoint 'request-individual-code/enter-address'")
+        self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/enter-address'")
 
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
