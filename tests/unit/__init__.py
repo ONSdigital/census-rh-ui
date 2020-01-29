@@ -249,17 +249,17 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_info = self.app.router['Info:get'].url_for()
 
-        self.get_start_adlocation_valid_en = self.app.router['IndexEN:get'].url_for().with_query(
+        self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "1234567890"})
-        self.get_start_adlocation_invalid_en = self.app.router['IndexEN:get'].url_for().with_query(
+        self.get_start_adlocation_invalid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "invalid"})
-        self.get_start_adlocation_valid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+        self.get_start_adlocation_valid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "1234567890"})
-        self.get_start_adlocation_invalid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+        self.get_start_adlocation_invalid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "invalid"})
-        self.get_start_adlocation_valid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+        self.get_start_adlocation_valid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "1234567890"})
-        self.get_start_adlocation_invalid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+        self.get_start_adlocation_invalid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "invalid"})
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
