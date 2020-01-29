@@ -249,6 +249,19 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_info = self.app.router['Info:get'].url_for()
 
+        self.get_start_adlocation_valid_en = self.app.router['IndexEN:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_en = self.app.router['IndexEN:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+        self.get_start_adlocation_valid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_cy = self.app.router['IndexCY:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+        self.get_start_adlocation_valid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+            {"adlocation": "1234567890"})
+        self.get_start_adlocation_invalid_ni = self.app.router['IndexNI:get'].url_for().with_query(
+            {"adlocation": "invalid"})
+
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "1234567890"})
@@ -541,45 +554,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddressHIEN:post'].url_for()
         self.post_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddressHICY:post'].url_for()
         self.post_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddressHINI:post'].url_for()
-        self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:get'].url_for()
-        self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:get'].url_for()
-        self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:get'].url_for()
-        self.post_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:post'].url_for()
-        self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:post'].url_for()
-        self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:post'].url_for()
-
-        self.get_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:get'].url_for()
-        self.get_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:get'].url_for()
-        self.get_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:get'].url_for()
-        self.get_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:get'].url_for()
-        self.get_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:get'].url_for()
-        self.get_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:get'].url_for()
-        self.post_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobileHHEN:post'].url_for()
-        self.post_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobileHHCY:post'].url_for()
-        self.post_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobileHHNI:post'].url_for()
-        self.post_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobileHIEN:post'].url_for()
-        self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobileHICY:post'].url_for()
-        self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobileHINI:post'].url_for()
-
-        self.get_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:get'].url_for()
-        self.get_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:get'].url_for()
-        self.get_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:get'].url_for()
-        self.get_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:get'].url_for()
-        self.get_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:get'].url_for()
-        self.get_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:get'].url_for()
-        self.post_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobileHHEN:post'].url_for()
-        self.post_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobileHHCY:post'].url_for()
-        self.post_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobileHHNI:post'].url_for()
-        self.post_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobileHIEN:post'].url_for()
-        self.post_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobileHICY:post'].url_for()
-        self.post_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobileHINI:post'].url_for()
-
-        self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequiredHHEN:get'].url_for()
-        self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequiredHHCY:get'].url_for()
-        self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequiredHHNI:get'].url_for()
-        self.get_requestcode_notrequired_hi_en = self.app.router['RequestCodeNotRequiredHIEN:get'].url_for()
-        self.get_requestcode_notrequired_hi_cy = self.app.router['RequestCodeNotRequiredHICY:get'].url_for()
-        self.get_requestcode_notrequired_hi_ni = self.app.router['RequestCodeNotRequiredHINI:get'].url_for()
         self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddressHIEN:get'].url_for()
         self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddressHICY:get'].url_for()
         self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddressHINI:get'].url_for()
