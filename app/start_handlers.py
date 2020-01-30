@@ -671,7 +671,7 @@ class StartSaveAndExit(View):
         }
 
 
-@start_routes.view('/start/timeout')
+@start_routes.view('/start/timeout/')
 class UACTimeout(View):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
