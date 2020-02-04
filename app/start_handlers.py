@@ -262,42 +262,7 @@ class Start(StartCommon):
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
 
-        if session['case']['region'][0] == 'N':
-            if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
-            else:
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='ni'))
-        elif session['case']['region'][0] == 'W':
-            if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
-            else:
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
-        else:
-            if display_region == 'en':
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
-            else:
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/region-change/')
-class StartRegionChange(StartCommon):
-    @aiohttp_jinja2.template('start-region-change.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/region-change')
-
-        await check_permission(request)
-
-        locale = 'en'
-        page_title = 'Change of region'
-
-        self.log_entry(request, 'start/region-change')
-        return {
-            'display_region': display_region,
-            'locale': locale,
-            'page_title': page_title
-        }
+        raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/confirm-address/')
@@ -317,7 +282,6 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
             page_title = 'Is this address correct?'
-        page_url = '/start/confirm-address/'
 
         session = await get_session(request)
         try:
@@ -331,7 +295,6 @@ class StartConfirmAddress(StartCommon):
 
         return {'locale': locale,
                 'page_title': page_title,
-                'page_url': page_url,
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
                 'addressLine2': attributes['addressLine2'],
@@ -354,7 +317,6 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
             page_title = 'Is this address correct?'
-        page_url = '/start/confirm-address/'
 
         data = await request.post()
 
@@ -381,7 +343,6 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
-                    'page_url': page_url,
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -413,7 +374,6 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
-                    'page_url': page_url,
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
