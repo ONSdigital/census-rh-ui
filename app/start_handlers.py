@@ -262,7 +262,42 @@ class Start(StartCommon):
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
 
-        raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+        if session['case']['region'][0] == 'N':
+            if display_region == 'ni':
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+            else:
+                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='ni'))
+        elif session['case']['region'][0] == 'W':
+            if display_region == 'ni':
+                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
+            else:
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+        else:
+            if display_region == 'en':
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+            else:
+                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/region-change/')
+class StartRegionChange(StartCommon):
+    @aiohttp_jinja2.template('start-region-change.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/region-change')
+
+        await check_permission(request)
+
+        locale = 'en'
+        page_title = 'Change of region'
+
+        self.log_entry(request, 'start/region-change')
+        return {
+            'display_region': display_region,
+            'locale': locale,
+            'page_title': page_title
+        }
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/confirm-address/')
