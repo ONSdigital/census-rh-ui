@@ -27,23 +27,16 @@ class EqPayloadConstructor(object):
 
         self._sample_attributes = attributes
 
-        if self._sample_attributes['display_region'] == 'ni':
-            domain_url = app['DOMAIN_URL_EN']
-            save_and_exit_url = '/ni/start/save-and-exit'
-            start_url = '/ni/start/'
-        elif self._sample_attributes['display_region'] == 'cy':
-            domain_url = app['DOMAIN_URL_CY']
-            save_and_exit_url = '/dechrau/cadw-a-gadael'
-            start_url = '/dechrau/'
-        else:
-            domain_url = app['DOMAIN_URL_EN']
-            save_and_exit_url = '/start/save-and-exit'
-            start_url = '/start/'
-
         domain_url_protocol = app['DOMAIN_URL_PROTOCOL']
+        domain_url = app['DOMAIN_URL_EN']
         url_path_prefix = app['URL_PATH_PREFIX']
-        self._account_service_url = f'{domain_url_protocol}{domain_url}{url_path_prefix}{start_url}'
-        self._account_service_log_out_url = f'{domain_url_protocol}{domain_url}{url_path_prefix}{save_and_exit_url}'
+        url_display_region = '/' + self._sample_attributes['display_region']
+        save_and_exit_url = '/start/save-and-exit/'
+        start_url = '/start/'
+        self._account_service_url = \
+            f'{domain_url_protocol}{domain_url}{url_path_prefix}{url_display_region}{start_url}'
+        self._account_service_log_out_url = \
+            f'{domain_url_protocol}{domain_url}{url_path_prefix}{url_display_region}{save_and_exit_url}'
 
         if adlocation:
             self._channel = 'ad'

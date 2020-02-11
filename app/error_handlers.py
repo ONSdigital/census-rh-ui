@@ -25,16 +25,18 @@ def create_error_middleware(overrides):
             def path_starts_with(suffix):
                 return request.path.startswith(path_prefix + suffix)
 
-            if path_starts_with('/ni'):
-                index_resource = request.app.router['IndexNI:get']
-            elif path_starts_with('/dechrau') or path_starts_with('/cy'):
-                index_resource = request.app.router['IndexCY:get']
-            else:
-                index_resource = request.app.router['IndexEN:get']
+            index_resource = request.app.router['Start:get']
 
-            if request.path + '/' == index_resource.canonical:
+            if path_starts_with('/ni'):
+                display_region = 'ni'
+            elif path_starts_with('/cy'):
+                display_region = 'cy'
+            else:
+                display_region = 'en'
+
+            if request.path + '/' == index_resource.canonical.replace('{display_region}', display_region):
                 logger.debug('redirecting to index', path=request.path)
-                raise web.HTTPMovedPermanently(index_resource.url_for())
+                raise web.HTTPMovedPermanently(index_resource.url_for(display_region=display_region))
             return await not_found_error(request)
         except web.HTTPForbidden:
             return await forbidden(request)
@@ -109,7 +111,7 @@ async def not_found_error(request):
 
 async def forbidden(request):
     attributes = check_display_region(request)
-    return jinja.render_template('index.html', request, attributes, status=403)
+    return jinja.render_template('start.html', request, attributes, status=403)
 
 
 def setup(app):
@@ -145,7 +147,6 @@ def check_display_region(request):
             'display_region': 'ni',
         }
     elif any([
-            path_starts_with('/dechrau'),
             path_starts_with('/gwe-sgwrs'),
             path_starts_with('/gofyn-am-god-mynediad'),
             path_starts_with('/gofyn-am-god-unigol'),
