@@ -101,10 +101,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_en}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
@@ -152,10 +155,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -213,10 +217,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'eo'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -284,10 +289,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'ga'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -355,10 +361,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -426,10 +435,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_en}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
@@ -486,10 +498,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'cy'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/cy'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_cy}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_cy}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
@@ -544,10 +559,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
