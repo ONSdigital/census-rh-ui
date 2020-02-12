@@ -315,7 +315,7 @@ class TestWebChatHandlers(RHTestCase):
                                                      allow_redirects=False,
                                                      data=self.webchat_form_data)
             self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/webchat'")
+            self.assertLogEvent(cm, "received POST on endpoint 'en/web-chat'")
             self.assertLogEvent(cm, "date/time check")
 
             contents = str(await response.content.read())
@@ -335,7 +335,7 @@ class TestWebChatHandlers(RHTestCase):
                                                      allow_redirects=False,
                                                      data=self.webchat_form_data)
             self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/webchat'")
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/web-chat'")
             self.assertLogEvent(cm, "date/time check")
 
             contents = str(await response.content.read())
@@ -355,7 +355,7 @@ class TestWebChatHandlers(RHTestCase):
                                                      allow_redirects=False,
                                                      data=self.webchat_form_data)
             self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/webchat'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/web-chat'")
             self.assertLogEvent(cm, "date/time check")
 
             contents = str(await response.content.read())

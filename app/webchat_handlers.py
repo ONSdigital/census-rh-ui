@@ -91,7 +91,7 @@ class WebChat(View):
         return form_valid
 
 
-@webchat_routes.view(r'/' + View.valid_display_regions + '/webchat/chat/')
+@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/chat/')
 class WebChatWindow(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, request):
@@ -103,7 +103,7 @@ class WebChatWindow(WebChat):
         else:
             page_title = 'Web Chat'
             locale = 'en'
-        self.log_entry(request, display_region + '/webchat/chat')
+        self.log_entry(request, display_region + '/web-chat/chat')
         return {
             'display_region': display_region,
             'page_title': page_title,
@@ -111,7 +111,7 @@ class WebChatWindow(WebChat):
         }
 
 
-@webchat_routes.view(r'/' + View.valid_display_regions + '/webchat')
+@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/')
 class WebChat(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
@@ -123,7 +123,7 @@ class WebChat(WebChat):
         else:
             page_title = 'Web Chat'
             locale = 'en'
-        self.log_entry(request, display_region + '/webchat')
+        self.log_entry(request, display_region + '/web-chat')
 
         logger.info('date/time check', client_ip=request['client_ip'])
         if WebChat.check_open():
@@ -151,7 +151,7 @@ class WebChat(WebChat):
         else:
             page_title = 'Web Chat'
             locale = 'en'
-        self.log_entry(request, display_region + '/webchat')
+        self.log_entry(request, display_region + '/web-chat')
 
         data = await request.post()
 
