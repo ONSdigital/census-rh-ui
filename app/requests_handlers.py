@@ -150,8 +150,7 @@ class RequestCode(RequestCodeCommon):
             'locale': locale,
             'page_title': page_title,
             'request_type': request_type,
-            'partial_name': 'request-' + request_type + '-code',
-            'page_url': '/request-' + request_type + '-code/'
+            'partial_name': 'request-' + request_type + '-code'
         }
 
 

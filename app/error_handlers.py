@@ -25,14 +25,13 @@ def create_error_middleware(overrides):
             def path_starts_with(suffix):
                 return request.path.startswith(path_prefix + suffix)
 
+            index_resource = request.app.router['Start:get']
+
             if path_starts_with('/ni'):
-                index_resource = request.app.router['Start:get']
                 display_region = 'ni'
             elif path_starts_with('/cy'):
-                index_resource = request.app.router['Start:get']
                 display_region = 'cy'
             else:
-                index_resource = request.app.router['Start:get']
                 display_region = 'en'
 
             if request.path + '/' == index_resource.canonical.replace('{display_region}', display_region):
@@ -147,12 +146,7 @@ def check_display_region(request):
             **base_attributes,
             'display_region': 'ni',
         }
-    elif any([
-            path_starts_with('/gwe-sgwrs'),
-            path_starts_with('/gofyn-am-god-mynediad'),
-            path_starts_with('/gofyn-am-god-unigol'),
-            path_starts_with('/cy')
-    ]):
+    elif path_starts_with('/cy'):
         attributes = {
             **base_attributes,
             'display_region': 'cy',

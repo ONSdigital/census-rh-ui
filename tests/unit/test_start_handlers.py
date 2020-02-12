@@ -101,10 +101,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_en}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
@@ -152,10 +155,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -213,10 +217,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'eo'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -284,10 +289,11 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'ga'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload['account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload['account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -355,10 +361,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'en'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -426,10 +435,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_en}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_en}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
@@ -486,10 +498,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload['language_code'] = 'cy'
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/cy'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_cy}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_cy}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_cy,
@@ -544,10 +559,13 @@ class TestStartHandlers(RHTestCase):
             eq_payload = self.eq_payload.copy()
             account_service_url = self.app['ACCOUNT_SERVICE_URL']
             url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/ni'
             eq_payload[
-                'account_service_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_url_ni}'
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
             eq_payload[
-                'account_service_log_out_url'] = f'{account_service_url}{url_path_prefix}{self.account_service_log_out_url_ni}'
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('POST',
                                                  self.post_start_ni,
@@ -1914,111 +1932,6 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Enter the 16 character code printed on the letter',
                       contents)
-
-    @unittest_run_loop
-    async def test_get_change_of_region(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            response = await self.client.request('GET', self.get_start_region_change_ni, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/region-change'")
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Change of region', contents)
-
-    @unittest_run_loop
-    async def test_get_change_of_region_en_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            response = await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            self.assertIn('/ni/start/region-change/', response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_cy_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_ni)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/ni/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_cy_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_ni_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_cy)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_ni_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
 
     @unittest_run_loop
     async def test_post_start_address_confirm_empty_en(self):
