@@ -1,18 +1,15 @@
 {% extends 'base-' + display_region + '.html' %}
 
 {% if display_region == 'ni' %}
-    {% set request_code_link = url('RequestCodeHouseholdNI:get') %}
-    {% set request_individual_code_link = url('RequestCodeIndividualNI:get') %}
     {% set webchat_link = url('WebChatNI:post') %}
 {% elif display_region == 'cy' %}
-    {% set request_code_link = url('RequestCodeHouseholdCY:get') %}
-    {% set request_individual_code_link = url('RequestCodeIndividualCY:get') %}
     {% set webchat_link = url('WebChatCY:post') %}
 {% else %}
-    {% set request_code_link = url('RequestCodeHouseholdEN:get') %}
-    {% set request_individual_code_link = url('RequestCodeIndividualEN:get') %}
     {% set webchat_link = url('WebChatEN:post') %}
 {% endif %}
+
+{% set request_household_code_link = url('RequestCode:get', request_type='household', display_region=display_region) %}
+{% set request_individual_code_link = url('RequestCode:get', request_type='individual', display_region=display_region) %}
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}
 {% from 'components/button/_macro.njk' import onsButton %}
@@ -96,7 +93,7 @@
 
     <h2 class="u-fs-r--b u-mb-no">{{_("Don't have a code?")}}</h2>
     {% autoescape false %}
-        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
+        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.', open='<a href="%s">' % request_household_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
     <h2 class="u-fs-r--b u-mb-no">{{_("Want to answer separately from your household?")}}</h2>

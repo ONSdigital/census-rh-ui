@@ -1,26 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% if display_region == 'ni' %}
-    {% if fulfillment_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeEnterAddressHINI:post') %}
-    {% else %}
-        {% set request_code_link = url('RequestCodeEnterAddressHHNI:post') %}
-    {% endif %}
-{% elif display_region == 'cy' %}
-    {% if fulfillment_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeEnterAddressHICY:post') %}
-    {% else %}
-        {% set request_code_link = url('RequestCodeEnterAddressHHCY:post') %}
-    {% endif %}
-{% else %}
-    {% if fulfillment_type == 'HI' %}
-        {% set request_code_link = url('RequestCodeEnterAddressHIEN:post') %}
-    {% else %}
-        {% set request_code_link = url('RequestCodeEnterAddressHHEN:post') %}
-    {% endif %}
-{% endif %}
-
 {% set start_survey_link = url('Start:get', display_region=display_region) %}
+{% set request_code_link = url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region) %}
 
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'macros/telephone/_macro.njk' import rhTelephone %}

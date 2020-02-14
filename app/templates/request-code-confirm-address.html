@@ -1,25 +1,4 @@
-{% if display_region == 'ni' %}
-    {% extends 'base-ni.html' %}
-    {% if fulfillment_type == 'HI' %}
-        {% set form_action = url('RequestCodeConfirmAddressHINI:post') %}
-    {% else %}
-        {% set form_action = url('RequestCodeConfirmAddressHHNI:post') %}
-    {% endif %}
-{% elif display_region == 'cy' %}
-    {% extends 'base-cy.html' %}
-    {% if fulfillment_type == 'HI' %}
-        {% set form_action = url('RequestCodeConfirmAddressHICY:post') %}
-    {% else %}
-        {% set form_action = url('RequestCodeConfirmAddressHHCY:post') %}
-    {% endif %}
-{% else %}
-    {% extends 'base-en.html' %}
-    {% if fulfillment_type == 'HI' %}
-        {% set form_action = url('RequestCodeConfirmAddressHIEN:post') %}
-    {% else %}
-        {% set form_action = url('RequestCodeConfirmAddressHHEN:post') %}
-    {% endif %}
-{% endif %}
+{% extends 'base-' + display_region + '.html' %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -31,7 +10,7 @@
 {% set form =  {
     'method': 'POST',
     'attributes': {
-        'action': form_action
+        'action': url('RequestCodeConfirmAddress:post', request_type=request_type, display_region=display_region)
     }
 } %}
 
