@@ -49,10 +49,15 @@ class RequestCodeCommon(View):
 
         return attributes
 
-    async def get_postcode_return(self, request, postcode):
+    async def get_postcode_return(self, request, postcode, display_region):
         postcode_return = await self.get_ai_postcode(request, postcode)
 
         address_options = []
+
+        if display_region == 'cy':
+            cannot_find_text = 'I cannot find my address'
+        else:
+            cannot_find_text = 'I cannot find my address'
 
         for singleAddress in postcode_return['response']['addresses']:
             address_options.append({
@@ -67,6 +72,18 @@ class RequestCodeCommon(View):
                 'id':
                 singleAddress['uprn']
             })
+
+        address_options.append({
+            'value':
+            json.dumps({
+                'uprn': 'xxxx',
+                'address': cannot_find_text
+            }),
+            'label': {
+                'text': cannot_find_text
+            },
+            'id': 'xxxx'
+        })
 
         address_content = {
             'postcode': postcode,
@@ -185,10 +202,8 @@ class RequestCodeEnterAddress(RequestCodeCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = 'Beth yw eich cod post?'
             locale = 'cy'
         else:
-            page_title = 'What is your postcode?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-address')
@@ -238,7 +253,7 @@ class RequestCodeSelectAddress(RequestCodeCommon):
         self.log_entry(request, display_region + '/request-' + request_type + '-code/select-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
-        address_content = await self.get_postcode_return(request, attributes['postcode'])
+        address_content = await self.get_postcode_return(request, attributes['postcode'], display_region)
         address_content['page_title'] = page_title
         address_content['display_region'] = display_region
         address_content['locale'] = locale
@@ -273,22 +288,55 @@ class RequestCodeSelectAddress(RequestCodeCommon):
             else:
                 flash(request, ADDRESS_SELECT_CHECK_MSG)
             address_content = await self.get_postcode_return(
-                request, attributes['postcode'])
+                request, attributes['postcode'], display_region)
             address_content['page_title'] = page_title
             address_content['display_region'] = display_region
             address_content['locale'] = locale
             address_content['request_type'] = request_type
             return address_content
 
-        session = await get_session(request)
-        session['attributes']['address'] = form_return['address']
-        session['attributes']['uprn'] = form_return['uprn']
-        session.changed()
-        logger.info('session updated', client_ip=request['client_ip'])
+        if form_return['uprn'] == 'xxxx':
+            raise HTTPFound(
+                request.app.router['RequestContactCentre:get'].url_for(
+                    request_type=request_type, display_region=display_region))
+        else:
+            session = await get_session(request)
+            session['attributes']['address'] = form_return['address']
+            session['attributes']['uprn'] = form_return['uprn']
+            session.changed()
+            logger.info('session updated', client_ip=request['client_ip'])
 
-        raise HTTPFound(
-            request.app.router['RequestCodeConfirmAddress:get'].url_for(
-                request_type=request_type, display_region=display_region))
+            raise HTTPFound(
+                request.app.router['RequestCodeConfirmAddress:get'].url_for(
+                    request_type=request_type, display_region=display_region))
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
+                      RequestCodeCommon.valid_request_types + '-code/contact-centre/')
+class RequestContactCentre(RequestCodeCommon):
+    @aiohttp_jinja2.template('request-contact-centre.html')
+    async def get(self, request):
+        self.setup_request(request)
+        request_type = request.match_info['request_type']
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = 'You need to contact customer contact centre'
+            locale = 'cy'
+        else:
+            page_title = 'You need to contact customer contact centre'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/request-' + request_type + '-code/contact-centre')
+
+        await self.get_check_attributes(request, request_type, display_region)
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type
+        }
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
