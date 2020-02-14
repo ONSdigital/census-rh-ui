@@ -185,10 +185,8 @@ class RequestCodeEnterAddress(RequestCodeCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = 'Beth yw eich cod post?'
             locale = 'cy'
         else:
-            page_title = 'What is your postcode?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-address')
