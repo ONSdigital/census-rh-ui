@@ -25,38 +25,21 @@ class Info(View):
         return json_response(info)
 
 
-@static_routes.view('/start/accessibility/')
-class AccessibilityEN(View):
+@static_routes.view(r'/' + View.valid_display_regions + '/start/accessibility/')
+class Accessibility(View):
     @aiohttp_jinja2.template('accessibility.html')
     async def get(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'start/accessibility')
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/accessibility')
+        if display_region == 'cy':
+            locale = 'cy'
+            page_title = 'Datganiad hygyrchedd gwefan y cyfrifiad'
+        else:
+            locale = 'en'
+            page_title = 'Census questionnaire accessibility statement'
         return {
-            'display_region': 'en',
-            'page_title': 'Census questionnaire accessibility statement'
-        }
-
-
-@static_routes.view('/dechrau/hygyrchedd/')
-class AccessibilityCY(View):
-    @aiohttp_jinja2.template('accessibility.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/accessibility')
-        return {
-            'display_region': 'cy',
-            'locale': 'cy',
-            'page_title': 'Datganiad hygyrchedd gwefan y cyfrifiad'
-        }
-
-
-@static_routes.view('/ni/start/accessibility/')
-class AccessibilityNI(View):
-    @aiohttp_jinja2.template('accessibility.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/accessibility')
-        return {
-            'display_region': 'ni',
-            'page_title': 'Census questionnaire accessibility statement'
+            'display_region': display_region,
+            'page_title': page_title,
+            'locale': locale
         }
