@@ -472,15 +472,15 @@ class RHTestCase(AioHTTPTestCase):
 
         self.start_ni_select_language_data_empty = {}
 
-        self.get_webchat_en = self.app.router['WebChatEN:get'].url_for()
-        self.get_webchat_cy = self.app.router['WebChatCY:get'].url_for()
-        self.get_webchat_ni = self.app.router['WebChatNI:get'].url_for()
-        self.post_webchat_en = self.app.router['WebChatEN:post'].url_for()
-        self.post_webchat_cy = self.app.router['WebChatCY:post'].url_for()
-        self.post_webchat_ni = self.app.router['WebChatNI:post'].url_for()
-        self.get_webchat_chat_en = self.app.router['WebChatWindowEN:get'].url_for()
-        self.get_webchat_chat_cy = self.app.router['WebChatWindowCY:get'].url_for()
-        self.get_webchat_chat_ni = self.app.router['WebChatWindowNI:get'].url_for()
+        self.get_webchat_en = self.app.router['WebChat:get'].url_for(display_region='en')
+        self.get_webchat_cy = self.app.router['WebChat:get'].url_for(display_region='cy')
+        self.get_webchat_ni = self.app.router['WebChat:get'].url_for(display_region='ni')
+        self.post_webchat_en = self.app.router['WebChat:post'].url_for(display_region='en')
+        self.post_webchat_cy = self.app.router['WebChat:post'].url_for(display_region='cy')
+        self.post_webchat_ni = self.app.router['WebChat:post'].url_for(display_region='ni')
+        self.get_webchat_chat_en = self.app.router['WebChatWindow:get'].url_for(display_region='en')
+        self.get_webchat_chat_cy = self.app.router['WebChatWindow:get'].url_for(display_region='cy')
+        self.get_webchat_chat_ni = self.app.router['WebChatWindow:get'].url_for(display_region='ni')
 
         self.webchat_form_data = {
             'screen_name': 'Test',
