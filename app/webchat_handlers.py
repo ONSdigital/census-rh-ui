@@ -1,7 +1,5 @@
 import aiohttp_jinja2
 
-from aiohttp.client_exceptions import (ClientError)
-
 from aiohttp.web import RouteTableDef
 
 from datetime import datetime
@@ -92,83 +90,72 @@ class WebChat(View):
 
         return form_valid
 
-    async def get_webchat_closed(self, request):
-        querystring = '?im_name=OOH&im_subject=ONS&im_countchars=1&info_email=EMAIL&info_country=COUNTRY&info_query=QUERY&info_language=LANGUAGEID'
-        return await self._make_request(
-            request, 'GET', request.app['WEBCHAT_SVC_URL'] + querystring,
-            self._handle_response)
 
-
-@webchat_routes.view('/webchat/chat')
-class WebChatWindowEN(WebChat):
+@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/chat/')
+class WebChatWindow(WebChat):
     @aiohttp_jinja2.template('webchat-window.html')
     async def get(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'webchat/chat')
+        display_region = request.match_info['display_region']
+        if display_region == 'cy':
+            page_title = 'Gwe-sgwrs'
+            locale = 'cy'
+        else:
+            page_title = 'Web Chat'
+            locale = 'en'
+        self.log_entry(request, display_region + '/web-chat/chat')
         return {
-            'display_region': 'en',
-            'page_title': 'Web Chat'
+            'display_region': display_region,
+            'page_title': page_title,
+            'locale': locale
         }
 
 
-@webchat_routes.view('/gwe-sgwrs/chat')
-class WebChatWindowCY(WebChat):
-    @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat/chat')
-        return {
-            'display_region': 'cy',
-            'locale': 'cy',
-            'page_title': 'Gwe-sgwrs'
-        }
-
-
-@webchat_routes.view('/ni/webchat/chat')
-class WebChatWindowNI(WebChat):
-    @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat/chat')
-        return {
-            'display_region': 'ni',
-            'page_title': 'Web Chat'
-        }
-
-
-@webchat_routes.view('/webchat')
-class WebChatEN(WebChat):
+@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/')
+class WebChat(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
     async def get(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'webchat')
+        display_region = request.match_info['display_region']
+        if display_region == 'cy':
+            page_title = 'Gwe-sgwrs'
+            locale = 'cy'
+        else:
+            page_title = 'Web Chat'
+            locale = 'en'
+        self.log_entry(request, display_region + '/web-chat')
+
         logger.info('date/time check', client_ip=request['client_ip'])
         if WebChat.check_open():
             return {
-                'display_region': 'en',
-                'page_title': 'Web Chat'
+                'display_region': display_region,
+                'page_title': page_title,
+                'locale': locale
             }
         else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
             logger.info('webchat closed', client_ip=request['client_ip'])
             return {
                 'webchat_status': 'closed',
-                'display_region': 'en',
-                'page_title': 'Web Chat'
+                'display_region': display_region,
+                'page_title': page_title,
+                'locale': locale
             }
 
     @aiohttp_jinja2.template('webchat-form.html')
     async def post(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'webchat')
+        display_region = request.match_info['display_region']
+        if display_region == 'cy':
+            page_title = 'Gwe-sgwrs'
+            locale = 'cy'
+        else:
+            page_title = 'Web Chat'
+            locale = 'en'
+        self.log_entry(request, display_region + '/web-chat')
+
         data = await request.post()
 
-        form_valid = self.validate_form(request, data, 'en')
+        form_valid = self.validate_form(request, data, display_region)
 
         if not form_valid:
             logger.info('form submission error',
@@ -177,8 +164,9 @@ class WebChatEN(WebChat):
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
                 'form_value_query': data.get('query'),
-                'display_region': 'en',
-                'page_title': 'Web Chat'
+                'display_region': display_region,
+                'page_title': page_title,
+                'locale': locale
             }
 
         context = {
@@ -186,9 +174,10 @@ class WebChatEN(WebChat):
             'language': 'en',
             'country': data.get('country'),
             'query': data.get('query'),
-            'display_region': 'en',
-            'page_title': 'Web Chat',
-            'webchat_url': request.app['WEBCHAT_SVC_URL']
+            'display_region': display_region,
+            'page_title': page_title,
+            'webchat_url': request.app['WEBCHAT_SVC_URL'],
+            'locale': locale
         }
 
         logger.info('date/time check', client_ip=request['client_ip'])
@@ -196,168 +185,10 @@ class WebChatEN(WebChat):
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   request, context)
         else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
             logger.info('webchat closed', client_ip=request['client_ip'])
             return {
                 'webchat_status': 'closed',
-                'display_region': 'en',
-                'page_title': 'Web Chat'
-            }
-
-
-@webchat_routes.view('/gwe-sgwrs')
-class WebChatCY(WebChat):
-    @aiohttp_jinja2.template('webchat-form.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat')
-        logger.info('date/time check', client_ip=request['client_ip'])
-        if WebChat.check_open():
-            return {
-                'display_region': 'cy',
-                'locale': 'cy',
-                'page_title': 'Gwe-sgwrs'
-            }
-        else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
-            logger.info('webchat closed', client_ip=request['client_ip'])
-            return {
-                'webchat_status': 'closed',
-                'display_region': 'cy',
-                'locale': 'cy',
-                'page_title': 'Gwe-sgwrs'
-            }
-
-    @aiohttp_jinja2.template('webchat-form.html')
-    async def post(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat')
-        data = await request.post()
-
-        form_valid = self.validate_form(request, data, 'cy')
-
-        if not form_valid:
-            logger.info('form submission error',
-                        client_ip=request['client_ip'])
-            return {
-                'form_value_screen_name': data.get('screen_name'),
-                'form_value_country': data.get('country'),
-                'form_value_query': data.get('query'),
-                'display_region': 'cy',
-                'locale': 'cy',
-                'page_title': 'Gwe-sgwrs'
-            }
-
-        context = {
-            'screen_name': data.get('screen_name'),
-            'language': 'cy',
-            'country': data.get('country'),
-            'query': data.get('query'),
-            'display_region': 'cy',
-            'locale': 'cy',
-            'page_title': 'Gwe-sgwrs',
-            'webchat_url': request.app['WEBCHAT_SVC_URL']
-        }
-
-        logger.info('date/time check', client_ip=request['client_ip'])
-        if WebChat.check_open():
-            return aiohttp_jinja2.render_template('webchat-window.html',
-                                                  request, context)
-        else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
-            logger.info('webchat closed', client_ip=request['client_ip'])
-            return {
-                'webchat_status': 'closed',
-                'display_region': 'cy',
-                'locale': 'cy',
-                'page_title': 'Gwe-sgwrs'
-            }
-
-
-@webchat_routes.view('/ni/webchat')
-class WebChatNI(WebChat):
-    @aiohttp_jinja2.template('webchat-form.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat')
-        logger.info('date/time check', client_ip=request['client_ip'])
-        if WebChat.check_open():
-            return {
-                'display_region': 'ni',
-                'page_title': 'Web Chat'
-            }
-        else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
-            logger.info('webchat closed', client_ip=request['client_ip'])
-            return {
-                'webchat_status': 'closed',
-                'display_region': 'ni',
-                'page_title': 'Web Chat'
-            }
-
-    @aiohttp_jinja2.template('webchat-form.html')
-    async def post(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'webchat')
-        data = await request.post()
-
-        form_valid = self.validate_form(request, data, 'ni')
-
-        if not form_valid:
-            logger.info('form submission error',
-                        client_ip=request['client_ip'])
-            return {
-                'form_value_screen_name': data.get('screen_name'),
-                'form_value_country': data.get('country'),
-                'form_value_query': data.get('query'),
-                'display_region': 'ni',
-                'page_title': 'Web Chat'
-            }
-
-        context = {
-            'screen_name': data.get('screen_name'),
-            'language': 'en',
-            'country': data.get('country'),
-            'query': data.get('query'),
-            'display_region': 'ni',
-            'page_title': 'Web Chat',
-            'webchat_url': request.app['WEBCHAT_SVC_URL']
-        }
-
-        logger.info('date/time check', client_ip=request['client_ip'])
-        if WebChat.check_open():
-            return aiohttp_jinja2.render_template('webchat-window.html',
-                                                  request, context)
-        else:
-            try:
-                await self.get_webchat_closed(request)
-            except ClientError:
-                logger.error('failed to send webchat closed',
-                             client_ip=request['client_ip'])
-
-            logger.info('webchat closed', client_ip=request['client_ip'])
-            return {
-                'webchat_status': 'closed',
-                'display_region': 'ni',
-                'page_title': 'Web Chat'
+                'display_region': display_region,
+                'page_title': page_title,
+                'locale': locale
             }

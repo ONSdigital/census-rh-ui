@@ -1,10 +1,4 @@
-{% if display_region == 'cy' %}
-    {% extends 'base-webchat-cy.html' %}
-{% elif display_region == 'ni' %}
-    {% extends 'base-webchat-ni.html' %}
-{% else %}
-    {% extends 'base-webchat-en.html' %}
-{% endif %}
+{% extends 'base-webchat-' + display_region + '.html' %}
 
 {% block main %}
 
