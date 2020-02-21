@@ -4012,12 +4012,12 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_en,
                     data=self.request_code_select_address_form_data_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'en/request-household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-household-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+            self.assertIn(self.content_request_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hh_cy(self):
@@ -4037,12 +4037,12 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_cy,
                     data=self.request_code_select_address_form_data_not_listed_cy)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/request-household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-household-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_contact_centre_cy, contents)
+            self.assertIn(self.content_request_address_not_listed_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hh_ni(self):
@@ -4062,12 +4062,12 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_ni,
                     data=self.request_code_select_address_form_data_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/request-household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-household-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+            self.assertIn(self.content_request_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_en(self):
@@ -4087,12 +4087,12 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_en,
                     data=self.request_code_select_address_form_data_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'en/request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/request-individual-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+            self.assertIn(self.content_request_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_cy(self):
@@ -4112,12 +4112,12 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_cy,
                     data=self.request_code_select_address_form_data_not_listed_cy)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/request-individual-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_contact_centre_cy, contents)
+            self.assertIn(self.content_request_address_not_listed_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_ni(self):
@@ -4137,9 +4137,9 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_ni,
                     data=self.request_code_select_address_form_data_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/request-individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/request-individual-code/address-not-listed'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+            self.assertIn(self.content_request_address_not_listed_en, contents)

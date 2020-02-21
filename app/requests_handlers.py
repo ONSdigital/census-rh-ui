@@ -297,7 +297,7 @@ class RequestCodeSelectAddress(RequestCodeCommon):
 
         if form_return['uprn'] == 'xxxx':
             raise HTTPFound(
-                request.app.router['RequestContactCentre:get'].url_for(
+                request.app.router['RequestAddressNotListed:get'].url_for(
                     request_type=request_type, display_region=display_region))
         else:
             session = await get_session(request)
@@ -312,9 +312,9 @@ class RequestCodeSelectAddress(RequestCodeCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/contact-centre/')
-class RequestContactCentre(RequestCodeCommon):
-    @aiohttp_jinja2.template('request-contact-centre.html')
+                      RequestCodeCommon.valid_request_types + '-code/address-not-listed/')
+class RequestAddressNotListed(RequestCodeCommon):
+    @aiohttp_jinja2.template('request-address-not-listed.html')
     async def get(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -327,7 +327,7 @@ class RequestContactCentre(RequestCodeCommon):
             page_title = 'You need to contact customer contact centre'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/contact-centre')
+        self.log_entry(request, display_region + '/request-' + request_type + '-code/address-not-listed')
 
         await self.get_check_attributes(request, request_type, display_region)
 

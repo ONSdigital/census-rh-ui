@@ -962,7 +962,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_title_en = 'Is this address correct?'
         self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
 
-        self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
-        self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
+        self.content_request_address_not_listed_en = 'You need to call the Census customer contact centre'
+        self.content_request_address_not_listed_cy = 'You need to call the Census customer contact centre'
 
         # yapf: enable
