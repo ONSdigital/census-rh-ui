@@ -772,6 +772,12 @@ class RHTestCase(AioHTTPTestCase):
         self.post_requestcode_select_address_form_data_valid = \
             '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
 
+        self.post_requestcode_select_address_form_data_not_listed_en = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
+        self.post_requestcode_select_address_form_data_not_listed_cy = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
         self.selected_uprn = '10023122451'
 
         self.mobile_valid = '07012345678'
@@ -851,6 +857,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_select_address_form_data_valid = {
             'request-address-select': self.post_requestcode_select_address_form_data_valid,
+            'action[save_continue]': '',
+        }
+
+        self.request_code_select_address_form_data_not_listed_en = {
+            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_en,
+            'action[save_continue]': '',
+        }
+
+        self.request_code_select_address_form_data_not_listed_cy = {
+            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_cy,
             'action[save_continue]': '',
         }
 
@@ -945,5 +961,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_confirm_address_title_en = 'Is this address correct?'
         self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
+
+        self.content_request_address_not_listed_en = 'You need to call the Census customer contact centre'
+        self.content_request_address_not_listed_cy = 'You need to call the Census customer contact centre'
 
         # yapf: enable
