@@ -418,11 +418,14 @@ class RequestCodeConfirmAddress(RequestCommon):
 
             uprn_ai_return = await self.get_ai_uprn(request, uprn)
 
-            if uprn_ai_return['response']['address']['countryCode'] == 'S':
-                logger.info('address is in Scotland', client_ip=request['client_ip'])
-                raise HTTPFound(
-                    request.app.router['RequestAddressInScotland:get'].
-                    url_for(display_region=display_region, request_type=request_type))
+            try:
+                if uprn_ai_return['response']['address']['countryCode'] == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['RequestAddressInScotland:get'].
+                        url_for(display_region=display_region, request_type=request_type))
+            except KeyError:
+                logger.info('unable to check for region', client_ip=request['client_ip'])
 
             # uprn_return[0] will need updating/changing for multiple households - post 2019 issue
             try:
