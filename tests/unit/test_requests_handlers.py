@@ -3230,7 +3230,8 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=E&deliveryChannel=SMS',
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=E&deliveryChannel=SMS&productGroup=UAC&individual=false',
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_household_en)
@@ -3275,7 +3276,9 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=W&deliveryChannel=SMS', status=400)
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=W&deliveryChannel=SMS&productGroup=UAC&individual=false',
+                                    status=400)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
             await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
@@ -3319,7 +3322,9 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HH&region=N&deliveryChannel=SMS', status=400)
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=N&deliveryChannel=SMS&productGroup=UAC&individual=false',
+                                    status=400)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
             await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
@@ -3363,7 +3368,9 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=E&deliveryChannel=SMS', status=400)
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=E&deliveryChannel=SMS&productGroup=UAC&individual=true',
+                                    status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
             await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
@@ -3407,7 +3414,9 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=W&deliveryChannel=SMS', status=400)
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=W&deliveryChannel=SMS&productGroup=UAC&individual=true',
+                                    status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
             await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
@@ -3451,7 +3460,9 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
-            mocked_aioresponses.get(self.rhsvc_url_fulfilments + '?caseType=HI&region=N&deliveryChannel=SMS', status=400)
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=HH&region=N&deliveryChannel=SMS&productGroup=UAC&individual=true',
+                                    status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
             await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
