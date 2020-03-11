@@ -82,6 +82,12 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad(
                 f'Could not retrieve region from case JSON ')
 
+        try:
+            self._form_type = case['formType']
+        except KeyError:
+            raise InvalidEqPayLoad(
+                f'Could not retrieve formType from case JSON ')
+
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
 
@@ -119,7 +125,7 @@ class EqPayloadConstructor(object):
             'questionnaire_id': self._questionnaire_id,
             'eq_id': 'census',  # hardcoded for rehearsal
             'period_id': '2019',  # hardcoded for rehearsal
-            'form_type': 'individual_gb_eng',  # hardcoded for rehearsal
+            'form_type': self._form_type,
             'survey': 'CENSUS'  # hardcoded for rehearsal
         }
 
