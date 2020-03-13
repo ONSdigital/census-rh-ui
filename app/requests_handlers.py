@@ -120,9 +120,10 @@ class RequestCommon(View):
                                         return_json=True)
 
     async def get_fulfilment(self, request, case_type, region,
-                             delivery_channel):
+                             delivery_channel, product_group, individual):
         rhsvc_url = request.app['RHSVC_URL']
-        url = f'{rhsvc_url}/fulfilments?caseType={case_type}&region={region}&deliveryChannel={delivery_channel}'
+        url = f'{rhsvc_url}/fulfilments?caseType={case_type}&region={region}&deliveryChannel={delivery_channel}' \
+              f'&productGroup={product_group}&individual={individual}'
         return await self._make_request(request,
                                         'GET',
                                         url,
@@ -659,8 +660,10 @@ class RequestCodeConfirmMobile(RequestCommon):
 
             if request_type == 'household':
                 fulfilment_case_type = 'HH'
+                fulfilment_individual = 'false'
             elif request_type == 'individual':
-                fulfilment_case_type = 'HI'
+                fulfilment_case_type = 'HH'
+                fulfilment_individual = 'true'
             else:
                 # catch all just in case, should never get here
                 logger.info('invalid request_type',
@@ -674,7 +677,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
             try:
                 available_fulfilments = await self.get_fulfilment(
-                    request, fulfilment_case_type, attributes['region'], 'SMS')
+                    request, fulfilment_case_type, attributes['region'], 'SMS', 'UAC', fulfilment_individual)
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
