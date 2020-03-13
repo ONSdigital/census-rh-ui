@@ -482,7 +482,7 @@ class RequestContactCentre(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '-code/contact-centre')
 
-        await self.get_check_attributes(request, display_region, request_type)
+        await self.get_check_attributes(request, request_type, display_region)
 
         return {
             'page_title': page_title,
