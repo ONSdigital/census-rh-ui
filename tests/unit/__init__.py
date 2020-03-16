@@ -700,22 +700,22 @@ class RHTestCase(AioHTTPTestCase):
             request_type='individual', display_region='ni'
         )
 
-        self.get_requestcode_notrequired_hh_en = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hh_en = self.app.router['RequestContactCentre:get'].url_for(
             request_type='household', display_region='en'
         )
-        self.get_requestcode_notrequired_hh_cy = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hh_cy = self.app.router['RequestContactCentre:get'].url_for(
             request_type='household', display_region='cy'
         )
-        self.get_requestcode_notrequired_hh_ni = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hh_ni = self.app.router['RequestContactCentre:get'].url_for(
             request_type='household', display_region='ni'
         )
-        self.get_requestcode_notrequired_hi_en = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hi_en = self.app.router['RequestContactCentre:get'].url_for(
             request_type='individual', display_region='en'
         )
-        self.get_requestcode_notrequired_hi_cy = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hi_cy = self.app.router['RequestContactCentre:get'].url_for(
             request_type='individual', display_region='cy'
         )
-        self.get_requestcode_notrequired_hi_ni = self.app.router['RequestCodeNotRequired:get'].url_for(
+        self.get_request_contact_centre_hi_ni = self.app.router['RequestContactCentre:get'].url_for(
             request_type='individual', display_region='ni'
         )
 
@@ -797,6 +797,16 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
+        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result = f
+
+        with open('tests/test_data/address_index/uprn_scotland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_scotland = f
+
         with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -827,45 +837,45 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment = f
 
-        self.request_code_form_data_valid = {
+        self.request_postcode_input_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
 
-        self.request_code_form_data_no_results = {
+        self.request_postcode_input_no_results = {
             'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
         }
 
-        self.request_code_form_data_invalid = {
+        self.request_postcode_input_invalid = {
             'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
-        self.request_code_address_confirmation_data_yes = {
+        self.request_confirm_address_input_yes = {
             'request-address-confirmation': 'yes', 'action[save_continue]': ''
         }
 
-        self.request_code_address_confirmation_data_no = {
+        self.request_confirm_address_input_no = {
             'request-address-confirmation': 'no', 'action[save_continue]': ''
         }
 
-        self.request_code_address_confirmation_data_invalid = {
+        self.request_confirm_address_input_invalid = {
             'request-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
         self.request_code_select_address_form_data_empty = {}
 
-        self.request_code_confirm_address_form_data_empty = {}
+        self.request_confirm_address_input_empty = {}
 
-        self.request_code_select_address_form_data_valid = {
+        self.request_select_address_input_valid = {
             'request-address-select': self.post_requestcode_select_address_form_data_valid,
             'action[save_continue]': '',
         }
 
-        self.request_code_select_address_form_data_not_listed_en = {
+        self.request_select_address_input_not_listed_en = {
             'request-address-select': self.post_requestcode_select_address_form_data_not_listed_en,
             'action[save_continue]': '',
         }
 
-        self.request_code_select_address_form_data_not_listed_cy = {
+        self.request_select_address_input_not_listed_cy = {
             'request-address-select': self.post_requestcode_select_address_form_data_not_listed_cy,
             'action[save_continue]': '',
         }
@@ -951,8 +961,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_timeout_en = 'Your session has timed out due to inactivity'
         self.content_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
-        self.content_request_not_required_en = 'Your address is not part of the 2019 rehearsal'
-        self.content_request_not_required_cy = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+        self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
+        self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
 
         self.content_start_title_en = 'Start Census'
         self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
@@ -964,5 +974,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_address_not_listed_en = 'You need to call the Census customer contact centre'
         self.content_request_address_not_listed_cy = 'You need to call the Census customer contact centre'
+
+        self.content_request_address_in_scotland_en = 'Your address is in Scotland'
+        self.content_request_address_in_scotland_cy = 'Your address is in Scotland'
 
         # yapf: enable

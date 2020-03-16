@@ -21,7 +21,7 @@ logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
 
 
-class RequestCodeCommon(View):
+class RequestCommon(View):
 
     valid_request_types = r'{request_type:\bhousehold|individual\b}'
 
@@ -102,6 +102,15 @@ class RequestCodeCommon(View):
                                         self._handle_response,
                                         return_json=True)
 
+    async def get_ai_uprn(self, request, uprn):
+        ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
+        url = f'{ai_svc_url}/addresses/uprn/{uprn}'
+        return await self._make_request(request,
+                                        'GET',
+                                        url,
+                                        self._handle_response,
+                                        return_json=True)
+
     async def get_cases_by_uprn(self, request, uprn):
         rhsvc_url = request.app['RHSVC_URL']
         return await self._make_request(request,
@@ -139,9 +148,9 @@ class RequestCodeCommon(View):
                                         json=fulfilment_json)
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/')
-class RequestCode(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/')
+class RequestCode(RequestCommon):
     @aiohttp_jinja2.template('template-main.html')
     async def get(self, request):
         self.setup_request(request)
@@ -162,7 +171,7 @@ class RequestCode(RequestCodeCommon):
                 page_title = 'Request a new access code'
                 locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -172,9 +181,9 @@ class RequestCode(RequestCodeCommon):
         }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/enter-address/')
-class RequestCodeEnterAddress(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/enter-address/')
+class RequestCodeEnterAddress(RequestCommon):
     @aiohttp_jinja2.template('request-code-enter-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -188,7 +197,7 @@ class RequestCodeEnterAddress(RequestCodeCommon):
             page_title = 'What is your postcode?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-address')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -207,7 +216,7 @@ class RequestCodeEnterAddress(RequestCodeCommon):
         else:
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-address')
 
         data = await request.post()
 
@@ -235,9 +244,9 @@ class RequestCodeEnterAddress(RequestCodeCommon):
                     request_type=request_type, display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/select-address/')
-class RequestCodeSelectAddress(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/select-address/')
+class RequestCodeSelectAddress(RequestCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -251,7 +260,7 @@ class RequestCodeSelectAddress(RequestCodeCommon):
             page_title = 'Select your address'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/select-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/select-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         address_content = await self.get_postcode_return(request, attributes['postcode'], display_region)
@@ -275,7 +284,7 @@ class RequestCodeSelectAddress(RequestCodeCommon):
             page_title = 'Select your address'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/select-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/select-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         data = await request.post()
@@ -312,9 +321,9 @@ class RequestCodeSelectAddress(RequestCodeCommon):
                     request_type=request_type, display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/address-not-listed/')
-class RequestAddressNotListed(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/address-not-listed/')
+class RequestAddressNotListed(RequestCommon):
     @aiohttp_jinja2.template('request-address-not-listed.html')
     async def get(self, request):
         self.setup_request(request)
@@ -328,7 +337,7 @@ class RequestAddressNotListed(RequestCodeCommon):
             page_title = 'You need to contact customer contact centre'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/address-not-listed')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/address-not-listed')
 
         await self.get_check_attributes(request, request_type, display_region)
 
@@ -340,9 +349,9 @@ class RequestAddressNotListed(RequestCodeCommon):
         }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/confirm-address/')
-class RequestCodeConfirmAddress(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/confirm-address/')
+class RequestCodeConfirmAddress(RequestCommon):
     @aiohttp_jinja2.template('request-code-confirm-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -357,7 +366,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             page_title = 'Is this address correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         attributes['page_title'] = page_title
@@ -381,7 +390,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             page_title = 'Is this address correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -408,6 +417,17 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             session = await get_session(request)
             uprn = session['attributes']['uprn']
 
+            uprn_ai_return = await self.get_ai_uprn(request, uprn)
+
+            try:
+                if uprn_ai_return['response']['address']['countryCode'] == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['RequestAddressInScotland:get'].
+                        url_for(display_region=display_region, request_type=request_type))
+            except KeyError:
+                logger.info('unable to check for region', client_ip=request['client_ip'])
+
             # uprn_return[0] will need updating/changing for multiple households - post 2019 issue
             try:
                 uprn_return = await self.get_cases_by_uprn(request, uprn)
@@ -422,7 +442,7 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
                     logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
-                        request.app.router['RequestCodeNotRequired:get'].
+                        request.app.router['RequestContactCentre:get'].
                         url_for(request_type=request_type, display_region=display_region))
                 else:
                     raise ex
@@ -444,35 +464,63 @@ class RequestCodeConfirmAddress(RequestCodeCommon):
             return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/not-required/')
-class RequestCodeNotRequired(RequestCodeCommon):
-    @aiohttp_jinja2.template('request-code-not-required.html')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/contact-centre/')
+class RequestContactCentre(RequestCommon):
+    @aiohttp_jinja2.template('request-contact-centre.html')
     async def get(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = 'Nid yw eich cyfeiriad yn rhan o ymarfer 2019'
+            page_title = 'You need to contact customer contact centre'
             locale = 'cy'
         else:
-            page_title = 'Your address is not part of the 2019 rehearsal'
+            page_title = 'You need to contact customer contact centre'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/not-required')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/contact-centre')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        return attributes
+        await self.get_check_attributes(request, request_type, display_region)
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type
+        }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/enter-mobile/')
-class RequestCodeEnterMobile(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/address-in-scotland/')
+class RequestAddressInScotland(RequestCommon):
+    @aiohttp_jinja2.template('request-address-in-scotland.html')
+    async def get(self, request):
+        self.setup_request(request)
+        request_type = request.match_info['request_type']
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = 'Your address is in Scotland'
+            locale = 'cy'
+        else:
+            page_title = 'Your address is in Scotland'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/address-in-scotland')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type
+        }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/enter-mobile/')
+class RequestCodeEnterMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         self.setup_request(request)
@@ -487,7 +535,7 @@ class RequestCodeEnterMobile(RequestCodeCommon):
             page_title = 'What is your mobile phone number?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -511,7 +559,7 @@ class RequestCodeEnterMobile(RequestCodeCommon):
             page_title = 'What is your mobile phone number?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/enter-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         attributes['page_title'] = page_title
@@ -545,9 +593,9 @@ class RequestCodeEnterMobile(RequestCodeCommon):
                                                                           display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/confirm-mobile/')
-class RequestCodeConfirmMobile(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/confirm-mobile/')
+class RequestCodeConfirmMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
         self.setup_request(request)
@@ -562,7 +610,7 @@ class RequestCodeConfirmMobile(RequestCodeCommon):
             page_title = 'Is this mobile phone number correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -587,7 +635,7 @@ class RequestCodeConfirmMobile(RequestCodeCommon):
             page_title = 'Is this mobile phone number correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -666,9 +714,9 @@ class RequestCodeConfirmMobile(RequestCodeCommon):
             return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/code-sent/')
-class RequestCodeCodeSent(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/code-sent/')
+class RequestCodeCodeSent(RequestCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
         self.setup_request(request)
@@ -683,7 +731,7 @@ class RequestCodeCodeSent(RequestCodeCommon):
             page_title = 'We have sent an access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/code-sent')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/code-sent')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -695,9 +743,9 @@ class RequestCodeCodeSent(RequestCodeCommon):
         return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/request-' +
-                      RequestCodeCommon.valid_request_types + '-code/timeout/')
-class RequestCodeTimeout(RequestCodeCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types + '-code/timeout/')
+class RequestCodeTimeout(RequestCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self.setup_request(request)
@@ -712,7 +760,7 @@ class RequestCodeTimeout(RequestCodeCommon):
             page_title = 'Your session has timed out due to inactivity'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/request-' + request_type + '-code/timeout')
+        self.log_entry(request, display_region + '/requests/' + request_type + '-code/timeout')
 
         return {
             'request_type': request_type,
