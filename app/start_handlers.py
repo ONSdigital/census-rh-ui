@@ -47,11 +47,11 @@ class StartCommon(View):
     @staticmethod
     def uac_hash(uac, expected_length=16):
         if uac:
-            combined = uac.lower().replace(' ', '')
+            combined = uac.upper().replace(' ', '')
         else:
             combined = ''
 
-        uac_validation_pattern = re.compile(r'^[a-z0-9]{16}$')
+        uac_validation_pattern = re.compile(r'^[A-Z0-9]{16}$')
 
         if (len(combined) < expected_length) or not (uac_validation_pattern.fullmatch(combined)):  # yapf: disable
             raise TypeError

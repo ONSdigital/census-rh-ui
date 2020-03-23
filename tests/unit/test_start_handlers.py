@@ -1585,7 +1585,7 @@ class TestStartHandlers(RHTestCase):
         result = Start.uac_hash(post_data['uac'])
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
+        self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
 
     def test_join_uac_cy(self):
         # Given some post data
@@ -1595,7 +1595,7 @@ class TestStartHandlers(RHTestCase):
         result = Start.uac_hash(post_data['uac'])
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
+        self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
 
     def test_join_uac_ni(self):
         # Given some post data
@@ -1605,7 +1605,7 @@ class TestStartHandlers(RHTestCase):
         result = Start.uac_hash(post_data['uac'])
 
         # Then a single string built from the uac values is returned
-        self.assertEqual(result, '8a9d5db4bbee34fd16e40aa2aaae52cfbdf1842559023614c30edb480ec252b4')
+        self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
 
     def test_join_uac_missing_en(self):
         # Given some missing post data
