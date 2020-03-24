@@ -1577,7 +1577,7 @@ class TestStartHandlers(RHTestCase):
                           contents)
             self.assertIn(self.ons_logo_cy, contents)
 
-    def test_uac_hash_en(self):
+    def test_uac_hash(self):
         # Given some post data
         post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
 
@@ -1587,27 +1587,7 @@ class TestStartHandlers(RHTestCase):
         # Then a single string built from the uac values is returned
         self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
 
-    def test_join_uac_cy(self):
-        # Given some post data
-        post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        result = Start.uac_hash(post_data['uac'])
-
-        # Then a single string built from the uac values is returned
-        self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
-
-    def test_join_uac_ni(self):
-        # Given some post data
-        post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        result = Start.uac_hash(post_data['uac'])
-
-        # Then a single string built from the uac values is returned
-        self.assertEqual(result, '54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c')
-
-    def test_join_uac_missing_en(self):
+    def test_join_uac_missing(self):
         # Given some missing post data
         post_data = {'uac': '', 'action[save_continue]': ''}
 
@@ -1616,25 +1596,7 @@ class TestStartHandlers(RHTestCase):
             Start.uac_hash(post_data['uac'])
         # Then a TypeError is raised
 
-    def test_join_uac_missing_cy(self):
-        # Given some missing post data
-        post_data = {'uac': '', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        with self.assertRaises(TypeError):
-            Start.uac_hash(post_data['uac'])
-        # Then a TypeError is raised
-
-    def test_join_uac_missing_ni(self):
-        # Given some missing post data
-        post_data = {'uac': '', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        with self.assertRaises(TypeError):
-            Start.uac_hash(post_data['uac'])
-        # Then a TypeError is raised
-
-    def test_join_uac_some_missing_en(self):
+    def test_join_uac_some_missing(self):
         # Given some missing post data
         post_data = {'uac': '123456781234', 'action[save_continue]': ''}
 
@@ -1643,25 +1605,7 @@ class TestStartHandlers(RHTestCase):
             Start.uac_hash(post_data['uac'])
         # Then a TypeError is raised
 
-    def test_join_uac_some_missing_cy(self):
-        # Given some missing post data
-        post_data = {'uac': '123456781234', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        with self.assertRaises(TypeError):
-            Start.uac_hash(post_data['uac'])
-        # Then a TypeError is raised
-
-    def test_join_uac_some_missing_ni(self):
-        # Given some missing post data
-        post_data = {'uac': '123456781234', 'action[save_continue]': ''}
-
-        # When join_uac is called
-        with self.assertRaises(TypeError):
-            Start.uac_hash(post_data['uac'])
-        # Then a TypeError is raised
-
-    def test_validate_case_en(self):
+    def test_validate_case(self):
         # Given a dict with an active key and value
         case_json = {'active': True, 'caseStatus': 'OK'}
 
@@ -1670,25 +1614,7 @@ class TestStartHandlers(RHTestCase):
 
         # Nothing happens
 
-    def test_validate_case_cy(self):
-        # Given a dict with an active key and value
-        case_json = {'active': True, 'caseStatus': 'OK'}
-
-        # When validate_case is called
-        Start.validate_case(case_json)
-
-        # Nothing happens
-
-    def test_validate_case_ni(self):
-        # Given a dict with an active key and value
-        case_json = {'active': True, 'caseStatus': 'OK'}
-
-        # When validate_case is called
-        Start.validate_case(case_json)
-
-        # Nothing happens
-
-    def test_validate_case_inactive_en(self):
+    def test_validate_case_inactive(self):
         # Given a dict with an active key and value
         case_json = {'active': False, 'caseStatus': 'OK'}
 
@@ -1698,27 +1624,7 @@ class TestStartHandlers(RHTestCase):
 
         # Then an InactiveCaseError is raised
 
-    def test_validate_case_inactive_cy(self):
-        # Given a dict with an active key and value
-        case_json = {'active': False, 'caseStatus': 'OK'}
-
-        # When validate_case is called
-        with self.assertRaises(InactiveCaseError):
-            Start.validate_case(case_json)
-
-        # Then an InactiveCaseError is raised
-
-    def test_validate_case_inactive_ni(self):
-        # Given a dict with an active key and value
-        case_json = {'active': False, 'caseStatus': 'OK'}
-
-        # When validate_case is called
-        with self.assertRaises(InactiveCaseError):
-            Start.validate_case(case_json)
-
-        # Then an InactiveCaseError is raised
-
-    def test_validate_caseStatus_notfound_en(self):
+    def test_validate_caseStatus_notfound(self):
         # Given a dict with an active key and value
         case_json = {'active': True, 'caseStatus': 'NOT_FOUND'}
 
@@ -1728,47 +1634,7 @@ class TestStartHandlers(RHTestCase):
 
         # Then an InvalidEqPayload is raised
 
-    def test_validate_caseStatus_notfound_cy(self):
-        # Given a dict with an active key and value
-        case_json = {'active': True, 'caseStatus': 'NOT_FOUND'}
-
-        # When validate_case is called
-        with self.assertRaises(InvalidEqPayLoad):
-            Start.validate_case(case_json)
-
-        # Then an InvalidEqPayload is raised
-
-    def test_validate_caseStatus_notfound_ni(self):
-        # Given a dict with an active key and value
-        case_json = {'active': True, 'caseStatus': 'NOT_FOUND'}
-
-        # When validate_case is called
-        with self.assertRaises(InvalidEqPayLoad):
-            Start.validate_case(case_json)
-
-        # Then an InvalidEqPayload is raised
-
-    def test_validate_case_empty_en(self):
-        # Given an empty dict
-        case_json = {}
-
-        # When validate_case is called
-        with self.assertRaises(InactiveCaseError):
-            Start.validate_case(case_json)
-
-        # Then an InactiveCaseError is raised
-
-    def test_validate_case_empty_cy(self):
-        # Given an empty dict
-        case_json = {}
-
-        # When validate_case is called
-        with self.assertRaises(InactiveCaseError):
-            Start.validate_case(case_json)
-
-        # Then an InactiveCaseError is raised
-
-    def test_validate_case_empty_ni(self):
+    def test_validate_case_empty(self):
         # Given an empty dict
         case_json = {}
 
