@@ -7,6 +7,7 @@ from aioresponses import aioresponses
 from . import RHTestCase
 
 
+# noinspection PyTypeChecker
 class TestRequestsHandlers(RHTestCase):
 
     @unittest_run_loop
@@ -1986,10 +1987,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
@@ -2034,10 +2037,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
@@ -2082,10 +2087,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
@@ -2130,10 +2137,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
@@ -2178,10 +2187,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
@@ -2226,10 +2237,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
@@ -2274,10 +2287,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
@@ -2321,10 +2336,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
@@ -2368,10 +2385,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
@@ -2415,10 +2434,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
@@ -2462,10 +2483,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
@@ -2509,10 +2532,12 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn\
                 :
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
@@ -2556,9 +2581,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
@@ -2602,9 +2629,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
@@ -2648,9 +2677,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
@@ -2694,9 +2725,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
@@ -2740,9 +2773,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
@@ -2786,9 +2821,11 @@ class TestRequestsHandlers(RHTestCase):
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.requests_handlers.RequestCommon.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.requests_handlers.RequestCommon.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_cases_by_uprn') as mocked_get_cases_by_uprn \
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
