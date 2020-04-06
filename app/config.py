@@ -68,6 +68,7 @@ class BaseConfig:
     WEBCHAT_SVC_URL = env('WEBCHAT_SVC_URL')
 
     ADDRESS_INDEX_SVC_URL = env('ADDRESS_INDEX_SVC_URL')
+    ADDRESS_INDEX_SVC_AUTH = (env('ADDRESS_INDEX_SVC_USERNAME'), env('ADDRESS_INDEX_SVC_PASSWORD'))
 
 
 class ProductionConfig(BaseConfig):
@@ -113,7 +114,9 @@ class DevelopmentConfig:
         default='https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221'
     )  # yapf: disable
 
-    ADDRESS_INDEX_SVC_URL = env.str('ADDRESS_INDEX_SVC_URL', default='http://addressindex-api-beta.apps.devtest.onsclofo.uk')  # yapf: disable
+    ADDRESS_INDEX_SVC_URL = env.str('ADDRESS_INDEX_SVC_URL', default='http://localhost:9000')  # yapf: disable
+    ADDRESS_INDEX_SVC_AUTH = (env.str('ADDRESS_INDEX_SVC_USERNAME', default='admin'),
+                  env.str('ADDRESS_INDEX_SVC_PASSWORD', default='secret'))
 
 
 class TestingConfig:
@@ -147,4 +150,5 @@ class TestingConfig:
 
     WEBCHAT_SVC_URL = 'https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221'
 
-    ADDRESS_INDEX_SVC_URL = 'http://addressindex-api-beta.apps.devtest.onsclofo.uk'
+    ADDRESS_INDEX_SVC_URL = 'http://localhost:9000'
+    ADDRESS_INDEX_SVC_AUTH = ('admin', 'secret')

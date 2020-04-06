@@ -1,5 +1,6 @@
 import aiohttp_jinja2
 import re
+import json
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
@@ -12,15 +13,16 @@ from structlog import get_logger
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
                ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
                START_LANGUAGE_OPTION_MSG,
+               ADDRESS_SELECT_CHECK_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY)
+               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY,
+               ADDRESS_SELECT_CHECK_MSG_CY)
 from .exceptions import InactiveCaseError
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-# from .handlers import View
-from .utils import View
+from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -242,7 +244,10 @@ class Start(StartCommon):
             else:
                 raise ex
 
-        await remember(uac_json['caseId'], request)
+        if uac_json['caseId'] == '':
+            raise HTTPFound(request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
+        else:
+            await remember(uac_json['caseId'], request)
 
         self.validate_case(uac_json)
 
@@ -673,3 +678,128 @@ class UACTimeout(View):
         self.setup_request(request)
         self.log_entry(request, 'start/timeout')
         return {}
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/enter-address/')
+class StartUnlinkedEnterAddress(View):
+    @aiohttp_jinja2.template('start-unlinked-enter-address.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/unlinked/enter-address')
+        await check_permission(request)
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+        return {
+            'display_region': display_region,
+            'locale': locale
+        }
+
+    @aiohttp_jinja2.template('start-unlinked-enter-address.html')
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/enter-address')
+
+        await check_permission(request)
+
+        data = await request.post()
+
+        try:
+            postcode = ProcessPostcode.validate_postcode(data['request-postcode'], locale)
+            logger.info('valid postcode', client_ip=request['client_ip'])
+
+        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
+            logger.info('invalid postcode', client_ip=request['client_ip'])
+            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
+            flash(request, flash_message)
+            raise HTTPFound(
+                request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
+
+        session = await get_session(request)
+        session['attributes']['postcode'] = postcode
+        session.changed()
+
+        raise HTTPFound(
+            request.app.router['StartUnlinkedSelectAddress:get'].url_for(display_region=display_region))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/select-address/')
+class StartUnlinkedSelectAddress(View):
+    @aiohttp_jinja2.template('start-unlinked-select-address.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        await check_permission(request)
+
+        if display_region == 'cy':
+            page_title = 'Dewiswch eich cyfeiriad'
+            locale = 'cy'
+        else:
+            page_title = 'Select your address'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/select-address')
+
+        attributes = await self.get_check_attributes(request, request_type, display_region)
+        address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
+        address_content['page_title'] = page_title
+        address_content['display_region'] = display_region
+        address_content['locale'] = locale
+
+        return address_content
+
+    @aiohttp_jinja2.template('start-unlinked-select-address.html')
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        await check_permission(request)
+
+        if display_region == 'cy':
+            page_title = 'Dewiswch eich cyfeiriad'
+            locale = 'cy'
+        else:
+            page_title = 'Select your address'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/select-address')
+
+        attributes = await self.get_check_attributes(request, request_type, display_region)
+        data = await request.post()
+
+        try:
+            form_return = json.loads(data['request-address-select'])
+        except KeyError:
+            logger.info('no address selected', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
+            else:
+                flash(request, ADDRESS_SELECT_CHECK_MSG)
+            address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
+            address_content['page_title'] = page_title
+            address_content['display_region'] = display_region
+            address_content['locale'] = locale
+            return address_content
+
+        if form_return['uprn'] == 'xxxx':
+            raise HTTPFound(
+                request.app.router['StartAddressNotListed:get'].url_for(display_region=display_region))
+        else:
+            session = await get_session(request)
+            session['attributes']['address'] = form_return['address']
+            session['attributes']['uprn'] = form_return['uprn']
+            session.changed()
+            logger.info('session updated', client_ip=request['client_ip'])
+
+            raise HTTPFound(
+                request.app.router['StartUnlinkedConfirmAddress:get'].url_for(display_region=display_region))

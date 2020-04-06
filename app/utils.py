@@ -1,5 +1,6 @@
 import string
 import re
+import json
 
 from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientConnectorError,
@@ -188,3 +189,73 @@ class FlashMessage:
     def generate_flash_message(text, level, message_type, field):
         json_return = {'text': text, 'level': level, 'type': message_type, 'field': field}
         return json_return
+
+
+class AddressIndex(View):
+
+    @staticmethod
+    async def get_postcode_return(request, postcode, display_region):
+        postcode_return = await AddressIndex.get_ai_postcode(request, postcode)
+
+        address_options = []
+
+        if display_region == 'cy':
+            cannot_find_text = 'I cannot find my address'
+        else:
+            cannot_find_text = 'I cannot find my address'
+
+        for singleAddress in postcode_return['response']['addresses']:
+            address_options.append({
+                'value':
+                json.dumps({
+                    'uprn': singleAddress['uprn'],
+                    'address': singleAddress['formattedAddress']
+                }),
+                'label': {
+                    'text': singleAddress['formattedAddress']
+                },
+                'id':
+                singleAddress['uprn']
+            })
+
+        address_options.append({
+            'value':
+            json.dumps({
+                'uprn': 'xxxx',
+                'address': cannot_find_text
+            }),
+            'label': {
+                'text': cannot_find_text
+            },
+            'id': 'xxxx'
+        })
+
+        address_content = {
+            'postcode': postcode,
+            'addresses': address_options,
+            'total_matches': postcode_return['response']['total']
+        }
+
+        return address_content
+
+    @staticmethod
+    async def get_ai_postcode(request, postcode):
+        ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
+        url = f'{ai_svc_url}/addresses/postcode/{postcode}'
+        return await View._make_request(request,
+                                        'GET',
+                                        url,
+                                        View._handle_response,
+                                        auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
+                                        return_json=True)
+
+    @staticmethod
+    async def get_ai_uprn(request, uprn):
+        ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
+        url = f'{ai_svc_url}/addresses/uprn/{uprn}'
+        return await View._make_request(request,
+                                        'GET',
+                                        url,
+                                        View._handle_response,
+                                        auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
+                                        return_json=True)

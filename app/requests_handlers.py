@@ -15,7 +15,13 @@ from . import (ADDRESS_CHECK_MSG,
                ADDRESS_SELECT_CHECK_MSG_CY)
 
 from .flash import flash
-from .utils import View, ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
+from .utils import View, \
+    ProcessPostcode, \
+    ProcessMobileNumber, \
+    InvalidDataError, \
+    InvalidDataErrorWelsh, \
+    FlashMessage, \
+    AddressIndex
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -48,68 +54,6 @@ class RequestCommon(View):
                     request_type=request_type, display_region=display_region))
 
         return attributes
-
-    async def get_postcode_return(self, request, postcode, display_region):
-        postcode_return = await self.get_ai_postcode(request, postcode)
-
-        address_options = []
-
-        if display_region == 'cy':
-            cannot_find_text = 'I cannot find my address'
-        else:
-            cannot_find_text = 'I cannot find my address'
-
-        for singleAddress in postcode_return['response']['addresses']:
-            address_options.append({
-                'value':
-                json.dumps({
-                    'uprn': singleAddress['uprn'],
-                    'address': singleAddress['formattedAddress']
-                }),
-                'label': {
-                    'text': singleAddress['formattedAddress']
-                },
-                'id':
-                singleAddress['uprn']
-            })
-
-        address_options.append({
-            'value':
-            json.dumps({
-                'uprn': 'xxxx',
-                'address': cannot_find_text
-            }),
-            'label': {
-                'text': cannot_find_text
-            },
-            'id': 'xxxx'
-        })
-
-        address_content = {
-            'postcode': postcode,
-            'addresses': address_options,
-            'total_matches': postcode_return['response']['total']
-        }
-
-        return address_content
-
-    async def get_ai_postcode(self, request, postcode):
-        ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/postcode/{postcode}'
-        return await self._make_request(request,
-                                        'GET',
-                                        url,
-                                        self._handle_response,
-                                        return_json=True)
-
-    async def get_ai_uprn(self, request, uprn):
-        ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/uprn/{uprn}'
-        return await self._make_request(request,
-                                        'GET',
-                                        url,
-                                        self._handle_response,
-                                        return_json=True)
 
     async def get_cases_by_uprn(self, request, uprn):
         rhsvc_url = request.app['RHSVC_URL']
@@ -264,7 +208,7 @@ class RequestCodeSelectAddress(RequestCommon):
         self.log_entry(request, display_region + '/requests/' + request_type + '-code/select-address')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
-        address_content = await self.get_postcode_return(request, attributes['postcode'], display_region)
+        address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
         address_content['page_title'] = page_title
         address_content['display_region'] = display_region
         address_content['locale'] = locale
@@ -298,8 +242,7 @@ class RequestCodeSelectAddress(RequestCommon):
                 flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             else:
                 flash(request, ADDRESS_SELECT_CHECK_MSG)
-            address_content = await self.get_postcode_return(
-                request, attributes['postcode'], display_region)
+            address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
             address_content['page_title'] = page_title
             address_content['display_region'] = display_region
             address_content['locale'] = locale
@@ -418,7 +361,7 @@ class RequestCodeConfirmAddress(RequestCommon):
             session = await get_session(request)
             uprn = session['attributes']['uprn']
 
-            uprn_ai_return = await self.get_ai_uprn(request, uprn)
+            uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
             try:
                 if uprn_ai_return['response']['address']['countryCode'] == 'S':
