@@ -100,6 +100,7 @@ class RequestCommon(View):
                                         'GET',
                                         url,
                                         self._handle_response,
+                                        auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
     async def get_ai_uprn(self, request, uprn):
@@ -109,6 +110,7 @@ class RequestCommon(View):
                                         'GET',
                                         url,
                                         self._handle_response,
+                                        auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
     async def get_cases_by_uprn(self, request, uprn):
