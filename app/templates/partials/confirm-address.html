@@ -1,0 +1,42 @@
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    {% call onsQuestion({
+        'title': _('Is this address correct?')
+    }) %}
+
+    <p>
+        {{ address['addressLine1'] }}<br>
+        {% if address['addressLine2'] !='' %}{{ address['addressLine2'] }}<br>{% endif %}
+        {% if address['addressLine3'] !='' %}{{ address['addressLine3'] }}<br>{% endif %}
+        {% if address['townName'] !='' %}{{ address['townName'] }}<br>{% endif %}
+        {{ address['postcode'] }}
+    </p>
+
+{% if 'address' in field_messages_dict %}
+    {{
+        onsRadios({
+            'name': 'request-address-confirmation',
+            'radios': form_options,
+            'error': {
+                'text': _('Check and confirm the address')
+            }
+        })
+    }}
+{% else %}
+    {{
+        onsRadios({
+            'name': 'request-address-confirmation',
+            'radios': form_options
+        })
+    }}
+{% endif %}
+    {% endcall %}
+
+    {{
+        onsButton({
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
+        })
+    }}

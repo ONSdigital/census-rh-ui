@@ -2600,3 +2600,24 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 302)
         self.assertIn('/en/start/region-change/',
                       response.headers['Location'])
+
+    @unittest_run_loop
+    async def test_unlinked_uac_happy_path_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
+
+            response = await self.client.request('GET', self.get_start_en)
+            self.assertEqual(response.status, 200)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            response = await self.client.request('POST',
+                                                 self.post_start_en,
+                                                 allow_redirects=False,
+                                                 data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "unlinked case")
+
+            self.assertEqual(response.status, 302)
+            self.assertIn('/en/start/unlinked/enter-address/', response.headers['Location'])

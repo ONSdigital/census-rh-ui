@@ -252,10 +252,36 @@ class AddressIndex(View):
     @staticmethod
     async def get_ai_uprn(request, uprn):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/uprn/{uprn}'
+        url = f'{ai_svc_url}/addresses/rh/uprn/{uprn}?addresstype=paf'
         return await View._make_request(request,
                                         'GET',
                                         url,
                                         View._handle_response,
                                         auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
+                                        return_json=True)
+
+
+class RHService(View):
+
+    @staticmethod
+    async def get_cases_by_uprn(request, uprn):
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'GET',
+                                        f'{rhsvc_url}/cases/uprn/{uprn}',
+                                        View._handle_response,
+                                        return_json=True)
+
+    @staticmethod
+    async def get_unlinked_uac_details(request, uac, uprn):
+        uac_hash = uac
+        logger.info('making get request for uac',
+                    uac_hash=uac_hash,
+                    client_ip=request['client_ip'])
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'GET',
+                                        f'{rhsvc_url}/cases/unlinked/{uac_hash}',
+                                        View._handle_response,
+                                        auth=request.app['RHSVC_AUTH'],
                                         return_json=True)

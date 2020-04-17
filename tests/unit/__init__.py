@@ -978,4 +978,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_address_in_scotland_en = 'Your address is in Scotland'
         self.content_request_address_in_scotland_cy = 'Your address is in Scotland'
 
+        # Unlinked UACs
+
+        with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
+            self.unlinked_uac_json_en = json.load(fp)
+
         # yapf: enable

@@ -21,7 +21,8 @@ from .utils import View, \
     InvalidDataError, \
     InvalidDataErrorWelsh, \
     FlashMessage, \
-    AddressIndex
+    AddressIndex, \
+    RHService
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -54,14 +55,6 @@ class RequestCommon(View):
                     request_type=request_type, display_region=display_region))
 
         return attributes
-
-    async def get_cases_by_uprn(self, request, uprn):
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'GET',
-                                        f'{rhsvc_url}/cases/uprn/{uprn}',
-                                        self._handle_response,
-                                        return_json=True)
 
     async def get_fulfilment(self, request, case_type, region,
                              delivery_channel, product_group, individual):
@@ -374,7 +367,7 @@ class RequestCodeConfirmAddress(RequestCommon):
 
             # uprn_return[0] will need updating/changing for multiple households - post 2019 issue
             try:
-                uprn_return = await self.get_cases_by_uprn(request, uprn)
+                uprn_return = await RHService.get_cases_by_uprn(request, uprn)
                 session['attributes']['case_id'] = uprn_return[0]['caseId']
                 session['attributes']['region'] = uprn_return[0]['region']
                 session.changed()
@@ -439,7 +432,7 @@ class RequestContactCentre(RequestCommon):
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
                       RequestCommon.valid_request_types + '-code/address-in-scotland/')
 class RequestAddressInScotland(RequestCommon):
-    @aiohttp_jinja2.template('request-address-in-scotland.html')
+    @aiohttp_jinja2.template('common-address-in-scotland.html')
     async def get(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']

@@ -1,6 +1,7 @@
 import aiohttp_jinja2
 import re
 import json
+import uuid
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
@@ -22,7 +23,7 @@ from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex
+from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -244,7 +245,14 @@ class Start(StartCommon):
             else:
                 raise ex
 
+        logger.info('logging uac_json', uac_json=uac_json)
+
         if uac_json['caseId'] == '':
+            logger.info('unlinked case', client_ip=request['client_ip'])
+            session = await get_session(request)
+            session['attributes'] = {}
+            session['case'] = uac_json
+            await remember(str(uuid.uuid4()), request)
             raise HTTPFound(request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
         else:
             await remember(uac_json['caseId'], request)
@@ -527,7 +535,7 @@ class StartModifyAddress(StartCommon):
 
 
 @start_routes.view('/ni/start/language-options/')
-class StartNILanguageOptions(Start):
+class StartNILanguageOptions(StartCommon):
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def get(self, request):
         """
@@ -589,7 +597,7 @@ class StartNILanguageOptions(Start):
 
 
 @start_routes.view('/ni/start/select-language/')
-class StartNISelectLanguage(Start):
+class StartNISelectLanguage(StartCommon):
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def get(self, request):
         """
@@ -654,7 +662,7 @@ class StartNISelectLanguage(Start):
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/save-and-exit/')
-class StartSaveAndExit(View):
+class StartSaveAndExit(StartCommon):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
         self.setup_request(request)
@@ -672,7 +680,7 @@ class StartSaveAndExit(View):
 
 
 @start_routes.view('/start/timeout/')
-class UACTimeout(View):
+class UACTimeout(StartCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
         self.setup_request(request)
@@ -681,7 +689,7 @@ class UACTimeout(View):
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/enter-address/')
-class StartUnlinkedEnterAddress(View):
+class StartUnlinkedEnterAddress(StartCommon):
     @aiohttp_jinja2.template('start-unlinked-enter-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -733,7 +741,7 @@ class StartUnlinkedEnterAddress(View):
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/select-address/')
-class StartUnlinkedSelectAddress(View):
+class StartUnlinkedSelectAddress(StartCommon):
     @aiohttp_jinja2.template('start-unlinked-select-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -750,7 +758,16 @@ class StartUnlinkedSelectAddress(View):
 
         self.log_entry(request, display_region + '/start/unlinked/select-address')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
         address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
         address_content['page_title'] = page_title
         address_content['display_region'] = display_region
@@ -774,7 +791,16 @@ class StartUnlinkedSelectAddress(View):
 
         self.log_entry(request, display_region + '/start/unlinked/select-address')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
         data = await request.post()
 
         try:
@@ -793,9 +819,10 @@ class StartUnlinkedSelectAddress(View):
 
         if form_return['uprn'] == 'xxxx':
             raise HTTPFound(
-                request.app.router['StartAddressNotListed:get'].url_for(display_region=display_region))
+                request.app.router['StartCallContactCentre:get'].url_for(
+                    display_region=display_region,
+                    error='address-not-found'))
         else:
-            session = await get_session(request)
             session['attributes']['address'] = form_return['address']
             session['attributes']['uprn'] = form_return['uprn']
             session.changed()
@@ -803,3 +830,235 @@ class StartUnlinkedSelectAddress(View):
 
             raise HTTPFound(
                 request.app.router['StartUnlinkedConfirmAddress:get'].url_for(display_region=display_region))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/confirm-address/')
+class StartUnlinkedConfirmAddress(StartCommon):
+    @aiohttp_jinja2.template('start-unlinked-confirm-address.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        await check_permission(request)
+
+        if display_region == 'cy':
+            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            locale = 'cy'
+        else:
+            page_title = 'Is this address correct?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/confirm-address')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        uprn = session['attributes']['uprn']
+        uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
+
+        attributes['address'] = uprn_ai_return['response']['address']
+
+        session['attributes']['address'] = attributes['address']
+        session.changed()
+
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['locale'] = locale
+
+        return attributes
+
+    @aiohttp_jinja2.template('start-unlinked-confirm-address.html')
+    async def post(self, request):
+        self.setup_request(request)
+
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            locale = 'cy'
+        else:
+            page_title = 'Is this address correct?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/confirm-address')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['locale'] = locale
+
+        data = await request.post()
+
+        try:
+            address_confirmation = data['request-address-confirmation']
+        except KeyError:
+            logger.info('address confirmation error',
+                        client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, ADDRESS_CHECK_MSG_CY)
+            else:
+                flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'yes':
+
+            address = session['attributes']['address']
+            uprn = session['attributes']['address']['uprn']
+
+            try:
+                if address['countryCode'] == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['StartAddressInScotland:get'].
+                        url_for(display_region=display_region))
+            except KeyError:
+                logger.info('unable to check for region', client_ip=request['client_ip'])
+
+            try:
+                uprn_return = await RHService.get_unlinked_uac_details(request, session['case']['uac'], uprn)
+                session['case'] = uprn_return
+                session.changed()
+
+                raise HTTPFound(
+                    request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+
+            except ClientResponseError:
+                logger.info('uac linking error', client_ip=request['client_ip'])
+                raise HTTPFound(
+                    request.app.router['StartCallContactCentre:get'].url_for(
+                        display_region=display_region, error='address-linking'))
+
+        elif address_confirmation == 'no':
+            raise HTTPFound(
+                request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
+
+        else:
+            # catch all just in case, should never get here
+            logger.info('address confirmation error',
+                        client_ip=request['client_ip'])
+            flash(request, ADDRESS_CHECK_MSG)
+            attributes['page_title'] = page_title
+            attributes['display_region'] = display_region
+            attributes['locale'] = locale
+            return attributes
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/address-in-scotland/')
+class StartAddressInScotland(StartCommon):
+    @aiohttp_jinja2.template('common-address-in-scotland.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = 'Your address is in Scotland'
+            locale = 'cy'
+        else:
+            page_title = 'Your address is in Scotland'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/address-in-scotland')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale
+        }
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/address-has-been-linked/')
+class StartAddressHasBeenLinked(StartCommon):
+    @aiohttp_jinja2.template('start-unlinked-linked.html')
+    async def get(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = 'Your address has been linked to your code'
+            locale = 'cy'
+        else:
+            page_title = 'Your address has been linked to your code'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/address-has-been-linked')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale
+        }
+
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/address-has-been-linked')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+            case = session['case']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        if case['region'][0] == 'N':
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
+        else:
+            attributes['language'] = locale
+            attributes['display_region'] = display_region
+            await self.call_questionnaire(request, case,
+                                          attributes, request.app,
+                                          session.get('adlocation'))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/call-contact-centre/{error}')
+class StartCallContactCentre(StartCommon):
+    @aiohttp_jinja2.template('common-contact-centre.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        error = request.match_info['error']
+
+        if display_region == 'cy':
+            page_title = 'Call Census Customer Contact Centre'
+            locale = 'cy'
+        else:
+            page_title = 'Call Census Customer Contact Centre'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/call-contact-centre/' + error)
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'error': error
+        }
