@@ -7,11 +7,11 @@
     }) %}
 
     <p>
-        {{ address['addressLine1'] }}<br>
-        {% if address['addressLine2'] !='' %}{{ address['addressLine2'] }}<br>{% endif %}
-        {% if address['addressLine3'] !='' %}{{ address['addressLine3'] }}<br>{% endif %}
-        {% if address['townName'] !='' %}{{ address['townName'] }}<br>{% endif %}
-        {{ address['postcode'] }}
+        {{ addressLine1 }}<br>
+        {% if addressLine2 !='' %}{{ addressLine2 }}<br>{% endif %}
+        {% if addressLine3 !='' %}{{ addressLine3 }}<br>{% endif %}
+        {% if townName !='' %}{{ townName }}<br>{% endif %}
+        {{ postcode }}
     </p>
 
 {% if 'address' in field_messages_dict %}

@@ -994,10 +994,10 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
             self.unlinked_uac_json_en = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac_en.json') as fp:
+        with open('tests/test_data/rhsvc/uac_linked_en.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_post_unlinked_uac_en = f
+            self.rhsvc_post_linked_uac_en = f
 
         self.start_address_linked = {
             'action[save_continue]': ''

@@ -863,9 +863,19 @@ class StartUnlinkedConfirmAddress(StartCommon):
         uprn = session['attributes']['uprn']
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
-        attributes['address'] = uprn_ai_return['response']['address']
+        # attributes['address'] = uprn_ai_return['response']['address']
 
-        session['attributes']['address'] = attributes['address']
+        attributes = {
+            "addressLine1": uprn_ai_return['response']['address']['addressLine1'],
+            "addressLine2": uprn_ai_return['response']['address']['addressLine2'],
+            "addressLine3": uprn_ai_return['response']['address']['addressLine3'],
+            "townName": uprn_ai_return['response']['address']['townName'],
+            "postcode": uprn_ai_return['response']['address']['postcode'],
+            "uprn": uprn_ai_return['response']['address']['uprn'],
+            "countryCode": uprn_ai_return['response']['address']['countryCode']
+        }
+
+        session['attributes'] = attributes
         session.changed()
 
         attributes['page_title'] = page_title
@@ -918,10 +928,10 @@ class StartUnlinkedConfirmAddress(StartCommon):
 
         if address_confirmation == 'yes':
 
-            address = session['attributes']['address']
+            # address = session['attributes']['address']
 
             try:
-                if address['countryCode'] == 'S':
+                if session['attributes']['countryCode'] == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['StartAddressInScotland:get'].
@@ -930,9 +940,12 @@ class StartUnlinkedConfirmAddress(StartCommon):
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
             try:
-                uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'], address)
+                uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'],
+                                                                session['attributes'])
                 session['case'] = uprn_return
                 session.changed()
+
+                self.validate_case(uprn_return)
 
                 raise HTTPFound(
                     request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))

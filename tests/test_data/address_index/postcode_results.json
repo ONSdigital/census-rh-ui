@@ -1,85 +1,46 @@
 {
-   "apiVersion": "1.0.0",
-   "dataVersion": "39",
-   "errors": [],
-   "response": {
-       "addresses": [
-           {
-               "classificationCode": "RD",
-               "confidenceScore": 1,
-               "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNag": "1 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNisra": "",
-               "formattedAddressPaf": "1 Gate Reach, Exeter, EX2 6GA",
-               "fromSource": "EW",
-               "geo": {
-                   "easting": 293545,
-                   "latitude": 50.706085,
-                   "longitude": -3.5089686,
-                   "northing": 90692
-               },
-               "lpiLogicalStatus": "1",
-               "parentUprn": "0",
-               "underlyingScore": 0,
-               "uprn": "10023122451",
-               "welshFormattedAddressNag": "",
-               "welshFormattedAddressPaf": "1 Gate Reach, Exeter, EX2 6GA"
-           },
-           {
-               "classificationCode": "RD",
-               "confidenceScore": 1,
-               "formattedAddress": "2 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNag": "2 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNisra": "",
-               "formattedAddressPaf": "2 Gate Reach, Exeter, EX2 6GA",
-               "fromSource": "EW",
-               "geo": {
-                   "easting": 293470,
-                   "latitude": 50.706036,
-                   "longitude": -3.5100298,
-                   "northing": 90689
-               },
-               "lpiLogicalStatus": "1",
-               "parentUprn": "0",
-               "underlyingScore": 0,
-               "uprn": "10023122452",
-               "welshFormattedAddressNag": "",
-               "welshFormattedAddressPaf": "2 Gate Reach, Exeter, EX2 6GA"
-           },
-           {
-               "classificationCode": "RD02",
-               "confidenceScore": 1,
-               "formattedAddress": "3 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNag": "3 Gate Reach, Exeter, EX2 6GA",
-               "formattedAddressNisra": "",
-               "formattedAddressPaf": "3 Gate Reach, Exeter, EX2 6GA",
-               "fromSource": "EW",
-               "geo": {
-                   "easting": 293542,
-                   "latitude": 50.706047,
-                   "longitude": -3.5090103,
-                   "northing": 90688
-               },
-               "lpiLogicalStatus": "1",
-               "parentUprn": "0",
-               "underlyingScore": 0,
-               "uprn": "10023122453",
-               "welshFormattedAddressNag": "",
-               "welshFormattedAddressPaf": "3 Gate Reach, Exeter, EX2 6GA"
-           }
-       ],
-       "epoch": "",
-       "filter": "",
-       "historical": true,
-       "limit": 3,
-       "maxScore": 0,
-       "offset": 0,
-       "postcode": "EX2 6GA",
-       "total": 26,
-       "verbose": false
-   },
-   "status": {
-       "code": 200,
-       "message": "Ok"
-   }
+    "apiVersion": "1.0.0-SNAPSHOT",
+    "dataVersion": "72",
+    "response": {
+        "postcode": "EX2 6GA",
+        "addresses": [
+            {
+                "uprn": "10023122451",
+                "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
+                "addressType": "PAF",
+                "censusAddressType": "HH",
+                "censusEstabType": "Household",
+                "countryCode": "E"
+            },
+            {
+                "uprn": "10023122452",
+                "formattedAddress": "2 Gate Reach, Exeter, EX2 6GA",
+                "addressType": "PAF",
+                "censusAddressType": "HH",
+                "censusEstabType": "Household",
+                "countryCode": "E"
+            },
+            {
+                "uprn": "10023122453",
+                "formattedAddress": "3 Gate Reach, Exeter, EX2 6GA",
+                "addressType": "PAF",
+                "censusAddressType": "HH",
+                "censusEstabType": "Household",
+                "countryCode": "E"
+            }
+        ],
+        "filter": "",
+        "historical": false,
+        "epoch": "",
+        "limit": 3,
+        "offset": 0,
+        "total": 27,
+        "maxScore": 0,
+        "verbose": false
+    },
+    "status": {
+        "code": 200,
+        "message": "Ok"
+    },
+    "errors": []
 }

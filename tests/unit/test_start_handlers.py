@@ -2613,7 +2613,7 @@ class TestStartHandlers(RHTestCase):
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_post_unlinked_uac.return_value = self.rhsvc_post_unlinked_uac_en
+            mocked_post_unlinked_uac.return_value = self.rhsvc_post_linked_uac_en
 
             mocked.post(self.rhsvc_url_surveylaunched)
             eq_payload = self.eq_payload.copy()
