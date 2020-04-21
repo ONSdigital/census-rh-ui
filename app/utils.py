@@ -273,15 +273,28 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def get_unlinked_uac_details(request, uac, uprn):
+    async def post_unlinked_uac(request, uac, address):
         uac_hash = uac
-        logger.info('making get request for uac',
+        logger.info('request linked case',
                     uac_hash=uac_hash,
                     client_ip=request['client_ip'])
         rhsvc_url = request.app['RHSVC_URL']
+        address_json = {
+            "addressLine1": address['addressLine1'],
+            "addressLine2": address['addressLine2'],
+            "addressLine3": address['addressLine3'],
+            "townName": address['townName'],
+            "region": address['countryCode'],
+            "postcode": address['postcode'],
+            "uprn": address['uprn'],
+            "estabType": address['censusEstabType'],
+            "addressType": address['censusAddressType']
+        }
+        url = f'{rhsvc_url}/uacs/{uac_hash}/link'
         return await View._make_request(request,
-                                        'GET',
-                                        f'{rhsvc_url}/cases/unlinked/{uac_hash}',
+                                        'POST',
+                                        url,
                                         View._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
+                                        json=address_json,
                                         return_json=True)

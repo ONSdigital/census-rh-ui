@@ -2603,21 +2603,115 @@ class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_unlinked_uac_happy_path_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.post_unlinked_uac') as mocked_post_unlinked_uac, aioresponses(
+            passthrough=[str(self.server._root)]) \
                 as mocked:
+
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_post_unlinked_uac.return_value = self.rhsvc_post_unlinked_uac_en
+
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-ENG'
+            eq_payload['language_code'] = 'en'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
 
             response = await self.client.request('GET', self.get_start_en)
-            self.assertEqual(response.status, 200)
+            self.assertEqual(200, response.status)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
-                                                 allow_redirects=False,
+                                                 allow_redirects=True,
                                                  data=self.start_data_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
             self.assertLogEvent(cm, "unlinked case")
 
-            self.assertEqual(response.status, 302)
-            self.assertIn('/en/start/unlinked/enter-address/', response.headers['Location'])
+            self.assertEqual(200, response.status)
+            contents = str(await response.content.read())
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_start_unlinked_enter_address_title_en, contents)
+            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, contents)
+            self.assertIn(self.content_start_unlinked_enter_address_question_title_en, contents)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_en,
+                    data=self.request_postcode_input_valid)
+            self.assertLogEvent(cm, 'valid postcode')
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_select_address_value_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_en,
+                    data=self.request_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_confirm_address_value_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_en,
+                    data=self.request_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/address-has-been-linked'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
+            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                'POST',
+                self.post_start_unlinked_address_is_linked_en,
+                allow_redirects=False,
+                data=self.start_address_linked)
+
+            self.assertLogEvent(cm, 'redirecting to eq')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)

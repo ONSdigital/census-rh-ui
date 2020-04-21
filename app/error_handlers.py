@@ -52,8 +52,8 @@ def create_error_middleware(overrides):
             return await connection_error(request, ex.os_error.strerror)
         except ContentTypeError as ex:
             return await payload_error(request, str(ex.request_info.url))
-        except KeyError:
-            return await key_error(request)
+        except KeyError as error:
+            return await key_error(request, error)
         except ClientResponseError:
             return await response_error(request)
         # TODO fallthrough error here
@@ -93,8 +93,8 @@ async def payload_error(request, url: str):
     return jinja.render_template('error.html', request, attributes, status=500)
 
 
-async def key_error(request):
-    logger.error('required value missing')
+async def key_error(request, error):
+    logger.error('required value ' + str(error) + ' missing', missing_key=error)
     attributes = check_display_region(request)
     return jinja.render_template('error.html', request, attributes, status=500)
 

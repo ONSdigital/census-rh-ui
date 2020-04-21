@@ -919,7 +919,6 @@ class StartUnlinkedConfirmAddress(StartCommon):
         if address_confirmation == 'yes':
 
             address = session['attributes']['address']
-            uprn = session['attributes']['address']['uprn']
 
             try:
                 if address['countryCode'] == 'S':
@@ -931,7 +930,7 @@ class StartUnlinkedConfirmAddress(StartCommon):
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
             try:
-                uprn_return = await RHService.get_unlinked_uac_details(request, session['case']['uac'], uprn)
+                uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'], address)
                 session['case'] = uprn_return
                 session.changed()
 
@@ -982,7 +981,7 @@ class StartAddressInScotland(StartCommon):
         }
 
 
-@start_routes.view(r'/' + View.valid_display_regions + '/start/address-has-been-linked/')
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
 class StartAddressHasBeenLinked(StartCommon):
     @aiohttp_jinja2.template('start-unlinked-linked.html')
     async def get(self, request):
@@ -997,7 +996,7 @@ class StartAddressHasBeenLinked(StartCommon):
             page_title = 'Your address has been linked to your code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/start/address-has-been-linked')
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
 
         return {
             'page_title': page_title,
@@ -1015,7 +1014,7 @@ class StartAddressHasBeenLinked(StartCommon):
         else:
             locale = 'en'
 
-        self.log_entry(request, display_region + '/start/address-has-been-linked')
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
 
         session = await get_session(request)
         try:

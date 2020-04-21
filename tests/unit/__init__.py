@@ -980,7 +980,44 @@ class RHTestCase(AioHTTPTestCase):
 
         # Unlinked UACs
 
+        # URLs
+        self.post_start_unlinked_enter_address_en = \
+            self.app.router['StartUnlinkedEnterAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_select_address_en = \
+            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_confirm_address_en = \
+            self.app.router['StartUnlinkedConfirmAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_address_is_linked_en = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
+
+        # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
             self.unlinked_uac_json_en = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_en.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_unlinked_uac_en = f
+
+        self.start_address_linked = {
+            'action[save_continue]': ''
+        }
+
+        # Content
+        self.content_start_unlinked_enter_address_title_en = 'Please supply your address'
+        self.content_start_unlinked_enter_address_secondary_en = \
+            'The access code that you have entered is not currently linked to an address. ' \
+            'Please select your address so we can make the link.'
+        self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode'
+
+        self.content_start_unlinked_select_address_title_en = 'Select your address'
+        self.content_start_unlinked_select_address_value_en = '1 Gate Reach'
+
+        self.content_start_unlinked_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_unlinked_confirm_address_value_en = 'Yes, this address is correct'
+
+        self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
+        self.content_start_unlinked_address_has_been_linked_secondary_en = \
+            'You are now ready to start your Census questions'
 
         # yapf: enable
