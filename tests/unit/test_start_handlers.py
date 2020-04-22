@@ -2601,6 +2601,7 @@ class TestStartHandlers(RHTestCase):
         self.assertIn('/en/start/region-change/',
                       response.headers['Location'])
 
+    @skip_encrypt
     @unittest_run_loop
     async def test_unlinked_uac_happy_path_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -2628,6 +2629,8 @@ class TestStartHandlers(RHTestCase):
             eq_payload[
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '10023122451'
+            eq_payload['display_address'] = '1 Gate Reach, Exeter'
 
             response = await self.client.request('GET', self.get_start_en)
             self.assertEqual(200, response.status)
