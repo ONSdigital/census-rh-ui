@@ -972,32 +972,55 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_title_en = 'Is this address correct?'
         self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
 
-        self.content_request_address_not_listed_en = 'You need to call the Census customer contact centre'
-        self.content_request_address_not_listed_cy = 'You need to call the Census customer contact centre'
-
-        self.content_request_address_in_scotland_en = 'Your address is in Scotland'
-        self.content_request_address_in_scotland_cy = 'Your address is in Scotland'
-
         # Unlinked UACs
 
         # URLs
         self.post_start_unlinked_enter_address_en = \
             self.app.router['StartUnlinkedEnterAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_enter_address_cy = \
+            self.app.router['StartUnlinkedEnterAddress:post'].url_for(display_region='cy')
+        self.post_start_unlinked_enter_address_ni = \
+            self.app.router['StartUnlinkedEnterAddress:post'].url_for(display_region='ni')
+
         self.post_start_unlinked_select_address_en = \
             self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_select_address_cy = \
+            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='cy')
+        self.post_start_unlinked_select_address_ni = \
+            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='ni')
         self.post_start_unlinked_confirm_address_en = \
             self.app.router['StartUnlinkedConfirmAddress:post'].url_for(display_region='en')
+        self.post_start_unlinked_confirm_address_cy = \
+            self.app.router['StartUnlinkedConfirmAddress:post'].url_for(display_region='cy')
+        self.post_start_unlinked_confirm_address_ni = \
+            self.app.router['StartUnlinkedConfirmAddress:post'].url_for(display_region='ni')
         self.post_start_unlinked_address_is_linked_en = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
+        self.post_start_unlinked_address_is_linked_cy = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
+        self.post_start_unlinked_address_is_linked_ni = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
             self.unlinked_uac_json_en = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_cy.json') as fp:
+            self.unlinked_uac_json_cy = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_ni.json') as fp:
+            self.unlinked_uac_json_ni = json.load(fp)
 
         with open('tests/test_data/rhsvc/uac_linked_en.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_post_linked_uac_en = f
+        with open('tests/test_data/rhsvc/uac_linked_cy.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_cy = f
+        with open('tests/test_data/rhsvc/uac_linked_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_ni = f
 
         self.start_address_linked = {
             'action[save_continue]': ''
@@ -1005,19 +1028,40 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
         self.content_start_unlinked_enter_address_title_en = 'Please supply your address'
+        self.content_start_unlinked_enter_address_title_cy = 'Please supply your address'
         self.content_start_unlinked_enter_address_secondary_en = \
             'The access code that you have entered is not currently linked to an address. ' \
             'Please select your address so we can make the link.'
+        self.content_start_unlinked_enter_address_secondary_cy = \
+            'The access code that you have entered is not currently linked to an address. ' \
+            'Please select your address so we can make the link.'
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode'
+        self.content_start_unlinked_enter_address_question_title_cy = 'What is your postcode'
 
         self.content_start_unlinked_select_address_title_en = 'Select your address'
+        self.content_start_unlinked_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_start_unlinked_select_address_value_en = '1 Gate Reach'
+        self.content_start_unlinked_select_address_value_cy = '1 Gate Reach'
 
         self.content_start_unlinked_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_unlinked_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
         self.content_start_unlinked_confirm_address_value_en = 'Yes, this address is correct'
+        self.content_start_unlinked_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
 
         self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
+        self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
         self.content_start_unlinked_address_has_been_linked_secondary_en = \
             'You are now ready to start your Census questions'
+        self.content_start_unlinked_address_has_been_linked_secondary_cy = \
+            'You are now ready to start your Census questions'
+
+        # Common
+
+        # Content
+        self.content_common_address_not_listed_en = 'You need to call the Census customer contact centre'
+        self.content_common_address_not_listed_cy = 'You need to call the Census customer contact centre'
+
+        self.content_common_address_in_scotland_en = 'Your address is in Scotland'
+        self.content_common_address_in_scotland_cy = 'Your address is in Scotland'
 
         # yapf: enable

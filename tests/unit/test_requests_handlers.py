@@ -4126,7 +4126,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_address_not_listed_en, contents)
+            self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hh_cy(self):
@@ -4151,7 +4151,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_address_not_listed_cy, contents)
+            self.assertIn(self.content_common_address_not_listed_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hh_ni(self):
@@ -4176,7 +4176,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_address_not_listed_en, contents)
+            self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_en(self):
@@ -4201,7 +4201,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_address_not_listed_en, contents)
+            self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_cy(self):
@@ -4226,7 +4226,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_address_not_listed_cy, contents)
+            self.assertIn(self.content_common_address_not_listed_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_listed_hi_ni(self):
@@ -4251,15 +4251,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_address_not_listed_en, contents)
+            self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hh_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4285,15 +4287,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_address_in_scotland_en, contents)
+            self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hh_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4319,15 +4323,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_address_in_scotland_cy, contents)
+            self.assertIn(self.content_common_address_in_scotland_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hh_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4353,15 +4359,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_address_in_scotland_en, contents)
+            self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hi_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4387,15 +4395,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_request_address_in_scotland_en, contents)
+            self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hi_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4421,15 +4431,17 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_request_address_in_scotland_cy, contents)
+            self.assertIn(self.content_common_address_in_scotland_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hi_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
@@ -4455,4 +4467,4 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_address_in_scotland_en, contents)
+            self.assertIn(self.content_common_address_in_scotland_en, contents)
