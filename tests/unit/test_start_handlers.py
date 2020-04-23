@@ -2662,7 +2662,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_enter_address_en,
-                    data=self.request_postcode_input_valid)
+                    data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
@@ -2677,7 +2677,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_en,
-                    data=self.request_select_address_input_valid)
+                    data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
 
@@ -2780,7 +2780,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_enter_address_cy,
-                    data=self.request_postcode_input_valid)
+                    data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
@@ -2795,7 +2795,7 @@ class TestStartHandlers(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_cy,
-                    data=self.request_select_address_input_valid)
+                    data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
 
@@ -2856,53 +2856,31 @@ class TestStartHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
 
-            response = await self.client.request('GET', self.get_start_en)
-            self.assertEqual(200, response.status)
+            await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
 
-            response = await self.client.request('POST',
-                                                 self.post_start_en,
-                                                 allow_redirects=True,
-                                                 data=self.start_data_valid)
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-            self.assertLogEvent(cm, "unlinked case")
-
-            self.assertEqual(200, response.status)
-            contents = str(await response.content.read())
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_question_title_en, contents)
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_enter_address_en,
-                    data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, 'valid postcode')
+                    data=self.common_postcode_input_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_value_en, str(resp_content))
-
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_en,
-                    data=self.request_select_address_input_valid)
+                    data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2928,53 +2906,31 @@ class TestStartHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
 
-            response = await self.client.request('GET', self.get_start_cy)
-            self.assertEqual(200, response.status)
+            await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
 
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=True,
-                                                 data=self.start_data_valid)
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
-            self.assertLogEvent(cm, "unlinked case")
-
-            self.assertEqual(200, response.status)
-            contents = str(await response.content.read())
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_title_cy, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, contents)
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_enter_address_cy,
-                    data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, 'valid postcode')
+                    data=self.common_postcode_input_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_value_cy, str(resp_content))
-
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_cy,
-                    data=self.request_select_address_input_valid)
+                    data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -3000,53 +2956,31 @@ class TestStartHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
 
-            response = await self.client.request('GET', self.get_start_ni)
-            self.assertEqual(200, response.status)
+            await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
 
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=True,
-                                                 data=self.start_data_valid)
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-            self.assertLogEvent(cm, "unlinked case")
-
-            self.assertEqual(200, response.status)
-            contents = str(await response.content.read())
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, contents)
-            self.assertIn(self.content_start_unlinked_enter_address_question_title_en, contents)
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_enter_address_ni,
-                    data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, 'valid postcode')
+                    data=self.common_postcode_input_valid)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_select_address_value_en, str(resp_content))
-
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_ni,
-                    data=self.request_select_address_input_valid)
+                    data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/confirm-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_confirm_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -3059,3 +2993,221 @@ class TestStartHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_address_in_scotland_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_address_not_listed_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_en,
+                    data=self.common_select_address_input_not_listed_en)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-not-found'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_address_not_listed_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_cy)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_cy,
+                    data=self.common_select_address_input_not_listed_cy)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-not-found'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_address_not_listed_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_ni)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_ni,
+                    data=self.common_select_address_input_not_listed_en)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-not-found'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_start_unlinked_enter_address_bad_postcode_en(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_start_en)
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "unlinked case")
+
+            response = await self.client.request(
+                'POST',
+                self.post_start_unlinked_enter_address_en,
+                data=self.common_postcode_input_invalid)
+        self.assertLogEvent(cm, 'invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_title_en, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_secondary_en, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_question_title_en, contents)
+        self.assertIn(self.content_common_enter_address_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_start_unlinked_enter_address_bad_postcode_cy(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_start_cy)
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "unlinked case")
+
+            response = await self.client.request(
+                'POST',
+                self.post_start_unlinked_enter_address_cy,
+                data=self.common_postcode_input_invalid)
+        self.assertLogEvent(cm, 'invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_title_cy, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, contents)
+        self.assertIn(self.content_common_enter_address_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_start_unlinked_enter_address_bad_postcode_ni(
+            self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            await self.client.request('GET', self.get_start_ni)
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "unlinked case")
+
+            response = await self.client.request(
+                'POST',
+                self.post_start_unlinked_enter_address_ni,
+                data=self.common_postcode_input_invalid)
+        self.assertLogEvent(cm, 'invalid postcode')
+        self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
+
+        self.assertEqual(response.status, 200)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_title_en, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_secondary_en, contents)
+        self.assertIn(self.content_start_unlinked_enter_address_question_title_en, contents)
+        self.assertIn(self.content_common_enter_address_error_en, contents)

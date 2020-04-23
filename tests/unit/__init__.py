@@ -247,6 +247,93 @@ class RHTestCase(AioHTTPTestCase):
         rh_svc_url = self.app['RHSVC_URL']
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
 
+        # Common
+
+        # Test Data
+
+        self.postcode_valid = 'EX2 6GA'
+        self.postcode_invalid = 'ZZ99 9ZZ'
+        self.postcode_no_results = 'GU34 6DU'
+
+        self.post_common_select_address_form_data_valid = \
+            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
+
+        self.post_common_select_address_form_data_not_listed_en = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
+        self.post_common_select_address_form_data_not_listed_cy = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
+        self.common_select_address_input_valid = {
+            'request-address-select': self.post_common_select_address_form_data_valid,
+            'action[save_continue]': '',
+        }
+
+        self.common_select_address_input_not_listed_en = {
+            'request-address-select': self.post_common_select_address_form_data_not_listed_en,
+            'action[save_continue]': '',
+        }
+
+        self.common_select_address_input_not_listed_cy = {
+            'request-address-select': self.post_common_select_address_form_data_not_listed_cy,
+            'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_valid = {
+            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_no_results = {
+            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_invalid = {
+            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_no_results = f
+
+        with open('tests/test_data/address_index/postcode_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_results = f
+
+        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result = f
+
+        with open('tests/test_data/address_index/uprn_scotland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_scotland = f
+
+        # Content
+        self.content_common_address_not_listed_en = 'You need to call the Census customer contact centre'
+        self.content_common_address_not_listed_cy = 'You need to call the Census customer contact centre'
+
+        self.content_common_address_in_scotland_en = 'Your address is in Scotland'
+        self.content_common_address_in_scotland_cy = 'Your address is in Scotland'
+
+        self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
+        self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+
+        self.content_common_call_contact_centre_title_en = 'Call Census Customer Contact Centre'
+        self.content_common_call_contact_centre_title_cy = 'Call Census Customer Contact Centre'
+        self.content_common_call_contact_centre_address_not_found_en = \
+            'As you have been unable to find your address from the provided options, ' \
+            'we need you to call the Census Customer Contact Centre. This will enable ' \
+            'an operator to deal with your address.'
+        self.content_common_call_contact_centre_address_not_found_cy = \
+            'As you have been unable to find your address from the provided options, ' \
+            'we need you to call the Census Customer Contact Centre. This will enable ' \
+            'an operator to deal with your address.'
+
+        # End Common
+
         self.get_info = self.app.router['Info:get'].url_for()
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
@@ -765,19 +852,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
-        self.postcode_valid = 'EX2 6GA'
-        self.postcode_invalid = 'ZZ99 9ZZ'
-        self.postcode_no_results = 'GU34 5DU'
-
-        self.post_requestcode_select_address_form_data_valid = \
-            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
-
-        self.post_requestcode_select_address_form_data_not_listed_en = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
-        self.post_requestcode_select_address_form_data_not_listed_cy = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
         self.selected_uprn = '10023122451'
 
         self.mobile_valid = '07012345678'
@@ -786,26 +860,6 @@ class RHTestCase(AioHTTPTestCase):
         self.mobile_invalid_character = '0701234567$'
 
         self.field_empty = None
-
-        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_postcode_no_results = f
-
-        with open('tests/test_data/address_index/postcode_results.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_postcode_results = f
-
-        with open('tests/test_data/address_index/uprn_valid.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result = f
-
-        with open('tests/test_data/address_index/uprn_scotland.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result_scotland = f
 
         with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
             f = asyncio.Future()
@@ -837,18 +891,6 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment = f
 
-        self.request_postcode_input_valid = {
-            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
-        }
-
-        self.request_postcode_input_no_results = {
-            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
-        }
-
-        self.request_postcode_input_invalid = {
-            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
-        }
-
         self.request_confirm_address_input_yes = {
             'request-address-confirmation': 'yes', 'action[save_continue]': ''
         }
@@ -864,21 +906,6 @@ class RHTestCase(AioHTTPTestCase):
         self.request_code_select_address_form_data_empty = {}
 
         self.request_confirm_address_input_empty = {}
-
-        self.request_select_address_input_valid = {
-            'request-address-select': self.post_requestcode_select_address_form_data_valid,
-            'action[save_continue]': '',
-        }
-
-        self.request_select_address_input_not_listed_en = {
-            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_en,
-            'action[save_continue]': '',
-        }
-
-        self.request_select_address_input_not_listed_cy = {
-            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_cy,
-            'action[save_continue]': '',
-        }
 
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
@@ -914,11 +941,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
-        self.content_request_enter_address_error_en = 'The postcode is not a valid UK postcode'
         self.content_request_enter_address_secondary_en = \
             'To text you a new code we need to know the address for which you are answering.'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
-        self.content_request_enter_address_error_cy = 'The postcode is not a valid UK postcode'
         self.content_request_enter_address_secondary_cy = \
             "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
 
@@ -1055,13 +1080,5 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_unlinked_address_has_been_linked_secondary_cy = \
             'You are now ready to start your Census questions'
 
-        # Common
-
-        # Content
-        self.content_common_address_not_listed_en = 'You need to call the Census customer contact centre'
-        self.content_common_address_not_listed_cy = 'You need to call the Census customer contact centre'
-
-        self.content_common_address_in_scotland_en = 'Your address is in Scotland'
-        self.content_common_address_in_scotland_cy = 'Your address is in Scotland'
 
         # yapf: enable
