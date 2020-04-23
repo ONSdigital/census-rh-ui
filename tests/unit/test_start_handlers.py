@@ -3123,7 +3123,11 @@ class TestStartHandlers(RHTestCase):
     async def test_post_start_unlinked_enter_address_bad_postcode_en(
             self):
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
 
             await self.client.request('GET', self.get_start_en)
 
@@ -3154,7 +3158,11 @@ class TestStartHandlers(RHTestCase):
     async def test_post_start_unlinked_enter_address_bad_postcode_cy(
             self):
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_cy)
 
             await self.client.request('GET', self.get_start_cy)
 
@@ -3185,7 +3193,11 @@ class TestStartHandlers(RHTestCase):
     async def test_post_start_unlinked_enter_address_bad_postcode_ni(
             self):
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_ni)
 
             await self.client.request('GET', self.get_start_ni)
 
