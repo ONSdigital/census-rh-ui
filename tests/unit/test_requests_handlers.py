@@ -27,7 +27,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn(self.content_request_select_address_no_results_en, contents)
+                self.assertIn(self.content_common_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_cy(
@@ -46,7 +46,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn(self.content_request_select_address_no_results_cy, contents)
+                self.assertIn(self.content_common_select_address_no_results_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hh_ni(
@@ -65,7 +65,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn(self.content_request_select_address_no_results_en, contents)
+                self.assertIn(self.content_common_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_en(
@@ -84,7 +84,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_en, contents)
-                self.assertIn(self.content_request_select_address_no_results_en, contents)
+                self.assertIn(self.content_common_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_cy(
@@ -103,7 +103,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.ons_logo_cy, contents)
-                self.assertIn(self.content_request_select_address_no_results_cy, contents)
+                self.assertIn(self.content_common_select_address_no_results_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_not_found_hi_ni(
@@ -122,7 +122,7 @@ class TestRequestsHandlers(RHTestCase):
                 self.assertEqual(response.status, 200)
                 contents = str(await response.content.read())
                 self.assertIn(self.nisra_logo, contents)
-                self.assertIn(self.content_request_select_address_no_results_en, contents)
+                self.assertIn(self.content_common_select_address_no_results_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_en(
@@ -624,16 +624,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hh_en,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'en/requests/household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hh_cy(
@@ -652,16 +652,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hh_cy,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'cy/requests/household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hh_ni(
@@ -680,16 +680,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hh_ni,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'ni/requests/household-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_en(
@@ -708,16 +708,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hi_en,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'en/requests/individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_cy(
@@ -736,16 +736,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hi_cy,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'cy/requests/individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_select_address_no_selection_hi_ni(
@@ -764,16 +764,16 @@ class TestRequestsHandlers(RHTestCase):
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_selectaddress_hi_ni,
-                    data=self.request_code_select_address_form_data_empty)
+                    data=self.common_form_data_empty)
             self.assertLogEvent(cm_select, "received POST on endpoint 'ni/requests/individual-code/select-address'")
             self.assertLogEvent(cm_select, "no address selected")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_en(
@@ -1429,8 +1429,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1529,8 +1529,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1629,8 +1629,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1729,8 +1729,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1829,8 +1829,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1929,8 +1929,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_select_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -3152,10 +3152,12 @@ class TestRequestsHandlers(RHTestCase):
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hh_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3188,10 +3190,12 @@ class TestRequestsHandlers(RHTestCase):
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hi_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result

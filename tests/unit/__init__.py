@@ -255,6 +255,8 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
 
+        self.common_form_data_empty = {}
+
         self.post_common_select_address_form_data_valid = \
             '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
 
@@ -320,6 +322,15 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
         self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+
+        self.content_common_select_address_title_en = 'Select your address'
+        self.content_common_select_address_error_en = 'Select an address'
+        self.content_common_select_address_value_en = '1 Gate Reach'
+        self.content_common_select_address_no_results_en = 'We cannot find your address'
+        self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
+        self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
+        self.content_common_select_address_value_cy = '1 Gate Reach'
+        self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
         self.content_common_call_contact_centre_title_en = 'Call Census Customer Contact Centre'
         self.content_common_call_contact_centre_title_cy = 'Call Census Customer Contact Centre'
@@ -903,8 +914,6 @@ class RHTestCase(AioHTTPTestCase):
             'request-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
-        self.request_code_select_address_form_data_empty = {}
-
         self.request_confirm_address_input_empty = {}
 
         self.request_code_enter_mobile_form_data_valid = {
@@ -946,15 +955,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         self.content_request_enter_address_secondary_cy = \
             "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
-
-        self.content_request_select_address_title_en = 'Select your address'
-        self.content_request_select_address_error_en = 'Select an address'
-        self.content_request_select_address_value_en = '1 Gate Reach'
-        self.content_request_select_address_no_results_en = 'We cannot find your address'
-        self.content_request_select_address_title_cy = 'Dewiswch eich cyfeiriad'
-        self.content_request_select_address_error_cy = 'Dewiswch gyfeiriad'
-        self.content_request_select_address_value_cy = '1 Gate Reach'
-        self.content_request_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
         self.content_request_confirm_address_title_en = 'Is this address correct?'
         self.content_request_confirm_address_error_en = 'Check and confirm the address'
@@ -1062,11 +1062,6 @@ class RHTestCase(AioHTTPTestCase):
             'Please select your address so we can make the link.'
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode'
         self.content_start_unlinked_enter_address_question_title_cy = 'What is your postcode'
-
-        self.content_start_unlinked_select_address_title_en = 'Select your address'
-        self.content_start_unlinked_select_address_title_cy = 'Dewiswch eich cyfeiriad'
-        self.content_start_unlinked_select_address_value_en = '1 Gate Reach'
-        self.content_start_unlinked_select_address_value_cy = '1 Gate Reach'
 
         self.content_start_unlinked_confirm_address_title_en = 'Is this address correct?'
         self.content_start_unlinked_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
