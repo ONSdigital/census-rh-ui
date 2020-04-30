@@ -281,6 +281,18 @@ class RHTestCase(AioHTTPTestCase):
             'action[save_continue]': '',
         }
 
+        self.common_confirm_address_input_yes = {
+            'request-address-confirmation': 'yes', 'action[save_continue]': ''
+        }
+
+        self.common_confirm_address_input_no = {
+            'request-address-confirmation': 'no', 'action[save_continue]': ''
+        }
+
+        self.common_confirm_address_input_invalid = {
+            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
+        }
+
         self.common_postcode_input_valid = {
             'request-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
@@ -314,6 +326,10 @@ class RHTestCase(AioHTTPTestCase):
             self.ai_uprn_result_scotland = f
 
         # Content
+        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
+        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
+        self.nisra_logo = '/img/nisra-logo-en.svg'
+
         self.content_common_address_not_listed_en = 'You need to call the Census customer contact centre'
         self.content_common_address_not_listed_cy = 'You need to call the Census customer contact centre'
 
@@ -331,6 +347,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+
+        self.content_common_confirm_address_title_en = 'Is this address correct?'
+        self.content_common_confirm_address_error_en = 'Check and confirm the address'
+        self.content_common_confirm_address_value_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        self.content_common_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
 
         self.content_common_call_contact_centre_title_en = 'Call Census Customer Contact Centre'
         self.content_common_call_contact_centre_title_cy = 'Call Census Customer Contact Centre'
@@ -439,7 +462,8 @@ class RHTestCase(AioHTTPTestCase):
             'ru_ref': self.uprn,
             'case_id': self.case_id,
             'language_code': 'en',
-            'display_address': self.uac_json_en['address']['addressLine1'] + ', ' + self.uac_json_en['address']['addressLine2'],
+            'display_address': self.uac_json_en['address']['addressLine1'] + ', '
+                               + self.uac_json_en['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
@@ -883,20 +907,6 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment = f
 
-        self.request_confirm_address_input_yes = {
-            'request-address-confirmation': 'yes', 'action[save_continue]': ''
-        }
-
-        self.request_confirm_address_input_no = {
-            'request-address-confirmation': 'no', 'action[save_continue]': ''
-        }
-
-        self.request_confirm_address_input_invalid = {
-            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
-        }
-
-        self.request_confirm_address_input_empty = {}
-
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
         }
@@ -919,10 +929,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_mobile_confirmation_data_empty = {}
 
-        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
-        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
-        self.nisra_logo = '/img/nisra-logo-en.svg'
-
         self.content_request_household_title_en = 'Request a new access code'
         self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
         self.content_request_individual_title_en = 'Request an individual access code'
@@ -936,13 +942,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         self.content_request_enter_address_secondary_cy = \
             "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
-
-        self.content_request_confirm_address_title_en = 'Is this address correct?'
-        self.content_request_confirm_address_error_en = 'Check and confirm the address'
-        self.content_request_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
-        self.content_request_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_request_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
-        self.content_request_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
 
         self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
         self.content_request_enter_mobile_error_en = ''
@@ -1043,11 +1042,6 @@ class RHTestCase(AioHTTPTestCase):
             'Please select your address so we can make the link.'
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode'
         self.content_start_unlinked_enter_address_question_title_cy = 'What is your postcode'
-
-        self.content_start_unlinked_confirm_address_title_en = 'Is this address correct?'
-        self.content_start_unlinked_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_start_unlinked_confirm_address_value_en = 'Yes, this address is correct'
-        self.content_start_unlinked_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
 
         self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
         self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
