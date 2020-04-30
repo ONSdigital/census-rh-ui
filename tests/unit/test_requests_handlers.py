@@ -4286,7 +4286,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4322,7 +4322,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4358,7 +4358,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4394,7 +4394,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4430,7 +4430,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4466,7 +4466,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/address-in-scotland'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/address-in-scotland'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())

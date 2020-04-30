@@ -819,8 +819,9 @@ class StartUnlinkedSelectAddress(StartCommon):
 
         if form_return['uprn'] == 'xxxx':
             raise HTTPFound(
-                request.app.router['StartCallContactCentre:get'].url_for(
+                request.app.router['CommonCallContactCentre:get'].url_for(
                     display_region=display_region,
+                    journey='start',
                     error='address-not-found'))
         else:
             session['attributes']['address'] = form_return['address']
@@ -934,8 +935,8 @@ class StartUnlinkedConfirmAddress(StartCommon):
                 if session['attributes']['countryCode'] == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
-                        request.app.router['StartAddressInScotland:get'].
-                        url_for(display_region=display_region))
+                        request.app.router['CommonAddressInScotland:get'].
+                        url_for(display_region=display_region, journey='start'))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
@@ -953,8 +954,8 @@ class StartUnlinkedConfirmAddress(StartCommon):
             except ClientResponseError:
                 logger.info('uac linking error', client_ip=request['client_ip'])
                 raise HTTPFound(
-                    request.app.router['StartCallContactCentre:get'].url_for(
-                        display_region=display_region, error='address-linking'))
+                    request.app.router['CommonCallContactCentre:get'].url_for(
+                        display_region=display_region, journey='start', error='address-linking'))
 
         elif address_confirmation == 'no':
             raise HTTPFound(
@@ -969,29 +970,6 @@ class StartUnlinkedConfirmAddress(StartCommon):
             attributes['display_region'] = display_region
             attributes['locale'] = locale
             return attributes
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/address-in-scotland/')
-class StartAddressInScotland(StartCommon):
-    @aiohttp_jinja2.template('common-address-in-scotland.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'Your address is in Scotland'
-            locale = 'cy'
-        else:
-            page_title = 'Your address is in Scotland'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/address-in-scotland')
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale
-        }
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
@@ -1049,28 +1027,3 @@ class StartAddressHasBeenLinked(StartCommon):
             await self.call_questionnaire(request, case,
                                           attributes, request.app,
                                           session.get('adlocation'))
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/call-contact-centre/{error}')
-class StartCallContactCentre(StartCommon):
-    @aiohttp_jinja2.template('common-contact-centre.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        error = request.match_info['error']
-
-        if display_region == 'cy':
-            page_title = 'Call Census Customer Contact Centre'
-            locale = 'cy'
-        else:
-            page_title = 'Call Census Customer Contact Centre'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/call-contact-centre/' + error)
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'error': error
-        }

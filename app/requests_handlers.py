@@ -360,8 +360,8 @@ class RequestCodeConfirmAddress(RequestCommon):
                 if uprn_ai_return['response']['address']['countryCode'] == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
-                        request.app.router['RequestAddressInScotland:get'].
-                        url_for(display_region=display_region, request_type=request_type))
+                        request.app.router['CommonAddressInScotland:get'].
+                        url_for(display_region=display_region, journey='requests', request_type=request_type))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
@@ -420,32 +420,6 @@ class RequestContactCentre(RequestCommon):
         self.log_entry(request, display_region + '/requests/' + request_type + '-code/contact-centre')
 
         await self.get_check_attributes(request, request_type, display_region)
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'request_type': request_type
-        }
-
-
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/address-in-scotland/')
-class RequestAddressInScotland(RequestCommon):
-    @aiohttp_jinja2.template('common-address-in-scotland.html')
-    async def get(self, request):
-        self.setup_request(request)
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'Your address is in Scotland'
-            locale = 'cy'
-        else:
-            page_title = 'Your address is in Scotland'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/address-in-scotland')
 
         return {
             'page_title': page_title,
