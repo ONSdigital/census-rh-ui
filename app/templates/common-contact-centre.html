@@ -8,6 +8,8 @@
         <p>{{ _('There is an issue linking your address via the website.') }}</p>
     {% elif error == 'address-not-found' %}
         <p>{{ _('As you have been unable to find your address from the provided options, we need you to call the Census Customer Contact Centre. This will enable an operator to deal with your address.') }}</p>
+    {% elif error == 'unable-to-match-address' %}
+        <p>{{ _('There is an issue processing your address via the website.') }}</p>
     {% endif %}
 
     <p>{{ _('Please call us free on 0800 085 7376.') }}</p>

@@ -244,8 +244,10 @@ class RequestCodeSelectAddress(RequestCommon):
 
         if form_return['uprn'] == 'xxxx':
             raise HTTPFound(
-                request.app.router['RequestAddressNotListed:get'].url_for(
-                    request_type=request_type, display_region=display_region))
+                request.app.router['CommonCallContactCentre:get'].url_for(
+                    display_region=display_region,
+                    journey='requests',
+                    error='address-not-found'))
         else:
             session = await get_session(request)
             session['attributes']['address'] = form_return['address']
@@ -256,34 +258,6 @@ class RequestCodeSelectAddress(RequestCommon):
             raise HTTPFound(
                 request.app.router['RequestCodeConfirmAddress:get'].url_for(
                     request_type=request_type, display_region=display_region))
-
-
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/address-not-listed/')
-class RequestAddressNotListed(RequestCommon):
-    @aiohttp_jinja2.template('request-address-not-listed.html')
-    async def get(self, request):
-        self.setup_request(request)
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'You need to contact customer contact centre'
-            locale = 'cy'
-        else:
-            page_title = 'You need to contact customer contact centre'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/address-not-listed')
-
-        await self.get_check_attributes(request, request_type, display_region)
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'request_type': request_type
-        }
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -379,8 +353,11 @@ class RequestCodeConfirmAddress(RequestCommon):
                     logger.info('unable to match uprn',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
-                        request.app.router['RequestContactCentre:get'].
-                        url_for(request_type=request_type, display_region=display_region))
+                        request.app.router['CommonCallContactCentre:get'].
+                        url_for(request_type=request_type,
+                                journey='requests',
+                                display_region=display_region,
+                                error='unable-to-match-address'))
                 else:
                     raise ex
 
@@ -399,34 +376,6 @@ class RequestCodeConfirmAddress(RequestCommon):
             attributes['locale'] = locale
             attributes['request_type'] = request_type
             return attributes
-
-
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/contact-centre/')
-class RequestContactCentre(RequestCommon):
-    @aiohttp_jinja2.template('request-contact-centre.html')
-    async def get(self, request):
-        self.setup_request(request)
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'You need to contact customer contact centre'
-            locale = 'cy'
-        else:
-            page_title = 'You need to contact customer contact centre'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/contact-centre')
-
-        await self.get_check_attributes(request, request_type, display_region)
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'request_type': request_type
-        }
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +

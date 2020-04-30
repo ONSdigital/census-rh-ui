@@ -2892,7 +2892,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_en,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'en/requests/call-contact-centre/unable-to-match-address'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2927,7 +2928,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_cy,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2962,7 +2964,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hh_ni,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -2997,7 +3000,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_en,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'en/requests/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(response.status, 200)
 
@@ -3033,7 +3037,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_cy,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(response.status, 200)
 
@@ -3069,7 +3074,8 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_address_confirmation_hi_ni,
                     data=self.request_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/contact-centre'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(response.status, 200)
 
@@ -3785,12 +3791,16 @@ class TestRequestsHandlers(RHTestCase):
     async def test_request_code_confirm_mobile_request_fulfilment_error_hi_cy(
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCommon.get_fulfilment'
+        ) as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3834,12 +3844,16 @@ class TestRequestsHandlers(RHTestCase):
     async def test_request_code_confirm_mobile_request_fulfilment_error_hi_ni(
             self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn, mock.patch(
+                'app.requests_handlers.RequestCommon.get_fulfilment'
+        ) as mocked_get_fulfilment, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -4108,7 +4122,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hh_en(self):
+    async def test_get_request_address_not_found_hh_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4125,7 +4139,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_en,
                     data=self.common_select_address_input_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4133,7 +4147,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hh_cy(self):
+    async def test_get_request_address_not_found_hh_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4150,7 +4164,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_cy,
                     data=self.common_select_address_input_not_listed_cy)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4158,7 +4172,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_not_listed_cy, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hh_ni(self):
+    async def test_get_request_address_not_found_hh_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4175,7 +4189,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hh_ni,
                     data=self.common_select_address_input_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4183,7 +4197,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hi_en(self):
+    async def test_get_request_address_not_found_hi_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4200,7 +4214,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_en,
                     data=self.common_select_address_input_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4208,7 +4222,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_not_listed_en, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hi_cy(self):
+    async def test_get_request_address_not_found_hi_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4225,7 +4239,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_cy,
                     data=self.common_select_address_input_not_listed_cy)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
@@ -4233,7 +4247,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_not_listed_cy, contents)
 
     @unittest_run_loop
-    async def test_get_request_address_not_listed_hi_ni(self):
+    async def test_get_request_address_not_found_hi_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
 
@@ -4250,7 +4264,7 @@ class TestRequestsHandlers(RHTestCase):
                     self.post_requestcode_selectaddress_hi_ni,
                     data=self.common_select_address_input_not_listed_en)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/address-not-listed'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())

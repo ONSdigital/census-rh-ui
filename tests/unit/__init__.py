@@ -798,25 +798,6 @@ class RHTestCase(AioHTTPTestCase):
             request_type='individual', display_region='ni'
         )
 
-        self.get_request_contact_centre_hh_en = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='en'
-        )
-        self.get_request_contact_centre_hh_cy = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='cy'
-        )
-        self.get_request_contact_centre_hh_ni = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='ni'
-        )
-        self.get_request_contact_centre_hi_en = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='en'
-        )
-        self.get_request_contact_centre_hi_cy = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='cy'
-        )
-        self.get_request_contact_centre_hi_ni = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='ni'
-        )
-
         self.get_requestcode_codesent_hh_en = self.app.router['RequestCodeCodeSent:get'].url_for(
             request_type='household', display_region='en'
         )
