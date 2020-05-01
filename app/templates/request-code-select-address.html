@@ -28,51 +28,6 @@
 
 {% block main %}
 
-    {% if total_matches == 0: %}
-
-        <h1>{{ _('We cannot find your address') }}</h1>
-
-        {% autoescape false %}
-            <p>{{ _('If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.', start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="%s">' % contact_us_link, end_link='</a>')|safe }}</p>
-        {% endautoescape %}
-
-    {% else: %}
-
-        {% call onsQuestion({
-            'title': _('Select your address'),
-            'description': question_description
-        }) %}
-
-            {% if 'address-select' in field_messages_dict %}
-                {{
-                    onsRadios({
-                        'name': 'request-address-select',
-                        'or': 'Or',
-                        'radios': addresses,
-                        'error': {
-                            'text': _('Select an address')
-                        }
-                    })
-                }}
-            {% else %}
-                {{
-                    onsRadios({
-                        'name': 'request-address-select',
-                        'or': 'Or',
-                        'radios': addresses
-                    })
-                }}
-            {% endif %}
-
-        {% endcall %}
-
-        {{
-            onsButton({
-                'text': _('Continue'),
-                'classes': 'u-mt-l'
-            })
-        }}
-
-    {% endif %}
+    {% include 'partials/select-address.html' with context %}
 
 {% endblock %}

@@ -32,43 +32,8 @@
             ]
 %}
 
-{% set question_description = '<p class="u-fs-r--b"><em class="highlight">' + address + '</em></p>' %}
-
 {% block main %}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
-
-    {% call onsQuestion({
-        'title': _('Is this address correct?'),
-        'description': question_description
-    }) %}
-{% if 'address' in field_messages_dict %}
-    {{
-        onsRadios({
-            'name': 'request-address-confirmation',
-            'radios': form_options,
-            'error': {
-                'text': _('Check and confirm the address')
-            }
-        })
-    }}
-{% else %}
-    {{
-        onsRadios({
-            'name': 'request-address-confirmation',
-            'radios': form_options
-        })
-    }}
-{% endif %}
-    {% endcall %}
-
-    {{
-        onsButton({
-            'text': _('Continue'),
-            'classes': 'u-mt-l'
-        })
-    }}
+    {% include 'partials/confirm-address.html' with context %}
 
 {% endblock %}

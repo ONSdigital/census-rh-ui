@@ -977,6 +977,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_title_en = 'Is this address correct?'
         self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
 
+        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
+        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
+
         # Unlinked UACs
 
         # URLs
