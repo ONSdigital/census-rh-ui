@@ -16,7 +16,7 @@
             {% if 'address-select' in field_messages_dict %}
                 {{
                     onsRadios({
-                        'name': 'request-address-select',
+                        'name': 'form-select-address',
                         'or': 'Or',
                         'radios': addresses,
                         'error': {
@@ -27,7 +27,7 @@
             {% else %}
                 {{
                     onsRadios({
-                        'name': 'request-address-select',
+                        'name': 'form-select-address',
                         'or': 'Or',
                         'radios': addresses
                     })

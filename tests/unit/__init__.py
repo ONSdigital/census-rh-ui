@@ -267,42 +267,42 @@ class RHTestCase(AioHTTPTestCase):
             '{"uprn": "xxxx", "address": "I cannot find my address"}'
 
         self.common_select_address_input_valid = {
-            'request-address-select': self.post_common_select_address_form_data_valid,
+            'form-select-address': self.post_common_select_address_form_data_valid,
             'action[save_continue]': '',
         }
 
         self.common_select_address_input_not_listed_en = {
-            'request-address-select': self.post_common_select_address_form_data_not_listed_en,
+            'form-select-address': self.post_common_select_address_form_data_not_listed_en,
             'action[save_continue]': '',
         }
 
         self.common_select_address_input_not_listed_cy = {
-            'request-address-select': self.post_common_select_address_form_data_not_listed_cy,
+            'form-select-address': self.post_common_select_address_form_data_not_listed_cy,
             'action[save_continue]': '',
         }
 
         self.common_confirm_address_input_yes = {
-            'request-address-confirmation': 'yes', 'action[save_continue]': ''
+            'form-confirm-address': 'yes', 'action[save_continue]': ''
         }
 
         self.common_confirm_address_input_no = {
-            'request-address-confirmation': 'no', 'action[save_continue]': ''
+            'form-confirm-address': 'no', 'action[save_continue]': ''
         }
 
         self.common_confirm_address_input_invalid = {
-            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
+            'form-confirm-address': 'invalid', 'action[save_continue]': ''
         }
 
         self.common_postcode_input_valid = {
-            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
+            'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
 
         self.common_postcode_input_no_results = {
-            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
+            'form-enter-address-postcode': self.postcode_no_results, 'action[save_continue]': '',
         }
 
         self.common_postcode_input_invalid = {
-            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
+            'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:

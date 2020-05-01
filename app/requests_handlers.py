@@ -159,7 +159,7 @@ class RequestCodeEnterAddress(RequestCommon):
         data = await request.post()
 
         try:
-            postcode = ProcessPostcode.validate_postcode(data['request-postcode'], locale)
+            postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
             logger.info('valid postcode', client_ip=request['client_ip'])
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
@@ -228,7 +228,7 @@ class RequestCodeSelectAddress(RequestCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['request-address-select'])
+            form_return = json.loads(data['form-select-address'])
         except KeyError:
             logger.info('no address selected', client_ip=request['client_ip'])
             if display_region == 'cy':
@@ -313,7 +313,7 @@ class RequestCodeConfirmAddress(RequestCommon):
         data = await request.post()
 
         try:
-            address_confirmation = data['request-address-confirmation']
+            address_confirmation = data['form-confirm-address']
         except KeyError:
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
