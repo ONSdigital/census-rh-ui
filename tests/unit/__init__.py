@@ -980,6 +980,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
+        self.content_start_ni_select_language_title = 'Choose your language'
+        self.content_start_ni_select_language_option = 'Continue in English'
+
         # Unlinked UACs
 
         # URLs
