@@ -120,69 +120,6 @@ class RequestCode(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/enter-address/')
-class RequestCodeEnterAddress(RequestCommon):
-    @aiohttp_jinja2.template('request-code-enter-address.html')
-    async def get(self, request):
-        self.setup_request(request)
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'Beth yw eich cod post?'
-            locale = 'cy'
-        else:
-            page_title = 'What is your postcode?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-address')
-        return {
-            'display_region': display_region,
-            'locale': locale,
-            'page_title': page_title,
-            'request_type': request_type
-        }
-
-    @aiohttp_jinja2.template('request-code-enter-address.html')
-    async def post(self, request):
-        self.setup_request(request)
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-address')
-
-        data = await request.post()
-
-        try:
-            postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'])
-
-        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info('invalid postcode', client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
-            flash(request, flash_message)
-            raise HTTPFound(
-                request.app.router['RequestCodeEnterAddress:get'].url_for(
-                    request_type=request_type, display_region=display_region))
-
-        attributes = {
-            'postcode': postcode
-        }
-
-        session = await get_session(request)
-        session['attributes'] = attributes
-
-        raise HTTPFound(
-            request.app.router['RequestCodeSelectAddress:get'].url_for(
-                    request_type=request_type, display_region=display_region))
-
-
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
                       RequestCommon.valid_request_types + '-code/select-address/')
 class RequestCodeSelectAddress(RequestCommon):
     @aiohttp_jinja2.template('request-code-select-address.html')
@@ -246,7 +183,7 @@ class RequestCodeSelectAddress(RequestCommon):
             raise HTTPFound(
                 request.app.router['CommonCallContactCentre:get'].url_for(
                     display_region=display_region,
-                    journey='requests',
+                    user_journey='requests',
                     error='address-not-found'))
         else:
             session = await get_session(request)
@@ -335,7 +272,7 @@ class RequestCodeConfirmAddress(RequestCommon):
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
-                        url_for(display_region=display_region, journey='requests', request_type=request_type))
+                        url_for(display_region=display_region, user_journey='requests', request_type=request_type))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
@@ -355,7 +292,7 @@ class RequestCodeConfirmAddress(RequestCommon):
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].
                         url_for(request_type=request_type,
-                                journey='requests',
+                                user_journey='requests',
                                 display_region=display_region,
                                 error='unable-to-match-address'))
                 else:
@@ -363,8 +300,9 @@ class RequestCodeConfirmAddress(RequestCommon):
 
         elif address_confirmation == 'no':
             raise HTTPFound(
-                request.app.router['RequestCodeEnterAddress:get'].url_for(request_type=request_type,
-                                                                          display_region=display_region))
+                request.app.router['CommonEnterAddress:get'].url_for(sub_user_journey=request_type + '-code',
+                                                                     display_region=display_region,
+                                                                     user_journey='requests'))
 
         else:
             # catch all just in case, should never get here

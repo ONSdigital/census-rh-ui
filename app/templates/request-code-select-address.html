@@ -8,7 +8,7 @@
     {% set contact_us_link = domain_url_en + '/contact-us/' %}
 {% endif %}
 
-{% set request_code_link = url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region) %}
+{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type + '-code') %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}

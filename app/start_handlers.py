@@ -253,7 +253,11 @@ class Start(StartCommon):
             session['attributes'] = {}
             session['case'] = uac_json
             await remember(str(uuid.uuid4()), request)
-            raise HTTPFound(request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
+            raise HTTPFound(request.app.router['CommonEnterAddress:get'].url_for(
+                display_region=display_region,
+                user_journey='start',
+                sub_user_journey='unlinked'
+            ))
         else:
             await remember(uac_json['caseId'], request)
 
@@ -688,58 +692,6 @@ class UACTimeout(StartCommon):
         return {}
 
 
-@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/enter-address/')
-class StartUnlinkedEnterAddress(StartCommon):
-    @aiohttp_jinja2.template('start-unlinked-enter-address.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/unlinked/enter-address')
-        await check_permission(request)
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-        return {
-            'display_region': display_region,
-            'locale': locale
-        }
-
-    @aiohttp_jinja2.template('start-unlinked-enter-address.html')
-    async def post(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/unlinked/enter-address')
-
-        await check_permission(request)
-
-        data = await request.post()
-
-        try:
-            postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'])
-
-        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info('invalid postcode', client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
-            flash(request, flash_message)
-            raise HTTPFound(
-                request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
-
-        session = await get_session(request)
-        session['attributes']['postcode'] = postcode
-        session.changed()
-
-        raise HTTPFound(
-            request.app.router['StartUnlinkedSelectAddress:get'].url_for(display_region=display_region))
-
-
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/select-address/')
 class StartUnlinkedSelectAddress(StartCommon):
     @aiohttp_jinja2.template('start-unlinked-select-address.html')
@@ -821,7 +773,7 @@ class StartUnlinkedSelectAddress(StartCommon):
             raise HTTPFound(
                 request.app.router['CommonCallContactCentre:get'].url_for(
                     display_region=display_region,
-                    journey='start',
+                    user_journey='start',
                     error='address-not-found'))
         else:
             session['attributes']['address'] = form_return['address']
@@ -936,7 +888,7 @@ class StartUnlinkedConfirmAddress(StartCommon):
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
-                        url_for(display_region=display_region, journey='start'))
+                        url_for(display_region=display_region, user_journey='start'))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
@@ -955,11 +907,13 @@ class StartUnlinkedConfirmAddress(StartCommon):
                 logger.info('uac linking error', client_ip=request['client_ip'])
                 raise HTTPFound(
                     request.app.router['CommonCallContactCentre:get'].url_for(
-                        display_region=display_region, journey='start', error='address-linking'))
+                        display_region=display_region, user_journey='start', error='address-linking'))
 
         elif address_confirmation == 'no':
             raise HTTPFound(
-                request.app.router['StartUnlinkedEnterAddress:get'].url_for(display_region=display_region))
+                request.app.router['CommonEnterAddress:get'].url_for(display_region=display_region,
+                                                                     user_journey='start',
+                                                                     sub_user_journey='unlinked'))
 
         else:
             # catch all just in case, should never get here

@@ -1,8 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
 {% set index_url = url('Start:get', display_region=display_region) %}
-{% set request_individual_url = url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region) %}
-{% set request_household_url = url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region) %}
+{% set request_enter_address_url = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type + '-code') %}
 
 {% from 'components/panel/_macro.njk' import onsPanel %}
 
@@ -15,10 +14,8 @@
     {% endcall %}
 
     {% autoescape false %}
-        {% if request_type == 'household' %}
-            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_household_url, close='</a>')|safe }}</p>
-        {% elif  request_type == 'individual' %}
-            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_individual_url, close='</a>')|safe }}</p>
+        {% if request_type == 'household' or request_type == 'individual' %}
+            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_enter_address_url, close='</a>')|safe }}</p>
         {% else %}
             <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
         {% endif %}

@@ -22,7 +22,8 @@ uk_prefix = '44'
 
 class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
-    valid_journeys = r'{journey:\bstart|requests\b}'
+    valid_user_journeys = r'{user_journey:\bstart|requests\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|household-code|individual-code\b}'
 
     @staticmethod
     def setup_request(request):

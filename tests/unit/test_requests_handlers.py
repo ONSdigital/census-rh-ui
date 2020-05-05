@@ -20,7 +20,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -39,7 +39,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -58,7 +58,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -77,7 +77,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -96,7 +96,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -115,7 +115,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
                 self.assertLogEvent(cm, 'valid postcode')
 
@@ -134,7 +134,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -156,7 +156,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -178,7 +178,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm,
                                 'client failed to connect',
@@ -199,7 +199,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -217,7 +217,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -235,7 +235,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
 
@@ -253,7 +253,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -271,7 +271,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -289,7 +289,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=503)
 
@@ -307,7 +307,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -325,7 +325,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -344,7 +344,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=403)
 
@@ -362,7 +362,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -380,7 +380,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -399,7 +399,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=401)
 
@@ -417,7 +417,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -435,7 +435,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -454,7 +454,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
@@ -472,7 +472,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -496,7 +496,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -520,7 +520,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -544,7 +544,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -568,7 +568,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -592,7 +592,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO'):
                 await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
 
                 with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -616,7 +616,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -644,7 +644,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -672,7 +672,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -700,7 +700,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -728,7 +728,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -756,7 +756,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -784,7 +784,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -818,7 +818,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -852,7 +852,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -886,7 +886,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -920,7 +920,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -954,7 +954,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -988,7 +988,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1022,7 +1022,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1056,7 +1056,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1090,7 +1090,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1124,7 +1124,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1158,7 +1158,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1192,7 +1192,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1225,7 +1225,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1258,7 +1258,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1291,7 +1291,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1324,7 +1324,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1357,7 +1357,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             self.assertEqual(response.status, 200)
 
@@ -1412,7 +1412,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_en, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hh_en)
+                                                 self.get_request_code_enter_address_hh_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1422,7 +1422,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -1512,7 +1512,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_cy, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hh_cy)
+                                                 self.get_request_code_enter_address_hh_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1522,7 +1522,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -1612,7 +1612,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_en, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hh_ni)
+                                                 self.get_request_code_enter_address_hh_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1622,7 +1622,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -1712,7 +1712,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_en, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hi_en)
+                                                 self.get_request_code_enter_address_hi_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1722,7 +1722,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -1812,7 +1812,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_cy, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hi_cy)
+                                                 self.get_request_code_enter_address_hi_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1822,7 +1822,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -1912,7 +1912,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_request_secondary_en, contents)
 
             response = await self.client.request('GET',
-                                                 self.get_requestcode_enter_address_hi_ni)
+                                                 self.get_request_code_enter_address_hi_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-address'")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1922,7 +1922,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             self.assertLogEvent(cm, 'valid postcode')
 
@@ -2000,11 +2000,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2050,11 +2050,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2100,11 +2100,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2150,11 +2150,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2200,11 +2200,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2250,11 +2250,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2300,11 +2300,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2349,11 +2349,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2398,11 +2398,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2447,11 +2447,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2496,11 +2496,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2545,11 +2545,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2593,11 +2593,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_en,
+                self.post_request_code_enter_address_hh_en,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2641,11 +2641,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_cy,
+                self.post_request_code_enter_address_hh_cy,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2689,11 +2689,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_ni,
+                self.post_request_code_enter_address_hh_ni,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2737,11 +2737,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hi_en,
+                self.post_request_code_enter_address_hi_en,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2785,11 +2785,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_cy,
+                self.post_request_code_enter_address_hh_cy,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2833,11 +2833,11 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hi_ni,
+                self.post_request_code_enter_address_hi_ni,
                 data=self.common_postcode_input_valid)
 
             await self.client.request(
@@ -2880,10 +2880,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -2916,10 +2916,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -2952,10 +2952,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -2988,10 +2988,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3025,10 +3025,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3062,10 +3062,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3099,10 +3099,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3135,10 +3135,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3173,10 +3173,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3211,10 +3211,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3247,10 +3247,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3283,10 +3283,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3324,10 +3324,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3372,10 +3372,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3420,10 +3420,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3468,10 +3468,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3516,10 +3516,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3564,10 +3564,10 @@ class TestRequestsHandlers(RHTestCase):
                                     status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3613,10 +3613,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3662,10 +3662,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3711,10 +3711,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3760,10 +3760,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3813,10 +3813,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3866,10 +3866,10 @@ class TestRequestsHandlers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -3982,12 +3982,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_en,
+                self.post_request_code_enter_address_hh_en,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/enter-address'")
@@ -4007,12 +4007,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_cy,
+                self.post_request_code_enter_address_hh_cy,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/enter-address'")
@@ -4032,12 +4032,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hh_ni,
+                self.post_request_code_enter_address_hh_ni,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/enter-address'")
@@ -4057,12 +4057,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hi_en,
+                self.post_request_code_enter_address_hi_en,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/enter-address'")
@@ -4082,12 +4082,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hi_cy,
+                self.post_request_code_enter_address_hi_cy,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/enter-address'")
@@ -4107,12 +4107,12 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-address'")
 
             response = await self.client.request(
                 'POST',
-                self.post_requestcode_enter_address_hi_ni,
+                self.post_request_code_enter_address_hi_ni,
                 data=self.common_postcode_input_invalid)
         self.assertLogEvent(cm, 'invalid postcode')
         self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/enter-address'")
@@ -4132,10 +4132,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4157,10 +4157,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4182,10 +4182,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4207,10 +4207,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4232,10 +4232,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4257,10 +4257,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             response = await self.client.request(
                     'POST',
@@ -4289,10 +4289,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_household_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_en,
+                    self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -4325,10 +4325,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_household_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_cy,
+                    self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -4361,10 +4361,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_household_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hh_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hh_ni,
+                    self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -4397,10 +4397,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
 
             await self.client.request('GET', self.get_requestcode_individual_en)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_en,
+                    self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -4433,10 +4433,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_cy,
+                    self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
@@ -4469,10 +4469,10 @@ class TestRequestsHandlers(RHTestCase):
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
-            await self.client.request('GET', self.get_requestcode_enter_address_hi_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_enter_address_hi_ni,
+                    self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
             await self.client.request(
                     'POST',
