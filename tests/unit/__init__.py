@@ -647,23 +647,14 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_code_enter_address_hh_ni = self.app.router['CommonEnterAddress:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='en'
+        self.post_request_code_select_address_hh_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='cy'
+        self.post_request_code_select_address_hh_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='ni'
-        )
-        self.post_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='en'
-        )
-        self.post_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='cy'
-        )
-        self.post_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='ni'
+        self.post_request_code_select_address_hh_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
         self.get_requestcode_address_confirmation_hh_en = self.app.router['RequestCodeConfirmAddress:get'].url_for(
             request_type='household', display_region='en'
@@ -711,23 +702,14 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_code_enter_address_hi_ni = self.app.router['CommonEnterAddress:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='en'
+        self.post_request_code_select_address_hi_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='cy'
+        self.post_request_code_select_address_hi_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='ni'
-        )
-        self.post_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='en'
-        )
-        self.post_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='cy'
-        )
-        self.post_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='ni'
+        self.post_request_code_select_address_hi_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
 
         self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddress:get'].url_for(
@@ -998,11 +980,14 @@ class RHTestCase(AioHTTPTestCase):
                                                                sub_user_journey='unlinked')
 
         self.post_start_unlinked_select_address_en = \
-            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='en')
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='en', user_journey='start',
+                                                                       sub_user_journey='unlinked')
         self.post_start_unlinked_select_address_cy = \
-            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='cy')
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                                       sub_user_journey='unlinked')
         self.post_start_unlinked_select_address_ni = \
-            self.app.router['StartUnlinkedSelectAddress:post'].url_for(display_region='ni')
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                                       sub_user_journey='unlinked')
         self.post_start_unlinked_confirm_address_en = \
             self.app.router['StartUnlinkedConfirmAddress:post'].url_for(display_region='en')
         self.post_start_unlinked_confirm_address_cy = \

@@ -1,0 +1,24 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% set index_url = url('Start:get', display_region=display_region) %}
+{% set request_enter_address_url = url('CommonEnterAddress:get', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey) %}
+
+{% from 'components/panel/_macro.njk' import onsPanel %}
+
+{% block main %}
+    <h1>{{ _('Your session has timed out due to inactivity') }}</h1>
+    {% call onsPanel({
+        'classes': 'u-mb-m'
+    }) %}
+        <p>{{ _('To protect your information we have timed you out.') }}</p>
+    {% endcall %}
+
+    {% autoescape false %}
+        {% if user_journey == 'requests' %}
+            <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_enter_address_url, close='</a>')|safe }}</p>
+        {% elif user_journey='start' %}
+            <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
+        {% endif %}
+    {% endautoescape %}
+
+{% endblock %}
