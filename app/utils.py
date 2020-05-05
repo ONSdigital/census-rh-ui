@@ -5,6 +5,8 @@ import json
 from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientConnectorError,
                                        ClientResponseError)
+from .exceptions import InactiveCaseError
+from .exceptions import InvalidEqPayLoad
 from structlog import get_logger
 logger = get_logger('respondent-home')
 
@@ -84,6 +86,13 @@ class View:
                          url=url,
                          client_ip=request['client_ip'])
             raise ex
+
+    @staticmethod
+    def validate_case(case_json):
+        if not case_json.get('active', False):
+            raise InactiveCaseError(case_json.get('caseType'))
+        if not case_json.get('caseStatus', None) == 'OK':
+            raise InvalidEqPayLoad('CaseStatus is not OK')
 
 
 class InvalidDataError(Exception):

@@ -779,8 +779,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hh_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -797,7 +799,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -813,8 +815,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hh_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -831,7 +835,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -847,8 +851,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hh_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -865,7 +871,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -881,8 +887,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hi_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -899,7 +907,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -915,8 +923,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hi_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -933,7 +943,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -949,8 +959,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_no_selection_hi_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -967,7 +979,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_form_data_empty)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -983,8 +995,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hh_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1001,7 +1015,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1017,8 +1031,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hh_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1035,7 +1051,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1051,8 +1067,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hh_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1069,7 +1087,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1085,8 +1103,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hi_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1103,7 +1123,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1119,8 +1139,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hi_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1137,7 +1159,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1153,8 +1175,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_invalid_hi_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1171,7 +1195,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_invalid)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "address confirmation error")
@@ -1187,8 +1211,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hh_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1205,7 +1231,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'en/requests/household-code/enter-address'")
@@ -1220,8 +1246,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hh_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1238,7 +1266,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'cy/requests/household-code/enter-address'")
@@ -1253,8 +1281,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hh_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1271,7 +1301,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'ni/requests/household-code/enter-address'")
@@ -1286,8 +1316,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hi_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1304,7 +1336,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'en/requests/individual-code/enter-address'")
@@ -1319,8 +1351,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hi_cy(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1337,7 +1371,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'cy/requests/individual-code/enter-address'")
@@ -1352,8 +1386,10 @@ class TestRequestsHandlers(RHTestCase):
     async def test_get_request_access_code_confirm_address_data_no_hi_ni(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode:
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
             response = await self.client.request(
                     'POST',
@@ -1370,7 +1406,7 @@ class TestRequestsHandlers(RHTestCase):
             with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
                 response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm_confirm, "received GET on endpoint 'ni/requests/individual-code/enter-address'")
@@ -1450,7 +1486,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/household-code/enter-mobile'")
@@ -1550,7 +1586,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/enter-mobile'")
@@ -1650,7 +1686,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/household-code/enter-mobile'")
@@ -1750,7 +1786,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-mobile'")
@@ -1850,7 +1886,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-mobile'")
@@ -1950,7 +1986,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-mobile'")
@@ -2014,7 +2050,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2064,7 +2100,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2114,7 +2150,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2164,7 +2200,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2214,7 +2250,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2264,7 +2300,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2314,7 +2350,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2363,7 +2399,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2412,7 +2448,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2461,7 +2497,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2510,7 +2546,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2559,7 +2595,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2607,7 +2643,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hh_en,
+                self.post_request_code_confirm_address_hh_en,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2655,7 +2691,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hh_cy,
+                self.post_request_code_confirm_address_hh_cy,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2703,7 +2739,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hh_ni,
+                self.post_request_code_confirm_address_hh_ni,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2751,7 +2787,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hi_en,
+                self.post_request_code_confirm_address_hi_en,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2799,7 +2835,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hh_cy,
+                self.post_request_code_confirm_address_hh_cy,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2847,7 +2883,7 @@ class TestRequestsHandlers(RHTestCase):
 
             await self.client.request(
                 'POST',
-                self.post_requestcode_address_confirmation_hi_ni,
+                self.post_request_code_confirm_address_hi_ni,
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
@@ -2892,7 +2928,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -2928,7 +2964,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -2964,7 +3000,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -3000,7 +3036,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -3037,7 +3073,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -3074,7 +3110,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint "
@@ -3111,7 +3147,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
 
@@ -3147,7 +3183,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
 
@@ -3185,7 +3221,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
 
@@ -3223,7 +3259,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
 
@@ -3259,7 +3295,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
 
@@ -3295,7 +3331,7 @@ class TestRequestsHandlers(RHTestCase):
 
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
 
@@ -3335,7 +3371,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3383,7 +3419,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3431,7 +3467,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3479,7 +3515,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3527,7 +3563,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3575,7 +3611,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3624,7 +3660,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3673,7 +3709,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3722,7 +3758,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3771,7 +3807,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3824,7 +3860,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -3877,7 +3913,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
@@ -4300,7 +4336,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_en,
+                    self.post_request_code_confirm_address_hh_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/address-in-scotland'")
@@ -4336,7 +4372,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_cy,
+                    self.post_request_code_confirm_address_hh_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/address-in-scotland'")
@@ -4372,7 +4408,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hh_ni,
+                    self.post_request_code_confirm_address_hh_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/address-in-scotland'")
@@ -4408,7 +4444,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_en,
+                    self.post_request_code_confirm_address_hi_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/address-in-scotland'")
@@ -4444,7 +4480,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_cy,
+                    self.post_request_code_confirm_address_hi_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/address-in-scotland'")
@@ -4480,7 +4516,7 @@ class TestRequestsHandlers(RHTestCase):
                     data=self.common_select_address_input_valid)
             response = await self.client.request(
                     'POST',
-                    self.post_requestcode_address_confirmation_hi_ni,
+                    self.post_request_code_confirm_address_hi_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/address-in-scotland'")

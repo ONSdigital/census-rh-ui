@@ -1,6 +1,5 @@
 import aiohttp_jinja2
 import re
-import json
 import uuid
 
 from sdc.crypto.encrypter import encrypt
@@ -14,16 +13,14 @@ from structlog import get_logger
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
                ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
                START_LANGUAGE_OPTION_MSG,
-               ADDRESS_SELECT_CHECK_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY,
-               ADDRESS_SELECT_CHECK_MSG_CY)
-from .exceptions import InactiveCaseError
+               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY)
+
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
+from .utils import View
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -92,13 +89,6 @@ class StartCommon(View):
                                         auth=request.app['RHSVC_AUTH'],
                                         json=launch_json)
 
-    @staticmethod
-    def validate_case(case_json):
-        if not case_json.get('active', False):
-            raise InactiveCaseError(case_json.get('caseType'))
-        if not case_json.get('caseStatus', None) == 'OK':
-            raise InvalidEqPayLoad('CaseStatus is not OK')
-
     async def get_uac_details(self, request):
         uac_hash = request['uac_hash']
         logger.info('making get request for uac',
@@ -133,10 +123,9 @@ class StartCommon(View):
                                         json=case_json)
 
     @staticmethod
-    def get_address_details(request, data: dict, attributes: dict):
+    def get_address_details(data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
-        :param request:
         :param data: Changed address details
         :param attributes: attributes to be sent
         :return: attributes with changed address
@@ -496,7 +485,7 @@ class StartModifyAddress(StartCommon):
             raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
 
         try:
-            attributes = StartCommon.get_address_details(request, data,
+            attributes = StartCommon.get_address_details(data,
                                                          attributes)
         except KeyError:
             logger.info('address-line-1 has no value', client_ip=request['client_ip'])
@@ -690,147 +679,6 @@ class UACTimeout(StartCommon):
         self.setup_request(request)
         self.log_entry(request, 'start/timeout')
         return {}
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/confirm-address/')
-class StartUnlinkedConfirmAddress(StartCommon):
-    @aiohttp_jinja2.template('start-unlinked-confirm-address.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-
-        await check_permission(request)
-
-        if display_region == 'cy':
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
-            locale = 'cy'
-        else:
-            page_title = 'Is this address correct?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/unlinked/confirm-address')
-
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
-
-        uprn = session['attributes']['uprn']
-        uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
-
-        # attributes['address'] = uprn_ai_return['response']['address']
-
-        attributes = {
-            "addressLine1": uprn_ai_return['response']['address']['addressLine1'],
-            "addressLine2": uprn_ai_return['response']['address']['addressLine2'],
-            "addressLine3": uprn_ai_return['response']['address']['addressLine3'],
-            "townName": uprn_ai_return['response']['address']['townName'],
-            "postcode": uprn_ai_return['response']['address']['postcode'],
-            "uprn": uprn_ai_return['response']['address']['uprn'],
-            "countryCode": uprn_ai_return['response']['address']['countryCode']
-        }
-
-        session['attributes'] = attributes
-        session.changed()
-
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-
-        return attributes
-
-    @aiohttp_jinja2.template('start-unlinked-confirm-address.html')
-    async def post(self, request):
-        self.setup_request(request)
-
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
-            locale = 'cy'
-        else:
-            page_title = 'Is this address correct?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/unlinked/confirm-address')
-
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
-
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-
-        data = await request.post()
-
-        try:
-            address_confirmation = data['form-confirm-address']
-        except KeyError:
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
-            if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
-            else:
-                flash(request, ADDRESS_CHECK_MSG)
-            return attributes
-
-        if address_confirmation == 'yes':
-
-            # address = session['attributes']['address']
-
-            try:
-                if session['attributes']['countryCode'] == 'S':
-                    logger.info('address is in Scotland', client_ip=request['client_ip'])
-                    raise HTTPFound(
-                        request.app.router['CommonAddressInScotland:get'].
-                        url_for(display_region=display_region, user_journey='start'))
-            except KeyError:
-                logger.info('unable to check for region', client_ip=request['client_ip'])
-
-            try:
-                uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'],
-                                                                session['attributes'])
-                session['case'] = uprn_return
-                session.changed()
-
-                self.validate_case(uprn_return)
-
-                raise HTTPFound(
-                    request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
-
-            except ClientResponseError:
-                logger.info('uac linking error', client_ip=request['client_ip'])
-                raise HTTPFound(
-                    request.app.router['CommonCallContactCentre:get'].url_for(
-                        display_region=display_region, user_journey='start', error='address-linking'))
-
-        elif address_confirmation == 'no':
-            raise HTTPFound(
-                request.app.router['CommonEnterAddress:get'].url_for(display_region=display_region,
-                                                                     user_journey='start',
-                                                                     sub_user_journey='unlinked'))
-
-        else:
-            # catch all just in case, should never get here
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
-            flash(request, ADDRESS_CHECK_MSG)
-            attributes['page_title'] = page_title
-            attributes['display_region'] = display_region
-            attributes['locale'] = locale
-            return attributes
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')

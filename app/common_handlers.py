@@ -4,13 +4,13 @@ import json
 from aiohttp.web import HTTPFound, RouteTableDef
 from structlog import get_logger
 from aiohttp_session import get_session
+from aiohttp.client_exceptions import (ClientResponseError)
 
-from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
-               ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
-               START_LANGUAGE_OPTION_MSG,
+from . import (ADDRESS_CHECK_MSG,
+               SESSION_TIMEOUT_MSG,
                ADDRESS_SELECT_CHECK_MSG,
-               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY,
+               ADDRESS_CHECK_MSG_CY,
+               SESSION_TIMEOUT_MSG_CY,
                ADDRESS_SELECT_CHECK_MSG_CY)
 
 from .flash import flash
@@ -288,15 +288,167 @@ class CommonSelectAddress(CommonCommon):
             session.changed()
             logger.info('session updated', client_ip=request['client_ip'])
 
-            if user_journey == 'start':
-                raise HTTPFound(
-                    request.app.router['StartUnlinkedConfirmAddress:get'].url_for(
-                        display_region=display_region,
-                        user_journey=user_journey,
-                        sub_user_journey=sub_user_journey
-                    ))
+        raise HTTPFound(
+            request.app.router['CommonConfirmAddress:get'].url_for(
+                display_region=display_region,
+                user_journey=user_journey,
+                sub_user_journey=sub_user_journey
+            ))
+
+
+@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
+                    + '/' + View.valid_sub_user_journeys + '/confirm-address/')
+class CommonConfirmAddress(CommonCommon):
+    @aiohttp_jinja2.template('common-confirm-address.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        if user_journey == 'start':
+            await check_permission(request)
+
+        if display_region == 'cy':
+            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            locale = 'cy'
+        else:
+            page_title = 'Is this address correct?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
+
+        session = await get_session(request)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+
+        uprn = attributes['uprn']
+        uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
+
+        attributes = {
+            "addressLine1": uprn_ai_return['response']['address']['addressLine1'],
+            "addressLine2": uprn_ai_return['response']['address']['addressLine2'],
+            "addressLine3": uprn_ai_return['response']['address']['addressLine3'],
+            "townName": uprn_ai_return['response']['address']['townName'],
+            "postcode": uprn_ai_return['response']['address']['postcode'],
+            "uprn": uprn_ai_return['response']['address']['uprn'],
+            "countryCode": uprn_ai_return['response']['address']['countryCode']
+        }
+
+        session['attributes'] = attributes
+        session.changed()
+
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['user_journey'] = user_journey
+        attributes['sub_user_journey'] = sub_user_journey
+        attributes['locale'] = locale
+
+        return attributes
+
+    @aiohttp_jinja2.template('common-confirm-address.html')
+    async def post(self, request):
+        self.setup_request(request)
+
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        if display_region == 'cy':
+            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            locale = 'cy'
+        else:
+            page_title = 'Is this address correct?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
+
+        session = await get_session(request)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['user_journey'] = user_journey
+        attributes['sub_user_journey'] = sub_user_journey
+        attributes['locale'] = locale
+
+        data = await request.post()
+
+        try:
+            address_confirmation = data['form-confirm-address']
+        except KeyError:
+            logger.info('address confirmation error',
+                        client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, ADDRESS_CHECK_MSG_CY)
+            else:
+                flash(request, ADDRESS_CHECK_MSG)
+            return attributes
+
+        if address_confirmation == 'yes':
+
+            try:
+                if session['attributes']['countryCode'] == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressInScotland:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+            except KeyError:
+                logger.info('unable to check for region', client_ip=request['client_ip'])
+
+            if sub_user_journey == 'unlinked':
+                try:
+                    uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'],
+                                                                    session['attributes'])
+                    session['case'] = uprn_return
+                    session.changed()
+
+                    self.validate_case(uprn_return)
+
+                    raise HTTPFound(
+                        request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+
+                except ClientResponseError:
+                    logger.info('uac linking error', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonCallContactCentre:get'].url_for(
+                            display_region=display_region, user_journey=user_journey, error='address-linking'))
+
             elif user_journey == 'requests':
-                request_type = sub_user_journey.split('-', 1)[0]
-                raise HTTPFound(
-                    request.app.router['RequestCodeConfirmAddress:get'].url_for(
-                        request_type=request_type, display_region=display_region))
+                try:
+                    uprn_return = await RHService.get_cases_by_uprn(request, session['attributes']['uprn'])
+                    session['attributes']['case_id'] = uprn_return[0]['caseId']
+                    session['attributes']['region'] = uprn_return[0]['region']
+                    session.changed()
+                    request_type = sub_user_journey.split('-', 1)[0]
+                    raise HTTPFound(
+                        request.app.router['RequestCodeEnterMobile:get'].
+                            url_for(request_type=request_type, display_region=display_region))
+                except ClientResponseError as ex:
+                    if ex.status == 404:
+                        logger.info('unable to match uprn',
+                                    client_ip=request['client_ip'])
+                        raise HTTPFound(
+                            request.app.router['CommonCallContactCentre:get'].
+                                url_for(user_journey=user_journey,
+                                        display_region=display_region,
+                                        error='unable-to-match-address'))
+                    else:
+                        raise ex
+
+        elif address_confirmation == 'no':
+            raise HTTPFound(
+                request.app.router['CommonEnterAddress:get'].url_for(display_region=display_region,
+                                                                     user_journey=user_journey,
+                                                                     sub_user_journey=sub_user_journey))
+
+        else:
+            # catch all just in case, should never get here
+            logger.info('address confirmation error',
+                        client_ip=request['client_ip'])
+            flash(request, ADDRESS_CHECK_MSG)
+            attributes['page_title'] = page_title
+            attributes['display_region'] = display_region
+            attributes['user_journey'] = user_journey
+            attributes['sub_user_journey'] = sub_user_journey
+            attributes['locale'] = locale
+            return attributes
