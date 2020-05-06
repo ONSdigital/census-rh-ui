@@ -16,7 +16,7 @@
     {% autoescape false %}
         {% if user_journey == 'requests' %}
             <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_enter_address_url, close='</a>')|safe }}</p>
-        {% elif user_journey='start' %}
+        {% elif user_journey == 'start' %}
             <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
         {% endif %}
     {% endautoescape %}

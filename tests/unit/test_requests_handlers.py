@@ -144,7 +144,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(
@@ -166,7 +166,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_500_error_cy, contents)
+        self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(
@@ -188,7 +188,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_en(self):
@@ -206,7 +206,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_cy(self):
@@ -224,7 +224,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_500_error_cy, contents)
+        self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_hh_ni(self):
@@ -242,7 +242,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
@@ -260,7 +260,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_cy(self):
@@ -278,7 +278,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_500_error_cy, contents)
+        self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_ni(self):
@@ -296,7 +296,7 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_500_error_en, contents)
+        self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_en(self):
@@ -314,7 +314,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_403_hh_cy(self):
@@ -332,7 +332,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy,
+            self.assertIn(self.content_common_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -351,7 +351,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_en(self):
@@ -369,7 +369,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_401_hh_cy(self):
@@ -387,7 +387,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy,
+            self.assertIn(self.content_common_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -406,7 +406,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_en(self):
@@ -424,7 +424,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_400_hh_cy(self):
@@ -442,7 +442,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy,
+            self.assertIn(self.content_common_500_error_cy,
                           contents)
 
     @unittest_run_loop
@@ -461,7 +461,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_en(self):
@@ -3156,7 +3156,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hh_cy(self):
@@ -3192,7 +3192,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hh_ni(self):
@@ -3230,7 +3230,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hi_en(self):
@@ -3268,7 +3268,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hi_cy(self):
@@ -3304,7 +3304,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_code_confirm_address_get_cases_error_hi_ni(self):
@@ -3340,7 +3340,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hh_en(
@@ -3388,7 +3388,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hh_cy(
@@ -3436,7 +3436,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hh_ni(
@@ -3484,7 +3484,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hi_en(
@@ -3532,7 +3532,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hi_cy(
@@ -3580,7 +3580,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_get_fulfilment_error_hi_ni(
@@ -3628,7 +3628,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hh_en(
@@ -3677,7 +3677,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hh_cy(
@@ -3726,7 +3726,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hh_ni(
@@ -3775,7 +3775,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hi_en(
@@ -3824,7 +3824,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hi_cy(
@@ -3877,7 +3877,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_500_error_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
 
     @unittest_run_loop
     async def test_request_code_confirm_mobile_request_fulfilment_error_hi_ni(
@@ -3930,7 +3930,7 @@ class TestRequestsHandlers(RHTestCase):
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_500_error_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hh_en(self):
@@ -3943,7 +3943,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_timeout_en, contents)
+        self.assertIn(self.content_common_timeout_en, contents)
+        self.assertIn(self.content_request_timeout_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hh_cy(self):
@@ -3955,8 +3956,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/household-code/timeout'")
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_timeout_cy, contents)
+        self.assertIn(self.content_common_timeout_cy, contents)
+        self.assertIn(self.content_request_timeout_error_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hh_ni(self):
@@ -3969,7 +3970,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_timeout_en, contents)
+        self.assertIn(self.content_common_timeout_en, contents)
+        self.assertIn(self.content_request_timeout_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hi_en(self):
@@ -3982,7 +3984,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_timeout_en, contents)
+        self.assertIn(self.content_common_timeout_en, contents)
+        self.assertIn(self.content_request_timeout_error_en, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hi_cy(self):
@@ -3995,7 +3998,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_timeout_cy, contents)
+        self.assertIn(self.content_common_timeout_cy, contents)
+        self.assertIn(self.content_request_timeout_error_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_code_timeout_hi_ni(self):
@@ -4008,7 +4012,8 @@ class TestRequestsHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_timeout_en, contents)
+        self.assertIn(self.content_common_timeout_en, contents)
+        self.assertIn(self.content_request_timeout_error_en, contents)
 
     @unittest_run_loop
     async def test_post_request_code_enter_address_bad_postcode_hh_en(

@@ -31,10 +31,10 @@ class CommonCommon(View):
     async def common_check_attributes(self, request, user_journey, sub_user_journey, display_region):
         self.common_check_session(request, user_journey, sub_user_journey, display_region)
         session = await get_session(request)
-        try:
-            attributes = session['attributes']
 
-        except KeyError:
+        if session['attributes'] != {}:
+            attributes = session['attributes']
+        else:
             raise HTTPFound(
                 request.app.router['CommonTimeout:get'].url_for(
                     display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey))

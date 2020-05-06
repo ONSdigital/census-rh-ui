@@ -1672,3 +1672,138 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_no_session_attributes_select_address_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_en)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+
+            response = await self.client.request(
+                    'GET',
+                    self.get_start_unlinked_select_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_timeout_en, str(resp_content))
+            self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_no_session_attributes_select_address_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_cy)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+
+            response = await self.client.request(
+                    'GET',
+                    self.get_start_unlinked_select_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_timeout_cy, str(resp_content))
+            self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_no_session_attributes_select_address_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_ni)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+
+            response = await self.client.request(
+                    'GET',
+                    self.get_start_unlinked_select_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_timeout_en, str(resp_content))
+            self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_timeout_en(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_start_unlinked_timeout_en)
+        self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/timeout'")
+        self.assertEqual(response.status, 200)
+        resp_content = await response.content.read()
+        self.assertIn(self.ons_logo_en, str(resp_content))
+        self.assertIn(self.content_common_timeout_en, str(resp_content))
+        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_timeout_cy(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_start_unlinked_timeout_cy)
+        self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/timeout'")
+        self.assertEqual(response.status, 200)
+        resp_content = await response.content.read()
+        self.assertIn(self.ons_logo_cy, str(resp_content))
+        self.assertIn(self.content_common_timeout_cy, str(resp_content))
+        self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_timeout_ni(self):
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET',
+                                                 self.get_start_unlinked_timeout_ni)
+        self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/timeout'")
+        self.assertEqual(response.status, 200)
+        resp_content = await response.content.read()
+        self.assertIn(self.nisra_logo, str(resp_content))
+        self.assertIn(self.content_common_timeout_en, str(resp_content))
+        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))

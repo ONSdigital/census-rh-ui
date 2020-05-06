@@ -366,6 +366,12 @@ class RHTestCase(AioHTTPTestCase):
             'we need you to call the Census Customer Contact Centre. This will enable ' \
             'an operator to deal with your address.'
 
+        self.content_common_500_error_en = 'Sorry, something went wrong'
+        self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
+
+        self.content_common_timeout_en = 'Your session has timed out due to inactivity'
+        self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+
         # End Common
 
         self.get_info = self.app.router['Info:get'].url_for()
@@ -926,14 +932,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_title_en = 'We have sent an access code'
         self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
 
-        self.content_500_error_en = 'Sorry, something went wrong'
-        self.content_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
-
-        self.content_timeout_en = 'Your session has timed out due to inactivity'
-        self.content_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
+
+        self.content_request_timeout_error_en = 're-enter your postcode'
+        self.content_request_timeout_error_cy = 'nodi eich cod post eto'
 
         self.content_start_title_en = 'Start Census'
         self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
@@ -962,6 +965,15 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['CommonEnterAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                sub_user_journey='unlinked')
 
+        self.get_start_unlinked_select_address_en = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_select_address_cy = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_select_address_ni = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='unlinked')
         self.post_start_unlinked_select_address_en = \
             self.app.router['CommonSelectAddress:post'].url_for(display_region='en', user_journey='start',
                                                                 sub_user_journey='unlinked')
@@ -986,6 +998,16 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
         self.post_start_unlinked_address_is_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
+
+        self.get_start_unlinked_timeout_en = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
+                                                         sub_user_journey='unlinked')
+        self.get_start_unlinked_timeout_cy = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
+                                                         sub_user_journey='unlinked')
+        self.get_start_unlinked_timeout_ni = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
+                                                         sub_user_journey='unlinked')
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
@@ -1031,5 +1053,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_unlinked_address_has_been_linked_secondary_cy = \
             'You are now ready to start your Census questions'
 
+        self.content_unlinked_timeout_error_en = 're-enter your access code'
+        self.content_unlinked_timeout_error_cy = 'nodi eich cod mynediad eto'
 
         # yapf: enable
