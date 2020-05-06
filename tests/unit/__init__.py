@@ -623,11 +623,11 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/postcode/'
 
         self.get_requestcode_household_en = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='en')
+            request_type='household-code', display_region='en')
         self.get_requestcode_household_cy = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='cy')
+            request_type='household-code', display_region='cy')
         self.get_requestcode_household_ni = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='ni')
+            request_type='household-code', display_region='ni')
 
         self.get_request_code_enter_address_hh_en = self.app.router['CommonEnterAddress:get'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='household-code'
@@ -668,13 +668,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.get_requestcode_individual_en = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_individual_cy = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_individual_ni = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
         self.get_request_code_enter_address_hi_en = self.app.router['CommonEnterAddress:get'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='individual-code'
@@ -715,115 +715,115 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.get_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
         self.post_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.post_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.post_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.post_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
         self.post_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.post_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.post_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.post_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.post_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.post_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_codesent_hh_en = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_codesent_hh_cy = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_codesent_hh_ni = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_codesent_hi_en = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_codesent_hi_cy = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_codesent_hi_ni = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_household_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_household_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_household_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_individual_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_individual_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_individual_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_accessibility_statement_en = self.app.router['Accessibility:get'].url_for(display_region='en')

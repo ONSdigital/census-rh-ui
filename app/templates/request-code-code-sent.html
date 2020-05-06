@@ -1,7 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
 {% set start_survey_link = url('Start:get', display_region=display_region) %}
-{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type + '-code') %}
+{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) %}
 
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'macros/telephone/_macro.njk' import rhTelephone %}

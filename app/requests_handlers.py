@@ -30,7 +30,7 @@ requests_routes = RouteTableDef()
 
 class RequestCommon(View):
 
-    valid_request_types = r'{request_type:\bhousehold|individual\b}'
+    valid_request_types = r'{request_type:\bhousehold-code|individual-code\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type,
@@ -86,14 +86,14 @@ class RequestCommon(View):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/')
+                      RequestCommon.valid_request_types + '/')
 class RequestCode(RequestCommon):
     @aiohttp_jinja2.template('template-main.html')
     async def get(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
-        if request_type == 'individual':
+        if request_type == 'individual-code':
             if display_region == 'cy':
                 page_title = 'Gofyn am god mynediad unigryw'
                 locale = 'cy'
@@ -108,19 +108,19 @@ class RequestCode(RequestCommon):
                 page_title = 'Request a new access code'
                 locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code')
+        self.log_entry(request, display_region + '/requests/' + request_type)
         return {
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
             'request_type': request_type,
-            'partial_name': 'request-' + request_type + '-code',
-            'page_url': '/requests/' + request_type + '-code/'
+            'partial_name': 'request-' + request_type,
+            'page_url': '/requests/' + request_type + '/'
         }
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/enter-mobile/')
+                      RequestCommon.valid_request_types + '/enter-mobile/')
 class RequestCodeEnterMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
@@ -136,7 +136,7 @@ class RequestCodeEnterMobile(RequestCommon):
             page_title = 'What is your mobile phone number?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -160,7 +160,7 @@ class RequestCodeEnterMobile(RequestCommon):
             page_title = 'What is your mobile phone number?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/enter-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
         attributes['page_title'] = page_title
@@ -195,7 +195,7 @@ class RequestCodeEnterMobile(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/confirm-mobile/')
+                      RequestCommon.valid_request_types + '/confirm-mobile/')
 class RequestCodeConfirmMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
@@ -211,7 +211,7 @@ class RequestCodeConfirmMobile(RequestCommon):
             page_title = 'Is this mobile phone number correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -236,7 +236,7 @@ class RequestCodeConfirmMobile(RequestCommon):
             page_title = 'Is this mobile phone number correct?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -259,10 +259,10 @@ class RequestCodeConfirmMobile(RequestCommon):
 
         if mobile_confirmation == 'yes':
 
-            if request_type == 'household':
+            if request_type == 'household-code':
                 fulfilment_case_type = 'HH'
                 fulfilment_individual = 'false'
-            elif request_type == 'individual':
+            elif request_type == 'individual-code':
                 fulfilment_case_type = 'HH'
                 fulfilment_individual = 'true'
             else:
@@ -316,7 +316,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/code-sent/')
+                      RequestCommon.valid_request_types + '/code-sent/')
 class RequestCodeCodeSent(RequestCommon):
     @aiohttp_jinja2.template('request-code-code-sent.html')
     async def get(self, request):
@@ -332,7 +332,7 @@ class RequestCodeCodeSent(RequestCommon):
             page_title = 'We have sent an access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/code-sent')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
@@ -345,7 +345,7 @@ class RequestCodeCodeSent(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '-code/timeout/')
+                      RequestCommon.valid_request_types + '/timeout/')
 class RequestCodeTimeout(RequestCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):
@@ -361,7 +361,7 @@ class RequestCodeTimeout(RequestCommon):
             page_title = 'Your session has timed out due to inactivity'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '-code/timeout')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/timeout')
 
         return {
             'request_type': request_type,

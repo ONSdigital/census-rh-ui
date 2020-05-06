@@ -7,10 +7,8 @@ from aiohttp_session import get_session
 from aiohttp.client_exceptions import (ClientResponseError)
 
 from . import (ADDRESS_CHECK_MSG,
-               SESSION_TIMEOUT_MSG,
                ADDRESS_SELECT_CHECK_MSG,
                ADDRESS_CHECK_MSG_CY,
-               SESSION_TIMEOUT_MSG_CY,
                ADDRESS_SELECT_CHECK_MSG_CY)
 
 from .flash import flash
@@ -331,7 +329,9 @@ class CommonConfirmAddress(CommonCommon):
             "townName": uprn_ai_return['response']['address']['townName'],
             "postcode": uprn_ai_return['response']['address']['postcode'],
             "uprn": uprn_ai_return['response']['address']['uprn'],
-            "countryCode": uprn_ai_return['response']['address']['countryCode']
+            "countryCode": uprn_ai_return['response']['address']['countryCode'],
+            "censusEstabType": uprn_ai_return['response']['address']['censusEstabType'],
+            "censusAddressType": uprn_ai_return['response']['address']['censusAddressType']
         }
 
         session['attributes'] = attributes
@@ -419,19 +419,17 @@ class CommonConfirmAddress(CommonCommon):
                     session['attributes']['case_id'] = uprn_return[0]['caseId']
                     session['attributes']['region'] = uprn_return[0]['region']
                     session.changed()
-                    request_type = sub_user_journey.split('-', 1)[0]
                     raise HTTPFound(
-                        request.app.router['RequestCodeEnterMobile:get'].
-                            url_for(request_type=request_type, display_region=display_region))
+                        request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
+                                                                                 display_region=display_region))
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('unable to match uprn',
                                     client_ip=request['client_ip'])
                         raise HTTPFound(
-                            request.app.router['CommonCallContactCentre:get'].
-                                url_for(user_journey=user_journey,
-                                        display_region=display_region,
-                                        error='unable-to-match-address'))
+                            request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,
+                                                                                      display_region=display_region,
+                                                                                      error='unable-to-match-address'))
                     else:
                         raise ex
 
