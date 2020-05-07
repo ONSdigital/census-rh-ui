@@ -241,6 +241,8 @@ class Start(StartCommon):
             session = await get_session(request)
             session['attributes'] = {}
             session['case'] = uac_json
+            if data.get('adlocation'):
+                session['adlocation'] = data.get('adlocation')
             await remember(str(uuid.uuid4()), request)
             raise HTTPFound(request.app.router['CommonEnterAddress:get'].url_for(
                 display_region=display_region,
@@ -670,15 +672,6 @@ class StartSaveAndExit(StartCommon):
             'display_region': display_region,
             'locale': locale
         }
-
-
-@start_routes.view('/start/timeout/')
-class UACTimeout(StartCommon):
-    @aiohttp_jinja2.template('timeout.html')
-    async def get(self, request):
-        self.setup_request(request)
-        self.log_entry(request, 'start/timeout')
-        return {}
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
