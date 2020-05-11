@@ -1434,7 +1434,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -1534,7 +1534,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -1634,7 +1634,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -1734,7 +1734,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -1834,7 +1834,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -1934,7 +1934,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
             mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
 
@@ -2032,7 +2032,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2082,7 +2082,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2132,7 +2132,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2182,7 +2182,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2232,7 +2232,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2282,7 +2282,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -2332,7 +2332,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2381,7 +2381,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2430,7 +2430,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2479,7 +2479,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2528,7 +2528,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2577,7 +2577,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -2625,7 +2625,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_household_en)
 
@@ -2673,7 +2673,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_household_cy)
 
@@ -2721,7 +2721,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_household_ni)
 
@@ -2769,7 +2769,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_individual_en)
 
@@ -2817,7 +2817,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
 
@@ -2865,7 +2865,7 @@ class TestRequestsHandlers(RHTestCase):
                 :
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
 
@@ -3354,7 +3354,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=E&deliveryChannel=SMS&productGroup=UAC&individual=false',
                                     status=400)
@@ -3402,7 +3402,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=W&deliveryChannel=SMS&productGroup=UAC&individual=false',
                                     status=400)
@@ -3450,7 +3450,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=N&deliveryChannel=SMS&productGroup=UAC&individual=false',
                                     status=400)
@@ -3498,7 +3498,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=E&deliveryChannel=SMS&productGroup=UAC&individual=true',
                                     status=400)
@@ -3546,7 +3546,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=W&deliveryChannel=SMS&productGroup=UAC&individual=true',
                                     status=400)
@@ -3594,7 +3594,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=HH&region=N&deliveryChannel=SMS&productGroup=UAC&individual=true',
                                     status=400)
@@ -3643,7 +3643,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -3692,7 +3692,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -3741,7 +3741,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -3790,7 +3790,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -3843,7 +3843,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -3896,7 +3896,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
@@ -4327,7 +4327,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_household_en)
             await self.client.request('GET', self.get_request_code_enter_address_hh_en)
@@ -4363,7 +4363,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_household_cy)
             await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
@@ -4399,7 +4399,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_household_ni)
             await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
@@ -4435,7 +4435,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_en
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
 
             await self.client.request('GET', self.get_requestcode_individual_en)
             await self.client.request('GET', self.get_request_code_enter_address_hi_en)
@@ -4471,7 +4471,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_cy
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
 
             await self.client.request('GET', self.get_requestcode_individual_cy)
             await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
@@ -4507,7 +4507,7 @@ class TestRequestsHandlers(RHTestCase):
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_ni
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
 
             await self.client.request('GET', self.get_requestcode_individual_ni)
             await self.client.request('GET', self.get_request_code_enter_address_hi_ni)

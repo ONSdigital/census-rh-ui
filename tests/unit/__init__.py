@@ -232,20 +232,22 @@ class RHTestCase(AioHTTPTestCase):
         # This section gets ugly if YAPF reformats it
         # yapf: disable
         super().setUp()  # NB: setUp the server first so we can use self.app
-        with open('tests/test_data/rhsvc/uac_en.json') as fp:
-            self.uac_json_en = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_e.json') as fp:
+            self.uac_json_e = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac-cy.json') as fp:
-            self.uac_json_cy = json.load(fp)
+        with open('tests/test_data/rhsvc/uac-w.json') as fp:
+            self.uac_json_w = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac-ni.json') as fp:
-            self.uac_json_ni = json.load(fp)
+        with open('tests/test_data/rhsvc/uac-n.json') as fp:
+            self.uac_json_n = json.load(fp)
 
         # URLs used in later statements
         url_path_prefix = self.app['URL_PATH_PREFIX']
         account_svc_url = self.app['ACCOUNT_SERVICE_URL']
         rh_svc_url = self.app['RHSVC_URL']
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
+
+        self.get_info = self.app.router['Info:get'].url_for()
 
         # Common
 
@@ -374,7 +376,21 @@ class RHTestCase(AioHTTPTestCase):
 
         # End Common
 
-        self.get_info = self.app.router['Info:get'].url_for()
+        # Start Journey
+
+        # Content
+
+        self.content_start_title_en = 'Start Census'
+        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
+        self.content_start_title_cy = "Dechrau\\\'r Cyfrifiad"
+        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi\\\'i argraffu ar y llythyr"
+
+        self.content_start_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_confirm_address_option_en = 'Yes, this address is correct'
+        self.content_start_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_start_confirm_address_option_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+
+        # End Start Journey
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
@@ -419,29 +435,29 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
         self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
-        self.case_id = self.uac_json_en['caseId']
-        self.collection_exercise_id = self.uac_json_en['collectionExerciseId']
+        self.case_id = self.uac_json_e['caseId']
+        self.collection_exercise_id = self.uac_json_e['collectionExerciseId']
         self.eq_id = 'census'
         self.survey = 'CENSUS'
-        self.form_type = self.uac_json_en['formType']
+        self.form_type = self.uac_json_e['formType']
         self.jti = str(uuid.uuid4())
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = '2019'
         self.uac = 'w4nwwpphjjptp7fn'
-        self.uacHash = self.uac_json_en['uacHash']
-        self.uprn = self.uac_json_en['address']['uprn']
-        self.response_id = self.uac_json_en['questionnaireId']
-        self.questionnaire_id = self.uac_json_en['questionnaireId']
-        self.case_type = self.uac_json_en['caseType']
+        self.uacHash = self.uac_json_e['uacHash']
+        self.uprn = self.uac_json_e['address']['uprn']
+        self.response_id = self.uac_json_e['questionnaireId']
+        self.questionnaire_id = self.uac_json_e['questionnaireId']
+        self.case_type = self.uac_json_e['caseType']
         self.channel = 'rh'
         self.attributes_en = {
-            'addressLine1': self.uac_json_en['address']['addressLine1'],
-            'addressLine2': self.uac_json_en['address']['addressLine2'],
-            'addressLine3': self.uac_json_en['address']['addressLine3'],
-            'townName': self.uac_json_en['address']['townName'],
-            'postcode': self.uac_json_en['address']['postcode'],
-            'uprn': self.uac_json_en['address']['uprn'],
+            'addressLine1': self.uac_json_e['address']['addressLine1'],
+            'addressLine2': self.uac_json_e['address']['addressLine2'],
+            'addressLine3': self.uac_json_e['address']['addressLine3'],
+            'townName': self.uac_json_e['address']['townName'],
+            'postcode': self.uac_json_e['address']['postcode'],
+            'uprn': self.uac_json_e['address']['uprn'],
             'language': 'en',
             'display_region': 'en'
         }
@@ -468,8 +484,8 @@ class RHTestCase(AioHTTPTestCase):
             'ru_ref': self.uprn,
             'case_id': self.case_id,
             'language_code': 'en',
-            'display_address': self.uac_json_en['address']['addressLine1'] + ', '
-                               + self.uac_json_en['address']['addressLine2'],
+            'display_address': self.uac_json_e['address']['addressLine1'] + ', '
+                               + self.uac_json_e['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
@@ -575,11 +591,11 @@ class RHTestCase(AioHTTPTestCase):
         self.start_modify_address_data = {
             'caseId': self.case_id,
             'uprn': self.uprn,
-            'addressLine1': self.uac_json_en['address']['addressLine1'],
-            'addressLine2': self.uac_json_en['address']['addressLine2'],
-            'addressLine3': self.uac_json_en['address']['addressLine3'],
-            'townName': self.uac_json_en['address']['townName'],
-            'postcode': self.uac_json_en['address']['postcode']
+            'addressLine1': self.uac_json_e['address']['addressLine1'],
+            'addressLine2': self.uac_json_e['address']['addressLine2'],
+            'addressLine3': self.uac_json_e['address']['addressLine3'],
+            'townName': self.uac_json_e['address']['townName'],
+            'postcode': self.uac_json_e['address']['postcode']
             }
 
         self.start_ni_select_language_data_ul = {
@@ -849,20 +865,20 @@ class RHTestCase(AioHTTPTestCase):
 
         self.field_empty = None
 
-        with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_e.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_en = f
+            self.rhsvc_cases_by_uprn_e = f
 
-        with open('tests/test_data/rhsvc/case_by_uprn_cy.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_w.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_cy = f
+            self.rhsvc_cases_by_uprn_w = f
 
-        with open('tests/test_data/rhsvc/case_by_uprn_ni.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_n.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_ni = f
+            self.rhsvc_cases_by_uprn_n = f
 
         with open('tests/test_data/rhsvc/get_fulfilment_multi.json') as fp:
             f = asyncio.Future()
@@ -938,14 +954,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_timeout_error_en = 're-enter your postcode'
         self.content_request_timeout_error_cy = 'nodi eich cod post eto'
 
-        self.content_start_title_en = 'Start Census'
-        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
-        self.content_start_title_cy = "Dechrau'r Cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
-
-        self.content_start_confirm_address_title_en = 'Is this address correct?'
-        self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
-
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
@@ -1010,25 +1018,25 @@ class RHTestCase(AioHTTPTestCase):
                                                          sub_user_journey='unlinked')
 
         # Test Data
-        with open('tests/test_data/rhsvc/uac_unlinked_en.json') as fp:
-            self.unlinked_uac_json_en = json.load(fp)
-        with open('tests/test_data/rhsvc/uac_unlinked_cy.json') as fp:
-            self.unlinked_uac_json_cy = json.load(fp)
-        with open('tests/test_data/rhsvc/uac_unlinked_ni.json') as fp:
-            self.unlinked_uac_json_ni = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
+            self.unlinked_uac_json_e = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_w.json') as fp:
+            self.unlinked_uac_json_w = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_n.json') as fp:
+            self.unlinked_uac_json_n = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac_linked_en.json') as fp:
+        with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_en = f
-        with open('tests/test_data/rhsvc/uac_linked_cy.json') as fp:
+            self.rhsvc_post_linked_uac_e = f
+        with open('tests/test_data/rhsvc/uac_linked_w.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_cy = f
-        with open('tests/test_data/rhsvc/uac_linked_ni.json') as fp:
+            self.rhsvc_post_linked_uac_w = f
+        with open('tests/test_data/rhsvc/uac_linked_n.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_ni = f
+            self.rhsvc_post_linked_uac_n = f
 
         self.start_address_linked = {
             'action[save_continue]': ''
