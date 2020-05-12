@@ -49,6 +49,22 @@ class TestStartHandlers(RHTestCase):
         self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
+    async def test_post_index_en_with_retry(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, status=503)
+            mocked.get(self.rhsvc_url, status=503)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+
+            response = await self.client.request('POST',
+                                                 self.post_start_en,
+                                                 allow_redirects=False,
+                                                 data=self.start_data_valid)
+
+        self.assertEqual(response.status, 302)
+        self.assertIn('/start/confirm-address',
+                      response.headers['Location'])
+
+    @unittest_run_loop
     async def test_post_index_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_en)
@@ -1127,16 +1143,21 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Sorry, something went wrong', contents)
 
+    def mock503s(self, mocked):
+        mocked.get(self.rhsvc_url, status=503)
+        mocked.get(self.rhsvc_url, status=503)
+        mocked.get(self.rhsvc_url, status=503)
+
     @unittest_run_loop
     async def test_post_index_get_uac_503_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, status=503)
+            self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=503)
+            self.assertServiceUnavailableLogMessage(cm)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1146,13 +1167,13 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_get_uac_503_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, status=503)
+            self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=503)
+            self.assertServiceUnavailableLogMessage(cm)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1162,13 +1183,13 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_get_uac_503_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, status=503)
+            self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'INFO') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=503)
+            self.assertServiceUnavailableLogMessage(cm)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
