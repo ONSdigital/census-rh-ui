@@ -407,8 +407,13 @@ class CommonConfirmAddress(CommonCommon):
                     raise HTTPFound(
                         request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
 
-                except ClientResponseError:
-                    logger.info('uac linking error', client_ip=request['client_ip'])
+                except ClientResponseError as ex:
+                    if ex.status == 404:
+                        logger.info('uac linking error - unable to find uac', client_ip=request['client_ip'])
+                    elif ex.status == 400:
+                        logger.info('uac linking error - invalid request', client_ip=request['client_ip'])
+                    else:
+                        logger.info('uac linking error - unknown issue', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='address-linking'))

@@ -357,8 +357,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
         self.content_common_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
 
-        self.content_common_call_contact_centre_title_en = 'Call Census Customer Contact Centre'
-        self.content_common_call_contact_centre_title_cy = 'Call Census Customer Contact Centre'
+        self.content_common_call_contact_centre_title_en = 'You need to call the Census customer contact centre'
+        self.content_common_call_contact_centre_title_cy = 'You need to call the Census customer contact centre'
         self.content_common_call_contact_centre_address_not_found_en = \
             'As you have been unable to find your address from the provided options, ' \
             'we need you to call the Census Customer Contact Centre. This will enable ' \
@@ -367,6 +367,10 @@ class RHTestCase(AioHTTPTestCase):
             'As you have been unable to find your address from the provided options, ' \
             'we need you to call the Census Customer Contact Centre. This will enable ' \
             'an operator to deal with your address.'
+        self.content_common_call_contact_centre_address_linking_en = \
+            'There is an issue linking your address via the website.'
+        self.content_common_call_contact_centre_address_linking_cy = \
+            'There is an issue linking your address via the website.'
 
         self.content_common_500_error_en = 'Sorry, something went wrong'
         self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
@@ -535,6 +539,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.rhsvc_cases_url = (
             f'{rh_svc_url}/cases/'
+        )
+
+        self.rhsvc_url_unlinked_uac = (
+            f'{rh_svc_url}/uacs/{self.uacHash}/link'
         )
 
         self.start_data_valid = {

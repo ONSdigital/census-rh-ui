@@ -236,7 +236,7 @@ class Start(StartCommon):
 
         logger.info('logging uac_json', uac_json=uac_json)
 
-        if uac_json['caseId'] == '':
+        if uac_json['caseId'] is None:
             logger.info('unlinked case', client_ip=request['client_ip'])
             session = await get_session(request)
             session['attributes'] = {}
