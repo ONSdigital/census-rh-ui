@@ -131,7 +131,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked.get(self.addressindexsvc_url + self.postcode_valid,
                        exception=ClientConnectionError('Failed'))
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
@@ -153,7 +153,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked.get(self.addressindexsvc_url + self.postcode_valid,
                        exception=ClientConnectionError('Failed'))
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
@@ -175,7 +175,7 @@ class TestRequestsHandlers(RHTestCase):
             mocked.get(self.addressindexsvc_url + self.postcode_valid,
                        exception=ClientConnectionError('Failed'))
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
@@ -254,7 +254,7 @@ class TestRequestsHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'INFO') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
@@ -271,7 +271,7 @@ class TestRequestsHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'INFO') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
@@ -288,7 +288,7 @@ class TestRequestsHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'INFO') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,

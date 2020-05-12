@@ -5,7 +5,7 @@ from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientConnectorError,
                                        ClientResponseError)
 
-from tenacity import retry, stop_after_attempt, retry_if_exception_message
+from tenacity import retry, stop_after_attempt, retry_if_exception_message, retry_if_exception_type
 from structlog import get_logger
 logger = get_logger('respondent-home')
 
@@ -41,7 +41,7 @@ class View:
             response.raise_for_status()
         except ClientResponseError as ex:
             if ex.status == 503:
-                logger.info('503 returned. Could be during service scale back',
+                logger.warn('503 returned. Could be during service scale back',
                             url=response.url,
                             status_code=response.status)
             elif not ex.status == 404:
@@ -54,7 +54,9 @@ class View:
                          url=str(response.url))
 
     @staticmethod
-    @retry(reraise=True, stop=stop_after_attempt(3), retry=retry_if_exception_message(match='503.*'))
+    @retry(reraise=True, stop=stop_after_attempt(3), retry=(
+            retry_if_exception_message(match='503.*') | retry_if_exception_type((ClientConnectionError,
+                                                                                ClientConnectorError))))
     async def _make_request(request,
                             method,
                             url,
@@ -84,7 +86,7 @@ class View:
                 else:
                     return None
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error('client failed to connect',
+            logger.warn('client failed to connect, could be during service scale back',
                          url=url,
                          client_ip=request['client_ip'])
             raise ex
