@@ -1,5 +1,6 @@
 import string
 import re
+import aiohttp
 
 from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientConnectorError,
@@ -77,14 +78,28 @@ class View:
                      method=method,
                      url=url,
                      handler=func.__name__)
+
         try:
-            async with request.app.http_session_pool.request(
-                    method, url, auth=auth, json=json, ssl=False) as resp:
-                func(resp)
-                if return_json:
-                    return await resp.json()
-                else:
-                    return None
+            attempt_number = View._make_request.retry.statistics['attempt_number']
+            if attempt_number > 1:
+                # basic request without keep-alive to avoid terminating service.
+                logger.info('retrying using basic connection', attempt_number=str(attempt_number))
+                async with aiohttp.request(
+                        method, url, auth=auth, json=json) as resp:
+                    func(resp)
+                    if return_json:
+                        return await resp.json()
+                    else:
+                        return None
+            else:
+                # normal path. pooled ; keep-alive request for performance
+                async with request.app.http_session_pool.request(
+                        method, url, auth=auth, json=json, ssl=False) as resp:
+                    func(resp)
+                    if return_json:
+                        return await resp.json()
+                    else:
+                        return None
         except (ClientConnectionError, ClientConnectorError) as ex:
             logger.warn('client failed to connect, could be during service scale back',
                          url=url,
