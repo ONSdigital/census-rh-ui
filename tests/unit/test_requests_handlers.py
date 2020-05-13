@@ -245,21 +245,20 @@ class TestRequestsHandlers(RHTestCase):
         self.assertIn(self.content_500_error_en, contents)
 
     def mock503s(self, mocked):
-        mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
-        mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
-        mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
+        for i in range(5):
+            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_503_hh_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_postcode_input_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -271,12 +270,12 @@ class TestRequestsHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_postcode_input_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -288,12 +287,12 @@ class TestRequestsHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_postcode_input_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())

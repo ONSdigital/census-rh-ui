@@ -212,9 +212,6 @@ class RHTestCase(AioHTTPTestCase):
                 f"No matching log records with event: '{event}' and parameters: {kwargs}"
             )
 
-    def assertServiceUnavailableLogMessage(self, cm):
-        self.assertLogEvent(cm, '503 returned. Could be during service scale back', status_code=503)
-
     def assertMessagePanel(self, message, content):
         """
         Helper method for asserting the rendered content includes the required message panels.

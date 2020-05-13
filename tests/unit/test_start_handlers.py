@@ -1162,20 +1162,19 @@ class TestStartHandlers(RHTestCase):
         self.assertIn('Sorry, something went wrong', contents)
 
     def mock503s(self, mocked):
-        mocked.get(self.rhsvc_url, status=503)
-        mocked.get(self.rhsvc_url, status=503)
-        mocked.get(self.rhsvc_url, status=503)
+        for i in range(5):
+            mocked.get(self.rhsvc_url, status=503)
 
     @unittest_run_loop
     async def test_post_index_get_uac_503_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1187,11 +1186,11 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
                                                      data=self.start_data_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -1203,11 +1202,11 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
                                                      data=self.start_data_valid)
-            self.assertServiceUnavailableLogMessage(cm)
+            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())

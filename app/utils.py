@@ -20,7 +20,7 @@ OBSCURE_WHITESPACE = (
 )
 
 uk_prefix = '44'
-
+attempts_retry_limit = 5
 
 class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
@@ -37,14 +37,19 @@ class View:
                     path=request.path)
 
     @staticmethod
-    def _handle_response(response):
+    def _handle_response(response, attempt_number):
         try:
             response.raise_for_status()
         except ClientResponseError as ex:
             if ex.status == 503:
-                logger.warn('503 returned. Could be during service scale back',
-                            url=response.url,
-                            status_code=response.status)
+                if attempt_number < attempts_retry_limit:
+                    logger.warn('503 returned. Could be during service scale back',
+                                url=response.url,
+                                status_code=response.status)
+                else:
+                    logger.error('503 returned. Giving up retries',
+                                url = response.url,
+                                status_code = response.status)
             elif not ex.status == 404:
                 logger.error('error in response',
                              url=response.url,
@@ -55,7 +60,7 @@ class View:
                          url=str(response.url))
 
     @staticmethod
-    @retry(reraise=True, stop=stop_after_attempt(3), retry=(
+    @retry(reraise=True, stop=stop_after_attempt(attempts_retry_limit), retry=(
             retry_if_exception_message(match='503.*') | retry_if_exception_type((ClientConnectionError,
                                                                                 ClientConnectorError))))
     async def _make_request(request,
@@ -86,7 +91,7 @@ class View:
                 logger.info('retrying using basic connection', attempt_number=str(attempt_number))
                 async with aiohttp.request(
                         method, url, auth=auth, json=json) as resp:
-                    func(resp)
+                    func(resp, attempt_number)
                     if return_json:
                         return await resp.json()
                     else:
@@ -95,15 +100,20 @@ class View:
                 # normal path. pooled ; keep-alive request for performance
                 async with request.app.http_session_pool.request(
                         method, url, auth=auth, json=json, ssl=False) as resp:
-                    func(resp)
+                    func(resp, attempt_number)
                     if return_json:
                         return await resp.json()
                     else:
                         return None
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.warn('client failed to connect, could be during service scale back',
-                         url=url,
-                         client_ip=request['client_ip'])
+            if attempt_number < attempts_retry_limit:
+                logger.warn('client failed to connect, could be during service scale back',
+                             url=url,
+                             client_ip=request['client_ip'])
+            else:
+                logger.error('client failed to connect. Giving up retries',
+                             url=url,
+                             client_ip=request['client_ip'])
             raise ex
 
 
