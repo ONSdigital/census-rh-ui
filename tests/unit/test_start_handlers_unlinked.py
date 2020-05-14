@@ -58,8 +58,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -178,8 +176,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -296,8 +292,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -416,8 +410,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -534,8 +526,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -654,8 +644,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -772,8 +760,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -906,8 +892,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -1864,8 +1848,8 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_address_not_listed_cy(self):
@@ -1906,8 +1890,8 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_address_not_listed_ni(self):
@@ -1947,8 +1931,8 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_start_unlinked_enter_address_bad_postcode_en(
@@ -1980,8 +1964,6 @@ class TestStartHandlersUnlinked(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_en, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
         self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
         self.assertIn(self.content_common_enter_address_error_en, str(resp_content))
 
@@ -2015,8 +1997,6 @@ class TestStartHandlersUnlinked(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_cy, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_title_cy, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, str(resp_content))
         self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, str(resp_content))
         self.assertIn(self.content_common_enter_address_error_cy, str(resp_content))
 
@@ -2050,8 +2030,6 @@ class TestStartHandlersUnlinked(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.nisra_logo, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-        self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
         self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
         self.assertIn(self.content_common_enter_address_error_en, str(resp_content))
 
@@ -2226,8 +2204,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -2276,8 +2252,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_cy, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -2326,8 +2300,6 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_enter_address_secondary_en, str(resp_content))
             self.assertIn(self.content_start_unlinked_enter_address_question_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -2764,57 +2736,3 @@ class TestStartHandlersUnlinked(RHTestCase):
         self.assertIn(self.nisra_logo, str(resp_content))
         self.assertIn(self.content_common_timeout_en, str(resp_content))
         self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
-
-    # @unittest_run_loop
-    # async def test_unlinked_rhsvc_post_unlinked_uac_404_en(self):
-    #     with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-    #             'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-    #             'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-    #         'app.utils.RHService.post_unlinked_uac') as mocked_post_unlinked_uac, aioresponses(
-    #         passthrough=[str(self.server._root)]) \
-    #             as mocked:
-    #
-    #         mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
-    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
-    #         mocked_get_ai_uprn.return_value = self.ai_uprn_result
-    #         mocked_post_unlinked_uac.return_value = '{}'
-    #         mocked_post_unlinked_uac.status_code = 404
-    #
-    #         await self.client.request('GET', self.get_start_en)
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-    #
-    #         await self.client.request('POST',
-    #                                   self.post_start_en,
-    #                                   allow_redirects=True,
-    #                                   data=self.start_data_valid)
-    #
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
-    #
-    #         await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_enter_address_en,
-    #                 data=self.common_postcode_input_valid)
-    #
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
-    #
-    #         await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_select_address_en,
-    #                 data=self.common_select_address_input_valid)
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
-    #
-    #         response = await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_confirm_address_en,
-    #                 data=self.common_confirm_address_input_yes)
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-    #         # self.assertLogEvent(cm, 'uac linking error - unable to find uac', status_code=404)
-    #
-    #         self.assertEqual(response.status, 500)
-    #         contents = str(await response.content.read())
-    #         self.assertIn(self.ons_logo_en, contents)
-    #         self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-    #         self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)

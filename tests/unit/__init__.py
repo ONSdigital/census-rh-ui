@@ -332,11 +332,8 @@ class RHTestCase(AioHTTPTestCase):
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
         self.nisra_logo = '/img/nisra-logo-en.svg'
 
-        self.content_common_address_not_listed_en = 'You need to call the Census customer contact centre'
-        self.content_common_address_not_listed_cy = 'You need to call the Census customer contact centre'
-
-        self.content_common_address_in_scotland_en = 'Your address is in Scotland'
-        self.content_common_address_in_scotland_cy = 'Your address is in Scotland'
+        self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
+        self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
         self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
@@ -357,16 +354,16 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
         self.content_common_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
 
-        self.content_common_call_contact_centre_title_en = 'You need to call the Census customer contact centre'
-        self.content_common_call_contact_centre_title_cy = 'You need to call the Census customer contact centre'
-        self.content_common_call_contact_centre_address_not_found_en = \
-            'As you have been unable to find your address from the provided options, ' \
-            'we need you to call the Census Customer Contact Centre. This will enable ' \
-            'an operator to deal with your address.'
-        self.content_common_call_contact_centre_address_not_found_cy = \
-            'As you have been unable to find your address from the provided options, ' \
-            'we need you to call the Census Customer Contact Centre. This will enable ' \
-            'an operator to deal with your address.'
+        self.content_common_call_contact_centre_address_not_found_title_en = \
+            'Add or change an address'
+        self.content_common_call_contact_centre_address_not_found_title_cy = \
+            'Add or change an address'
+        self.content_common_call_contact_centre_address_not_found_text_en = \
+            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
+            'it may not be registered on our system.'
+        self.content_common_call_contact_centre_address_not_found_text_cy = \
+            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
+            'it may not be registered on our system.'
         self.content_common_call_contact_centre_address_linking_en = \
             'There is an issue linking your address via the website.'
         self.content_common_call_contact_centre_address_linking_cy = \
@@ -934,10 +931,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
         self.content_request_enter_address_secondary_en = \
-            'To text you a new code we need to know the address for which you are answering.'
+            'To request an access code, we need your address.'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         self.content_request_enter_address_secondary_cy = \
-            "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
+            'To request an access code, we need your address.'
 
         self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
         self.content_request_enter_mobile_error_en = ''
@@ -1051,14 +1048,6 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         # Content
-        self.content_start_unlinked_enter_address_title_en = 'Please supply your address'
-        self.content_start_unlinked_enter_address_title_cy = 'Please supply your address'
-        self.content_start_unlinked_enter_address_secondary_en = \
-            'The access code that you have entered is not currently linked to an address. ' \
-            'Please select your address so we can make the link.'
-        self.content_start_unlinked_enter_address_secondary_cy = \
-            'The access code that you have entered is not currently linked to an address. ' \
-            'Please select your address so we can make the link.'
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode?'
         self.content_start_unlinked_enter_address_question_title_cy = 'Beth yw eich cod post?'
 

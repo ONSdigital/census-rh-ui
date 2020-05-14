@@ -4188,7 +4188,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_common_address_not_listed_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_found_hh_cy(self):
@@ -4213,7 +4213,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_common_address_not_listed_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_found_hh_ni(self):
@@ -4238,7 +4238,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_address_not_listed_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_found_hi_en(self):
@@ -4263,7 +4263,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_common_address_not_listed_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_found_hi_cy(self):
@@ -4288,7 +4288,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_common_address_not_listed_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
 
     @unittest_run_loop
     async def test_get_request_address_not_found_hi_ni(self):
@@ -4313,7 +4313,7 @@ class TestRequestsHandlers(RHTestCase):
 
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_address_not_listed_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
 
     @unittest_run_loop
     async def test_get_request_address_in_scotland_hh_en(self):

@@ -79,10 +79,10 @@ class CommonAddressInScotland(CommonCommon):
         user_journey = request.match_info['user_journey']
 
         if display_region == 'cy':
-            page_title = 'Your address is in Scotland'
+            page_title = 'This address is not part of the census for England and Wales'
             locale = 'cy'
         else:
-            page_title = 'Your address is in Scotland'
+            page_title = 'This address is not part of the census for England and Wales'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-scotland')
@@ -409,11 +409,11 @@ class CommonConfirmAddress(CommonCommon):
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
-                        logger.info('uac linking error - unable to find uac', client_ip=request['client_ip'])
+                        logger.info('uac linking error - unable to find uac (404)', client_ip=request['client_ip'])
                     elif ex.status == 400:
-                        logger.info('uac linking error - invalid request', client_ip=request['client_ip'])
+                        logger.info('uac linking error - invalid request (400)', client_ip=request['client_ip'])
                     else:
-                        logger.info('uac linking error - unknown issue', client_ip=request['client_ip'])
+                        logger.info('uac linking error - unknown issue (500)', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='address-linking'))
@@ -429,7 +429,7 @@ class CommonConfirmAddress(CommonCommon):
                                                                                  display_region=display_region))
                 except ClientResponseError as ex:
                     if ex.status == 404:
-                        logger.info('unable to match uprn',
+                        logger.info('get cases by uprn error - unable to match uprn (404)',
                                     client_ip=request['client_ip'])
                         raise HTTPFound(
                             request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,

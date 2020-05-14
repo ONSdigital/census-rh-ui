@@ -1,17 +1,39 @@
 {% extends 'base-' + display_region + '.html' %}
 
+{% if display_region == 'ni' %}
+    {% set contact_us_link = domain_url_ni + '/contact-us/' %}
+{% elif display_region == 'cy' %}
+    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
+{% else %}
+    {% set contact_us_link = domain_url_en + '/contact-us/' %}
+{% endif %}
+
 {% block main %}
 
-    <h1 class="u-mt-l">{{ _('You need to call the Census customer contact centre') }}</h1>
-
     {% if error == 'address-linking' %}
+
+        <h1 class="u-mt-l">{{ _('You need to call the Census customer contact centre') }}</h1>
+
         <p>{{ _('There is an issue linking your address via the website.') }}</p>
+
     {% elif error == 'address-not-found' %}
-        <p>{{ _('As you have been unable to find your address from the provided options, we need you to call the Census Customer Contact Centre. This will enable an operator to deal with your address.') }}</p>
+
+        <h1 class="u-mt-l">{{ _('Add or change an address') }}</h1>
+
+        <p>{{ _('If you can’t find your address or part of your address has changed, it may not be registered on our system.') }}</p>
+
+        <p>{{ _('To register your address, we need you to get in touch.') }}</p>
+
     {% elif error == 'unable-to-match-address' %}
+
+        <h1 class="u-mt-l">{{ _('You need to call the Census customer contact centre') }}</h1>
+
         <p>{{ _('There is an issue processing your address via the website.') }}</p>
+
     {% endif %}
 
-    <p>{{ _('Please call us free on 0800 085 7376.') }}</p>
+    {% autoescape false %}
+        <p>{{ _('You can call us free on 0800 141 2021 or %(open)schoose another way to contact us%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
 
 {% endblock %}
