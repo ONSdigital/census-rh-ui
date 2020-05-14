@@ -1,4 +1,5 @@
 import string
+import time
 import re
 import aiohttp
 
@@ -21,6 +22,7 @@ OBSCURE_WHITESPACE = (
 
 uk_prefix = '44'
 attempts_retry_limit = 5
+
 
 class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
@@ -48,8 +50,8 @@ class View:
                                 status_code=response.status)
                 else:
                     logger.error('503 returned. Giving up retries',
-                                url = response.url,
-                                status_code = response.status)
+                                 url=response.url,
+                                 status_code=response.status)
             elif not ex.status == 404:
                 logger.error('error in response',
                              url=response.url,
@@ -84,11 +86,13 @@ class View:
                      url=url,
                      handler=func.__name__)
 
+        attempt_number = View._make_request.retry.statistics['attempt_number']
         try:
-            attempt_number = View._make_request.retry.statistics['attempt_number']
             if attempt_number > 1:
+                wait_secs = int(request.app['WAIT_BEFORE_RETRY'])
+                time.sleep(wait_secs)
                 # basic request without keep-alive to avoid terminating service.
-                logger.info('retrying using basic connection', attempt_number=str(attempt_number))
+                logger.info('retrying using basic connection', attempt_number=attempt_number, wait_secs=wait_secs)
                 async with aiohttp.request(
                         method, url, auth=auth, json=json) as resp:
                     func(resp, attempt_number)
@@ -108,8 +112,8 @@ class View:
         except (ClientConnectionError, ClientConnectorError) as ex:
             if attempt_number < attempts_retry_limit:
                 logger.warn('client failed to connect, could be during service scale back',
-                             url=url,
-                             client_ip=request['client_ip'])
+                            url=url,
+                            client_ip=request['client_ip'])
             else:
                 logger.error('client failed to connect. Giving up retries',
                              url=url,
