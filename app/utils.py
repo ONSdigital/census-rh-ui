@@ -1,12 +1,16 @@
 import string
+import time
 import re
 import json
+import aiohttp
 
 from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientConnectorError,
                                        ClientResponseError)
 from .exceptions import InactiveCaseError
 from .exceptions import InvalidEqPayLoad
+
+from tenacity import retry, stop_after_attempt, retry_if_exception_message, retry_if_exception_type
 from structlog import get_logger
 logger = get_logger('respondent-home')
 
@@ -20,6 +24,7 @@ OBSCURE_WHITESPACE = (
 )
 
 uk_prefix = '44'
+attempts_retry_limit = 5
 
 
 class View:
@@ -39,11 +44,21 @@ class View:
                     path=request.path)
 
     @staticmethod
-    def _handle_response(response):
+    def _handle_response(response, attempt_number):
         try:
             response.raise_for_status()
         except ClientResponseError as ex:
-            if not ex.status == 404:
+            if ex.status == 503:
+                if attempt_number < attempts_retry_limit:
+                    logger.warn('503 returned. Could be during service scale back',
+                                url=response.url,
+                                status_code=response.status,
+                                attempt_number=attempt_number)
+                else:
+                    logger.error('503 returned. Giving up retries',
+                                 url=response.url,
+                                 status_code=response.status)
+            elif not ex.status == 404:
                 logger.error('error in response',
                              url=response.url,
                              status_code=response.status)
@@ -53,6 +68,9 @@ class View:
                          url=str(response.url))
 
     @staticmethod
+    @retry(reraise=True, stop=stop_after_attempt(attempts_retry_limit), retry=(
+            retry_if_exception_message(match='503.*') | retry_if_exception_type((ClientConnectionError,
+                                                                                ClientConnectorError))))
     async def _make_request(request,
                             method,
                             url,
@@ -73,18 +91,43 @@ class View:
                      method=method,
                      url=url,
                      handler=func.__name__)
+
+        attempt_number = View._make_request.retry.statistics['attempt_number']
         try:
-            async with request.app.http_session_pool.request(
-                    method, url, auth=auth, json=json, ssl=False) as resp:
-                func(resp)
-                if return_json:
-                    return await resp.json()
-                else:
-                    return None
+            if attempt_number > 1:
+                # sleep with a rising sleep time as the attempt numbers grow, starting at 0 seconds.
+                wait_exp = float(request.app['WAIT_BEFORE_RETRY_EXPONENT'])
+                base = attempt_number - 1
+                wait_secs = 0 if (wait_exp == 0 or base == 0) else (base ** wait_exp)
+                logger.info('retrying using basic connection', attempt_number=attempt_number, wait_secs=wait_secs)
+                time.sleep(wait_secs)
+                # basic request without keep-alive to avoid terminating service.
+                async with aiohttp.request(
+                        method, url, auth=auth, json=json) as resp:
+                    func(resp, attempt_number)
+                    if return_json:
+                        return await resp.json()
+                    else:
+                        return None
+            else:
+                # normal path. pooled ; keep-alive request for performance
+                async with request.app.http_session_pool.request(
+                        method, url, auth=auth, json=json, ssl=False) as resp:
+                    func(resp, attempt_number)
+                    if return_json:
+                        return await resp.json()
+                    else:
+                        return None
         except (ClientConnectionError, ClientConnectorError) as ex:
-            logger.error('client failed to connect',
-                         url=url,
-                         client_ip=request['client_ip'])
+            if attempt_number < attempts_retry_limit:
+                logger.warn('client failed to connect, could be during service scale back',
+                            url=url,
+                            client_ip=request['client_ip'],
+                            attempt_number=attempt_number)
+            else:
+                logger.error('client failed to connect. Giving up retries',
+                             url=url,
+                             client_ip=request['client_ip'])
             raise ex
 
     @staticmethod
