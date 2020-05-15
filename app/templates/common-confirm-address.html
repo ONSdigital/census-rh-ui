@@ -14,23 +14,50 @@
     }
 } %}
 
-{% set form_options = [
-                {
-                    'id': 'yes',
-                    'label': {
-                        'text': _('Yes, this address is correct')
+{% if country_code == 'S' %}
+    {% set form_options = [
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, this address is correct')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'yes'
-                },
-                {
-                    'id': 'no',
-                    'label': {
-                        'text': _('No, I need to change it')
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, search for address again')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    %}
+{% else %}
+    {% set form_options = [
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, this address is correct')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'no'
-                }
-            ]
-%}
+                    {
+                        'id': 'change',
+                        'label': {
+                            'text': _('No, I need to make a change to this address')
+                        },
+                        'value': 'change'
+                    },
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, search for address again')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    %}
+{% endif %}
 
 {% block main %}
 

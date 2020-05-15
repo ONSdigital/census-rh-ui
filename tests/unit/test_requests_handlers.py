@@ -809,7 +809,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_cy(
@@ -845,7 +847,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hh_ni(
@@ -881,7 +885,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_en(
@@ -917,7 +923,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_cy(
@@ -953,7 +961,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_no_selection_hi_ni(
@@ -989,7 +999,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hh_en(
@@ -1025,7 +1037,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hh_cy(
@@ -1061,7 +1075,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hh_ni(
@@ -1097,7 +1113,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_en(
@@ -1133,7 +1151,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_cy(
@@ -1169,7 +1189,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_hi_ni(
@@ -1205,7 +1227,9 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_no_hh_en(
@@ -1482,7 +1506,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1582,7 +1608,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1682,7 +1710,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1782,7 +1812,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1882,7 +1914,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1982,7 +2016,9 @@ class TestRequestsHandlers(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -4335,10 +4371,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hh_en,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hh_en,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hh_en,
@@ -4371,10 +4413,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hh_cy,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hh_cy,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hh_cy,
@@ -4407,10 +4455,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hh_ni,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hh_ni,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hh_ni,
@@ -4443,10 +4497,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hi_en,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hi_en,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hi_en,
@@ -4479,10 +4539,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hi_cy,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hi_cy,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hi_cy,
@@ -4515,10 +4581,16 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_request_code_enter_address_hi_ni,
                     data=self.common_postcode_input_valid)
-            await self.client.request(
+
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_request_code_select_address_hi_ni,
                     data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
             response = await self.client.request(
                     'POST',
                     self.post_request_code_confirm_address_hi_ni,

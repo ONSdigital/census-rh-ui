@@ -287,6 +287,10 @@ class RHTestCase(AioHTTPTestCase):
             'form-confirm-address': 'yes', 'action[save_continue]': ''
         }
 
+        self.common_confirm_address_input_change = {
+            'form-confirm-address': 'change', 'action[save_continue]': ''
+        }
+
         self.common_confirm_address_input_no = {
             'form-confirm-address': 'no', 'action[save_continue]': ''
         }
@@ -349,10 +353,14 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_confirm_address_title_en = 'Is this address correct?'
         self.content_common_confirm_address_error_en = 'Check and confirm the address'
-        self.content_common_confirm_address_value_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_value_yes_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
+        self.content_common_confirm_address_value_no_en = 'No, search for address again'
         self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
-        self.content_common_confirm_address_value_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_common_confirm_address_value_yes_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
+        self.content_common_confirm_address_value_no_cy = 'No, search for address again'
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Add or change an address'
@@ -647,7 +655,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
-        self.addressindexsvc_url = f'{address_index_svc_url}/addresses/postcode/'
+        self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
 
         self.get_requestcode_household_en = self.app.router['RequestCode:get'].url_for(
             request_type='household-code', display_region='en')

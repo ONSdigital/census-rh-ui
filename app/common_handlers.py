@@ -342,6 +342,7 @@ class CommonConfirmAddress(CommonCommon):
         attributes['user_journey'] = user_journey
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
+        attributes['country_code'] = uprn_ai_return['response']['address']['countryCode']
 
         return attributes
 
@@ -437,6 +438,12 @@ class CommonConfirmAddress(CommonCommon):
                                                                                       error='unable-to-match-address'))
                     else:
                         raise ex
+
+        elif address_confirmation == 'change':
+            raise HTTPFound(
+                request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,
+                                                                          display_region=display_region,
+                                                                          error='address-not-found'))
 
         elif address_confirmation == 'no':
             raise HTTPFound(

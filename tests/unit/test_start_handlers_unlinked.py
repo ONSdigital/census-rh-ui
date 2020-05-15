@@ -86,7 +86,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -204,7 +206,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -320,7 +324,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -438,7 +444,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -554,7 +562,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -672,7 +682,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -788,7 +800,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -920,7 +934,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1690,12 +1706,16 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
 
-            await self.client.request(
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1740,12 +1760,16 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
 
-            await self.client.request(
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1790,12 +1814,16 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
 
-            await self.client.request(
+            response_get_confirm = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/confirm-address'")
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2350,7 +2378,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_invalid_cy(self):
@@ -2400,7 +2430,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_invalid_ni(self):
@@ -2450,7 +2482,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_empty_en(self):
@@ -2500,7 +2534,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_empty_cy(self):
@@ -2550,7 +2586,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_empty_ni(self):
@@ -2600,7 +2638,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_no_session_attributes_select_address_en(self):

@@ -252,7 +252,7 @@ class AddressIndex(View):
     @staticmethod
     async def get_ai_postcode(request, postcode):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/postcode/{postcode}'
+        url = f'{ai_svc_url}/addresses/rh/postcode/{postcode}'
         return await View._make_request(request,
                                         'GET',
                                         url,
