@@ -34,7 +34,7 @@ class TestStartHandlers(RHTestCase):
     async def test_post_index_en_with_retry_503(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock503s(mocked, 2)
-            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
@@ -50,7 +50,7 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url,
                        exception=ClientConnectionError('Failed'))
-            mocked.get(self.rhsvc_url, payload=self.uac_json_en)
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
 
             response = await self.client.request('POST',
                                                  self.post_start_en,
