@@ -64,7 +64,7 @@ class BaseConfig:
     REDIS_PORT = env('REDIS_PORT', default='7379')
 
     SESSION_AGE = env('SESSION_AGE', default='600')
-    WAIT_BEFORE_RETRY = env('WAIT_BEFORE_RETRY', default='2')  # 2 seconds
+    WAIT_BEFORE_RETRY_EXPONENT = env('WAIT_BEFORE_RETRY_EXPONENT', default='1')  # rising scale for retry wait times
 
     WEBCHAT_SVC_URL = env('WEBCHAT_SVC_URL')
 
@@ -109,7 +109,7 @@ class DevelopmentConfig:
     REDIS_PORT = env('REDIS_PORT', default='7379')
 
     SESSION_AGE = env('SESSION_AGE', default='300')  # 5 minutes
-    WAIT_BEFORE_RETRY = env('WAIT_BEFORE_RETRY', default='2')  # 2 seconds
+    WAIT_BEFORE_RETRY_EXPONENT = env('WAIT_BEFORE_RETRY_EXPONENT', default='1')  # rising scale for retry wait times
 
     WEBCHAT_SVC_URL = env.str(
         'WEBCHAT_SVC_URL',
@@ -149,7 +149,7 @@ class TestingConfig:
     REDIS_PORT = ''
 
     SESSION_AGE = ''
-    WAIT_BEFORE_RETRY = '0'  # 0 seconds
+    WAIT_BEFORE_RETRY_EXPONENT = '0'  # no wait.
 
     WEBCHAT_SVC_URL = 'https://www.timeforstorm.com/IM/endpoint/client/5441/ONSWebchat/ce033298af0c07067a77b7940c011ec8ef670d66b7fe15c5776a16e205478221'
 

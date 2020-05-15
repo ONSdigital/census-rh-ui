@@ -47,7 +47,8 @@ class View:
                 if attempt_number < attempts_retry_limit:
                     logger.warn('503 returned. Could be during service scale back',
                                 url=response.url,
-                                status_code=response.status)
+                                status_code=response.status,
+                                attempt_number=attempt_number)
                 else:
                     logger.error('503 returned. Giving up retries',
                                  url=response.url,
@@ -89,10 +90,13 @@ class View:
         attempt_number = View._make_request.retry.statistics['attempt_number']
         try:
             if attempt_number > 1:
-                wait_secs = int(request.app['WAIT_BEFORE_RETRY'])
+                # sleep with a rising sleep time as the attempt numbers grow, starting at 0 seconds.
+                wait_exp = float(request.app['WAIT_BEFORE_RETRY_EXPONENT'])
+                base = attempt_number - 1
+                wait_secs = 0 if (wait_exp == 0 or base == 0) else (base ** wait_exp)
+                logger.info('retrying using basic connection', attempt_number=attempt_number, wait_secs=wait_secs)
                 time.sleep(wait_secs)
                 # basic request without keep-alive to avoid terminating service.
-                logger.info('retrying using basic connection', attempt_number=attempt_number, wait_secs=wait_secs)
                 async with aiohttp.request(
                         method, url, auth=auth, json=json) as resp:
                     func(resp, attempt_number)
@@ -113,7 +117,8 @@ class View:
             if attempt_number < attempts_retry_limit:
                 logger.warn('client failed to connect, could be during service scale back',
                             url=url,
-                            client_ip=request['client_ip'])
+                            client_ip=request['client_ip'],
+                            attempt_number=attempt_number)
             else:
                 logger.error('client failed to connect. Giving up retries',
                              url=url,

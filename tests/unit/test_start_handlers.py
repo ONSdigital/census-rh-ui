@@ -14,6 +14,8 @@ from app.start_handlers import Start
 
 from . import RHTestCase, build_eq_raises, skip_encrypt
 
+attempts_retry_limit = 5
+
 
 class TestStartHandlers(RHTestCase):
     @unittest_run_loop
@@ -51,8 +53,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_en_with_retry_503(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, status=503)
-            mocked.get(self.rhsvc_url, status=503)
+            self.mock503s(mocked, 2)
             mocked.get(self.rhsvc_url, payload=self.uac_json_en)
 
             response = await self.client.request('POST',
@@ -1161,14 +1162,14 @@ class TestStartHandlers(RHTestCase):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('Sorry, something went wrong', contents)
 
-    def mock503s(self, mocked):
-        for i in range(5):
+    def mock503s(self, mocked, times):
+        for i in range(times):
             mocked.get(self.rhsvc_url, status=503)
 
     @unittest_run_loop
     async def test_post_index_get_uac_503_en(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            self.mock503s(mocked)
+            self.mock503s(mocked, attempts_retry_limit)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
@@ -1184,7 +1185,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_get_uac_503_cy(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            self.mock503s(mocked)
+            self.mock503s(mocked, attempts_retry_limit)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
@@ -1200,7 +1201,7 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_index_get_uac_503_ni(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            self.mock503s(mocked)
+            self.mock503s(mocked, attempts_retry_limit)
 
             with self.assertLogs('respondent-home', 'ERROR') as cm:
                 response = await self.client.request('POST',
