@@ -93,22 +93,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_confirm_address_en,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -213,22 +200,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                 'POST',
                 self.post_start_unlinked_confirm_address_en,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -331,22 +305,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_confirm_address_en,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -451,22 +412,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                 'POST',
                 self.post_start_unlinked_confirm_address_en,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -569,22 +517,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_confirm_address_cy,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -689,22 +624,9 @@ class TestStartHandlersUnlinked(RHTestCase):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_confirm_address_cy,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_cy, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -809,19 +731,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -943,19 +852,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_title_en, str(resp_content))
-            self.assertIn(self.content_start_unlinked_address_has_been_linked_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -1054,13 +950,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1169,13 +1058,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1282,13 +1164,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1397,13 +1272,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1510,13 +1378,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1625,13 +1486,6 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.post_start_unlinked_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_unlinked_address_is_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(

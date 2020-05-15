@@ -9,6 +9,10 @@ from aiohttp.client_exceptions import (ClientConnectionError,
                                        ClientResponseError)
 from .exceptions import InactiveCaseError
 from .exceptions import InvalidEqPayLoad
+from aiohttp.web import HTTPFound
+
+from sdc.crypto.encrypter import encrypt
+from .eq import EqPayloadConstructor
 
 from tenacity import retry, stop_after_attempt, retry_if_exception_message, retry_if_exception_type
 from structlog import get_logger
@@ -136,6 +140,37 @@ class View:
             raise InactiveCaseError(case_json.get('caseType'))
         if not case_json.get('caseStatus', None) == 'OK':
             raise InvalidEqPayLoad('CaseStatus is not OK')
+
+    async def call_questionnaire(self, request, case, attributes, app,
+                                 adlocation):
+        eq_payload = await EqPayloadConstructor(case, attributes, app,
+                                                adlocation).build()
+
+        token = encrypt(eq_payload,
+                        key_store=app['key_store'],
+                        key_purpose='authentication')
+
+        await self.post_surveylaunched(request, case, adlocation)
+
+        logger.info('redirecting to eq', client_ip=request['client_ip'])
+        eq_url = app['EQ_URL']
+        raise HTTPFound(f'{eq_url}/session?token={token}')
+
+    async def post_surveylaunched(self, request, case, adlocation):
+        if not adlocation:
+            adlocation = ''
+        launch_json = {
+            'questionnaireId': case['questionnaireId'],
+            'caseId': case['caseId'],
+            'agentId': adlocation
+        }
+        rhsvc_url = request.app['RHSVC_URL']
+        return await self._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/surveyLaunched',
+                                        self._handle_response,
+                                        auth=request.app['RHSVC_AUTH'],
+                                        json=launch_json)
 
 
 class InvalidDataError(Exception):

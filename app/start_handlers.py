@@ -2,9 +2,6 @@ import aiohttp_jinja2
 import re
 import uuid
 
-from sdc.crypto.encrypter import encrypt
-from .eq import EqPayloadConstructor
-
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
@@ -57,37 +54,6 @@ class StartCommon(View):
             raise TypeError
 
         return get_sha256_hash(combined)
-
-    async def call_questionnaire(self, request, case, attributes, app,
-                                 adlocation):
-        eq_payload = await EqPayloadConstructor(case, attributes, app,
-                                                adlocation).build()
-
-        token = encrypt(eq_payload,
-                        key_store=app['key_store'],
-                        key_purpose='authentication')
-
-        await self.post_surveylaunched(request, case, adlocation)
-
-        logger.info('redirecting to eq', client_ip=request['client_ip'])
-        eq_url = app['EQ_URL']
-        raise HTTPFound(f'{eq_url}/session?token={token}')
-
-    async def post_surveylaunched(self, request, case, adlocation):
-        if not adlocation:
-            adlocation = ''
-        launch_json = {
-            'questionnaireId': case['questionnaireId'],
-            'caseId': case['caseId'],
-            'agentId': adlocation
-        }
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'POST',
-                                        f'{rhsvc_url}/surveyLaunched',
-                                        self._handle_response,
-                                        auth=request.app['RHSVC_AUTH'],
-                                        json=launch_json)
 
     async def get_uac_details(self, request):
         uac_hash = request['uac_hash']
@@ -672,60 +638,3 @@ class StartSaveAndExit(StartCommon):
             'display_region': display_region,
             'locale': locale
         }
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
-class StartAddressHasBeenLinked(StartCommon):
-    @aiohttp_jinja2.template('start-unlinked-linked.html')
-    async def get(self, request):
-        self.setup_request(request)
-        await check_permission(request)
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'Your address has been linked to your code'
-            locale = 'cy'
-        else:
-            page_title = 'Your address has been linked to your code'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
-
-        return {
-            'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale
-        }
-
-    async def post(self, request):
-        self.setup_request(request)
-        await check_permission(request)
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
-
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-        except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
-
-        if case['region'][0] == 'N':
-            raise HTTPFound(
-                request.app.router['StartNILanguageOptions:get'].url_for())
-        else:
-            attributes['language'] = locale
-            attributes['display_region'] = display_region
-            await self.call_questionnaire(request, case,
-                                          attributes, request.app,
-                                          session.get('adlocation'))

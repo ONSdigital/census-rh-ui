@@ -111,18 +111,18 @@ def skip_encrypt(func, *args, **kwargs):
     :return: new method with patching functions attached as attributes
     """
     async def _override_sdc_encrypt(*_):
-        from app import start_handlers
+        from app import utils
 
         def encrypt(payload, **_):
             return json.dumps(payload)
 
-        start_handlers._bk_encrypt = start_handlers.encrypt
-        start_handlers.encrypt = encrypt
+        utils._bk_encrypt = utils.encrypt
+        utils.encrypt = encrypt
 
     async def _reset_sdc_encrypt(*_):
-        from app import start_handlers
+        from app import utils
 
-        start_handlers.encrypt = start_handlers._bk_encrypt
+        utils.encrypt = utils._bk_encrypt
 
     @functools.wraps(func, *args, **kwargs)
     def new_func(self, *inner_args, **inner_kwargs):
@@ -1013,12 +1013,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_unlinked_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                  sub_user_journey='unlinked')
-        self.post_start_unlinked_address_is_linked_en = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
-        self.post_start_unlinked_address_is_linked_cy = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
-        self.post_start_unlinked_address_is_linked_ni = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
         self.get_start_unlinked_timeout_en = \
             self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
@@ -1051,20 +1045,9 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_post_linked_uac_n = f
 
-        self.start_address_linked = {
-            'action[save_continue]': ''
-        }
-
         # Content
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode?'
         self.content_start_unlinked_enter_address_question_title_cy = 'Beth yw eich cod post?'
-
-        self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
-        self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
-        self.content_start_unlinked_address_has_been_linked_secondary_en = \
-            'You are now ready to start your Census questions'
-        self.content_start_unlinked_address_has_been_linked_secondary_cy = \
-            'You are now ready to start your Census questions'
 
         self.content_unlinked_timeout_error_en = 're-enter your access code'
         self.content_unlinked_timeout_error_cy = 'nodi eich cod mynediad eto'
