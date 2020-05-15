@@ -8,6 +8,7 @@ from . import RHTestCase
 
 attempts_retry_limit = 5
 
+
 # noinspection PyTypeChecker
 class TestRequestsHandlers(RHTestCase):
 
@@ -1557,8 +1558,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment') as mocked_request_fulfilment\
-                :
+            'app.requests_handlers.RequestCommon.request_fulfilment'
+        ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -1659,8 +1660,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment') as mocked_request_fulfilment\
-                :
+            'app.requests_handlers.RequestCommon.request_fulfilment'
+        ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -1761,8 +1762,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment') as mocked_request_fulfilment\
-                :
+            'app.requests_handlers.RequestCommon.request_fulfilment'
+        ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -1863,8 +1864,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment') as mocked_request_fulfilment\
-                :
+            'app.requests_handlers.RequestCommon.request_fulfilment'
+        ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -1965,8 +1966,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
             'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment') as mocked_request_fulfilment\
-                :
+            'app.requests_handlers.RequestCommon.request_fulfilment'
+        ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2065,8 +2066,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2115,8 +2116,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2165,8 +2166,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2215,8 +2216,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2265,8 +2266,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2315,8 +2316,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2365,8 +2366,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2414,8 +2415,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2463,8 +2464,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2512,8 +2513,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2561,8 +2562,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2610,8 +2611,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn\
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2659,8 +2660,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
@@ -2707,8 +2709,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
@@ -2755,8 +2758,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
@@ -2803,8 +2807,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
@@ -2851,8 +2856,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
@@ -2899,8 +2905,9 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn \
-                :
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
@@ -2946,8 +2953,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -2982,8 +2989,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3018,8 +3025,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3054,8 +3061,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3091,8 +3098,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3128,8 +3135,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3165,8 +3172,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3201,8 +3208,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3313,8 +3320,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3349,8 +3356,8 @@ class TestRequestsHandlers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_get_cases_by_uprn\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_cases_by_uprn:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3387,8 +3394,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3435,8 +3442,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3483,8 +3490,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3531,8 +3538,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3579,8 +3586,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3627,8 +3634,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3676,8 +3683,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
                 'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3725,8 +3732,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
                 'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3774,8 +3781,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
                 'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -3823,8 +3830,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
                 'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
-            passthrough=[str(self.server._root)]) as mocked_aioresponses\
-                :
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
@@ -4604,3 +4611,219 @@ class TestRequestsHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_address_in_scotland_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hh_en(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_en,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_en,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_en,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hh_cy(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_cy,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hh_ni(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_ni,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hi_en(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_en,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_en,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_en,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hi_cy(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_cy,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_change_hi_ni(
+            self):
+        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
+                        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertEqual(response.status, 200)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_ni,
+                    data=self.common_confirm_address_input_change)
+            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm_confirm,
+                                "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
