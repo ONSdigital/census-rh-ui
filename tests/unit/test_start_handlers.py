@@ -70,8 +70,6 @@ class TestStartHandlers(RHTestCase):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url,
                        exception=ClientConnectionError('Failed'))
-            mocked.get(self.rhsvc_url,
-                       exception=ClientConnectionError('Failed'))
             mocked.get(self.rhsvc_url, payload=self.uac_json_en)
 
             response = await self.client.request('POST',
