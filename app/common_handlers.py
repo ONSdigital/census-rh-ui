@@ -405,15 +405,8 @@ class CommonConfirmAddress(CommonCommon):
 
                     self.validate_case(uprn_return)
 
-                    if session['case']['region'][0] == 'N':
-                        raise HTTPFound(
-                            request.app.router['StartNILanguageOptions:get'].url_for())
-                    else:
-                        attributes['language'] = locale
-                        attributes['display_region'] = display_region
-                        await self.call_questionnaire(request, session['case'],
-                                                      attributes, request.app,
-                                                      session.get('adlocation'))
+                    raise HTTPFound(
+                        request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
 
                 except ClientResponseError as ex:
                     if ex.status == 404:

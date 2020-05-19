@@ -638,3 +638,60 @@ class StartSaveAndExit(StartCommon):
             'display_region': display_region,
             'locale': locale
         }
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
+class StartAddressHasBeenLinked(StartCommon):
+    @aiohttp_jinja2.template('start-unlinked-linked.html')
+    async def get(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            page_title = 'Your address has been linked to your code'
+            locale = 'cy'
+        else:
+            page_title = 'Your address has been linked to your code'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale
+        }
+
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+            case = session['case']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        if case['region'][0] == 'N':
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
+        else:
+            attributes['language'] = locale
+            attributes['display_region'] = display_region
+            await self.call_questionnaire(request, case,
+                                          attributes, request.app,
+                                          session.get('adlocation'))
