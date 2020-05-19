@@ -140,7 +140,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.addressindexsvc_url +
-                                self.postcode_valid)
+                                self.postcode_valid +
+                                self.address_index_epoch_param)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -162,7 +163,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.addressindexsvc_url +
-                                self.postcode_valid)
+                                self.postcode_valid +
+                                self.address_index_epoch_param)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -184,7 +186,8 @@ class TestRequestsHandlers(RHTestCase):
             self.assertLogEvent(cm,
                                 'client failed to connect',
                                 url=self.addressindexsvc_url +
-                                self.postcode_valid)
+                                self.postcode_valid +
+                                self.address_index_epoch_param)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
