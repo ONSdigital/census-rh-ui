@@ -10,7 +10,13 @@
 
 {% block main %}
 
-    {% if error == 'address-not-found' %}
+    {% if error == 'address-linking' %}
+
+        <h1 class="u-mt-l">{{ _('You need to call the Census customer contact centre') }}</h1>
+
+        <p>{{ _('There is an issue linking your address via the website.') }}</p>
+
+    {% elif error == 'address-not-found' %}
 
         <h1 class="u-mt-l">{{ _('Add or change an address') }}</h1>
 
