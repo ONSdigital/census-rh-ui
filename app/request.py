@@ -15,7 +15,7 @@ logger = get_logger('respondent-home')
 
 pooled_attempts_limit = 2
 basic_attempt_limit = 3
-wait_multiplier = 1.5
+wait_multiplier = 0.01
 
 
 def after_failed_attempt(request_type, retry_state):
@@ -51,7 +51,7 @@ class RetryRequest:
             logger.debug('successfully connected to service', url=self.url)
 
     @retry(reraise=True, stop=stop_after_attempt(basic_attempt_limit),
-           wait=wait_exponential(multiplier=wait_multiplier),
+           wait=wait_exponential(multiplier=wait_multiplier, exp_base=25),
            after=after_failed_basic,
            retry=(retry_if_exception_message(match='503.*') | retry_if_exception_type((ClientConnectionError,
                                                                                        ClientConnectorError))))
