@@ -18,6 +18,9 @@ from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWels
 logger = get_logger('respondent-home')
 common_routes = RouteTableDef()
 
+# common_handlers contains routes and supporting code for any route in more than top level journey path
+# eg start or requests
+
 
 class CommonCommon(View):
     @staticmethod
@@ -42,6 +45,7 @@ class CommonCommon(View):
         return attributes
 
 
+# Route to render a Timeout page that can be triggered during start/unlinked journey and all requests journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/timeout/')
 class CommonTimeout(CommonCommon):
@@ -70,6 +74,7 @@ class CommonTimeout(CommonCommon):
         }
 
 
+# Route to render an 'Address in Scotland' page during address lookups
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/address-in-scotland/')
 class CommonAddressInScotland(CommonCommon):
     @aiohttp_jinja2.template('common-address-in-scotland.html')
@@ -95,6 +100,7 @@ class CommonAddressInScotland(CommonCommon):
         }
 
 
+# Common route to render a 'Call the Contact Centre' page from any journey
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/call-contact-centre/{error}')
 class CommonCallContactCentre(CommonCommon):
     @aiohttp_jinja2.template('common-contact-centre.html')
@@ -122,6 +128,7 @@ class CommonCallContactCentre(CommonCommon):
         }
 
 
+# Common route to enable address entry via postcode from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/enter-address/')
 class CommonEnterAddress(CommonCommon):
@@ -201,6 +208,7 @@ class CommonEnterAddress(CommonCommon):
             ))
 
 
+# Common route to enable address selection from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/select-address/')
 class CommonSelectAddress(CommonCommon):
@@ -294,6 +302,7 @@ class CommonSelectAddress(CommonCommon):
             ))
 
 
+# Common route to enable address confirmation from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/confirm-address/')
 class CommonConfirmAddress(CommonCommon):
@@ -410,11 +419,14 @@ class CommonConfirmAddress(CommonCommon):
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
-                        logger.info('uac linking error - unable to find uac (404)', client_ip=request['client_ip'])
+                        logger.error('uac linking error - unable to find uac (' + ex.status + ')',
+                                     client_ip=request['client_ip'])
                     elif ex.status == 400:
-                        logger.info('uac linking error - invalid request (400)', client_ip=request['client_ip'])
+                        logger.error('uac linking error - invalid request (' + ex.status + ')',
+                                     client_ip=request['client_ip'])
                     else:
-                        logger.info('uac linking error - unknown issue (500)', client_ip=request['client_ip'])
+                        logger.error('uac linking error - unknown issue (' + ex.status + ')',
+                                     client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='address-linking'))
