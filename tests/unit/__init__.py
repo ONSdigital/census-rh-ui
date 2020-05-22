@@ -501,6 +501,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
+        self.address_index_epoch_param_test = f'?epoch=test'
 
         self.get_requestcode_household_en = self.app.router['RequestCode:get'].url_for(
             request_type='household', display_region='en')

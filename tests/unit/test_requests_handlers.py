@@ -149,6 +149,30 @@ class TestRequestsHandlers(RHTestCase):
         self.assertIn(self.content_500_error_en, contents)
 
     @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_with_epoch_hh_en(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+            self.app['ADDRESS_INDEX_EPOCH'] = 'test'
+
+            with self.assertLogs('respondent-home', 'WARN') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_en,
+                    data=self.request_postcode_input_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid +
+                                self.address_index_epoch_param_test)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_cy(
             self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -172,6 +196,30 @@ class TestRequestsHandlers(RHTestCase):
         self.assertIn(self.content_500_error_cy, contents)
 
     @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_with_epoch_hh_cy(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+            self.app['ADDRESS_INDEX_EPOCH'] = 'test'
+
+            with self.assertLogs('respondent-home', 'WARN') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_cy,
+                    data=self.request_postcode_input_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid +
+                                self.address_index_epoch_param_test)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_500_error_cy, contents)
+
+    @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_hh_ni(
             self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -188,6 +236,30 @@ class TestRequestsHandlers(RHTestCase):
                                 url=self.addressindexsvc_url +
                                 self.postcode_valid +
                                 self.address_index_epoch_param)
+
+        self.assertEqual(response.status, 500)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_get_ai_postcode_connection_error_with_epoch_hh_ni(
+            self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.addressindexsvc_url + self.postcode_valid,
+                       exception=ClientConnectionError('Failed'))
+            self.app['ADDRESS_INDEX_EPOCH'] = 'test'
+
+            with self.assertLogs('respondent-home', 'WARN') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_requestcode_enter_address_hh_ni,
+                    data=self.request_postcode_input_valid)
+            self.assertLogEvent(cm,
+                                'client failed to connect',
+                                url=self.addressindexsvc_url +
+                                self.postcode_valid +
+                                self.address_index_epoch_param_test)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
