@@ -116,7 +116,7 @@ class DevelopmentConfig:
 
     ADDRESS_INDEX_SVC_URL = env.str('ADDRESS_INDEX_SVC_URL', default='http://localhost:9000')
     ADDRESS_INDEX_SVC_AUTH = (env.str('ADDRESS_INDEX_SVC_USERNAME', default='admin'),
-                  env.str('ADDRESS_INDEX_SVC_PASSWORD', default='secret'))
+                              env.str('ADDRESS_INDEX_SVC_PASSWORD', default='secret'))
 
 
 class TestingConfig:

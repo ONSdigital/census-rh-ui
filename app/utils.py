@@ -1,6 +1,5 @@
 import string
 import re
-from aiohttp.client_exceptions import (ClientResponseError)
 from .request import RetryRequest
 from structlog import get_logger
 
