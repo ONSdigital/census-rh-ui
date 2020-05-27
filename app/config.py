@@ -69,6 +69,7 @@ class BaseConfig:
 
     ADDRESS_INDEX_SVC_URL = env('ADDRESS_INDEX_SVC_URL')
     ADDRESS_INDEX_SVC_AUTH = (env('ADDRESS_INDEX_SVC_USERNAME'), env('ADDRESS_INDEX_SVC_PASSWORD'))
+    ADDRESS_INDEX_EPOCH = env('ADDRESS_INDEX_EPOCH', default='')
 
 
 class ProductionConfig(BaseConfig):
@@ -117,6 +118,7 @@ class DevelopmentConfig:
     ADDRESS_INDEX_SVC_URL = env.str('ADDRESS_INDEX_SVC_URL', default='http://localhost:9000')
     ADDRESS_INDEX_SVC_AUTH = (env.str('ADDRESS_INDEX_SVC_USERNAME', default='admin'),
                               env.str('ADDRESS_INDEX_SVC_PASSWORD', default='secret'))
+    ADDRESS_INDEX_EPOCH = env.str('ADDRESS_INDEX_EPOCH', default='')
 
 
 class TestingConfig:
@@ -152,3 +154,4 @@ class TestingConfig:
 
     ADDRESS_INDEX_SVC_URL = 'http://localhost:9000'
     ADDRESS_INDEX_SVC_AUTH = ('admin', 'secret')
+    ADDRESS_INDEX_EPOCH = ''

@@ -250,6 +250,7 @@ class RHTestCase(AioHTTPTestCase):
         account_svc_url = self.app['ACCOUNT_SERVICE_URL']
         rh_svc_url = self.app['RHSVC_URL']
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
+        aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
 
         self.get_info = self.app.router['Info:get'].url_for()
 
@@ -660,6 +661,8 @@ class RHTestCase(AioHTTPTestCase):
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
+        self.address_index_epoch_param = f'?epoch={aims_epoch}'
+        self.address_index_epoch_param_test = f'?epoch=test'
 
         self.get_requestcode_household_en = self.app.router['RequestCode:get'].url_for(
             request_type='household-code', display_region='en')
