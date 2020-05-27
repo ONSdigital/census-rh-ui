@@ -258,7 +258,8 @@ class AddressIndex(View):
     @staticmethod
     async def get_ai_postcode(request, postcode):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/rh/postcode/{postcode}'
+        ai_epoch = request.app['ADDRESS_INDEX_EPOCH']
+        url = f'{ai_svc_url}/addresses/rh/postcode/{postcode}?epoch={ai_epoch}'
         return await View._make_request(request,
                                         'GET',
                                         url,
@@ -268,7 +269,8 @@ class AddressIndex(View):
     @staticmethod
     async def get_ai_uprn(request, uprn):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/rh/uprn/{uprn}?addresstype=paf'
+        ai_epoch = request.app['ADDRESS_INDEX_EPOCH']
+        url = f'{ai_svc_url}/addresses/rh/uprn/{uprn}?addresstype=paf&epoch={ai_epoch}'
         return await View._make_request(request,
                                         'GET',
                                         url,
