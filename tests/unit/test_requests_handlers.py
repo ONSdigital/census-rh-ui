@@ -334,7 +334,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_en,
                     data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -351,7 +351,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_cy,
                     data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -368,7 +368,7 @@ class TestRequestsHandlers(RHTestCase):
                     'POST',
                     self.post_requestcode_enter_address_hh_ni,
                     data=self.request_postcode_input_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())

@@ -5,7 +5,7 @@ import structlog
 from collections import OrderedDict
 from pythonjsonlogger import jsonlogger
 
-date_format = '%Y-%m-%dT%H:%M:%s'
+date_format = '%Y-%m-%dT%H:%M:%S'
 service = 'rhui'
 
 # Standard fields on logging records that we don't want directly inserted into the data dictionary
