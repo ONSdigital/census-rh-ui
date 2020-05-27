@@ -64,7 +64,6 @@ class StartCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         f'{rhsvc_url}/uacs/{uac_hash}',
-                                        self._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
                                         return_json=True)
 
@@ -84,7 +83,6 @@ class StartCommon(View):
                                         'PUT',
                                         f'{rhsvc_url}/cases/' +
                                         case['caseId'] + '/address',
-                                        self._handle_response,
                                         auth=rhsvc_auth,
                                         json=case_json)
 

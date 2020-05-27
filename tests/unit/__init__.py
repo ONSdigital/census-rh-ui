@@ -5,10 +5,11 @@ import time
 import uuid
 
 from aiohttp.test_utils import AioHTTPTestCase
+from tenacity import wait_exponential
 
 from app import app
 
-from app import session
+from app import session, request
 from aiohttp_session import session_middleware
 from aiohttp_session import SimpleCookieStorage
 
@@ -153,6 +154,9 @@ class RHTestCase(AioHTTPTestCase):
     async def get_application(self):
         # Monkey patch the session setup function to remove Redis dependency for unit tests
         session.setup = self.session_storage
+        # Monkey patch request retry wait time for faster tests
+        request.RetryRequest._request_using_pool.retry.wait = wait_exponential(multiplier=0)
+        request.RetryRequest._request_basic.retry.wait = wait_exponential(multiplier=0)
         return app.create_app('TestingConfig')
 
     async def setUpAsync(self):

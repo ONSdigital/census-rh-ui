@@ -1,5 +1,4 @@
 import string
-import time
 import re
 import json
 import aiohttp
@@ -14,8 +13,9 @@ from aiohttp.web import HTTPFound
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
 
-from tenacity import retry, stop_after_attempt, retry_if_exception_message, retry_if_exception_type
+from .request import RetryRequest
 from structlog import get_logger
+
 logger = get_logger('respondent-home')
 
 OBSCURE_WHITESPACE = (
@@ -28,7 +28,6 @@ OBSCURE_WHITESPACE = (
 )
 
 uk_prefix = '44'
-attempts_retry_limit = 5
 
 
 class View:
@@ -48,37 +47,9 @@ class View:
                     path=request.path)
 
     @staticmethod
-    def _handle_response(response, attempt_number):
-        try:
-            response.raise_for_status()
-        except ClientResponseError as ex:
-            if ex.status == 503:
-                if attempt_number < attempts_retry_limit:
-                    logger.warn('503 returned. Could be during service scale back',
-                                url=response.url,
-                                status_code=response.status,
-                                attempt_number=attempt_number)
-                else:
-                    logger.error('503 returned. Giving up retries',
-                                 url=response.url,
-                                 status_code=response.status)
-            elif not ex.status == 404:
-                logger.error('error in response',
-                             url=response.url,
-                             status_code=response.status)
-            raise ex
-        else:
-            logger.debug('successfully connected to service',
-                         url=str(response.url))
-
-    @staticmethod
-    @retry(reraise=True, stop=stop_after_attempt(attempts_retry_limit), retry=(
-            retry_if_exception_message(match='503.*') | retry_if_exception_type((ClientConnectionError,
-                                                                                ClientConnectorError))))
     async def _make_request(request,
                             method,
                             url,
-                            func,
                             auth=None,
                             json=None,
                             return_json=False):
@@ -88,51 +59,10 @@ class View:
         :param url: The target URL
         :param auth: Authorization
         :param json: JSON payload to pass as request data
-        :param func: Function to call on the response
         :param return_json: If True, the response JSON will be returned
         """
-        logger.debug('making request with handler',
-                     method=method,
-                     url=url,
-                     handler=func.__name__)
-
-        attempt_number = View._make_request.retry.statistics['attempt_number']
-        try:
-            if attempt_number > 1:
-                # sleep with a rising sleep time as the attempt numbers grow, starting at 0 seconds.
-                wait_exp = float(request.app['WAIT_BEFORE_RETRY_EXPONENT'])
-                base = attempt_number - 1
-                wait_secs = 0 if (wait_exp == 0 or base == 0) else (base ** wait_exp)
-                logger.info('retrying using basic connection', attempt_number=attempt_number, wait_secs=wait_secs)
-                time.sleep(wait_secs)
-                # basic request without keep-alive to avoid terminating service.
-                async with aiohttp.request(
-                        method, url, auth=auth, json=json) as resp:
-                    func(resp, attempt_number)
-                    if return_json:
-                        return await resp.json()
-                    else:
-                        return None
-            else:
-                # normal path. pooled ; keep-alive request for performance
-                async with request.app.http_session_pool.request(
-                        method, url, auth=auth, json=json, ssl=False) as resp:
-                    func(resp, attempt_number)
-                    if return_json:
-                        return await resp.json()
-                    else:
-                        return None
-        except (ClientConnectionError, ClientConnectorError) as ex:
-            if attempt_number < attempts_retry_limit:
-                logger.warn('client failed to connect, could be during service scale back',
-                            url=url,
-                            client_ip=request['client_ip'],
-                            attempt_number=attempt_number)
-            else:
-                logger.error('client failed to connect. Giving up retries',
-                             url=url,
-                             client_ip=request['client_ip'])
-            raise ex
+        retry_request = RetryRequest(request, method, url, auth, json, return_json)
+        return await retry_request.make_request()
 
     @staticmethod
     def validate_case(case_json):
@@ -168,7 +98,6 @@ class View:
         return await self._make_request(request,
                                         'POST',
                                         f'{rhsvc_url}/surveyLaunched',
-                                        self._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
                                         json=launch_json)
 
@@ -186,7 +115,6 @@ class InvalidDataErrorWelsh(Exception):
 
 
 class ProcessPostcode:
-
     postcode_validation_pattern = re.compile(
         r'^((AB|AL|B|BA|BB|BD|BH|BL|BN|BR|BS|BT|BX|CA|CB|CF|CH|CM|CO|CR|CT|CV|CW|DA|DD|DE|DG|DH|DL|DN|DT|DY|E|EC|EH|EN|EX|FK|FY|G|GL|GY|GU|HA|HD|HG|HP|HR|HS|HU|HX|IG|IM|IP|IV|JE|KA|KT|KW|KY|L|LA|LD|LE|LL|LN|LS|LU|M|ME|MK|ML|N|NE|NG|NN|NP|NR|NW|OL|OX|PA|PE|PH|PL|PO|PR|RG|RH|RM|S|SA|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|SY|TA|TD|TF|TN|TQ|TR|TS|TW|UB|W|WA|WC|WD|WF|WN|WR|WS|WV|YO|ZE)(\d[\dA-Z]?[ ]?\d[ABD-HJLN-UW-Z]{2}))|BFPO[ ]?\d{1,4}$'  # NOQA
     )
@@ -334,7 +262,6 @@ class AddressIndex(View):
         return await View._make_request(request,
                                         'GET',
                                         url,
-                                        View._handle_response,
                                         auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
@@ -345,7 +272,6 @@ class AddressIndex(View):
         return await View._make_request(request,
                                         'GET',
                                         url,
-                                        View._handle_response,
                                         auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
@@ -358,7 +284,6 @@ class RHService(View):
         return await View._make_request(request,
                                         'GET',
                                         f'{rhsvc_url}/cases/uprn/{uprn}',
-                                        View._handle_response,
                                         return_json=True)
 
     @staticmethod
@@ -383,7 +308,6 @@ class RHService(View):
         return await View._make_request(request,
                                         'POST',
                                         url,
-                                        View._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
                                         json=address_json,
                                         return_json=True)

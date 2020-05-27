@@ -16,7 +16,6 @@ from . import RHTestCase, build_eq_raises, skip_encrypt
 attempts_retry_limit = 5
 
 
-# noinspection PyTypeChecker
 class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
@@ -766,7 +765,7 @@ class TestStartHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -782,7 +781,7 @@ class TestStartHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
@@ -798,7 +797,7 @@ class TestStartHandlers(RHTestCase):
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, '503 returned. Giving up retries', status_code=503)
+            self.assertLogEvent(cm, 'error in response', status_code=503)
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())

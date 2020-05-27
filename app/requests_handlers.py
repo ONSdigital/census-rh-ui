@@ -64,7 +64,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         url,
-                                        self._handle_response,
                                         return_json=True)
 
     async def request_fulfilment(self, request, case_id, tel_no,
@@ -80,7 +79,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'POST',
                                         url,
-                                        self._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
                                         json=fulfilment_json)
 
