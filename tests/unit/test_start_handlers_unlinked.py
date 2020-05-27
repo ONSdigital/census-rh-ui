@@ -2929,55 +2929,470 @@ class TestStartHandlersUnlinked(RHTestCase):
         self.assertIn(self.content_common_timeout_en, str(resp_content))
         self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
 
-    # @unittest_run_loop
-    # async def test_unlinked_confirm_address_unable_to_link_404_en(self):
-    #     with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-    #             'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-    #             'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-    #         passthrough=[str(self.server._root)]) \
-    #             as mocked:
-    #
-    #         mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
-    #         mocked_get_ai_postcode.return_value = self.ai_postcode_results
-    #         mocked_get_ai_uprn.return_value = self.ai_uprn_result
-    #         mocked.post(self.rhsvc_url_unlinked_uac, payload=self.rhsvc_post_linked_uac_e,
-    #                     exception=ClientConnectionError('Failed'))
-    #
-    #         await self.client.request('GET', self.get_start_en)
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-    #
-    #         await self.client.request('POST',
-    #                                   self.post_start_en,
-    #                                   allow_redirects=True,
-    #                                   data=self.start_data_valid)
-    #
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
-    #
-    #         await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_enter_address_en,
-    #                 data=self.common_postcode_input_valid)
-    #
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
-    #
-    #         await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_select_address_en,
-    #                 data=self.common_select_address_input_valid)
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
-    #
-    #         response = await self.client.request(
-    #                 'POST',
-    #                 self.post_start_unlinked_confirm_address_en,
-    #                 data=self.common_confirm_address_input_yes)
-    #         self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
-    #         self.assertLogEvent(cm, "uac linking error - unable to find uac (404)", status_code=404)
-    #         self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-linking'")
-    #
-    #         self.assertEqual(200, response.status)
-    #         resp_content = await response.content.read()
-    #         self.assertIn(self.ons_logo_en, str(resp_content))
-    #         self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_404_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=404)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unable to find uac (404)", status_code=404)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_404_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=404)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unable to find uac (404)", status_code=404)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_404_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=404)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unable to find uac (404)", status_code=404)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_400_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=400)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - invalid request (400)", status_code=400)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_400_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=400)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - invalid request (400)", status_code=400)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_400_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=400)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - invalid request (400)", status_code=400)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_500_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=500)
+
+            await self.client.request('GET', self.get_start_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_en,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unknown issue (500)", status_code=500)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_500_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=500)
+
+            await self.client.request('GET', self.get_start_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_cy,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unknown issue (500)", status_code=500)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_unlinked_confirm_address_unable_to_link_500_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]) \
+                as mocked:
+
+            mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked.post(self.rhsvc_url_unlinked_uac, status=500)
+
+            await self.client.request('GET', self.get_start_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
+
+            await self.client.request('POST',
+                                      self.post_start_ni,
+                                      allow_redirects=True,
+                                      data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/confirm-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_start_unlinked_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/confirm-address'")
+            self.assertLogEvent(cm, "uac linking error - unknown issue (500)", status_code=500)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-linking'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))

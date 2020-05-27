@@ -419,14 +419,14 @@ class CommonConfirmAddress(CommonCommon):
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
-                        logger.error('uac linking error - unable to find uac (' + ex.status + ')',
-                                     client_ip=request['client_ip'])
+                        logger.error('uac linking error - unable to find uac (' + str(ex.status) + ')',
+                                     client_ip=request['client_ip'], status_code=ex.status)
                     elif ex.status == 400:
-                        logger.error('uac linking error - invalid request (' + ex.status + ')',
-                                     client_ip=request['client_ip'])
+                        logger.error('uac linking error - invalid request (' + str(ex.status) + ')',
+                                     client_ip=request['client_ip'], status_code=ex.status)
                     else:
-                        logger.error('uac linking error - unknown issue (' + ex.status + ')',
-                                     client_ip=request['client_ip'])
+                        logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
+                                     client_ip=request['client_ip'], status_code=ex.status)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='address-linking'))
