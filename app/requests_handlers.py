@@ -95,7 +95,8 @@ class RequestCommon(View):
 
     async def get_ai_postcode(self, request, postcode):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/postcode/{postcode}'
+        ai_epoch = request.app['ADDRESS_INDEX_EPOCH']
+        url = f'{ai_svc_url}/addresses/postcode/{postcode}?epoch={ai_epoch}'
         return await self._make_request(request,
                                         'GET',
                                         url,
@@ -104,7 +105,8 @@ class RequestCommon(View):
 
     async def get_ai_uprn(self, request, uprn):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
-        url = f'{ai_svc_url}/addresses/uprn/{uprn}'
+        ai_epoch = request.app['ADDRESS_INDEX_EPOCH']
+        url = f'{ai_svc_url}/addresses/uprn/{uprn}?epoch={ai_epoch}'
         return await self._make_request(request,
                                         'GET',
                                         url,
