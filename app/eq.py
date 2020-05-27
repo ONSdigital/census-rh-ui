@@ -73,20 +73,17 @@ class EqPayloadConstructor(object):
         try:
             self._uprn = case['address']['uprn']
         except KeyError:
-            raise InvalidEqPayLoad(
-                f'Could not retrieve address uprn from case JSON ')
+            raise InvalidEqPayLoad('Could not retrieve address uprn from case JSON')
 
         try:
             self._region = case['region'][0]
         except KeyError:
-            raise InvalidEqPayLoad(
-                f'Could not retrieve region from case JSON ')
+            raise InvalidEqPayLoad('Could not retrieve region from case JSON')
 
         try:
             self._form_type = case['formType']
         except KeyError:
-            raise InvalidEqPayLoad(
-                f'Could not retrieve formType from case JSON ')
+            raise InvalidEqPayLoad('Could not retrieve formType from case JSON')
 
     async def build(self):
         """__init__ is not a coroutine function, so I/O needs to go here"""
@@ -157,7 +154,6 @@ class EqPayloadConstructor(object):
 
     @staticmethod
     def convert_region_code(case_region):
-        region_value = ''
         if case_region == 'N':
             region_value = 'GB-NIR'
         elif case_region == 'W':

@@ -99,7 +99,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         url,
-                                        self._handle_response,
                                         auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
@@ -109,7 +108,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         url,
-                                        self._handle_response,
                                         auth=request.app['ADDRESS_INDEX_SVC_AUTH'],
                                         return_json=True)
 
@@ -118,7 +116,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         f'{rhsvc_url}/cases/uprn/{uprn}',
-                                        self._handle_response,
                                         return_json=True)
 
     async def get_fulfilment(self, request, case_type, region,
@@ -129,7 +126,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'GET',
                                         url,
-                                        self._handle_response,
                                         return_json=True)
 
     async def request_fulfilment(self, request, case_id, tel_no,
@@ -145,7 +141,6 @@ class RequestCommon(View):
         return await self._make_request(request,
                                         'POST',
                                         url,
-                                        self._handle_response,
                                         auth=request.app['RHSVC_AUTH'],
                                         json=fulfilment_json)
 
