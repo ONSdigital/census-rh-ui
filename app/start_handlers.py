@@ -248,8 +248,6 @@ class Start(StartCommon):
         except KeyError:
             raise InvalidEqPayLoad('Could not retrieve address details')
 
-        # SOMEHOW NEED TO MAP ADDRESS DETAILS TO ATTRIBUTES SO CAN BE DISPLAYED
-
         logger.debug('address confirmation displayed',
                      client_ip=request['client_ip'])
         session = await get_session(request)
