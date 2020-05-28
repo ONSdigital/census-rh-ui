@@ -420,10 +420,10 @@ class CommonConfirmAddress(CommonCommon):
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'], status_code=ex.status)
+                                    client_ip=request['client_ip'], status_code=ex.status)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'], status_code=ex.status)
+                                    client_ip=request['client_ip'], status_code=ex.status)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
                                      client_ip=request['client_ip'], status_code=ex.status)

@@ -1,5 +1,4 @@
 import aiohttp_jinja2
-import json
 
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
@@ -7,22 +6,11 @@ from aiohttp_session import get_session
 from datetime import datetime, timezone
 from structlog import get_logger
 
-from . import (ADDRESS_CHECK_MSG,
-               MOBILE_CHECK_MSG,
-               ADDRESS_SELECT_CHECK_MSG,
-               ADDRESS_CHECK_MSG_CY,
-               MOBILE_CHECK_MSG_CY,
-               ADDRESS_SELECT_CHECK_MSG_CY)
+from . import (MOBILE_CHECK_MSG,
+               MOBILE_CHECK_MSG_CY)
 
 from .flash import flash
-from .utils import View, \
-    ProcessPostcode, \
-    ProcessMobileNumber, \
-    InvalidDataError, \
-    InvalidDataErrorWelsh, \
-    FlashMessage, \
-    AddressIndex, \
-    RHService
+from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
