@@ -127,6 +127,12 @@ class ProcessPostcode:
 
         postcode = postcode.upper()
 
+        if len(postcode) == 0:
+            if locale == 'cy':
+                raise InvalidDataErrorWelsh('You have not entered a postcode')
+            else:
+                raise InvalidDataError('You have not entered a postcode')
+
         if not postcode.isalnum():
             if locale == 'cy':
                 raise InvalidDataErrorWelsh('The postcode must not contain symbols')
