@@ -342,9 +342,11 @@ class RHTestCase(AioHTTPTestCase):
         self.nisra_logo = '/img/nisra-logo-en.svg'
 
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
+        # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
+        # TODO: add welsh translation
         self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
 
         self.content_common_select_address_title_en = 'Select your address'
@@ -361,24 +363,32 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_value_yes_en = 'Yes, this address is correct'
         self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
+        # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        # TODO: add welsh translation
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        # TODO: add welsh translation
         self.content_common_confirm_address_value_yes_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        # TODO: add welsh translation
         self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
+        # TODO: add welsh translation
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Add or change an address'
+        # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_title_cy = \
             'Add or change an address'
         self.content_common_call_contact_centre_address_not_found_text_en = \
             'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
             'it may not be registered on our system.'
+        # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_text_cy = \
             'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
             'it may not be registered on our system.'
         self.content_common_call_contact_centre_address_linking_en = \
             'There is an issue linking your address via the website.'
+        # TODO: add welsh translation
         self.content_common_call_contact_centre_address_linking_cy = \
             'There is an issue linking your address via the website.'
 
@@ -948,6 +958,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_enter_address_secondary_en = \
             'To request an access code, we need your address.'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
+        # TODO: add welsh translation
         self.content_request_enter_address_secondary_cy = \
             'To request an access code, we need your address.'
 
@@ -969,6 +980,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
+        # TODO: add welsh translation
         self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
 
         self.content_request_timeout_error_en = 're-enter your postcode'
@@ -1065,12 +1077,15 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
         self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode?'
+        # TODO: add welsh translation
         self.content_start_unlinked_enter_address_question_title_cy = 'Beth yw eich cod post?'
 
         self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
+        # TODO: add welsh translation
         self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
         self.content_start_unlinked_address_has_been_linked_secondary_en = \
             'You are now ready to start your Census questions'
+        # TODO: add welsh translation
         self.content_start_unlinked_address_has_been_linked_secondary_cy = \
             'You are now ready to start your Census questions'
 

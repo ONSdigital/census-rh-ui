@@ -88,6 +88,7 @@ class CommonAddressInScotland(CommonCommon):
         user_journey = request.match_info['user_journey']
 
         if display_region == 'cy':
+            # TODO: add welsh translation
             page_title = 'This address is not part of the census for England and Wales'
             locale = 'cy'
         else:
@@ -117,6 +118,7 @@ class CommonCallContactCentre(CommonCommon):
         error = request.match_info['error']
 
         if display_region == 'cy':
+            # TODO: add welsh translation
             page_title = 'Call Census Customer Contact Centre'
             locale = 'cy'
         else:

@@ -645,6 +645,7 @@ class StartAddressHasBeenLinked(StartCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
+            # TODO: add welsh translation
             page_title = 'Your address has been linked to your code'
             locale = 'cy'
         else:
