@@ -1,11 +1,7 @@
 import string
 import re
 import json
-import aiohttp
 
-from aiohttp.client_exceptions import (ClientConnectionError,
-                                       ClientConnectorError,
-                                       ClientResponseError)
 from .exceptions import InactiveCaseError
 from .exceptions import InvalidEqPayLoad
 from aiohttp.web import HTTPFound

@@ -35,7 +35,7 @@ class CommonCommon(View):
         self.common_check_session(request, user_journey, sub_user_journey, display_region)
         session = await get_session(request)
 
-        if session['attributes'] != {}:
+        if session['attributes']:
             attributes = session['attributes']
         else:
             raise HTTPFound(
@@ -45,10 +45,12 @@ class CommonCommon(View):
         return attributes
 
 
-# Route to render a Timeout page that can be triggered during start/unlinked journey and all requests journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/timeout/')
 class CommonTimeout(CommonCommon):
+    """
+    Route to render a Timeout page that can be triggered during start/unlinked journey and all requests journeys
+    """
     @aiohttp_jinja2.template('common-timeout.html')
     async def get(self, request):
         self.setup_request(request)
@@ -74,9 +76,11 @@ class CommonTimeout(CommonCommon):
         }
 
 
-# Route to render an 'Address in Scotland' page during address lookups
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/address-in-scotland/')
 class CommonAddressInScotland(CommonCommon):
+    """
+    Route to render an 'Address in Scotland' page during address lookups
+    """
     @aiohttp_jinja2.template('common-address-in-scotland.html')
     async def get(self, request):
         self.setup_request(request)
@@ -100,9 +104,11 @@ class CommonAddressInScotland(CommonCommon):
         }
 
 
-# Common route to render a 'Call the Contact Centre' page from any journey
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/call-contact-centre/{error}')
 class CommonCallContactCentre(CommonCommon):
+    """
+    Common route to render a 'Call the Contact Centre' page from any journey
+    """
     @aiohttp_jinja2.template('common-contact-centre.html')
     async def get(self, request):
         self.setup_request(request)
@@ -128,10 +134,12 @@ class CommonCallContactCentre(CommonCommon):
         }
 
 
-# Common route to enable address entry via postcode from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/enter-address/')
 class CommonEnterAddress(CommonCommon):
+    """
+    Common route to enable address entry via postcode from start and request journeys
+    """
     @aiohttp_jinja2.template('common-enter-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -208,10 +216,12 @@ class CommonEnterAddress(CommonCommon):
             ))
 
 
-# Common route to enable address selection from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/select-address/')
 class CommonSelectAddress(CommonCommon):
+    """
+    Common route to enable address selection from start and request journeys
+    """
     @aiohttp_jinja2.template('common-select-address.html')
     async def get(self, request):
         self.setup_request(request)
@@ -302,10 +312,12 @@ class CommonSelectAddress(CommonCommon):
             ))
 
 
-# Common route to enable address confirmation from start and request journeys
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/confirm-address/')
 class CommonConfirmAddress(CommonCommon):
+    """
+    Common route to enable address confirmation from start and request journeys
+    """
     @aiohttp_jinja2.template('common-confirm-address.html')
     async def get(self, request):
         self.setup_request(request)

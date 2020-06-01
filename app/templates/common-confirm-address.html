@@ -71,9 +71,9 @@
 
     <p class="rh-address-display">
         {{ addressLine1 }}<br>
-        {% if addressLine2 !='' %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 !='' %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName !='' %}{{ townName }}<br>{% endif %}
+        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
+        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
+        {% if townName %}{{ townName }}<br>{% endif %}
         {{ postcode }}
     </p>
 
