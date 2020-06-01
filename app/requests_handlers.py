@@ -3,14 +3,13 @@ import aiohttp_jinja2
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
-from datetime import datetime, timezone
 from structlog import get_logger
 
 from . import (MOBILE_CHECK_MSG,
                MOBILE_CHECK_MSG_CY)
 
 from .flash import flash
-from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
+from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, RHService
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -43,32 +42,6 @@ class RequestCommon(View):
                     request_type=request_type, display_region=display_region))
 
         return attributes
-
-    async def get_fulfilment(self, request, case_type, region,
-                             delivery_channel, product_group, individual):
-        rhsvc_url = request.app['RHSVC_URL']
-        url = f'{rhsvc_url}/fulfilments?caseType={case_type}&region={region}&deliveryChannel={delivery_channel}' \
-              f'&productGroup={product_group}&individual={individual}'
-        return await self._make_request(request,
-                                        'GET',
-                                        url,
-                                        return_json=True)
-
-    async def request_fulfilment(self, request, case_id, tel_no,
-                                 fulfilment_code):
-        rhsvc_url = request.app['RHSVC_URL']
-        fulfilment_json = {
-            'caseId': case_id,
-            'telNo': tel_no,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
-        }
-        url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
-        return await self._make_request(request,
-                                        'POST',
-                                        url,
-                                        auth=request.app['RHSVC_AUTH'],
-                                        json=fulfilment_json)
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -263,7 +236,7 @@ class RequestCodeConfirmMobile(RequestCommon):
                 fulfilment_language = 'eng'
 
             try:
-                available_fulfilments = await self.get_fulfilment(
+                available_fulfilments = await RHService.get_fulfilment(
                     request, fulfilment_case_type, attributes['region'], 'SMS', 'UAC', fulfilment_individual)
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
@@ -275,10 +248,10 @@ class RequestCodeConfirmMobile(RequestCommon):
                         'fulfilmentCode']
 
                 try:
-                    await self.request_fulfilment(request,
-                                                  attributes['case_id'],
-                                                  attributes['mobile_number'],
-                                                  attributes['fulfilmentCode'])
+                    await RHService.request_fulfilment(request,
+                                                       attributes['case_id'],
+                                                       attributes['mobile_number'],
+                                                       attributes['fulfilmentCode'])
                 except (KeyError, ClientResponseError) as ex:
                     raise ex
 

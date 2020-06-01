@@ -5,6 +5,7 @@ import json
 from .exceptions import InactiveCaseError
 from .exceptions import InvalidEqPayLoad
 from aiohttp.web import HTTPFound
+from datetime import datetime, timezone
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
@@ -315,3 +316,64 @@ class RHService(View):
                                         auth=request.app['RHSVC_AUTH'],
                                         json=address_json,
                                         return_json=True)
+
+    @staticmethod
+    async def get_fulfilment(request, case_type, region,
+                             delivery_channel, product_group, individual):
+        rhsvc_url = request.app['RHSVC_URL']
+        url = f'{rhsvc_url}/fulfilments?caseType={case_type}&region={region}&deliveryChannel={delivery_channel}' \
+              f'&productGroup={product_group}&individual={individual}'
+        return await View._make_request(request,
+                                        'GET',
+                                        url,
+                                        return_json=True)
+
+    @staticmethod
+    async def request_fulfilment(request, case_id, tel_no,
+                                 fulfilment_code):
+        rhsvc_url = request.app['RHSVC_URL']
+        fulfilment_json = {
+            'caseId': case_id,
+            'telNo': tel_no,
+            'fulfilmentCode': fulfilment_code,
+            'dateTime': datetime.now(timezone.utc).isoformat()
+        }
+        url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
+        return await View._make_request(request,
+                                        'POST',
+                                        url,
+                                        auth=request.app['RHSVC_AUTH'],
+                                        json=fulfilment_json)
+
+    @staticmethod
+    async def get_uac_details(request):
+        uac_hash = request['uac_hash']
+        logger.info('making get request for uac',
+                    uac_hash=uac_hash,
+                    client_ip=request['client_ip'])
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'GET',
+                                        f'{rhsvc_url}/uacs/{uac_hash}',
+                                        auth=request.app['RHSVC_AUTH'],
+                                        return_json=True)
+
+    @staticmethod
+    async def put_modify_address(request, case, address):
+        rhsvc_url = request.app['RHSVC_URL']
+        rhsvc_auth = request.app['RHSVC_AUTH']
+        case_json = {
+            'caseId': case['caseId'],
+            'uprn': case['address']['uprn'],
+            'addressLine1': address['addressLine1'],
+            'addressLine2': address['addressLine2'],
+            'addressLine3': address['addressLine3'],
+            'townName': address['townName'],
+            'postcode': address['postcode']
+        }
+        return await View._make_request(request,
+                                        'PUT',
+                                        f'{rhsvc_url}/cases/' +
+                                        case['caseId'] + '/address',
+                                        auth=rhsvc_auth,
+                                        json=case_json)

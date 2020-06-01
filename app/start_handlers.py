@@ -17,7 +17,7 @@ from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-from .utils import View
+from .utils import View, RHService
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -54,37 +54,6 @@ class StartCommon(View):
             raise TypeError
 
         return get_sha256_hash(combined)
-
-    async def get_uac_details(self, request):
-        uac_hash = request['uac_hash']
-        logger.info('making get request for uac',
-                    uac_hash=uac_hash,
-                    client_ip=request['client_ip'])
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'GET',
-                                        f'{rhsvc_url}/uacs/{uac_hash}',
-                                        auth=request.app['RHSVC_AUTH'],
-                                        return_json=True)
-
-    async def put_modify_address(self, request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await self._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        json=case_json)
 
     @staticmethod
     def get_address_details(data: dict, attributes: dict):
@@ -178,7 +147,7 @@ class Start(StartCommon):
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
         try:
-            uac_json = await self.get_uac_details(request)
+            uac_json = await RHService.get_uac_details(request)
         except ClientResponseError as ex:
             if ex.status == 404:
                 logger.warn('attempt to use an invalid access code',
@@ -468,7 +437,7 @@ class StartModifyAddress(StartCommon):
         try:
             logger.info('raising address modification call',
                         client_ip=request['client_ip'])
-            await self.put_modify_address(request, session['case'], attributes)
+            await RHService.put_modify_address(request, session['case'], attributes)
         except ClientResponseError as ex:
             logger.error('error raising address modification call',
                          client_ip=request['client_ip'])

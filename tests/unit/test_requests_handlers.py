@@ -1529,9 +1529,9 @@ class TestRequestsHandlers(RHTestCase):
         ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn'
         ) as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment'
+            'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -1632,8 +1632,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -1734,8 +1734,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -1836,8 +1836,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -1938,8 +1938,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -2040,8 +2040,8 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-            'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, mock.patch(
-            'app.requests_handlers.RequestCommon.request_fulfilment'
+            'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment'
         ) as mocked_request_fulfilment:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -3757,7 +3757,7 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+                'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
 
@@ -3806,7 +3806,7 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+                'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
 
@@ -3855,7 +3855,7 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+                'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
 
@@ -3904,7 +3904,7 @@ class TestRequestsHandlers(RHTestCase):
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn') as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment') as mocked_get_fulfilment, aioresponses(
+                'app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
 
@@ -3956,7 +3956,7 @@ class TestRequestsHandlers(RHTestCase):
         ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn'
         ) as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment'
+                'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
@@ -4009,7 +4009,7 @@ class TestRequestsHandlers(RHTestCase):
         ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_cases_by_uprn'
         ) as mocked_get_cases_by_uprn, mock.patch(
-                'app.requests_handlers.RequestCommon.get_fulfilment'
+                'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
