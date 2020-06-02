@@ -13,6 +13,20 @@ class TestUtils(RHTestCase):
         ProcessPostcode.validate_postcode(postcode, locale)
         # Nothing happens
 
+    def test_validate_postcode_empty(self):
+        postcode = ''
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'You have not entered a postcode',
+            str(cm.exception)
+        )
+        # With the correct message
+
     def test_validate_postcode_not_alphanumeric(self):
         postcode = '?<>:{}'
         locale = 'en'
@@ -76,6 +90,20 @@ class TestUtils(RHTestCase):
         # When validate_postcode is called
         ProcessPostcode.validate_postcode(postcode, locale)
         # Nothing happens
+
+    def test_validate_postcode_empty_cy(self):
+        postcode = ''
+        locale = 'cy'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataErrorWelsh) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'You have not entered a postcode',
+            str(cm.exception)
+        )
+        # With the correct message
 
     def test_validate_postcode_not_alphanumeric_cy(self):
         postcode = '?<>:{}'

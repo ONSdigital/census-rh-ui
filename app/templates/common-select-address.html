@@ -8,7 +8,7 @@
     {% set contact_us_link = domain_url_en + '/contact-us/' %}
 {% endif %}
 
-{% set request_code_link = url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region) %}
+{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey) %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -20,7 +20,7 @@
 {% set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestCodeSelectAddress:post', request_type=request_type, display_region=display_region)
+        'action': url('CommonSelectAddress:post', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey)
     }
 } %}
 
@@ -28,7 +28,7 @@
 
 {% block main %}
 
-    {% if total_matches == 0: %}
+        {% if total_matches == 0: %}
 
         <h1>{{ _('We cannot find your address') }}</h1>
 
@@ -46,7 +46,7 @@
             {% if 'address-select' in field_messages_dict %}
                 {{
                     onsRadios({
-                        'name': 'request-address-select',
+                        'name': 'form-select-address',
                         'or': 'Or',
                         'radios': addresses,
                         'error': {
@@ -57,7 +57,7 @@
             {% else %}
                 {{
                     onsRadios({
-                        'name': 'request-address-select',
+                        'name': 'form-select-address',
                         'or': 'Or',
                         'radios': addresses
                     })
@@ -74,5 +74,6 @@
         }}
 
     {% endif %}
+
 
 {% endblock %}

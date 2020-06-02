@@ -1,36 +1,27 @@
 {
     "apiVersion": "1.0.0-SNAPSHOT",
-    "dataVersion": "39",
-    "errors": [],
+    "dataVersion": "72",
     "response": {
         "address": {
-            "classificationCode": "RD",
-            "confidenceScore": 1,
-            "formattedAddress": "34 Gate Reach, Exeter, EX2 6GA",
-            "formattedAddressNag": "34 Gate Reach, Exeter, EX2 6GA",
-            "formattedAddressNisra": "",
-            "formattedAddressPaf": "34, Gate Reach, Exeter, EX2 6GA",
-            "fromSource": "EW",
-            "geo": {
-                "easting": 293455,
-                "latitude": 50.705944,
-                "longitude": -3.5102394,
-                "northing": 90679
-            },
-            "lpiLogicalStatus": "1",
-            "parentUprn": "0",
-            "underlyingScore": 1,
-            "uprn": "10023122476",
-            "welshFormattedAddressNag": "",
-            "welshFormattedAddressPaf": "34, Gate Reach, Exeter, EX2 6GA",
+            "uprn": "10023122451",
+            "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
+            "addressLine1": "1 Gate Reach",
+            "addressLine2": "",
+            "addressLine3": "",
+            "townName": "Exeter",
+            "postcode": "EX2 6GA",
+            "foundAddressType": "PAF",
+            "censusAddressType": "HH",
+            "censusEstabType": "Household",
             "countryCode": "E"
         },
-        "epoch": "",
+        "addressType": "PAF",
         "historical": true,
-        "verbose": false
+        "epoch": ""
     },
     "status": {
         "code": 200,
         "message": "Ok"
-    }
+    },
+    "errors": []
 }

@@ -1,8 +1,6 @@
 import aiohttp_jinja2
 import re
-
-from sdc.crypto.encrypter import encrypt
-from .eq import EqPayloadConstructor
+import uuid
 
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
@@ -14,13 +12,12 @@ from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
                ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY)
-from .exceptions import InactiveCaseError
+
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
 from .security import remember, check_permission, forget, get_sha256_hash
 
-# from .handlers import View
-from .utils import View
+from .utils import View, RHService
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -58,79 +55,10 @@ class StartCommon(View):
 
         return get_sha256_hash(combined)
 
-    async def call_questionnaire(self, request, case, attributes, app,
-                                 adlocation):
-        eq_payload = await EqPayloadConstructor(case, attributes, app,
-                                                adlocation).build()
-
-        token = encrypt(eq_payload,
-                        key_store=app['key_store'],
-                        key_purpose='authentication')
-
-        await self.post_surveylaunched(request, case, adlocation)
-
-        logger.info('redirecting to eq', client_ip=request['client_ip'])
-        eq_url = app['EQ_URL']
-        raise HTTPFound(f'{eq_url}/session?token={token}')
-
-    async def post_surveylaunched(self, request, case, adlocation):
-        if not adlocation:
-            adlocation = ''
-        launch_json = {
-            'questionnaireId': case['questionnaireId'],
-            'caseId': case['caseId'],
-            'agentId': adlocation
-        }
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'POST',
-                                        f'{rhsvc_url}/surveyLaunched',
-                                        auth=request.app['RHSVC_AUTH'],
-                                        json=launch_json)
-
     @staticmethod
-    def validate_case(case_json):
-        if not case_json.get('active', False):
-            raise InactiveCaseError(case_json.get('caseType'))
-        if not case_json.get('caseStatus', None) == 'OK':
-            raise InvalidEqPayLoad('CaseStatus is not OK')
-
-    async def get_uac_details(self, request):
-        uac_hash = request['uac_hash']
-        logger.info('making get request for uac',
-                    uac_hash=uac_hash,
-                    client_ip=request['client_ip'])
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'GET',
-                                        f'{rhsvc_url}/uacs/{uac_hash}',
-                                        auth=request.app['RHSVC_AUTH'],
-                                        return_json=True)
-
-    async def put_modify_address(self, request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await self._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        json=case_json)
-
-    @staticmethod
-    def get_address_details(request, data: dict, attributes: dict):
+    def get_address_details(data: dict, attributes: dict):
         """
         Replace any changed address details in attributes to be sent to EQ
-        :param request:
         :param data: Changed address details
         :param attributes: attributes to be sent
         :return: attributes with changed address
@@ -219,7 +147,7 @@ class Start(StartCommon):
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
         try:
-            uac_json = await self.get_uac_details(request)
+            uac_json = await RHService.get_uac_details(request)
         except ClientResponseError as ex:
             if ex.status == 404:
                 logger.warn('attempt to use an invalid access code',
@@ -239,7 +167,23 @@ class Start(StartCommon):
             else:
                 raise ex
 
-        await remember(uac_json['caseId'], request)
+        logger.info('logging uac_json', uac_json=uac_json)
+
+        if uac_json['caseId'] is None:
+            logger.info('unlinked case', client_ip=request['client_ip'])
+            session = await get_session(request)
+            session['attributes'] = {}
+            session['case'] = uac_json
+            if data.get('adlocation'):
+                session['adlocation'] = data.get('adlocation')
+            await remember(str(uuid.uuid4()), request)
+            raise HTTPFound(request.app.router['CommonEnterAddress:get'].url_for(
+                display_region=display_region,
+                user_journey='start',
+                sub_user_journey='unlinked'
+            ))
+        else:
+            await remember(uac_json['caseId'], request)
 
         self.validate_case(uac_json)
 
@@ -474,7 +418,7 @@ class StartModifyAddress(StartCommon):
             raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
 
         try:
-            attributes = StartCommon.get_address_details(request, data,
+            attributes = StartCommon.get_address_details(data,
                                                          attributes)
         except KeyError:
             logger.info('address-line-1 has no value', client_ip=request['client_ip'])
@@ -493,7 +437,7 @@ class StartModifyAddress(StartCommon):
         try:
             logger.info('raising address modification call',
                         client_ip=request['client_ip'])
-            await self.put_modify_address(request, session['case'], attributes)
+            await RHService.put_modify_address(request, session['case'], attributes)
         except ClientResponseError as ex:
             logger.error('error raising address modification call',
                          client_ip=request['client_ip'])
@@ -517,7 +461,7 @@ class StartModifyAddress(StartCommon):
 
 
 @start_routes.view('/ni/start/language-options/')
-class StartNILanguageOptions(Start):
+class StartNILanguageOptions(StartCommon):
     @aiohttp_jinja2.template('start-ni-language-options.html')
     async def get(self, request):
         """
@@ -579,7 +523,7 @@ class StartNILanguageOptions(Start):
 
 
 @start_routes.view('/ni/start/select-language/')
-class StartNISelectLanguage(Start):
+class StartNISelectLanguage(StartCommon):
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def get(self, request):
         """
@@ -644,7 +588,7 @@ class StartNISelectLanguage(Start):
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/save-and-exit/')
-class StartSaveAndExit(View):
+class StartSaveAndExit(StartCommon):
     @aiohttp_jinja2.template('save-and-exit.html')
     async def get(self, request):
         self.setup_request(request)
@@ -661,10 +605,59 @@ class StartSaveAndExit(View):
         }
 
 
-@start_routes.view('/start/timeout/')
-class UACTimeout(View):
-    @aiohttp_jinja2.template('timeout.html')
+@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
+class StartAddressHasBeenLinked(StartCommon):
+    @aiohttp_jinja2.template('start-unlinked-linked.html')
     async def get(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'start/timeout')
-        return {}
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'Your address has been linked to your code'
+            locale = 'cy'
+        else:
+            page_title = 'Your address has been linked to your code'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale
+        }
+
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+            case = session['case']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        if case['region'][0] == 'N':
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
+        else:
+            attributes['language'] = locale
+            attributes['display_region'] = display_region
+            await self.call_questionnaire(request, case,
+                                          attributes, request.app,
+                                          session.get('adlocation'))

@@ -9,11 +9,11 @@ from . import RHTestCase
 class TestEq(RHTestCase):
     def test_create_eq_constructor(self):
         self.assertIsInstance(
-            EqPayloadConstructor(self.uac_json_en, self.attributes_en, self.app,
+            EqPayloadConstructor(self.uac_json_e, self.attributes_en, self.app,
                                  None), EqPayloadConstructor)
 
     def test_create_eq_constructor_missing_case_id(self):
-        uac_json = self.uac_json_en.copy()
+        uac_json = self.uac_json_e.copy()
         del uac_json['caseId']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
@@ -21,7 +21,7 @@ class TestEq(RHTestCase):
         self.assertIn('No case id in supplied case JSON', ex.exception.message)
 
     def test_create_eq_constructor_missing_ce_id(self):
-        uac_json = self.uac_json_en.copy()
+        uac_json = self.uac_json_e.copy()
         del uac_json['collectionExerciseId']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
@@ -30,7 +30,7 @@ class TestEq(RHTestCase):
                       ex.exception.message)
 
     def test_create_eq_constructor_missing_questionnaire_id(self):
-        uac_json = self.uac_json_en.copy()
+        uac_json = self.uac_json_e.copy()
         del uac_json['questionnaireId']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
@@ -39,7 +39,7 @@ class TestEq(RHTestCase):
                           ex.exception.message)
 
     def test_create_eq_constructor_missing_case_type(self):
-        uac_json = self.uac_json_en.copy()
+        uac_json = self.uac_json_e.copy()
         del uac_json['caseType']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
@@ -48,7 +48,7 @@ class TestEq(RHTestCase):
                           ex.exception.message)
 
     def test_create_eq_constructor_missing_uprn(self):
-        uac_json = self.uac_json_en.copy()
+        uac_json = self.uac_json_e.copy()
         del uac_json['address']['uprn']
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
@@ -78,7 +78,7 @@ class TestEq(RHTestCase):
             mocked_uuid4.return_value = self.jti
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
-                payload = await EqPayloadConstructor(self.uac_json_en,
+                payload = await EqPayloadConstructor(self.uac_json_e,
                                                      self.attributes_en,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
@@ -112,7 +112,7 @@ class TestEq(RHTestCase):
             mocked_uuid4.return_value = self.jti
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
-                payload = await EqPayloadConstructor(self.uac_json_cy,
+                payload = await EqPayloadConstructor(self.uac_json_w,
                                                      self.attributes_cy,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
@@ -146,7 +146,7 @@ class TestEq(RHTestCase):
             mocked_uuid4.return_value = self.jti
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
-                payload = await EqPayloadConstructor(self.uac_json_ni,
+                payload = await EqPayloadConstructor(self.uac_json_n,
                                                      self.attributes_ni,
                                                      self.app, None).build()
             self.assertLogEvent(cm,
@@ -182,7 +182,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json_en, self.attributes_en, self.app,
+                    self.uac_json_e, self.attributes_en, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
                                 'creating payload for jwt',
@@ -217,7 +217,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json_cy, self.attributes_cy, self.app,
+                    self.uac_json_w, self.attributes_cy, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
                                 'creating payload for jwt',
@@ -252,7 +252,7 @@ class TestEq(RHTestCase):
 
             with self.assertLogs('respondent-home', 'DEBUG') as cm:
                 payload = await EqPayloadConstructor(
-                    self.uac_json_ni, self.attributes_ni, self.app,
+                    self.uac_json_n, self.attributes_ni, self.app,
                     eq_payload['user_id']).build()
             self.assertLogEvent(cm,
                                 'creating payload for jwt',
@@ -269,7 +269,7 @@ class TestEq(RHTestCase):
         from app import eq  # NB: local import to avoid overwriting the patched version for some tests
 
         with self.assertRaises(InvalidEqPayLoad) as ex:
-            await eq.EqPayloadConstructor(self.uac_json_en, None, self.app,
+            await eq.EqPayloadConstructor(self.uac_json_e, None, self.app,
                                           None).build()
         self.assertIn('Attributes is empty', ex.exception.message)
 
@@ -279,7 +279,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.build_display_address(
-            self.uac_json_en['address'])
+            self.uac_json_e['address'])
         self.assertEqual(result, eq_payload['display_address'])
 
     def test_build_display_address_cy(self):
@@ -288,7 +288,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.build_display_address(
-            self.uac_json_en['address'])
+            self.uac_json_e['address'])
         self.assertEqual(result, eq_payload['display_address'])
 
     def test_build_display_address_ni(self):
@@ -297,7 +297,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.build_display_address(
-            self.uac_json_en['address'])
+            self.uac_json_e['address'])
         self.assertEqual(result, eq_payload['display_address'])
 
     def test_convert_region_code_e(self):
@@ -306,7 +306,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.convert_region_code(
-            self.uac_json_en['region'])
+            self.uac_json_e['region'])
         self.assertEqual(result, eq_payload['region_code'])
 
     def test_convert_region_code_w(self):
@@ -315,7 +315,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.convert_region_code(
-            self.uac_json_cy['region'])
+            self.uac_json_w['region'])
         self.assertEqual(result, eq_payload['region_code'])
 
     def test_convert_region_code_n(self):
@@ -324,7 +324,7 @@ class TestEq(RHTestCase):
         from app import eq
 
         result = eq.EqPayloadConstructor.convert_region_code(
-            self.uac_json_ni['region'])
+            self.uac_json_n['region'])
         self.assertEqual(result, eq_payload['region_code'])
 
     def test_build_display_address_raises(self):

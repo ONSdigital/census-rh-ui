@@ -1,0 +1,20 @@
+{
+	"uacHash": "54598f02da027026a584fd0bc7176de55a3e6472f4b3c74f68d0ae7be206e17c",
+	"active": "True",
+	"caseStatus": "OK",
+	"questionnaireId": "11100000009",
+	"caseType": "HH",
+	"formType": "H",
+	"region": "W",
+	"caseId": "e37b0d05-3643-445e-8e71-73f7df3ff95e",
+	"collectionExerciseId": "22684ede-7d5f-4f53-9069-2398055c61b2",
+	"handDelivery": false,
+	"address": {
+		"addressLine1": "1 Gate Reach",
+		"addressLine2": "",
+		"addressLine3": "",
+		"townName": "Exeter",
+		"postcode": "EX2 6GA",
+		"uprn": "10023122451"
+	}
+}

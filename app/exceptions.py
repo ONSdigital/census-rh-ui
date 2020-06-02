@@ -20,3 +20,16 @@ class ExerciseClosedError(Exception):
     def __init__(self, collection_exercise_id):
         super().__init__()
         self.collection_exercise_id = collection_exercise_id
+
+
+class InvalidDataError(Exception):
+    """ Raised when user supplies invalid data in form fields (on english language page) """
+    def __init__(self, message=None):
+        super().__init__(message or 'The supplied value is invalid')
+
+
+class InvalidDataErrorWelsh(Exception):
+    """ Raised when user supplies invalid data in form fields (on welsh language page) """
+    def __init__(self, message=None):
+        # TODO: Add Welsh Translation
+        super().__init__(message or 'WELSH The supplied value is invalid')

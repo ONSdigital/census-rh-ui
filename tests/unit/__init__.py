@@ -112,18 +112,18 @@ def skip_encrypt(func, *args, **kwargs):
     :return: new method with patching functions attached as attributes
     """
     async def _override_sdc_encrypt(*_):
-        from app import start_handlers
+        from app import utils
 
         def encrypt(payload, **_):
             return json.dumps(payload)
 
-        start_handlers._bk_encrypt = start_handlers.encrypt
-        start_handlers.encrypt = encrypt
+        utils._bk_encrypt = utils.encrypt
+        utils.encrypt = encrypt
 
     async def _reset_sdc_encrypt(*_):
-        from app import start_handlers
+        from app import utils
 
-        start_handlers.encrypt = start_handlers._bk_encrypt
+        utils.encrypt = utils._bk_encrypt
 
     @functools.wraps(func, *args, **kwargs)
     def new_func(self, *inner_args, **inner_kwargs):
@@ -236,14 +236,14 @@ class RHTestCase(AioHTTPTestCase):
         # This section gets ugly if YAPF reformats it
         # yapf: disable
         super().setUp()  # NB: setUp the server first so we can use self.app
-        with open('tests/test_data/rhsvc/uac_en.json') as fp:
-            self.uac_json_en = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_e.json') as fp:
+            self.uac_json_e = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac-cy.json') as fp:
-            self.uac_json_cy = json.load(fp)
+        with open('tests/test_data/rhsvc/uac-w.json') as fp:
+            self.uac_json_w = json.load(fp)
 
-        with open('tests/test_data/rhsvc/uac-ni.json') as fp:
-            self.uac_json_ni = json.load(fp)
+        with open('tests/test_data/rhsvc/uac-n.json') as fp:
+            self.uac_json_n = json.load(fp)
 
         # URLs used in later statements
         url_path_prefix = self.app['URL_PATH_PREFIX']
@@ -253,6 +253,168 @@ class RHTestCase(AioHTTPTestCase):
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
 
         self.get_info = self.app.router['Info:get'].url_for()
+
+        # Common
+
+        # Test Data
+
+        self.postcode_valid = 'EX2 6GA'
+        self.postcode_invalid = 'ZZ99 9ZZ'
+        self.postcode_no_results = 'GU34 6DU'
+
+        self.common_form_data_empty = {}
+
+        self.post_common_select_address_form_data_valid = \
+            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
+
+        self.post_common_select_address_form_data_not_listed_en = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
+        self.post_common_select_address_form_data_not_listed_cy = \
+            '{"uprn": "xxxx", "address": "I cannot find my address"}'
+
+        self.common_select_address_input_valid = {
+            'form-select-address': self.post_common_select_address_form_data_valid,
+            'action[save_continue]': '',
+        }
+
+        self.common_select_address_input_not_listed_en = {
+            'form-select-address': self.post_common_select_address_form_data_not_listed_en,
+            'action[save_continue]': '',
+        }
+
+        self.common_select_address_input_not_listed_cy = {
+            'form-select-address': self.post_common_select_address_form_data_not_listed_cy,
+            'action[save_continue]': '',
+        }
+
+        self.common_confirm_address_input_yes = {
+            'form-confirm-address': 'yes', 'action[save_continue]': ''
+        }
+
+        self.common_confirm_address_input_change = {
+            'form-confirm-address': 'change', 'action[save_continue]': ''
+        }
+
+        self.common_confirm_address_input_no = {
+            'form-confirm-address': 'no', 'action[save_continue]': ''
+        }
+
+        self.common_confirm_address_input_invalid = {
+            'form-confirm-address': 'invalid', 'action[save_continue]': ''
+        }
+
+        self.common_postcode_input_valid = {
+            'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_no_results = {
+            'form-enter-address-postcode': self.postcode_no_results, 'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_invalid = {
+            'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_no_results = f
+
+        with open('tests/test_data/address_index/postcode_results.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_postcode_results = f
+
+        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result = f
+
+        with open('tests/test_data/address_index/uprn_scotland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_scotland = f
+
+        # Content
+        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
+        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
+        self.nisra_logo = '/img/nisra-logo-en.svg'
+
+        self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
+
+        self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
+        # TODO: add welsh translation
+        self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+
+        self.content_common_select_address_title_en = 'Select your address'
+        self.content_common_select_address_error_en = 'Select an address'
+        self.content_common_select_address_value_en = '1 Gate Reach'
+        self.content_common_select_address_no_results_en = 'We cannot find your address'
+        self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
+        self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
+        self.content_common_select_address_value_cy = '1 Gate Reach'
+        self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+
+        self.content_common_confirm_address_title_en = 'Is this address correct?'
+        self.content_common_confirm_address_error_en = 'Check and confirm the address'
+        self.content_common_confirm_address_value_yes_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
+        self.content_common_confirm_address_value_no_en = 'No, search for address again'
+        # TODO: add welsh translation
+        self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        # TODO: add welsh translation
+        self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        # TODO: add welsh translation
+        self.content_common_confirm_address_value_yes_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        # TODO: add welsh translation
+        self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
+        # TODO: add welsh translation
+        self.content_common_confirm_address_value_no_cy = 'No, search for address again'
+
+        self.content_common_call_contact_centre_address_not_found_title_en = \
+            'Add or change an address'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_address_not_found_title_cy = \
+            'Add or change an address'
+        self.content_common_call_contact_centre_address_not_found_text_en = \
+            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
+            'it may not be registered on our system.'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_address_not_found_text_cy = \
+            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
+            'it may not be registered on our system.'
+        self.content_common_call_contact_centre_address_linking_en = \
+            'There is an issue linking your address via the website.'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_address_linking_cy = \
+            'There is an issue linking your address via the website.'
+
+        self.content_common_500_error_en = 'Sorry, something went wrong'
+        self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
+
+        self.content_common_timeout_en = 'Your session has timed out due to inactivity'
+        self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+
+        # End Common
+
+        # Start Journey
+
+        # Content
+
+        self.content_start_title_en = 'Start Census'
+        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
+        self.content_start_title_cy = "Dechrau\\\'r Cyfrifiad"
+        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi\\\'i argraffu ar y llythyr"
+
+        self.content_start_confirm_address_title_en = 'Is this address correct?'
+        self.content_start_confirm_address_option_en = 'Yes, this address is correct'
+        self.content_start_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_start_confirm_address_option_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+
+        # End Start Journey
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
@@ -297,29 +459,29 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
         self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
-        self.case_id = self.uac_json_en['caseId']
-        self.collection_exercise_id = self.uac_json_en['collectionExerciseId']
+        self.case_id = self.uac_json_e['caseId']
+        self.collection_exercise_id = self.uac_json_e['collectionExerciseId']
         self.eq_id = 'census'
         self.survey = 'CENSUS'
-        self.form_type = self.uac_json_en['formType']
+        self.form_type = self.uac_json_e['formType']
         self.jti = str(uuid.uuid4())
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = '2019'
         self.uac = 'w4nwwpphjjptp7fn'
-        self.uacHash = self.uac_json_en['uacHash']
-        self.uprn = self.uac_json_en['address']['uprn']
-        self.response_id = self.uac_json_en['questionnaireId']
-        self.questionnaire_id = self.uac_json_en['questionnaireId']
-        self.case_type = self.uac_json_en['caseType']
+        self.uacHash = self.uac_json_e['uacHash']
+        self.uprn = self.uac_json_e['address']['uprn']
+        self.response_id = self.uac_json_e['questionnaireId']
+        self.questionnaire_id = self.uac_json_e['questionnaireId']
+        self.case_type = self.uac_json_e['caseType']
         self.channel = 'rh'
         self.attributes_en = {
-            'addressLine1': self.uac_json_en['address']['addressLine1'],
-            'addressLine2': self.uac_json_en['address']['addressLine2'],
-            'addressLine3': self.uac_json_en['address']['addressLine3'],
-            'townName': self.uac_json_en['address']['townName'],
-            'postcode': self.uac_json_en['address']['postcode'],
-            'uprn': self.uac_json_en['address']['uprn'],
+            'addressLine1': self.uac_json_e['address']['addressLine1'],
+            'addressLine2': self.uac_json_e['address']['addressLine2'],
+            'addressLine3': self.uac_json_e['address']['addressLine3'],
+            'townName': self.uac_json_e['address']['townName'],
+            'postcode': self.uac_json_e['address']['postcode'],
+            'uprn': self.uac_json_e['address']['uprn'],
             'language': 'en',
             'display_region': 'en'
         }
@@ -346,7 +508,8 @@ class RHTestCase(AioHTTPTestCase):
             'ru_ref': self.uprn,
             'case_id': self.case_id,
             'language_code': 'en',
-            'display_address': self.uac_json_en['address']['addressLine1'] + ', ' + self.uac_json_en['address']['addressLine2'],
+            'display_address': self.uac_json_e['address']['addressLine1'] + ', '
+                               + self.uac_json_e['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
@@ -396,6 +559,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.rhsvc_cases_url = (
             f'{rh_svc_url}/cases/'
+        )
+
+        self.rhsvc_url_unlinked_uac = (
+            f'{rh_svc_url}/uacs/{self.uacHash}/link'
         )
 
         self.start_data_valid = {
@@ -452,11 +619,11 @@ class RHTestCase(AioHTTPTestCase):
         self.start_modify_address_data = {
             'caseId': self.case_id,
             'uprn': self.uprn,
-            'addressLine1': self.uac_json_en['address']['addressLine1'],
-            'addressLine2': self.uac_json_en['address']['addressLine2'],
-            'addressLine3': self.uac_json_en['address']['addressLine3'],
-            'townName': self.uac_json_en['address']['townName'],
-            'postcode': self.uac_json_en['address']['postcode']
+            'addressLine1': self.uac_json_e['address']['addressLine1'],
+            'addressLine2': self.uac_json_e['address']['addressLine2'],
+            'addressLine3': self.uac_json_e['address']['addressLine3'],
+            'townName': self.uac_json_e['address']['townName'],
+            'postcode': self.uac_json_e['address']['postcode']
             }
 
         self.start_ni_select_language_data_ul = {
@@ -503,265 +670,212 @@ class RHTestCase(AioHTTPTestCase):
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
-        self.addressindexsvc_url = f'{address_index_svc_url}/addresses/postcode/'
+        self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'
 
         self.get_requestcode_household_en = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='en')
+            request_type='household-code', display_region='en')
         self.get_requestcode_household_cy = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='cy')
+            request_type='household-code', display_region='cy')
         self.get_requestcode_household_ni = self.app.router['RequestCode:get'].url_for(
-            request_type='household', display_region='ni')
-        self.get_requestcode_enter_address_hh_en = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='ni')
+
+        self.get_request_code_enter_address_hh_en = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_enter_address_hh_cy = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='household', display_region='cy'
+        self.get_request_code_enter_address_hh_cy = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_enter_address_hh_ni = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='household', display_region='ni'
+        self.get_request_code_enter_address_hh_ni = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_enter_address_hh_en = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='household', display_region='en'
+        self.post_request_code_enter_address_hh_en = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_enter_address_hh_cy = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='household', display_region='cy'
+        self.post_request_code_enter_address_hh_cy = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_enter_address_hh_ni = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='household', display_region='ni'
+        self.post_request_code_enter_address_hh_ni = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='en'
+        self.post_request_code_select_address_hh_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='cy'
+        self.post_request_code_select_address_hh_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='household-code'
         )
-        self.get_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='household', display_region='ni'
+        self.post_request_code_select_address_hh_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_selectaddress_hh_en = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='en'
+
+        self.post_request_code_confirm_address_hh_en = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_selectaddress_hh_cy = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='cy'
+        self.post_request_code_confirm_address_hh_cy = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='household-code'
         )
-        self.post_requestcode_selectaddress_hh_ni = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='household', display_region='ni'
-        )
-        self.get_requestcode_address_confirmation_hh_en = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='household', display_region='en'
-        )
-        self.get_requestcode_address_confirmation_hh_cy = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='household', display_region='cy'
-        )
-        self.get_requestcode_address_confirmation_hh_ni = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='household', display_region='ni'
-        )
-        self.post_requestcode_address_confirmation_hh_en = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='household', display_region='en'
-        )
-        self.post_requestcode_address_confirmation_hh_cy = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='household', display_region='cy'
-        )
-        self.post_requestcode_address_confirmation_hh_ni = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='household', display_region='ni'
+        self.post_request_code_confirm_address_hh_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='household-code'
         )
 
         self.get_requestcode_individual_en = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_individual_cy = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_individual_ni = self.app.router['RequestCode:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
-        self.get_requestcode_enter_address_hi_en = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='individual', display_region='en'
+        self.get_request_code_enter_address_hi_en = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_enter_address_hi_cy = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='individual', display_region='cy'
+        self.get_request_code_enter_address_hi_cy = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_enter_address_hi_ni = self.app.router['RequestCodeEnterAddress:get'].url_for(
-            request_type='individual', display_region='ni'
+        self.get_request_code_enter_address_hi_ni = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.post_requestcode_enter_address_hi_en = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='individual', display_region='en'
+        self.post_request_code_enter_address_hi_en = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.post_requestcode_enter_address_hi_cy = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='individual', display_region='cy'
+        self.post_request_code_enter_address_hi_cy = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.post_requestcode_enter_address_hi_ni = self.app.router['RequestCodeEnterAddress:post'].url_for(
-            request_type='individual', display_region='ni'
+        self.post_request_code_enter_address_hi_ni = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='en'
+        self.post_request_code_select_address_hi_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='cy'
+        self.post_request_code_select_address_hi_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddress:get'].url_for(
-            request_type='individual', display_region='ni'
-        )
-        self.post_requestcode_selectaddress_hi_en = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='en'
-        )
-        self.post_requestcode_selectaddress_hi_cy = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='cy'
-        )
-        self.post_requestcode_selectaddress_hi_ni = self.app.router['RequestCodeSelectAddress:post'].url_for(
-            request_type='individual', display_region='ni'
+        self.post_request_code_select_address_hi_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
 
-        self.get_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='individual', display_region='en'
+        self.post_request_code_confirm_address_hi_en = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='individual', display_region='cy'
+        self.post_request_code_confirm_address_hi_cy = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
         )
-        self.get_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddress:get'].url_for(
-            request_type='individual', display_region='ni'
-        )
-        self.post_requestcode_address_confirmation_hi_en = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='individual', display_region='en'
-        )
-        self.post_requestcode_address_confirmation_hi_cy = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='individual', display_region='cy'
-        )
-        self.post_requestcode_address_confirmation_hi_ni = self.app.router['RequestCodeConfirmAddress:post'].url_for(
-            request_type='individual', display_region='ni'
+        self.post_request_code_confirm_address_hi_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
 
         self.get_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
         self.post_requestcode_entermobile_hh_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.post_requestcode_entermobile_hh_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.post_requestcode_entermobile_hh_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.post_requestcode_entermobile_hi_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.post_requestcode_entermobile_hi_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.post_requestcode_entermobile_hi_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
         self.post_requestcode_confirm_mobile_hh_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.post_requestcode_confirm_mobile_hh_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.post_requestcode_confirm_mobile_hh_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.post_requestcode_confirm_mobile_hi_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.post_requestcode_confirm_mobile_hi_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.post_requestcode_confirm_mobile_hi_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual', display_region='ni'
-        )
-
-        self.get_request_contact_centre_hh_en = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='en'
-        )
-        self.get_request_contact_centre_hh_cy = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='cy'
-        )
-        self.get_request_contact_centre_hh_ni = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='household', display_region='ni'
-        )
-        self.get_request_contact_centre_hi_en = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='en'
-        )
-        self.get_request_contact_centre_hi_cy = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='cy'
-        )
-        self.get_request_contact_centre_hi_ni = self.app.router['RequestContactCentre:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_codesent_hh_en = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_codesent_hh_cy = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_codesent_hh_ni = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_codesent_hi_en = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_codesent_hi_cy = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_codesent_hi_ni = self.app.router['RequestCodeCodeSent:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_requestcode_household_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='en'
+            request_type='household-code', display_region='en'
         )
         self.get_requestcode_household_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='cy'
+            request_type='household-code', display_region='cy'
         )
         self.get_requestcode_household_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household', display_region='ni'
+            request_type='household-code', display_region='ni'
         )
         self.get_requestcode_individual_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='en'
+            request_type='individual-code', display_region='en'
         )
         self.get_requestcode_individual_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='cy'
+            request_type='individual-code', display_region='cy'
         )
         self.get_requestcode_individual_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual', display_region='ni'
+            request_type='individual-code', display_region='ni'
         )
 
         self.get_accessibility_statement_en = self.app.router['Accessibility:get'].url_for(display_region='en')
@@ -772,19 +886,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
-        self.postcode_valid = 'EX2 6GA'
-        self.postcode_invalid = 'ZZ99 9ZZ'
-        self.postcode_no_results = 'GU34 5DU'
-
-        self.post_requestcode_select_address_form_data_valid = \
-            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
-
-        self.post_requestcode_select_address_form_data_not_listed_en = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
-        self.post_requestcode_select_address_form_data_not_listed_cy = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
         self.selected_uprn = '10023122451'
 
         self.mobile_valid = '07012345678'
@@ -794,40 +895,20 @@ class RHTestCase(AioHTTPTestCase):
 
         self.field_empty = None
 
-        with open('tests/test_data/address_index/postcode_no_results.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_e.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_postcode_no_results = f
+            self.rhsvc_cases_by_uprn_e = f
 
-        with open('tests/test_data/address_index/postcode_results.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_w.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_postcode_results = f
+            self.rhsvc_cases_by_uprn_w = f
 
-        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_n.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result = f
-
-        with open('tests/test_data/address_index/uprn_scotland.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result_scotland = f
-
-        with open('tests/test_data/rhsvc/case_by_uprn_en.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_en = f
-
-        with open('tests/test_data/rhsvc/case_by_uprn_cy.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_cy = f
-
-        with open('tests/test_data/rhsvc/case_by_uprn_ni.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_cases_by_uprn_ni = f
+            self.rhsvc_cases_by_uprn_n = f
 
         with open('tests/test_data/rhsvc/get_fulfilment_multi.json') as fp:
             f = asyncio.Future()
@@ -843,49 +924,6 @@ class RHTestCase(AioHTTPTestCase):
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment = f
-
-        self.request_postcode_input_valid = {
-            'request-postcode': self.postcode_valid, 'action[save_continue]': '',
-        }
-
-        self.request_postcode_input_no_results = {
-            'request-postcode': self.postcode_no_results, 'action[save_continue]': '',
-        }
-
-        self.request_postcode_input_invalid = {
-            'request-postcode': self.postcode_invalid, 'action[save_continue]': '',
-        }
-
-        self.request_confirm_address_input_yes = {
-            'request-address-confirmation': 'yes', 'action[save_continue]': ''
-        }
-
-        self.request_confirm_address_input_no = {
-            'request-address-confirmation': 'no', 'action[save_continue]': ''
-        }
-
-        self.request_confirm_address_input_invalid = {
-            'request-address-confirmation': 'invalid', 'action[save_continue]': ''
-        }
-
-        self.request_code_select_address_form_data_empty = {}
-
-        self.request_confirm_address_input_empty = {}
-
-        self.request_select_address_input_valid = {
-            'request-address-select': self.post_requestcode_select_address_form_data_valid,
-            'action[save_continue]': '',
-        }
-
-        self.request_select_address_input_not_listed_en = {
-            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_en,
-            'action[save_continue]': '',
-        }
-
-        self.request_select_address_input_not_listed_cy = {
-            'request-address-select': self.post_requestcode_select_address_form_data_not_listed_cy,
-            'action[save_continue]': '',
-        }
 
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
@@ -909,10 +947,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_mobile_confirmation_data_empty = {}
 
-        self.ons_logo_en = '/img/ons-logo-pos-en.svg'
-        self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
-        self.nisra_logo = '/img/nisra-logo-en.svg'
-
         self.content_request_household_title_en = 'Request a new access code'
         self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
         self.content_request_individual_title_en = 'Request an individual access code'
@@ -921,29 +955,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
-        self.content_request_enter_address_error_en = 'The postcode is not a valid UK postcode'
         self.content_request_enter_address_secondary_en = \
-            'To text you a new code we need to know the address for which you are answering.'
+            'To request an access code, we need your address.'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
-        self.content_request_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+        # TODO: add welsh translation
         self.content_request_enter_address_secondary_cy = \
-            "Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer pa gyfeiriad rydych chi\\\'n ateb."
-
-        self.content_request_select_address_title_en = 'Select your address'
-        self.content_request_select_address_error_en = 'Select an address'
-        self.content_request_select_address_value_en = '1 Gate Reach'
-        self.content_request_select_address_no_results_en = 'We cannot find your address'
-        self.content_request_select_address_title_cy = 'Dewiswch eich cyfeiriad'
-        self.content_request_select_address_error_cy = 'Dewiswch gyfeiriad'
-        self.content_request_select_address_value_cy = '1 Gate Reach'
-        self.content_request_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
-
-        self.content_request_confirm_address_title_en = 'Is this address correct?'
-        self.content_request_confirm_address_error_en = 'Check and confirm the address'
-        self.content_request_confirm_address_value_en = '1 Gate Reach, Exeter, EX2 6GA'
-        self.content_request_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_request_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
-        self.content_request_confirm_address_value_cy = '1 Gate Reach, Exeter, EX2 6GA'
+            'To request an access code, we need your address.'
 
         self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
         self.content_request_enter_mobile_error_en = ''
@@ -962,27 +979,117 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_title_en = 'We have sent an access code'
         self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
 
-        self.content_500_error_en = 'Sorry, something went wrong'
-        self.content_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
-
-        self.content_timeout_en = 'Your session has timed out due to inactivity'
-        self.content_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
+        # TODO: add welsh translation
         self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
 
-        self.content_start_title_en = 'Start Census'
-        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
-        self.content_start_title_cy = "Dechrau'r Cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
+        self.content_request_timeout_error_en = 're-enter your postcode'
+        self.content_request_timeout_error_cy = 'nodi eich cod post eto'
 
-        self.content_start_confirm_address_title_en = 'Is this address correct?'
-        self.content_start_confirm_address_title_cy = "Ydy'r cyfeiriad hwn yn gywir?"
+        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
+        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
-        self.content_request_address_not_listed_en = 'You need to call the Census customer contact centre'
-        self.content_request_address_not_listed_cy = 'You need to call the Census customer contact centre'
+        self.content_start_ni_select_language_title = 'Choose your language'
+        self.content_start_ni_select_language_option = 'Continue in English'
 
-        self.content_request_address_in_scotland_en = 'Your address is in Scotland'
-        self.content_request_address_in_scotland_cy = 'Your address is in Scotland'
+        # Unlinked UACs
+
+        # URLs
+        self.post_start_unlinked_enter_address_en = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.post_start_unlinked_enter_address_cy = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.post_start_unlinked_enter_address_ni = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='unlinked')
+
+        self.get_start_unlinked_select_address_en = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_select_address_cy = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_select_address_ni = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.post_start_unlinked_select_address_en = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='en', user_journey='start',
+                                                                sub_user_journey='unlinked')
+        self.post_start_unlinked_select_address_cy = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                                sub_user_journey='unlinked')
+        self.post_start_unlinked_select_address_ni = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                                sub_user_journey='unlinked')
+        self.post_start_unlinked_confirm_address_en = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
+                                                                 sub_user_journey='unlinked')
+        self.post_start_unlinked_confirm_address_cy = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                                 sub_user_journey='unlinked')
+        self.post_start_unlinked_confirm_address_ni = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                                 sub_user_journey='unlinked')
+
+        self.post_start_unlinked_address_is_linked_en = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
+        self.post_start_unlinked_address_is_linked_cy = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
+        self.post_start_unlinked_address_is_linked_ni = \
+            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
+
+        self.get_start_unlinked_timeout_en = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
+                                                         sub_user_journey='unlinked')
+        self.get_start_unlinked_timeout_cy = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
+                                                         sub_user_journey='unlinked')
+        self.get_start_unlinked_timeout_ni = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
+                                                         sub_user_journey='unlinked')
+
+        # Test Data
+        with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
+            self.unlinked_uac_json_e = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_w.json') as fp:
+            self.unlinked_uac_json_w = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_unlinked_n.json') as fp:
+            self.unlinked_uac_json_n = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_e = f
+        with open('tests/test_data/rhsvc/uac_linked_w.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_w = f
+        with open('tests/test_data/rhsvc/uac_linked_n.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_n = f
+
+        self.start_address_linked = {
+            'action[save_continue]': ''
+        }
+
+        # Content
+        self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode?'
+        # TODO: add welsh translation
+        self.content_start_unlinked_enter_address_question_title_cy = 'Beth yw eich cod post?'
+
+        self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
+        # TODO: add welsh translation
+        self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
+        self.content_start_unlinked_address_has_been_linked_secondary_en = \
+            'You are now ready to start your Census questions'
+        # TODO: add welsh translation
+        self.content_start_unlinked_address_has_been_linked_secondary_cy = \
+            'You are now ready to start your Census questions'
+
+        self.content_unlinked_timeout_error_en = 're-enter your access code'
+        self.content_unlinked_timeout_error_cy = 'nodi eich cod mynediad eto'
 
         # yapf: enable

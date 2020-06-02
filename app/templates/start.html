@@ -1,7 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% set request_household_code_link = url('RequestCode:get', request_type='household', display_region=display_region) %}
-{% set request_individual_code_link = url('RequestCode:get', request_type='individual', display_region=display_region) %}
+{% set request_household_code_link = url('RequestCode:get', request_type='household-code', display_region=display_region) %}
+{% set request_individual_code_link = url('RequestCode:get', request_type='individual-code', display_region=display_region) %}
 {% set webchat_link = url('WebChat:get', display_region=display_region) %}
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}

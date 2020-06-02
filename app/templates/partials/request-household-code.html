@@ -27,7 +27,7 @@
         'type': 'button',
         'text': _('Request a new code'),
         'classes': 'u-mb-m',
-        'url': url('RequestCodeEnterAddress:get', request_type=request_type, display_region=display_region),
+        'url': url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='household-code'),
         'innerClasses': 'icon--chevron-right-white'
     })
 }}
