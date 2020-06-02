@@ -76,26 +76,11 @@ class View:
                         key_store=app['key_store'],
                         key_purpose='authentication')
 
-        await self.post_surveylaunched(request, case, adlocation)
+        await RHService.post_surveylaunched(request, case, adlocation)
 
         logger.info('redirecting to eq', client_ip=request['client_ip'])
         eq_url = app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')
-
-    async def post_surveylaunched(self, request, case, adlocation):
-        if not adlocation:
-            adlocation = ''
-        launch_json = {
-            'questionnaireId': case['questionnaireId'],
-            'caseId': case['caseId'],
-            'agentId': adlocation
-        }
-        rhsvc_url = request.app['RHSVC_URL']
-        return await self._make_request(request,
-                                        'POST',
-                                        f'{rhsvc_url}/surveyLaunched',
-                                        auth=request.app['RHSVC_AUTH'],
-                                        json=launch_json)
 
 
 class ProcessPostcode:
@@ -374,3 +359,19 @@ class RHService(View):
                                         case['caseId'] + '/address',
                                         auth=rhsvc_auth,
                                         json=case_json)
+
+    @staticmethod
+    async def post_surveylaunched(request, case, adlocation):
+        if not adlocation:
+            adlocation = ''
+        launch_json = {
+            'questionnaireId': case['questionnaireId'],
+            'caseId': case['caseId'],
+            'agentId': adlocation
+        }
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/surveyLaunched',
+                                        auth=request.app['RHSVC_AUTH'],
+                                        json=launch_json)
