@@ -450,6 +450,7 @@ class CommonConfirmAddress(CommonCommon):
                     uprn_return = await RHService.get_cases_by_uprn(request, session['attributes']['uprn'])
                     session['attributes']['case_id'] = uprn_return[0]['caseId']
                     session['attributes']['region'] = uprn_return[0]['region']
+                    session['attributes']['case_type'] = uprn_return[0]['caseType']
                     session.changed()
                     raise HTTPFound(
                         request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,

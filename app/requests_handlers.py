@@ -17,7 +17,7 @@ requests_routes = RouteTableDef()
 
 class RequestCommon(View):
 
-    valid_request_types = r'{request_type:\bhousehold-code|individual-code\b}'
+    valid_request_types = r'{request_type:\bhousehold-code|individual-code|access-code\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type,
@@ -218,17 +218,15 @@ class RequestCodeConfirmMobile(RequestCommon):
 
         if mobile_confirmation == 'yes':
 
-            if request_type == 'household-code':
-                fulfilment_case_type = 'HH'
-                fulfilment_individual = 'false'
-            elif request_type == 'individual-code':
-                fulfilment_case_type = 'HH'
+            if request_type == 'individual-code':
                 fulfilment_individual = 'true'
+            elif attributes['case_type'] == 'CE':
+                if attributes['addressLevel'] == 'U':
+                    fulfilment_individual = 'true'
+                else:
+                    fulfilment_individual = 'false'
             else:
-                # catch all just in case, should never get here
-                logger.info('invalid request_type',
-                            client_ip=request['client_ip'])
-                raise KeyError
+                fulfilment_individual = 'false'
 
             if display_region == 'cy':
                 fulfilment_language = 'wel'
@@ -237,7 +235,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
             try:
                 available_fulfilments = await RHService.get_fulfilment(
-                    request, fulfilment_case_type, attributes['region'], 'SMS', 'UAC', fulfilment_individual)
+                    request, attributes['case_type'], attributes['region'], 'SMS', 'UAC', fulfilment_individual)
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
