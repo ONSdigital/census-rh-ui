@@ -55,26 +55,6 @@ class StartCommon(View):
 
         return get_sha256_hash(combined)
 
-    @staticmethod
-    def get_address_details(data: dict, attributes: dict):
-        """
-        Replace any changed address details in attributes to be sent to EQ
-        :param data: Changed address details
-        :param attributes: attributes to be sent
-        :return: attributes with changed address
-        """
-
-        if not data['address-line-1'].strip():
-            raise KeyError
-        else:
-            attributes['addressLine1'] = data['address-line-1'].strip()
-            attributes['addressLine2'] = data['address-line-2'].strip()
-            attributes['addressLine3'] = data['address-line-3'].strip()
-            attributes['townName'] = data['address-town'].strip()
-            attributes['postcode'] = data['address-postcode'].strip()
-
-        return attributes
-
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/')
 class Start(StartCommon):

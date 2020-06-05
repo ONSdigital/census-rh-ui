@@ -67,6 +67,7 @@ class View:
         if not case_json.get('caseStatus', None) == 'OK':
             raise InvalidEqPayLoad('CaseStatus is not OK')
 
+    @staticmethod
     async def call_questionnaire(self, request, case, attributes, app,
                                  adlocation):
         eq_payload = await EqPayloadConstructor(case, attributes, app,
@@ -339,26 +340,6 @@ class RHService(View):
                                         f'{rhsvc_url}/uacs/{uac_hash}',
                                         auth=request.app['RHSVC_AUTH'],
                                         return_json=True)
-
-    @staticmethod
-    async def put_modify_address(request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await View._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        json=case_json)
 
     @staticmethod
     async def post_surveylaunched(request, case, adlocation):
