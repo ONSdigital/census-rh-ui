@@ -68,8 +68,7 @@ class View:
             raise InvalidEqPayLoad('CaseStatus is not OK')
 
     @staticmethod
-    async def call_questionnaire(self, request, case, attributes, app,
-                                 adlocation):
+    async def call_questionnaire(request, case, attributes, app, adlocation):
         eq_payload = await EqPayloadConstructor(case, attributes, app,
                                                 adlocation).build()
 
