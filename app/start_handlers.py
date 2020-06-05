@@ -8,10 +8,10 @@ from aiohttp_session import get_session
 from structlog import get_logger
 
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
-               ADDRESS_EDIT_MSG, SESSION_TIMEOUT_MSG,
+               SESSION_TIMEOUT_MSG,
                START_LANGUAGE_OPTION_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               ADDRESS_EDIT_MSG_CY, SESSION_TIMEOUT_MSG_CY)
+               SESSION_TIMEOUT_MSG_CY)
 
 from .flash import flash
 from .exceptions import InvalidEqPayLoad
@@ -336,7 +336,11 @@ class StartConfirmAddress(StartCommon):
                                               session.get('adlocation'))
 
         elif address_confirmation == 'No':
-            raise HTTPFound(request.app.router['StartModifyAddress:get'].url_for(display_region=display_region))
+            raise HTTPFound(request.app.router['CommonEnterAddress:get'].url_for(
+                display_region=display_region,
+                user_journey='start',
+                sub_user_journey='change-address'
+            ))
 
         else:
             # catch all just in case, should never get here
@@ -354,110 +358,6 @@ class StartConfirmAddress(StartCommon):
                     'addressLine3': attributes['addressLine3'],
                     'townName': attributes['townName'],
                     'postcode': attributes['postcode']}
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/modify-address/')
-class StartModifyAddress(StartCommon):
-    @aiohttp_jinja2.template('start-modify-address.html')
-    async def get(self, request):
-        """
-        Address Edit get.
-        """
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/modify-address')
-        await check_permission(request)
-
-        if display_region == 'cy':
-            locale = 'cy'
-            page_title = "Newid eich cyfeiriad"
-        else:
-            locale = 'en'
-            page_title = 'Change your address'
-
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
-
-        return {'locale': locale,
-                'page_title': page_title,
-                'display_region': display_region,
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode']}
-
-    @aiohttp_jinja2.template('start-modify-address.html')
-    async def post(self, request):
-        """
-        Address Edit flow. Edited address details.
-        """
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/modify-address')
-        await check_permission(request)
-        data = await request.post()
-
-        if display_region == 'cy':
-            locale = 'cy'
-            page_title = "Newid eich cyfeiriad"
-        else:
-            locale = 'en'
-            page_title = 'Change your address'
-
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-        except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
-
-        try:
-            attributes = StartCommon.get_address_details(data,
-                                                         attributes)
-        except KeyError:
-            logger.info('address-line-1 has no value', client_ip=request['client_ip'])
-            if display_region == 'cy':
-                flash(request, ADDRESS_EDIT_MSG_CY)
-            else:
-                flash(request, ADDRESS_EDIT_MSG)
-            return {'locale': locale,
-                    'page_title': page_title,
-                    'display_region': display_region,
-                    'addressLine2': attributes['addressLine2'],
-                    'addressLine3': attributes['addressLine3'],
-                    'townName': attributes['townName'],
-                    'postcode': attributes['postcode']}
-
-        try:
-            logger.info('raising address modification call',
-                        client_ip=request['client_ip'])
-            await RHService.put_modify_address(request, session['case'], attributes)
-        except ClientResponseError as ex:
-            logger.error('error raising address modification call',
-                         client_ip=request['client_ip'])
-            raise ex
-
-        if case['region'][0] == 'N':
-            session['attributes']['addressLine1'] = attributes['addressLine1']
-            session['attributes']['addressLine2'] = attributes['addressLine2']
-            session['attributes']['addressLine3'] = attributes['addressLine3']
-            session['attributes']['townName'] = attributes['townName']
-            session['attributes']['postcode'] = attributes['postcode']
-            session.changed()
-            raise HTTPFound(
-                request.app.router['StartNILanguageOptions:get'].url_for())
-        else:
-            attributes['language'] = locale
-            attributes['display_region'] = display_region
-            await self.call_questionnaire(request, case,
-                                          attributes, request.app,
-                                          session.get('adlocation'))
 
 
 @start_routes.view('/ni/start/language-options/')
@@ -640,6 +540,64 @@ class StartAddressHasBeenLinked(StartCommon):
             locale = 'en'
 
         self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+            case = session['case']
+        except KeyError:
+            if display_region == 'cy':
+                flash(request, SESSION_TIMEOUT_MSG_CY)
+            else:
+                flash(request, SESSION_TIMEOUT_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        if case['region'][0] == 'N':
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
+        else:
+            attributes['language'] = locale
+            attributes['display_region'] = display_region
+            await self.call_questionnaire(request, case,
+                                          attributes, request.app,
+                                          session.get('adlocation'))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/change-address/address-has-been-changed/')
+class StartAddressHasBeenChanged(StartCommon):
+    @aiohttp_jinja2.template('start-address-changed.html')
+    async def get(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'Your address has been changed'
+            locale = 'cy'
+        else:
+            page_title = 'Your address has been changed'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/change-address/address-has-been-changed')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale
+        }
+
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/change-address/address-has-been-changed')
 
         session = await get_session(request)
         try:
