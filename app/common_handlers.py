@@ -366,6 +366,7 @@ class CommonConfirmAddress(CommonCommon):
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
         attributes['country_code'] = uprn_ai_return['response']['address']['countryCode']
+        attributes['address_type'] = uprn_ai_return['response']['address']['censusAddressType']
 
         return attributes
 
@@ -418,6 +419,18 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
+
+            try:
+                if session['attributes']['censusAddressType'] == 'NA':
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonCallContactCentre:get'].url_for(
+                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+            except KeyError:
+                logger.info('unable to check censusAddressType', client_ip=request['client_ip'])
+                raise HTTPFound(
+                    request.app.router['CommonCallContactCentre:get'].url_for(
+                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             if sub_user_journey == 'unlinked' or sub_user_journey == 'change-address':
                 try:

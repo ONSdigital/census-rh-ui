@@ -336,6 +336,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_scotland = f
 
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na = f
+
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
@@ -396,6 +401,16 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_call_contact_centre_change_address_cy = \
             'There is an issue changing your address via the website.'
+
+        self.content_common_call_contact_centre_title_en = 'You need to call the Census customer contact centre'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_title_cy = 'You need to call the Census customer contact centre'
+
+        self.content_common_call_contact_centre_unable_to_match_address_en = \
+            'There is an issue processing your address via the website.'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_unable_to_match_address_cy = \
+            'There is an issue processing your address via the website.'
 
         self.content_common_500_error_en = 'Sorry, something went wrong'
         self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
