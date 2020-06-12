@@ -336,6 +336,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_scotland = f
 
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na = f
+
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
@@ -391,6 +396,21 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_call_contact_centre_address_linking_cy = \
             'There is an issue linking your address via the website.'
+        self.content_common_call_contact_centre_change_address_en = \
+            'There is an issue changing your address via the website.'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_change_address_cy = \
+            'There is an issue changing your address via the website.'
+
+        self.content_common_call_contact_centre_title_en = 'You need to call the Census customer contact centre'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_title_cy = 'You need to call the Census customer contact centre'
+
+        self.content_common_call_contact_centre_unable_to_match_address_en = \
+            'There is an issue processing your address via the website.'
+        # TODO: add welsh translation
+        self.content_common_call_contact_centre_unable_to_match_address_cy = \
+            'There is an issue processing your address via the website.'
 
         self.content_common_500_error_en = 'Sorry, something went wrong'
         self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
@@ -425,8 +445,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
         self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
-        self.get_start_modify_address_en = self.app.router['StartModifyAddress:get'].url_for(display_region='en')
-        self.post_start_modify_address_en = self.app.router['StartModifyAddress:post'].url_for(display_region='en')
         self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
@@ -438,8 +456,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
         self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
-        self.get_start_modify_address_cy = self.app.router['StartModifyAddress:get'].url_for(display_region='cy')
-        self.post_start_modify_address_cy = self.app.router['StartModifyAddress:post'].url_for(display_region='cy')
         self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
@@ -451,8 +467,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
         self.get_start_confirm_address_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
         self.post_start_confirm_address_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
-        self.get_start_modify_address_ni = self.app.router['StartModifyAddress:get'].url_for(display_region='ni')
-        self.post_start_modify_address_ni = self.app.router['StartModifyAddress:post'].url_for(display_region='ni')
+
         self.get_start_language_options_ni = self.app.router['StartNILanguageOptions:get'].url_for()
         self.post_start_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
         self.get_start_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
@@ -561,7 +576,7 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/cases/'
         )
 
-        self.rhsvc_url_unlinked_uac = (
+        self.rhsvc_url_link_uac = (
             f'{rh_svc_url}/uacs/{self.uacHash}/link'
         )
 
@@ -995,6 +1010,15 @@ class RHTestCase(AioHTTPTestCase):
         # Unlinked UACs
 
         # URLs
+        self.get_start_unlinked_enter_address_en = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_enter_address_cy = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='unlinked')
+        self.get_start_unlinked_enter_address_ni = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='unlinked')
         self.post_start_unlinked_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
                                                                sub_user_journey='unlinked')
@@ -1023,6 +1047,16 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_unlinked_select_address_ni = \
             self.app.router['CommonSelectAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                 sub_user_journey='unlinked')
+
+        self.get_start_unlinked_confirm_address_en = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
+                                                                 sub_user_journey='unlinked')
+        self.get_start_unlinked_confirm_address_cy = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                                 sub_user_journey='unlinked')
+        self.get_start_unlinked_confirm_address_ni = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                                 sub_user_journey='unlinked')
         self.post_start_unlinked_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
                                                                  sub_user_journey='unlinked')
@@ -1033,11 +1067,17 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                  sub_user_journey='unlinked')
 
-        self.post_start_unlinked_address_is_linked_en = \
+        self.get_start_unlinked_address_has_been_linked_en = \
+            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='en')
+        self.get_start_unlinked_address_has_been_linked_cy = \
+            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='cy')
+        self.get_start_unlinked_address_has_been_linked_ni = \
+            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='ni')
+        self.post_start_unlinked_address_has_been_linked_en = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
-        self.post_start_unlinked_address_is_linked_cy = \
+        self.post_start_unlinked_address_has_been_linked_cy = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
-        self.post_start_unlinked_address_is_linked_ni = \
+        self.post_start_unlinked_address_has_been_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
         self.get_start_unlinked_timeout_en = \
@@ -1091,5 +1131,123 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_unlinked_timeout_error_en = 're-enter your access code'
         self.content_unlinked_timeout_error_cy = 'nodi eich cod mynediad eto'
+
+        # Start Change Address
+
+        # URLs
+        self.get_start_change_address_enter_address_en = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.get_start_change_address_enter_address_cy = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.get_start_change_address_enter_address_ni = \
+            self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.post_start_change_address_enter_address_en = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.post_start_change_address_enter_address_cy = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.post_start_change_address_enter_address_ni = \
+            self.app.router['CommonEnterAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='change-address')
+
+        self.get_start_change_address_select_address_en = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='en', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.get_start_change_address_select_address_cy = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.get_start_change_address_select_address_ni = \
+            self.app.router['CommonSelectAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                               sub_user_journey='change-address')
+        self.post_start_change_address_select_address_en = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='en', user_journey='start',
+                                                                sub_user_journey='change-address')
+        self.post_start_change_address_select_address_cy = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                                sub_user_journey='change-address')
+        self.post_start_change_address_select_address_ni = \
+            self.app.router['CommonSelectAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                                sub_user_journey='change-address')
+
+        self.get_start_change_address_confirm_address_en = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
+                                                                 sub_user_journey='change-address')
+        self.get_start_change_address_confirm_address_cy = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
+                                                                 sub_user_journey='change-address')
+        self.get_start_change_address_confirm_address_ni = \
+            self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
+                                                                 sub_user_journey='change-address')
+        self.post_start_change_address_confirm_address_en = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
+                                                                 sub_user_journey='change-address')
+        self.post_start_change_address_confirm_address_cy = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='cy', user_journey='start',
+                                                                 sub_user_journey='change-address')
+        self.post_start_change_address_confirm_address_ni = \
+            self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
+                                                                 sub_user_journey='change-address')
+
+        self.get_start_change_address_address_has_been_changed_en = \
+            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='en')
+        self.get_start_change_address_address_has_been_changed_cy = \
+            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='cy')
+        self.get_start_change_address_address_has_been_changed_ni = \
+            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='ni')
+        self.post_start_change_address_address_has_been_changed_en = \
+            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='en')
+        self.post_start_change_address_address_has_been_changed_cy = \
+            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='cy')
+        self.post_start_change_address_address_has_been_changed_ni = \
+            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='ni')
+
+        self.get_start_change_address_timeout_en = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
+                                                         sub_user_journey='change-address')
+        self.get_start_change_address_timeout_cy = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
+                                                         sub_user_journey='change-address')
+        self.get_start_change_address_timeout_ni = \
+            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
+                                                         sub_user_journey='change-address')
+
+        # Test Data
+        with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_e = f
+        with open('tests/test_data/rhsvc/uac_linked_w.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_w = f
+        with open('tests/test_data/rhsvc/uac_linked_n.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_post_linked_uac_n = f
+
+        self.start_address_changed = {
+            'action[save_continue]': ''
+        }
+
+        # Content
+        self.content_start_change_address_enter_address_question_title_en = 'What is your postcode?'
+        # TODO: add welsh translation
+        self.content_start_change_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
+
+        self.content_start_change_address_address_has_been_changed_title_en = 'Your address has been changed'
+        # TODO: add welsh translation
+        self.content_start_change_address_address_has_been_changed_title_cy = 'Your address has been changed'
+        self.content_start_change_address_address_has_been_changed_secondary_en = \
+            'You are now ready to start your Census questions'
+        # TODO: add welsh translation
+        self.content_start_change_address_address_has_been_changed_secondary_cy = \
+            'You are now ready to start your Census questions'
+
+        self.content_start_change_address_timeout_error_en = 're-enter your access code'
+        self.content_start_change_address_timeout_error_cy = 'nodi eich cod mynediad eto'
 
         # yapf: enable

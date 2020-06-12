@@ -366,6 +366,7 @@ class CommonConfirmAddress(CommonCommon):
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
         attributes['country_code'] = uprn_ai_return['response']['address']['countryCode']
+        attributes['address_type'] = uprn_ai_return['response']['address']['censusAddressType']
 
         return attributes
 
@@ -419,17 +420,34 @@ class CommonConfirmAddress(CommonCommon):
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
 
-            if sub_user_journey == 'unlinked':
+            try:
+                if session['attributes']['censusAddressType'] == 'NA':
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonCallContactCentre:get'].url_for(
+                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+            except KeyError:
+                logger.info('unable to check censusAddressType', client_ip=request['client_ip'])
+                raise HTTPFound(
+                    request.app.router['CommonCallContactCentre:get'].url_for(
+                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+
+            if sub_user_journey == 'unlinked' or sub_user_journey == 'change-address':
                 try:
-                    uprn_return = await RHService.post_unlinked_uac(request, session['case']['uacHash'],
-                                                                    session['attributes'])
+                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'],
+                                                                session['attributes'])
                     session['case'] = uprn_return
                     session.changed()
 
                     self.validate_case(uprn_return)
 
-                    raise HTTPFound(
-                        request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+                    if sub_user_journey == 'unlinked':
+                        raise HTTPFound(
+                            request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+
+                    elif sub_user_journey == 'change-address':
+                        raise HTTPFound(
+                            request.app.router['StartAddressHasBeenChanged:get'].url_for(display_region=display_region))
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
@@ -441,9 +459,16 @@ class CommonConfirmAddress(CommonCommon):
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
                                      client_ip=request['client_ip'], status_code=ex.status)
+
+                    cc_error = ''
+                    if sub_user_journey == 'unlinked':
+                        cc_error = 'address-linking'
+                    elif sub_user_journey == 'change-address':
+                        cc_error = 'change-address'
+
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
-                            display_region=display_region, user_journey=user_journey, error='address-linking'))
+                            display_region=display_region, user_journey=user_journey, error=cc_error))
 
             elif user_journey == 'requests':
                 try:

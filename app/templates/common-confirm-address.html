@@ -14,7 +14,7 @@
     }
 } %}
 
-{% if country_code == 'S' %}
+{% if country_code == 'S' or address_type == 'NA' %}
     {% set form_options = [
                     {
                         'id': 'yes',
