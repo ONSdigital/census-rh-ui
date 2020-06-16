@@ -910,17 +910,17 @@ class RHTestCase(AioHTTPTestCase):
 
         self.field_empty = None
 
-        with open('tests/test_data/rhsvc/case_by_uprn_e.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_hh_e.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_cases_by_uprn_e = f
 
-        with open('tests/test_data/rhsvc/case_by_uprn_w.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_hh_w.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_cases_by_uprn_w = f
 
-        with open('tests/test_data/rhsvc/case_by_uprn_n.json') as fp:
+        with open('tests/test_data/rhsvc/case_by_uprn_hh_n.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_cases_by_uprn_n = f
