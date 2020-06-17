@@ -4688,6 +4688,264 @@ class TestRequestsHandlers(RHTestCase):
             self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
+    async def test_get_request_census_address_type_na_hh_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
+
+            await self.client.request('GET', self.get_requestcode_household_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_en)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_en,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_en,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_census_address_type_na_hh_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
+
+            await self.client.request('GET', self.get_requestcode_household_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_cy,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_cy,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_census_address_type_na_hh_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
+
+            await self.client.request('GET', self.get_requestcode_household_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hh_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hh_ni,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hh_ni,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hh_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/household-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_census_address_type_na_hi_en(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_e
+
+            await self.client.request('GET', self.get_requestcode_individual_en)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_en)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_en,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_en,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_census_address_type_na_hi_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_w
+
+            await self.client.request('GET', self.get_requestcode_individual_cy)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_cy,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_cy,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_census_address_type_na_hi_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_cases_by_uprn'
+        ) as mocked_get_cases_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_cases_by_uprn.return_value = self.rhsvc_cases_by_uprn_n
+
+            await self.client.request('GET', self.get_requestcode_individual_ni)
+            await self.client.request('GET', self.get_request_code_enter_address_hi_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_request_code_enter_address_hi_ni,
+                    data=self.common_postcode_input_valid)
+
+            response_get_confirm = await self.client.request(
+                    'POST',
+                    self.post_request_code_select_address_hi_ni,
+                    data=self.common_select_address_input_valid)
+            resp_content = await response_get_confirm.content.read()
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_code_confirm_address_hi_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/call-contact-centre/unable-to-match-address'")
+
+            self.assertEqual(200, response.status)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+
+    @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_change_hh_en(
             self):
         with mock.patch('app.utils.AddressIndex.get_ai_postcode'

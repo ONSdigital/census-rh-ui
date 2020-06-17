@@ -16,6 +16,7 @@ from . import RHTestCase, build_eq_raises, skip_encrypt
 attempts_retry_limit = 5
 
 
+# noinspection PyTypeChecker
 class TestStartHandlers(RHTestCase):
 
     @unittest_run_loop
@@ -48,191 +49,6 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 302)
         self.assertIn('/start/confirm-address',
                       response.headers['Location'])
-
-    @skip_encrypt
-    @unittest_run_loop
-    async def test_post_index_address_edit_with_build_en(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
-                       payload=self.start_modify_address_data)
-            mocked.post(self.rhsvc_url_surveylaunched)
-            eq_payload = self.eq_payload.copy()
-            account_service_url = self.app['ACCOUNT_SERVICE_URL']
-            url_path_prefix = self.app['URL_PATH_PREFIX']
-            url_display_region = '/en'
-            eq_payload[
-                'account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
-            eq_payload[
-                'account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
-
-            response = await self.client.request('POST',
-                                                 self.post_start_en,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-            self.assertEqual(response.status, 302)
-
-            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_confirm_address_en,
-                    allow_redirects=False,
-                    data=self.start_confirm_address_data_no)
-                self.assertEqual(response.status, 302)
-
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_modify_address_en,
-                    allow_redirects=False,
-                    data=self.start_modify_address_data_valid)
-
-                self.assertLogEvent(logs_home,
-                                    'raising address modification call')
-                self.assertLogEvent(logs_home, 'redirecting to eq')
-
-        self.assertEqual(response.status, 302)
-        redirected_url = response.headers['location']
-        # outputs url on fail
-        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
-                        redirected_url)
-        # we only care about the query string
-        _, _, _, query, *_ = urlsplit(redirected_url)
-        # convert token to dict
-        token = json.loads(parse_qs(query)['token'][0])
-        # fail early if payload keys differ
-        self.assertEqual(eq_payload.keys(), token.keys())
-        for key in eq_payload.keys():
-            # skip uuid / time generated values
-            if key in ['jti', 'tx_id', 'iat', 'exp']:
-                continue
-            # outputs failed key as msg
-            self.assertEqual(eq_payload[key], token[key], key)
-
-    @skip_encrypt
-    @unittest_run_loop
-    async def test_post_index_address_edit_with_build_cy(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
-                       payload=self.start_modify_address_data)
-            mocked.post(self.rhsvc_url_surveylaunched)
-            eq_payload = self.eq_payload.copy()
-            eq_payload['region_code'] = 'GB-WLS'
-            eq_payload['language_code'] = 'cy'
-            account_service_url = self.app['ACCOUNT_SERVICE_URL']
-            url_path_prefix = self.app['URL_PATH_PREFIX']
-            url_display_region = '/cy'
-            eq_payload[
-                'account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
-            eq_payload[
-                'account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
-
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-            self.assertEqual(response.status, 302)
-
-            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_confirm_address_cy,
-                    allow_redirects=False,
-                    data=self.start_confirm_address_data_no)
-                self.assertEqual(response.status, 302)
-
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_modify_address_cy,
-                    allow_redirects=False,
-                    data=self.start_modify_address_data_valid)
-
-                self.assertLogEvent(logs_home,
-                                    'raising address modification call')
-                self.assertLogEvent(logs_home, 'redirecting to eq')
-
-        self.assertEqual(response.status, 302)
-        redirected_url = response.headers['location']
-        # outputs url on fail
-        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
-                        redirected_url)
-        # we only care about the query string
-        _, _, _, query, *_ = urlsplit(redirected_url)
-        # convert token to dict
-        token = json.loads(parse_qs(query)['token'][0])
-        # fail early if payload keys differ
-        self.assertEqual(eq_payload.keys(), token.keys())
-        for key in eq_payload.keys():
-            # skip uuid / time generated values
-            if key in ['jti', 'tx_id', 'iat', 'exp']:
-                continue
-            # outputs failed key as msg
-            self.assertEqual(eq_payload[key], token[key], key)
-
-    @skip_encrypt
-    @unittest_run_loop
-    async def test_post_index_address_edit_with_build_ni(self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-            mocked.put(self.rhsvc_cases_url + self.case_id + '/address',
-                       payload=self.start_modify_address_data)
-            mocked.post(self.rhsvc_url_surveylaunched)
-            eq_payload = self.eq_payload.copy()
-            account_service_url = self.app['ACCOUNT_SERVICE_URL']
-            url_path_prefix = self.app['URL_PATH_PREFIX']
-            url_display_region = '/ni'
-            eq_payload[
-                'account_service_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
-            eq_payload[
-                'account_service_log_out_url'] = \
-                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
-
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-            self.assertEqual(response.status, 302)
-
-            with self.assertLogs('respondent-home', 'DEBUG') as logs_home:
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_confirm_address_ni,
-                    allow_redirects=False,
-                    data=self.start_confirm_address_data_no)
-                self.assertEqual(response.status, 302)
-
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_modify_address_ni,
-                    allow_redirects=False,
-                    data=self.start_modify_address_data_valid)
-
-                self.assertLogEvent(logs_home,
-                                    'raising address modification call')
-                self.assertLogEvent(logs_home, 'redirecting to eq')
-
-        self.assertEqual(response.status, 302)
-        redirected_url = response.headers['location']
-        # outputs url on fail
-        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
-                        redirected_url)
-        # we only care about the query string
-        _, _, _, query, *_ = urlsplit(redirected_url)
-        # convert token to dict
-        token = json.loads(parse_qs(query)['token'][0])
-        # fail early if payload keys differ
-        self.assertEqual(eq_payload.keys(), token.keys())
-        for key in eq_payload.keys():
-            # skip uuid / time generated values
-            if key in ['jti', 'tx_id', 'iat', 'exp']:
-                continue
-            # outputs failed key as msg
-            self.assertEqual(eq_payload[key], token[key], key)
 
     @build_eq_raises
     @unittest_run_loop
@@ -1282,8 +1098,8 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
     async def test_get_address_confirmation_direct_access_cy(self):
@@ -1294,7 +1110,8 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Rhowch y cod 16 nod sydd', contents)
+        self.assertIn(self.content_start_title_cy, contents)
+        self.assertIn(self.content_start_uac_title_cy, contents)
 
     @unittest_run_loop
     async def test_get_address_confirmation_direct_access_ni(self):
@@ -1305,8 +1122,8 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_en(self):
@@ -1320,8 +1137,8 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_cy(self):
@@ -1335,7 +1152,8 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Rhowch y cod 16 nod sydd', contents)
+        self.assertIn(self.content_start_title_cy, contents)
+        self.assertIn(self.content_start_uac_title_cy, contents)
 
     @unittest_run_loop
     async def test_post_address_confirmation_direct_access_ni(self):
@@ -1349,84 +1167,56 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
-    async def test_get_address_edit_direct_access_en(self):
+    async def test_get_start_ni_language_options_direct_access(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_modify_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
-
-    @unittest_run_loop
-    async def test_get_address_edit_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_modify_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Rhowch y cod 16 nod sydd', contents)
-
-    @unittest_run_loop
-    async def test_get_address_edit_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_modify_address_ni,
-                                                 allow_redirects=False)
+            response = await self.client.request(
+                'GET', self.get_start_language_options_ni, allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
-    async def test_post_address_edit_direct_access_en(self):
+    async def test_post_start_ni_language_options_direct_access(self):
         with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_modify_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
-
-    @unittest_run_loop
-    async def test_post_address_edit_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_modify_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn('Rhowch y cod 16 nod sydd', contents)
-
-    @unittest_run_loop
-    async def test_post_address_edit_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_modify_address_ni,
-                                                 allow_redirects=False)
+            response = await self.client.request(
+                'POST', self.post_start_language_options_ni, allow_redirects=False)
         self.assertLogEvent(cm, 'permission denied')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
+
+    @unittest_run_loop
+    async def test_get_start_ni_select_language_direct_access(self):
+        with self.assertLogs('respondent-home', 'WARN') as cm:
+            response = await self.client.request(
+                'GET', self.get_start_select_language_ni, allow_redirects=False)
+        self.assertLogEvent(cm, 'permission denied')
+        self.assertEqual(response.status, 403)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
+
+    @unittest_run_loop
+    async def test_post_start_ni_select_language_direct_access(self):
+        with self.assertLogs('respondent-home', 'WARN') as cm:
+            response = await self.client.request(
+                'POST', self.post_start_select_language_ni, allow_redirects=False)
+        self.assertLogEvent(cm, 'permission denied')
+        self.assertEqual(response.status, 403)
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_title_en, contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
 
     @unittest_run_loop
     async def test_post_start_address_confirm_empty_en(self):
@@ -1565,236 +1355,6 @@ class TestStartHandlers(RHTestCase):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn('Is this address correct?', contents)
             self.assertIn('Please check and confirm address', contents)
-
-    @unittest_run_loop
-    async def test_get_start_modify_address_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_en,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
-
-            response = await self.client.request('GET', self.get_start_modify_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Change your address', contents)
-
-    @unittest_run_loop
-    async def test_get_start_modify_address_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_cy,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
-
-            response = await self.client.request('GET', self.get_start_modify_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Newid eich cyfeiriad', contents)
-
-    @unittest_run_loop
-    async def test_get_start_modify_address_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            response = await self.client.request('GET', self.get_start_modify_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Change your address', contents)
-
-    @unittest_run_loop
-    async def test_post_start_modify_address_invalid_data_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_en,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
-
-            response = await self.client.request('POST', self.post_start_modify_address_en,
-                                                 allow_redirects=False,
-                                                 data=self.start_modify_address_data_incomplete)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "address-line-1 has no value")
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('Change your address', contents)
-            self.assertIn('Enter address to continue', contents)
-
-    @unittest_run_loop
-    async def test_post_start_modify_address_invalid_data_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            await self.client.request('POST', self.post_start_cy, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_cy,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
-
-            response = await self.client.request('POST', self.post_start_modify_address_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_modify_address_data_incomplete)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "address-line-1 has no value")
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('Newid eich cyfeiriad', contents)
-            self.assertIn('Nodwch gyfeiriad i barhau', contents)
-
-    @unittest_run_loop
-    async def test_post_start_modify_address_invalid_data_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            response = await self.client.request('POST', self.post_start_modify_address_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_modify_address_data_incomplete)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
-
-            self.assertEqual(response.status, 200)
-            self.assertLogEvent(cm, "address-line-1 has no value")
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Change your address', contents)
-            self.assertIn('Enter address to continue', contents)
-
-    @unittest_run_loop
-    async def test_get_start_modify_address_put_error_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-            mocked.put(self.rhsvc_put_modify_address, payload={}, status=400)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            response = await self.client.request('POST', self.post_start_modify_address_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_modify_address_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
-
-            self.assertLogEvent(cm, "error raising address modification call")
-
-            self.assertEqual(response.status, 500)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Sorry, something went wrong', contents)
-
-    @unittest_run_loop
-    async def test_get_start_ni_language_options(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-            mocked.put(self.rhsvc_put_modify_address, payload={})
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_ni, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-
-            await self.client.request('POST', self.post_start_confirm_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_confirm_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-
-            await self.client.request('POST', self.post_start_modify_address_ni,
-                                      allow_redirects=False,
-                                      data=self.start_modify_address_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/modify-address'")
-
-            response = await self.client.request('GET', self.get_start_language_options_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
-
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Would you like to complete the census in English?', contents)
 
     @unittest_run_loop
     async def test_post_start_ni_language_options_invalid(self):
