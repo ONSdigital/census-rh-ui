@@ -365,8 +365,6 @@ class CommonConfirmAddress(CommonCommon):
         attributes['user_journey'] = user_journey
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
-        attributes['country_code'] = uprn_ai_return['response']['address']['countryCode']
-        attributes['address_type'] = uprn_ai_return['response']['address']['censusAddressType']
 
         return attributes
 
