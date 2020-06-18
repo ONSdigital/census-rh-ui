@@ -266,7 +266,7 @@ class AddressIndex(View):
 class RHService(View):
 
     @staticmethod
-    async def get_cases_by_uprn(request, uprn):
+    async def get_case_by_uprn(request, uprn):
         rhsvc_url = request.app['RHSVC_URL']
         return await View._make_request(request,
                                         'GET',

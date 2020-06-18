@@ -3,6 +3,7 @@
    "caseRef": "10000000010",
    "caseType": "HH",
    "addressType": "HH",
+   "addressLevel": "E",
    "uprn": "123456",
    "addressLine1": "1 main street",
    "addressLine2": "upper upperingham",

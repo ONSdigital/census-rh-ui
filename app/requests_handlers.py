@@ -221,7 +221,7 @@ class RequestCodeConfirmMobile(RequestCommon):
             if request_type == 'individual-code':
                 fulfilment_individual = 'true'
             elif attributes['case_type'] == 'CE':
-                if attributes['addressLevel'] == 'U':
+                if attributes['address_level'] == 'U':
                     fulfilment_individual = 'true'
                 else:
                     fulfilment_individual = 'false'
