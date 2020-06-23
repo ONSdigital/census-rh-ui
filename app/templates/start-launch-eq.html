@@ -1,0 +1,41 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from "components/input/_macro.njk" import onsInput %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('LaunchEQ:post', display_region=display_region)
+    }
+} %}
+
+{% block main %}
+
+    <h1>{{ _('Launch EQ') }}</h1>
+
+    <p>{{ _('Press the below button to launch census EQ') }}</p>
+
+    {% if token %}
+        {{
+            onsInput({
+                "type": "hidden",
+                "classes": "u-d-no",
+                "id": "token",
+                "name": "token",
+                "value": token,
+                "label": {
+                    "text": "Enter some text",
+                    "classes": "u-d-no"
+                }
+            })
+        }}
+    {% endif %}
+
+    {{ onsButton({
+        'text': _('Launch census'),
+        'classes': 'u-mb-xl',
+        'name': 'action[save_continue]'
+    }) }}
+
+{% endblock %}
