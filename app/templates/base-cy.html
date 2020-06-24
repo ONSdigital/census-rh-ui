@@ -51,7 +51,7 @@
     'language': { 'languages': language },
     'header': {
         'language': 'cy',
-        'titleLogo': '/img/census-logo-cy.svg',
+        'titleLogo': 'census-logo-cy',
         'titleLogoAlt': 'Cyfrifiad 2021',
     },
     'footer': {
@@ -123,10 +123,10 @@
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            'html': 'Rydym yn defnyddio cwcis i wella eich profiad o cyfrifiad.gov.uk',
-            'primaryButtonText': 'Derbyn cwcis',
-            'secondaryButtonText': 'Gosodiadau cwcis',
-            'secondaryButtonUrl': domain_url_cy + '/cwcis'
+            "statementTitle": 'Tell us whether you accept cookies',
+            "statementText": 'We use <a href="' + domain_url_cy + '/cwcis' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
+            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_cy + '/cwcis' + '">change your cookie preferences</a> at any time.',
+            "secondaryButtonUrl": domain_url_cy + '/cwcis'
         })
     }}
 {% endblock %}

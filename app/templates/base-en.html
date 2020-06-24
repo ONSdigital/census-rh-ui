@@ -49,7 +49,7 @@
     'title': page_title_value,
     'theme': 'census',
     'header': {
-        'titleLogo': '/img/census-logo-en.svg',
+        'titleLogo': 'census-logo-en',
         'titleLogoAlt': 'Census 2021',
     },
     'language': { 'languages': language },
@@ -122,8 +122,10 @@
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            'html': 'We use cookies to improve your experience of census.gov.uk',
-            'secondaryButtonUrl': domain_url_en + '/cookies'
+            "statementTitle": 'Tell us whether you accept cookies',
+            "statementText": 'We use <a href="' + domain_url_en + '/cookies' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
+            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_en + '/cookies' + '">change your cookie preferences</a> at any time.',
+            "secondaryButtonUrl": domain_url_en + '/cookies'
         })
     }}
 {% endblock %}

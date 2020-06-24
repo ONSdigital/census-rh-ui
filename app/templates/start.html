@@ -6,9 +6,11 @@
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}
 {% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/panel/_macro.njk' import onsPanel %}
-{% from 'components/lists/_macro.njk' import onsList %}
 {% from "components/input/_macro.njk" import onsInput %}
+
+{% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
+{% from "components/collapsible/_macro.njk" import onsCollapsible %}
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -20,46 +22,65 @@
     }
 } %}
 
-{% set uac_input = onsUACInput({
-        'id': 'uac',
-        'name': 'uac',
-        'label': {
-            'text': _('Enter the 16 character code printed on the letter'),
-            'description': _('Keep this code safe and only share it with others in your household')
-        },
-        'securityMessage': _('Your personal information is protected by law and will be kept confidential.')
-    })
-%}
+{% block preMain %}
+    {{
+        onsBreadcrumb({
+            "ariaLabel": 'Breadcrumb',
+            "itemsList": [
+                {
+                    "url": '/',
+                    "text": 'Home'
+                },
+                {
+                    "url": '/#',
+                    "text": 'Start census',
+                    "current": true
+                }
+            ]
+        })
+    }}
+{% endblock %}
 
 {% block main %}
 
-    <h1 class="u-mt-l">{{_('Start Census')}}</h1>
+    <h1 class="u-mt-xs">{{_('Start census')}}</h1>
 
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% if 'uac' in field_messages_dict %}
-        {% call
-            onsPanel({
-                'type': 'error'
-            })
-        %}
         {{
-            onsList({
-                'id': 'link-uac',
-                'classes': 'list--bare list--errors u-mb-s',
-                'itemsList': [
-                    {
-                        'text': _('Enter a valid code')
-                    }
-                ]
+            onsUACInput({
+                'id': 'uac',
+                'name': 'uac',
+                'postTextboxLinkText': _('Where to find your access code'),
+                'postTextboxLinkUrl': '#',
+                'label': {
+                    'text': _('Enter your 16-character access code'),
+                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
+                },
+                'securityMessage': _('Your personal information is protected by law and will be kept confidential.'),
+                'error': {
+                    'id': 'uac',
+                    'text': _('Enter an access code to continue')
+                }
             })
         }}
-        {{ uac_input }}
-        {% endcall %}
     {% else %}
-        {{ uac_input }}
+        {{
+            onsUACInput({
+                'id': 'uac',
+                'name': 'uac',
+                'postTextboxLinkText': _('Where to find your access code'),
+                'postTextboxLinkUrl': '#',
+                'label': {
+                    'text': _('Enter your 16-character access code'),
+                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
+                },
+                'securityMessage': _('Your personal information is protected by law and will be kept confidential.')
+            })
+        }}
     {% endif %}
 
     {% if adlocation %}
@@ -79,22 +100,40 @@
     {% endif %}
 
     {{ onsButton({
-        'text': _('Access Census'),
+        'text': _('Access census'),
         'classes': 'u-mb-xl',
         'name': 'action[save_continue]'
     }) }}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_("Don't have a code?")}}</h2>
+    <h2>{{_("If you don’t have an access code")}}</h2>
     {% autoescape false %}
-        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new survey if you have lost, forgotten or not received an access code.', open='<a href="%s">' % request_household_code_link, close='</a>')|safe }}</p>
+        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new census if you have lost or not received an access code. This can be sent to you by text or post.', open='<a href="%s">' % request_household_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_("Want to answer separately from your household?")}}</h2>
-    {% autoescape false %}
-        <p>{{ _('If you prefer to answer separately from the people you live with, you can  %(open)srequest an individual access code%(close)s.', open='<a href="%s">' % request_individual_code_link, close='</a>')|safe }}</p>
-    {% endautoescape %}
+    {% set content %}
+        {% autoescape false %}
+            <p>{{ _('If you need to answer separately from the people you live with, you can %(open)srequest an individual access code%(close)s to start a separate census.', open='<a href="%s">' % request_individual_code_link, close='</a>')|safe }}</p>
+        {% endautoescape %}
+        {% call onsPanel({
+                'type': 'warn'
+            })
+        %}
+        <p><strong>{{ _('Someone in your household must still complete a census using a household access code')}}</strong></p>
+        {% endcall %}
+    {% endset %}
 
-    <h2 class="u-fs-r--b u-mb-no">{{_('Need help?')}}</h2>
+    {% call onsCollapsible({
+            'id': 'collapsible',
+            'title': _('Need to answer separately from your household?'),
+            'titleTag': 'h2',
+            'button': {
+                'close': _('Hide this'),
+                'contextSuffix': 'content'
+            }
+        })
+    %}
+        {{ content | safe }}
+    {% endcall %}
 
     {{ onsButton({
         'text': _('Web chat'),

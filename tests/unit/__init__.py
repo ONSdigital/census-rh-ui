@@ -424,10 +424,10 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
 
-        self.content_start_title_en = 'Start Census'
-        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
-        self.content_start_title_cy = "Dechrau\\\'r Cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi\\\'i argraffu ar y llythyr"
+        self.content_start_title_en = 'Start census'
+        self.content_start_uac_title_en = 'Enter your 16-character access code'
+        self.content_start_title_cy = "Start census"
+        self.content_start_uac_title_cy = "Enter your 16-character access code"
 
         self.content_start_confirm_address_title_en = 'Is this address correct?'
         self.content_start_confirm_address_option_en = 'Yes, this address is correct'

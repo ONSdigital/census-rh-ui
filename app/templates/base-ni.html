@@ -11,8 +11,10 @@
     'theme': 'census',
     'header': {
         'logo': 'nisra-logo-en',
+        'mobileLogo': 'nisra-logo-en',
         'logoAlt': 'Northern Ireland Statistics and Research Agency logo',
-        'titleLogo': '/img/census-logo-en.svg',
+        'customHeaderLogo': 'nisra',
+        'titleLogo': 'census-logo-en',
         'titleLogoAlt': 'Census 2021',
     },
     'footer': {
@@ -86,8 +88,10 @@
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            'html': 'We use cookies to improve your experience of census.gov.uk',
-            'secondaryButtonUrl': domain_url_en + '/ni/cookies'
+            "statementTitle": 'Tell us whether you accept cookies',
+            "statementText": 'We use <a href="' + domain_url_ni + '/cookies' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
+            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_ni + '/cookies' + '">change your cookie preferences</a> at any time.',
+            "secondaryButtonUrl": domain_url_ni + '/cookies'
         })
     }}
 {% endblock %}
