@@ -1567,8 +1567,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
         contents = str(await response.content.read())
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
         self.assertIn(self.ons_logo_en, contents)
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
@@ -1582,8 +1581,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
         contents = str(await response.content.read())
-        self.assertIn('Rhowch y cod 16 nod sydd',
-                      contents)
+        self.assertIn(self.content_start_uac_title_cy, contents)
         self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
@@ -1597,8 +1595,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         self.assertLogEvent(cm, "assisted digital query parameter not numeric - ignoring")
         contents = str(await response.content.read())
-        self.assertIn('Enter the 16 character code printed on the letter',
-                      contents)
+        self.assertIn(self.content_start_uac_title_en, contents)
         self.assertIn(self.nisra_logo, contents)
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
