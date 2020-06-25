@@ -6,6 +6,64 @@
     {% set page_title_value = 'Census 2021' %}
 {% endif %}
 
+{% if page_show_signout == 'true' %}
+    {% set signout_button_value = {
+            'text': 'Save and sign out',
+            'ariaLabel': 'Toggle main navigation',
+            'url': domain_url_ni + '/start/save-and-exit/'
+        }
+    %}
+{% endif %}
+
+{% set footer_content = {
+        'poweredBy': {
+            'logo': 'nisra-logo-black-en',
+            'classes': 'footer__poweredby-img--small'
+        },
+        'rows': [
+            {
+                'itemsList': [
+                    {
+                        'text': 'About the census',
+                        'url': domain_url_ni + '/about-the-census/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Help with your census',
+                        'url': domain_url_ni + '/help/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Contact us',
+                        'url': domain_url_ni + '/contact-us/',
+                        'target': '_blank'
+                    }
+                ]
+            },
+            {
+                'itemsList': [
+                    {
+                        'text': 'Cookies',
+                        'url': domain_url_ni + '/cookies/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Accessibility',
+                        'url': domain_url_ni + '/start/accessibility/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Privacy and data protection',
+                        'url': domain_url_ni + '/privacy-and-data-protection/',
+                        'target': '_blank'
+                    }
+                ]
+            }
+        ]
+    }
+%}
+
+
 {% set pageConfig = {
     'title': page_title_value,
     'theme': 'census',
@@ -17,52 +75,8 @@
         'titleLogo': 'census-logo-en',
         'titleLogoAlt': 'Census 2021',
     },
-    'footer': {
-        'poweredBy': {
-            'logo': 'nisra-logo-black-en',
-            'classes': 'footer__poweredby-img--small'
-        },
-        'rows': [
-            {
-                'itemsList': [
-                    {
-                        'text': 'About the census',
-                        'url': domain_url_en + '/ni/about-the-census/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Help with your census',
-                        'url': domain_url_en + '/ni/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Contact us',
-                        'url': domain_url_en + '/ni/contact-us/',
-                        'target': '_blank'
-                    }
-                ]
-            },
-            {
-                'itemsList': [
-                    {
-                        'text': 'Cookies',
-                        'url': domain_url_en + '/ni/cookies/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Accessibility',
-                        'url': domain_url_en + '/ni/start/accessibility/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Privacy and data protection',
-                        'url': domain_url_en + '/ni/privacy-and-data-protection/',
-                        'target': '_blank'
-                    }
-                ]
-            }
-        ]
-    }
+    'signoutButton': signout_button_value,
+    'footer': footer_content
 } %}
 
 {% block head %}

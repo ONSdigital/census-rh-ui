@@ -6,6 +6,62 @@
     {% set page_title_value = 'Cyfrifiad 2021' %}
 {% endif %}
 
+{% if page_show_signout == 'true' %}
+    {% set signout_button_value = {
+            'text': 'Save and sign out',
+            'ariaLabel': 'Toggle main navigation',
+            'url': domain_url_en + '/cy/start/save-and-exit/'
+        }
+    %}
+{% endif %}
+
+{% set footer_content = {
+        'poweredBy': true,
+        'lang': 'cy',
+        'rows': [
+            {
+                'itemsList': [
+                    {
+                        'text': "Ynglŷn â'r cyfrifiad",
+                        'url': domain_url_cy + '/ynglyn-ar-cyfrifiad/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': "Help gyda'ch cyfrifiad",
+                        'url': domain_url_cy + '/help/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Cysylltu â ni',
+                        'url': domain_url_cy + '/cysylltu-a-ni/',
+                        'target': '_blank'
+                    }
+                ]
+            },
+            {
+                'itemsList': [
+                    {
+                        'text': 'Cwcis',
+                        'url': domain_url_cy + '/cwcis/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Hygyrchedd',
+                        'url': domain_url_en + '/cy/start/accessibility/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Preifatrwydd a diogelu data',
+                        'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/',
+                        'target': '_blank'
+                    }
+                ]
+            }
+        ]
+    }
+
+%}
+
 {% if page_url %}
     {% set language =
         [
@@ -54,51 +110,10 @@
         'titleLogo': 'census-logo-cy',
         'titleLogoAlt': 'Cyfrifiad 2021',
     },
-    'footer': {
-        'poweredBy': true,
-        'lang': 'cy',
-        'rows': [
-            {
-                'itemsList': [
-                    {
-                        'text': "Ynglŷn â'r cyfrifiad",
-                        'url': domain_url_cy + '/ynglyn-ar-cyfrifiad/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': "Help gyda'ch cyfrifiad",
-                        'url': domain_url_cy + '/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Cysylltu â ni',
-                        'url': domain_url_cy + '/cysylltu-a-ni/',
-                        'target': '_blank'
-                    }
-                ]
-            },
-            {
-                'itemsList': [
-                    {
-                        'text': 'Cwcis',
-                        'url': domain_url_cy + '/cwcis/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Hygyrchedd',
-                        'url': domain_url_en + '/cy/start/accessibility/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Preifatrwydd a diogelu data',
-                        'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/',
-                        'target': '_blank'
-                    }
-                ]
-            }
-        ]
+    'signoutButton': signout_button_value,
+    'footer': footer_content
     }
-} %}
+%}
 
 {% block head %}
 

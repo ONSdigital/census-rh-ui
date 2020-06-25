@@ -429,10 +429,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_title_cy = "Start census"
         self.content_start_uac_title_cy = "Enter your 16-character access code"
 
-        self.content_start_confirm_address_title_en = 'Is this address correct?'
-        self.content_start_confirm_address_option_en = 'Yes, this address is correct'
-        self.content_start_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_start_confirm_address_option_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_start_confirm_address_title_en = 'Is this the correct address?'
+        self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
+        self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
+        self.content_start_confirm_address_error_en = 'Check and confirm the address is correct'
+        self.content_start_confirm_address_title_cy = "Is this the correct address?"
+        self.content_start_confirm_address_option_yes_cy = "Yes, this is the correct address"
+        self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
+        self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
 
         # End Start Journey
 

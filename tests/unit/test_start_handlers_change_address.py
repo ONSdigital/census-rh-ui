@@ -58,7 +58,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -193,7 +194,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -326,7 +328,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -461,7 +464,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -594,7 +598,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_cy, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -729,7 +734,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_cy, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -862,7 +868,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -1010,7 +1017,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
+            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
 
             response = await self.client.request(
                 'POST',
@@ -2035,7 +2043,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_address_in_scotland_en, str(resp_content))
-
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_en(self):

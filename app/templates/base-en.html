@@ -6,6 +6,61 @@
     {% set page_title_value = 'Census 2021' %}
 {% endif %}
 
+{% if page_show_signout == 'true' %}
+    {% set signout_button_value = {
+            'text': 'Save and sign out',
+            'ariaLabel': 'Toggle main navigation',
+            'url': domain_url_en + '/en/start/save-and-exit/'
+        }
+    %}
+{% endif %}
+
+{% set footer_content = {
+        'poweredBy': true,
+        'lang': 'en',
+        'rows': [
+            {
+                'itemsList': [
+                    {
+                        'text': 'About the census',
+                        'url': domain_url_en + '/about-the-census/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Help with your census',
+                        'url': domain_url_en + '/help/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Contact us',
+                        'url': domain_url_en + '/contact-us/',
+                        'target': '_blank'
+                    }
+                ]
+            },
+            {
+                'itemsList': [
+                    {
+                        'text': 'Cookies',
+                        'url': domain_url_en + '/cookies/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Accessibility',
+                        'url': domain_url_en + '/en/start/accessibility/',
+                        'target': '_blank'
+                    },
+                    {
+                        'text': 'Privacy and data protection',
+                        'url': domain_url_en + '/privacy-and-data-protection/',
+                        'target': '_blank'
+                    }
+                ]
+            }
+        ]
+    }
+%}
+
 {% if page_url %}
     {% set language =
         [
@@ -52,51 +107,9 @@
         'titleLogo': 'census-logo-en',
         'titleLogoAlt': 'Census 2021',
     },
+    'signoutButton': signout_button_value,
     'language': { 'languages': language },
-    'footer': {
-        'poweredBy': true,
-        'lang': 'en',
-        'rows': [
-            {
-                'itemsList': [
-                    {
-                        'text': 'About the census',
-                        'url': domain_url_en + '/about-the-census/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Help with your census',
-                        'url': domain_url_en + '/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Contact us',
-                        'url': domain_url_en + '/contact-us/',
-                        'target': '_blank'
-                    }
-                ]
-            },
-            {
-                'itemsList': [
-                    {
-                        'text': 'Cookies',
-                        'url': domain_url_en + '/cookies/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Accessibility',
-                        'url': domain_url_en + '/en/start/accessibility/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Privacy and data protection',
-                        'url': domain_url_en + '/privacy-and-data-protection/',
-                        'target': '_blank'
-                    }
-                ]
-            }
-        ]
-    }
+    'footer': footer_content
 } %}
 
 {% block head %}
