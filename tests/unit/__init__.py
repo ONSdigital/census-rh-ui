@@ -418,6 +418,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
+        self.content_common_save_and_exit_link_en = 'Save and sign out'
+        self.content_common_save_and_exit_link_cy = 'Save and sign out'
+
         # End Common
 
         # Start Journey
@@ -426,17 +429,38 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_title_en = 'Start census'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
+        # TODO: add welsh translation
         self.content_start_title_cy = "Start census"
+        # TODO: add welsh translation
         self.content_start_uac_title_cy = "Enter your 16-character access code"
+
+        self.content_start_uac_expired_en = 'Your unique access code has expired'
+        self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
 
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
         self.content_start_confirm_address_error_en = 'Check and confirm the address is correct'
+        # TODO: add welsh translation
         self.content_start_confirm_address_title_cy = "Is this the correct address?"
+        # TODO: add welsh translation
         self.content_start_confirm_address_option_yes_cy = "Yes, this is the correct address"
+        # TODO: add welsh translation
         self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
+        # TODO: add welsh translation
         self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
+
+        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
+        self.content_start_ni_language_options_option_title = 'Select a language option'
+        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
+
+        self.content_start_ni_select_language_title = 'Choose your language'
+        self.content_start_ni_select_language_option_title = 'Select a language option'
+        self.content_start_ni_select_language_option = 'Continue in English'
+        self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
+
+        self.content_start_save_and_exit_title_en = 'Your progress has been saved'
+        self.content_start_save_and_exit_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
         # End Start Journey
 
@@ -1004,12 +1028,6 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_timeout_error_en = 're-enter your postcode'
         self.content_request_timeout_error_cy = 'nodi eich cod post eto'
-
-        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
-        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
-
-        self.content_start_ni_select_language_title = 'Choose your language'
-        self.content_start_ni_select_language_option = 'Continue in English'
 
         # Unlinked UACs
 

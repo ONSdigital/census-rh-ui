@@ -375,6 +375,7 @@ class StartNILanguageOptions(StartCommon):
             case = session['case']
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
+            attributes['page_show_signout'] = 'true'
 
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
