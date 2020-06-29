@@ -71,10 +71,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
 
         try:
             adlocation = request.query['adlocation']
@@ -119,10 +120,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
         data = await request.post()
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
