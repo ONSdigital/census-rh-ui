@@ -363,17 +363,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_value_cy = '1 Gate Reach'
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
-        self.content_common_confirm_address_title_en = 'Is this address correct?'
+        self.content_common_confirm_address_title_en = 'Is this the correct address?'
         self.content_common_confirm_address_error_en = 'Check and confirm the address'
-        self.content_common_confirm_address_value_yes_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
         # TODO: add welsh translation
-        self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
         # TODO: add welsh translation
-        self.content_common_confirm_address_value_yes_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
         # TODO: add welsh translation
