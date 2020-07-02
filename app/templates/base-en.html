@@ -6,54 +6,16 @@
     {% set page_title_value = 'Census 2021' %}
 {% endif %}
 
-{% if page_url %}
-    {% set language =
-        [
-            {
-                'url': domain_url_en + '/en' + page_url,
-                'ISOCode': 'en',
-                'text': 'English',
-                'buttonAriaLabel': 'Language selector. Current language: English',
-                'chooseLanguage': 'Choose language',
-                'allLanguages': 'All languages',
-                'current': true
-            },
-            {
-                'url': domain_url_cy + '/cy' + page_url,
-                'ISOCode': 'cy',
-                'text': 'Cymraeg',
-                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
-                'chooseLanguage': 'Dewiswch iaith',
-                'allLanguages': 'Pob iaith',
-                'current': false
-            }
-        ]
-    %}
-{% else %}
-    {% set language =
-        [
-            {
-                'url': '#',
-                'ISOCode': 'en',
-                'text': 'English',
-                'buttonAriaLabel': 'Language selector. Current language: English',
-                'chooseLanguage': 'Choose language',
-                'allLanguages': 'All languages',
-                'current': true
-            }
-        ]
+{% if page_show_signout == 'true' %}
+    {% set signout_button_value = {
+            'text': 'Save and sign out',
+            'ariaLabel': 'Toggle main navigation',
+            'url': domain_url_en + '/en/start/save-and-exit/'
+        }
     %}
 {% endif %}
 
-{% set pageConfig = {
-    'title': page_title_value,
-    'theme': 'census',
-    'header': {
-        'titleLogo': '/img/census-logo-en.svg',
-        'titleLogoAlt': 'Census 2021',
-    },
-    'language': { 'languages': language },
-    'footer': {
+{% set footer_content = {
         'poweredBy': true,
         'lang': 'en',
         'rows': [
@@ -97,6 +59,44 @@
             }
         ]
     }
+%}
+
+{% if page_url %}
+    {% set language = { 'languages':
+        [
+            {
+                'url': domain_url_en + '/en' + page_url,
+                'ISOCode': 'en',
+                'text': 'English',
+                'buttonAriaLabel': 'Language selector. Current language: English',
+                'chooseLanguage': 'Choose language',
+                'allLanguages': 'All languages',
+                'current': true
+            },
+            {
+                'url': domain_url_cy + '/cy' + page_url,
+                'ISOCode': 'cy',
+                'text': 'Cymraeg',
+                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
+                'chooseLanguage': 'Dewiswch iaith',
+                'allLanguages': 'Pob iaith',
+                'current': false
+            }
+        ]
+}
+    %}
+{% endif %}
+
+{% set pageConfig = {
+    'title': page_title_value,
+    'theme': 'census',
+    'header': {
+        'titleLogo': 'census-logo-en',
+        'titleLogoAlt': 'Census 2021',
+    },
+    'signoutButton': signout_button_value,
+    'language': language,
+    'footer': footer_content
 } %}
 
 {% block head %}
@@ -122,8 +122,10 @@
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            'html': 'We use cookies to improve your experience of census.gov.uk',
-            'secondaryButtonUrl': domain_url_en + '/cookies'
+            "statementTitle": 'Tell us whether you accept cookies',
+            "statementText": 'We use <a href="' + domain_url_en + '/cookies' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
+            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_en + '/cookies' + '">change your cookie preferences</a> at any time.',
+            "secondaryButtonUrl": domain_url_en + '/cookies'
         })
     }}
 {% endblock %}
