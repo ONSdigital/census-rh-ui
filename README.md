@@ -22,7 +22,9 @@ Install the required Python packages for running and testing Respondent Home wit
   `make install`
 
 ## Running
-To run this application in development use:
+First, run scripts/load_templates.sh to pull the current/correct version of the ONS Design Patterns.
+
+Then to run this application in development use:
 
   `make run`
 
