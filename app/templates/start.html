@@ -1,6 +1,6 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% set request_household_code_link = url('RequestCode:get', request_type='household-code', display_region=display_region) %}
+{% set request_access_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='access-code') %}
 {% set request_individual_code_link = url('RequestCode:get', request_type='individual-code', display_region=display_region) %}
 {% set webchat_link = url('WebChat:get', display_region=display_region) %}
 
@@ -107,7 +107,7 @@
 
     <h2>{{_("If you don’t have an access code")}}</h2>
     {% autoescape false %}
-        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new census if you have lost or not received an access code. This can be sent to you by text or post.', open='<a href="%s">' % request_household_code_link, close='</a>')|safe }}</p>
+        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new census if you have lost or not received an access code. This can be sent to you by text or post.', open='<a href="%s">' % request_access_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
     {% set content %}
