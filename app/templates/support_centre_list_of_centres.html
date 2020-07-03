@@ -2,10 +2,77 @@
 
 {% from "components/collapsible/_macro.njk" import onsCollapsible %}
 {% from "components/lists/_macro.njk" import onsList %}
+{% from 'macros/time/_macro.njk' import rhTime %}
 
 {% block main %}
 
-    <h1 class="u-mt-l u-fs-xxl">Support centres near <em class="highlight">S1 1XN</em></h1>
+    <h1 class="u-mt-l u-fs-xxl">Support centres near <em class="highlight">{{ postcode }}</em></h1>
+
+    {% for centre in ad_response['centres'] %}
+        <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
+            <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
+            <div><span class="u-mb-s tag">{{ centre['distanceInMiles'] }} miles away</span></div>
+            {% autoescape false %}
+                <p>{{ centre['address'] | replace(',', '<br>') }} <br>
+                {{ centre['postcode'] }}</p>
+            {% endautoescape %}
+            <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">Find on Google Maps</a></p>
+            {{
+                onsList({
+                    "classes": 'list--bare',
+                    "itemsList": [
+                        {
+                            "text": 'Telephone: ' + centre['phone']
+                        },
+                        {
+                            "text": 'Email: <a href="mailto:' + centre['email'] + '">' + centre['email'] + '</a>'
+                        }
+                    ]
+                })
+            }}
+            {% call onsCollapsible({
+                "id": 'collapsible-1',
+                "title": 'Opening times and facilities',
+                "button": {
+                    "close": 'Hide this',
+                    'contextSuffix': 'content'
+                }
+            }) %}
+            <h3 class="u-fs-r--b u-mb-xs">Opening times</h3>
+            <p>
+                {% for days in centre['openingHours'] %}
+                    {% for day in days %}
+                        {% for times in days[day] %}
+                            {{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day|capitalize }}<br>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </p>
+            <h3 class="u-fs-r--b u-mb-xs">Centre facilities</h3>
+            {{
+                onsList({
+                    "itemsList": [
+                        {
+                            "text": 'Public parking'
+                        },
+                        {
+                            "text": 'Level access into building entrance'
+                        },
+                        {
+                            "text": 'Wheelchair access'
+                        },
+                        {
+                            "text": 'Staff are disability aware'
+                        },
+                        {
+                            "text": 'Hearing loop system'
+                        }
+                    ]
+                })
+            }}
+            {% endcall %}
+        </div>
+    {% endfor %}
 
     <div class="u-pb-m u-pt-m">
         <h2 class="u-fs-l u-mb-xs">Sheffield Central Library</h2>

@@ -4,7 +4,7 @@ from aiohttp.web import RouteTableDef, HTTPFound
 from structlog import get_logger
 
 from .flash import flash
-from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
+from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, ADLookUp
 
 logger = get_logger('respondent-home')
 support_centre_routes = RouteTableDef()
@@ -95,7 +95,7 @@ class SupportCentreListCentres(View):
                 'page_title': 'Error',
                 'display_region': display_region,
                 'locale': locale,
-                'page_url': '/find-a-support-centre/' + postcode_value + '/'
+                'page_url': '/find-a-support-centre/' + request.match_info['postcode'] + '/'
             }
             return aiohttp_jinja2.render_template('404.html', request, attributes, status=404)
 
@@ -107,13 +107,14 @@ class SupportCentreListCentres(View):
         else:
             page_title = 'Support centres near ' + postcode_value
 
-        # list_of_centres_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
-        list_of_centres_content = {}
-        list_of_centres_content['page_title'] = page_title
-        list_of_centres_content['postcode'] = page_title
-        list_of_centres_content['display_region'] = display_region
-        list_of_centres_content['locale'] = locale
-        list_of_centres_content['page_url'] = '/find-a-support-centre/' + postcode_value + '/'
+        list_of_centres_content = {
+            'ad_response': await ADLookUp.get_ad_lookup_by_postcode(request, postcode_value),
+            'page_title': page_title,
+            'postcode': postcode_value,
+            'display_region': display_region,
+            'locale': locale,
+            'page_url': '/find-a-support-centre/' + postcode_value + '/'
+        }
 
         return list_of_centres_content
 

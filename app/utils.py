@@ -376,3 +376,16 @@ class RHService(View):
                                         f'{rhsvc_url}/surveyLaunched',
                                         auth=request.app['RHSVC_AUTH'],
                                         json=launch_json)
+
+
+class ADLookUp(View):
+
+    @staticmethod
+    async def get_ad_lookup_by_postcode(request, postcode):
+        ai_svc_url = request.app['AD_LOOK_UP_SVC_URL']
+        url = f'{ai_svc_url}/adlookup/postcode/{postcode}'
+        return await View._make_request(request,
+                                        'GET',
+                                        url,
+                                        auth=request.app['AD_LOOK_UP_SVC_AUTH'],
+                                        return_json=True)
