@@ -313,7 +313,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.common_resident_or_manager_input_invalid = {
-            'form-resident-or-manager': 'no', 'action[save_continue]': ''
+            'form-resident-or-manager': 'invalid', 'action[save_continue]': ''
         }
 
         self.common_postcode_input_valid = {
@@ -437,6 +437,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_en = 'Manager'
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
+        self.content_common_resident_or_manager_error_en = 'Please select an option.'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -449,6 +450,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_resident_or_manager_description_manager_cy = \
             'A manager is responsible for answering the census questions about this establishment'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_error_cy = 'Please select an option.'
 
         # End Common
 
