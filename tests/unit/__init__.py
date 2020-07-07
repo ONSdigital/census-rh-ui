@@ -304,6 +304,18 @@ class RHTestCase(AioHTTPTestCase):
             'form-confirm-address': 'invalid', 'action[save_continue]': ''
         }
 
+        self.common_resident_or_manager_input_resident = {
+            'form-resident-or-manager': 'resident', 'action[save_continue]': ''
+        }
+
+        self.common_resident_or_manager_input_manager = {
+            'form-resident-or-manager': 'manager', 'action[save_continue]': ''
+        }
+
+        self.common_resident_or_manager_input_invalid = {
+            'form-resident-or-manager': 'no', 'action[save_continue]': ''
+        }
+
         self.common_postcode_input_valid = {
             'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
@@ -417,6 +429,26 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+
+        self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
+        self.content_common_resident_or_manager_option_resident_en = 'Resident'
+        self.content_common_resident_or_manager_description_resident_en = \
+            'Residents are responsible for answering the census questions about themselves'
+        self.content_common_resident_or_manager_option_manager_en = 'Manager'
+        self.content_common_resident_or_manager_description_manager_en = \
+            'A manager is responsible for answering the census questions about this establishment'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_option_resident_cy = 'Resident'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_description_resident_cy = \
+            'Residents are responsible for answering the census questions about themselves'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_option_manager_cy = 'Manager'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_description_manager_cy = \
+            'A manager is responsible for answering the census questions about this establishment'
 
         # End Common
 
@@ -1149,6 +1181,16 @@ class RHTestCase(AioHTTPTestCase):
             display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+
+        self.post_request_access_code_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 

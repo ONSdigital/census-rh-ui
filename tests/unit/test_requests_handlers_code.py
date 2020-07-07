@@ -853,6 +853,22 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -950,6 +966,22 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1047,6 +1079,22 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_title_cy, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_cy,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1144,6 +1192,22 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_ni,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
