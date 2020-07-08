@@ -49,21 +49,18 @@
                 {% endfor %}
             </p>
             <h3 class="u-fs-r--b u-mb-xs">Centre facilities</h3>
-            {% set accessibility_items %} [
+            {% set accessibility_items = [] %}
             {% for accessibility in centre['accessibility'] %}
 
-                    {% if accessibility['parking'] == True %}{"text": 'Public parking'},{% endif %}
-                    {% if accessibility['accessibleEntrance'] == True %}{"text": 'Level access into building entrance'},{% endif %}
-                    {% if accessibility['accessibleBuilding'] == True %}{"text": 'Wheelchair access'},{% endif %}
-                    {% if accessibility['disabledParking'] == True %}{"text": 'Public parking'},{% endif %}
-                    {% if accessibility['staffDisabilityAware'] == True %}{"text": 'Staff are disability aware'},{% endif %}
-                    {% if accessibility['waitingRoomSeating'] == True %}{"text": 'Public parking'},{% endif %}
-                    {% if accessibility['hearingLoop'] == True %}{"text": 'Hearing loop system'},{% endif %}
+                    {% if accessibility['parking'] == True %}{{ accessibility_items.append( {"text": 'Public parking'}) }}{% endif %}
+                    {% if accessibility['accessibleEntrance'] == True %}{{ accessibility_items.append( {"text": 'Level access into building entrance'}) }}{% endif %}
+                    {% if accessibility['accessibleBuilding'] == True %}{{ accessibility_items.append( {"text": 'Wheelchair access'}) }}{% endif %}
+                    {% if accessibility['disabledParking'] == True %}{{ accessibility_items.append( {"text": 'Public parking'}) }}{% endif %}
+                    {% if accessibility['staffDisabilityAware'] == True %}{{ accessibility_items.append( {"text": 'Staff are disability aware'}) }}{% endif %}
+                    {% if accessibility['waitingRoomSeating'] == True %}{{ accessibility_items.append( {"text": 'Public parking'}) }}{% endif %}
+                    {% if accessibility['hearingLoop'] == True %}{{ accessibility_items.append( {"text": 'Hearing loop system'}) }}{% endif %}
 
             {% endfor %}
-            ]
-            {% endset %}
-            {{accessibility_items}}
             {{
                 onsList({
                     "itemsList": accessibility_items
