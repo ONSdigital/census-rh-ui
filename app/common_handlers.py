@@ -528,7 +528,7 @@ class CommonConfirmAddress(CommonCommon):
                     + '/' + View.valid_sub_user_journeys + '/resident-or-manager/')
 class CommonCEMangerQuestion(CommonCommon):
     """
-    Common route to enable address entry via postcode from start and request journeys
+    Common route to ask whether user is a resident or manager if they select a CE Estab as an address in fulfilments
     """
     @aiohttp_jinja2.template('common-resident-or-manager.html')
     async def get(self, request):
