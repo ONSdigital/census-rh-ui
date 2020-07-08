@@ -43,11 +43,11 @@
 
 {% block main %}
 
-    <h1 class="u-fs-xl">{{_('Start census')}}</h1>
-
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
     {% endif %}
+
+    <h1 class="u-mt-l">{{_('Start census')}}</h1>
 
     {% if 'uac' in field_messages_dict %}
         {{
