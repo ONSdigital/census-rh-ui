@@ -17,7 +17,7 @@ requests_routes = RouteTableDef()
 
 class RequestCommon(View):
 
-    valid_request_types = r'{request_type:\bhousehold-code|individual-code|access-code\b}'
+    valid_request_types = r'{request_type:\bindividual-code|access-code\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type,
