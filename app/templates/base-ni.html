@@ -6,16 +6,16 @@
     {% set page_title_value = 'Census 2021' %}
 {% endif %}
 
-{% set pageConfig = {
-    'title': page_title_value,
-    'theme': 'census',
-    'header': {
-        'logo': 'nisra-logo-en',
-        'logoAlt': 'Northern Ireland Statistics and Research Agency logo',
-        'titleLogo': '/img/census-logo-en.svg',
-        'titleLogoAlt': 'Census 2021',
-    },
-    'footer': {
+{% if page_show_signout == 'true' %}
+    {% set signout_button_value = {
+            'text': 'Save and sign out',
+            'ariaLabel': 'Toggle main navigation',
+            'url': domain_url_ni + '/start/save-and-exit/'
+        }
+    %}
+{% endif %}
+
+{% set footer_content = {
         'poweredBy': {
             'logo': 'nisra-logo-black-en',
             'classes': 'footer__poweredby-img--small'
@@ -25,17 +25,17 @@
                 'itemsList': [
                     {
                         'text': 'About the census',
-                        'url': domain_url_en + '/ni/about-the-census/',
+                        'url': domain_url_ni + '/about-the-census/',
                         'target': '_blank'
                     },
                     {
                         'text': 'Help with your census',
-                        'url': domain_url_en + '/ni/help/',
+                        'url': domain_url_ni + '/help/',
                         'target': '_blank'
                     },
                     {
                         'text': 'Contact us',
-                        'url': domain_url_en + '/ni/contact-us/',
+                        'url': domain_url_ni + '/contact-us/',
                         'target': '_blank'
                     }
                 ]
@@ -44,23 +44,39 @@
                 'itemsList': [
                     {
                         'text': 'Cookies',
-                        'url': domain_url_en + '/ni/cookies/',
+                        'url': domain_url_ni + '/cookies/',
                         'target': '_blank'
                     },
                     {
                         'text': 'Accessibility',
-                        'url': domain_url_en + '/ni/start/accessibility/',
+                        'url': domain_url_ni + '/start/accessibility/',
                         'target': '_blank'
                     },
                     {
                         'text': 'Privacy and data protection',
-                        'url': domain_url_en + '/ni/privacy-and-data-protection/',
+                        'url': domain_url_ni + '/privacy-and-data-protection/',
                         'target': '_blank'
                     }
                 ]
             }
         ]
     }
+%}
+
+
+{% set pageConfig = {
+    'title': page_title_value,
+    'theme': 'census',
+    'header': {
+        'logo': 'nisra-logo-en',
+        'mobileLogo': 'nisra-logo-en',
+        'logoAlt': 'Northern Ireland Statistics and Research Agency logo',
+        'customHeaderLogo': 'nisra',
+        'titleLogo': 'census-logo-en',
+        'titleLogoAlt': 'Census 2021',
+    },
+    'signoutButton': signout_button_value,
+    'footer': footer_content
 } %}
 
 {% block head %}
@@ -86,8 +102,10 @@
     {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
     {{
         onsCookiesBanner({
-            'html': 'We use cookies to improve your experience of census.gov.uk',
-            'secondaryButtonUrl': domain_url_en + '/ni/cookies'
+            "statementTitle": 'Tell us whether you accept cookies',
+            "statementText": 'We use <a href="' + domain_url_ni + '/cookies' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
+            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_ni + '/cookies' + '">change your cookie preferences</a> at any time.',
+            "secondaryButtonUrl": domain_url_ni + '/cookies'
         })
     }}
 {% endblock %}
