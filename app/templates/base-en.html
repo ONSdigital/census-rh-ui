@@ -62,7 +62,7 @@
 %}
 
 {% if page_url %}
-    {% set language =
+    {% set language = { 'languages':
         [
             {
                 'url': domain_url_en + '/en' + page_url,
@@ -83,20 +83,7 @@
                 'current': false
             }
         ]
-    %}
-{% else %}
-    {% set language =
-        [
-            {
-                'url': '#',
-                'ISOCode': 'en',
-                'text': 'English',
-                'buttonAriaLabel': 'Language selector. Current language: English',
-                'chooseLanguage': 'Choose language',
-                'allLanguages': 'All languages',
-                'current': true
-            }
-        ]
+}
     %}
 {% endif %}
 
@@ -108,7 +95,7 @@
         'titleLogoAlt': 'Census 2021',
     },
     'signoutButton': signout_button_value,
-    'language': { 'languages': language },
+    'language': language,
     'footer': footer_content
 } %}
 

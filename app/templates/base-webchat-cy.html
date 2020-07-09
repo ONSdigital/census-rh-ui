@@ -6,6 +6,32 @@
     {% set page_title_value = 'Cyfrifiad 2021' %}
 {% endif %}
 
+{% if page_url %}
+    {% set language = { 'languages':
+        [
+            {
+                'url': domain_url_cy + '/cy' + page_url,
+                'ISOCode': 'cy',
+                'text': 'Cymraeg',
+                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
+                'chooseLanguage': 'Dewiswch iaith',
+                'allLanguages': 'Pob iaith',
+                'current': true
+            },
+            {
+                'url': domain_url_en + '/en' + page_url,
+                'ISOCode': 'en',
+                'text': 'English',
+                'buttonAriaLabel': 'Language selector. Current language: English',
+                'chooseLanguage': 'Choose language',
+                'allLanguages': 'All languages',
+                'current': false
+            }
+        ]
+}
+    %}
+{% endif %}
+
 {% set pageConfig = {
     'title': page_title_value,
     'theme': 'census',
@@ -13,19 +39,7 @@
         'titleLogo': 'census-logo-cy',
         'titleLogoAlt': 'Cyfrifiad 2021',
     },
-    'language': {
-        'languages': [
-            {
-                'url': '#',
-                'ISOCode': 'cy',
-                'text': 'Cymraeg',
-                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
-                'chooseLanguage': 'Dewiswch iaith',
-                'allLanguages': 'Pob iaith',
-                'current': true
-            }
-        ]
-    },
+    'language': language,
     'footer': {}
 } %}
 
