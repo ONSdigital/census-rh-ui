@@ -71,10 +71,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
 
         try:
             adlocation = request.query['adlocation']
@@ -119,10 +120,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
         data = await request.post()
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
@@ -215,7 +217,8 @@ class StartRegionChange(StartCommon):
         return {
             'display_region': display_region,
             'locale': locale,
-            'page_title': page_title
+            'page_title': page_title,
+            'page_show_signout': 'true'
         }
 
 
@@ -232,10 +235,11 @@ class StartConfirmAddress(StartCommon):
         await check_permission(request)
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO: add welsh translation
+            page_title = "Is this the correct address?"
         else:
             locale = 'en'
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
 
         session = await get_session(request)
         try:
@@ -249,6 +253,7 @@ class StartConfirmAddress(StartCommon):
 
         return {'locale': locale,
                 'page_title': page_title,
+                'page_show_signout': 'true',
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
                 'addressLine2': attributes['addressLine2'],
@@ -267,10 +272,11 @@ class StartConfirmAddress(StartCommon):
         self.log_entry(request, display_region + '/start/confirm-address')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO: add welsh translation
+            page_title = "Is this the correct address?"
         else:
             locale = 'en'
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
 
         data = await request.post()
 
@@ -297,6 +303,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -332,6 +339,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -353,6 +361,7 @@ class StartNILanguageOptions(StartCommon):
 
         return {'locale': 'en',
                 'page_title': 'Would you like to complete the census in English?',
+                'page_show_signout': 'true',
                 'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
@@ -368,6 +377,7 @@ class StartNILanguageOptions(StartCommon):
             case = session['case']
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
+            attributes['page_show_signout'] = 'true'
 
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
@@ -399,6 +409,7 @@ class StartNILanguageOptions(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Would you like to complete the census in English?',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
 
@@ -415,6 +426,7 @@ class StartNISelectLanguage(StartCommon):
 
         return {'locale': 'en',
                 'page_title': 'Choose your language',
+                'page_show_signout': 'true',
                 'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
@@ -441,6 +453,7 @@ class StartNISelectLanguage(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Choose your language',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
         if language_option == 'gaeilge':
@@ -459,6 +472,7 @@ class StartNISelectLanguage(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Choose your language',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
         attributes['display_region'] = 'ni'
