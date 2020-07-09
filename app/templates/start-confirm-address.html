@@ -18,14 +18,14 @@
                         {
                             'id': 'yes',
                             'label': {
-                                'text': _('Yes, this address is correct')
+                                'text': _('Yes, this is the correct address')
                             },
                             'value': 'Yes'
                         },
                         {
                             'id': 'no',
                             'label': {
-                                'text': _('No, I need to change it')
+                                'text': _('No, this is not the correct address')
                             },
                             'value': 'No'
                         }
@@ -49,7 +49,7 @@
     {% endif %}
 
     {% call onsQuestion({
-        'title': _('Is this address correct?'),
+        'title': _('Is this the correct address?'),
         'useFieldset': true
     }) %}
 
@@ -68,7 +68,7 @@
                     'name': 'address-check-answer',
                     'radios': form_radio_options,
                     'error': {
-                        'text': _('Check and confirm the address')
+                        'text': _('Check and confirm the address is correct')
                     }
                 })
             }}
