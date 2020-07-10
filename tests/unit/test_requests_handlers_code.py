@@ -39,10 +39,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
-            response = await self.client.request(
+            post_enter_address_response = await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_address_en,
                     data=self.common_postcode_input_valid)
@@ -52,8 +53,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
+            resp_content = await post_enter_address_response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -67,6 +70,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -82,6 +87,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -95,6 +101,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -107,6 +115,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -136,6 +145,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -151,6 +161,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -164,6 +176,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -179,6 +193,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -192,6 +207,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -204,6 +221,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -233,6 +251,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/enter-address/" lang="en" >English</a>', contents)
             self.assertIn(self.content_request_enter_address_title_cy, contents)
             self.assertIn(self.content_request_enter_address_secondary_cy, contents)
 
@@ -248,6 +267,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -261,6 +282,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -276,6 +299,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>', str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_cy, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_cy, str(resp_content))
 
@@ -289,6 +313,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -301,6 +327,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -427,6 +454,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -442,6 +471,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -455,6 +486,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -470,6 +503,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -483,6 +518,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -495,6 +532,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -524,6 +563,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -539,6 +580,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -552,6 +595,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -567,6 +612,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -580,6 +627,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -592,6 +641,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -621,6 +672,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/enter-address/" lang="en" >English</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_cy, contents)
             self.assertIn(self.content_request_enter_address_secondary_cy, contents)
 
@@ -636,6 +689,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -649,6 +704,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -664,6 +721,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_cy, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_cy, str(resp_content))
 
@@ -677,6 +736,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -689,6 +750,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -815,6 +878,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -830,6 +895,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -843,6 +910,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -858,6 +927,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -871,6 +942,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -883,6 +956,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -912,6 +987,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -927,6 +1004,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -940,6 +1019,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -955,6 +1036,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -968,6 +1051,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -980,6 +1065,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -1009,6 +1096,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/enter-address/" lang="en" >English</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_cy, contents)
             self.assertIn(self.content_request_enter_address_secondary_cy, contents)
 
@@ -1024,6 +1113,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -1037,6 +1128,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -1052,6 +1145,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_cy, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_cy, str(resp_content))
 
@@ -1065,6 +1160,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -1077,6 +1174,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -1203,6 +1302,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -1218,6 +1319,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -1231,6 +1334,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -1246,6 +1351,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -1259,6 +1366,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -1271,6 +1380,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -1300,6 +1411,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
             self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
@@ -1315,6 +1428,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -1328,6 +1443,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -1343,6 +1460,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_en, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_en, str(resp_content))
 
@@ -1356,6 +1475,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -1368,6 +1489,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -1397,6 +1520,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/enter-address/" lang="en" >English</a>',
+                          contents)
             self.assertIn(self.content_request_enter_address_title_cy, contents)
             self.assertIn(self.content_request_enter_address_secondary_cy, contents)
 
@@ -1412,6 +1537,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -1425,6 +1552,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -1440,6 +1569,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_enter_mobile_title_cy, str(resp_content))
             self.assertIn(self.content_request_enter_mobile_secondary_cy, str(resp_content))
 
@@ -1453,6 +1584,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -1465,6 +1598,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -1584,6 +1719,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/select-address/" lang="cy" >Cymraeg</a>',
+                          contents)
             self.assertIn(self.content_common_select_address_no_results_en, contents)
 
     @unittest_run_loop
@@ -1606,6 +1743,8 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/select-address/" lang="en" >English</a>',
+                          contents)
             self.assertIn(self.content_common_select_address_no_results_cy, contents)
 
     @unittest_run_loop
