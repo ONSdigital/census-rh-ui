@@ -57,6 +57,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
@@ -73,6 +75,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -87,6 +91,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -100,6 +106,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -116,6 +124,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, str(resp_content))
 
@@ -193,6 +203,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
@@ -209,6 +221,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -223,6 +237,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -236,6 +252,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -252,6 +270,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, str(resp_content))
 
@@ -327,6 +347,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
@@ -343,6 +365,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -357,6 +381,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -370,6 +396,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -386,6 +414,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, str(resp_content))
 
@@ -463,6 +493,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
@@ -479,6 +511,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
             response = await self.client.request(
@@ -493,6 +527,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
 
@@ -506,6 +542,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
@@ -522,6 +560,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, str(resp_content))
 
@@ -597,6 +637,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
@@ -613,6 +655,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -627,6 +671,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -640,6 +686,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -656,6 +704,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/address-has-been-changed/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_cy, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_cy, str(resp_content))
 
@@ -733,6 +783,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
             self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
@@ -749,6 +801,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
 
             response = await self.client.request(
@@ -763,6 +817,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
 
@@ -776,6 +832,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
@@ -792,6 +850,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/address-has-been-changed/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_title_cy, str(resp_content))
             self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_cy, str(resp_content))
 
@@ -1916,6 +1976,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/address-in-scotland/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_address_in_scotland_en, str(resp_content))
 
     @unittest_run_loop
@@ -1979,6 +2041,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/address-in-scotland/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_address_in_scotland_cy, str(resp_content))
 
     @unittest_run_loop
@@ -2105,6 +2169,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
 
@@ -2169,6 +2235,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
 
@@ -2284,6 +2352,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
@@ -2335,6 +2405,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/address-not-found/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
 
@@ -2427,6 +2499,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_en, str(resp_content))
+        self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                      str(resp_content))
         self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
         self.assertIn(self.content_common_enter_address_error_en, str(resp_content))
 
@@ -2469,6 +2543,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_cy, str(resp_content))
+        self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
+                      str(resp_content))
         self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
         self.assertIn(self.content_common_enter_address_error_cy, str(resp_content))
 
@@ -2561,6 +2637,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_en, str(resp_content))
             self.assertIn(self.content_common_select_address_error_en, str(resp_content))
             self.assertIn(self.content_common_select_address_value_en, str(resp_content))
@@ -2612,6 +2690,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
@@ -2721,6 +2801,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -2778,6 +2860,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -2892,6 +2976,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
@@ -2950,6 +3036,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/address-not-found/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
@@ -3066,6 +3154,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
@@ -3127,6 +3217,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
@@ -3249,6 +3341,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
@@ -3310,6 +3404,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
@@ -3386,6 +3482,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_en, str(resp_content))
+        self.assertIn('<a href="/cy/start/change-address/timeout/" lang="cy" >Cymraeg</a>',
+                      str(resp_content))
         self.assertIn(self.content_common_timeout_en, str(resp_content))
         self.assertIn(self.content_start_change_address_timeout_error_en, str(resp_content))
 
@@ -3400,6 +3498,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
         self.assertEqual(response.status, 200)
         resp_content = await response.content.read()
         self.assertIn(self.ons_logo_cy, str(resp_content))
+        self.assertIn('<a href="/en/start/change-address/timeout/" lang="en" >English</a>',
+                      str(resp_content))
         self.assertIn(self.content_common_timeout_cy, str(resp_content))
         self.assertIn(self.content_start_change_address_timeout_error_cy, str(resp_content))
 
@@ -3476,6 +3576,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
 
     @unittest_run_loop
@@ -3537,6 +3639,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
 
     @unittest_run_loop
@@ -3659,6 +3763,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
 
     @unittest_run_loop
@@ -3720,6 +3826,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
 
     @unittest_run_loop
@@ -3842,6 +3950,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
 
     @unittest_run_loop
@@ -3903,6 +4013,8 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
+                          str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
 
     @unittest_run_loop
