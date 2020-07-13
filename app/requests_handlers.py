@@ -237,6 +237,10 @@ class RequestCodeConfirmMobile(RequestCommon):
             else:
                 fulfilment_language = 'eng'
 
+            logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
+                        f"individual={fulfilment_individual}",
+                        client_ip=request['client_ip'])
+
             try:
                 available_fulfilments = await RHService.get_fulfilment(
                     request, attributes['case_type'], attributes['region'], 'SMS', 'UAC', fulfilment_individual)
