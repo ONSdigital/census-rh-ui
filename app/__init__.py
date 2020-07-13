@@ -17,6 +17,7 @@ MOBILE_CHECK_MSG = {'text': 'Please check and confirm your mobile phone number.'
 ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'address-select'}
 VALIDATION_FAILURE_MSG = {'text': 'Session timed out or permission denied', 'level': 'ERROR', 'type': 'VALIDATION_FAILURE_MSG', 'field': 'uac'}
 START_LANGUAGE_OPTION_MSG = {'text': 'Select a language option', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'language-option'}
+NO_SELECTION_CHECK_MSG = {'text': 'Please select an option.', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA
 
 BAD_CODE_MSG_CY = {'text': 'Rhowch eich cod mynediad.', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'uac'}
 BAD_CODE_TYPE_MSG_CY = {'text': 'Rhowch eich cod mynediad eto a rhowch gynnig arall arni.', 'clickable': True, 'level': 'ERROR', 'type': 'NOT_HOUSEHOLD_CODE', 'field': 'uac'}  # NOQA
@@ -34,3 +35,5 @@ MOBILE_CHECK_MSG_CY = {'text': "Edrychwch eto ar eich rhif ffôn symudol a'i gad
 ADDRESS_SELECT_CHECK_MSG_CY = {'text': 'Dewiswch gyfeiriad', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'address-select'}
 VALIDATION_FAILURE_MSG_CY = {'text': "Mae'r sesiwn wedi cyrraedd y terfyn amser neu nid oes caniatâd wedi cael ei roi", 'level': 'ERROR', 'type': 'VALIDATION_FAILURE_MSG', 'field': 'uac'}  # NOQA
 START_LANGUAGE_OPTION_MSG_CY = {'text': 'Dewiswch opsiwn iaith', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'language-option'}
+# TODO ADD WELSH TRANSLATION
+NO_SELECTION_CHECK_MSG_CY = {'text': 'Please select an option.', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA
