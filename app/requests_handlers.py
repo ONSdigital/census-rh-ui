@@ -44,28 +44,19 @@ class RequestCommon(View):
         return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/individual-code/')
 class RequestCode(RequestCommon):
     @aiohttp_jinja2.template('template-main.html')
     async def get(self, request):
         self.setup_request(request)
-        request_type = request.match_info['request_type']
+        request_type = 'individual-code'
         display_region = request.match_info['display_region']
-        if request_type == 'individual-code':
-            if display_region == 'cy':
-                page_title = 'Gofyn am god mynediad unigryw'
-                locale = 'cy'
-            else:
-                page_title = 'Request an individual access code'
-                locale = 'en'
+        if display_region == 'cy':
+            page_title = 'Gofyn am god mynediad unigryw'
+            locale = 'cy'
         else:
-            if display_region == 'cy':
-                page_title = 'Gofyn am god mynediad newydd'
-                locale = 'cy'
-            else:
-                page_title = 'Request a new access code'
-                locale = 'en'
+            page_title = 'Request an individual access code'
+            locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type)
         return {
