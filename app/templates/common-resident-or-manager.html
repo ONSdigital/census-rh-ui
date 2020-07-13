@@ -1,0 +1,83 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from 'components/question/_macro.njk' import onsQuestion %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/radios/_macro.njk' import onsRadios %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('CommonCEMangerQuestion:post', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey)
+    }
+} %}
+
+{% set form_options = [
+        {
+            'id': 'yes',
+            'label': {
+                'text': _('Resident'),
+                'description': _('Residents are responsible for answering the census questions about themselves')
+            },
+            'value': 'resident'
+        },
+        {
+            'id': 'no',
+            'label': {
+                'text': _('Manager'),
+                'description': _('A manager is responsible for answering the census questions about this establishment')
+            },
+            'value': 'manager'
+        }
+    ]
+%}
+
+
+{% block main %}
+
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    {% call onsQuestion({
+        'title': _('Are you a resident or manager of this establishment?')
+    }) %}
+
+    <p class="rh-address-display">
+        {{ addressLine1 }}<br>
+        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
+        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
+        {% if townName %}{{ townName }}<br>{% endif %}
+        {{ postcode }}
+    </p>
+
+{% if 'no-selection' in field_messages_dict %}
+    {{
+        onsRadios({
+            'name': 'form-resident-or-manager',
+            'radios': form_options,
+            'error': {
+                'text': _('Please select an option.')
+            }
+        })
+    }}
+{% else %}
+    {{
+        onsRadios({
+            'name': 'form-resident-or-manager',
+            'radios': form_options
+        })
+    }}
+{% endif %}
+    {% endcall %}
+
+    {{
+        onsButton({
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
+        })
+    }}
+
+{% endblock %}
