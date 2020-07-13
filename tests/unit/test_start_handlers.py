@@ -277,6 +277,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
@@ -293,6 +294,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
@@ -325,6 +327,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
@@ -341,6 +344,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
@@ -373,6 +377,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG, contents)
 
     @unittest_run_loop
@@ -389,6 +394,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
         self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
 
     @unittest_run_loop
@@ -808,6 +814,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 401)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
         self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
@@ -826,6 +833,7 @@ class TestStartHandlers(RHTestCase):
         self.assertEqual(response.status, 401)
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
         self.assertMessagePanel(INVALID_CODE_MSG_CY, contents)
 
     @unittest_run_loop
@@ -1542,6 +1550,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
@@ -1566,6 +1575,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
@@ -1590,6 +1600,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_error_cy, contents)
@@ -1638,6 +1649,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
@@ -1662,6 +1674,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
@@ -1686,6 +1699,7 @@ class TestStartHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_error_cy, contents)
@@ -1896,6 +1910,7 @@ class TestStartHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.content_start_save_and_exit_title_en, contents)
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/save-and-exit/" lang="cy" >Cymraeg</a>', contents)
 
     @unittest_run_loop
     async def test_get_start_save_and_exit_cy(self):
@@ -1907,6 +1922,7 @@ class TestStartHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.content_start_save_and_exit_title_cy, contents)
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/start/save-and-exit/" lang="en" >English</a>', contents)
 
     @unittest_run_loop
     async def test_get_start_save_and_exit_ni(self):
@@ -1929,6 +1945,7 @@ class TestStartHandlers(RHTestCase):
         contents = str(await response.content.read())
         self.assertIn(self.content_start_uac_title_en, contents)
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn('<a href="/cy/start/?adlocation=invalid" lang="cy" >Cymraeg</a>', contents)
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
         self.assertNotIn('value="invalid"', contents)
@@ -1943,6 +1960,7 @@ class TestStartHandlers(RHTestCase):
         contents = str(await response.content.read())
         self.assertIn(self.content_start_uac_title_cy, contents)
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn('<a href="/en/start/?adlocation=invalid" lang="en" >English</a>', contents)
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
         self.assertNotIn('value="invalid"', contents)
