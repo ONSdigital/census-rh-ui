@@ -6,6 +6,32 @@
     {% set page_title_value = 'Census 2021' %}
 {% endif %}
 
+{% if page_url %}
+    {% set language = { 'languages':
+        [
+            {
+                'url': '/en' + page_url,
+                'ISOCode': 'en',
+                'text': 'English',
+                'buttonAriaLabel': 'Language selector. Current language: English',
+                'chooseLanguage': 'Choose language',
+                'allLanguages': 'All languages',
+                'current': true
+            },
+            {
+                'url': '/cy' + page_url,
+                'ISOCode': 'cy',
+                'text': 'Cymraeg',
+                'buttonAriaLabel': 'Dewisydd iaith. Iaith gyfredol: Cymraeg',
+                'chooseLanguage': 'Dewiswch iaith',
+                'allLanguages': 'Pob iaith',
+                'current': false
+            }
+        ]
+}
+    %}
+{% endif %}
+
 {% set pageConfig = {
     'title': page_title_value,
     'theme': 'census',
@@ -13,6 +39,7 @@
         'titleLogo': 'census-logo-en',
         'titleLogoAlt': 'Census 2021',
     },
+    'language': language,
     'footer': {}
 } %}
 

@@ -43,6 +43,15 @@ class View:
                     path=request.path)
 
     @staticmethod
+    def gen_page_url(request):
+        full_url = str(request.rel_url)
+        if full_url[:3] == '/en' or full_url[:3] == '/cy' or full_url[:3] == '/ni':
+            generic_url = full_url[3:]
+        else:
+            generic_url = full_url
+        return generic_url
+
+    @staticmethod
     async def _make_request(request,
                             method,
                             url,

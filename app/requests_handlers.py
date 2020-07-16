@@ -65,7 +65,7 @@ class RequestCode(RequestCommon):
             'page_title': page_title,
             'request_type': request_type,
             'partial_name': 'request-' + request_type,
-            'page_url': '/requests/' + request_type + '/'
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -94,6 +94,7 @@ class RequestCodeEnterMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -117,6 +118,7 @@ class RequestCodeEnterMobile(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['display_region'] = display_region
+        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
 
@@ -169,6 +171,7 @@ class RequestCodeConfirmMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -194,6 +197,7 @@ class RequestCodeConfirmMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
         try:
@@ -292,6 +296,7 @@ class RequestCodeCodeSent(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -319,5 +324,6 @@ class RequestCodeTimeout(RequestCommon):
             'request_type': request_type,
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }

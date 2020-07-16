@@ -88,7 +88,7 @@ class Start(StartCommon):
                     'page_title': page_title,
                     'adlocation': request.query['adlocation'],
                     'locale': locale,
-                    'page_url': '/start/'
+                    'page_url': View.gen_page_url(request)
                 }
             else:
                 logger.warn('assisted digital query parameter not numeric - ignoring',
@@ -98,14 +98,14 @@ class Start(StartCommon):
                     'display_region': display_region,
                     'page_title': page_title,
                     'locale': locale,
-                    'page_url': '/start/'
+                    'page_url': View.gen_page_url(request)
                 }
         except KeyError:
             return {
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': '/start/'
+                'page_url': View.gen_page_url(request)
             }
 
     @aiohttp_jinja2.template('start.html')
@@ -143,7 +143,8 @@ class Start(StartCommon):
                     request, {
                         'display_region': display_region,
                         'page_title': page_title,
-                        'locale': locale
+                        'locale': locale,
+                        'page_url': View.gen_page_url(request)
                     },
                     status=401)
             else:
@@ -218,6 +219,7 @@ class StartRegionChange(StartCommon):
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
+            'page_url': View.gen_page_url(request),
             'page_show_signout': 'true'
         }
 
@@ -253,6 +255,7 @@ class StartConfirmAddress(StartCommon):
 
         return {'locale': locale,
                 'page_title': page_title,
+                'page_url': View.gen_page_url(request),
                 'page_show_signout': 'true',
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
@@ -303,6 +306,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': View.gen_page_url(request),
                     'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
@@ -339,6 +343,7 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': View.gen_page_url(request),
                     'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
@@ -495,7 +500,8 @@ class StartSaveAndExit(StartCommon):
         await forget(request)
         return {
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -520,7 +526,8 @@ class StartAddressHasBeenLinked(StartCommon):
         return {
             'page_title': page_title,
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
     async def post(self, request):
@@ -578,7 +585,8 @@ class StartAddressHasBeenChanged(StartCommon):
         return {
             'page_title': page_title,
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
     async def post(self, request):

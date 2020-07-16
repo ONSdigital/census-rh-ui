@@ -74,7 +74,8 @@ class CommonTimeout(CommonCommon):
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -103,11 +104,13 @@ class CommonAddressInScotland(CommonCommon):
             'page_title': page_title,
             'display_region': display_region,
             'locale': locale,
-            'user_journey': user_journey
+            'user_journey': user_journey,
+            'page_url': View.gen_page_url(request)
         }
 
 
-@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/call-contact-centre/{error}')
+@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
+                    + '/call-contact-centre/{error}/')
 class CommonCallContactCentre(CommonCommon):
     """
     Common route to render a 'Call the Contact Centre' page from any journey
@@ -134,7 +137,8 @@ class CommonCallContactCentre(CommonCommon):
             'display_region': display_region,
             'locale': locale,
             'user_journey': user_journey,
-            'error': error
+            'error': error,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -164,7 +168,8 @@ class CommonEnterAddress(CommonCommon):
             'display_region': display_region,
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
     @aiohttp_jinja2.template('common-enter-address.html')
@@ -253,6 +258,7 @@ class CommonSelectAddress(CommonCommon):
         address_content['user_journey'] = user_journey
         address_content['sub_user_journey'] = sub_user_journey
         address_content['locale'] = locale
+        address_content['page_url'] = View.gen_page_url(request)
 
         return address_content
 
@@ -293,6 +299,7 @@ class CommonSelectAddress(CommonCommon):
             address_content['user_journey'] = user_journey
             address_content['sub_user_journey'] = sub_user_journey
             address_content['locale'] = locale
+            address_content['page_url'] = View.gen_page_url(request)
             return address_content
 
         if form_return['uprn'] == 'xxxx':
@@ -367,6 +374,7 @@ class CommonConfirmAddress(CommonCommon):
         attributes['user_journey'] = user_journey
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -395,6 +403,7 @@ class CommonConfirmAddress(CommonCommon):
         attributes['user_journey'] = user_journey
         attributes['sub_user_journey'] = sub_user_journey
         attributes['locale'] = locale
+        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
 
@@ -521,6 +530,7 @@ class CommonConfirmAddress(CommonCommon):
             attributes['user_journey'] = user_journey
             attributes['sub_user_journey'] = sub_user_journey
             attributes['locale'] = locale
+            attributes['page_url'] = View.gen_page_url(request)
             return attributes
 
 
@@ -553,6 +563,7 @@ class CommonCEMangerQuestion(CommonCommon):
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
+            'page_url': View.gen_page_url(request),
             'page_title': page_title,
             'addressLine1': session['attributes']['addressLine1'],
             'addressLine2': session['attributes']['addressLine2'],
@@ -597,6 +608,7 @@ class CommonCEMangerQuestion(CommonCommon):
                 'user_journey': user_journey,
                 'sub_user_journey': sub_user_journey,
                 'locale': locale,
+                'page_url': View.gen_page_url(request),
                 'addressLine1': session['attributes']['addressLine1'],
                 'addressLine2': session['attributes']['addressLine2'],
                 'addressLine3': session['attributes']['addressLine3'],
@@ -632,6 +644,7 @@ class CommonCEMangerQuestion(CommonCommon):
                 'user_journey': user_journey,
                 'sub_user_journey': sub_user_journey,
                 'locale': locale,
+                'page_url': View.gen_page_url(request),
                 'addressLine1': session['attributes']['addressLine1'],
                 'addressLine2': session['attributes']['addressLine2'],
                 'addressLine3': session['attributes']['addressLine3'],

@@ -107,7 +107,8 @@ class WebChatWindow(WebChat):
         return {
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -130,7 +131,8 @@ class WebChat(WebChat):
             return {
                 'display_region': display_region,
                 'page_title': page_title,
-                'locale': locale
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
             }
         else:
             logger.info('webchat closed', client_ip=request['client_ip'])
@@ -138,7 +140,8 @@ class WebChat(WebChat):
                 'webchat_status': 'closed',
                 'display_region': display_region,
                 'page_title': page_title,
-                'locale': locale
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
             }
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -166,18 +169,20 @@ class WebChat(WebChat):
                 'form_value_query': data.get('query'),
                 'display_region': display_region,
                 'page_title': page_title,
-                'locale': locale
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
             }
 
         context = {
             'screen_name': data.get('screen_name'),
-            'language': 'en',
+            'display_language': 'en',
             'country': data.get('country'),
             'query': data.get('query'),
             'display_region': display_region,
             'page_title': page_title,
             'webchat_url': request.app['WEBCHAT_SVC_URL'],
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
         logger.info('date/time check', client_ip=request['client_ip'])
@@ -190,5 +195,6 @@ class WebChat(WebChat):
                 'webchat_status': 'closed',
                 'display_region': display_region,
                 'page_title': page_title,
-                'locale': locale
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
             }

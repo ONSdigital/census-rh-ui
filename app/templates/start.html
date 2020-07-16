@@ -22,21 +22,52 @@
     }
 } %}
 
-{% block preMain %}
-    {{
-        onsBreadcrumb({
-            "ariaLabel": 'Breadcrumb',
-            "itemsList": [
+{% if display_region == 'ni' %}
+    {% set breadcrumb_items = [
                 {
-                    "url": '/',
+                    "url": '/ni',
                     "text": 'Home'
                 },
                 {
-                    "url": '/#',
+                    "url": '/ni/#',
                     "text": 'Start census',
                     "current": true
                 }
             ]
+    %}
+{% elif display_region == 'cy' %}
+    {% set breadcrumb_items = [
+                {
+                    "url": '/cy',
+                    "text": 'Hafan'
+                },
+                {
+                    "url": '/cy/#',
+                    "text": 'Start census',
+                    "current": true
+                }
+            ]
+    %}
+{% else %}
+    {% set breadcrumb_items = [
+                {
+                    "url": '/en',
+                    "text": 'Home'
+                },
+                {
+                    "url": '/en/#',
+                    "text": 'Start census',
+                    "current": true
+                }
+            ]
+    %}
+{% endif %}
+
+{% block preMain %}
+    {{
+        onsBreadcrumb({
+            "ariaLabel": 'Breadcrumb',
+            "itemsList": breadcrumb_items
         })
     }}
 {% endblock %}

@@ -2,7 +2,6 @@ import datetime
 
 from unittest import mock
 
-from aiohttp.client_exceptions import ClientConnectionError
 from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
