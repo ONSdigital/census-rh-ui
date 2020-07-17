@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
-
+from .flash import flash
 from .request import RetryRequest
 from structlog import get_logger
 
@@ -193,6 +193,36 @@ class ProcessMobileNumber:
         return '{}{}'.format(uk_prefix, number)
 
 
+class ProcessName:
+
+    @staticmethod
+    def validate_name(request, data, display_region):
+
+        name_valid = True
+
+        if not (data.get('name_first_name')):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
+            name_valid = False
+
+        if not (data.get('name_last_name')):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
+            name_valid = False
+
+        return name_valid
+
+
 class FlashMessage:
 
     @staticmethod
@@ -320,8 +350,8 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def request_fulfilment(request, case_id, tel_no,
-                                 fulfilment_code):
+    async def request_fulfilment_sms(request, case_id, tel_no,
+                                     fulfilment_code):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
@@ -330,6 +360,23 @@ class RHService(View):
             'dateTime': datetime.now(timezone.utc).isoformat()
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
+        return await View._make_request(request,
+                                        'POST',
+                                        url,
+                                        auth=request.app['RHSVC_AUTH'],
+                                        json=fulfilment_json)
+
+    @staticmethod
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code):
+        rhsvc_url = request.app['RHSVC_URL']
+        fulfilment_json = {
+            'caseId': case_id,
+            'forename': first_name,
+            'surname': last_name,
+            'fulfilmentCode': fulfilment_code,
+            'dateTime': datetime.now(timezone.utc).isoformat()
+        }
+        url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'
         return await View._make_request(request,
                                         'POST',
                                         url,

@@ -340,10 +340,11 @@ class CommonConfirmAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO Add Welsh Translation
+            page_title = "Is this the correct address?"
             locale = 'cy'
         else:
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -387,10 +388,11 @@ class CommonConfirmAddress(CommonCommon):
         sub_user_journey = request.match_info['sub_user_journey']
 
         if display_region == 'cy':
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO Add Welsh Translation
+            page_title = "Is this the correct address?"
             locale = 'cy'
         else:
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -495,8 +497,8 @@ class CommonConfirmAddress(CommonCommon):
                                                                                      display_region=display_region))
                     else:
                         raise HTTPFound(
-                            request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                                     display_region=display_region))
+                            request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                                      display_region=display_region))
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
@@ -507,12 +509,6 @@ class CommonConfirmAddress(CommonCommon):
                                                                                       error='unable-to-match-address'))
                     else:
                         raise ex
-
-        elif address_confirmation == 'change':
-            raise HTTPFound(
-                request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,
-                                                                          display_region=display_region,
-                                                                          error='address-not-found'))
 
         elif address_confirmation == 'no':
             raise HTTPFound(
@@ -550,6 +546,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_session(request)
+        await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
 
         if display_region == 'cy':
             locale = 'cy'
@@ -590,6 +587,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_session(request)
+        await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
 
         data = await request.post()
 
@@ -622,13 +620,13 @@ class CommonCEMangerQuestion(CommonCommon):
             session.changed()
 
             raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                         display_region=display_region))
+                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                          display_region=display_region))
 
         elif resident_or_manager == 'manager':
             raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                         display_region=display_region))
+                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                          display_region=display_region))
 
         else:
             # catch all just in case, should never get here

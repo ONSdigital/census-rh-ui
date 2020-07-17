@@ -22,7 +22,6 @@
 
     {% call onsQuestion({
         'title': _('What is your mobile phone number?'),
-        'description': _('<p>We will send an access code by text to this number.</p>')
     }) %}
 
         {% if 'mobile' in field_messages_dict %}
@@ -32,9 +31,9 @@
                     'id': 'telephone',
                     'type': 'tel',
                     'autocomplete': 'tel',
-                    'classes': 'input--w-8',
                     'label': {
-                        'text': _('UK mobile phone number')
+                        'text': _('UK mobile phone number'),
+                        'description': _('This will not be stored and only used once to send the access code')
                     },
                     'name': 'request-mobile-number',
                     'error': {
@@ -49,9 +48,9 @@
                     'id': 'telephone',
                     'type': 'tel',
                     'autocomplete': 'tel',
-                    'classes': 'input--w-8',
                     'label': {
-                        'text': _('UK mobile phone number')
+                        'text': _('UK mobile phone number'),
+                        'description': _('This will not be stored and only used once to send the access code')
                     },
                     'name': 'request-mobile-number'
                 })

@@ -1,0 +1,90 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from 'components/question/_macro.njk' import onsQuestion %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/input/_macro.njk' import onsInput %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('RequestCommonEnterName:post', request_type=request_type, display_region=display_region)
+    }
+} %}
+
+{% block main %}
+
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    {% call onsQuestion({
+        'title': _('What is your name?'),
+    }) %}
+
+        {% if 'name_first_name' in field_messages_dict %}
+            {{
+                onsInput({
+                    'id': 'name_first_name',
+                    'label': {
+                        'text': _('First name')
+                    },
+                    'value': form_value_name_first_name,
+                    'name': 'name_first_name',
+                    'error': {
+                        'text': _('Enter a first name to continue')
+                    }
+                })
+            }}
+        {% else %}
+            {{
+                onsInput({
+                    'id': 'name_first_name',
+                    'label': {
+                        'text': _('First name')
+                    },
+                    'value': form_value_name_first_name,
+                    'name': 'name_first_name'
+                })
+            }}
+        {% endif %}
+
+        {% if 'name_last_name' in field_messages_dict %}
+            {{
+                onsInput({
+                    'id': 'name_last_name',
+                    'label': {
+                        'text': _('Last name')
+                    },
+                    'value': form_value_name_last_name,
+                    'name': 'name_last_name',
+                    'error': {
+                        'text': _('Enter a last name to continue')
+                    }
+                })
+            }}
+        {% else %}
+            {{
+                onsInput({
+                    'id': 'name_last_name',
+                    'label': {
+                        'text': _('Last name')
+                    },
+                    'value': form_value_name_last_name,
+                    'name': 'name_last_name'
+                })
+            }}
+        {% endif %}
+
+    {% endcall %}
+
+    {{
+        onsButton({
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
+        })
+    }}
+
+{% endblock %}

@@ -7,42 +7,44 @@
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'components/radios/_macro.njk' import onsRadios %}
 
+{% set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) %}
+
 {% set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('CommonConfirmAddress:post', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey)
+        'action': url('RequestCommonConfirmNameAddress:post', display_region=display_region, request_type=request_type)
     }
 } %}
 
 {% set form_options = [
-    {
-        'id': 'yes',
-        'label': {
-            'text': _('Yes, this is the correct address')
-        },
-        'value': 'yes'
-    },
-    {
-        'id': 'no',
-        'label': {
-            'text': _('No, search for address again')
-        },
-        'value': 'no'
-    }
-]
+                {
+                    'id': 'yes',
+                    'label': {
+                        'text': _('Yes, send the access code by post')
+                    },
+                    'value': 'yes'
+                },
+                {
+                    'id': 'no',
+                    'label': {
+                        'text': _('No, send it another way')
+                    },
+                    'value': 'no'
+                }
+            ]
 %}
 
 {% block main %}
 
-        {% if messages_dict %}
+    {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% call onsQuestion({
-        'title': _('Is this the correct address?')
+        'title': _('Do you want to send a new household access code to this address?')
     }) %}
 
-    <p class="rh-address-display">
+    <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
         {{ addressLine1 }}<br>
         {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
         {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
@@ -50,20 +52,23 @@
         {{ postcode }}
     </p>
 
-{% if 'address' in field_messages_dict %}
+    <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+
+
+{% if 'request-name-address-confirmation' in field_messages_dict %}
     {{
         onsRadios({
-            'name': 'form-confirm-address',
+            'name': 'request-name-address-confirmation',
             'radios': form_options,
             'error': {
-                'text': _('Check and confirm the address')
+                'text': _('Select an option')
             }
         })
     }}
 {% else %}
     {{
         onsRadios({
-            'name': 'form-confirm-address',
+            'name': 'request-name-address-confirmation',
             'radios': form_options
         })
     }}

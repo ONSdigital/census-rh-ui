@@ -110,7 +110,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -256,7 +255,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -400,7 +398,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -546,7 +543,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -690,7 +686,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -836,7 +831,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -972,7 +966,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1121,7 +1114,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1963,7 +1955,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2028,7 +2019,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -2093,7 +2083,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2156,7 +2145,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2222,7 +2210,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -2288,7 +2275,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2922,184 +2908,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_change_address_confirm_address_change_en(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
-            passthrough=[str(self.server._root)]) \
-                as mocked:
-
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            await self.client.request('POST',
-                                      self.post_start_en,
-                                      allow_redirects=True,
-                                      data=self.start_data_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_confirm_address_en,
-                allow_redirects=True,
-                data=self.start_confirm_address_data_no)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_enter_address_en,
-                    data=self.common_postcode_input_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_start_change_address_confirm_address_en,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-not-found'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/start/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_change_address_confirm_address_change_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
-            passthrough=[str(self.server._root)]) \
-                as mocked:
-
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            await self.client.request('POST',
-                                      self.post_start_cy,
-                                      allow_redirects=True,
-                                      data=self.start_data_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_confirm_address_cy,
-                allow_redirects=True,
-                data=self.start_confirm_address_data_no)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_start_change_address_confirm_address_cy,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-not-found'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/start/call-contact-centre/address-not-found/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_change_address_confirm_address_change_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
-            passthrough=[str(self.server._root)]) \
-                as mocked:
-
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            await self.client.request('POST',
-                                      self.post_start_ni,
-                                      allow_redirects=True,
-                                      data=self.start_data_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_confirm_address_ni,
-                allow_redirects=True,
-                data=self.start_confirm_address_data_no)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_start_change_address_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_start_change_address_confirm_address_ni,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-not-found'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
-
-    @unittest_run_loop
     async def test_change_address_confirm_address_invalid_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
@@ -3159,7 +2967,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3222,7 +3029,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
@@ -3283,7 +3089,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3346,7 +3151,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3409,7 +3213,6 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop

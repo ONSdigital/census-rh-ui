@@ -24,14 +24,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -74,7 +74,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -82,6 +81,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -111,12 +127,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -131,14 +147,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -181,7 +197,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -189,6 +204,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -218,12 +250,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
     @unittest_run_loop
@@ -238,14 +270,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_cy)
@@ -288,7 +320,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -296,6 +327,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -325,12 +373,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>', str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>', str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
     @unittest_run_loop
@@ -345,14 +393,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_ni)
@@ -390,7 +438,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -398,6 +445,21 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -424,7 +486,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -443,14 +505,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -494,7 +556,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -502,6 +563,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -532,12 +610,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -553,14 +631,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -604,7 +682,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -612,6 +689,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -642,12 +736,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -663,14 +757,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_cy)
@@ -714,7 +808,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -722,6 +815,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -752,12 +862,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
@@ -773,14 +883,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_ni)
@@ -818,7 +928,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -826,6 +935,21 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -852,7 +976,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -871,14 +995,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -922,7 +1046,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -948,6 +1071,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_en,
                     data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -978,12 +1118,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -999,14 +1139,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -1050,7 +1190,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1076,6 +1215,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_en,
                     data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1106,12 +1262,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -1127,14 +1283,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_cy)
@@ -1178,7 +1334,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -1204,6 +1359,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_cy,
                     data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1234,12 +1406,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
@@ -1255,14 +1427,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_ni)
@@ -1300,7 +1472,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1324,6 +1495,21 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_ni,
                     data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1350,7 +1536,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1369,14 +1555,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -1420,7 +1606,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1446,6 +1631,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_en,
                     data=self.common_resident_or_manager_input_resident)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1476,12 +1678,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -1497,14 +1699,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -1548,7 +1750,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1574,6 +1775,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_en,
                     data=self.common_resident_or_manager_input_resident)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1604,12 +1822,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -1625,14 +1843,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_cy)
@@ -1676,7 +1894,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -1702,6 +1919,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_cy,
                     data=self.common_resident_or_manager_input_resident)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1732,12 +1966,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
@@ -1753,14 +1987,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_ni)
@@ -1798,7 +2032,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1822,6 +2055,21 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_resident_or_manager_ni,
                     data=self.common_resident_or_manager_input_resident)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1848,7 +2096,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1867,14 +2115,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -1918,7 +2166,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -1926,6 +2173,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -1956,12 +2220,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -1977,14 +2241,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_en)
@@ -2028,7 +2292,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2036,6 +2299,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -2066,12 +2346,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -2087,14 +2367,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_cy)
@@ -2138,7 +2418,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -2146,6 +2425,23 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -2176,12 +2472,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
@@ -2197,14 +2493,14 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_access_code_enter_address_ni)
@@ -2242,7 +2538,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2250,6 +2545,21 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -2276,7 +2586,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -2528,7 +2838,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2568,7 +2877,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -2608,7 +2916,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2722,7 +3029,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2764,7 +3070,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -2806,7 +3111,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -2822,118 +3126,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_change_ew(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_change_cy(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/call-contact-centre/address-not-found/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_change_ni(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_bad_postcode_ew(
@@ -3415,7 +3607,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3455,7 +3646,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
@@ -3493,7 +3683,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3621,7 +3810,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -3661,7 +3849,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
@@ -3699,7 +3886,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -4365,6 +4551,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4407,6 +4598,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4451,6 +4647,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_cy,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4494,6 +4695,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_ni,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4533,6 +4739,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4576,6 +4787,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4617,6 +4833,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_cy,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4660,6 +4881,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_ni,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_ni,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4699,6 +4925,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4742,6 +4973,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4783,6 +5019,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_cy,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4826,6 +5067,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_ni,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_ni,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4865,6 +5111,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4908,6 +5159,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -4949,6 +5205,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_cy,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -4992,6 +5253,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 self.post_request_access_code_confirm_address_ni,
                 data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_access_code_enter_mobile_ni,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -5033,6 +5299,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5086,6 +5357,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5133,6 +5409,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5186,6 +5467,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5231,6 +5517,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5284,6 +5575,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5331,6 +5627,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5384,6 +5685,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5429,6 +5735,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5482,6 +5793,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5529,6 +5845,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5582,6 +5903,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5627,6 +5953,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5680,6 +6011,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5727,6 +6063,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -5780,6 +6121,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -5824,6 +6170,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -5874,6 +6225,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -5920,6 +6276,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -5970,6 +6331,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6014,6 +6380,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6064,6 +6435,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6110,6 +6486,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6160,6 +6541,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6204,6 +6590,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6254,6 +6645,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6300,6 +6696,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6350,6 +6751,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6394,6 +6800,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6444,6 +6855,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6490,6 +6906,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6540,6 +6961,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6585,6 +7011,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6636,6 +7067,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6683,6 +7119,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6734,6 +7175,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6779,6 +7225,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6830,6 +7281,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6877,6 +7333,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -6928,6 +7389,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -6973,6 +7439,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -7024,6 +7495,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -7071,6 +7547,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -7122,6 +7603,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -7167,6 +7653,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -7218,6 +7709,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -7265,6 +7761,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 'POST',
                 self.post_request_access_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -7316,6 +7817,11 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_access_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -7362,6 +7868,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -7411,6 +7921,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7456,6 +7970,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -7505,6 +8023,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7550,6 +8072,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -7599,6 +8125,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7644,6 +8174,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -7693,6 +8227,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7738,6 +8276,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -7787,6 +8329,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7832,6 +8378,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -7881,6 +8431,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -7926,6 +8480,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -7975,6 +8533,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -8020,6 +8582,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -8069,6 +8635,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_access_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -8098,7 +8668,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8115,6 +8685,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8146,7 +8720,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8163,6 +8737,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8194,7 +8772,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8211,6 +8789,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -8242,7 +8824,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8259,6 +8841,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_ni,
@@ -8290,7 +8876,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8307,6 +8893,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8338,7 +8928,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8355,6 +8945,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8386,7 +8980,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8403,6 +8997,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -8434,7 +9032,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8451,6 +9049,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_ni,
@@ -8482,7 +9084,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8499,6 +9101,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8530,7 +9136,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8547,6 +9153,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8578,7 +9188,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8595,6 +9205,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -8626,7 +9240,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8643,6 +9257,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_ni,
@@ -8674,7 +9292,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8691,6 +9309,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8722,7 +9344,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8739,6 +9361,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_en,
@@ -8770,7 +9396,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8787,6 +9413,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_cy,
@@ -8818,7 +9448,7 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -8835,6 +9465,10 @@ class TestRequestsHandlersAccessCode(RHTestCase):
                     'POST',
                     self.post_request_access_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_access_code_enter_mobile_ni,
@@ -8868,14 +9502,14 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_individual_code_en)
@@ -8930,7 +9564,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -8938,6 +9571,23 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/individual-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -8968,12 +9618,12 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/individual-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/individual-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -8989,14 +9639,14 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_individual_code_en)
@@ -9051,7 +9701,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9059,6 +9708,23 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/individual-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -9089,12 +9755,12 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/individual-code/code-sent/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/requests/individual-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_en, str(resp_content))
 
@@ -9110,14 +9776,14 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_individual_code_cy)
@@ -9172,7 +9838,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -9180,6 +9845,23 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/individual-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_post_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -9210,12 +9892,12 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/individual-code/code-sent/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/requests/individual-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_request_code_sent_title_cy, str(resp_content))
 
@@ -9231,14 +9913,14 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
         ) as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment'
-        ) as mocked_request_fulfilment:
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi
-            mocked_request_fulfilment.return_value = self.rhsvc_request_fulfilment
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('GET',
                                                  self.get_request_individual_code_ni)
@@ -9285,7 +9967,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9293,6 +9974,21 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_option_post_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/select-method'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-mobile'")
 
             self.assertEqual(response.status, 200)
@@ -9319,7 +10015,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-mobile'")
             self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/code-sent'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/code-sent-sms'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -9575,7 +10271,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9616,7 +10311,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -9657,7 +10351,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9775,7 +10468,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9818,7 +10510,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
@@ -9861,7 +10552,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_select_address_input_valid)
             resp_content = await response_get_confirm.content.read()
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertNotIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
@@ -9877,118 +10567,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_confirm_address_data_change_ew(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_en,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_confirm_address_data_change_cy(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/call-contact-centre/address-not-found/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_confirm_address_data_change_ni(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_change)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm_confirm,
-                                "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_bad_postcode_ew(
@@ -10486,7 +11064,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -10526,7 +11103,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
@@ -10564,7 +11140,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -10604,7 +11179,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -10644,7 +11218,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_cy, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
     @unittest_run_loop
@@ -10682,7 +11255,6 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_change_en, str(resp_content))
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
@@ -11078,6 +11650,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_individual_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -11123,6 +11700,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
             response = await self.client.request('POST', self.post_request_individual_code_enter_mobile_en,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
 
@@ -11149,24 +11731,29 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
 
-            await self.client.request('GET', self.get_request_individual_code_en)
+            await self.client.request('GET', self.get_request_individual_code_cy)
 
-            await self.client.request('GET', self.get_request_individual_code_enter_address_en)
+            await self.client.request('GET', self.get_request_individual_code_enter_address_cy)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_enter_address_en,
+                    self.post_request_individual_code_enter_address_cy,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_select_address_en,
+                    self.post_request_individual_code_select_address_cy,
                     data=self.common_select_address_input_valid)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_confirm_address_en,
+                    self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_individual_code_enter_mobile_cy,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -11194,24 +11781,29 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
 
-            await self.client.request('GET', self.get_request_individual_code_en)
+            await self.client.request('GET', self.get_request_individual_code_ni)
 
-            await self.client.request('GET', self.get_request_individual_code_enter_address_en)
+            await self.client.request('GET', self.get_request_individual_code_enter_address_ni)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_enter_address_en,
+                    self.post_request_individual_code_enter_address_ni,
                     data=self.common_postcode_input_valid)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_select_address_en,
+                    self.post_request_individual_code_select_address_ni,
                     data=self.common_select_address_input_valid)
 
             await self.client.request(
                     'POST',
-                    self.post_request_individual_code_confirm_address_en,
+                    self.post_request_individual_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
 
             response = await self.client.request('POST', self.post_request_individual_code_enter_mobile_ni,
                                                  data=self.request_code_enter_mobile_form_data_invalid)
@@ -11256,6 +11848,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -11311,6 +11908,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -11360,6 +11962,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -11415,6 +12022,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -11462,6 +12074,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -11516,6 +12133,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -11564,6 +12186,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                     'POST',
@@ -11618,6 +12245,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
 
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -11664,6 +12296,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                 'POST',
                 self.post_request_individual_code_confirm_address_en,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -11717,6 +12354,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_individual_code_enter_mobile_en,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -11766,6 +12408,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                 'POST',
                 self.post_request_individual_code_confirm_address_cy,
                 data=self.common_confirm_address_input_yes)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
 
             await self.client.request(
                 'POST',
@@ -11819,6 +12466,11 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                 data=self.common_confirm_address_input_yes)
 
             await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+
+            await self.client.request(
                 'POST',
                 self.post_request_individual_code_enter_mobile_ni,
                 data=self.request_code_enter_mobile_form_data_valid)
@@ -11866,6 +12518,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_en,
@@ -11916,6 +12572,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_en,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -11962,6 +12622,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_cy,
@@ -12012,6 +12676,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     data=self.common_confirm_address_input_yes)
             await self.client.request(
                     'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            await self.client.request(
+                    'POST',
                     self.post_request_individual_code_enter_mobile_ni,
                     data=self.request_code_enter_mobile_form_data_valid)
 
@@ -12041,7 +12709,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -12059,6 +12727,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_en,
@@ -12090,7 +12762,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -12108,6 +12780,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_en,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_en,
@@ -12143,7 +12819,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -12161,6 +12837,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_cy,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_cy,
@@ -12196,7 +12876,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
             mocked_aioresponses.post(self.rhsvc_cases_url +
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
@@ -12214,6 +12894,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
                     'POST',
                     self.post_request_individual_code_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
             await self.client.request(
                     'POST',
                     self.post_request_individual_code_enter_mobile_ni,
