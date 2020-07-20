@@ -295,6 +295,396 @@ class TestRequestsHandlersAccessCodeCommon(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.content_common_select_address_no_results_en, contents)
 
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_no_selection_ew(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request('POST',
+                                      self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_select_address_en,
+                                                 data=self.common_select_address_input_valid)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_no_selection_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request('POST',
+                                      self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_select_address_cy,
+                                                 data=self.common_select_address_input_valid)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_no_selection_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request('POST',
+                                      self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_select_address_ni,
+                                                 data=self.common_select_address_input_valid)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
+            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_get_cases_error_ew(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_get_cases_error_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_get_cases_error_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_ew(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_enter_address_title_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_cy,
+                                                 data=self.common_confirm_address_input_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_enter_address_title_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_no_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_ni,
+                                                 data=self.common_confirm_address_input_no)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_enter_address_title_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_invalid_ew(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_invalid_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_cy,
+                                                 data=self.common_confirm_address_input_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_data_invalid_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST',
+                                                 self.post_request_access_code_confirm_address_ni,
+                                                 data=self.common_confirm_address_input_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "address confirmation error")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+
 
 # noinspection PyTypeChecker
 class TestRequestsHandlersAccessCode(RHTestCase):
@@ -330,21 +720,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -436,21 +817,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -542,21 +914,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -648,19 +1011,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -746,21 +1102,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -854,21 +1201,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -962,21 +1300,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1070,19 +1399,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1168,21 +1490,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1294,21 +1607,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1420,21 +1724,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1546,19 +1841,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1660,21 +1948,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1786,21 +2065,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -1912,21 +2182,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2038,19 +2299,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2152,21 +2406,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2260,21 +2505,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_en,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2368,21 +2604,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_cy,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -2476,19 +2703,12 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
-            response = await self.client.request(
+            await self.client.request(
                     'POST',
                     self.post_request_access_code_select_address_ni,
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -3053,113 +3273,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
         self.assertIn(self.content_request_timeout_error_en, contents)
 
     @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_get_cases_error_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-
-            self.assertLogEvent(cm, 'error in response', status_code=400)
-
-            self.assertEqual(response.status, 500)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn(self.content_common_500_error_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_get_cases_error_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-
-            self.assertLogEvent(cm, 'error in response', status_code=400)
-
-            self.assertEqual(response.status, 500)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn(self.content_common_500_error_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_get_cases_error_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-
-            self.assertLogEvent(cm, 'error in response', status_code=400)
-
-            self.assertEqual(response.status, 500)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_500_error_en, contents)
-
-    @unittest_run_loop
     async def test_get_request_access_code_address_not_required_ew(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
@@ -3267,345 +3380,6 @@ class TestRequestsHandlersAccessCode(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_request_contact_centre_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_no_ew(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_enter_address_secondary_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_no_cy(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_enter_address_title_cy, str(resp_content))
-            self.assertIn(self.content_request_enter_address_secondary_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_no_ni(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_no)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_enter_address_title_en, str(resp_content))
-            self.assertIn(self.content_request_enter_address_secondary_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_invalid_ew(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_invalid_cy(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_data_invalid_ni(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_no_selection_ew(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_no_selection_cy(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_no_selection_ni(
-            self):
-        with mock.patch('app.utils.AddressIndex.get_ai_postcode'
-                        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertEqual(response.status, 200)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertEqual(response.status, 200)
-
-            with self.assertLogs('respondent-home', 'INFO') as cm_confirm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm_confirm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm_confirm, "address confirmation error")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_ew(self):
