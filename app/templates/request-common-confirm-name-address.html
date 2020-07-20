@@ -34,6 +34,14 @@
             ]
 %}
 
+{% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
+    {% set question_title = _('Do you want to send a new individual access code to this address?') %}
+{% elif (case_type == 'CE' and address_level == 'E') %}
+    {% set question_title = _('Do you want to send a new manager access code to this address?') %}
+{% else %}
+    {% set question_title = _('Do you want to send a new household access code to this address?') %}
+{% endif %}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -41,7 +49,7 @@
     {% endif %}
 
     {% call onsQuestion({
-        'title': _('Do you want to send a new household access code to this address?')
+        'title': question_title
     }) %}
 
     <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>

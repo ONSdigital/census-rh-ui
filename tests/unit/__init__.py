@@ -900,65 +900,76 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_enter_address_secondary_cy = \
             'To request an access code, we need your address.'
 
-        self.content_request_code_select_method_household_title_en = \
-            'How would you like to receive a new household access code?'
-        self.content_request_code_select_method_household_individual_question_en = \
+        self.content_request_access_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_household_error_en = 'Please select an option.'
-        self.content_request_code_select_method_household_secondary_en = 'Select how to send access code'
-        self.content_request_code_select_method_household_option_text_en = 'Text message'
-        self.content_request_code_select_method_household_option_post_en = 'Post'
+        self.content_request_access_code_select_method_error_en = 'Please select an option.'
+        self.content_request_access_code_select_method_secondary_en = 'Select how to send access code'
+        self.content_request_access_code_select_method_option_text_en = 'Text message'
+        self.content_request_access_code_select_method_option_post_en = 'Post'
+
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_title_cy = \
-            'How would you like to receive a new household access code?'
-        # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_individual_question_cy = \
+        self.content_request_access_code_select_method_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_error_cy = "Please select an option."
+        self.content_request_access_code_select_method_error_cy = "Please select an option."
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_secondary_cy = "Select how to send access code"
+        self.content_request_access_code_select_method_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_option_text_cy = 'Text message'
+        self.content_request_access_code_select_method_option_text_cy = 'Text message'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_option_post_cy = 'Post'
+        self.content_request_access_code_select_method_option_post_cy = 'Post'
 
-        self.content_request_code_select_method_individual_title_en = \
-            'How would you like to receive a new individual access code?'
-        self.content_request_code_select_method_individual_error_en = 'Please select an option.'
-        self.content_request_code_select_method_individual_secondary_en = 'Select how to send access code'
-        self.content_request_code_select_method_individual_option_text_en = 'Text message'
-        self.content_request_code_select_method_individual_option_post_en = 'Post'
+        self.content_request_access_code_select_method_household_title_en = \
+            'How would you like to receive a new household access code?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_title_cy = \
-            'How would you like to receive a new individual access code?'
-        # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_error_cy = "Please select an option."
-        # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_secondary_cy = "Select how to send access code"
-        # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_option_text_cy = 'Text message'
-        # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_option_post_cy = 'Post'
+        self.content_request_access_code_select_method_household_title_cy = \
+            'How would you like to receive a new household access code?'
 
-        self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
-        self.content_request_enter_mobile_error_en = ''
-        self.content_request_enter_mobile_secondary_en = \
+        self.content_request_access_code_select_method_individual_title_en = \
+            'How would you like to receive a new individual access code?'
+        # TODO Add Welsh Translation
+        self.content_request_access_code_select_method_individual_title_cy = \
+            'How would you like to receive a new individual access code?'
+
+        self.content_request_access_code_select_method_manager_title_en = \
+            'How would you like to receive a new manager access code?'
+        # TODO Add Welsh Translation
+        self.content_request_access_code_select_method_manager_title_cy = \
+            'How would you like to receive a new manager access code?'
+
+        self.content_request_access_code_enter_mobile_title_en = 'What is your mobile phone number?'
+        self.content_request_access_code_enter_mobile_error_en = ''
+        self.content_request_access_code_enter_mobile_secondary_en = \
             'This will not be stored and only used once to send the access code'
-        self.content_request_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
-        self.content_request_enter_mobile_error_cy = ""
+        self.content_request_access_code_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
+        self.content_request_access_code_enter_mobile_error_cy = ""
         # TODO Add Welsh Translation
-        self.content_request_enter_mobile_secondary_cy = \
+        self.content_request_access_code_enter_mobile_secondary_cy = \
             "This will not be stored and only used once to send the access code"
 
-        self.content_request_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
-        self.content_request_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
-        self.content_request_confirm_mobile_error_cy = \
+        self.content_request_access_code_confirm_mobile_title_en = 'Is this mobile phone number correct?'
+        self.content_request_access_code_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_access_code_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_access_code_confirm_mobile_error_cy = \
             "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
 
-        self.content_request_code_sent_title_en = 'We have sent an access code'
-        self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
+        self.content_request_access_code_sent_sms_title_en = 'We have sent an access code'
+        self.content_request_access_code_sent_sms_secondary_individual_en = \
+            'The text message with a new individual access code should arrive soon for you to start your census'
+        self.content_request_access_code_sent_sms_secondary_manager_en = \
+            'The text message with a new manager access code should arrive soon for you to start your census'
+        self.content_request_access_code_sent_sms_secondary_household_en = \
+            'The text message with a new household access code should arrive soon for you to start your census'
+        self.content_request_access_code_sent_sms_title_cy = 'Rydym ni wedi anfon cod mynediad'
+        # TODO Add Welsh Translation
+        self.content_request_access_code_sent_sms_secondary_individual_cy = \
+            'The text message with a new individual access code should arrive soon for you to start your census'
+        # TODO Add Welsh Translation
+        self.content_request_access_code_sent_sms_secondary_manager_cy = \
+            'The text message with a new manager access code should arrive soon for you to start your census'
+        # TODO Add Welsh Translation
+        self.content_request_access_code_sent_sms_secondary_household_cy = \
+            'The text message with a new household access code should arrive soon for you to start your census'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation

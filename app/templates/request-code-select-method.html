@@ -45,8 +45,10 @@
     ]
 %}
 
-{% if request_type == 'individual-code' %}
+{% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
     {% set question_title = _('How would you like to receive a new individual access code?') %}
+{% elif (case_type == 'CE' and address_level == 'E') %}
+    {% set question_title = _('How would you like to receive a new manager access code?') %}
 {% else %}
     {% set question_title = _('How would you like to receive a new household access code?') %}
 {% endif %}
@@ -61,7 +63,7 @@
         'title': question_title,
     }) %}
 
-    {% if case_type == 'HH' %}
+    {% if case_type == 'HH' and request_type != 'individual-code' %}
 
         {% set content %}
             {% autoescape false %}
