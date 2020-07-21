@@ -1011,9 +1011,1895 @@ class TestRequestsHandlersAccessCodeCommon(RHTestCase):
         self.assertIn(self.content_common_timeout_en, contents)
         self.assertIn(self.content_request_timeout_error_en, contents)
 
+    @unittest_run_loop
+    async def test_get_request_access_code_address_not_required_ew(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
 
-# noinspection PyTypeChecker
-class TestRequestsHandlersAccessCodeConnectionIssues(RHTestCase):
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'en/requests/call-contact-centre/unable-to-match-address'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
+                          contents)
+            self.assertIn(self.content_request_contact_centre_en, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_not_required_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
+                          contents)
+            self.assertIn(self.content_request_contact_centre_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_not_required_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint "
+                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
+            self.assertEqual(response.status, 200)
+
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_request_contact_centre_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_en,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_en,
+                data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_en,
+                data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
+                          contents)
+            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_form_data_empty)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_en,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_en,
+                data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_en,
+                data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
+                          contents)
+            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_form_data_empty)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_empty_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_cy,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_cy,
+                data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_cy,
+                data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/requests/access-code/resident-or-manager/" lang="en" >English</a>',
+                          contents)
+            self.assertIn(self.content_common_resident_or_manager_title_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                                 data=self.common_form_data_empty)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_ni,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_ni,
+                data=self.common_select_address_input_valid)
+
+            response = await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_ni,
+                data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                                 data=self.common_form_data_empty)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_en,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_en,
+                data=self.common_select_address_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_en,
+                data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_invalid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_en,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_en,
+                data=self.common_select_address_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_en,
+                data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_invalid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_cy,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_cy,
+                data=self.common_select_address_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_cy,
+                data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                                 data=self.common_resident_or_manager_input_invalid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_enter_address_ni,
+                data=self.common_postcode_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_select_address_ni,
+                data=self.common_select_address_input_valid)
+
+            await self.client.request(
+                'POST',
+                self.post_request_access_code_confirm_address_ni,
+                data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                                 data=self.common_resident_or_manager_input_invalid)
+
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_hh_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_hh_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_hh_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_hh_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_spg_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_spg_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_spg_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_spg_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_household_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_manager_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_manager)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_manager_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_manager_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_manager)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_manager_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_manager_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                                 data=self.common_resident_or_manager_input_manager)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_manager_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_manager_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                                 data=self.common_resident_or_manager_input_manager)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_manager_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_resident_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_resident)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_resident_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                                 data=self.common_resident_or_manager_input_resident)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_resident_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                                 data=self.common_resident_or_manager_input_resident)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_select_resident_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                                 data=self.common_resident_or_manager_input_resident)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_ce_r_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_ce_r_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_ce_r_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_empty_ce_r_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            response = await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                                 data=self.common_confirm_address_input_yes)
+
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.common_form_data_empty)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_hh_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_hh_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_hh_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_hh_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_spg_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_spg_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_spg_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_spg_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_manager_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                      data=self.common_resident_or_manager_input_manager)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_manager_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                      data=self.common_resident_or_manager_input_manager)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_manager_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                      data=self.common_resident_or_manager_input_manager)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_manager_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                      data=self.common_resident_or_manager_input_manager)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_resident_ce_m_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                      data=self.common_resident_or_manager_input_resident)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_resident_ce_m_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
+                                      data=self.common_resident_or_manager_input_resident)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_resident_ce_m_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
+                                      data=self.common_resident_or_manager_input_resident)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_select_resident_ce_m_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
+                                      data=self.common_resident_or_manager_input_resident)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_ce_r_ew_e(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_ce_r_ew_w(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_en,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_en,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_en,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_en,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_ce_r_cy(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_cy,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_cy,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_cy,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_cy,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_invalid_ce_r_ni(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn:
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+
+            await self.client.request('POST', self.post_request_access_code_enter_address_ni,
+                                      data=self.common_postcode_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_select_address_ni,
+                                      data=self.common_select_address_input_valid)
+
+            await self.client.request('POST', self.post_request_access_code_confirm_address_ni,
+                                      data=self.common_confirm_address_input_yes)
+
+            response = await self.client.request('POST', self.post_request_access_code_select_method_ni,
+                                                 data=self.request_code_select_method_data_invalid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.content_request_code_select_method_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_connection_error_ew(
@@ -1166,2221 +3052,6 @@ class TestRequestsHandlersAccessCodeConnectionIssues(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_500_error_en, contents)
-
-
-# noinspection PyTypeChecker
-class TestRequestsHandlersAccessCodeSMS(RHTestCase):
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_cy,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_cy,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_cy,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>', str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_ni,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_ni,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_ni,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_cy,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_cy,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_cy,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_household_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_ni,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_ni,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_ni,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_household_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_manager)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_manager_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_manager_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_manager)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_manager_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_manager_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_manager_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/resident-or-manager/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_manager)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_manager_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_cy,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_cy,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_cy,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_manager_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_manager)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_manager_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_ni,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_ni,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_ni,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=false")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_manager_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/resident-or-manager/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_cy,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_cy,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_cy,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_title_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, str(resp_content))
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_ni,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_ni,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_ni,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/select-method/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_en,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_en,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_en,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/select-method/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_cy,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_cy,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_cy,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_access_code_sms_happy_path_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_sms'
-        ) as mocked_request_fulfilment_sms:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
-            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_method_ni,
-                    data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_mobile_ni,
-                    data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_mobile_ni,
-                    data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
-            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
-
-
-
-
-
-
-
-
-
-    @unittest_run_loop
-    async def test_get_request_access_code_address_not_required_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_en)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'en/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_address_not_required_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_request_access_code_address_not_required_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_access_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_access_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_get_ai_postcode_500_ew(self):
@@ -3656,365 +3327,1843 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_500_error_en, contents)
 
+
+# noinspection PyTypeChecker
+class TestRequestsHandlersAccessCodeSMS(RHTestCase):
+
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ew_e(self):
+    async def test_request_access_code_sms_happy_path_hh_ew_e(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_hh_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>', str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_hh_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>', str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>', str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_hh_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_spg_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_spg_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_spg_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_spg_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_en,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_en,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_manager_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ew_w(self):
+    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ew_w(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_en,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_en,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_manager_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_cy(self):
+    async def test_request_access_code_sms_happy_path_select_manager_ce_m_cy(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_cy,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_cy,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_cy,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_cy,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/access-code/resident-or-manager/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_manager_cy, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_invalid_ce_m_ni(self):
+    async def test_request_access_code_sms_happy_path_select_manager_ce_m_ni(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_ni,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_ni,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_ni,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_ni,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_manager_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ew_e(self):
+    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ew_e(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_en,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_en,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ew_w(self):
+    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ew_w(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_en,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_en,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_en,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/access-code/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_empty_ce_m_cy(self):
+    async def test_request_access_code_sms_happy_path_select_resident_ce_m_cy(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_cy,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_cy,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_cy,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_cy,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_cy,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/access-code/resident-or-manager/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_cy, str(resp_content))
 
     @unittest_run_loop
-    async def test_post_request_access_code_resident_or_manager_empty_ce_m_ni(self):
+    async def test_request_access_code_sms_happy_path_select_resident_ce_m_ni(
+            self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
             'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_enter_address_ni,
-                data=self.common_postcode_input_valid)
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_select_address_ni,
-                data=self.common_select_address_input_valid)
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
 
             await self.client.request(
-                'POST',
-                self.post_request_access_code_confirm_address_ni,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_access_code_resident_or_manager_ni,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
 
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_ni,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
+
             self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_ce_r_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_ce_r_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_en,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_en,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_ce_r_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_cy,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_cy,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-sms/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_sms_happy_path_ce_r_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_sms'
+        ) as mocked_request_fulfilment_sms:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_sms
+            mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_mobile_ni,
+                    data=self.request_code_enter_mobile_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-mobile'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-mobile'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_mobile_ni,
+                    data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-mobile'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-sms'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_ew_e(self):
@@ -4061,8 +5210,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_ew_w(self):
@@ -4109,8 +5258,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_cy(self):
@@ -4157,8 +5306,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_ni(self):
@@ -4203,8 +5352,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_spg_ew_e(self):
@@ -4250,8 +5399,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_spg_ew_w(self):
@@ -4297,8 +5446,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_spg_cy(self):
@@ -4344,8 +5493,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_spg_ni(self):
@@ -4389,8 +5538,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_m_ew_e(self):
@@ -4436,8 +5585,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_m_ew_w(self):
@@ -4483,8 +5632,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_m_cy(self):
@@ -4530,8 +5679,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_m_ni(self):
@@ -4575,8 +5724,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_r_ew_e(self):
@@ -4622,8 +5771,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_r_ew_w(self):
@@ -4669,8 +5818,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_r_cy(self):
@@ -4716,8 +5865,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_ce_r_ni(self):
@@ -4761,8 +5910,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_hh_ew_e(
@@ -4816,8 +5965,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_hh_ew_w(
@@ -4871,8 +6020,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_hh_cy(
@@ -4926,8 +6075,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_hh_ni(
@@ -4979,8 +6128,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_spg_ew_e(
@@ -5034,8 +6183,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_spg_ew_w(
@@ -5089,8 +6238,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_spg_cy(
@@ -5144,8 +6293,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_spg_ni(
@@ -5197,8 +6346,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_m_ew_e(
@@ -5252,8 +6401,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_m_ew_w(
@@ -5307,8 +6456,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_m_cy(
@@ -5362,8 +6511,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_m_ni(
@@ -5415,8 +6564,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_r_ew_e(
@@ -5470,8 +6619,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_r_ew_w(
@@ -5525,8 +6674,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_r_cy(
@@ -5580,8 +6729,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_no_ce_r_ni(
@@ -5633,8 +6782,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_hh_ew_e(
@@ -5686,8 +6835,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_hh_ew_w(
@@ -5739,8 +6888,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_hh_cy(
@@ -5792,8 +6941,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_hh_ni(
@@ -5843,8 +6992,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_spg_ew_e(
@@ -5896,8 +7045,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_spg_ew_w(
@@ -5949,8 +7098,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_spg_cy(
@@ -6002,8 +7151,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_spg_ni(
@@ -6053,8 +7202,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_m_ew_e(
@@ -6106,8 +7255,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_m_ew_w(
@@ -6159,8 +7308,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_m_cy(
@@ -6212,8 +7361,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_m_ni(
@@ -6263,8 +7412,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_r_ew_e(
@@ -6316,8 +7465,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_r_ew_w(
@@ -6369,8 +7518,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_r_cy(
@@ -6422,8 +7571,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_empty_ce_r_ni(
@@ -6473,8 +7622,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_hh_ew_e(
@@ -6527,8 +7676,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_hh_ew_w(
@@ -6581,8 +7730,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_hh_cy(
@@ -6635,8 +7784,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_hh_ni(
@@ -6687,8 +7836,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_spg_ew_e(
@@ -6741,8 +7890,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_spg_ew_w(
@@ -6795,8 +7944,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_spg_cy(
@@ -6849,8 +7998,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_spg_ni(
@@ -6901,8 +8050,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_m_ew_e(
@@ -6955,8 +8104,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_m_ew_w(
@@ -7009,8 +8158,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_m_cy(
@@ -7063,8 +8212,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_m_ni(
@@ -7115,8 +8264,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_r_ew_e(
@@ -7169,8 +8318,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_r_ew_w(
@@ -7223,8 +8372,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/access-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_r_cy(
@@ -7277,8 +8426,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/access-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_invalid_ce_r_ni(
@@ -7329,8 +8478,8 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_access_code_confirm_mobile_get_fulfilment_error_hh_ew_e(
@@ -8982,6 +10131,1556 @@ class TestRequestsHandlersAccessCodeSMS(RHTestCase):
 
 
 # noinspection PyTypeChecker
+class TestRequestsHandlersAccessCodePost(RHTestCase):
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=SPG, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_cy,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_ni,
+                    data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=false")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_en,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_cy,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/resident-or-manager'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_resident_or_manager_ni,
+                    data=self.common_resident_or_manager_input_resident)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/resident-or-manager'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=E, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/access-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/access-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_access_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_access_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=CE, region=N, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_household_en, str(resp_content))
+
+
+# noinspection PyTypeChecker
 class TestRequestsHandlersIndividualCode(RHTestCase):
 
     @unittest_run_loop
@@ -9072,10 +11771,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/select-method/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9089,8 +11788,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9104,7 +11803,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9119,8 +11818,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ew_w(
@@ -9210,10 +11909,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/select-method/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9227,8 +11926,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9242,7 +11941,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9257,8 +11956,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/code-sent-sms/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_cy(
@@ -9348,10 +12047,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/select-method/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_cy, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9365,8 +12064,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9380,7 +12079,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9395,8 +12094,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/code-sent-sms/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ni(
@@ -9476,10 +12175,10 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_individual_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_secondary_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_text_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_select_method_option_post_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_individual_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_text_en, str(resp_content))
+            self.assertIn(self.content_request_code_select_method_option_post_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9491,8 +12190,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9504,7 +12203,7 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
 
             response = await self.client.request(
                     'POST',
@@ -9517,8 +12216,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_sent_sms_secondary_individual_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_sms_secondary_individual_en, str(resp_content))
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_not_found_ew(
@@ -11164,8 +13863,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_ew_w(self):
@@ -11214,8 +13913,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_cy(self):
@@ -11264,8 +13963,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/requests/individual-code/enter-mobile/" lang="en" >English</a>',
                           contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_ni(self):
@@ -11312,8 +14011,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, contents)
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ew_e(
@@ -11369,8 +14068,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ew_w(
@@ -11426,8 +14125,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/enter-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_cy(
@@ -11483,8 +14182,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/enter-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ni(
@@ -11538,8 +14237,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_enter_mobile_secondary_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_enter_mobile_secondary_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ew_e(
@@ -11594,8 +14293,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ew_w(
@@ -11650,8 +14349,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_cy(
@@ -11706,8 +14405,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ni(
@@ -11760,8 +14459,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ew_e(
@@ -11816,8 +14515,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ew_w(
@@ -11872,8 +14571,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/requests/individual-code/confirm-mobile/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_cy(
@@ -11928,8 +14627,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/requests/individual-code/confirm-mobile/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_cy, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ni(
@@ -11982,8 +14681,8 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_title_en, str(resp_content))
-            self.assertIn(self.content_request_access_code_confirm_mobile_error_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_confirm_mobile_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_get_fulfilment_error_ew_e(
@@ -12412,3 +15111,301 @@ class TestRequestsHandlersIndividualCode(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_code_sent_post_hh_ew_e(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_individual_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=E, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/individual-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_individual_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_code_sent_post_hh_ew_w(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_individual_code_enter_address_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_address_en,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_address_en,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_address_en,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_en,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_name_en,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_name_address_en,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/individual-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_en, str(resp_content))
+            self.assertIn('<a href="/cy/requests/individual-code/code-sent-post/" lang="cy" >Cymraeg</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_individual_en, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_code_sent_post_hh_cy(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_individual_code_enter_address_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_address_cy,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_address_cy,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_address_cy,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_cy,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_name_cy,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_name_address_cy,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=W, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/individual-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.ons_logo_cy, str(resp_content))
+            self.assertIn('<a href="/en/requests/individual-code/code-sent-post/" lang="en" >English</a>',
+                          str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_cy, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_individual_cy, str(resp_content))
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_code_sent_post_hh_ni(
+            self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.AddressIndex.get_ai_postcode'
+        ) as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn'
+        ) as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.get_case_by_uprn'
+        ) as mocked_get_case_by_uprn, mock.patch(
+            'app.utils.RHService.get_fulfilment'
+        ) as mocked_get_fulfilment, mock.patch(
+            'app.utils.RHService.request_fulfilment_post'
+        ) as mocked_request_fulfilment_post:
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            await self.client.request('GET', self.get_request_individual_code_enter_address_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_address_ni,
+                    data=self.common_postcode_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/enter-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/select-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_access_code_select_address_ni,
+                    data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/access-code/select-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/access-code/confirm-address'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_address_ni,
+                    data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/select-method'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_select_method_ni,
+                    data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/select-method'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/enter-name'")
+
+            await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_enter_name_ni,
+                    data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/enter-name'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/confirm-name-address'")
+
+            response = await self.client.request(
+                    'POST',
+                    self.post_request_individual_code_confirm_name_address_ni,
+                    data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-name-address'")
+            self.assertLogEvent(cm, "fulfilment query: case_type=HH, region=N, individual=true")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/individual-code/code-sent-post'")
+
+            self.assertEqual(response.status, 200)
+            resp_content = await response.content.read()
+            self.assertIn(self.nisra_logo, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_title_en, str(resp_content))
+            self.assertIn(self.content_request_code_sent_post_secondary_individual_en, str(resp_content))

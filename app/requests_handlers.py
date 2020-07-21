@@ -83,19 +83,11 @@ class RequestCodeSelectMethod(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new individual access code?'
-            else:
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new individual access code?'
+            # TODO Add Welsh Translation
+            page_title = 'How would you like to receive a new access code?'
             locale = 'cy'
         else:
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new household access code?'
-            else:
-                page_title = 'How would you like to receive a new household access code?'
+            page_title = 'How would you like to receive a new access code?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
@@ -110,7 +102,7 @@ class RequestCodeSelectMethod(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    @aiohttp_jinja2.template('request-code-select-method.html')
     async def post(self, request):
         self.setup_request(request)
 
@@ -118,19 +110,11 @@ class RequestCodeSelectMethod(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new individual access code?'
-            else:
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new individual access code?'
+            # TODO Add Welsh Translation
+            page_title = 'How would you like to receive a new access code?'
             locale = 'cy'
         else:
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'How would you like to receive a new household access code?'
-            else:
-                page_title = 'How would you like to receive a new household access code?'
+            page_title = 'How would you like to receive a new access code?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
