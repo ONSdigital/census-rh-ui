@@ -456,19 +456,11 @@ class RequestCommonConfirmNameAddress(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new individual access code to this address?'
-            else:
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new individual access code to this address?'
+            # TODO Add Welsh Translation
+            page_title = 'Do you want to send a new access code to this address?'
             locale = 'cy'
         else:
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new household access code to this address?'
-            else:
-                page_title = 'Do you want to send a new household access code to this address?'
+            page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
@@ -487,7 +479,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             'addressLine2': attributes['addressLine2'],
             'addressLine3': attributes['addressLine3'],
             'townName': attributes['townName'],
-            'postcode': attributes['postcode']
+            'postcode': attributes['postcode'],
+            'case_type': attributes['case_type'],
+            'address_level': attributes['address_level']
         }
 
     @aiohttp_jinja2.template('request-common-confirm-name-address.html')
@@ -497,19 +491,11 @@ class RequestCommonConfirmNameAddress(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new individual access code to this address?'
-            else:
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new individual access code to this address?'
+            # TODO Add Welsh Translation
+            page_title = 'Do you want to send a new access code to this address?'
             locale = 'cy'
         else:
-            if request_type == 'individual-code':
-                # TODO Add Welsh Translation
-                page_title = 'Do you want to send a new household access code to this address?'
-            else:
-                page_title = 'Do you want to send a new household access code to this address?'
+            page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
@@ -545,7 +531,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']
+                'postcode': attributes['postcode'],
+                'case_type': attributes['case_type'],
+                'address_level': attributes['address_level']
             }
 
         if name_address_confirmation == 'yes':
@@ -629,7 +617,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']
+                'postcode': attributes['postcode'],
+                'case_type': attributes['case_type'],
+                'address_level': attributes['address_level']
             }
 
 
@@ -696,7 +686,9 @@ class RequestCodeCodeSentPost(RequestCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']
+                'postcode': attributes['postcode'],
+                'case_type': attributes['case_type'],
+                'address_level': attributes['address_level']
             }
 
 

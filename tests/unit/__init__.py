@@ -1021,7 +1021,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new manager access code to this address?'
         self.content_request_code_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_code_confirm_name_address_error_en = 'Select an option'
+        self.content_request_code_confirm_name_address_error_en = 'Please check and confirm the name and address.'
         # TODO Add Welsh Translation
         self.content_request_code_confirm_name_address_title_individual_cy = \
             'Do you want to send a new individual access code to this address?'
@@ -1033,7 +1033,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_code_confirm_name_address_error_cy = \
-            "Select an option"
+            "Please check and confirm the name and address."
 
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
