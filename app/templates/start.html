@@ -138,7 +138,7 @@
 
     <h2>{{_("If you don’t have an access code")}}</h2>
     {% autoescape false %}
-        <p>{{ _('You can %(open)srequest a new code%(close)s to start a new census if you have lost or not received an access code. This can be sent to you by text or post.', open='<a href="%s">' % request_access_code_link, close='</a>')|safe }}</p>
+        <p>{{ _('You can %(open)srequest a new access code%(close)s to start a new census if you have lost or not received an access code. This can be sent to you by text or post.', open='<a href="%s">' % request_access_code_link, close='</a>')|safe }}</p>
     {% endautoescape %}
 
     {% set content %}
