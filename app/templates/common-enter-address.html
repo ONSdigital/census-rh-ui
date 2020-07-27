@@ -20,7 +20,7 @@
     {% set question_description = _('<p>This will enable us to associate your code to your address</p>') %}
 {% elif sub_user_journey == 'change-address' %}
     {% set question_description = '' %}
-{% elif sub_user_journey == 'household-code' or sub_user_journey == 'individual-code' or sub_user_journey == 'access-code' %}
+{% elif sub_user_journey == 'individual-code' or sub_user_journey == 'access-code' %}
     {% set question_description = _('<p>To request an access code, we need your address.</p>') %}
 {% else %}
     {% set question_description = _('<p>We need to know the address for which you are answering.</p>') %}

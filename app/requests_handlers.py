@@ -17,7 +17,7 @@ requests_routes = RouteTableDef()
 
 class RequestCommon(View):
 
-    valid_request_types = r'{request_type:\bhousehold-code|individual-code|access-code\b}'
+    valid_request_types = r'{request_type:\bindividual-code|access-code\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type,
@@ -44,28 +44,19 @@ class RequestCommon(View):
         return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/individual-code/')
 class RequestCode(RequestCommon):
     @aiohttp_jinja2.template('template-main.html')
     async def get(self, request):
         self.setup_request(request)
-        request_type = request.match_info['request_type']
+        request_type = 'individual-code'
         display_region = request.match_info['display_region']
-        if request_type == 'individual-code':
-            if display_region == 'cy':
-                page_title = 'Gofyn am god mynediad unigryw'
-                locale = 'cy'
-            else:
-                page_title = 'Request an individual access code'
-                locale = 'en'
+        if display_region == 'cy':
+            page_title = 'Gofyn am god mynediad unigryw'
+            locale = 'cy'
         else:
-            if display_region == 'cy':
-                page_title = 'Gofyn am god mynediad newydd'
-                locale = 'cy'
-            else:
-                page_title = 'Request a new access code'
-                locale = 'en'
+            page_title = 'Request an individual access code'
+            locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type)
         return {
@@ -74,7 +65,7 @@ class RequestCode(RequestCommon):
             'page_title': page_title,
             'request_type': request_type,
             'partial_name': 'request-' + request_type,
-            'page_url': '/requests/' + request_type + '/'
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -103,6 +94,7 @@ class RequestCodeEnterMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -126,6 +118,7 @@ class RequestCodeEnterMobile(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['display_region'] = display_region
+        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
 
@@ -178,6 +171,7 @@ class RequestCodeConfirmMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -203,6 +197,7 @@ class RequestCodeConfirmMobile(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
         try:
@@ -232,6 +227,10 @@ class RequestCodeConfirmMobile(RequestCommon):
                 fulfilment_language = 'wel'
             else:
                 fulfilment_language = 'eng'
+
+            logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
+                        f"individual={fulfilment_individual}",
+                        client_ip=request['client_ip'])
 
             try:
                 available_fulfilments = await RHService.get_fulfilment(
@@ -297,6 +296,7 @@ class RequestCodeCodeSent(RequestCommon):
         attributes['display_region'] = display_region
         attributes['locale'] = locale
         attributes['request_type'] = request_type
+        attributes['page_url'] = View.gen_page_url(request)
 
         return attributes
 
@@ -324,5 +324,6 @@ class RequestCodeTimeout(RequestCommon):
             'request_type': request_type,
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }

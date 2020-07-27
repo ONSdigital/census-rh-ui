@@ -30,7 +30,7 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|household-code|individual-code|access-code\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|individual-code|access-code\b}'
 
     @staticmethod
     def setup_request(request):
@@ -42,6 +42,15 @@ class View:
         logger.info(f"received {method} on endpoint '{endpoint}'",
                     method=request.method,
                     path=request.path)
+
+    @staticmethod
+    def gen_page_url(request):
+        full_url = str(request.rel_url)
+        if full_url[:3] == '/en' or full_url[:3] == '/cy' or full_url[:3] == '/ni':
+            generic_url = full_url[3:]
+        else:
+            generic_url = full_url
+        return generic_url
 
     @staticmethod
     async def _make_request(request,

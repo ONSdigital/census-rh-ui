@@ -9,6 +9,8 @@ from .exceptions import (ExerciseClosedError, InactiveCaseError,
                          InvalidEqPayLoad)
 from structlog import get_logger
 
+from .utils import View
+
 logger = get_logger('respondent-home')
 
 
@@ -138,7 +140,8 @@ def check_display_region(request):
     base_attributes = {
         'domain_url_en': domain_url_en,
         'domain_url_cy': domain_url_cy,
-        'page_title': 'Error'
+        'page_title': 'Error',
+        'page_url': View.gen_page_url(request)
     }
 
     if path_starts_with('/ni'):

@@ -304,6 +304,18 @@ class RHTestCase(AioHTTPTestCase):
             'form-confirm-address': 'invalid', 'action[save_continue]': ''
         }
 
+        self.common_resident_or_manager_input_resident = {
+            'form-resident-or-manager': 'resident', 'action[save_continue]': ''
+        }
+
+        self.common_resident_or_manager_input_manager = {
+            'form-resident-or-manager': 'manager', 'action[save_continue]': ''
+        }
+
+        self.common_resident_or_manager_input_invalid = {
+            'form-resident-or-manager': 'invalid', 'action[save_continue]': ''
+        }
+
         self.common_postcode_input_valid = {
             'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
@@ -363,17 +375,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_value_cy = '1 Gate Reach'
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
-        self.content_common_confirm_address_title_en = 'Is this address correct?'
+        self.content_common_confirm_address_title_en = 'Is this the correct address?'
         self.content_common_confirm_address_error_en = 'Check and confirm the address'
-        self.content_common_confirm_address_value_yes_en = 'Yes, this address is correct'
+        self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
         # TODO: add welsh translation
-        self.content_common_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
+        self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
         # TODO: add welsh translation
-        self.content_common_confirm_address_value_yes_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
         # TODO: add welsh translation
@@ -418,21 +430,72 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
+        self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
+        self.content_common_resident_or_manager_option_resident_en = 'Resident'
+        self.content_common_resident_or_manager_description_resident_en = \
+            'Residents are responsible for answering the census questions about themselves'
+        self.content_common_resident_or_manager_option_manager_en = 'Manager'
+        self.content_common_resident_or_manager_description_manager_en = \
+            'A manager is responsible for answering the census questions about this establishment'
+        self.content_common_resident_or_manager_error_en = 'Please select an option.'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_option_resident_cy = 'Resident'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_description_resident_cy = \
+            'Residents are responsible for answering the census questions about themselves'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_option_manager_cy = 'Manager'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_description_manager_cy = \
+            'A manager is responsible for answering the census questions about this establishment'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_error_cy = 'Please select an option.'
+
+        self.content_common_save_and_exit_link_en = 'Save and sign out'
+        # TODO: add welsh translation
+        self.content_common_save_and_exit_link_cy = 'Save and sign out'
         # End Common
 
         # Start Journey
 
         # Content
 
-        self.content_start_title_en = 'Start Census'
-        self.content_start_uac_title_en = 'Enter the 16 character code printed on the letter'
-        self.content_start_title_cy = "Dechrau\\\'r Cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch y cod 16 nod sydd wedi\\\'i argraffu ar y llythyr"
+        self.content_start_title_en = 'Start census'
+        self.content_start_uac_title_en = 'Enter your 16-character access code'
+        # TODO: add welsh translation
+        self.content_start_title_cy = "Start census"
+        # TODO: add welsh translation
+        self.content_start_uac_title_cy = "Enter your 16-character access code"
 
-        self.content_start_confirm_address_title_en = 'Is this address correct?'
-        self.content_start_confirm_address_option_en = 'Yes, this address is correct'
-        self.content_start_confirm_address_title_cy = "Ydy\\\'r cyfeiriad hwn yn gywir?"
-        self.content_start_confirm_address_option_cy = "Ydy, mae\\\'r cyfeiriad hwn yn gywir"
+        self.content_start_uac_expired_en = 'Your unique access code has expired'
+        self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
+
+        self.content_start_confirm_address_title_en = 'Is this the correct address?'
+        self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
+        self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
+        self.content_start_confirm_address_error_en = 'Check and confirm the address is correct'
+        # TODO: add welsh translation
+        self.content_start_confirm_address_title_cy = "Is this the correct address?"
+        # TODO: add welsh translation
+        self.content_start_confirm_address_option_yes_cy = "Yes, this is the correct address"
+        # TODO: add welsh translation
+        self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
+        # TODO: add welsh translation
+        self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
+
+        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
+        self.content_start_ni_language_options_option_title = 'Select a language option'
+        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
+
+        self.content_start_ni_select_language_title = 'Choose your language'
+        self.content_start_ni_select_language_option_title = 'Select a language option'
+        self.content_start_ni_select_language_option = 'Continue in English'
+        self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
+
+        self.content_start_save_and_exit_title_en = 'Your progress has been saved'
+        self.content_start_save_and_exit_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
         # End Start Journey
 
@@ -842,12 +905,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_timeout_error_en = 're-enter your postcode'
         self.content_request_timeout_error_cy = 'nodi eich cod post eto'
 
-        self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
-        self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
-
-        self.content_start_ni_select_language_title = 'Choose your language'
-        self.content_start_ni_select_language_option = 'Continue in English'
-
         # Unlinked UACs
 
         # URLs
@@ -1152,6 +1209,16 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
+        self.post_request_access_code_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+
         self.get_request_access_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
             request_type='access-code', display_region='en'
         )
@@ -1198,122 +1265,6 @@ class RHTestCase(AioHTTPTestCase):
         )
         self.get_request_access_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
             request_type='access-code', display_region='ni'
-        )
-
-        # Start Request Household Code
-
-        # URLs
-
-        self.get_request_household_code_en = self.app.router['RequestCode:get'].url_for(
-            request_type='household-code', display_region='en')
-        self.get_request_household_code_cy = self.app.router['RequestCode:get'].url_for(
-            request_type='household-code', display_region='cy')
-        self.get_request_household_code_ni = self.app.router['RequestCode:get'].url_for(
-            request_type='household-code', display_region='ni')
-
-        self.get_request_household_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-
-        self.get_request_household_code_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-
-        self.get_request_household_code_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.get_request_household_code_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='household-code'
-        )
-        self.post_request_household_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='household-code'
-        )
-
-        self.get_request_household_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household-code', display_region='en'
-        )
-        self.get_request_household_code_enter_mobile_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household-code', display_region='cy'
-        )
-        self.get_request_household_code_enter_mobile_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='household-code', display_region='ni'
-        )
-        self.post_request_household_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household-code', display_region='en'
-        )
-        self.post_request_household_code_enter_mobile_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household-code', display_region='cy'
-        )
-        self.post_request_household_code_enter_mobile_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='household-code', display_region='ni'
-        )
-
-        self.get_request_household_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household-code', display_region='en'
-        )
-        self.get_request_household_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household-code', display_region='cy'
-        )
-        self.get_request_household_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='household-code', display_region='ni'
-        )
-        self.post_request_household_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household-code', display_region='en'
-        )
-        self.post_request_household_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household-code', display_region='cy'
-        )
-        self.post_request_household_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='household-code', display_region='ni'
-        )
-
-        self.get_request_household_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household-code', display_region='en'
-        )
-        self.get_request_household_code_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household-code', display_region='cy'
-        )
-        self.get_request_household_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='household-code', display_region='ni'
         )
 
         # Start Request Individual Code

@@ -41,7 +41,8 @@ class Accessibility(View):
         return {
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -62,7 +63,8 @@ class LaunchEQ(View):
             'display_region': display_region,
             'page_title': page_title,
             'locale': locale,
-            'token': request.query['token']
+            'token': request.query['token'],
+            'page_url': View.gen_page_url(request)
         }
 
     @aiohttp_jinja2.template('start-launch-eq.html')

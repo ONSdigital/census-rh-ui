@@ -71,10 +71,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
 
         try:
             adlocation = request.query['adlocation']
@@ -87,7 +88,7 @@ class Start(StartCommon):
                     'page_title': page_title,
                     'adlocation': request.query['adlocation'],
                     'locale': locale,
-                    'page_url': '/start/'
+                    'page_url': View.gen_page_url(request)
                 }
             else:
                 logger.warn('assisted digital query parameter not numeric - ignoring',
@@ -97,14 +98,14 @@ class Start(StartCommon):
                     'display_region': display_region,
                     'page_title': page_title,
                     'locale': locale,
-                    'page_url': '/start/'
+                    'page_url': View.gen_page_url(request)
                 }
         except KeyError:
             return {
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': '/start/'
+                'page_url': View.gen_page_url(request)
             }
 
     @aiohttp_jinja2.template('start.html')
@@ -119,10 +120,11 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r Cyfrifiad"
+            # TODO Confirm welsh translation
+            page_title = "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start Census'
+            page_title = 'Start census'
         data = await request.post()
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
@@ -141,7 +143,8 @@ class Start(StartCommon):
                     request, {
                         'display_region': display_region,
                         'page_title': page_title,
-                        'locale': locale
+                        'locale': locale,
+                        'page_url': View.gen_page_url(request)
                     },
                     status=401)
             else:
@@ -215,7 +218,9 @@ class StartRegionChange(StartCommon):
         return {
             'display_region': display_region,
             'locale': locale,
-            'page_title': page_title
+            'page_title': page_title,
+            'page_url': View.gen_page_url(request),
+            'page_show_signout': 'true'
         }
 
 
@@ -232,10 +237,11 @@ class StartConfirmAddress(StartCommon):
         await check_permission(request)
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO: add welsh translation
+            page_title = "Is this the correct address?"
         else:
             locale = 'en'
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
 
         session = await get_session(request)
         try:
@@ -249,6 +255,8 @@ class StartConfirmAddress(StartCommon):
 
         return {'locale': locale,
                 'page_title': page_title,
+                'page_url': View.gen_page_url(request),
+                'page_show_signout': 'true',
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
                 'addressLine2': attributes['addressLine2'],
@@ -267,10 +275,11 @@ class StartConfirmAddress(StartCommon):
         self.log_entry(request, display_region + '/start/confirm-address')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Ydy'r cyfeiriad hwn yn gywir?"
+            # TODO: add welsh translation
+            page_title = "Is this the correct address?"
         else:
             locale = 'en'
-            page_title = 'Is this address correct?'
+            page_title = 'Is this the correct address?'
 
         data = await request.post()
 
@@ -297,6 +306,8 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': View.gen_page_url(request),
+                    'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -332,6 +343,8 @@ class StartConfirmAddress(StartCommon):
                 flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
+                    'page_url': View.gen_page_url(request),
+                    'page_show_signout': 'true',
                     'display_region': display_region,
                     'addressLine1': attributes['addressLine1'],
                     'addressLine2': attributes['addressLine2'],
@@ -353,6 +366,7 @@ class StartNILanguageOptions(StartCommon):
 
         return {'locale': 'en',
                 'page_title': 'Would you like to complete the census in English?',
+                'page_show_signout': 'true',
                 'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-language-options.html')
@@ -368,6 +382,7 @@ class StartNILanguageOptions(StartCommon):
             case = session['case']
             attributes[
                 'page_title'] = 'Would you like to complete the census in English?'
+            attributes['page_show_signout'] = 'true'
 
         except KeyError:
             flash(request, SESSION_TIMEOUT_MSG)
@@ -399,6 +414,7 @@ class StartNILanguageOptions(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Would you like to complete the census in English?',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
 
@@ -415,6 +431,7 @@ class StartNISelectLanguage(StartCommon):
 
         return {'locale': 'en',
                 'page_title': 'Choose your language',
+                'page_show_signout': 'true',
                 'display_region': 'ni'}
 
     @aiohttp_jinja2.template('start-ni-select-language.html')
@@ -441,6 +458,7 @@ class StartNISelectLanguage(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Choose your language',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
         if language_option == 'gaeilge':
@@ -459,6 +477,7 @@ class StartNISelectLanguage(StartCommon):
             flash(request, START_LANGUAGE_OPTION_MSG)
             return {'locale': 'en',
                     'page_title': 'Choose your language',
+                    'page_show_signout': 'true',
                     'display_region': 'ni'}
 
         attributes['display_region'] = 'ni'
@@ -481,7 +500,8 @@ class StartSaveAndExit(StartCommon):
         await forget(request)
         return {
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
 
@@ -506,7 +526,8 @@ class StartAddressHasBeenLinked(StartCommon):
         return {
             'page_title': page_title,
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
     async def post(self, request):
@@ -564,7 +585,8 @@ class StartAddressHasBeenChanged(StartCommon):
         return {
             'page_title': page_title,
             'display_region': display_region,
-            'locale': locale
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
         }
 
     async def post(self, request):
