@@ -569,6 +569,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     attributes['fulfilmentCode'] = available_fulfilments[0][
                         'fulfilmentCode']
 
+                logger.info('fulfilment code ' + attributes['fulfilmentCode'], client_ip=request['client_ip'])
+
                 try:
                     await RHService.request_fulfilment_post(request,
                                                             attributes['case_id'],
@@ -576,6 +578,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                             attributes['last_name'],
                                                             attributes['fulfilmentCode'])
                 except (KeyError, ClientResponseError) as ex:
+                    logger.info('fulfilment request error ' + ex, client_ip=request['client_ip'])
                     raise ex
 
                 raise HTTPFound(
