@@ -578,7 +578,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                             attributes['last_name'],
                                                             attributes['fulfilmentCode'])
                 except (KeyError, ClientResponseError) as ex:
-                    logger.info('fulfilment request error ' + ex, client_ip=request['client_ip'])
+                    logger.info('fulfilment request error ' + ex.message, client_ip=request['client_ip'])
                     raise ex
 
                 raise HTTPFound(
