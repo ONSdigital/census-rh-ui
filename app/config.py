@@ -125,7 +125,8 @@ class DevelopmentConfig:
 
     AD_LOOK_UP_SVC_URL = env.str('AD_LOOK_UP_SVC_URL', default='http://localhost:8071')
     AD_LOOK_UP_SVC_AUTH = (env.str('AD_LOOK_UP_SVC_USERNAME', default='admin'),
-                              env.str('AD_LOOK_UP_SVC_PASSWORD', default='secret'))
+                           env.str('AD_LOOK_UP_SVC_PASSWORD', default='secret'))
+
 
 class TestingConfig:
     HOST = '0.0.0.0'

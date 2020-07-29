@@ -30,7 +30,7 @@ class SupportCentreEnterPostcode(View):
             'display_region': display_region,
             'page_title': page_title,
             'locale': locale,
-            'page_url': '/find-a-support-centre/'
+            'page_url': View.gen_page_url(request)
         }
 
     @aiohttp_jinja2.template('support_centre_enter_postcode.html')
@@ -90,12 +90,10 @@ class SupportCentreListCentres(View):
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
             attributes = {
-                'domain_url_en': domain_url_en,
-                'domain_url_cy': domain_url_cy,
                 'page_title': 'Error',
                 'display_region': display_region,
                 'locale': locale,
-                'page_url': '/find-a-support-centre/' + request.match_info['postcode'] + '/'
+                'page_url': View.gen_page_url(request)
             }
             return aiohttp_jinja2.render_template('404.html', request, attributes, status=404)
 
@@ -113,7 +111,7 @@ class SupportCentreListCentres(View):
             'postcode': postcode_value,
             'display_region': display_region,
             'locale': locale,
-            'page_url': '/find-a-support-centre/' + postcode_value + '/'
+            'page_url': View.gen_page_url(request)
         }
 
         return list_of_centres_content

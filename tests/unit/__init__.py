@@ -251,6 +251,7 @@ class RHTestCase(AioHTTPTestCase):
         rh_svc_url = self.app['RHSVC_URL']
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
+        ad_look_up_svc_url = self.app['AD_LOOK_UP_SVC_URL']
 
         self.get_info = self.app.router['Info:get'].url_for()
 
@@ -1413,27 +1414,30 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_en = 'Find a support centre'
         self.content_support_centre_enter_postcode_secondary_en = \
             'To find your nearest support centre, we need your postcode.'
-        self.content_support_centre_enter_postcode_error_en = 'Enter a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_en = 'You have not entered a postcode'
+        self.content_support_centre_enter_postcode_error_invalid_en = 'The postcode is not a valid UK postcode'
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_title_cy = 'Find a support centre'
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_secondary_cy = \
             'To find your nearest support centre, we need your postcode.'
         # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_cy = 'Enter a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
 
         # Test Data
 
         self.support_centre_enter_postcode_input_valid = {
-            'form-enter-address-postcode': self.postcode_valid, 'action[find]': '',
+            'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
         }
 
         self.support_centre_enter_postcode_input_invalid = {
-            'form-enter-address-postcode': self.postcode_invalid, 'action[find]': '',
+            'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
         self.support_centre_enter_postcode_input_empty = {
-            'form-enter-address-postcode': self.postcode_empty, 'action[find]': '',
+            'form-enter-address-postcode': self.postcode_empty, 'action[save_continue]': '',
         }
 
         # yapf: enable
