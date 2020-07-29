@@ -28,7 +28,11 @@
 
 {% block main %}
 
-        {% if total_matches == 0: %}
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    {% if total_matches == 0: %}
 
         <h1>{{ _('We cannot find your address') }}</h1>
 

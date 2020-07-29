@@ -28,16 +28,16 @@
 
 {% block main %}
 
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
     {% if sub_user_journey == 'unlinked' %}
 
         <h1 class="u-mb-l u-fs-xxl">{{_('Please supply your address')}}</h1>
 
         <p>{{_('The access code that you have entered is not currently linked to an address. Please select your address so we can make the link.')}}</p>
 
-    {% endif %}
-
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
     {% endif %}
 
     {% call onsQuestion({
