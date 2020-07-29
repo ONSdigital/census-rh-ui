@@ -48,7 +48,7 @@ class SupportCentreEnterPostcode(View):
         data = await request.post()
 
         try:
-            postcode = ProcessPostcode.validate_postcode(data['form-enter-postcode'], locale)
+            postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
             logger.info('valid postcode', client_ip=request['client_ip'])
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:

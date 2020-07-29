@@ -261,6 +261,7 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
+        self.postcode_empty = ''
 
         self.common_form_data_empty = {}
 
@@ -326,6 +327,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.common_postcode_input_invalid = {
             'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        self.common_postcode_input_empty = {
+            'form-enter-address-postcode': self.postcode_empty, 'action[save_continue]': '',
         }
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
@@ -1386,5 +1391,49 @@ class RHTestCase(AioHTTPTestCase):
             request_type='individual-code', display_region='ni'
         )
 
+        # Start Support Centre Pages
+
+        # URLs
+
+        self.get_support_centre_enter_postcode_en = self.app.router['SupportCentreEnterPostcode:get'].url_for(
+            display_region='en'
+        )
+        self.get_support_centre_enter_postcode_cy = self.app.router['SupportCentreEnterPostcode:get'].url_for(
+            display_region='cy'
+        )
+        self.post_support_centre_enter_postcode_en = self.app.router['SupportCentreEnterPostcode:post'].url_for(
+            display_region='en'
+        )
+        self.post_support_centre_enter_postcode_cy = self.app.router['SupportCentreEnterPostcode:post'].url_for(
+            display_region='cy'
+        )
+
+        # Contents
+
+        self.content_support_centre_enter_postcode_title_en = 'Find a support centre'
+        self.content_support_centre_enter_postcode_secondary_en = \
+            'To find your nearest support centre, we need your postcode.'
+        self.content_support_centre_enter_postcode_error_en = 'Enter a valid UK postcode'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_title_cy = 'Find a support centre'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_secondary_cy = \
+            'To find your nearest support centre, we need your postcode.'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_cy = 'Enter a valid UK postcode'
+
+        # Test Data
+
+        self.support_centre_enter_postcode_input_valid = {
+            'form-enter-address-postcode': self.postcode_valid, 'action[find]': '',
+        }
+
+        self.support_centre_enter_postcode_input_invalid = {
+            'form-enter-address-postcode': self.postcode_invalid, 'action[find]': '',
+        }
+
+        self.support_centre_enter_postcode_input_empty = {
+            'form-enter-address-postcode': self.postcode_empty, 'action[find]': '',
+        }
 
         # yapf: enable

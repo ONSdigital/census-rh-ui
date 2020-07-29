@@ -15,6 +15,10 @@
 
 {% block main %}
 
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
     <h1 class="u-mt-l u-fs-xxl">{{ _('Find a support centre') }}</h1>
 
     <p>{{ _('To find your nearest support centre, we need your postcode.') }}</p>
@@ -29,7 +33,7 @@
                 'label': {
                     'text': _('Enter your postcode')
                 },
-                'name': 'form-enter-postcode',
+                'name': 'form-enter-address-postcode',
                 'error': {
                     'text': _('Enter a valid UK postcode')
                 },
@@ -45,16 +49,16 @@
                 'label': {
                     'text': _('Enter your postcode')
                 },
-                'name': 'form-enter-postcode'
+                'name': 'form-enter-address-postcode'
             })
         }}
     {% endif %}
 
     {{
         onsButton({
-            "type": 'submit',
-            "text": 'Find',
-            "classes": 'btn--small'
+            'text': _('Find'),
+            'classes': 'btn--small u-mt-m',
+            'name': 'action[find]'
         })
     }}
 
