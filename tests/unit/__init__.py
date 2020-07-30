@@ -433,6 +433,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_500_error_en = 'Sorry, something went wrong'
         self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
 
+        self.content_common_404_error_title_en = 'Page not found'
+        self.content_common_404_error_secondary_en = 'If you entered a web address, check it is correct.'
+        self.content_common_404_error_title_cy = "Heb ddod o hyd i\\\'r dudalen"
+        self.content_common_404_error_secondary_cy = \
+            "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn si\\xc5\\xb5r ei fod yn gywir."
+
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
@@ -1408,6 +1414,12 @@ class RHTestCase(AioHTTPTestCase):
         self.post_support_centre_enter_postcode_cy = self.app.router['SupportCentreEnterPostcode:post'].url_for(
             display_region='cy'
         )
+        self.get_support_centre_list_of_centres_postcode_invalid_en = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='en', postcode=self.postcode_invalid)
+        self.get_support_centre_list_of_centres_postcode_invalid_cy = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='cy', postcode=self.postcode_invalid)
 
         # Contents
 
@@ -1426,6 +1438,35 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
 
+        self.content_support_centre_list_of_centres_title_en = 'Support centres near ' + self.postcode_valid
+        self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
+        self.content_support_centre_list_of_centres_result_two_location_name_en = 'University of Sheffield'
+
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_title_cy = 'Support centres near ' + self.postcode_valid
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Sheffield Central Library'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_two_location_name_cy = 'University of Sheffield'
+
+        self.content_support_centre_list_of_centres_result_one_distance_away = \
+            '<span class="u-mb-s tag">1.3 miles away</span>'
+        self.content_support_centre_list_of_centres_result_one_address = \
+            '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
+        self.content_support_centre_list_of_centres_result_one_google_url = \
+            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
+        self.content_support_centre_list_of_centres_result_one_telephone = 'Telephone: 01142734712'
+        self.content_support_centre_list_of_centres_result_one_email = \
+            'Email: <a href="mailto:test@email.com">test@email.com</a>'
+        self.content_support_centre_list_of_centres_result_one_times_monday = '10:30am to 5:15pm - Monday'
+        self.content_support_centre_list_of_centres_result_one_times_tuesday = '10am to 5pm - Tuesday'
+        self.content_support_centre_list_of_centres_result_one_public_parking = 'Public parking'
+        self.content_support_centre_list_of_centres_result_one_level_access = 'Level access into building entrance'
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access = 'Wheelchair access'
+        self.content_support_centre_list_of_centres_result_one_disability_aware = 'Staff are disability aware'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop = 'Hearing loop system'
+
+
         # Test Data
 
         self.support_centre_enter_postcode_input_valid = {
@@ -1439,5 +1480,20 @@ class RHTestCase(AioHTTPTestCase):
         self.support_centre_enter_postcode_input_empty = {
             'form-enter-address-postcode': self.postcode_empty, 'action[save_continue]': '',
         }
+
+        with open('tests/test_data/ad_lookup/multiple_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_multiple_return = f
+
+        with open('tests/test_data/ad_lookup/single_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_single_return = f
+
+        with open('tests/test_data/ad_lookup/no_match_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_no_match_return = f
 
         # yapf: enable

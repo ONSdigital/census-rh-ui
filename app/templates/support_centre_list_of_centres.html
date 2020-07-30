@@ -13,8 +13,7 @@
             <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
             <div><span class="u-mb-s tag">{{ centre['distanceInMiles'] }} miles away</span></div>
             {% autoescape false %}
-                <p>{{ centre['address'] | replace(',', '<br>') }} <br>
-                {{ centre['postcode'] }}</p>
+                <p>{{ centre['address'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
             {% endautoescape %}
             <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">Find on Google Maps</a></p>
             {{
@@ -39,16 +38,14 @@
                 }
             }) %}
             <h3 class="u-fs-r--b u-mb-xs">Opening times</h3>
-            <p>
-                {% for days in centre['openingHours'] %}
-                    {% for day in days %}
-                        {% for times in days[day] %}
-                            {{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day|capitalize }}<br>
-                        {% endfor %}
-                    {% endfor %}
-                {% endfor %}
-            </p>
-            <h3 class="u-fs-r--b u-mb-xs">Centre facilities</h3>
+            {%- for days in centre['openingHours'] -%}
+                {%- for day in days -%}
+                    {%- for times in days[day] %}
+                        <div>{{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day|capitalize }}</div>
+                    {% endfor -%}
+                {%- endfor -%}
+            {%- endfor %}
+            <h3 class="u-fs-r--b u-mb-xs u-mt-m">Centre facilities</h3>
             {% set accessibility_items = [] %}
             {% for accessibility in centre['accessibility'] %}
                     {% if accessibility['parking'] == True %}{{ accessibility_items.append( {"text": 'Public parking'})|default("", True)  }}{% endif %}

@@ -73,10 +73,6 @@ class SupportCentreListCentres(View):
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        domain_url_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
-            'DOMAIN_URL_EN']
-        domain_url_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app[
-            'DOMAIN_URL_CY']
 
         if display_region == 'cy':
             locale = 'cy'
@@ -87,7 +83,7 @@ class SupportCentreListCentres(View):
             postcode_value = ProcessPostcode.validate_postcode(request.match_info['postcode'], locale)
             logger.info('valid postcode', client_ip=request['client_ip'])
 
-        except (InvalidDataError, InvalidDataErrorWelsh) as exc:
+        except (InvalidDataError, InvalidDataErrorWelsh):
             logger.info('invalid postcode', client_ip=request['client_ip'])
             attributes = {
                 'page_title': 'Error',
@@ -115,4 +111,3 @@ class SupportCentreListCentres(View):
         }
 
         return list_of_centres_content
-
