@@ -4,9 +4,17 @@
 {% from './components/lists/_macro.njk' import onsList %}
 
 {% if messages | length == 1 %}
-    {% set errorTitle = _('This page has an error') %}
+    {% if page_url == '/start/' %}
+        {% set errorTitle = _('There is a problem with this page') %}
+    {% else %}
+        {% set errorTitle = _('There is a problem with your answer') %}
+    {% endif %}
 {% else %}
-    {% set errorTitle = _('This page has %(errorcount)s errors', errorcount= messages | length | string ) %}
+    {% if page_url == '/start/' %}
+        {% set errorTitle = _('There are %(errorcount)s problems with this page', errorcount= messages | length | string ) %}
+    {% else %}
+        {% set errorTitle = _('There are %(errorcount)s problems with your answer', errorcount= messages | length | string ) %}
+    {% endif %}
 {% endif %}
 
 {% set itemsList = [] %}
@@ -31,10 +39,6 @@
         'type': 'error'
     })
 %}
-
-{% autoescape false %}
-    <p>{{ _('These %(startbold)smust be corrected%(endbold)s to continue.', startbold='<strong>', endbold='</strong>')|safe }}</p>
-{% endautoescape %}
 
 {{
     onsList({
