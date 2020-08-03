@@ -1,5 +1,7 @@
 from unittest import mock
 from aiohttp.test_utils import unittest_run_loop
+from aiohttp.client_exceptions import ClientConnectionError
+from aioresponses import aioresponses
 
 from . import RHTestCase
 
@@ -310,4 +312,36 @@ class TestSupportCentre(RHTestCase):
             self.assertIn(self.content_support_centre_list_of_centres_result_one_location_name_cy, resp_content)
             self.assertIn(self.content_support_centre_list_of_centres_result_two_location_name_cy, resp_content)
 
-# TODO Connection tests
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_connection_error_en(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, exception=ClientConnectionError('Failed'))
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_en)
+
+            self.assertLogEvent(cm, 'client failed to connect', url=self.ad_lookup_url)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_connection_error_cy(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, exception=ClientConnectionError('Failed'))
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_cy)
+
+            self.assertLogEvent(cm, 'client failed to connect', url=self.ad_lookup_url)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)

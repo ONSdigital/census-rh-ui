@@ -1420,6 +1420,12 @@ class RHTestCase(AioHTTPTestCase):
         self.get_support_centre_list_of_centres_postcode_invalid_cy = \
             self.app.router['SupportCentreListCentres:get'].url_for(
                 display_region='cy', postcode=self.postcode_invalid)
+        self.get_support_centre_list_of_centres_postcode_valid_en = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='en', postcode=self.postcode_valid)
+        self.get_support_centre_list_of_centres_postcode_valid_cy = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='cy', postcode=self.postcode_valid)
 
         # Contents
 
@@ -1495,5 +1501,7 @@ class RHTestCase(AioHTTPTestCase):
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.ad_no_match_return = f
+
+        self.ad_lookup_url = f'{ad_look_up_svc_url}/adlookup/postcode/{self.postcode_valid}'
 
         # yapf: enable
