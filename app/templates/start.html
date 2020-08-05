@@ -25,11 +25,11 @@
 {% if display_region == 'ni' %}
     {% set breadcrumb_items = [
                 {
-                    "url": '/ni',
+                    "url": domain_url_ni,
                     "text": 'Home'
                 },
                 {
-                    "url": '/ni/#',
+                    "url": domain_url_ni + '/ni/start/#',
                     "text": 'Start census',
                     "current": true
                 }
@@ -38,11 +38,11 @@
 {% elif display_region == 'cy' %}
     {% set breadcrumb_items = [
                 {
-                    "url": '/cy',
+                    "url": domain_url_cy,
                     "text": 'Hafan'
                 },
                 {
-                    "url": '/cy/#',
+                    "url": domain_url_cy + '/cy/start/#',
                     "text": 'Start census',
                     "current": true
                 }
@@ -51,11 +51,11 @@
 {% else %}
     {% set breadcrumb_items = [
                 {
-                    "url": '/en',
+                    "url": domain_url_en,
                     "text": 'Home'
                 },
                 {
-                    "url": '/en/#',
+                    "url": domain_url_en + '/en/start/#',
                     "text": 'Start census',
                     "current": true
                 }
