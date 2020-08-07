@@ -154,8 +154,6 @@ class TestSupportCentre(RHTestCase):
             self.assertIn(self.content_common_404_error_title_cy, contents)
             self.assertIn(self.content_common_404_error_secondary_cy, contents)
 
-# TODO Test for total = 0 in return
-
     @unittest_run_loop
     async def test_get_support_centre_list_of_centres_single_result_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, \

@@ -1,5 +1,6 @@
 import aiohttp_jinja2
 
+from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import RouteTableDef, HTTPFound
 from structlog import get_logger
 
@@ -101,8 +102,24 @@ class SupportCentreListCentres(View):
         else:
             page_title = 'Support centres near ' + postcode_value
 
+        try:
+            ad_response = await ADLookUp.get_ad_lookup_by_postcode(request, postcode_value)
+        except ClientResponseError as ex:
+            attributes = {
+                'page_title': 'Error',
+                'display_region': display_region,
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
+            }
+            if ex.status == 404:
+                logger.info('AD Lookup API returned as postcode not existing', client_ip=request['client_ip'])
+                return aiohttp_jinja2.render_template('404.html', request, attributes, status=404)
+            else:
+                logger.error('AD Lookup API not responding', client_ip=request['client_ip'])
+                return aiohttp_jinja2.render_template('error.html', request, attributes, status=500)
+
         list_of_centres_content = {
-            'ad_response': await ADLookUp.get_ad_lookup_by_postcode(request, postcode_value),
+            'ad_response': ad_response,
             'page_title': page_title,
             'postcode': postcode_value,
             'display_region': display_region,
