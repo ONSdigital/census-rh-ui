@@ -30,6 +30,8 @@ async def on_startup(app):
     # by limiting keep-alive, we help prevent errors during RHSvc scale-back.
     conn = TCPConnector(keepalive_timeout=5)
     app.http_session_pool = ClientSession(connector=conn, timeout=ClientTimeout(total=30))
+    # Use below line instead if using a proxy (for AD API etc)
+    # app.http_session_pool = ClientSession(connector=conn, timeout=ClientTimeout(total=30), trust_env=True)
 
 
 async def on_cleanup(app):

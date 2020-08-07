@@ -57,17 +57,19 @@ class View:
                             method,
                             url,
                             auth=None,
-                            json=None,
+                            headers=None,
+                            request_json=None,
                             return_json=False):
         """
         :param request: The AIOHTTP user request, used for logging and app access
         :param method: The HTTP verb
         :param url: The target URL
         :param auth: Authorization
-        :param json: JSON payload to pass as request data
+        :param headers: Any needed headers, in json format
+        :param request_json: JSON payload to pass as request data
         :param return_json: If True, the response JSON will be returned
         """
-        retry_request = RetryRequest(request, method, url, auth, json, return_json)
+        retry_request = RetryRequest(request, method, url, auth, headers, request_json, return_json)
         return await retry_request.make_request()
 
     @staticmethod
@@ -306,7 +308,7 @@ class RHService(View):
                                         'POST',
                                         url,
                                         auth=request.app['RHSVC_AUTH'],
-                                        json=address_json,
+                                        request_json=address_json,
                                         return_json=True)
 
     @staticmethod
@@ -335,7 +337,7 @@ class RHService(View):
                                         'POST',
                                         url,
                                         auth=request.app['RHSVC_AUTH'],
-                                        json=fulfilment_json)
+                                        request_json=fulfilment_json)
 
     @staticmethod
     async def get_uac_details(request):
@@ -368,7 +370,7 @@ class RHService(View):
                                         f'{rhsvc_url}/cases/' +
                                         case['caseId'] + '/address',
                                         auth=rhsvc_auth,
-                                        json=case_json)
+                                        request_json=case_json)
 
     @staticmethod
     async def post_surveylaunched(request, case, adlocation):
@@ -384,7 +386,7 @@ class RHService(View):
                                         'POST',
                                         f'{rhsvc_url}/surveyLaunched',
                                         auth=request.app['RHSVC_AUTH'],
-                                        json=launch_json)
+                                        request_json=launch_json)
 
 
 class ADLookUp(View):
@@ -393,8 +395,11 @@ class ADLookUp(View):
     async def get_ad_lookup_by_postcode(request, postcode):
         ai_svc_url = request.app['AD_LOOK_UP_SVC_URL']
         url = f'{ai_svc_url}/v1/centres/postcode?postcode={postcode}'
+        headers = {'x-api-key': request.app['AD_LOOK_UP_SVC_APIKEY'],
+                   'x-app-id': request.app['AD_LOOK_UP_SVC_APPID']}
         return await View._make_request(request,
                                         'GET',
                                         url,
                                         auth=request.app['AD_LOOK_UP_SVC_AUTH'],
+                                        headers=headers,
                                         return_json=True)

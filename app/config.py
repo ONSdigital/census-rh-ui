@@ -73,6 +73,8 @@ class BaseConfig:
 
     AD_LOOK_UP_SVC_URL = env('AD_LOOK_UP_SVC_URL')
     AD_LOOK_UP_SVC_AUTH = (env('AD_LOOK_UP_SVC_USERNAME'), env('AD_LOOK_UP_SVC_PASSWORD'))
+    AD_LOOK_UP_SVC_APIKEY = env('AD_LOOK_UP_SVC_APIKEY')
+    AD_LOOK_UP_SVC_APPID = env('AD_LOOK_UP_SVC_APPID')
 
 
 class ProductionConfig(BaseConfig):
@@ -126,6 +128,8 @@ class DevelopmentConfig:
     AD_LOOK_UP_SVC_URL = env.str('AD_LOOK_UP_SVC_URL', default='http://localhost:8071')
     AD_LOOK_UP_SVC_AUTH = (env.str('AD_LOOK_UP_SVC_USERNAME', default='admin'),
                            env.str('AD_LOOK_UP_SVC_PASSWORD', default='secret'))
+    AD_LOOK_UP_SVC_APIKEY = env.str('AD_LOOK_UP_SVC_APIKEY', default='apikey')
+    AD_LOOK_UP_SVC_APPID = env.str('AD_LOOK_UP_SVC_APPID', default='appid')
 
 
 class TestingConfig:
@@ -165,3 +169,5 @@ class TestingConfig:
 
     AD_LOOK_UP_SVC_URL = 'http://localhost:8071'
     AD_LOOK_UP_SVC_AUTH = ('admin', 'secret')
+    AD_LOOK_UP_SVC_APIKEY = 'apikey'
+    AD_LOOK_UP_SVC_APPID = 'appid'
