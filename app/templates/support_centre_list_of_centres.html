@@ -8,7 +8,8 @@
 
     <h1 class="u-mt-l u-fs-xxl">Support centres near <em class="highlight">{{ postcode }}</em></h1>
 
-    {% for centre in ad_response['centres'] %}
+    {% for results in ad_response %}
+        {% for centre in results['centres'] %}
         <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
             <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
             <div><span class="u-mb-s tag">{{ centre['distanceInMiles'] }} miles away</span></div>
@@ -63,6 +64,7 @@
             }}
             {% endcall %}
         </div>
+        {% endfor %}
     {% endfor %}
 
 {% endblock %}

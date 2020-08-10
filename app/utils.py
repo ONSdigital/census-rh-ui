@@ -394,7 +394,7 @@ class ADLookUp(View):
     @staticmethod
     async def get_ad_lookup_by_postcode(request, postcode):
         ai_svc_url = request.app['AD_LOOK_UP_SVC_URL']
-        url = f'{ai_svc_url}/centres/postcode?postcode={postcode}'
+        url = f'{ai_svc_url}/centres/postcode?postcode={postcode}&limit=10'
         headers = {'x-api-key': request.app['AD_LOOK_UP_SVC_APIKEY'],
                    'x-app-id': request.app['AD_LOOK_UP_SVC_APPID']}
         return await View._make_request(request,
