@@ -1502,6 +1502,6 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ad_no_match_return = f
 
-        self.ad_lookup_url = f'{ad_look_up_svc_url}/v1/centres/postcode?postcode={self.postcode_valid}'
+        self.ad_lookup_url = f'{ad_look_up_svc_url}/centres/postcode?postcode={self.postcode_valid}'
 
         # yapf: enable

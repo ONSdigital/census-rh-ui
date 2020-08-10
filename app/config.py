@@ -125,7 +125,7 @@ class DevelopmentConfig:
                               env.str('ADDRESS_INDEX_SVC_PASSWORD', default='secret'))
     ADDRESS_INDEX_EPOCH = env.str('ADDRESS_INDEX_EPOCH', default='')
 
-    AD_LOOK_UP_SVC_URL = env.str('AD_LOOK_UP_SVC_URL', default='http://localhost:8071')
+    AD_LOOK_UP_SVC_URL = env.str('AD_LOOK_UP_SVC_URL', default='http://localhost:8071/v1')
     AD_LOOK_UP_SVC_AUTH = (env.str('AD_LOOK_UP_SVC_USERNAME', default='admin'),
                            env.str('AD_LOOK_UP_SVC_PASSWORD', default='secret'))
     AD_LOOK_UP_SVC_APIKEY = env.str('AD_LOOK_UP_SVC_APIKEY', default='apikey')
@@ -167,7 +167,7 @@ class TestingConfig:
     ADDRESS_INDEX_SVC_AUTH = ('admin', 'secret')
     ADDRESS_INDEX_EPOCH = ''
 
-    AD_LOOK_UP_SVC_URL = 'http://localhost:8071'
+    AD_LOOK_UP_SVC_URL = 'http://localhost:8071/v1'
     AD_LOOK_UP_SVC_AUTH = ('admin', 'secret')
     AD_LOOK_UP_SVC_APIKEY = 'apikey'
     AD_LOOK_UP_SVC_APPID = 'appid'
