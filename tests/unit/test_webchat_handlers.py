@@ -104,6 +104,12 @@ class TestWebChatHandlers(RHTestCase):
         self.should_be_closed(2021, 3, 28, 11, 30)      # 2021 GMT spring
         self.should_be_closed(2021, 4, 4, 11, 30)       # 2021 BST summer
 
+    def test_check_open_bank_holidays_closed(self):
+        self.should_be_closed(2021, 4, 2, 10, 30)       # 2021 Good Friday
+        self.should_be_closed(2021, 4, 5, 10, 30)       # 2021 Easter Monday
+        self.should_be_closed(2021, 5, 3, 10, 30)       # 2021 Mayday bank holiday
+        self.should_be_closed(2021, 5, 31, 10, 30)      # 2021 Spring bank holiday
+
     async def should_respond_open_to_get(self, path, logo, name_prompt, mocked_now_utc):
         with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
             mocked_get_now_utc.return_value = mocked_now_utc

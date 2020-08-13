@@ -18,6 +18,13 @@ from .utils import View
 logger = get_logger('respondent-home')
 webchat_routes = RouteTableDef()
 
+bank_holidays = [
+    date(2021, 4, 2),
+    date(2021, 4, 5),
+    date(2021, 5, 3),
+    date(2021, 5, 31)
+]
+
 census_saturday = date(2021, 3, 20)
 census_sunday = date(2021, 3, 21)
 
@@ -54,7 +61,7 @@ class WebChat(View):
             return census_sunday_open, census_sunday_close, hour
         elif weekday == 5:  # Saturday
             return saturday_open, saturday_close, hour
-        elif weekday == 6:  # Sunday
+        elif weekday == 6 or now_date in bank_holidays:  # Sunday or bank holiday
             return None, None, None
         else:
             return weekday_open, weekday_close, hour
