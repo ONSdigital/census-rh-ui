@@ -30,36 +30,48 @@ class TestWebChatHandlers(RHTestCase):
             mocked_get_now_utc.return_value = mocked_now_utc
             self.assertFalse(WebChat.check_open())
 
-    def test_check_open_saturday_census_rehearsal_weekend_open(self):
-        self.should_be_open(2019, 10, 12, 9, 30)
+    def test_check_open_census_saturday_open(self):
+        self.should_be_open(2021, 3, 20, 8, 1)      # just after opening
+        self.should_be_open(2021, 3, 20, 10, 30)    # mid morning
+        self.should_be_open(2021, 3, 20, 15, 59)    # before closing
 
-    def test_check_open_sunday_census_rehearsal_weekend_closed(self):
-        self.should_be_closed(2019, 10, 13, 6, 30)
+    def test_check_open_census_saturday_closed(self):
+        self.should_be_closed(2021, 3, 20, 7, 59)   # just before opening
+        self.should_be_closed(2021, 3, 20, 16, 1)   # just after closing
+
+    def test_check_open_census_sunday_open(self):
+        self.should_be_open(2021, 3, 21, 8, 1)      # just after opening
+        self.should_be_open(2021, 3, 21, 10, 30)    # mid morning
+        self.should_be_open(2021, 3, 21, 15, 59)    # before closing
+
+    def test_check_open_census_sunday_closed(self):
+        self.should_be_closed(2021, 3, 21, 7, 59)   # just before opening
+        self.should_be_closed(2021, 3, 21, 16, 1)   # just after closing
 
     def test_check_open_weekday_open(self):
         self.should_be_open(2019, 6, 17, 9, 30)     # 2019 BST summer
         self.should_be_open(2020, 8, 12, 7, 1)      # 2020 BST summer just after opening
-        self.should_be_open(2020, 8, 12, 17, 59)    # 2020 BST summer just before closing
+        self.should_be_open(2020, 8, 12, 18, 59)    # 2020 BST summer just before closing
         self.should_be_open(2020, 11, 10, 8, 1)     # 2020 GMT winter just after opening
-        self.should_be_open(2020, 11, 10, 18, 59)   # 2020 GMT winter just before closing
+        self.should_be_open(2020, 11, 10, 19, 59)   # 2020 GMT winter just before closing
         self.should_be_open(2021, 3, 26, 8, 1)      # 2021 GMT spring just after opening
         self.should_be_open(2021, 3, 26, 13, 30)    # 2021 GMT spring mid day
-        self.should_be_open(2021, 3, 26, 18, 59)    # 2021 GMT spring just before closing
+        self.should_be_open(2021, 3, 26, 19, 59)    # 2021 GMT spring just before closing
         self.should_be_open(2021, 3, 29, 7, 1)      # 2021 BST summer just after opening
         self.should_be_open(2021, 3, 29, 12, 30)    # 2021 BST summer mid day
-        self.should_be_open(2021, 3, 29, 17, 59)    # 2021 BST summer just before closing
+        self.should_be_open(2021, 3, 29, 18, 59)    # 2021 BST summer just before closing
 
     def test_check_open_weekday_closed(self):
         self.should_be_closed(2019, 6, 16, 4, 30)   # 2019 BST summer before opening
         self.should_be_closed(2019, 6, 16, 21, 30)  # 2019 BST summer after closing
         self.should_be_closed(2020, 8, 12, 6, 59)   # 2020 BST summer just before opening
-        self.should_be_closed(2020, 8, 12, 18, 1)   # 2020 BST summer just after closing
+        self.should_be_closed(2020, 8, 12, 19, 1)   # 2020 BST summer just after closing
         self.should_be_closed(2020, 11, 10, 7, 59)  # 2020 GMT winter just before opening
-        self.should_be_closed(2020, 11, 10, 19, 1)  # 2020 GMT winter just after closing
+        self.should_be_closed(2020, 11, 10, 20, 1)  # 2020 GMT winter just after closing
         self.should_be_closed(2021, 3, 26, 7, 59)   # 2021 GMT spring just before opening
-        self.should_be_closed(2021, 3, 26, 19, 1)   # 2021 GMT spring just after closing
+        self.should_be_closed(2021, 3, 26, 20, 1)   # 2021 GMT spring just after closing
         self.should_be_closed(2021, 3, 29, 6, 59)   # 2021 BST summer just before opening
-        self.should_be_closed(2021, 3, 29, 18, 1)   # 2021 BST summer just after closing
+        self.should_be_closed(2021, 3, 29, 19, 1)   # 2021 BST summer just after closing
 
     def test_check_open_saturday_open(self):
         self.should_be_open(2019, 6, 15, 9, 30)     # 2019 BST summer
@@ -155,7 +167,7 @@ class TestWebChatHandlers(RHTestCase):
                                                   mocked_now_utc)
     @unittest_run_loop
     async def test_get_webchat_not_open_200_en_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_get(self.get_webchat_en, self.ons_logo_en, 'Bank Holidays',
                                                   mocked_now_utc)
 
@@ -167,7 +179,7 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy, 'Gwyliau Banc',
                                                   mocked_now_utc)
 
@@ -179,7 +191,7 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_get_webchat_not_open_200_ni_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_get(self.get_webchat_ni, self.nisra_logo, 'Bank Holidays',
                                                   mocked_now_utc)
 
@@ -371,7 +383,7 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_en_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_post(self.post_webchat_en, 'Bank Holidays', self.ons_logo_en,
                                                    mocked_now_utc)
 
@@ -383,7 +395,7 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Gwyliau Banc', self.ons_logo_cy,
                                                    mocked_now_utc)
 
@@ -395,7 +407,7 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_ni_2021_bst(self):
-        mocked_now_utc = datetime.datetime(2021, 3, 29, 18, 1)
+        mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_post(self.post_webchat_ni, 'Bank Holidays', self.nisra_logo,
                                                    mocked_now_utc)
 

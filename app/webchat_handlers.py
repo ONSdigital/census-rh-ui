@@ -2,7 +2,7 @@ import aiohttp_jinja2
 
 from aiohttp.web import RouteTableDef
 
-from datetime import datetime
+from datetime import datetime, date
 from structlog import get_logger
 from pytz import timezone, utc
 
@@ -18,10 +18,21 @@ from .utils import View
 logger = get_logger('respondent-home')
 webchat_routes = RouteTableDef()
 
+census_saturday = date(2021, 3, 20)
+census_sunday = date(2021, 3, 21)
+
+census_saturday_open = 8
+census_saturday_close = 16
+
+census_sunday_open = 8
+census_sunday_close = 16
+
 saturday_open = 8
 saturday_close = 13
+
 weekday_open = 8
-weekday_close = 19
+weekday_close = 20
+
 uk_zone = timezone('Europe/London')
 
 
@@ -31,17 +42,30 @@ class WebChat(View):
         return datetime.utcnow()
 
     @staticmethod
-    def check_open():
+    def todays_opening_hours() -> (int, int, int):
         wall_clock = utc.localize(WebChat.get_now_utc()).astimezone(uk_zone)
+        now_date = wall_clock.date()
         weekday = wall_clock.weekday()
         hour = wall_clock.hour
 
-        if weekday == 5:  # Saturday
-            return saturday_open <= hour < saturday_close
+        if now_date == census_saturday:
+            return census_saturday_open, census_saturday_close, hour
+        elif now_date == census_sunday:
+            return census_sunday_open, census_sunday_close, hour
+        elif weekday == 5:  # Saturday
+            return saturday_open, saturday_close, hour
         elif weekday == 6:  # Sunday
-            return False
+            return None, None, None
         else:
-            return weekday_open <= hour < weekday_close
+            return weekday_open, weekday_close, hour
+
+    @staticmethod
+    def check_open() -> bool:
+        opening, closing, hour = WebChat.todays_opening_hours()
+        if opening is None:
+            return False
+
+        return opening <= hour < closing
 
     @staticmethod
     def validate_form(request, data, display_region):
