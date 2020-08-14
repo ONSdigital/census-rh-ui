@@ -2,8 +2,9 @@ import aiohttp_jinja2
 
 from aiohttp.web import RouteTableDef
 
-from datetime import datetime
+from datetime import datetime, date
 from structlog import get_logger
+from pytz import timezone, utc
 
 from . import (WEBCHAT_MISSING_NAME_MSG,
                WEBCHAT_MISSING_COUNTRY_MSG,
@@ -17,50 +18,61 @@ from .utils import View
 logger = get_logger('respondent-home')
 webchat_routes = RouteTableDef()
 
+bank_holidays = [
+    date(2021, 4, 2),
+    date(2021, 4, 5),
+    date(2021, 5, 3),
+    date(2021, 5, 31)
+]
+
+census_saturday = date(2021, 3, 20)
+census_sunday = date(2021, 3, 21)
+
+census_saturday_open = 8
+census_saturday_close = 16
+
+census_sunday_open = 8
+census_sunday_close = 16
+
+saturday_open = 8
+saturday_close = 13
+
+weekday_open = 8
+weekday_close = 20
+
+uk_zone = timezone('Europe/London')
+
 
 class WebChat(View):
     @staticmethod
-    def get_now():
+    def get_now_utc():
         return datetime.utcnow()
 
     @staticmethod
-    def check_open():
+    def todays_opening_hours() -> (int, int, int):
+        wall_clock = utc.localize(WebChat.get_now_utc()).astimezone(uk_zone)
+        now_date = wall_clock.date()
+        weekday = wall_clock.weekday()
+        hour = wall_clock.hour
 
-        year = WebChat.get_now().year
-        month = WebChat.get_now().month
-        day = WebChat.get_now().day
-        weekday = WebChat.get_now().weekday()
-        hour = WebChat.get_now().hour
-
-        census_weekend_open = 8
-        census_weekend_close = 16
-        saturday_open = 8
-        saturday_close = 13
-        weekday_open = 8
-        weekday_close = 19
-
-        timezone_offset = 0
-
-        if WebChat.get_now() < datetime(2019, 10, 27):
-            logger.info('before switch to gmt - adjusting time', client_ip='')
-            timezone_offset = 1
-
-        if year == 2019 and month == 10 and (day == 12 or day == 13):
-            if hour < (census_weekend_open - timezone_offset) or hour >= (
-                    census_weekend_close - timezone_offset):
-                return False
+        if now_date == census_saturday:
+            return census_saturday_open, census_saturday_close, hour
+        elif now_date == census_sunday:
+            return census_sunday_open, census_sunday_close, hour
         elif weekday == 5:  # Saturday
-            if hour < (saturday_open - timezone_offset) or hour >= (
-                    saturday_close - timezone_offset):
-                return False
-        elif weekday == 6:  # Sunday
-            return False
+            return saturday_open, saturday_close, hour
+        elif weekday == 6 or now_date in bank_holidays:  # Sunday or bank holiday
+            return None, None, None
         else:
-            if hour < (weekday_open - timezone_offset) or hour >= (
-                    weekday_close - timezone_offset):
-                return False
+            return weekday_open, weekday_close, hour
 
-        return True
+    @staticmethod
+    def check_open() -> bool:
+        opening, closing, hour = WebChat.todays_opening_hours()
+        if opening is None:
+            return False
+
+        return opening <= hour < closing
 
     @staticmethod
     def validate_form(request, data, display_region):
