@@ -261,6 +261,7 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_valid = 'EX2 6GA'
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
+        self.postcode_empty = ''
 
         self.common_form_data_empty = {}
 
@@ -324,6 +325,10 @@ class RHTestCase(AioHTTPTestCase):
             'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
         }
 
+        self.common_postcode_input_empty = {
+            'form-enter-address-postcode': self.postcode_empty, 'action[save_continue]': '',
+        }
+
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -361,6 +366,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
         # TODO: add welsh translation
         self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+
+        self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
+        # TODO: add welsh translation
+        self.content_common_enter_address_error_empty_cy = 'You have not entered a postcode'
 
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
