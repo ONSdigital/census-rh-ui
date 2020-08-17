@@ -8,7 +8,7 @@
 {% from 'components/radios/_macro.njk' import onsRadios %}
 {% from 'macros/telephone/_macro.njk' import rhTelephone %}
 
-{% set formatted_mobile_number = rhTelephone({'number': mobile_number, 'highlight': 'true'}) %}
+{% set formatted_mobile_number = rhTelephone({'number': mobile_number, 'highlight': 'false'}) %}
 
 {% set form =  {
     'method': 'POST',
@@ -43,7 +43,7 @@
 
     {% call onsQuestion({
         'title': _('Is this mobile phone number correct?'),
-        'description': '<p class="u-fs-r--b">'|safe + formatted_mobile_number + '</p>'|safe
+        'description': '<p class="js-mobile-no">'|safe + formatted_mobile_number + '</p>'|safe
     }) %}
 
 

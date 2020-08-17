@@ -245,16 +245,16 @@ class RequestCodeConfirmMobile(RequestCommon):
                         'fulfilmentCode']
 
                 try:
-                    await RHService.request_fulfilment(request,
-                                                       attributes['case_id'],
-                                                       attributes['mobile_number'],
-                                                       attributes['fulfilmentCode'])
+                    await RHService.request_fulfilment_sms(request,
+                                                           attributes['case_id'],
+                                                           attributes['mobile_number'],
+                                                           attributes['fulfilmentCode'])
                 except (KeyError, ClientResponseError) as ex:
                     raise ex
 
                 raise HTTPFound(
-                    request.app.router['RequestCodeCodeSent:get'].url_for(request_type=request_type,
-                                                                          display_region=display_region))
+                    request.app.router['RequestCodeCodeSentSMS:get'].url_for(request_type=request_type,
+                                                                             display_region=display_region))
             except ClientResponseError as ex:
                 raise ex
 
@@ -272,9 +272,9 @@ class RequestCodeConfirmMobile(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/code-sent/')
-class RequestCodeCodeSent(RequestCommon):
-    @aiohttp_jinja2.template('request-code-code-sent.html')
+                      RequestCommon.valid_request_types + '/code-sent-sms/')
+class RequestCodeCodeSentSMS(RequestCommon):
+    @aiohttp_jinja2.template('request-code-code-sent-sms.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -288,7 +288,7 @@ class RequestCodeCodeSent(RequestCommon):
             page_title = 'We have sent an access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-sms')
 
         attributes = await self.get_check_attributes(request, request_type, display_region)
 
