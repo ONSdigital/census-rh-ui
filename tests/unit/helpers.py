@@ -110,7 +110,7 @@ class TestHelpers(RHTestCase):
         else:
             self.assertIn(self.content_common_500_error_en, contents)
 
-    async def get_common_enter_address(self, url, display_region):
+    async def check_get_enter_address(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('GET', url)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-address', display_region, 'GET'))
@@ -121,7 +121,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-address', display_region), contents)
             self.check_text_enter_address(display_region, contents, check_error=False)
 
-    async def post_common_enter_address(self, url, display_region):
+    async def check_post_enter_address(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -139,7 +139,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-address', display_region), contents)
             self.check_text_select_address(display_region, contents, check_error=False)
 
-    async def post_common_enter_address_no_results(self, url, display_region):
+    async def check_post_enter_address_input_returns_no_results(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_no_results
@@ -160,7 +160,7 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_common_select_address_no_results_en, contents)
 
-    async def post_common_enter_address_empty(self, url, display_region):
+    async def check_post_enter_address_input_empty(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_postcode_input_empty)
 
@@ -175,7 +175,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-address', display_region), contents)
             self.check_text_enter_address(display_region, contents, check_error=True)
 
-    async def post_common_enter_address_invalid(self, url, display_region):
+    async def check_post_enter_address_input_invalid(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_postcode_input_invalid)
 
@@ -197,7 +197,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_enter_address_title_en, contents)
                 self.assertIn(self.content_request_enter_address_secondary_en, contents)
 
-    async def post_common_select_address_empty(self, url, display_region):
+    async def check_post_select_address_no_selection_made(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
@@ -214,7 +214,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-address', display_region), contents)
             self.check_text_select_address(display_region, contents, check_error=True)
 
-    async def post_common_select_address(self, url, display_region, ai_uprn_return_value=None):
+    async def check_post_select_address(self, url, display_region, ai_uprn_return_value=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -236,7 +236,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('confirm-address', display_region), contents)
             self.check_text_confirm_address(display_region, contents, check_error=False)
 
-    async def post_common_select_address_not_found(self, url, display_region):
+    async def check_post_select_address_address_not_found(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_select_address_input_not_listed_en)
 
@@ -255,7 +255,7 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
 
-    async def post_common_confirm_address_invalid_or_no_selection(self, url, display_region, data):
+    async def check_post_confirm_address_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -271,7 +271,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('confirm-address', display_region), contents)
             self.check_text_confirm_address(display_region, contents, check_error=True)
 
-    async def post_common_confirm_address_no(self, url, display_region):
+    async def check_post_confirm_address_input_no(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -288,7 +288,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-address', display_region), contents)
             self.check_text_enter_address(display_region, contents, check_error=False)
 
-    async def post_common_confirm_address_yes(self, url, display_region, case_by_uprn_return):
+    async def check_post_confirm_address_input_yes(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
@@ -307,7 +307,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
-    async def post_common_confirm_address_in_scotland(self, url, display_region):
+    async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -321,7 +321,7 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_common_address_in_scotland_en, contents)
 
-    async def post_common_confirm_address_type_na(self, url, display_region):
+    async def check_post_confirm_address_returns_addresstype_na(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -340,7 +340,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_call_contact_centre_title_en, contents)
                 self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
 
-    async def post_common_confirm_address_get_cases_error(self, url, display_region):
+    async def check_post_confirm_address_error_from_get_cases(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
 
@@ -355,7 +355,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def post_common_enter_mobile(self, url, display_region):
+    async def check_post_enter_mobile(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_enter_mobile_form_data_valid)
@@ -367,7 +367,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
             self.check_text_confirm_mobile(display_region, contents, check_error=False)
 
-    async def post_common_enter_mobile_invalid(self, url, display_region):
+    async def check_post_enter_mobile_input_invalid(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_enter_mobile_form_data_invalid)
@@ -382,7 +382,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
-    async def post_common_confirm_mobile(self, url, display_region, case_type, region, individual):
+    async def check_post_confirm_mobile(self, url, display_region, case_type, region, individual):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
@@ -420,7 +420,8 @@ class TestHelpers(RHTestCase):
                 else:
                     self.assertIn(self.content_request_code_sent_sms_secondary_household_en, contents)
 
-    async def post_common_confirm_mobile_get_fulfilment_error(self, url, display_region, case_type, region, individual):
+    async def check_post_confirm_mobile_error_from_get_fulfilment(self, url, display_region,
+                                                                  case_type, region, individual):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
@@ -438,7 +439,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def post_common_confirm_mobile_no(self, url, display_region):
+    async def check_post_confirm_mobile_input_no(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_no)
@@ -452,7 +453,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
-    async def post_common_confirm_mobile_request_fulfilment_error(self, url, display_region):
+    async def check_post_confirm_mobile_error_from_request_fulfilment(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked_aioresponses:
@@ -470,7 +471,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def post_common_confirm_mobile_empty_or_invalid(self, url, display_region, data):
+    async def check_post_confirm_mobile_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
@@ -483,7 +484,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
             self.check_text_confirm_mobile(display_region, contents, check_error=True)
 
-    async def post_common_enter_address_ai_error(self, url, display_region, status):
+    async def check_post_enter_address_error_from_ai(self, url, display_region, status):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=status)
@@ -500,7 +501,7 @@ class TestHelpers(RHTestCase):
         for i in range(times):
             mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
 
-    async def post_common_enter_address_ai_error_503(self, url, display_region):
+    async def check_post_enter_address_error_503_from_ai(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked:
             self.mock_ai_503s(mocked, attempts_retry_limit)
@@ -513,7 +514,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def post_common_enter_address_ai_connection_error(self, url, display_region, epoch=None):
+    async def check_post_enter_address_connection_error_from_ai(self, url, display_region, epoch=None):
         with self.assertLogs('respondent-home', 'WARN') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked:
 
@@ -535,7 +536,7 @@ class TestHelpers(RHTestCase):
         self.assertIn(self.get_logo(display_region), contents)
         self.check_text_error_500(display_region, contents)
 
-    async def get_common_timeout(self, url, display_region):
+    async def check_get_timeout(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('GET', url)
