@@ -14,7 +14,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
     user_journey = 'requests'
     sub_user_journey = 'individual-code'
 
-    async def get_request_individual_code(self, url, display_region):
+    async def check_get_request_individual_code(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('GET', url)
             self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'GET', False))
@@ -32,7 +32,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -44,7 +44,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -56,7 +56,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -68,7 +68,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -80,21 +80,21 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_no_results_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address_input_returns_no_results(
             self.post_request_individual_code_enter_address_en, 'en')
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_no_results_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address_input_returns_no_results(
             self.post_request_individual_code_enter_address_cy, 'cy')
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_no_results_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address_input_returns_no_results(
             self.post_request_individual_code_enter_address_ni, 'ni')
@@ -131,7 +131,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_in_scotland_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -141,7 +141,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_in_scotland_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -151,7 +151,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_in_scotland_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -161,7 +161,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_not_found_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address_address_not_found(
@@ -169,7 +169,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_not_found_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address_address_not_found(
@@ -177,7 +177,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_address_not_found_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address_address_not_found(
@@ -185,7 +185,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_census_address_type_na_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en,
@@ -195,7 +195,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_census_address_type_na_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy,
@@ -205,7 +205,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_census_address_type_na_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni,
@@ -215,19 +215,19 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_invalid_postcode_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address_input_invalid(self.post_request_individual_code_enter_address_en, 'en')
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_invalid_postcode_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address_input_invalid(self.post_request_individual_code_enter_address_cy, 'cy')
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_invalid_postcode_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address_input_invalid(self.post_request_individual_code_enter_address_ni, 'ni')
 
@@ -245,7 +245,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_get_cases_error_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -254,7 +254,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_get_cases_error_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -263,7 +263,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_get_cases_error_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -390,7 +390,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_no_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -398,7 +398,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_confirm_address_data_no_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -406,7 +406,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_no_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -414,7 +414,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_invalid_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -423,7 +423,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_invalid_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -432,7 +432,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_invalid_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -441,7 +441,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_no_selection_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -450,7 +450,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_no_selection_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -459,7 +459,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_no_selection_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -468,7 +468,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_select_address_no_selection_ew(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address_no_selection_made(
@@ -476,7 +476,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_select_address_no_selection_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address_no_selection_made(
@@ -484,7 +484,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_select_address_no_selection_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address_no_selection_made(
@@ -492,7 +492,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -502,7 +502,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -512,7 +512,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -522,7 +522,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_mobile_invalid_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -532,7 +532,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -543,7 +543,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -554,7 +554,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -565,7 +565,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_no_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -576,7 +576,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -588,7 +588,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -600,7 +600,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -612,7 +612,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_empty_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -624,7 +624,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -637,7 +637,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -650,7 +650,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -663,7 +663,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_invalid_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -676,7 +676,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_get_fulfilment_error_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -688,7 +688,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_get_fulfilment_error_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -700,7 +700,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_get_fulfilment_error_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -712,7 +712,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_get_fulfilment_error_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
@@ -724,7 +724,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_request_fulfilment_error_ew_e(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -736,7 +736,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_request_fulfilment_error_ew_w(self):
-        await self.get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
@@ -748,7 +748,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_request_fulfilment_error_cy(self):
-        await self.get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
@@ -760,7 +760,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_mobile_request_fulfilment_error_ni(self):
-        await self.get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')

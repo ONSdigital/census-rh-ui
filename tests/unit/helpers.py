@@ -86,6 +86,24 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
+    def check_text_resident_or_manager(self, display_region, contents, check_error=False):
+        if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_title_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
+        else:
+            if check_error:
+                self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
+            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
+
     def check_text_enter_mobile(self, display_region, contents):
         if display_region == 'cy':
             self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
@@ -289,13 +307,9 @@ class TestHelpers(RHTestCase):
             self.check_text_enter_address(display_region, contents, check_error=False)
 
     async def check_post_confirm_address_input_yes(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
 
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
             mocked_get_case_by_uprn.return_value = case_by_uprn_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -306,6 +320,23 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
+
+    async def check_post_confirm_address_input_yes_ce(self, url, display_region, case_by_uprn_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
+            self.check_text_resident_or_manager(display_region, contents)
 
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -354,6 +385,19 @@ class TestHelpers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
+
+    async def check_post_resident_or_manager(self, url, display_region, data):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
+            self.check_text_enter_mobile(display_region, contents)
 
     async def check_post_enter_mobile(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
