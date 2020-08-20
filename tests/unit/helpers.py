@@ -399,6 +399,18 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
+    async def check_post_resident_or_manager_input_invalid_or_no_selection(self, url, display_region, data):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
+            self.check_text_resident_or_manager(display_region, contents, check_error=True)
+
     async def check_post_enter_mobile(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
