@@ -41,7 +41,7 @@
             {%- for days in centre['openingHours'] -%}
                 {%- for day in days -%}
                     {%- for times in days[day] %}
-                        <div>{{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day|capitalize }}</div>
+                        <div>{{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day }}</div>
                     {% endfor -%}
                 {%- endfor -%}
             {%- endfor %}
