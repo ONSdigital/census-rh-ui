@@ -1461,12 +1461,12 @@ class RHTestCase(AioHTTPTestCase):
             '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
-        self.content_support_centre_list_of_centres_result_one_telephone = 'Telephone: 01142734712'
+        self.content_support_centre_list_of_centres_result_one_telephone = 'Telephone: <span>+44 (0)11 4273 4712</span>'
         self.content_support_centre_list_of_centres_result_one_email = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
-        self.content_support_centre_list_of_centres_result_one_times_monday = '10:30am to 5:15pm - Monday'
-        self.content_support_centre_list_of_centres_result_one_times_tuesday = '10am to 5pm - Tuesday'
-        self.content_support_centre_list_of_centres_result_one_public_parking = 'Public parking'
+        self.content_support_centre_list_of_centres_result_one_times_monday = 'Monday &ndash; 10:30am to 5:15pm'
+        self.content_support_centre_list_of_centres_result_one_times_tuesday = 'Tuesday &ndash; 10am to 5pm'
+        self.content_support_centre_list_of_centres_result_one_public_parking = 'Car parking'
         self.content_support_centre_list_of_centres_result_one_level_access = 'Level access into building entrance'
         self.content_support_centre_list_of_centres_result_one_wheelchair_access = 'Wheelchair access'
         self.content_support_centre_list_of_centres_result_one_disability_aware = 'Staff are disability aware'

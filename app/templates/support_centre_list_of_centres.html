@@ -3,6 +3,7 @@
 {% from "components/collapsible/_macro.njk" import onsCollapsible %}
 {% from "components/lists/_macro.njk" import onsList %}
 {% from 'macros/time/_macro.njk' import rhTime %}
+{% from 'macros/telephone/_macro.njk' import rhADTelephone %}
 
 {% block main %}
 
@@ -21,7 +22,7 @@
                     "classes": 'list--bare',
                     "itemsList": [
                         {
-                            "text": 'Telephone: ' + centre['phone']
+                            "text": 'Telephone: ' + rhADTelephone({'number': centre['phone']})
                         },
                         {
                             "text": 'Email: <a href="mailto:' + centre['email'] + '">' + centre['email'] + '</a>'
@@ -41,19 +42,19 @@
             {%- for days in centre['openingHours'] -%}
                 {%- for day in days -%}
                     {%- for times in days[day] %}
-                        <div>{{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }} - {{ day }}</div>
+                        <div>{{ day }} &ndash; {{ rhTime({'time': times['start'] }) }} to {{ rhTime({'time': times['finish'] }) }}</div>
                     {% endfor -%}
                 {%- endfor -%}
             {%- endfor %}
             <h3 class="u-fs-r--b u-mb-xs u-mt-m">Centre facilities</h3>
             {% set accessibility_items = [] %}
             {% for accessibility in centre['accessibility'] %}
-                    {% if accessibility['parking'] == True %}{{ accessibility_items.append( {"text": 'Public parking'})|default("", True)  }}{% endif %}
+                    {% if accessibility['parking'] == True %}{{ accessibility_items.append( {"text": 'Car parking'})|default("", True)  }}{% endif %}
                     {% if accessibility['accessibleEntrance'] == True %}{{ accessibility_items.append( {"text": 'Level access into building entrance'})|default("", True)  }}{% endif %}
                     {% if accessibility['accessibleBuilding'] == True %}{{ accessibility_items.append( {"text": 'Wheelchair access'})|default("", True)  }}{% endif %}
-                    {% if accessibility['disabledParking'] == True %}{{ accessibility_items.append( {"text": 'Public parking'})|default("", True)  }}{% endif %}
+                    {% if accessibility['disabledParking'] == True %}{{ accessibility_items.append( {"text": 'Disabled parking'})|default("", True)  }}{% endif %}
                     {% if accessibility['staffDisabilityAware'] == True %}{{ accessibility_items.append( {"text": 'Staff are disability aware'})|default("", True)  }}{% endif %}
-                    {% if accessibility['waitingRoomSeating'] == True %}{{ accessibility_items.append( {"text": 'Public parking'})|default("", True)  }}{% endif %}
+                    {% if accessibility['waitingRoomSeating'] == True %}{{ accessibility_items.append( {"text": 'Waiting room seating'})|default("", True)  }}{% endif %}
                     {% if accessibility['hearingLoop'] == True %}{{ accessibility_items.append( {"text": 'Hearing loop system'})|default("", True)  }}{% endif %}
             {% endfor %}
             {{

@@ -109,43 +109,43 @@
           "welshLanguageDescription": "string",
           "openingHours": [
               {
-                  "monday": [
+                  "Monday": [
                       {
                           "start": 900,
                           "finish": 1700
                       }
                   ],
-                  "tuesday": [
+                  "Tuesday": [
                       {
                           "start": 900,
                           "finish": 1700
                       }
                   ],
-                  "wednesday": [
+                  "Wednesday": [
                       {
                           "start": 900,
                           "finish": 1700
                       }
                   ],
-                  "thursday": [
+                  "Thursday": [
                       {
                           "start": 900,
                           "finish": 1700
                       }
                   ],
-                  "friday": [
+                  "Friday": [
                       {
                           "start": 900,
                           "finish": 1700
                       }
                   ],
-                  "saturday": [
+                  "Saturday": [
                       {
                           "start": 1000,
                           "finish": 1700
                       }
                   ],
-                  "sunday": [
+                  "Sunday": [
                       {
                           "start": 1000,
                           "finish": 1700

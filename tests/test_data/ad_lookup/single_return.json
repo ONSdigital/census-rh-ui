@@ -18,55 +18,55 @@
       "welshLanguageDescription": "string",
       "openingHours": [
         {
-          "monday": [
+          "Monday": [
             {
               "start": 1030,
               "finish": 1715
             }
           ],
-          "tuesday": [
+          "Tuesday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "wednesday": [
+          "Wednesday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "thursday": [
+          "Thursday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "friday": [
+          "Friday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "saturday": [
+          "Saturday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "sunday": [
+          "Sunday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "additionalProp1": [
+          "Census Saturday": [
             {
               "start": 1000,
               "finish": 1700
             }
           ],
-          "additionalProp2": [
+          "Census Sunday": [
             {
               "start": 1000,
               "finish": 1700
