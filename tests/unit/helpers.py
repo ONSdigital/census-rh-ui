@@ -86,6 +86,32 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
+    def check_text_select_method(self, display_region, contents, user_type, check_error=False):
+        if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_request_code_select_method_error_cy, contents)
+            if user_type == 'individual':
+                self.assertIn(self.content_request_code_select_method_individual_title_cy, contents)
+            elif user_type == 'manager':
+                self.assertIn(self.content_request_code_select_method_manager_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_select_method_household_title_cy, contents)
+            self.assertIn(self.content_request_code_select_method_secondary_cy, contents)
+            self.assertIn(self.content_request_code_select_method_option_text_cy, contents)
+            self.assertIn(self.content_request_code_select_method_option_post_cy, contents)
+        else:
+            if check_error:
+                self.assertIn(self.content_request_code_select_method_error_en, contents)
+            if user_type == 'individual':
+                self.assertIn(self.content_request_code_select_method_individual_title_en, contents)
+            elif user_type == 'manager':
+                self.assertIn(self.content_request_code_select_method_manager_title_en, contents)
+            else:
+                self.assertIn(self.content_request_code_select_method_household_title_en, contents)
+            self.assertIn(self.content_request_code_select_method_secondary_en, contents)
+            self.assertIn(self.content_request_code_select_method_option_text_en, contents)
+            self.assertIn(self.content_request_code_select_method_option_post_en, contents)
+
     def check_text_resident_or_manager(self, display_region, contents, check_error=False):
         if display_region == 'cy':
             if check_error:
@@ -306,7 +332,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-address', display_region), contents)
             self.check_text_enter_address(display_region, contents, check_error=False)
 
-    async def check_post_confirm_address_input_yes(self, url, display_region, case_by_uprn_return):
+    async def check_post_confirm_address_input_yes(self, url, display_region, case_by_uprn_return, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
 
@@ -314,12 +340,12 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
-            self.check_text_enter_mobile(display_region, contents)
+                self.assertIn(self.build_translation_link('select-method', display_region), contents)
+            self.check_text_select_method(display_region, contents, user_type)
 
     async def check_post_confirm_address_input_yes_ce(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -386,18 +412,42 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def check_post_resident_or_manager(self, url, display_region, data):
+    async def check_post_select_method_input_sms(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST', url, data=data)
-            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
 
-            self.assertEqual(response.status, 200)
+            response = await self.client.request('POST', url, data=self.request_code_select_method_data_sms)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
+
+    async def check_post_select_method_input_post(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=self.request_code_select_method_data_post)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-name', display_region), contents)
+            self.assertIn(self.content_request_code_enter_name_title_en, contents)
+
+    async def check_post_resident_or_manager(self, url, display_region, data, user_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('select-method', display_region), contents)
+            self.check_text_select_method(display_region, contents, user_type)
 
     async def check_post_resident_or_manager_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -608,3 +658,149 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_common_timeout_en, contents)
                 self.assertIn(self.content_request_timeout_error_en, contents)
+
+    async def check_post_enter_name(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=self.request_common_enter_name_form_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_en, contents)
+
+    async def check_post_enter_name_inputs_error(self, url, display_region, data, value_first=True, value_last=True):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-name', display_region), contents)
+            if display_region == 'cy':
+                if not value_first:
+                    self.assertIn(self.content_request_code_enter_name_error_first_name_cy, contents)
+                if not value_last:
+                    self.assertIn(self.content_request_code_enter_name_error_last_name_cy, contents)
+                self.assertIn(self.content_request_code_enter_name_title_cy, contents)
+            else:
+                if not value_first:
+                    self.assertIn(self.content_request_code_enter_name_error_first_name_en, contents)
+                if not value_last:
+                    self.assertIn(self.content_request_code_enter_name_error_last_name_en, contents)
+                self.assertIn(self.content_request_code_enter_name_title_en, contents)
+
+    async def check_post_confirm_name_address_input_yes(self, url, display_region, case_type, region, individual):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
+                mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
+
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type + ", region=" + region +
+                                ", individual=" + individual)
+            self.assertLogEvent(cm, self.build_url_log_entry('code-sent-post', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_code_sent_post_title_cy, contents)
+                if individual == 'true':
+                    self.assertIn(self.content_request_code_sent_post_secondary_individual_cy, contents)
+                elif case_type == 'CE':
+                    self.assertIn(self.content_request_code_sent_post_secondary_manager_cy, contents)
+                else:
+                    self.assertIn(self.content_request_code_sent_post_secondary_household_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_sent_post_title_en, contents)
+                if individual == 'true':
+                    self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
+                elif case_type == 'CE':
+                    self.assertIn(self.content_request_code_sent_post_secondary_manager_en, contents)
+                else:
+                    self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
+
+    async def check_post_confirm_name_address_input_no(self, url, display_region, user_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_no)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('select-method', display_region), contents)
+            self.check_text_select_method(display_region, contents, user_type, check_error=False)
+
+    async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_code_confirm_name_address_error_cy, contents)
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_confirm_name_address_error_en, contents)
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_en, contents)
+
+    async def check_post_confirm_name_address_error_from_get_fulfilment(self, url, display_region,
+                                                                        case_type, region, individual):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_aioresponses:
+
+            mocked_aioresponses.get(self.rhsvc_url_fulfilments +
+                                    '?caseType=' + case_type + '&region=' + region +
+                                    '&deliveryChannel=POST&productGroup=UAC&individual=' + individual, status=400)
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_error_500(display_region, contents)
+
+    async def check_post_confirm_name_address_error_from_request_fulfilment(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_aioresponses:
+
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_post
+            mocked_aioresponses.post(self.rhsvc_cases_url +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/post', status=400)
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_error_500(display_region, contents)

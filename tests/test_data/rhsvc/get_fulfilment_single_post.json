@@ -1,0 +1,21 @@
+[
+   {
+       "caseType": "HH",
+       "deliveryChannel": "POST",
+       "description": "Household Unique Access Code for England",
+       "fieldDistributionCode": "",
+       "fulfilmentCode": "UACIT1",
+       "handler": "NOTIFY",
+       "initialContactCode": "",
+       "language": "eng",
+       "regions": [
+           "W"
+       ],
+       "reminderContactCode": "",
+       "requestChannels": [
+           "CC",
+           "FIELD",
+           "RH"
+       ]
+   }
+]

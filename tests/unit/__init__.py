@@ -841,10 +841,37 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_get_fulfilment_single_sms = f
 
+        with open('tests/test_data/rhsvc/get_fulfilment_multi_post.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_multi_post = f
+
+        with open('tests/test_data/rhsvc/get_fulfilment_single_post.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_get_fulfilment_single_post = f
+
         with open('tests/test_data/rhsvc/request_fulfilment_sms.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment_sms = f
+
+        with open('tests/test_data/rhsvc/request_fulfilment_post.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_request_fulfilment_post = f
+
+        self.request_code_select_method_data_sms = {
+            'form-select-method': 'sms', 'action[save_continue]': ''
+        }
+
+        self.request_code_select_method_data_post = {
+            'form-select-method': 'post', 'action[save_continue]': ''
+        }
+
+        self.request_code_select_method_data_invalid = {
+            'form-select-method': 'invalid', 'action[save_continue]': ''
+        }
 
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
@@ -868,6 +895,30 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_mobile_confirmation_data_empty = {}
 
+        self.request_common_enter_name_form_data_valid = {
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbington', 'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_no_first = {
+            'name_last_name': 'Bobbington', 'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_no_last = {
+            'name_first_name': 'Bob', 'action[save_continue]': '',
+        }
+
+        self.request_common_confirm_name_address_data_yes = {
+            'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
+        }
+
+        self.request_common_confirm_name_address_data_no = {
+            'request-name-address-confirmation': 'no', 'action[save_continue]': ''
+        }
+
+        self.request_common_confirm_name_address_data_invalid = {
+            'request-name-address-confirmation': 'invalid', 'action[save_continue]': ''
+        }
+
         self.content_request_household_title_en = 'Request a new access code'
         self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
         self.content_request_individual_title_en = 'Request an individual access code'
@@ -882,6 +933,43 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_request_enter_address_secondary_cy = \
             'To request an access code, we need your address.'
+
+        self.content_request_code_select_method_individual_response_question_en = \
+            'Need to answer separately from your household?'
+        self.content_request_code_select_method_error_en = 'Please select an option.'
+        self.content_request_code_select_method_secondary_en = 'Select how to send access code'
+        self.content_request_code_select_method_option_text_en = 'Text message'
+        self.content_request_code_select_method_option_post_en = 'Post'
+
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_individual_response_question_cy = \
+            'Need to answer separately from your household?'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_error_cy = "Please select an option."
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_secondary_cy = "Select how to send access code"
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_option_text_cy = 'Text message'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_option_post_cy = 'Post'
+
+        self.content_request_code_select_method_household_title_en = \
+            'How would you like to receive a new household access code?'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_household_title_cy = \
+            'How would you like to receive a new household access code?'
+
+        self.content_request_code_select_method_individual_title_en = \
+            'How would you like to receive a new individual access code?'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_individual_title_cy = \
+            'How would you like to receive a new individual access code?'
+
+        self.content_request_code_select_method_manager_title_en = \
+            'How would you like to receive a new manager access code?'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_method_manager_title_cy = \
+            'How would you like to receive a new manager access code?'
 
         self.content_request_code_enter_mobile_title_en = 'What is your mobile phone number?'
         self.content_request_code_enter_mobile_error_en = ''
@@ -916,6 +1004,56 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_sent_sms_secondary_household_cy = \
             'The text message with a new household access code should arrive soon for you to start your census'
+
+        self.content_request_code_enter_name_title_en = 'What is your name?'
+        self.content_request_code_enter_name_error_first_name_en = 'Enter a first name to continue'
+        self.content_request_code_enter_name_error_last_name_en = 'Enter a last name to continue'
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_name_title_cy = 'What is your name?'
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_name_error_first_name_cy = "Enter a first name to continue"
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_name_error_last_name_cy = 'Enter a last name to continue'
+
+        self.content_request_code_confirm_name_address_title_individual_en = \
+            'Do you want to send a new individual access code to this address?'
+        self.content_request_code_confirm_name_address_title_manager_en = \
+            'Do you want to send a new manager access code to this address?'
+        self.content_request_code_confirm_name_address_title_household_en = \
+            'Do you want to send a new household access code to this address?'
+        self.content_request_code_confirm_name_address_error_en = 'Please check and confirm the name and address.'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_name_address_title_individual_cy = \
+            'Do you want to send a new individual access code to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_name_address_title_manager_cy = \
+            'Do you want to send a new manager access code to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_name_address_title_household_cy = \
+            'Do you want to send a new household access code to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_name_address_error_cy = \
+            "Please check and confirm the name and address."
+
+        self.content_request_code_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_code_sent_post_secondary_individual_en = \
+            'The letter with a new individual access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_secondary_manager_en = \
+            'The letter with a new manager access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_secondary_household_en = \
+            'The letter with a new household access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_title_cy = \
+            'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_secondary_individual_cy = \
+            'The letter with a new individual access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_secondary_manager_cy = \
+            'The letter with a new manager access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_secondary_household_cy = \
+            'The letter with a new household access code should arrive soon for you to start the census'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation
@@ -1238,6 +1376,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
+        self.get_request_access_code_select_method_en = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='access-code', display_region='en'
+        )
+        self.get_request_access_code_select_method_cy = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='access-code', display_region='cy'
+        )
+        self.get_request_access_code_select_method_ni = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='access-code', display_region='ni'
+        )
+        self.post_request_access_code_select_method_en = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='access-code', display_region='en'
+        )
+        self.post_request_access_code_select_method_cy = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='access-code', display_region='cy'
+        )
+        self.post_request_access_code_select_method_ni = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='access-code', display_region='ni'
+        )
+
         self.get_request_access_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
             request_type='access-code', display_region='en'
         )
@@ -1275,6 +1432,26 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_access_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
             request_type='access-code', display_region='ni'
         )
+
+        self.post_request_access_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='access-code', display_region='en'
+        )
+        self.post_request_access_code_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='access-code', display_region='cy'
+        )
+        self.post_request_access_code_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='access-code', display_region='ni'
+        )
+
+        self.post_request_access_code_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+                                                                            display_region='en')
+        self.post_request_access_code_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+                                                                            display_region='cy')
+        self.post_request_access_code_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+                                                                            display_region='ni')
 
         self.get_request_access_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
             request_type='access-code', display_region='en'
@@ -1357,6 +1534,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='individual-code'
         )
 
+        self.get_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='individual-code', display_region='en'
+        )
+        self.get_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='individual-code', display_region='cy'
+        )
+        self.get_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:get'].url_for(
+            request_type='individual-code', display_region='ni'
+        )
+        self.post_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='individual-code', display_region='en'
+        )
+        self.post_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='individual-code', display_region='cy'
+        )
+        self.post_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:post'].url_for(
+            request_type='individual-code', display_region='ni'
+        )
+
         self.get_request_individual_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
             request_type='individual-code', display_region='en'
         )
@@ -1394,6 +1590,26 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_individual_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
             request_type='individual-code', display_region='ni'
         )
+
+        self.post_request_individual_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='individual-code', display_region='en'
+        )
+        self.post_request_individual_code_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='individual-code', display_region='cy'
+        )
+        self.post_request_individual_code_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='individual-code', display_region='ni'
+        )
+
+        self.post_request_individual_code_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+                                                                            display_region='en')
+        self.post_request_individual_code_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+                                                                            display_region='cy')
+        self.post_request_individual_code_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+                                                                            display_region='ni')
 
         self.get_request_individual_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
             request_type='individual-code', display_region='en'
