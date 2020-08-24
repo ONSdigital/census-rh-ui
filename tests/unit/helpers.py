@@ -148,6 +148,30 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_confirm_mobile_error_en, contents)
             self.assertIn(self.content_request_code_confirm_mobile_title_en, contents)
 
+    def check_text_confirm_name_address(self, display_region, contents, user_type, check_error=False):
+        if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_request_code_confirm_name_address_error_cy, contents)
+            if user_type == 'individual':
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_cy, contents)
+            elif user_type == 'manager':
+                self.assertIn(self.content_request_code_confirm_name_address_title_manager_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_confirm_name_address_title_household_cy, contents)
+            self.assertIn(self.content_request_code_confirm_name_address_option_yes_cy, contents)
+            self.assertIn(self.content_request_code_confirm_name_address_option_no_cy, contents)
+        else:
+            if check_error:
+                self.assertIn(self.content_request_code_confirm_name_address_error_en, contents)
+            if user_type == 'individual':
+                self.assertIn(self.content_request_code_confirm_name_address_title_individual_en, contents)
+            elif user_type == 'manager':
+                self.assertIn(self.content_request_code_confirm_name_address_title_manager_en, contents)
+            else:
+                self.assertIn(self.content_request_code_confirm_name_address_title_household_en, contents)
+            self.assertIn(self.content_request_code_confirm_name_address_option_yes_en, contents)
+            self.assertIn(self.content_request_code_confirm_name_address_option_no_en, contents)
+
     def check_text_error_500(self, display_region, contents):
         if display_region == 'cy':
             self.assertIn(self.content_common_500_error_cy, contents)
@@ -436,6 +460,18 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-name', display_region), contents)
             self.assertIn(self.content_request_code_enter_name_title_en, contents)
 
+    async def check_post_select_method_input_invalid_or_no_selection(self, url, display_region, data, user_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+            self.assertLogEvent(cm, "request method selection error")
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('select-method', display_region), contents)
+            self.check_text_select_method(display_region, contents, user_type, check_error=True)
+
     async def check_post_resident_or_manager(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=data)
@@ -659,7 +695,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_timeout_en, contents)
                 self.assertIn(self.content_request_timeout_error_en, contents)
 
-    async def check_post_enter_name(self, url, display_region):
+    async def check_post_enter_name(self, url, display_region, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_common_enter_name_form_data_valid)
@@ -671,10 +707,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
-            if display_region == 'cy':
-                self.assertIn(self.content_request_code_confirm_name_address_title_individual_cy, contents)
-            else:
-                self.assertIn(self.content_request_code_confirm_name_address_title_individual_en, contents)
+            self.check_text_confirm_name_address(display_region, contents, user_type, check_error=False)
 
     async def check_post_enter_name_inputs_error(self, url, display_region, data, value_first=True, value_last=True):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -750,7 +783,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region), contents)
             self.check_text_select_method(display_region, contents, user_type, check_error=False)
 
-    async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data):
+    async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
@@ -761,12 +794,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
-            if display_region == 'cy':
-                self.assertIn(self.content_request_code_confirm_name_address_error_cy, contents)
-                self.assertIn(self.content_request_code_confirm_name_address_title_individual_cy, contents)
-            else:
-                self.assertIn(self.content_request_code_confirm_name_address_error_en, contents)
-                self.assertIn(self.content_request_code_confirm_name_address_title_individual_en, contents)
+            self.check_text_confirm_name_address(display_region, contents, user_type, check_error=True)
 
     async def check_post_confirm_name_address_error_from_get_fulfilment(self, url, display_region,
                                                                         case_type, region, individual):
