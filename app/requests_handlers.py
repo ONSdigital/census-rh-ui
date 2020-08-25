@@ -20,7 +20,8 @@ requests_routes = RouteTableDef()
 
 class RequestCommon(View):
 
-    valid_request_types = r'{request_type:\bindividual-code|access-code\b}'
+    valid_request_types_code_only = r'{request_type:\bindividual-code|access-code\b}'
+    valid_request_types_code_and_form = r'{request_type:\bindividual-code|access-code|paper-form\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type,
@@ -73,7 +74,7 @@ class RequestCode(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/select-method/')
+                      RequestCommon.valid_request_types_code_only + '/select-method/')
 class RequestCodeSelectMethod(RequestCommon):
     @aiohttp_jinja2.template('request-code-select-method.html')
     async def get(self, request):
@@ -161,7 +162,7 @@ class RequestCodeSelectMethod(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/enter-mobile/')
+                      RequestCommon.valid_request_types_code_only + '/enter-mobile/')
 class RequestCodeEnterMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
@@ -238,7 +239,7 @@ class RequestCodeEnterMobile(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/confirm-mobile/')
+                      RequestCommon.valid_request_types_code_only + '/confirm-mobile/')
 class RequestCodeConfirmMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-confirm-mobile.html')
     async def get(self, request):
@@ -363,7 +364,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/enter-name/')
+                      RequestCommon.valid_request_types_code_and_form + '/enter-name/')
 class RequestCommonEnterName(RequestCommon):
     @aiohttp_jinja2.template('request-common-enter-name.html')
     async def get(self, request):
@@ -447,7 +448,7 @@ class RequestCommonEnterName(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/confirm-name-address/')
+                      RequestCommon.valid_request_types_code_and_form + '/confirm-name-address/')
 class RequestCommonConfirmNameAddress(RequestCommon):
     @aiohttp_jinja2.template('request-common-confirm-name-address.html')
     async def get(self, request):
@@ -553,13 +554,24 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             else:
                 fulfilment_language = 'eng'
 
-            logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
-                        f"individual={fulfilment_individual}",
+            if request_type == 'paper-form':
+                fulfilment_type = 'QUESTIONNAIRE'
+            else:
+                fulfilment_type = 'UAC'
+
+            logger.info(f"fulfilment query: case_type={attributes['case_type']}, fulfilment_type={fulfilment_type}, "
+                        f"region={attributes['region']}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'])
 
             try:
                 available_fulfilments = await RHService.get_fulfilment(
-                    request, attributes['case_type'], attributes['region'], 'POST', 'UAC', fulfilment_individual)
+                    request,
+                    attributes['case_type'],
+                    attributes['region'],
+                    'POST',
+                    fulfilment_type,
+                    fulfilment_individual)
+
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
@@ -578,17 +590,26 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 except (KeyError, ClientResponseError) as ex:
                     raise ex
 
-                raise HTTPFound(
-                    request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
-                                                                              request_type=request_type))
+                if request_type == 'paper-form':
+                    raise HTTPFound(
+                        request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
+                                                                                  request_type=request_type))
 
             except ClientResponseError as ex:
                 raise ex
 
         elif name_address_confirmation == 'no':
-            raise HTTPFound(
-                request.app.router['RequestCodeSelectMethod:get'].url_for(display_region=display_region,
-                                                                          request_type=request_type))
+            if request_type == 'paper-form':
+                raise HTTPFound(
+                    request.app.router['RequestFormCancelled:get'].url_for(display_region=display_region,
+                                                                           request_type=request_type))
+            else:
+                raise HTTPFound(
+                    request.app.router['RequestCodeSelectMethod:get'].url_for(display_region=display_region,
+                                                                              request_type=request_type))
 
         else:
             # catch all just in case, should never get here
@@ -624,7 +645,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/code-sent-sms/')
+                      RequestCommon.valid_request_types_code_only + '/code-sent-sms/')
 class RequestCodeCodeSentSMS(RequestCommon):
     @aiohttp_jinja2.template('request-code-code-sent-sms.html')
     async def get(self, request):
@@ -654,7 +675,7 @@ class RequestCodeCodeSentSMS(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/code-sent-post/')
+                      RequestCommon.valid_request_types_code_only + '/code-sent-post/')
 class RequestCodeCodeSentPost(RequestCommon):
     @aiohttp_jinja2.template('request-code-code-sent-post.html')
     async def get(self, request):
@@ -692,8 +713,103 @@ class RequestCodeCodeSentPost(RequestCommon):
             }
 
 
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-manager/')
+class RequestFormManager(RequestCommon):
+    @aiohttp_jinja2.template('request-form-manager.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        request_type = 'paper-form'
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = 'We cannot send census forms to managers by post'
+            locale = 'cy'
+        else:
+            page_title = 'We cannot send census forms to managers by post'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/' + request_type + '/form-manager')
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'request_type': request_type,
+                'page_url': View.gen_page_url(request)
+            }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/request-cancelled/')
+class RequestFormCancelled(RequestCommon):
+    @aiohttp_jinja2.template('request-form-cancelled.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        request_type = 'paper-form'
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = 'Your request for a paper form has been cancelled'
+            locale = 'cy'
+        else:
+            page_title = 'Your request for a paper form has been cancelled'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/' + request_type + '/request-cancelled')
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'request_type': request_type,
+                'page_url': View.gen_page_url(request)
+            }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-sent-post/')
+class RequestFormSentPost(RequestCommon):
+    @aiohttp_jinja2.template('request-form-sent-post.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        request_type = 'paper-form'
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = 'A paper questionnaire will be sent'
+            locale = 'cy'
+        else:
+            page_title = 'A paper questionnaire will be sent'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/' + request_type + '/form-sent-post')
+
+        attributes = await self.get_check_attributes(request, request_type, display_region)
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'request_type': request_type,
+                'page_url': View.gen_page_url(request),
+                'first_name': attributes['first_name'],
+                'last_name': attributes['last_name'],
+                'addressLine1': attributes['addressLine1'],
+                'addressLine2': attributes['addressLine2'],
+                'addressLine3': attributes['addressLine3'],
+                'townName': attributes['townName'],
+                'postcode': attributes['postcode'],
+                'case_type': attributes['case_type'],
+                'address_level': attributes['address_level']
+            }
+
+
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types + '/timeout/')
+                      RequestCommon.valid_request_types_code_and_form + '/timeout/')
 class RequestCodeTimeout(RequestCommon):
     @aiohttp_jinja2.template('timeout.html')
     async def get(self, request):

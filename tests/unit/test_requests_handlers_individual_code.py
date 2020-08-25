@@ -1205,7 +1205,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
         await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'E', 'true')
+            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'true')
 
     @unittest_run_loop
     async def test_request_individual_code_post_code_sent_post_hh_ew_w(self):
@@ -1218,7 +1218,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
         await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'W', 'true')
+            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_individual_code_post_code_sent_post_hh_cy(self):
@@ -1231,7 +1231,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
         await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'W', 'true')
+            self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_individual_code_post_code_sent_post_hh_ni(self):
@@ -1244,7 +1244,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
         await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'N', 'true')
+            self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'true')
 
     @unittest_run_loop
     async def test_request_individual_code_confirm_name_address_get_fulfilment_error_ew_e(self):

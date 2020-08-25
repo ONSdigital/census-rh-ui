@@ -34,7 +34,9 @@
             ]
 %}
 
-{% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
+{% if (request_type == 'paper-form') %}
+    {% set question_title = _('Do you want to send a paper questionnaire to this address?') %}
+{% elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
     {% set question_title = _('Do you want to send a new individual access code to this address?') %}
 {% elif (case_type == 'CE' and address_level == 'E') %}
     {% set question_title = _('Do you want to send a new manager access code to this address?') %}
