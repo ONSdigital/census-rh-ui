@@ -14,50 +14,23 @@
     }
 } %}
 
-{% if countryCode == 'S' or censusAddressType == 'NA' %}
-    {% set form_options = [
-                    {
-                        'id': 'yes',
-                        'label': {
-                            'text': _('Yes, this is the correct address')
-                        },
-                        'value': 'yes'
-                    },
-                    {
-                        'id': 'no',
-                        'label': {
-                            'text': _('No, search for address again')
-                        },
-                        'value': 'no'
-                    }
-                ]
-    %}
-{% else %}
-    {% set form_options = [
-                    {
-                        'id': 'yes',
-                        'label': {
-                            'text': _('Yes, this is the correct address')
-                        },
-                        'value': 'yes'
-                    },
-                    {
-                        'id': 'change',
-                        'label': {
-                            'text': _('No, I need to make a change to this address')
-                        },
-                        'value': 'change'
-                    },
-                    {
-                        'id': 'no',
-                        'label': {
-                            'text': _('No, search for address again')
-                        },
-                        'value': 'no'
-                    }
-                ]
-    %}
-{% endif %}
+{% set form_options = [
+    {
+        'id': 'yes',
+        'label': {
+            'text': _('Yes, this is the correct address')
+        },
+        'value': 'yes'
+    },
+    {
+        'id': 'no',
+        'label': {
+            'text': _('No, search for address again')
+        },
+        'value': 'no'
+    }
+]
+%}
 
 {% block main %}
 
