@@ -294,10 +294,6 @@ class RHTestCase(AioHTTPTestCase):
             'form-confirm-address': 'yes', 'action[save_continue]': ''
         }
 
-        self.common_confirm_address_input_change = {
-            'form-confirm-address': 'change', 'action[save_continue]': ''
-        }
-
         self.common_confirm_address_input_no = {
             'form-confirm-address': 'no', 'action[save_continue]': ''
         }
@@ -372,6 +368,10 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
 
+        self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
+        # TODO: add welsh translation
+        self.content_common_enter_address_error_empty_cy = 'You have not entered a postcode'
+
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
         self.content_common_select_address_value_en = '1 Gate Reach'
@@ -384,7 +384,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_title_en = 'Is this the correct address?'
         self.content_common_confirm_address_error_en = 'Check and confirm the address'
         self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
-        self.content_common_confirm_address_value_change_en = 'No, I need to make a change to this address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
         # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Is this the correct address?"
@@ -392,8 +391,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
-        # TODO: add welsh translation
-        self.content_common_confirm_address_value_change_cy = 'No, I need to make a change to this address'
         # TODO: add welsh translation
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
 
@@ -841,20 +838,20 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_case_by_uprn_ce_r_n = f
 
-        with open('tests/test_data/rhsvc/get_fulfilment_multi.json') as fp:
+        with open('tests/test_data/rhsvc/get_fulfilment_multi_sms.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_multi = f
+            self.rhsvc_get_fulfilment_multi_sms = f
 
-        with open('tests/test_data/rhsvc/get_fulfilment_single.json') as fp:
+        with open('tests/test_data/rhsvc/get_fulfilment_single_sms.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_single = f
+            self.rhsvc_get_fulfilment_single_sms = f
 
-        with open('tests/test_data/rhsvc/request_fulfilment.json') as fp:
+        with open('tests/test_data/rhsvc/request_fulfilment_sms.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.rhsvc_request_fulfilment = f
+            self.rhsvc_request_fulfilment_sms = f
 
         self.request_code_enter_mobile_form_data_valid = {
             'request-mobile-number': self.mobile_valid, 'action[save_continue]': '',
@@ -893,22 +890,39 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_enter_address_secondary_cy = \
             'To request an access code, we need your address.'
 
-        self.content_request_enter_mobile_title_en = 'What is your mobile phone number?'
-        self.content_request_enter_mobile_error_en = ''
-        self.content_request_enter_mobile_secondary_en = 'We will send an access code by text to this number.'
-        self.content_request_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
-        self.content_request_enter_mobile_error_cy = ""
-        self.content_request_enter_mobile_secondary_cy = \
-            "Byddwn ni\\\'n anfon cod mynediad drwy neges destun i\\\'r rhif hwn."
+        self.content_request_code_enter_mobile_title_en = 'What is your mobile phone number?'
+        self.content_request_code_enter_mobile_error_en = ''
+        self.content_request_code_enter_mobile_secondary_en = \
+            'This will not be stored and only used once to send the access code'
+        self.content_request_code_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
+        self.content_request_code_enter_mobile_error_cy = ""
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_secondary_cy = \
+            "This will not be stored and only used once to send the access code"
 
-        self.content_request_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
-        self.content_request_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
-        self.content_request_confirm_mobile_error_cy = \
+        self.content_request_code_confirm_mobile_title_en = 'Is this mobile phone number correct?'
+        self.content_request_code_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_code_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_code_confirm_mobile_error_cy = \
             "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
 
-        self.content_request_code_sent_title_en = 'We have sent an access code'
-        self.content_request_code_sent_title_cy = 'Rydym ni wedi anfon cod mynediad'
+        self.content_request_code_sent_sms_title_en = 'We have sent an access code'
+        self.content_request_code_sent_sms_secondary_individual_en = \
+            'The text message with a new individual access code should arrive soon for you to start your census'
+        self.content_request_code_sent_sms_secondary_manager_en = \
+            'The text message with a new manager access code should arrive soon for you to start your census'
+        self.content_request_code_sent_sms_secondary_household_en = \
+            'The text message with a new household access code should arrive soon for you to start your census'
+        self.content_request_code_sent_sms_title_cy = 'Rydym ni wedi anfon cod mynediad'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_sms_secondary_individual_cy = \
+            'The text message with a new individual access code should arrive soon for you to start your census'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_sms_secondary_manager_cy = \
+            'The text message with a new manager access code should arrive soon for you to start your census'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_sms_secondary_household_cy = \
+            'The text message with a new household access code should arrive soon for you to start your census'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation

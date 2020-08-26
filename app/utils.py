@@ -323,8 +323,8 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def request_fulfilment(request, case_id, tel_no,
-                                 fulfilment_code):
+    async def request_fulfilment_sms(request, case_id, tel_no,
+                                     fulfilment_code):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
