@@ -1458,33 +1458,81 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
 
+        self.content_support_centre_list_of_centres_result_one_google_url = \
+            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
+
         self.content_support_centre_list_of_centres_title_en = 'Support centres near ' + self.postcode_valid
         self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
         self.content_support_centre_list_of_centres_result_two_location_name_en = 'University of Sheffield'
+        self.content_support_centre_list_of_centres_result_one_distance_away_en = \
+            '<span class="u-mb-s tag">1.3 miles away</span>'
+        self.content_support_centre_list_of_centres_result_one_address_en = \
+            '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
+        self.content_support_centre_list_of_centres_result_one_telephone_en = \
+            'Telephone: <span>+44 (0)11 4273 4712</span>'
+        self.content_support_centre_list_of_centres_result_one_email_en = \
+            'Email: <a href="mailto:test@email.com">test@email.com</a>'
+        self.content_support_centre_list_of_centres_result_one_times_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
+        self.content_support_centre_list_of_centres_result_one_times_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_one_times_sunday_en = 'Sunday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_one_times_census_saturday_en = \
+            'Census Saturday, 20 March &ndash;&nbsp;10am to 4pm'
+        self.content_support_centre_list_of_centres_result_one_times_census_day_en = \
+            'Census Day, 21 March &ndash;&nbsp;10am to 4pm'
+        self.content_support_centre_list_of_centres_result_one_public_parking_en = \
+            'Car park, including disabled parking'
+        self.content_support_centre_list_of_centres_result_two_public_parking_en = 'Disabled parking'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_three_public_parking_en = 'Car park'
+        self.content_support_centre_list_of_centres_result_one_level_access_en = 'Level access into building entrance'
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_en = 'Wheelchair access'
+        self.content_support_centre_list_of_centres_result_one_disability_aware_en = 'Staff are disability aware'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_en = 'Hearing loop system'
 
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_title_cy = 'Support centres near ' + self.postcode_valid
+        self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Welsh Sheffield Central Library'
+        self.content_support_centre_list_of_centres_result_two_location_name_cy = 'Welsh University of Sheffield'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Sheffield Central Library'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_two_location_name_cy = 'University of Sheffield'
-
-        self.content_support_centre_list_of_centres_result_one_distance_away = \
+        self.content_support_centre_list_of_centres_result_one_distance_away_cy = \
             '<span class="u-mb-s tag">1.3 miles away</span>'
-        self.content_support_centre_list_of_centres_result_one_address = \
-            '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
-        self.content_support_centre_list_of_centres_result_one_google_url = \
-            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
-        self.content_support_centre_list_of_centres_result_one_telephone = 'Telephone: <span>+44 (0)11 4273 4712</span>'
-        self.content_support_centre_list_of_centres_result_one_email = \
+        self.content_support_centre_list_of_centres_result_one_address_cy = \
+            '<p>Welsh Street<br> Sheffield<br>S1 1XZ</p>'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_telephone_cy = \
+            'Telephone: <span>+44 (0)11 4273 4712</span>'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_email_cy = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
-        self.content_support_centre_list_of_centres_result_one_times_monday = 'Monday &ndash; 10:30am to 5:15pm'
-        self.content_support_centre_list_of_centres_result_one_times_tuesday = 'Tuesday &ndash; 10am to 5pm'
-        self.content_support_centre_list_of_centres_result_one_public_parking = 'Car parking'
-        self.content_support_centre_list_of_centres_result_one_level_access = 'Level access into building entrance'
-        self.content_support_centre_list_of_centres_result_one_wheelchair_access = 'Wheelchair access'
-        self.content_support_centre_list_of_centres_result_one_disability_aware = 'Staff are disability aware'
-        self.content_support_centre_list_of_centres_result_one_hearing_loop = 'Hearing loop system'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_times_monday_cy = \
+            'Monday &ndash;&nbsp;10:30y bore to 5:15y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_times_tuesday_cy = \
+            'Tuesday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_times_sunday_cy = 'Sunday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_times_census_saturday_cy = \
+            'Census Saturday, 20 March &ndash;&nbsp;10y bore to 4y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_times_census_day_cy = \
+            'Census Day, 21 March &ndash;&nbsp;10y bore to 4y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
+            'Car park, including disabled parking'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_two_public_parking_cy = 'Disabled parking'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Car park'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_level_access_cy = 'Level access into building entrance'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Wheelchair access'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_disability_aware_cy = 'Staff are disability aware'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
 
 
         # Test Data

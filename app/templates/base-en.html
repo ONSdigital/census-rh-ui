@@ -1,21 +1,21 @@
-{% extends 'layout/_template.njk' %}
+{%- extends 'layout/_template.njk' -%}
 
-{% if page_title %}
-    {% set page_title_value = page_title + ' - Census 2021' %}
-{% else %}
-    {% set page_title_value = 'Census 2021' %}
-{% endif %}
+{%- if page_title -%}
+    {%- set page_title_value = page_title + ' - Census 2021' -%}
+{%- else -%}
+    {%- set page_title_value = 'Census 2021' -%}
+{%- endif -%}
 
-{% if page_show_signout == 'true' %}
-    {% set signout_button_value = {
+{%- if page_show_signout == 'true' -%}
+    {%- set signout_button_value = {
             'text': 'Save and sign out',
             'ariaLabel': 'Toggle main navigation',
             'url': domain_url_en + '/en/start/save-and-exit/'
         }
-    %}
-{% endif %}
+    -%}
+{%- endif -%}
 
-{% set footer_content = {
+{%- set footer_content = {
         'poweredBy': true,
         'lang': 'en',
         'rows': [
@@ -59,10 +59,10 @@
             }
         ]
     }
-%}
+-%}
 
-{% if page_url %}
-    {% set language = { 'languages':
+{%- if page_url -%}
+    {%- set language = { 'languages':
         [
             {
                 'url': '/en' + page_url,
@@ -84,10 +84,10 @@
             }
         ]
 }
-    %}
-{% endif %}
+    -%}
+{%- endif -%}
 
-{% set pageConfig = {
+{%- set pageConfig = {
     'title': page_title_value,
     'theme': 'census',
     'header': {
@@ -97,29 +97,29 @@
     'signoutButton': signout_button_value,
     'language': language,
     'footer': footer_content
-} %}
+} -%}
 
-{% block head %}
+{%- block head -%}
 
     <!-- Google Analytics -->
-    {% if gtm_auth and gtm_preview and gtm_cookies_win %}
-        {% include 'partials/gtm.html' with context %}
-    {% endif %}
+    {%- if gtm_auth and gtm_preview and gtm_cookies_win -%}
+        {%- include 'partials/gtm.html' with context -%}
+    {%- endif -%}
     <!-- End Google Analytics -->
 
-{% endblock %}
+{%- endblock -%}
 
-{% block bodyStart %}
+{%- block bodyStart -%}
 
-    {% if gtm_auth and gtm_preview and gtm_cookies_win %}
-        {% include 'partials/gtm-no-script.html' with context %}
-    {% endif %}
+    {%- if gtm_auth and gtm_preview and gtm_cookies_win -%}
+        {%- include 'partials/gtm-no-script.html' with context -%}
+    {%- endif -%}
 
-{% endblock %}
+{%- endblock -%}
 
-{% block preHeader %}
+{%- block preHeader -%}
 
-    {% from 'components/cookies-banner/_macro.njk' import onsCookiesBanner %}
+    {%- from 'components/cookies-banner/_macro.njk' import onsCookiesBanner -%}
     {{
         onsCookiesBanner({
             "statementTitle": 'Tell us whether you accept cookies',
@@ -128,4 +128,4 @@
             "secondaryButtonUrl": domain_url_en + '/cookies'
         })
     }}
-{% endblock %}
+{%- endblock -%}
