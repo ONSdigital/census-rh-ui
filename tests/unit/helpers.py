@@ -842,6 +842,23 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region), contents)
             self.check_text_select_method(display_region, contents, user_type, check_error=False)
 
+    async def check_post_confirm_name_address_input_no_form(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_no)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('request-cancelled', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('request-cancelled', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_form_request_cancelled_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_form_request_cancelled_title_en, contents)
+
     async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 

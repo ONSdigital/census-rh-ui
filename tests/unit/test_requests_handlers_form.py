@@ -153,420 +153,119 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_no(self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_confirm_address_data_invalid_ew(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request('POST',
-                                                 self.post_request_paper_form_confirm_address_en,
-                                                 data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "address confirmation error")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+    async def test_get_request_paper_form_confirm_address_data_invalid_ew(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_address_en, 'en', self.common_confirm_address_input_invalid)
 
     @unittest_run_loop
-    async def test_get_request_paper_form_confirm_address_data_invalid_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request('POST',
-                                                 self.post_request_paper_form_confirm_address_cy,
-                                                 data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "address confirmation error")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
+    async def test_get_request_paper_form_confirm_address_data_invalid_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.common_confirm_address_input_invalid)
 
     @unittest_run_loop
-    async def test_get_request_paper_form_confirm_address_data_invalid_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request('POST',
-                                                 self.post_request_paper_form_confirm_address_ni,
-                                                 data=self.common_confirm_address_input_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "address confirmation error")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
+    async def test_get_request_paper_form_confirm_address_data_invalid_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.common_confirm_address_input_invalid)
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_in_scotland_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-
-            await self.client.request('POST',
-                                      self.post_request_paper_form_enter_address_en,
-                                      data=self.common_postcode_input_valid)
-
-            await self.client.request('POST',
-                                      self.post_request_paper_form_select_address_en,
-                                      data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/address-in-scotland'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/address-in-scotland/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_address_in_scotland_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_paper_form_select_address_en, 'en', self.ai_uprn_result_scotland)
+        await self.check_post_confirm_address_address_in_scotland(
+            self.post_request_paper_form_confirm_address_en, 'en')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_in_scotland_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-
-            await self.client.request('POST',
-                                      self.post_request_paper_form_enter_address_cy,
-                                      data=self.common_postcode_input_valid)
-
-            await self.client.request('POST',
-                                      self.post_request_paper_form_select_address_cy,
-                                      data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/address-in-scotland'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/address-in-scotland/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_common_address_in_scotland_cy, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(
+            self.post_request_paper_form_select_address_cy, 'cy', self.ai_uprn_result_scotland)
+        await self.check_post_confirm_address_address_in_scotland(
+            self.post_request_paper_form_confirm_address_cy, 'cy')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_in_scotland_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/address-in-scotland'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_address_in_scotland_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_paper_form_select_address_ni, 'ni', self.ai_uprn_result_scotland)
+        await self.check_post_confirm_address_address_in_scotland(
+            self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_found_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_not_listed_en)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/call-contact-centre/address-not-found'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address_address_not_found(
+            self.post_request_paper_form_select_address_en, 'en')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_found_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_not_listed_cy)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/call-contact-centre/address-not-found'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/call-contact-centre/address-not-found/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address_address_not_found(
+            self.post_request_paper_form_select_address_cy, 'cy')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_found_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_not_listed_en)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/call-contact-centre/address-not-found'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address_address_not_found(
+            self.post_request_paper_form_select_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_get_request_paper_form_census_address_type_na_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm,
-                                "received GET on endpoint 'en/requests/call-contact-centre/unable-to-match-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en,
+                                             'en', self.ai_uprn_result_censusaddresstype_na)
+        await self.check_post_confirm_address_returns_addresstype_na(
+            self.post_request_paper_form_confirm_address_en, 'en')
 
     @unittest_run_loop
     async def test_get_request_paper_form_census_address_type_na_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm,
-                                "received GET on endpoint 'cy/requests/call-contact-centre/unable-to-match-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy,
+                                             'cy', self.ai_uprn_result_censusaddresstype_na)
+        await self.check_post_confirm_address_returns_addresstype_na(
+            self.post_request_paper_form_confirm_address_cy, 'cy')
 
     @unittest_run_loop
     async def test_get_request_paper_form_census_address_type_na_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm,
-                                "received GET on endpoint 'ni/requests/call-contact-centre/unable-to-match-address'")
-
-            self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni,
+                                             'ni', self.ai_uprn_result_censusaddresstype_na)
+        await self.check_post_confirm_address_returns_addresstype_na(
+            self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_get_request_paper_form_timeout_ew(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_request_paper_form_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn('<a href="/cy/requests/paper-form/timeout/" lang="cy" >Cymraeg</a>',
-                      contents)
-        self.assertIn(self.content_common_timeout_en, contents)
-        self.assertIn(self.content_request_timeout_error_en, contents)
+        await self.check_get_timeout(self.get_request_paper_form_timeout_en, 'en')
 
     @unittest_run_loop
     async def test_get_request_paper_form_timeout_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_request_paper_form_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn('<a href="/en/requests/paper-form/timeout/" lang="en" >English</a>',
-                      contents)
-        self.assertIn(self.content_common_timeout_cy, contents)
-        self.assertIn(self.content_request_timeout_error_cy, contents)
+        await self.check_get_timeout(self.get_request_paper_form_timeout_cy, 'cy')
 
     @unittest_run_loop
     async def test_get_request_paper_form_timeout_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_request_paper_form_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/timeout'")
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_common_timeout_en, contents)
-        self.assertIn(self.content_request_timeout_error_en, contents)
+        await self.check_get_timeout(self.get_request_paper_form_timeout_ni, 'ni')
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_required_ew(self):
+        # TODO - to be removed, test will become redundant soon
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
@@ -603,6 +302,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_required_cy(self):
+        # TODO - to be removed, test will become redundant soon
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
@@ -639,6 +339,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
 
     @unittest_run_loop
     async def test_get_request_paper_form_address_not_required_ni(self):
+        # TODO - to be removed, test will become redundant soon
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
@@ -673,341 +374,83 @@ class TestRequestsHandlersPaperForm(TestHelpers):
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_empty_ce_m_ew_e(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_en,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_en,
-                data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/paper-form/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_en,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_en, 'en', self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_empty_ce_m_ew_w(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_en,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_en,
-                data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/paper-form/resident-or-manager/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_en,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_en, 'en', self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_empty_ce_m_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_cy,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_cy,
-                data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_cy,
-                data=self.common_confirm_address_input_yes)
-
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/paper-form/resident-or-manager/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_common_resident_or_manager_title_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_cy,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_cy, 'cy', self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_empty_ce_m_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_ni,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_ni,
-                data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_ni,
-                data=self.common_confirm_address_input_yes)
-
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_common_resident_or_manager_title_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_resident_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_option_manager_en, contents)
-            self.assertIn(self.content_common_resident_or_manager_description_manager_en, contents)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_ni,
-                                                 data=self.common_form_data_empty)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_ni, 'ni', self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_invalid_ce_m_ew_e(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_en,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_en,
-                data=self.common_select_address_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_en,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_en, 'en', self.common_resident_or_manager_input_invalid)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_invalid_ce_m_ew_w(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_en,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_en,
-                data=self.common_select_address_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_en,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_en,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_en, 'en', self.common_resident_or_manager_input_invalid)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_invalid_ce_m_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_cy,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_cy,
-                data=self.common_select_address_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_cy,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_cy,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_invalid)
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_invalid_ce_m_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-            'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_address_ni,
-                data=self.common_postcode_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_select_address_ni,
-                data=self.common_select_address_input_valid)
-
-            await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_address_ni,
-                data=self.common_confirm_address_input_yes)
-
-            response = await self.client.request('POST', self.post_request_paper_form_resident_or_manager_ni,
-                                                 data=self.common_resident_or_manager_input_invalid)
-
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.content_common_resident_or_manager_error_en, contents)
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_input_invalid_or_no_selection(
+            self.post_request_paper_form_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_invalid)
 
     @unittest_run_loop
     async def test_post_request_paper_form_get_ai_postcode_error(self):
@@ -1040,6676 +483,1052 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_enter_address_ni, 'ni', epoch='test')
 
     @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_empty_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_first_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_first)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertNotIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/enter-name/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/enter-name/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_cy,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_cy, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_enter_name_no_last_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_ni,
-                    data=self.request_common_enter_name_form_data_no_last)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertNotIn(self.content_request_common_enter_name_error_first_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_error_last_name_en, str(resp_content))
-            self.assertIn(self.content_request_common_enter_name_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_name_address_en,
-                    data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_empty_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.common_form_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_name_address_en,
-                    data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_cy, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.content_request_common_confirm_name_address_error_en, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_hh_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_name_en,
-                    data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_name_address_en,
-                    data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_hh_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_hh_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/request-cancelled/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_hh_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_spg_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_spg_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_spg_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/request-cancelled/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_spg_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_en,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_cy,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/request-cancelled/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/resident-or-manager'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_resident_or_manager_ni,
-                    data=self.common_resident_or_manager_input_resident)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/resident-or-manager'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ew_e(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ew_w(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_en,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/confirm-name-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_en,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/requests/paper-form/request-cancelled/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_ce_r_cy(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_cy,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/confirm-name-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_cy, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_cy,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/requests/paper-form/request-cancelled/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ni(
-            self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode'
-        ) as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn'
-        ) as mocked_get_ai_uprn, mock.patch(
-            'app.utils.RHService.get_case_by_uprn'
-        ) as mocked_get_case_by_uprn, mock.patch(
-            'app.utils.RHService.get_fulfilment'
-        ) as mocked_get_fulfilment, mock.patch(
-            'app.utils.RHService.request_fulfilment_post'
-        ) as mocked_request_fulfilment_post:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
-            mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
-
-            await self.client.request('GET', self.get_request_paper_form_enter_address_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/select-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-address'")
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/enter-name'")
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_enter_name_ni,
-                data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/enter-name'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/confirm-name-address'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_confirm_name_address_title_en, str(resp_content))
-
-            response = await self.client.request(
-                'POST',
-                self.post_request_paper_form_confirm_name_address_ni,
-                data=self.request_common_confirm_name_address_data_no)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-name-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/requests/paper-form/request-cancelled'")
-
-            self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_request_form_request_cancelled_title_en, str(resp_content))
+    async def test_request_paper_form_enter_name_empty_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_empty_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_first_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_enter_name_no_last_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name_inputs_error(self.post_request_paper_form_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_empty_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_invalid_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_paper_form_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form(self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_en,
+                                                             'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_cy,
+                                                             'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_paper_form_confirm_name_address_option_no_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_no_form(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_get_fulfilment_error_hh_ew_e(
