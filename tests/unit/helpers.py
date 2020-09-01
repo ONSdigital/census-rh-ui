@@ -158,11 +158,12 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_confirm_mobile_error_en, contents)
             self.assertIn(self.content_request_code_confirm_mobile_title_en, contents)
 
-    def check_text_confirm_name_address(self, display_region, contents, user_type, check_error=False):
+    def check_text_confirm_name_address(self, display_region, contents, user_type, check_error=False,
+                                        override_sub_user_journey=False):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_request_common_confirm_name_address_error_cy, contents)
-            if self.sub_user_journey == 'paper-form':
+            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_title_cy, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_cy, contents)
@@ -175,7 +176,7 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_request_common_confirm_name_address_error_en, contents)
-            if self.sub_user_journey == 'paper-form':
+            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_title_en, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_en, contents)
@@ -461,28 +462,61 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def check_post_select_method_input_sms(self, url, display_region):
+    async def check_get_select_method_form_manager(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('GET', url)
+            self.assertLogEvent(cm, self.build_url_log_entry('access-code/select-method',
+                                                             display_region, 'GET', False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('access-code/select-method', display_region, False),
+                              contents)
+            self.check_text_select_method(display_region, contents, 'manager')
+
+    async def check_post_select_method_input_sms(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_select_method_data_sms)
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-method',
+                                                                 display_region, 'POST', False))
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-mobile',
+                                                                 display_region, 'GET', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
+                if override_sub_user_journey:
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/enter-mobile',
+                                                              display_region, False), contents)
+                else:
+                    self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
-    async def check_post_select_method_input_post(self, url, display_region):
+    async def check_post_select_method_input_post(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_select_method_data_post)
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-method',
+                                                                 display_region, 'POST', False))
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-name',
+                                                                 display_region, 'GET', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('enter-name', display_region), contents)
+                if override_sub_user_journey:
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/enter-name',
+                                                              display_region, False), contents)
+                else:
+                    self.assertIn(self.build_translation_link('enter-name', display_region), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
@@ -513,7 +547,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region), contents)
             self.check_text_select_method(display_region, contents, user_type)
 
-    async def check_post_resident_or_manager_form(self, url, display_region):
+    async def check_post_resident_or_manager_form_resident(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_resident_or_manager_input_resident)
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
@@ -529,6 +563,22 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
+    async def check_post_resident_or_manager_form_manager(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_resident_or_manager_input_manager)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('form-manager', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('form-manager', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_form_manager_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_form_manager_title_en, contents)
+
     async def check_post_resident_or_manager_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=data)
@@ -541,16 +591,26 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
             self.check_text_resident_or_manager(display_region, contents, check_error=True)
 
-    async def check_post_enter_mobile(self, url, display_region):
+    async def check_post_enter_mobile(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_enter_mobile_form_data_valid)
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'GET'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-mobile',
+                                                                 display_region, 'POST', False))
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-mobile',
+                                                                 display_region, 'GET', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
+                if override_sub_user_journey:
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/confirm-mobile',
+                                                              display_region, False), contents)
+                else:
+                    self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
             self.check_text_confirm_mobile(display_region, contents, check_error=False)
 
     async def check_post_enter_mobile_input_invalid(self, url, display_region):
@@ -568,7 +628,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
             self.check_text_enter_mobile(display_region, contents)
 
-    async def check_post_confirm_mobile(self, url, display_region, case_type, region, individual):
+    async def check_post_confirm_mobile(self, url, display_region, case_type, region, individual,
+                                        override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
             'app.utils.RHService.get_fulfilment'
         ) as mocked_get_fulfilment, mock.patch(
@@ -579,16 +640,28 @@ class TestHelpers(RHTestCase):
             mocked_request_fulfilment_sms.return_value = self.rhsvc_request_fulfilment_sms
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-mobile',
+                                                                 display_region, 'POST', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
             self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type + ", region=" + region +
                                 ", individual=" + individual)
-            self.assertLogEvent(cm, self.build_url_log_entry('code-sent-sms', display_region, 'GET'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-sms',
+                                                                 display_region, 'GET', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('code-sent-sms', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('code-sent-sms', display_region), contents)
+                if override_sub_user_journey:
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-sms',
+                                                              display_region, False), contents)
+                else:
+                    self.assertIn(self.build_translation_link('code-sent-sms', display_region), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_code_sent_sms_title_cy, contents)
                 if individual == 'true':
@@ -739,19 +812,32 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_timeout_en, contents)
                 self.assertIn(self.content_request_timeout_error_en, contents)
 
-    async def check_post_enter_name(self, url, display_region, user_type):
+    async def check_post_enter_name(self, url, display_region, user_type, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_common_enter_name_form_data_valid)
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'GET'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-name',
+                                                                 display_region, 'POST', False))
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-name-address',
+                                                                 display_region, 'GET', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
-            self.check_text_confirm_name_address(display_region, contents, user_type, check_error=False)
+                if override_sub_user_journey:
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/confirm-name-address',
+                                                              display_region, False), contents)
+                    self.check_text_confirm_name_address(display_region, contents, user_type, check_error=False,
+                                                         override_sub_user_journey=True)
+                else:
+                    self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
+                    self.check_text_confirm_name_address(display_region, contents, user_type, check_error=False,
+                                                         override_sub_user_journey=False)
 
     async def check_post_enter_name_inputs_error(self, url, display_region, data, value_first=True, value_last=True):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -777,8 +863,8 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
-    async def check_post_confirm_name_address_input_yes(self, url, display_region, case_type,
-                                                        fulfilment_type, region, individual):
+    async def check_post_confirm_name_address_input_yes(self, url, display_region, case_type, fulfilment_type,
+                                                        region, individual, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
@@ -787,19 +873,27 @@ class TestHelpers(RHTestCase):
             mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            if override_sub_user_journey:
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-name-address',
+                                                                 display_region, 'POST', False))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
             self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type +
                                 ", fulfilment_type=" + fulfilment_type +
                                 ", region=" + region + ", individual=" + individual)
-            if self.sub_user_journey == 'paper-form':
+            if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
                 self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
             else:
-                self.assertLogEvent(cm, self.build_url_log_entry('code-sent-post', display_region, 'GET'))
+                if override_sub_user_journey:
+                    self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-post',
+                                                                     display_region, 'GET', False))
+                else:
+                    self.assertLogEvent(cm, self.build_url_log_entry('code-sent-post', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
-            if self.sub_user_journey == 'paper-form':
+            if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
                 if not display_region == 'ni':
                     self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
                 if display_region == 'cy':
@@ -810,7 +904,11 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
-                    self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
+                    if override_sub_user_journey:
+                        self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-post',
+                                                                  display_region, False), contents)
+                    else:
+                        self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
                 if display_region == 'cy':
                     self.assertIn(self.content_request_code_sent_post_title_cy, contents)
                     if individual == 'true':
@@ -873,14 +971,15 @@ class TestHelpers(RHTestCase):
             self.check_text_confirm_name_address(display_region, contents, user_type, check_error=True)
 
     async def check_post_confirm_name_address_error_from_get_fulfilment(self, url, display_region,
-                                                                        case_type, region, individual):
+                                                                        case_type, region, product_group, individual):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_aioresponses:
 
             mocked_aioresponses.get(self.rhsvc_url_fulfilments +
                                     '?caseType=' + case_type + '&region=' + region +
-                                    '&deliveryChannel=POST&productGroup=UAC&individual=' + individual, status=400)
+                                    '&deliveryChannel=POST&productGroup=' + product_group +
+                                    '&individual=' + individual, status=400)
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
