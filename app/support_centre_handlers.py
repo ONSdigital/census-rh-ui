@@ -112,7 +112,7 @@ class SupportCentreListCentres(View):
                 'page_url': View.gen_page_url(request)
             }
             if ex.status == 404:
-                logger.info('AD Lookup API returned as postcode not existing', client_ip=request['client_ip'])
+                logger.error('AD Lookup API returned as postcode not existing', client_ip=request['client_ip'])
                 return aiohttp_jinja2.render_template('404.html', request, attributes, status=404)
             else:
                 logger.error('AD Lookup API not responding', client_ip=request['client_ip'])

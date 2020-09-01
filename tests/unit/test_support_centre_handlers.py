@@ -351,3 +351,73 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn(self.content_common_500_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_api_returns_404_en(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, status=404)
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_en)
+
+            self.assertLogEvent(cm, 'AD Lookup API returned as postcode not existing')
+
+            self.assertEqual(response.status, 404)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_404_error_title_en, contents)
+            self.assertIn(self.content_common_404_error_secondary_en, contents)
+
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_api_returns_404_cy(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, status=404)
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_cy)
+
+            self.assertLogEvent(cm, 'AD Lookup API returned as postcode not existing')
+
+            self.assertEqual(response.status, 404)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_common_404_error_title_cy, contents)
+            self.assertIn(self.content_common_404_error_secondary_cy, contents)
+
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_api_returns_500_en(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, status=500)
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_en)
+
+            self.assertLogEvent(cm, 'AD Lookup API not responding')
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
+
+    @unittest_run_loop
+    async def test_get_support_centre_list_of_centres_api_returns_500_cy(
+            self):
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+
+            mocked.get(self.ad_lookup_url, status=500)
+
+            response = await self.client.request('GET', self.get_support_centre_list_of_centres_postcode_valid_cy)
+
+            self.assertLogEvent(cm, 'AD Lookup API not responding')
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_common_500_error_cy, contents)
