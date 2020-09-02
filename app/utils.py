@@ -384,7 +384,7 @@ class RHService(View):
                                         'POST',
                                         url,
                                         auth=request.app['RHSVC_AUTH'],
-                                        json=fulfilment_json)
+                                        request_json=fulfilment_json)
 
     @staticmethod
     async def get_uac_details(request):
