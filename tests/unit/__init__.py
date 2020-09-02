@@ -1694,17 +1694,44 @@ class RHTestCase(AioHTTPTestCase):
             'Telephone: <span>+44 (0)11 4273 4712</span>'
         self.content_support_centre_list_of_centres_result_one_email_en = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
-        self.content_support_centre_list_of_centres_result_one_times_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
-        self.content_support_centre_list_of_centres_result_one_times_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_one_times_sunday_en = 'Sunday &ndash;&nbsp;Closed'
-        self.content_support_centre_list_of_centres_result_one_times_census_saturday_en = \
+        self.content_support_centre_list_of_centres_result_open_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
+        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_census_saturday_en = \
             'Census Saturday, 20 March &ndash;&nbsp;10am to 4pm'
-        self.content_support_centre_list_of_centres_result_one_times_census_day_en = \
+        self.content_support_centre_list_of_centres_result_open_census_day_en = \
             'Census Day, 21 March &ndash;&nbsp;10am to 4pm'
+        self.content_support_centre_list_of_centres_result_open_good_friday_en = \
+            'Good Friday, 2 April &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_easter_monday_en = \
+            'Easter Monday, 5 April &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_may_bank_holiday_en = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_closed_monday_en = 'Monday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_tuesday_en = 'Tuesday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_wednesday_en = 'Wednesday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_thursday_en = 'Thursday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_friday_en = 'Friday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_saturday_en = 'Saturday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_sunday_en = 'Sunday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_census_saturday_en = \
+            'Census Saturday, 20 March &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_census_day_en = \
+            'Census Day, 21 March &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_good_friday_en = \
+            'Good Friday, 2 April &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_easter_monday_en = \
+            'Easter Monday, 5 April &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_en = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
+
         self.content_support_centre_list_of_centres_result_one_public_parking_en = \
             'Car park, including disabled parking'
         self.content_support_centre_list_of_centres_result_two_public_parking_en = 'Disabled parking'
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_three_public_parking_en = 'Car park'
         self.content_support_centre_list_of_centres_result_one_level_access_en = 'Level access into building entrance'
         self.content_support_centre_list_of_centres_result_one_wheelchair_access_en = 'Wheelchair access'
@@ -1726,20 +1753,70 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_email_cy = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
+
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_times_monday_cy = \
+        self.content_support_centre_list_of_centres_result_open_monday_cy = \
             'Monday &ndash;&nbsp;10:30y bore to 5:15y nos'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_times_tuesday_cy = \
+        self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
             'Tuesday &ndash;&nbsp;10y bore to 5y nos'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_times_sunday_cy = 'Sunday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
+            'Wednesday &ndash;&nbsp;10y bore to 5y nos'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_times_census_saturday_cy = \
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Thursday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Friday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Saturday &ndash;&nbsp;10y bore to 1y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Sunday &ndash;&nbsp;10y bore to 1y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
             'Census Saturday, 20 March &ndash;&nbsp;10y bore to 4y nos'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_times_census_day_cy = \
+        self.content_support_centre_list_of_centres_result_open_census_day_cy = \
             'Census Day, 21 March &ndash;&nbsp;10y bore to 4y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
+            'Good Friday, 2 April &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
+            'Easter Monday, 5 April &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Monday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Tuesday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Wednesday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_thursday_cy = 'Thursday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_friday_cy = 'Friday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_saturday_cy = 'Saturday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_sunday_cy = 'Sunday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_census_saturday_cy = \
+            'Census Saturday, 20 March &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_census_day_cy = \
+            'Census Day, 21 March &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_good_friday_cy = \
+            'Good Friday, 2 April &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_easter_monday_cy = \
+            'Easter Monday, 5 April &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
+
+
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
             'Car park, including disabled parking'

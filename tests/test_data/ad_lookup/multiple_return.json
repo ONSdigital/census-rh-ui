@@ -59,24 +59,6 @@
               "start": 1000,
               "finish": 1700
             }
-          ],
-          "Good Friday": [
-            {
-              "start": 1000,
-              "finish": 1700
-            }
-          ],
-          "Easter Monday": [
-            {
-              "start": 1000,
-              "finish": 1700
-            }
-          ],
-          "May Bank Holiday": [
-            {
-              "start": 1000,
-              "finish": 1700
-            }
           ]
         }
       ],
@@ -108,50 +90,38 @@
           "description": "string",
           "welshLanguageDescription": "string",
           "openingHours": [
-              {
-                  "Monday": [
-                      {
-                          "start": 900,
-                          "finish": 1700
-                      }
-                  ],
-                  "Tuesday": [
-                      {
-                          "start": 900,
-                          "finish": 1700
-                      }
-                  ],
-                  "Wednesday": [
-                      {
-                          "start": 900,
-                          "finish": 1700
-                      }
-                  ],
-                  "Thursday": [
-                      {
-                          "start": 900,
-                          "finish": 1700
-                      }
-                  ],
-                  "Friday": [
-                      {
-                          "start": 900,
-                          "finish": 1700
-                      }
-                  ],
-                  "Saturday": [
-                      {
-                          "start": 1000,
-                          "finish": 1700
-                      }
-                  ],
-                  "Sunday": [
-                      {
-                          "start": 1000,
-                          "finish": 1700
-                      }
-                  ]
-              }
+            {
+              "Census Saturday": [
+            {
+              "start": 1000,
+              "finish": 1600
+            }
+          ],
+          "Census Sunday": [
+            {
+              "start": 1000,
+              "finish": 1600
+            }
+          ],
+          "Good Friday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Easter Monday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "May Bank Holiday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ]
+            }
           ],
           "accessibility": [
               {
