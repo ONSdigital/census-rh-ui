@@ -20,7 +20,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'HH', 'E', 'false')
@@ -31,7 +32,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'HH', 'W', 'false')
@@ -42,7 +44,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'HH', 'W', 'false')
@@ -53,7 +56,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'HH', 'N', 'false')
@@ -64,7 +68,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'SPG', 'E', 'false')
@@ -75,7 +80,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'SPG', 'W', 'false')
@@ -86,7 +92,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'SPG', 'W', 'false')
@@ -97,7 +104,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'SPG', 'N', 'false')
@@ -110,7 +118,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'false')
@@ -123,7 +133,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'false')
@@ -136,7 +148,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'false')
@@ -149,7 +163,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'false')
@@ -162,7 +178,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'true')
@@ -175,7 +193,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'true')
@@ -188,7 +208,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'true')
@@ -201,7 +223,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'true')
@@ -212,7 +236,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'true')
@@ -223,7 +248,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'true')
@@ -234,7 +260,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'true')
@@ -245,7 +272,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'true')
@@ -707,12 +735,480 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_form_data_empty)
 
     @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_no_selection_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni',
+            self.request_code_select_method_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy',
+            self.request_code_select_method_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni',
+            self.request_code_select_method_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_en, 'en',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_cy, 'cy',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_post_request_access_code_select_method_input_invalid_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_invalid_or_no_selection(
+            self.post_request_access_code_select_method_ni, 'ni',
+            self.request_code_select_method_data_invalid, 'individual')
+
+    @unittest_run_loop
     async def test_post_request_access_code_enter_mobile_invalid_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -721,7 +1217,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -730,7 +1226,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -739,7 +1235,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_ni, 'ni')
 
     @unittest_run_loop
@@ -748,7 +1244,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -757,7 +1253,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -766,7 +1262,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -775,7 +1271,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_ni, 'ni')
 
     @unittest_run_loop
@@ -786,7 +1282,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -797,7 +1294,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -808,7 +1306,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -819,7 +1318,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -828,7 +1328,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -837,7 +1337,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -846,7 +1346,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -855,7 +1355,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -864,7 +1364,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -874,7 +1375,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -884,7 +1386,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_cy, 'cy')
 
@@ -894,7 +1397,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_ni, 'ni')
 
@@ -904,7 +1408,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -914,7 +1419,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -924,7 +1430,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_cy, 'cy')
 
@@ -934,7 +1441,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_ni, 'ni')
 
@@ -946,7 +1454,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -958,7 +1468,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -970,7 +1482,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_cy, 'cy')
 
@@ -982,7 +1496,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_ni, 'ni')
 
@@ -992,7 +1508,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -1002,7 +1519,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_en, 'en')
 
@@ -1012,7 +1530,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_cy, 'cy')
 
@@ -1022,7 +1541,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_no(self.post_request_access_code_confirm_mobile_ni, 'ni')
 
@@ -1032,7 +1552,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1043,7 +1564,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1054,7 +1576,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_empty)
@@ -1065,7 +1588,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_empty)
@@ -1076,7 +1600,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1087,7 +1612,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1098,7 +1624,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_empty)
@@ -1109,7 +1636,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_empty)
@@ -1122,7 +1650,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1135,7 +1665,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1148,7 +1680,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_empty)
@@ -1161,7 +1695,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_empty)
@@ -1172,7 +1708,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1183,7 +1720,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_empty)
@@ -1194,7 +1732,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_empty)
@@ -1205,7 +1744,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_empty)
@@ -1216,7 +1756,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1227,7 +1768,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1238,7 +1780,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_invalid)
@@ -1249,7 +1792,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_invalid)
@@ -1260,7 +1804,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1271,7 +1816,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1282,7 +1828,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_invalid)
@@ -1293,7 +1840,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_invalid)
@@ -1306,7 +1854,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1319,7 +1869,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1332,7 +1884,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_invalid)
@@ -1345,7 +1899,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_invalid)
@@ -1356,7 +1912,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1367,7 +1924,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_en, 'en', self.request_code_mobile_confirmation_data_invalid)
@@ -1378,7 +1936,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_cy, 'cy', self.request_code_mobile_confirmation_data_invalid)
@@ -1389,7 +1948,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_input_invalid_or_no_selection(
             self.post_request_access_code_confirm_mobile_ni, 'ni', self.request_code_mobile_confirmation_data_invalid)
@@ -1400,7 +1960,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'HH', 'E', 'false')
@@ -1411,7 +1972,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'HH', 'W', 'false')
@@ -1422,7 +1984,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'HH', 'W', 'false')
@@ -1433,7 +1996,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'HH', 'N', 'false')
@@ -1444,7 +2008,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'SPG', 'E', 'false')
@@ -1455,7 +2020,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'SPG', 'W', 'false')
@@ -1466,7 +2032,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'SPG', 'W', 'false')
@@ -1477,7 +2044,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'SPG', 'N', 'false')
@@ -1490,7 +2058,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'false')
@@ -1503,7 +2073,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'false')
@@ -1516,7 +2088,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'false')
@@ -1529,7 +2103,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'false')
@@ -1542,7 +2118,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'true')
@@ -1555,7 +2133,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'true')
@@ -1568,7 +2148,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'true')
@@ -1581,7 +2163,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'true')
@@ -1592,7 +2176,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_e)
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'E', 'true')
@@ -1603,7 +2188,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_w)
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en', 'CE', 'W', 'true')
@@ -1614,7 +2200,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w)
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy', 'CE', 'W', 'true')
@@ -1625,7 +2212,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n)
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_get_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'true')
@@ -1636,7 +2224,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_e)
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1647,7 +2236,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_hh_w)
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1658,7 +2248,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_hh_w)
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy')
@@ -1669,7 +2260,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n)
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni')
@@ -1680,7 +2272,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_e)
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1691,7 +2284,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_spg_w)
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1702,7 +2296,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_spg_w)
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy')
@@ -1713,7 +2308,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n)
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni')
@@ -1726,7 +2322,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1739,7 +2337,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1752,7 +2352,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy')
@@ -1765,7 +2367,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_manager)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni')
@@ -1778,7 +2382,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1791,7 +2397,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_en, 'en', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1804,7 +2412,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_cy, 'cy', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy')
@@ -1817,7 +2427,9 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
         await self.check_post_resident_or_manager(
-            self.post_request_access_code_resident_or_manager_ni, 'ni', self.common_resident_or_manager_input_resident)
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni')
@@ -1828,7 +2440,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1839,7 +2452,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_en, 'en')
@@ -1850,7 +2464,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_cy, 'cy')
@@ -1861,7 +2476,2348 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni')
         await self.check_post_confirm_mobile_error_from_request_fulfilment(
             self.post_request_access_code_confirm_mobile_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_empty_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.common_form_data_empty, False, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_first_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_first, False, True)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_enter_name_no_last_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_no_last, True, False)
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_en, 'en',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_cy, 'cy',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_name_address_ni, 'ni',
+            self.request_common_confirm_name_address_data_invalid, 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'household')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'manager')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_no(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'individual')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'HH', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'HH', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'SPG', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'SPG', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_code_sent_post_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'HH', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'HH', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'SPG', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'SPG', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_ew_e(
+            self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_ew_w(
+            self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_manager, 'manager')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'manager')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ew_e(
+            self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ew_w(
+            self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_en,
+                                                           'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_en, 'en',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_cy,
+                                                           'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_cy, 'cy',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni,
+                                                           'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager(
+            self.post_request_access_code_resident_or_manager_ni, 'ni',
+            self.common_resident_or_manager_input_resident, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_name_address_ni, 'ni')
