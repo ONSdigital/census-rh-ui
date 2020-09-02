@@ -497,8 +497,8 @@ class CommonConfirmAddress(CommonCommon):
                                                                                      display_region=display_region))
                     else:
                         raise HTTPFound(
-                            request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                                     display_region=display_region))
+                            request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                                      display_region=display_region))
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
@@ -620,13 +620,13 @@ class CommonCEMangerQuestion(CommonCommon):
             session.changed()
 
             raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                         display_region=display_region))
+                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                          display_region=display_region))
 
         elif resident_or_manager == 'manager':
             raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile:get'].url_for(request_type=sub_user_journey,
-                                                                         display_region=display_region))
+                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
+                                                                          display_region=display_region))
 
         else:
             # catch all just in case, should never get here
