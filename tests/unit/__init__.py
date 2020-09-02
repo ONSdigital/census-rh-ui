@@ -1080,13 +1080,13 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
         self.get_start_unlinked_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.get_start_unlinked_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.get_start_unlinked_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.post_start_unlinked_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
                                                                sub_user_journey='unlinked')
@@ -1118,13 +1118,13 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_unlinked_confirm_address_en = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.get_start_unlinked_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.get_start_unlinked_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.post_start_unlinked_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
                                                                  sub_user_journey='unlinked')
@@ -1205,13 +1205,13 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
         self.get_start_change_address_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.get_start_change_address_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.get_start_change_address_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.post_start_change_address_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
                                                                sub_user_journey='change-address')
@@ -1243,13 +1243,13 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_change_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.get_start_change_address_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.get_start_change_address_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.post_start_change_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
                                                                  sub_user_journey='change-address')
@@ -1816,7 +1816,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
             'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
 
-
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
             'Car park, including disabled parking'
@@ -1832,7 +1831,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_disability_aware_cy = 'Staff are disability aware'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
-
 
         # Test Data
 
