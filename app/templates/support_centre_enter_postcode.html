@@ -1,0 +1,65 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/input/_macro.njk' import onsInput %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('SupportCentreEnterPostcode:post', display_region=display_region)
+    }
+} %}
+
+{% block main %}
+
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    <h1 class="u-mt-l u-fs-xxl">{{ _('Find a support centre') }}</h1>
+
+    <p>{{ _('To find your nearest support centre, we need your postcode.') }}</p>
+
+    {% if 'postcode' in field_messages_dict %}
+        {{
+            onsInput({
+                'id': 'postcode',
+                'type': 'postcode',
+                'autocomplete': 'postcode',
+                'classes': 'input--w-5 u-mb-m',
+                'label': {
+                    'text': _('Enter your postcode')
+                },
+                'name': 'form-enter-address-postcode',
+                'error': {
+                    'text': _('Enter a valid UK postcode')
+                },
+            })
+        }}
+    {% else %}
+        {{
+            onsInput({
+                'id': 'postcode',
+                'type': 'postcode',
+                'autocomplete': 'postcode',
+                'classes': 'input--w-5 u-mb-m',
+                'label': {
+                    'text': _('Enter your postcode')
+                },
+                'name': 'form-enter-address-postcode'
+            })
+        }}
+    {% endif %}
+
+    {{
+        onsButton({
+            'text': _('Find'),
+            'classes': 'btn--small u-mt-m',
+            'name': 'action[find]'
+        })
+    }}
+
+{% endblock %}

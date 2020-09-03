@@ -1,0 +1,61 @@
+{%- macro rhTime(params) -%}
+
+    {%- set time_string = params.time|string -%}
+    {%- set display_region_string = params.display_region|string -%}
+
+    {%- if time_string|length == 3 -%}
+        {% set hour = time_string[0:1] %}
+    {%- else -%}
+        {% set hour = time_string[0:2] %}
+    {%- endif -%}
+
+    {%- if time_string|length == 3 -%}
+        {% set minutes = time_string[1:3] %}
+    {%- else -%}
+        {% set minutes = time_string[2:4] %}
+    {%- endif -%}
+
+    {%- if minutes != '00' -%}
+        {% set minutes_display = ':' + minutes %}
+    {%- endif -%}
+
+    {%- if hour|int > 11 -%}
+        {%- if display_region_string == 'cy' %}
+            {%- set am_pm = 'y nos' -%}
+        {%- else -%}
+            {%- set am_pm = 'pm' -%}
+        {%- endif -%}
+        {%- set hour = hour|int - 12 -%}
+    {%- else -%}
+        {%- if display_region_string == 'cy' %}
+            {%- set am_pm = 'y bore' -%}
+        {%- else -%}
+            {%- set am_pm = 'am' -%}
+        {%- endif -%}
+    {%- endif -%}
+
+    {{ hour }}{{ minutes_display }}{{ am_pm }}
+
+{%- endmacro -%}
+
+{%- macro rhOpeningTimes(params) -%}
+
+    {%- set open_string = params.open|string -%}
+    {%- set close_string = params.close|string -%}
+    {%- set display_region_string = params.display_region|string -%}
+
+    {%- if display_region_string == 'cy' -%}
+        {{ rhTime({'time': open_string, 'display_region': display_region_string }) }} to {{ rhTime({'time': close_string, 'display_region': display_region_string }) }}
+    {%- else -%}
+        {{ rhTime({'time': open_string, 'display_region': display_region_string }) }} to {{ rhTime({'time': close_string, 'display_region': display_region_string }) }}
+    {%- endif -%}
+
+{%- endmacro -%}
+
+{%- macro rhEmailLink(params) -%}
+
+    {%- set email_string = params.email|string -%}
+
+    <a href="mailto:{{ email_string }}">{{ email_string }}</a>
+
+{%- endmacro -%}

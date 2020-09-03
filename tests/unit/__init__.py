@@ -251,6 +251,7 @@ class RHTestCase(AioHTTPTestCase):
         rh_svc_url = self.app['RHSVC_URL']
         address_index_svc_url = self.app['ADDRESS_INDEX_SVC_URL']
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
+        ad_look_up_svc_url = self.app['AD_LOOK_UP_SVC_URL']
 
         self.get_info = self.app.router['Info:get'].url_for()
 
@@ -428,6 +429,12 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_500_error_en = 'Sorry, something went wrong'
         self.content_common_500_error_cy = "Mae\\'n flin gennym, aeth rhywbeth o\\'i le"
+
+        self.content_common_404_error_title_en = 'Page not found'
+        self.content_common_404_error_secondary_en = 'If you entered a web address, check it is correct.'
+        self.content_common_404_error_title_cy = "Heb ddod o hyd i\\\'r dudalen"
+        self.content_common_404_error_secondary_cy = \
+            "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn si\\xc5\\xb5r ei fod yn gywir."
 
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
@@ -1073,13 +1080,13 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
         self.get_start_unlinked_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.get_start_unlinked_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.get_start_unlinked_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                              sub_user_journey='unlinked')
         self.post_start_unlinked_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
                                                                sub_user_journey='unlinked')
@@ -1111,13 +1118,13 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_unlinked_confirm_address_en = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.get_start_unlinked_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.get_start_unlinked_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                sub_user_journey='unlinked')
         self.post_start_unlinked_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
                                                                  sub_user_journey='unlinked')
@@ -1198,13 +1205,13 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
         self.get_start_change_address_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.get_start_change_address_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.get_start_change_address_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='change-address')
+                                                              sub_user_journey='change-address')
         self.post_start_change_address_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
                                                                sub_user_journey='change-address')
@@ -1236,13 +1243,13 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_change_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.get_start_change_address_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.get_start_change_address_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                                 sub_user_journey='change-address')
+                                                                sub_user_journey='change-address')
         self.post_start_change_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
                                                                  sub_user_journey='change-address')
@@ -1627,5 +1634,233 @@ class RHTestCase(AioHTTPTestCase):
             request_type='individual-code', display_region='ni'
         )
 
+        # Start Support Centre Pages
+
+        # URLs
+
+        self.get_support_centre_enter_postcode_en = self.app.router['SupportCentreEnterPostcode:get'].url_for(
+            display_region='en'
+        )
+        self.get_support_centre_enter_postcode_cy = self.app.router['SupportCentreEnterPostcode:get'].url_for(
+            display_region='cy'
+        )
+        self.post_support_centre_enter_postcode_en = self.app.router['SupportCentreEnterPostcode:post'].url_for(
+            display_region='en'
+        )
+        self.post_support_centre_enter_postcode_cy = self.app.router['SupportCentreEnterPostcode:post'].url_for(
+            display_region='cy'
+        )
+        self.get_support_centre_list_of_centres_postcode_invalid_en = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='en', postcode=self.postcode_invalid)
+        self.get_support_centre_list_of_centres_postcode_invalid_cy = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='cy', postcode=self.postcode_invalid)
+        self.get_support_centre_list_of_centres_postcode_valid_en = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='en', postcode=self.postcode_valid)
+        self.get_support_centre_list_of_centres_postcode_valid_cy = \
+            self.app.router['SupportCentreListCentres:get'].url_for(
+                display_region='cy', postcode=self.postcode_valid)
+
+        # Contents
+
+        self.content_support_centre_enter_postcode_title_en = 'Find a support centre'
+        self.content_support_centre_enter_postcode_secondary_en = \
+            'To find your nearest support centre, we need your postcode.'
+        self.content_support_centre_enter_postcode_error_empty_en = 'You have not entered a postcode'
+        self.content_support_centre_enter_postcode_error_invalid_en = 'The postcode is not a valid UK postcode'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_title_cy = 'Find a support centre'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_secondary_cy = \
+            'To find your nearest support centre, we need your postcode.'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
+
+        self.content_support_centre_list_of_centres_result_one_google_url = \
+            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
+
+        self.content_support_centre_list_of_centres_title_en = 'Support centres near ' + self.postcode_valid
+        self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
+        self.content_support_centre_list_of_centres_result_two_location_name_en = 'University of Sheffield'
+        self.content_support_centre_list_of_centres_result_one_distance_away_en = \
+            '<span class="u-mb-s tag">1.3 miles away</span>'
+        self.content_support_centre_list_of_centres_result_one_address_en = \
+            '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
+        self.content_support_centre_list_of_centres_result_one_telephone_en = \
+            'Telephone: <span>+44 (0)11 4273 4712</span>'
+        self.content_support_centre_list_of_centres_result_one_email_en = \
+            'Email: <a href="mailto:test@email.com">test@email.com</a>'
+        self.content_support_centre_list_of_centres_result_open_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
+        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_census_saturday_en = \
+            'Census Saturday, 20 March &ndash;&nbsp;10am to 4pm'
+        self.content_support_centre_list_of_centres_result_open_census_day_en = \
+            'Census Day, 21 March &ndash;&nbsp;10am to 4pm'
+        self.content_support_centre_list_of_centres_result_open_good_friday_en = \
+            'Good Friday, 2 April &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_easter_monday_en = \
+            'Easter Monday, 5 April &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_open_may_bank_holiday_en = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;10am to 5pm'
+        self.content_support_centre_list_of_centres_result_closed_monday_en = 'Monday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_tuesday_en = 'Tuesday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_wednesday_en = 'Wednesday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_thursday_en = 'Thursday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_friday_en = 'Friday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_saturday_en = 'Saturday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_sunday_en = 'Sunday &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_census_saturday_en = \
+            'Census Saturday, 20 March &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_census_day_en = \
+            'Census Day, 21 March &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_good_friday_en = \
+            'Good Friday, 2 April &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_easter_monday_en = \
+            'Easter Monday, 5 April &ndash;&nbsp;Closed'
+        self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_en = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
+
+        self.content_support_centre_list_of_centres_result_one_public_parking_en = \
+            'Car park, including disabled parking'
+        self.content_support_centre_list_of_centres_result_two_public_parking_en = 'Disabled parking'
+        self.content_support_centre_list_of_centres_result_three_public_parking_en = 'Car park'
+        self.content_support_centre_list_of_centres_result_one_level_access_en = 'Level access into building entrance'
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_en = 'Wheelchair access'
+        self.content_support_centre_list_of_centres_result_one_disability_aware_en = 'Staff are disability aware'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_en = 'Hearing loop system'
+
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_title_cy = 'Support centres near ' + self.postcode_valid
+        self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Welsh Sheffield Central Library'
+        self.content_support_centre_list_of_centres_result_two_location_name_cy = 'Welsh University of Sheffield'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_distance_away_cy = \
+            '<span class="u-mb-s tag">1.3 miles away</span>'
+        self.content_support_centre_list_of_centres_result_one_address_cy = \
+            '<p>Welsh Street<br> Sheffield<br>S1 1XZ</p>'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_telephone_cy = \
+            'Telephone: <span>+44 (0)11 4273 4712</span>'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_email_cy = \
+            'Email: <a href="mailto:test@email.com">test@email.com</a>'
+
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_monday_cy = \
+            'Monday &ndash;&nbsp;10:30y bore to 5:15y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
+            'Tuesday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
+            'Wednesday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Thursday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Friday &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Saturday &ndash;&nbsp;10y bore to 1y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Sunday &ndash;&nbsp;10y bore to 1y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
+            'Census Saturday, 20 March &ndash;&nbsp;10y bore to 4y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_census_day_cy = \
+            'Census Day, 21 March &ndash;&nbsp;10y bore to 4y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
+            'Good Friday, 2 April &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
+            'Easter Monday, 5 April &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;10y bore to 5y nos'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Monday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Tuesday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Wednesday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_thursday_cy = 'Thursday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_friday_cy = 'Friday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_saturday_cy = 'Saturday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_sunday_cy = 'Sunday &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_census_saturday_cy = \
+            'Census Saturday, 20 March &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_census_day_cy = \
+            'Census Day, 21 March &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_good_friday_cy = \
+            'Good Friday, 2 April &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_easter_monday_cy = \
+            'Easter Monday, 5 April &ndash;&nbsp;Closed'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
+            'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
+
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
+            'Car park, including disabled parking'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_two_public_parking_cy = 'Disabled parking'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Car park'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_level_access_cy = 'Level access into building entrance'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Wheelchair access'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_disability_aware_cy = 'Staff are disability aware'
+        # TODO Add Welsh Translation
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
+
+        # Test Data
+
+        self.support_centre_enter_postcode_input_valid = {
+            'form-enter-address-postcode': self.postcode_valid, 'action[save_continue]': '',
+        }
+
+        self.support_centre_enter_postcode_input_invalid = {
+            'form-enter-address-postcode': self.postcode_invalid, 'action[save_continue]': '',
+        }
+
+        self.support_centre_enter_postcode_input_empty = {
+            'form-enter-address-postcode': self.postcode_empty, 'action[save_continue]': '',
+        }
+
+        with open('tests/test_data/ad_lookup/multiple_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_multiple_return = f
+
+        with open('tests/test_data/ad_lookup/single_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_single_return = f
+
+        with open('tests/test_data/ad_lookup/no_match_return.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ad_no_match_return = f
+
+        self.ad_lookup_url = f'{ad_look_up_svc_url}/centres/postcode?postcode={self.postcode_valid}&limit=10'
 
         # yapf: enable

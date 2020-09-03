@@ -34,12 +34,13 @@ class RetryRequest:
     """
     Make requests to a URL, but retry under certain conditions to tolerate server graceful shutdown.
     """
-    def __init__(self, request, method, url, auth, json, return_json):
+    def __init__(self, request, method, url, auth, request_headers, request_json, return_json):
         self.request = request
         self.method = method
         self.url = url
         self.auth = auth
-        self.json = json
+        self.headers = request_headers
+        self.json = request_json
         self.return_json = return_json
 
     def __handle_response(self, response):
@@ -58,8 +59,9 @@ class RetryRequest:
     async def _request_basic(self):
         # basic request without keep-alive to avoid terminating service.
         logger.info('request using basic connection')
+
         async with aiohttp.request(
-                self.method, self.url, auth=self.auth, json=self.json) as resp:
+                self.method, self.url, auth=self.auth, json=self.json, headers=self.headers) as resp:
             self.__handle_response(resp)
             if self.return_json:
                 return await resp.json()
@@ -73,7 +75,7 @@ class RetryRequest:
                                                                                        ClientConnectorError))))
     async def _request_using_pool(self):
         async with self.request.app.http_session_pool.request(
-                self.method, self.url, auth=self.auth, json=self.json, ssl=False) as resp:
+                self.method, self.url, auth=self.auth, json=self.json, headers=self.headers, ssl=False) as resp:
             self.__handle_response(resp)
             if self.return_json:
                 return await resp.json()
