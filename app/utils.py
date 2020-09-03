@@ -65,7 +65,7 @@ class View:
         :param method: The HTTP verb
         :param url: The target URL
         :param auth: Authorization
-        :param headers: Any needed headers, in json format
+        :param headers: Any needed headers as a python dictionary
         :param request_json: JSON payload to pass as request data
         :param return_json: If True, the response JSON will be returned
         """
