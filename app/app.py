@@ -92,7 +92,7 @@ def create_app(config_name=None) -> Application:
         path='/info',
         excludes=[
             'ACCOUNT_SERVICE_URL', 'EQ_URL', 'WEBCHAT_SVC_URL',
-            'ADDRESS_INDEX_SVC_URL'
+            'ADDRESS_INDEX_SVC_URL', 'AD_LOOK_UP_SVC_URL'
         ])
 
     # Monkey patch the check_services function as a method to the app object

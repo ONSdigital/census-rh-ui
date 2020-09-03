@@ -1,0 +1,213 @@
+{
+  "dataVersion": "string",
+  "centres": [
+    {
+      "locationID": "1001",
+      "locationName": "Sheffield Central Library",
+      "welshLanguageLocationName": "Welsh Sheffield Central Library",
+      "distanceInMiles": 1.3,
+      "latitude": "53.380582",
+      "longitude": "-1.466986",
+      "address": "Welsh Street, Sheffield",
+      "welshLanguageAddress": "",
+      "postcode": "S1 1XZ",
+      "phone": "01142734712",
+      "email": "test@email.com",
+      "website": "www.helloworld.com",
+      "description": "string",
+      "welshLanguageDescription": "string",
+      "openingHours": [
+        {
+          "Monday": [
+            {
+              "start": 1030,
+              "finish": 1715
+            }
+          ],
+          "Tuesday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Wednesday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Thursday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Friday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Saturday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Sunday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ]
+        }
+      ],
+      "accessibility": [
+        {
+          "accessibleEntrance": true,
+          "accessibleBuilding": true,
+          "parking": true,
+          "disabledParking": true,
+          "staffDisabilityAware": true,
+          "waitingRoomSeating": true,
+          "hearingLoop": true
+        }
+      ]
+    },
+      {
+          "locationID": "1002",
+          "locationName": "University of Sheffield",
+          "welshLanguageLocationName": "Welsh University of Sheffield",
+          "distanceInMiles": 1.7,
+          "latitude": "53.380582",
+          "longitude": "-1.466986",
+          "address": "Western Bank, Sheffield",
+          "welshLanguageAddress": "Welsh Western Bank, Sheffield",
+          "postcode": "S10 2TN",
+          "phone": "0114 222 2000",
+          "email": "ask@sheffield.gov.uk",
+          "website": "www.helloworld.com",
+          "description": "string",
+          "welshLanguageDescription": "string",
+          "openingHours": [
+            {
+              "Census Saturday": [
+            {
+              "start": 1000,
+              "finish": 1600
+            }
+          ],
+          "Census Sunday": [
+            {
+              "start": 1000,
+              "finish": 1600
+            }
+          ],
+          "Good Friday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "Easter Monday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ],
+          "May Bank Holiday": [
+            {
+              "start": 1000,
+              "finish": 1700
+            }
+          ]
+            }
+          ],
+          "accessibility": [
+              {
+                  "accessibleEntrance": true,
+                  "accessibleBuilding": false,
+                  "parking": false,
+                  "disabledParking": true,
+                  "staffDisabilityAware": true,
+                  "waitingRoomSeating": true,
+                  "hearingLoop": true
+              }
+          ]
+      },
+      {
+          "locationID": "1002",
+          "locationName": "University of Possibilities",
+          "welshLanguageLocationName": "Welsh University of Possibilities",
+          "distanceInMiles": 7.9,
+          "latitude": "53.380582",
+          "longitude": "-1.466986",
+          "address": "Western Bank, Possibilities",
+          "welshLanguageAddress": "Welsh Western Bank, Possibilities",
+          "postcode": "S10 2TN",
+          "phone": "0114 222 2000",
+          "email": "ask@possibilities.gov.uk",
+          "website": "www.helloworld.com",
+          "description": "string",
+          "welshLanguageDescription": "string",
+          "openingHours": [
+              {
+                  "Monday": [
+                      {
+                          "start": 900,
+                          "finish": 1700
+                      }
+                  ],
+                  "Tuesday": [
+                      {
+                          "start": 900,
+                          "finish": 1700
+                      }
+                  ],
+                  "Wednesday": [
+                      {
+                          "start": 900,
+                          "finish": 1700
+                      }
+                  ],
+                  "Thursday": [
+                      {
+                          "start": 900,
+                          "finish": 1700
+                      }
+                  ],
+                  "Friday": [
+                      {
+                          "start": 900,
+                          "finish": 1700
+                      }
+                  ],
+                  "Saturday": [
+                      {
+                          "start": 1000,
+                          "finish": 1700
+                      }
+                  ],
+                  "Sunday": [
+                      {
+                          "start": 1000,
+                          "finish": 1700
+                      }
+                  ]
+              }
+          ],
+          "accessibility": [
+              {
+                  "accessibleEntrance": true,
+                  "accessibleBuilding": false,
+                  "parking": true,
+                  "disabledParking": false,
+                  "staffDisabilityAware": true,
+                  "waitingRoomSeating": true,
+                  "hearingLoop": true
+              }
+          ]
+      }
+  ],
+  "total": 2
+}

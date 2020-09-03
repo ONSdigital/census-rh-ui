@@ -1,0 +1,193 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
+{%- from "components/lists/_macro.njk" import onsList -%}
+{%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink -%}
+{%- from 'macros/telephone/_macro.njk' import rhADTelephone -%}
+
+{%- block main -%}
+
+    {%- autoescape false -%}
+        <h1 class="u-mt-l u-fs-xxl">{{ _('Support centres near %(highlight_postcode)s', highlight_postcode='<em class="highlight">%s</em>' % postcode)|safe }}</h1>
+    {%- endautoescape -%}
+
+    {%- for centre in ad_response['centres'] %}
+        <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
+            {% if display_region == 'cy' -%}
+                <h2 class="u-fs-l u-mb-xs">{{ centre['welshLanguageLocationName'] }}</h2>
+            {%- else -%}
+                <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
+            {%- endif %}
+            <div><span class="u-mb-s tag">{{ centre['distanceInMiles'] }} miles away</span></div>
+
+            {%- if display_region == 'cy' -%}
+                {% autoescape false %}
+                    <p>{{ centre['welshLanguageAddress'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
+                {% endautoescape %}
+            {%- else -%}
+                {% autoescape false %}
+                    <p>{{ centre['address'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
+                {% endautoescape %}
+            {%- endif -%}
+
+            <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">Find on Google Maps</a></p>
+
+            {{
+                onsList({
+                    "classes": 'list--bare',
+                    "itemsList": [
+                        {
+                            "text": _('Telephone: ') + rhADTelephone({'number': centre['phone']})
+                        },
+                        {
+                            "text": _('Email: ') + rhEmailLink({'email': centre['email'] })
+                        }
+                    ]
+                })
+            }}
+            {% call onsCollapsible({
+                "id": 'collapsible-1',
+                "title": _('Opening times and facilities'),
+                "button": {
+                    "close": _('Hide this'),
+                    'contextSuffix': 'content'
+                }
+            }) %}
+            <h3 class="u-fs-r--b u-mb-xs">{{ _('Opening times') }}</h3>
+            {% for days in centre['openingHours'] -%}
+                <div>{{ _('Monday') }} &ndash;&nbsp;
+                    {%- if days['Monday'] -%}
+                        {%- for times in days['Monday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Tuesday') }} &ndash;&nbsp;
+                    {%- if days['Tuesday'] -%}
+                        {%- for times in days['Tuesday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Wednesday') }} &ndash;&nbsp;
+                    {%- if days['Tuesday'] -%}
+                        {%- for times in days['Wednesday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Thursday') }} &ndash;&nbsp;
+                    {%- if days['Thursday'] -%}
+                        {%- for times in days['Thursday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Friday') }} &ndash;&nbsp;
+                    {%- if days['Friday'] -%}
+                        {%- for times in days['Friday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Saturday') }} &ndash;&nbsp;
+                    {%- if days['Saturday'] -%}
+                        {%- for times in days['Saturday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Sunday') }} &ndash;&nbsp;
+                    {%- if days['Sunday'] -%}
+                        {%- for times in days['Sunday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Census Saturday, 20 March') }} &ndash;&nbsp;
+                    {%- if days['Census Saturday'] -%}
+                        {%- for times in days['Census Saturday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Census Day, 21 March') }} &ndash;&nbsp;
+                    {%- if days['Census Sunday'] -%}
+                        {%- for times in days['Census Sunday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Good Friday, 2 April') }} &ndash;&nbsp;
+                    {%- if days['Good Friday'] -%}
+                        {%- for times in days['Good Friday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('Easter Monday, 5 April') }} &ndash;&nbsp;
+                    {%- if days['Easter Monday'] -%}
+                        {%- for times in days['Easter Monday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+                <div>{{ _('May Bank Holiday, 3 May') }} &ndash;&nbsp;
+                    {%- if days['May Bank Holiday'] -%}
+                        {%- for times in days['May Bank Holiday'] -%}
+                            {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
+                        {%- endfor -%}
+                    {%- else -%}
+                        {{ _('Closed') }}
+                    {%- endif -%}
+                </div>
+
+            {%- endfor -%}
+            <h3 class="u-fs-r--b u-mb-xs u-mt-m">{{ _('Centre facilities') }}</h3>
+            {%- set accessibility_items = [] -%}
+            {%- for accessibility in centre['accessibility'] -%}
+                {%- if (accessibility['parking'] == True) and (accessibility['disabledParking'] == True) -%}
+                    {{ accessibility_items.append( {"text": _('Car park, including disabled parking') })|default("", True)  }}
+                {%- elif (accessibility['parking'] == True) and (accessibility['disabledParking'] == False) -%}
+                    {{ accessibility_items.append( {"text": _('Car park') })|default("", True)  }}
+                {%- elif (accessibility['parking'] == False) and (accessibility['disabledParking'] == True) -%}
+                    {{ accessibility_items.append( {"text": _('Disabled parking') })|default("", True)  }}
+                {%- endif -%}
+                {%- if accessibility['accessibleEntrance'] == True -%}{{ accessibility_items.append( {"text": _('Level access into building entrance') })|default("", True)  }}{%- endif -%}
+                {%- if accessibility['accessibleBuilding'] == True -%}{{ accessibility_items.append( {"text": _('Wheelchair access') })|default("", True)  }}{%- endif -%}
+                {%- if accessibility['staffDisabilityAware'] == True -%}{{ accessibility_items.append( {"text": _('Staff are disability aware') })|default("", True)  }}{%- endif -%}
+                {%- if accessibility['waitingRoomSeating'] == True -%}{{ accessibility_items.append( {"text": _('Waiting room seating') })|default("", True)  }}{%- endif -%}
+                {%- if accessibility['hearingLoop'] == True -%}{{ accessibility_items.append( {"text": _('Hearing loop system') })|default("", True)  }}{%- endif -%}
+            {%- endfor -%}
+            {{
+                onsList({
+                    "itemsList": accessibility_items
+                })
+            }}
+            {%- endcall -%}
+        </div>
+    {%- endfor -%}
+
+{%- endblock -%}
