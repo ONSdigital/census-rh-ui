@@ -119,8 +119,7 @@ class WebChatWindow(WebChat):
         return {
             'display_region': display_region,
             'page_title': page_title,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
+            'locale': locale
         }
 
 
@@ -153,7 +152,15 @@ class WebChat(WebChat):
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'census_saturday_open': census_saturday_open,
+                'census_saturday_close':  census_saturday_close,
+                'census_sunday_open': census_sunday_open,
+                'census_sunday_close': census_sunday_close,
+                'saturday_open': saturday_open,
+                'saturday_close': saturday_close,
+                'weekday_open': weekday_open,
+                'weekday_close': weekday_close
             }
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -208,5 +215,13 @@ class WebChat(WebChat):
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'census_saturday_open': census_saturday_open,
+                'census_saturday_close': census_saturday_close,
+                'census_sunday_open': census_sunday_open,
+                'census_sunday_close': census_sunday_close,
+                'saturday_open': saturday_open,
+                'saturday_close': saturday_close,
+                'weekday_open': weekday_open,
+                'weekday_close': weekday_close
             }

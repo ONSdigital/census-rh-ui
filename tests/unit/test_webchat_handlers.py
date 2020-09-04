@@ -119,7 +119,7 @@ class TestWebChatHandlers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(logo, contents)
             self.assertIn(name_prompt, contents)
-            self.assertEqual(contents.count('radio__input'), 10)
+            self.assertEqual(contents.count('radio__input'), 9)
             self.assertIn('type="submit"', contents)
 
     @unittest_run_loop
@@ -169,36 +169,45 @@ class TestWebChatHandlers(RHTestCase):
     @unittest_run_loop
     async def test_get_webchat_not_open_200_en(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_get(self.get_webchat_en, self.ons_logo_en, 'Bank Holidays',
+        await self.should_respond_not_open_to_get(self.get_webchat_en, self.ons_logo_en,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
+
     @unittest_run_loop
     async def test_get_webchat_not_open_200_en_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_get(self.get_webchat_en, self.ons_logo_en, 'Bank Holidays',
+        await self.should_respond_not_open_to_get(self.get_webchat_en, self.ons_logo_en,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
 
+    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy, 'Gwyliau Banc',
+        await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
 
+    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy, 'Gwyliau Banc',
+        await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
 
     @unittest_run_loop
     async def test_get_webchat_not_open_200_ni(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_get(self.get_webchat_ni, self.nisra_logo, 'Bank Holidays',
+        await self.should_respond_not_open_to_get(self.get_webchat_ni, self.nisra_logo,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
 
     @unittest_run_loop
     async def test_get_webchat_not_open_200_ni_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_get(self.get_webchat_ni, self.nisra_logo, 'Bank Holidays',
+        await self.should_respond_not_open_to_get(self.get_webchat_ni, self.nisra_logo,
+                                                  'Our contact centre is now closed',
                                                   mocked_now_utc)
 
     @unittest_run_loop
@@ -384,38 +393,40 @@ class TestWebChatHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_webchat_not_open_200_en(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_post(self.post_webchat_en, 'Bank Holidays', self.ons_logo_en,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_en, 'Our contact centre is now closed',
+                                                   self.ons_logo_en, mocked_now_utc)
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_en_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_post(self.post_webchat_en, 'Bank Holidays', self.ons_logo_en,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_en, 'Our contact centre is now closed',
+                                                   self.ons_logo_en, mocked_now_utc)
 
+    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Gwyliau Banc', self.ons_logo_cy,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Our contact centre is now closed',
+                                                   self.ons_logo_cy, mocked_now_utc)
 
+    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Gwyliau Banc', self.ons_logo_cy,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Our contact centre is now closed',
+                                                   self.ons_logo_cy, mocked_now_utc)
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_ni(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_post(self.post_webchat_ni, 'Bank Holidays', self.nisra_logo,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_ni, 'Our contact centre is now closed',
+                                                   self.nisra_logo, mocked_now_utc)
 
     @unittest_run_loop
     async def test_post_webchat_not_open_200_ni_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_post(self.post_webchat_ni, 'Bank Holidays', self.nisra_logo,
-                                                   mocked_now_utc)
+        await self.should_respond_not_open_to_post(self.post_webchat_ni, 'Our contact centre is now closed',
+                                                   self.nisra_logo, mocked_now_utc)
 
     async def should_respond_not_open_to_post(self, path, reason, logo, mocked_now_utc):
         with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:

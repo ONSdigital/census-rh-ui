@@ -2,20 +2,10 @@
 
     {%- set time_string = params.time|string -%}
 
-    {%- if time_string|length == 3 -%}
+    {%- if (time_string|length == 1) or (time_string|length == 3) -%}
         {% set hour = time_string[0:1] %}
     {%- else -%}
         {% set hour = time_string[0:2] %}
-    {%- endif -%}
-
-    {%- if time_string|length == 3 -%}
-        {% set minutes = time_string[1:3] %}
-    {%- else -%}
-        {% set minutes = time_string[2:4] %}
-    {%- endif -%}
-
-    {%- if minutes != '00' -%}
-        {% set minutes_display = ':' + minutes %}
     {%- endif -%}
 
     {%- if hour|int > 11 -%}
@@ -25,6 +15,24 @@
         {%- set am_pm = 'am' -%}
     {%- endif -%}
 
-    {{ hour }}{{ minutes_display }}{{ am_pm }}
+    {%- if time_string|length < 3 -%}
+
+        {{ hour }}{{ am_pm }}
+
+    {%- else -%}
+
+        {%- if time_string|length == 3 -%}
+            {% set minutes = time_string[1:3] %}
+        {%- else -%}
+            {% set minutes = time_string[2:4] %}
+        {%- endif -%}
+
+        {%- if minutes != '00' -%}
+            {% set minutes_display = ':' + minutes %}
+        {%- endif -%}
+
+        {{ hour }}{{ minutes_display }}{{ am_pm }}
+
+    {%- endif -%}
 
 {%- endmacro -%}
