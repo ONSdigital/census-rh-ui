@@ -737,9 +737,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_webchat_en = self.app.router['WebChat:post'].url_for(display_region='en')
         self.post_webchat_cy = self.app.router['WebChat:post'].url_for(display_region='cy')
         self.post_webchat_ni = self.app.router['WebChat:post'].url_for(display_region='ni')
-        self.get_webchat_chat_en = self.app.router['WebChatWindow:get'].url_for(display_region='en')
-        self.get_webchat_chat_cy = self.app.router['WebChatWindow:get'].url_for(display_region='cy')
-        self.get_webchat_chat_ni = self.app.router['WebChatWindow:get'].url_for(display_region='ni')
 
         self.webchat_form_data = {
             'screen_name': 'Test',

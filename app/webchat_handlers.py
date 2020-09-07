@@ -103,26 +103,6 @@ class WebChat(View):
         return form_valid
 
 
-@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/chat/')
-class WebChatWindow(WebChat):
-    @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        if display_region == 'cy':
-            page_title = 'Gwe-sgwrs'
-            locale = 'cy'
-        else:
-            page_title = 'Web Chat'
-            locale = 'en'
-        self.log_entry(request, display_region + '/web-chat/chat')
-        return {
-            'display_region': display_region,
-            'page_title': page_title,
-            'locale': locale
-        }
-
-
 @webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/')
 class WebChat(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
