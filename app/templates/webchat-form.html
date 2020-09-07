@@ -1,12 +1,6 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% if display_region == 'cy' %}
-    {% set web_form_url = '#' %}
-{% elif display_region == 'ni' %}
-    {% set web_form_url = '#' %}
-{% else %}
-    {% set web_form_url = '#' %}
-{% endif %}
+{% set web_form_url = url('WebForm:get', display_region=display_region) %}
 
 {% from 'components/input/_macro.njk' import onsInput %}
 {% from 'components/button/_macro.njk' import onsButton %}

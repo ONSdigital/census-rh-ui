@@ -11,7 +11,7 @@ from . import (WEBCHAT_MISSING_NAME_MSG,
                WEBCHAT_MISSING_COUNTRY_MSG_CY,
                WEBCHAT_MISSING_QUERY_MSG_CY)
 from .flash import flash
-from .utils import View
+from .utils import View, FlashMessage
 
 logger = get_logger('respondent-home')
 web_form_routes = RouteTableDef()
@@ -24,12 +24,22 @@ class WebForm(View):
 
         form_valid = True
 
-        if not data.get('screen_name'):
+        if not data.get('name'):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_NAME_MSG_CY)
+                flash(request, FlashMessage.generate_flash_message('Nodwch eich enw',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
             else:
-                flash(request, WEBCHAT_MISSING_NAME_MSG)
-            form_valid = False
+                flash(request, FlashMessage.generate_flash_message('Enter your name',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+
+        if not data.get('email'):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter an email address',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter an email address',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
 
         if not (data.get('country')):
             if display_region == 'cy':

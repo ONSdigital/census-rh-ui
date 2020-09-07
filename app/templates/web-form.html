@@ -1,0 +1,230 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/button/_macro.njk' import onsButton %}
+{% from 'components/select/_macro.njk' import onsSelect %}
+{% from 'components/radios/_macro.njk' import onsRadios %}
+{% from 'components/textarea/_macro.njk' import onsTextarea %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+
+{% from 'macros/time/_macro.njk' import rhTime %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('WebForm:post', display_region=display_region)
+    }
+} %}
+
+        {% set country_options =
+            [
+                {
+                    'id': 'england',
+                    'label': {
+                        'text': _('England')
+                    },
+                    'value': 'england'
+                },
+                {
+                    'id': 'wales',
+                    'label': {
+                        'text': _('Wales')
+                    },
+                    'value': 'wales'
+                },
+                {
+                    'id': 'northern_ireland',
+                    'label': {
+                        'text': _('Northern Ireland')
+                    },
+                    'value': 'northern_ireland'
+                }
+            ]
+        %}
+
+        {% set query_options =
+            [
+                {
+                    'id': 'missing_information',
+                    'label': {
+                        'text': _('I don’t have everything I need to complete my census')
+                    },
+                    'value': 'missing_information'
+                },
+                {
+                    'id': 'technical',
+                    'label': {
+                        'text': _('I am having technical difficulties')
+                    },
+                    'value': 'technical'
+                },
+                {
+                    'id': 'form',
+                    'label': {
+                        'text': _('I need help with my census form')
+                    },
+                    'value': 'form'
+                },
+                {
+                    'id': 'complaint',
+                    'label': {
+                        'text': _('I have a complaint')
+                    },
+                    'value': 'complaint'
+                },
+                {
+                    'id': 'address',
+                    'label': {
+                        'text': _('I need help with my address')
+                    },
+                    'value': 'address'
+                },
+                {
+                    'id': 'something_else',
+                    'label': {
+                        'text': _('Something else')
+                    },
+                    'value': 'something_else'
+                }
+            ]
+        %}
+
+{% block main %}
+
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    <h1 class="u-fs-xxl u-mt-l">{{_('Web form')}}</h1>
+
+    {{
+        onsPanel({
+            'body': _('Do not include any personal information, for example, your access code'),
+            'type': 'warn'
+        })
+    }}
+
+    {% if 'country' in field_messages_dict %}
+        {{
+            onsRadios({
+                'legend': _('Select your country'),
+                'name': 'country',
+                'dontVisuallyHideLegend': true,
+                'value': form_value_country,
+                'radios': country_options,
+                'error': {
+                    'text': _('Select an option')
+                }
+            })
+        }}
+    {% else %}
+        {{
+            onsRadios({
+                'legend': _('Select your country'),
+                'name': 'country',
+                'dontVisuallyHideLegend': true,
+                'value': form_value_country,
+                'radios': country_options
+            })
+        }}
+    {% endif %}
+
+    {% if 'query' in field_messages_dict %}
+        {{
+            onsRadios({
+                'legend': _('What do you need help with?'),
+                'name': 'query',
+                'dontVisuallyHideLegend': true,
+                'value': form_value_query,
+                'radios': query_options,
+                'error': {
+                    'text': _('Select an option')
+                }
+            })
+        }}
+    {% else %}
+        {{
+            onsRadios({
+                'legend': _('What do you need help with?'),
+                'name': 'query',
+                'dontVisuallyHideLegend': true,
+                'value': form_value_query,
+                'radios': query_options
+            })
+        }}
+    {% endif %}
+
+    <h2 class="u-mt-m">Your contact details</h2>
+
+    {% if 'name' in field_messages_dict %}
+        {{
+            onsInput({
+                'id': 'name',
+                'name': 'name',
+                'label': {
+                    'text': _('Name')
+                },
+                'value': form_value_name,
+                'error': {
+                    'text': _('Enter your name')
+                }
+            })
+        }}
+    {% else %}
+        {{
+            onsInput({
+                'id': 'name',
+                'name': 'name',
+                'label': {
+                    'text': _('Name')
+                },
+                'value': form_value_name
+            })
+        }}
+    {% endif %}
+
+    {% if 'email' in field_messages_dict %}
+        {{
+            onsInput({
+                'id': 'email',
+                'type': 'email',
+                'autocomplete': 'email',
+                'label': {
+                    'text': 'Email address',
+                    'description': 'We will only use this to send you a reply'
+                },
+                'value': form_value_name,
+                'error': {
+                    'text': _('Enter a valid email address')
+                }
+            })
+        }}
+    {% else %}
+        {{
+            onsInput({
+                'id': 'email',
+                'type': 'email',
+                'autocomplete': 'email',
+                'label': {
+                    'text': 'Email address',
+                    'description': 'We will only use this to send you a reply'
+                },
+                'value': form_value_name
+            })
+        }}
+    {% endif %}
+
+    {{
+        onsButton({
+            'text': _('Start web chat'),
+            'classes': 'btn-group__btn u-mb-m u-mt-m'
+        })
+
+    }}
+
+    <p class="u-fs-s">For information about what we do with your personal data see our <a href="#0">privacy and data protection</a></p>
+
+{% endblock %}
