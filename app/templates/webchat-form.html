@@ -1,11 +1,11 @@
-{% extends 'base-webchat-' + display_region + '.html' %}
+{% extends 'base-' + display_region + '.html' %}
 
 {% if display_region == 'cy' %}
-    {% set help_url = domain_url_cy + '/help/' %}
+    {% set web_form_url = '#' %}
 {% elif display_region == 'ni' %}
-    {% set help_url = domain_url_en + '/ni/help/' %}
+    {% set web_form_url = '#' %}
 {% else %}
-    {% set help_url = domain_url_en + '/help/' %}
+    {% set web_form_url = '#' %}
 {% endif %}
 
 {% from 'components/input/_macro.njk' import onsInput %}
@@ -13,8 +13,9 @@
 {% from 'components/select/_macro.njk' import onsSelect %}
 {% from 'components/radios/_macro.njk' import onsRadios %}
 {% from 'components/textarea/_macro.njk' import onsTextarea %}
-{% from 'components/lists/_macro.njk' import onsList %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
+
+{% from 'macros/time/_macro.njk' import rhTime %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
@@ -30,22 +31,26 @@
 
     {% if webchat_status == 'closed' %}
 
-        <h2 class="u-mt-m u-mb-no">{{_('Web chat')}}</h2>
+        <h1 class="u-fs-xxl u-mt-l">{{_('Web chat unavailable')}}</h1>
+
+        <p>{{ _('Our contact centre is now closed.') }}</p>
+
         {% autoescape false %}
-            <p>{{ _('Contact Centre is closed. Please contact during the working hours or %(open)sGet Help Online%(close)s.', open='<a href="%s">' %  help_url, close='</a>')|safe }}</p>
+            <p>{{ _('You can still contact us through our %(open)sweb form%(close)s.', open='<a href="%s">' %  web_form_url, close='</a>')|safe }}</p>
         {% endautoescape %}
-        <h3 class="u-mt-m u-mb-no">{{_('Opening times')}}</h3>
+
+        <h2 class="u-fs-l u-mt-l">{{_('Web chat opening times')}}</h2>
         <p>
-            {{_('Monday to Friday: 8am to 7pm')}}<br/>
-            {{_('Saturday: 8am to 1pm')}}<br/>
-            {{_('Sunday / Bank Holidays: Closed')}}<br>
-            {{_('Census weekend: 8am to 4pm')}}
+            {{_('Monday to Friday &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': weekday_open }), close_time=rhTime({'time': weekday_close }) )|safe }}<br/>
+            {{_('Saturday &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': saturday_open }), close_time=rhTime({'time': saturday_close }) )|safe }}<br/>
+            {{_('Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_saturday_open }), close_time=rhTime({'time': census_saturday_close }) )|safe }}<br>
+            {{_('Census Day, 21 March &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_sunday_open }), close_time=rhTime({'time': census_sunday_close }) )|safe }}
         </p>
 
     {% else %}
 
         <noscript>
-            <h1>{{_('Javascript disabled')}}</h1>
+            <h1 class="u-fs-xxl u-mt-l">{{_('Javascript disabled')}}</h1>
 
             <p>{{_('Javascript on your browser is disabled. To start a Webchat session javascript needs to be enabled on your browser.')}}</p>
 
@@ -85,11 +90,11 @@
         {% set query_options =
             [
                 {
-                    'id': 'form',
+                    'id': 'missing_information',
                     'label': {
-                        'text': _('I have a question about my census form')
+                        'text': _('I don’t have everything I need to complete my census')
                     },
-                    'value': 'form'
+                    'value': 'missing_information'
                 },
                 {
                     'id': 'technical',
@@ -97,6 +102,13 @@
                         'text': _('I am having technical difficulties')
                     },
                     'value': 'technical'
+                },
+                {
+                    'id': 'form',
+                    'label': {
+                        'text': _('I need help with my census form')
+                    },
+                    'value': 'form'
                 },
                 {
                     'id': 'complaint',
@@ -108,38 +120,28 @@
                 {
                     'id': 'address',
                     'label': {
-                        'text': _('I have a question about my address')
+                        'text': _('I need help with my address')
                     },
                     'value': 'address'
                 },
                 {
-                    'id': 'send-something',
+                    'id': 'something_else',
                     'label': {
-                        'text': _('I need something sent to me')
+                        'text': _('Something else')
                     },
-                    'value': 'send-something'
-                },
-                {
-                    'id': 'face-to-face',
-                    'label': {
-                        'text': _('I need to speak to an adviser face-to-face')
-                    },
-                    'value': 'face-to-face'
-                },
-                {
-                    'id': 'help',
-                    'label': {
-                        'text': _('I need some help')
-                    },
-                    'value': 'help'
+                    'value': 'something_else'
                 }
             ]
         %}
 
         <div id="web-chat-form-display" class="web-chat-form__body" style="display:none;">
-            <h1>{{_('Web chat')}}</h1>
+            <h1 class="u-fs-xxl u-mt-l">{{_('Enter web chat details')}}</h1>
 
-            <p>{{_('Our advisers can help you with your census survey.')}}</p>
+            {{
+                onsPanel({
+                    'body': _('Data stored during web chat sessions will not be shared with third parties')
+                })
+            }}
 
             {% if 'screen_name' in field_messages_dict %}
                 {{
@@ -198,7 +200,7 @@
             {% if 'query' in field_messages_dict %}
                 {{
                     onsRadios({
-                        'legend': _('What type of query do you have'),
+                        'legend': _('What do you need help with?'),
                         'name': 'query',
                         'dontVisuallyHideLegend': true,
                         'value': form_value_query,
@@ -211,7 +213,7 @@
             {% else %}
                 {{
                     onsRadios({
-                        'legend': _('What type of query do you have'),
+                        'legend': _('What do you need help with?'),
                         'name': 'query',
                         'dontVisuallyHideLegend': true,
                         'value': form_value_query,
@@ -222,7 +224,7 @@
 
             {{
                 onsButton({
-                    'text': _('Start chat'),
+                    'text': _('Start web chat'),
                     'classes': 'btn-group__btn u-mb-m u-mt-m'
                 })
 

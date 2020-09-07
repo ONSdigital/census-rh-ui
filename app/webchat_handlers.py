@@ -103,27 +103,6 @@ class WebChat(View):
         return form_valid
 
 
-@webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/chat/')
-class WebChatWindow(WebChat):
-    @aiohttp_jinja2.template('webchat-window.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        if display_region == 'cy':
-            page_title = 'Gwe-sgwrs'
-            locale = 'cy'
-        else:
-            page_title = 'Web Chat'
-            locale = 'en'
-        self.log_entry(request, display_region + '/web-chat/chat')
-        return {
-            'display_region': display_region,
-            'page_title': page_title,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
-        }
-
-
 @webchat_routes.view(r'/' + View.valid_display_regions + '/web-chat/')
 class WebChat(WebChat):
     @aiohttp_jinja2.template('webchat-form.html')
@@ -153,7 +132,15 @@ class WebChat(WebChat):
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'census_saturday_open': census_saturday_open,
+                'census_saturday_close':  census_saturday_close,
+                'census_sunday_open': census_sunday_open,
+                'census_sunday_close': census_sunday_close,
+                'saturday_open': saturday_open,
+                'saturday_close': saturday_close,
+                'weekday_open': weekday_open,
+                'weekday_close': weekday_close
             }
 
     @aiohttp_jinja2.template('webchat-form.html')
@@ -208,5 +195,13 @@ class WebChat(WebChat):
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'census_saturday_open': census_saturday_open,
+                'census_saturday_close': census_saturday_close,
+                'census_sunday_open': census_sunday_open,
+                'census_sunday_close': census_sunday_close,
+                'saturday_open': saturday_open,
+                'saturday_close': saturday_close,
+                'weekday_open': weekday_open,
+                'weekday_close': weekday_close
             }
