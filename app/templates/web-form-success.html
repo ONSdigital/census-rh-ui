@@ -1,0 +1,72 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+
+{% if display_region == 'ni' %}
+    {% set breadcrumb_items = [
+                {
+                    "url": domain_url_ni,
+                    "text": 'Home'
+                },
+                {
+                    "url": domain_url_ni + '/ni/web-form/',
+                    "text": 'Web form'
+                }
+            ]
+    %}
+{% elif display_region == 'cy' %}
+    {% set breadcrumb_items = [
+                {
+                    "url": domain_url_cy,
+                    "text": 'Hafan'
+                },
+                {
+                    "url": domain_url_cy + '/cy/web-form/',
+                    "text": 'Web form'
+                }
+            ]
+    %}
+{% else %}
+    {% set breadcrumb_items = [
+                {
+                    "url": domain_url_en,
+                    "text": 'Home'
+                },
+                {
+                    "url": domain_url_en + '/en/web-form/',
+                    "text": 'Web form'
+                }
+            ]
+    %}
+{% endif %}
+
+{% block preMain %}
+    {{
+        onsBreadcrumb({
+            "ariaLabel": 'Breadcrumb',
+            "itemsList": breadcrumb_items
+        })
+    }}
+{% endblock %}
+
+{% block main %}
+
+    {% set panel_content %}
+        <h1 class="u-fs-xxl">{{ _('Thank you for contacting us') }}</h1>
+        <p>{{ _('You message has been sent.') }}</p>
+    {% endset %}
+
+    {{
+        onsPanel({
+            'type': 'success',
+            'id': 'success-id',
+            'icon': 'check',
+            'body': panel_content|safe,
+            'classes': 'u-mb-m'
+        })
+    }}
+
+    <p>{{_('We will respond to your message within 48 working hours.')}}</p>
+
+{% endblock %}
