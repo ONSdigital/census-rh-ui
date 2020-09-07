@@ -737,9 +737,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_webchat_en = self.app.router['WebChat:post'].url_for(display_region='en')
         self.post_webchat_cy = self.app.router['WebChat:post'].url_for(display_region='cy')
         self.post_webchat_ni = self.app.router['WebChat:post'].url_for(display_region='ni')
-        self.get_webchat_chat_en = self.app.router['WebChatWindow:get'].url_for(display_region='en')
-        self.get_webchat_chat_cy = self.app.router['WebChatWindow:get'].url_for(display_region='cy')
-        self.get_webchat_chat_ni = self.app.router['WebChatWindow:get'].url_for(display_region='ni')
 
         self.webchat_form_data = {
             'screen_name': 'Test',
@@ -1890,36 +1887,36 @@ class RHTestCase(AioHTTPTestCase):
 
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_monday_cy = \
-            'Monday &ndash;&nbsp;10:30y bore to 5:15y nos'
+            'Monday &ndash;&nbsp;10:30am tan 5:15pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
-            'Tuesday &ndash;&nbsp;10y bore to 5y nos'
+            'Tuesday &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
-            'Wednesday &ndash;&nbsp;10y bore to 5y nos'
+            'Wednesday &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Thursday &ndash;&nbsp;10y bore to 5y nos'
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Thursday &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Friday &ndash;&nbsp;10y bore to 5y nos'
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Friday &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Saturday &ndash;&nbsp;10y bore to 1y nos'
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Saturday &ndash;&nbsp;10am tan 1pm'
         # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Sunday &ndash;&nbsp;10y bore to 1y nos'
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Sunday &ndash;&nbsp;10am tan 1pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
-            'Census Saturday, 20 March &ndash;&nbsp;10y bore to 4y nos'
+            'Census Saturday, 20 March &ndash;&nbsp;10am tan 4pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_census_day_cy = \
-            'Census Day, 21 March &ndash;&nbsp;10y bore to 4y nos'
+            'Census Day, 21 March &ndash;&nbsp;10am tan 4pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
-            'Good Friday, 2 April &ndash;&nbsp;10y bore to 5y nos'
+            'Good Friday, 2 April &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
-            'Easter Monday, 5 April &ndash;&nbsp;10y bore to 5y nos'
+            'Easter Monday, 5 April &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
-            'May Bank Holiday, 3 May &ndash;&nbsp;10y bore to 5y nos'
+            'May Bank Holiday, 3 May &ndash;&nbsp;10am tan 5pm'
         # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Monday &ndash;&nbsp;Closed'
         # TODO Add Welsh Translation
