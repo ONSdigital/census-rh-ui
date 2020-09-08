@@ -1,13 +1,12 @@
 import aiohttp_jinja2
+import re
 
 from aiohttp.web import HTTPFound, RouteTableDef
 
 from structlog import get_logger
 
-from . import (WEBCHAT_MISSING_NAME_MSG,
-               WEBCHAT_MISSING_COUNTRY_MSG,
+from . import (WEBCHAT_MISSING_COUNTRY_MSG,
                WEBCHAT_MISSING_QUERY_MSG,
-               WEBCHAT_MISSING_NAME_MSG_CY,
                WEBCHAT_MISSING_COUNTRY_MSG_CY,
                WEBCHAT_MISSING_QUERY_MSG_CY)
 from .flash import flash
@@ -18,28 +17,14 @@ web_form_routes = RouteTableDef()
 
 
 class WebForm(View):
+    email_validation_pattern = re.compile(
+        r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)'
+    )
 
     @staticmethod
     def validate_form(request, data, display_region):
 
         form_valid = True
-
-        if not data.get('name'):
-            if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message('Nodwch eich enw',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
-            else:
-                flash(request, FlashMessage.generate_flash_message('Enter your name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
-
-        if not data.get('email'):
-            if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter an email address',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
-            else:
-                flash(request, FlashMessage.generate_flash_message('Enter an email address',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
 
         if not (data.get('country')):
             if display_region == 'cy':
@@ -53,6 +38,36 @@ class WebForm(View):
                 flash(request, WEBCHAT_MISSING_QUERY_MSG_CY)
             else:
                 flash(request, WEBCHAT_MISSING_QUERY_MSG)
+            form_valid = False
+
+        if not data.get('name'):
+            if display_region == 'cy':
+                flash(request, FlashMessage.generate_flash_message('Nodwch eich enw',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter your name',
+                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+            form_valid = False
+
+        if not (data.get('email')):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('No email provided',
+                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('No email provided',
+                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
+            form_valid = False
+
+        elif not WebForm.email_validation_pattern.fullmatch(data.get('email')):
+            if display_region == 'cy':
+                # TODO: Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Email address invalid',
+                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Email address invalid',
+                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
+
             form_valid = False
 
         return form_valid
@@ -100,9 +115,10 @@ class WebForm(WebForm):
         if not form_valid:
             logger.info('web form submission error', client_ip=request['client_ip'])
             return {
-                'form_value_screen_name': data.get('screen_name'),
+                'form_value_name': data.get('name'),
                 'form_value_country': data.get('country'),
                 'form_value_query': data.get('query'),
+                'form_value_email': data.get('email'),
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
@@ -114,7 +130,7 @@ class WebForm(WebForm):
             # TODO Call new endpoint for form with data
 
             raise HTTPFound(
-                request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region))
+                request.app.router['WebFormSuccess:get'].url_for(display_region=display_region))
 
 
 @web_form_routes.view(r'/' + View.valid_display_regions + '/web-form/success/')

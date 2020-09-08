@@ -7,8 +7,6 @@
 {% from 'components/textarea/_macro.njk' import onsTextarea %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 
-{% from 'macros/time/_macro.njk' import rhTime %}
-
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
@@ -193,10 +191,10 @@
                 'type': 'email',
                 'autocomplete': 'email',
                 'label': {
-                    'text': 'Email address',
+                    'text': _('Email address'),
                     'description': 'We will only use this to send you a reply'
                 },
-                'value': form_value_name,
+                'value': form_value_email,
                 'error': {
                     'text': _('Enter a valid email address')
                 }
@@ -209,17 +207,17 @@
                 'type': 'email',
                 'autocomplete': 'email',
                 'label': {
-                    'text': 'Email address',
+                    'text': _('Email address'),
                     'description': 'We will only use this to send you a reply'
                 },
-                'value': form_value_name
+                'value': form_value_email
             })
         }}
     {% endif %}
 
     {{
         onsButton({
-            'text': _('Start web chat'),
+            'text': _('Send message'),
             'classes': 'btn-group__btn u-mb-m u-mt-m'
         })
 
