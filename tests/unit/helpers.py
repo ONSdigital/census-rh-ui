@@ -171,8 +171,13 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_confirm_name_address_title_manager_cy, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_title_household_cy, contents)
-            self.assertIn(self.content_request_common_confirm_name_address_option_yes_cy, contents)
-            self.assertIn(self.content_request_common_confirm_name_address_option_no_cy, contents)
+
+            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
+                self.assertIn(self.content_request_form_confirm_name_address_option_yes_cy, contents)
+                self.assertIn(self.content_request_form_confirm_name_address_option_no_cy, contents)
+            else:
+                self.assertIn(self.content_request_common_confirm_name_address_option_yes_cy, contents)
+                self.assertIn(self.content_request_common_confirm_name_address_option_no_cy, contents)
         else:
             if check_error:
                 self.assertIn(self.content_request_common_confirm_name_address_error_en, contents)
@@ -184,8 +189,13 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_confirm_name_address_title_manager_en, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_title_household_en, contents)
-            self.assertIn(self.content_request_common_confirm_name_address_option_yes_en, contents)
-            self.assertIn(self.content_request_common_confirm_name_address_option_no_en, contents)
+
+            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
+                self.assertIn(self.content_request_form_confirm_name_address_option_yes_en, contents)
+                self.assertIn(self.content_request_form_confirm_name_address_option_no_en, contents)
+            else:
+                self.assertIn(self.content_request_common_confirm_name_address_option_yes_en, contents)
+                self.assertIn(self.content_request_common_confirm_name_address_option_no_en, contents)
 
     def check_text_error_500(self, display_region, contents):
         if display_region == 'cy':

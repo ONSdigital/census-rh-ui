@@ -1753,9 +1753,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'
+        self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
+        self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
+
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_title_cy = \
             'Do you want to send a paper questionnaire to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_option_no_cy = 'No, cancel and return'
 
         self.content_request_form_manager_title_en = 'We cannot send census forms to managers by post'
         # TODO Add Welsh Translation
