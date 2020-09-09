@@ -6,6 +6,7 @@
 {% from 'components/question/_macro.njk' import onsQuestion %}
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'components/radios/_macro.njk' import onsRadios %}
+{% from 'components/checkboxes/_macro.njk' import onsCheckboxes %}
 
 {% set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) %}
 
@@ -84,6 +85,26 @@
     }}
 {% endif %}
     {% endcall %}
+
+    {%- if (request_type == 'paper-form') -%}
+
+        <h2 class="u-fs-m">Large print</h2>
+        {{
+            onsCheckboxes({
+                "name": "format",
+                "checkboxes": [
+                    {
+                        "id": "large-print-yes",
+                        "label": {
+                            "text": "I need a large-print questionnaire"
+                        },
+                        "value": "large-print"
+                    }
+                ]
+            })
+        }}
+
+    {%- endif -%}
 
     {{
         onsButton({
