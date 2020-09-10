@@ -5,8 +5,6 @@ from aioresponses import aioresponses
 
 from .helpers import TestHelpers
 
-attempts_retry_limit = 5
-
 
 # noinspection PyTypeChecker
 class TestRequestsHandlersIndividualCode(TestHelpers):

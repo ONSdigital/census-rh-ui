@@ -17,23 +17,43 @@
     }
 } %}
 
+{% if (request_type == 'paper-form') %}
 {% set form_options = [
-                {
-                    'id': 'yes',
-                    'label': {
-                        'text': _('Yes, send the access code by post')
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, send the questionnaire by post')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'yes'
-                },
-                {
-                    'id': 'no',
-                    'label': {
-                        'text': _('No, send it another way')
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, cancel and return')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    %}
+{% else %}
+    {% set form_options = [
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, send the access code by post')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'no'
-                }
-            ]
-%}
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, send it another way')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    %}
+{% endif %}
 
 {% if (request_type == 'paper-form') %}
     {% set question_title = _('Do you want to send a paper questionnaire to this address?') %}
