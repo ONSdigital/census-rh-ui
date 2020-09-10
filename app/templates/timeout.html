@@ -14,7 +14,7 @@
     {% endcall %}
 
     {% autoescape false %}
-        {% if request_type == 'individual-code' or request_type == 'access-code' %}
+        {% if request_type == 'individual-code' or request_type == 'access-code' or request_type == 'paper-form' %}
             <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_enter_address_url, close='</a>')|safe }}</p>
         {% else %}
             <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>

@@ -1009,41 +1009,41 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_sms_secondary_household_cy = \
             'The text message with a new household access code should arrive soon for you to start your census'
 
-        self.content_request_code_enter_name_title_en = 'What is your name?'
-        self.content_request_code_enter_name_error_first_name_en = 'Enter a first name to continue'
-        self.content_request_code_enter_name_error_last_name_en = 'Enter a last name to continue'
+        self.content_request_common_enter_name_title_en = 'What is your name?'
+        self.content_request_common_enter_name_error_first_name_en = 'Enter a first name to continue'
+        self.content_request_common_enter_name_error_last_name_en = 'Enter a last name to continue'
         # TODO Add Welsh Translation
-        self.content_request_code_enter_name_title_cy = 'What is your name?'
+        self.content_request_common_enter_name_title_cy = 'What is your name?'
         # TODO Add Welsh Translation
-        self.content_request_code_enter_name_error_first_name_cy = "Enter a first name to continue"
+        self.content_request_common_enter_name_error_first_name_cy = "Enter a first name to continue"
         # TODO Add Welsh Translation
-        self.content_request_code_enter_name_error_last_name_cy = 'Enter a last name to continue'
+        self.content_request_common_enter_name_error_last_name_cy = 'Enter a last name to continue'
 
-        self.content_request_code_confirm_name_address_title_individual_en = \
+        self.content_request_common_confirm_name_address_title_individual_en = \
             'Do you want to send a new individual access code to this address?'
-        self.content_request_code_confirm_name_address_title_manager_en = \
+        self.content_request_common_confirm_name_address_title_manager_en = \
             'Do you want to send a new manager access code to this address?'
-        self.content_request_code_confirm_name_address_title_household_en = \
+        self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_code_confirm_name_address_error_en = 'Please check and confirm the name and address.'
-        self.content_request_code_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
-        self.content_request_code_confirm_name_address_option_no_en = 'No, send it another way'
+        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address.'
+        self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
+        self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_title_individual_cy = \
+        self.content_request_common_confirm_name_address_title_individual_cy = \
             'Do you want to send a new individual access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_title_manager_cy = \
+        self.content_request_common_confirm_name_address_title_manager_cy = \
             'Do you want to send a new manager access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_title_household_cy = \
+        self.content_request_common_confirm_name_address_title_household_cy = \
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_error_cy = \
+        self.content_request_common_confirm_name_address_error_cy = \
             "Please check and confirm the name and address."
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
+        self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_option_no_cy = 'No, send it another way'
+        self.content_request_common_confirm_name_address_option_no_cy = 'No, send it another way'
 
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -1630,6 +1630,147 @@ class RHTestCase(AioHTTPTestCase):
         self.get_request_individual_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
             request_type='individual-code', display_region='ni'
         )
+
+        # Start Request Paper Form
+
+        # URLs
+
+        self.get_request_paper_form_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
+        self.get_request_paper_form_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
+        self.get_request_paper_form_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
+        self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
+        self.post_request_paper_form_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='en'
+        )
+        self.post_request_paper_form_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='cy'
+        )
+        self.post_request_paper_form_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='ni'
+        )
+
+        self.post_request_paper_form_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+                                                                            display_region='en')
+        self.post_request_paper_form_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+                                                                            display_region='cy')
+        self.post_request_paper_form_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+                                                                            display_region='ni')
+
+        self.get_request_paper_form_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
+            request_type='paper-form', display_region='en'
+        )
+        self.get_request_paper_form_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
+            request_type='paper-form', display_region='cy'
+        )
+        self.get_request_paper_form_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
+            request_type='paper-form', display_region='ni'
+        )
+
+        # Content
+
+        self.content_request_form_enter_address_secondary_en = \
+            'To send a paper questionnaire, we need your address'
+        # TODO: add welsh translation
+        self.content_request_form_enter_address_secondary_cy = \
+            'To send a paper questionnaire, we need your address'
+
+        self.content_request_form_sent_post_title_en = \
+            'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_secondary_en = \
+            'This should arrive soon for you to complete your census'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO Add Welsh Translation
+        self.content_request_form_sent_post_secondary_cy = \
+            'This should arrive soon for you to complete your census'
+
+        self.content_request_form_confirm_name_address_title_en = \
+            'Do you want to send a paper questionnaire to this address?'
+        self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
+        self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
+
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_title_cy = \
+            'Do you want to send a paper questionnaire to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_option_no_cy = 'No, cancel and return'
+
+        self.content_request_form_manager_title_en = 'We cannot send census forms to managers by post'
+        # TODO Add Welsh Translation
+        self.content_request_form_manager_title_cy = 'We cannot send census forms to managers by post'
+
+        self.content_request_form_request_cancelled_title_en = 'Your request for a paper form has been cancelled'
+        # TODO Add Welsh Translation
+        self.content_request_form_request_cancelled_title_cy = 'Your request for a paper form has been cancelled'
 
         # Start Support Centre Pages
 

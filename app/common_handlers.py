@@ -496,9 +496,15 @@ class CommonConfirmAddress(CommonCommon):
                                                                                      sub_user_journey=sub_user_journey,
                                                                                      display_region=display_region))
                     else:
-                        raise HTTPFound(
-                            request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
-                                                                                      display_region=display_region))
+                        if sub_user_journey == 'paper-form':
+                            raise HTTPFound(
+                                request.app.router['RequestCommonEnterName:get'].url_for(
+                                    request_type=sub_user_journey, display_region=display_region))
+                        else:
+                            raise HTTPFound(
+                                request.app.router['RequestCodeSelectMethod:get'].url_for(
+                                    request_type=sub_user_journey, display_region=display_region))
+
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
@@ -619,14 +625,24 @@ class CommonCEMangerQuestion(CommonCommon):
             session['attributes']['address_level'] = 'U'
             session.changed()
 
-            raise HTTPFound(
-                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
-                                                                          display_region=display_region))
+            if sub_user_journey == 'paper-form':
+                raise HTTPFound(
+                    request.app.router['RequestCommonEnterName:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
+            else:
+                raise HTTPFound(
+                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
 
         elif resident_or_manager == 'manager':
-            raise HTTPFound(
-                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=sub_user_journey,
-                                                                          display_region=display_region))
+            if sub_user_journey == 'paper-form':
+                raise HTTPFound(
+                    request.app.router['RequestFormManager:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
+            else:
+                raise HTTPFound(
+                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
 
         else:
             # catch all just in case, should never get here
