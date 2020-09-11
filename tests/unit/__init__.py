@@ -915,6 +915,12 @@ class RHTestCase(AioHTTPTestCase):
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
         }
 
+        self.request_common_confirm_name_address_data_yes_large_print = {
+            'request-name-address-confirmation': 'yes',
+            'request-name-address-large-print': 'large-print',
+            'action[save_continue]': ''
+        }
+
         self.request_common_confirm_name_address_data_no = {
             'request-name-address-confirmation': 'no', 'action[save_continue]': ''
         }
@@ -1742,11 +1748,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_form_sent_post_title_en = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_title_large_print_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_cy = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
@@ -1755,6 +1766,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a paper questionnaire to this address?'
         self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
+        self.content_request_form_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
 
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_title_cy = \
@@ -1763,6 +1775,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_option_no_cy = 'No, cancel and return'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
 
         self.content_request_form_manager_title_en = 'We cannot send census forms to managers by post'
         # TODO Add Welsh Translation

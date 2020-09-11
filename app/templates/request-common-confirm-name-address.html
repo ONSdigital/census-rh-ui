@@ -1,24 +1,28 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/radios/_macro.njk' import onsRadios %}
-{% from 'components/checkboxes/_macro.njk' import onsCheckboxes %}
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
 
-{% set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) %}
+{%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
 
-{% set form =  {
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('RequestCommonConfirmNameAddress:post', display_region=display_region, request_type=request_type)
     }
-} %}
+} -%}
 
-{% if (request_type == 'paper-form') %}
-{% set form_options = [
+{%- if 'request-name-address-confirmation' in field_messages_dict -%}
+    {%- set error_radio = { 'text': _('Select an option') } -%}
+{%- endif -%}
+
+{%- if (request_type == 'paper-form') -%}
+{%- set form_options = [
                     {
                         'id': 'yes',
                         'label': {
@@ -34,9 +38,9 @@
                         'value': 'no'
                     }
                 ]
-    %}
-{% else %}
-    {% set form_options = [
+    -%}
+{%- else -%}
+    {%- set form_options = [
                     {
                         'id': 'yes',
                         'label': {
@@ -52,79 +56,67 @@
                         'value': 'no'
                     }
                 ]
-    %}
-{% endif %}
+    -%}
+{%- endif -%}
 
-{% if (request_type == 'paper-form') %}
-    {% set question_title = _('Do you want to send a paper questionnaire to this address?') %}
-{% elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
-    {% set question_title = _('Do you want to send a new individual access code to this address?') %}
-{% elif (case_type == 'CE' and address_level == 'E') %}
-    {% set question_title = _('Do you want to send a new manager access code to this address?') %}
-{% else %}
-    {% set question_title = _('Do you want to send a new household access code to this address?') %}
-{% endif %}
+{%- if (request_type == 'paper-form') -%}
+    {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
+{%- elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+    {%- set question_title = _('Do you want to send a new individual access code to this address?') -%}
+{%- elif (case_type == 'CE' and address_level == 'E') -%}
+    {%- set question_title = _('Do you want to send a new manager access code to this address?') -%}
+{%- else -%}
+    {%- set question_title = _('Do you want to send a new household access code to this address?') -%}
+{%- endif -%}
 
-{% block main %}
+{%- block main -%}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
 
-    {% call onsQuestion({
-        'title': question_title
-    }) %}
+    {%- call onsQuestion({ 'title': question_title }) -%}
 
-    <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
-        {{ addressLine1 }}<br>
-        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName %}{{ townName }}<br>{% endif %}
-        {{ postcode }}
-    </p>
+        <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
+            {{ addressLine1 }}<br>
+            {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
+            {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
+            {%- if townName -%}{{ townName }}<br>{%- endif -%}
+            {{ postcode }}
+        </p>
 
-    <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+        <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
 
-
-{% if 'request-name-address-confirmation' in field_messages_dict %}
-    {{
-        onsRadios({
-            'name': 'request-name-address-confirmation',
-            'radios': form_options,
-            'error': {
-                'text': _('Select an option')
-            }
-        })
-    }}
-{% else %}
-    {{
-        onsRadios({
-            'name': 'request-name-address-confirmation',
-            'radios': form_options
-        })
-    }}
-{% endif %}
-    {% endcall %}
-
-    {%- if (request_type == 'paper-form') -%}
-
-        <h2 class="u-fs-m">Large print</h2>
         {{
-            onsCheckboxes({
-                "name": "format",
-                "checkboxes": [
-                    {
-                        "id": "large-print-yes",
-                        "label": {
-                            "text": "I need a large-print questionnaire"
-                        },
-                        "value": "large-print"
-                    }
-                ]
+            onsRadios({
+                'name': 'request-name-address-confirmation',
+                'radios': form_options,
+                'error': error_radio
             })
         }}
 
-    {%- endif -%}
+        {%- if (request_type == 'paper-form') -%}
+
+            {{
+                onsCheckboxes({
+                    'legend': 'Large print',
+                    'legendClasses': 'u-fs-m u-mt-l',
+                    'checkboxes': [
+                        {
+                            'id': 'large-print-yes',
+                            'name': 'request-name-address-large-print',
+                            'label': {
+                                'text': 'I need a large-print questionnaire'
+                            },
+                            'value': 'large-print'
+                        }
+                    ]
+                })
+            }}
+
+        {%- endif -%}
+
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -133,4 +125,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}
