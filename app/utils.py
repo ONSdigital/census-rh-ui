@@ -438,7 +438,8 @@ class RHService(View):
                                         'POST',
                                         f'{rhsvc_url}/cases/create',
                                         auth=rhsvc_auth,
-                                        request_json=case_json)
+                                        request_json=case_json,
+                                        return_json=True)
 
     @staticmethod
     async def post_surveylaunched(request, case, adlocation):
