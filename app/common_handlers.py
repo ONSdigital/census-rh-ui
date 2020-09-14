@@ -521,6 +521,11 @@ class CommonConfirmAddress(CommonCommon):
                         logger.info('requesting new case', client_ip=request['client_ip'])
                         try:
                             case_creation_return = await RHService.post_case_create(request, session['attributes'])
+                            session['attributes']['case_id'] = case_creation_return['caseId']
+                            session['attributes']['region'] = case_creation_return['region']
+                            session['attributes']['case_type'] = case_creation_return['caseType']
+                            session['attributes']['address_level'] = case_creation_return['addressLevel']
+                            session.changed()
 
                             await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
                                                                         display_region,
