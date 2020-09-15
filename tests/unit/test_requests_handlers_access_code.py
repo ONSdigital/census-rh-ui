@@ -1,8 +1,4 @@
-from unittest import mock
-
 from aiohttp.test_utils import unittest_run_loop
-from aioresponses import aioresponses
-
 from .helpers import TestHelpers
 
 
@@ -448,6 +444,158 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
         await self.check_post_confirm_address_error_from_get_cases(
+            self.post_request_access_code_confirm_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_new_case(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_error_ew(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_access_code_confirm_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_error_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_access_code_confirm_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_error_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_error_from_create_case(
             self.post_request_access_code_confirm_address_ni, 'ni')
 
     @unittest_run_loop
