@@ -54,6 +54,12 @@ async def check_services(app: Application) -> bool:
         return True
 
 
+def jinja_filter_set_attributes(dictionary, attributes):
+    for key in attributes:
+        dictionary[key] = attributes[key]
+    return dictionary
+
+
 def create_app(config_name=None) -> Application:
     """
     App factory. Sets up routes and all plugins.
@@ -116,10 +122,9 @@ def create_app(config_name=None) -> Application:
             flash.context_processor, aiohttp_jinja2.request_processor,
             google_analytics.ga_ua_id_processor, domains.domain_processor
         ],
-        # extensions=['jinja2.ext.i18n'],
         extensions=['app.i18n.i18n'])
-    # Required to add the default gettext and ngettext functions for rendering
-    # env.install_null_translations()
+
+    env.filters['setAttributes'] = jinja_filter_set_attributes
     env.install_gettext_translations(i18n, newstyle=True)
 
     # JWT KeyStore
