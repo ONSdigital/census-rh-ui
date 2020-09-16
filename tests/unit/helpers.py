@@ -175,6 +175,7 @@ class TestHelpers(RHTestCase):
             if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_option_yes_cy, contents)
                 self.assertIn(self.content_request_form_confirm_name_address_option_no_cy, contents)
+                self.assertIn(self.content_request_form_confirm_name_address_large_print_checkbox_cy, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_option_yes_cy, contents)
                 self.assertIn(self.content_request_common_confirm_name_address_option_no_cy, contents)
@@ -193,6 +194,7 @@ class TestHelpers(RHTestCase):
             if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_option_yes_en, contents)
                 self.assertIn(self.content_request_form_confirm_name_address_option_no_en, contents)
+                self.assertIn(self.content_request_form_confirm_name_address_large_print_checkbox_en, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_option_yes_en, contents)
                 self.assertIn(self.content_request_common_confirm_name_address_option_no_en, contents)
@@ -882,7 +884,12 @@ class TestHelpers(RHTestCase):
             mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
             mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
 
-            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            if fulfilment_type == 'LARGE_PRINT':
+                data = self.request_common_confirm_name_address_data_yes_large_print
+            else:
+                data = self.request_common_confirm_name_address_data_yes
+            response = await self.client.request('POST', url, data=data)
+
             if override_sub_user_journey:
                 self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-name-address',
                                                                  display_region, 'POST', False))
@@ -892,7 +899,10 @@ class TestHelpers(RHTestCase):
                                 ", fulfilment_type=" + fulfilment_type +
                                 ", region=" + region + ", individual=" + individual)
             if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
-                self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
+                if fulfilment_type == 'LARGE_PRINT':
+                    self.assertLogEvent(cm, self.build_url_log_entry('large-print-sent-post', display_region, 'GET'))
+                else:
+                    self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
             else:
                 if override_sub_user_journey:
                     self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-post',
@@ -905,12 +915,21 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
                 if not display_region == 'ni':
-                    self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
+                    if fulfilment_type == 'LARGE_PRINT':
+                        self.assertIn(self.build_translation_link('large-print-sent-post', display_region), contents)
+                    else:
+                        self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
                 if display_region == 'cy':
-                    self.assertIn(self.content_request_form_sent_post_title_cy, contents)
+                    if fulfilment_type == 'LARGE_PRINT':
+                        self.assertIn(self.content_request_form_sent_post_title_large_print_cy, contents)
+                    else:
+                        self.assertIn(self.content_request_form_sent_post_title_cy, contents)
                     self.assertIn(self.content_request_form_sent_post_secondary_cy, contents)
                 else:
-                    self.assertIn(self.content_request_form_sent_post_title_en, contents)
+                    if fulfilment_type == 'LARGE_PRINT':
+                        self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
+                    else:
+                        self.assertIn(self.content_request_form_sent_post_title_en, contents)
                     self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
