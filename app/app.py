@@ -29,8 +29,7 @@ logger = get_logger('respondent-home')
 async def on_startup(app):
     # by limiting keep-alive, we help prevent errors during RHSvc scale-back.
     conn = TCPConnector(keepalive_timeout=5)
-    app.http_session_pool = ClientSession(connector=conn, timeout=ClientTimeout(total=1500), connect=None,
-                      sock_connect=None, sock_read=None)
+    app.http_session_pool = ClientSession(connector=conn, timeout=ClientTimeout(total=1500), connect=None, sock_connect=None, sock_read=None)
 
 
 async def on_cleanup(app):
