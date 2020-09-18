@@ -420,6 +420,28 @@ class RHService(View):
                                         request_json=case_json)
 
     @staticmethod
+    async def post_case_create(request, address):
+        rhsvc_url = request.app['RHSVC_URL']
+        rhsvc_auth = request.app['RHSVC_AUTH']
+        case_json = {
+            'uprn': address['uprn'],
+            'addressLine1': address['addressLine1'],
+            'addressLine2': address['addressLine2'],
+            'addressLine3': address['addressLine3'],
+            'townName': address['townName'],
+            'postcode': address['postcode'],
+            'region': address['countryCode'],
+            'estabType': address['censusEstabType'],
+            'addressType': address['censusAddressType']
+        }
+        return await View._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/cases/create',
+                                        auth=rhsvc_auth,
+                                        request_json=case_json,
+                                        return_json=True)
+
+    @staticmethod
     async def post_surveylaunched(request, case, adlocation):
         if not adlocation:
             adlocation = ''

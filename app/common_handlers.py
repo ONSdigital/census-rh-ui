@@ -46,6 +46,25 @@ class CommonCommon(View):
 
         return attributes
 
+    @staticmethod
+    def requests_confirm_address_routing(request, user_journey, sub_user_journey, display_region,
+                                         case_type, address_level):
+
+        if case_type == 'CE' and address_level == 'E':
+            raise HTTPFound(
+                request.app.router['CommonCEMangerQuestion:get'].url_for(user_journey=user_journey,
+                                                                         sub_user_journey=sub_user_journey,
+                                                                         display_region=display_region))
+        else:
+            if sub_user_journey == 'paper-form':
+                raise HTTPFound(
+                    request.app.router['RequestCommonEnterName:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
+            else:
+                raise HTTPFound(
+                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
+
 
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/' + View.valid_sub_user_journeys + '/timeout/')
@@ -490,29 +509,32 @@ class CommonConfirmAddress(CommonCommon):
                     session['attributes']['address_level'] = uprn_return['addressLevel']
                     session.changed()
 
-                    if uprn_return['caseType'] == 'CE' and uprn_return['addressLevel'] == 'E':
-                        raise HTTPFound(
-                            request.app.router['CommonCEMangerQuestion:get'].url_for(user_journey=user_journey,
-                                                                                     sub_user_journey=sub_user_journey,
-                                                                                     display_region=display_region))
-                    else:
-                        if sub_user_journey == 'paper-form':
-                            raise HTTPFound(
-                                request.app.router['RequestCommonEnterName:get'].url_for(
-                                    request_type=sub_user_journey, display_region=display_region))
-                        else:
-                            raise HTTPFound(
-                                request.app.router['RequestCodeSelectMethod:get'].url_for(
-                                    request_type=sub_user_journey, display_region=display_region))
+                    await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                display_region,
+                                                                uprn_return['caseType'],
+                                                                uprn_return['addressLevel'])
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
                                     client_ip=request['client_ip'])
-                        raise HTTPFound(
-                            request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,
-                                                                                      display_region=display_region,
-                                                                                      error='unable-to-match-address'))
+                        logger.info('requesting new case', client_ip=request['client_ip'])
+                        try:
+                            case_creation_return = await RHService.post_case_create(request, session['attributes'])
+                            session['attributes']['case_id'] = case_creation_return['caseId']
+                            session['attributes']['region'] = case_creation_return['region']
+                            session['attributes']['case_type'] = case_creation_return['caseType']
+                            session['attributes']['address_level'] = case_creation_return['addressLevel']
+                            session.changed()
+
+                            await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                        display_region,
+                                                                        case_creation_return['caseType'],
+                                                                        case_creation_return['addressLevel'])
+
+                        except ClientResponseError as ex:
+                            logger.warn('error requesting new case', client_ip=request['client_ip'])
+                            raise ex
                     else:
                         raise ex
 
