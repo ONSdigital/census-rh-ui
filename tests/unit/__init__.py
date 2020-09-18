@@ -652,6 +652,10 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/cases/uprn/'
         )
 
+        self.rhsvc_post_create_case_url = (
+            f'{rh_svc_url}/cases/create'
+        )
+
         self.rhsvc_put_modify_address = (
             f'{rh_svc_url}/cases/e37b0d05-3643-445e-8e71-73f7df3ff95e/address'
         )

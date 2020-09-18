@@ -391,6 +391,27 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region), contents)
             self.check_text_select_method(display_region, contents, user_type)
 
+    async def check_post_confirm_address_input_yes_new_case(self, url, display_region, create_case_return, user_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            mocked_post_case_create.return_value = create_case_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'requesting new case')
+            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('select-method', display_region), contents)
+            self.check_text_select_method(display_region, contents, user_type)
+
     async def check_post_confirm_address_input_yes_form(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
@@ -409,6 +430,29 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
+    async def check_post_confirm_address_input_yes_form_new_case(self, url, display_region, create_case_return, user_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            mocked_post_case_create.return_value = create_case_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'requesting new case')
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-name', display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_common_enter_name_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_common_enter_name_title_en, contents)
+
     async def check_post_confirm_address_input_yes_ce(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
@@ -417,6 +461,28 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
+            self.check_text_resident_or_manager(display_region, contents)
+
+    async def check_post_confirm_address_input_yes_ce_new_case(self, url, display_region, create_case_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            mocked_post_case_create.return_value = create_case_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
@@ -467,6 +533,25 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_error_500(display_region, contents)
+
+    async def check_post_confirm_address_error_from_create_case(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_rhsvc:
+
+            mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            mocked_rhsvc.post(self.rhsvc_post_create_case_url, status=400)
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
