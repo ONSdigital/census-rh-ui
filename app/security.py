@@ -83,7 +83,6 @@ async def check_permission(request):
                     url=request.rel_url.human_repr(),
                     client_ip=request['client_ip'])
     except KeyError:
-        flash(request, VALIDATION_FAILURE_MSG)
         logger.warn('permission denied',
                     url=request.rel_url.human_repr(),
                     client_ip=request['client_ip'])

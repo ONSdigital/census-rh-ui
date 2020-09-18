@@ -506,6 +506,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_save_and_exit_title_en = 'Your progress has been saved'
         self.content_start_save_and_exit_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
+        self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
+        self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_secondary_cy = \
+            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
+        self.content_start_timeout_restart_en = 're-enter your access code'
+        self.content_start_timeout_restart_cy = 'nodi eich cod mynediad eto'
+
         # End Start Journey
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
@@ -545,6 +553,10 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
         self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
+
+        self.get_start_timeout_en = self.app.router['StartTimeout:get'].url_for(display_region='en')
+        self.get_start_timeout_cy = self.app.router['StartTimeout:get'].url_for(display_region='cy')
+        self.get_start_timeout_ni = self.app.router['StartTimeout:get'].url_for(display_region='ni')
 
         self.case_id = self.uac_json_e['caseId']
         self.collection_exercise_id = self.uac_json_e['collectionExerciseId']

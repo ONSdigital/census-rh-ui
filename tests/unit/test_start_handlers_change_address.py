@@ -6,11 +6,12 @@ from urllib.parse import urlsplit, parse_qs
 from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
-from . import RHTestCase, skip_encrypt
+from . import skip_encrypt
+from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestStartHandlersChangeAddress(RHTestCase):
+class TestStartHandlersChangeAddress(TestHelpers):
     @skip_encrypt
     @unittest_run_loop
     async def test_change_address_happy_path_region_e_display_en(self):
@@ -3883,337 +3884,28 @@ class TestStartHandlersChangeAddress(RHTestCase):
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_get_start_change_address_enter_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_enter_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_enter_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_enter_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_enter_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_enter_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_enter_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_enter_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_enter_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_enter_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_enter_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_enter_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_select_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_select_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_select_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_select_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_select_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_select_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_select_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_select_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_select_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_select_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_select_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_select_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_confirm_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_confirm_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_confirm_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_confirm_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_confirm_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_confirm_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_confirm_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_confirm_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_address_has_been_changed_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_address_has_been_changed_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_address_has_been_changed_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_address_has_been_changed_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_change_address_address_has_been_changed_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_address_has_been_changed_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_address_has_been_changed_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_address_has_been_changed_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_address_has_been_changed_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_address_has_been_changed_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_change_address_address_has_been_changed_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_change_address_address_has_been_changed_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
+    async def test_no_direct_access(self):
+        await self.assert_no_direct_access(self.get_start_change_address_enter_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_enter_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_enter_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_enter_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_enter_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_enter_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_select_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_select_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_select_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_select_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_select_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_select_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_address_has_been_changed_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_address_has_been_changed_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_change_address_address_has_been_changed_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_address_has_been_changed_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_address_has_been_changed_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_change_address_address_has_been_changed_ni, 'ni', 'GET')

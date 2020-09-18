@@ -1,0 +1,19 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% set request_enter_address_url = url('CommonEnterAddress:get', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey) %}
+
+{% from 'components/panel/_macro.njk' import onsPanel %}
+
+{% block main %}
+    <h1>{{ _('Your session has timed out due to inactivity') }}</h1>
+    {% call onsPanel({
+        'classes': 'u-mb-m'
+    }) %}
+        <p>{{ _('To protect your information we have timed you out.') }}</p>
+    {% endcall %}
+
+    {% autoescape false %}
+        <p>{{ _('You will need to %(open)sre-enter your postcode%(close)s', open='<a href="%s">' % request_enter_address_url, close='</a>')|safe }}</p>
+    {% endautoescape %}
+
+{% endblock %}

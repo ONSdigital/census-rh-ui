@@ -859,7 +859,7 @@ class RequestLargePrintSentPost(RequestCommon):
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
                       RequestCommon.valid_request_types_code_and_form + '/timeout/')
 class RequestCodeTimeout(RequestCommon):
-    @aiohttp_jinja2.template('timeout.html')
+    @aiohttp_jinja2.template('request-timeout.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -876,7 +876,8 @@ class RequestCodeTimeout(RequestCommon):
         self.log_entry(request, display_region + '/requests/' + request_type + '/timeout')
 
         return {
-            'request_type': request_type,
+            'user_journey': 'requests',
+            'sub_user_journey': request_type,
             'display_region': display_region,
             'page_title': page_title,
             'locale': locale,
