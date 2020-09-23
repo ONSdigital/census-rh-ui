@@ -16,51 +16,75 @@
 {%- endif -%}
 
 {%- set footer_content = {
-        'poweredBy': {
-            'logo': 'nisra-logo-black-en',
-            'classes': 'footer__poweredby-img--small'
+    'crest': true,
+    'poweredBy': {
+        'logo': 'nisra-logo-black-en',
+        'classes': 'footer__poweredby-img--small'
+    },
+    "cols": [
+        {
+            "title": 'Get in touch',
+            "itemsList": [
+                {
+                    "text": 'Media enquiries',
+                    "url": '#0'
+                },
+                {
+                    "text": 'Contact us',
+                    "url": domain_url_ni + '/contact-us/'
+                }
+            ]
         },
-        'rows': [
-            {
-                'itemsList': [
-                    {
-                        'text': 'About the census',
-                        'url': domain_url_ni + '/about-the-census/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Help with your census',
-                        'url': domain_url_ni + '/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Contact us',
-                        'url': domain_url_ni + '/contact-us/',
-                        'target': '_blank'
-                    }
-                ]
-            },
-            {
-                'itemsList': [
-                    {
-                        'text': 'Cookies',
-                        'url': domain_url_ni + '/cookies/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Accessibility',
-                        'url': domain_url_ni + '/start/accessibility/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Privacy and data protection',
-                        'url': domain_url_ni + '/privacy-and-data-protection/',
-                        'target': '_blank'
-                    }
-                ]
-            }
-        ]
-    }
+        {
+            "title": 'Working on the census',
+            "itemsList": [
+                {
+                    "text": 'Jobs',
+                    "url": '#0'
+                },
+                {
+                    "text": 'Media and campaigns',
+                    "url": '#0'
+                },
+                {
+                    "text": 'Our partners',
+                    "url": '#0'
+                }
+            ]
+        },
+        {
+            "title": 'About the census',
+            "itemsList": [
+                {
+                    "text": 'Census 2021',
+                    "url": '#0'
+                },
+                {
+                    "text": 'Why you should take part',
+                    "url": '#0'
+                }
+            ]
+        }
+    ],
+    "rows": [
+        {
+            "itemsList": [
+                {
+                    "text": 'Cookies',
+                    "url": domain_url_ni + '/cookies/'
+                },
+                {
+                    "text": 'Accessibility',
+                    "url": domain_url_ni + '/accessibility/'
+                },
+                {
+                    "text": 'Privacy and data protection',
+                    "url": domain_url_ni + '/privacy-and-data-protection/'
+                }
+            ]
+        }
+    ]
+}
 -%}
 
 
