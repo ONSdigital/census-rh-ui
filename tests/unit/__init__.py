@@ -554,10 +554,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
         self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
-        self.get_start_timeout_en = self.app.router['StartTimeout:get'].url_for(display_region='en')
-        self.get_start_timeout_cy = self.app.router['StartTimeout:get'].url_for(display_region='cy')
-        self.get_start_timeout_ni = self.app.router['StartTimeout:get'].url_for(display_region='ni')
-
         self.case_id = self.uac_json_e['caseId']
         self.collection_exercise_id = self.uac_json_e['collectionExerciseId']
         self.eq_id = 'census'

@@ -12,7 +12,7 @@ from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import InvalidEqPayLoad
+from .exceptions import InvalidEqPayLoad, SessionTimeout
 from .security import remember, check_permission, forget, get_sha256_hash
 
 from .utils import View, RHService
@@ -245,7 +245,7 @@ class StartConfirmAddress(StartCommon):
         try:
             attributes = session['attributes']
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         return {'locale': locale,
                 'page_title': page_title,
@@ -283,7 +283,7 @@ class StartConfirmAddress(StartCommon):
             case = session['case']
             attributes['page_title'] = 'Is this address correct?'
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         try:
             address_confirmation = data['address-check-answer']
@@ -375,7 +375,7 @@ class StartNILanguageOptions(StartCommon):
             attributes['page_show_signout'] = 'true'
 
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region='ni'))
+            raise SessionTimeout('start')
 
         try:
             language_option = data['language-option']
@@ -436,7 +436,7 @@ class StartNISelectLanguage(StartCommon):
             case = session['case']
 
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region='ni'))
+            raise SessionTimeout('start')
 
         try:
             language_option = data['language-option']
@@ -535,7 +535,7 @@ class StartAddressHasBeenLinked(StartCommon):
             attributes = session['attributes']
             case = session['case']
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         if case['region'][0] == 'N':
             raise HTTPFound(
@@ -590,7 +590,7 @@ class StartAddressHasBeenChanged(StartCommon):
             attributes = session['attributes']
             case = session['case']
         except KeyError:
-            raise HTTPFound(request.app.router['StartTimeout:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         if case['region'][0] == 'N':
             raise HTTPFound(
@@ -601,27 +601,3 @@ class StartAddressHasBeenChanged(StartCommon):
             await self.call_questionnaire(request, case,
                                           attributes, request.app,
                                           session.get('adlocation'))
-
-
-@start_routes.view(r'/' + View.valid_display_regions + '/start/timeout/')
-class StartTimeout(StartCommon):
-    @aiohttp_jinja2.template('start-timeout.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-
-        self.log_entry(request, display_region + '/start/timeout')
-
-        if display_region == 'cy':
-            page_title = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-            locale = 'cy'
-        else:
-            page_title = 'Your session has timed out due to inactivity'
-            locale = 'en'
-
-        return {
-            'display_region': display_region,
-            'page_title': page_title,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
-        }

@@ -15,6 +15,13 @@ class InvalidIACError(Exception):
     """Raised when the IAC Service returns a 404"""
 
 
+class SessionTimeout(Exception):
+    """Raised when users session expires in the authentication journey"""
+    def __init__(self, user_journey):
+        super().__init__()
+        self.user_journey = user_journey
+
+
 class ExerciseClosedError(Exception):
     """Raised when a user attempts to access an already ended CE"""
     def __init__(self, collection_exercise_id):
