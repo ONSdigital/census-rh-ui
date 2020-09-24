@@ -3277,52 +3277,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
 
     @unittest_run_loop
-    async def test_change_address_timeout_en(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_en, str(resp_content))
-        self.assertIn('<a href="/cy/start/change-address/timeout/" lang="cy" >Cymraeg</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_start_change_address_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_change_address_timeout_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_cy, str(resp_content))
-        self.assertIn('<a href="/en/start/change-address/timeout/" lang="en" >English</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_cy, str(resp_content))
-        self.assertIn(self.content_start_change_address_timeout_error_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_change_address_timeout_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_change_address_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.nisra_logo, str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_start_change_address_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(

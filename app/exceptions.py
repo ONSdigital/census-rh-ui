@@ -16,10 +16,11 @@ class InvalidIACError(Exception):
 
 
 class SessionTimeout(Exception):
-    """Raised when users session expires in the authentication journey"""
-    def __init__(self, user_journey):
+    """Raised when users session expires in journeys requiring sessions"""
+    def __init__(self, user_journey, sub_user_journey=None):
         super().__init__()
         self.user_journey = user_journey
+        self.sub_user_journey = sub_user_journey
 
 
 class ExerciseClosedError(Exception):

@@ -1163,16 +1163,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_unlinked_address_has_been_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
-        self.get_start_unlinked_timeout_en = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
-                                                         sub_user_journey='unlinked')
-        self.get_start_unlinked_timeout_cy = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
-                                                         sub_user_journey='unlinked')
-        self.get_start_unlinked_timeout_ni = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
-                                                         sub_user_journey='unlinked')
-
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
             self.unlinked_uac_json_e = json.load(fp)
@@ -1287,16 +1277,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='cy')
         self.post_start_change_address_address_has_been_changed_ni = \
             self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='ni')
-
-        self.get_start_change_address_timeout_en = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
-                                                         sub_user_journey='change-address')
-        self.get_start_change_address_timeout_cy = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
-                                                         sub_user_journey='change-address')
-        self.get_start_change_address_timeout_ni = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
-                                                         sub_user_journey='change-address')
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
@@ -1481,16 +1461,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
                                                                             display_region='ni')
 
-        self.get_request_access_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_access_code_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_access_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-
         # Start Request Individual Code
 
         # URLs
@@ -1639,16 +1609,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
                                                                             display_region='ni')
 
-        self.get_request_individual_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='en'
-        )
-        self.get_request_individual_code_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='cy'
-        )
-        self.get_request_individual_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='ni'
-        )
-
         # Start Request Paper Form
 
         # URLs
@@ -1739,16 +1699,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_paper_form_confirm_name_address_ni = \
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
                                                                             display_region='ni')
-
-        self.get_request_paper_form_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='en'
-        )
-        self.get_request_paper_form_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='cy'
-        )
-        self.get_request_paper_form_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='ni'
-        )
 
         # Content
 

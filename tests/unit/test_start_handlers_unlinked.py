@@ -2898,11 +2898,9 @@ class TestStartHandlersUnlinked(TestHelpers):
                     self.get_start_unlinked_select_address_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/start/unlinked/timeout/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
             self.assertIn(self.content_common_timeout_en, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
 
@@ -2931,11 +2929,9 @@ class TestStartHandlersUnlinked(TestHelpers):
                     self.get_start_unlinked_select_address_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/start/unlinked/timeout/" lang="en" >English</a>',
-                          str(resp_content))
             self.assertIn(self.content_common_timeout_cy, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
 
@@ -2964,57 +2960,11 @@ class TestStartHandlersUnlinked(TestHelpers):
                     self.get_start_unlinked_select_address_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_timeout_en, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_en(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_en, str(resp_content))
-        self.assertIn('<a href="/cy/start/unlinked/timeout/" lang="cy" >Cymraeg</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_cy, str(resp_content))
-        self.assertIn('<a href="/en/start/unlinked/timeout/" lang="en" >English</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_cy, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.nisra_logo, str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_404_en(self):
