@@ -462,9 +462,9 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_resident_or_manager_error_cy = 'Please select an option.'
 
-        self.content_common_save_and_exit_link_en = 'Save and sign out'
+        self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
-        self.content_common_save_and_exit_link_cy = 'Save and sign out'
+        self.content_common_save_and_exit_link_cy = 'Exit'
         # End Common
 
         # Start Journey
@@ -761,10 +761,6 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'
-
-        self.get_accessibility_statement_en = self.app.router['Accessibility:get'].url_for(display_region='en')
-        self.get_accessibility_statement_cy = self.app.router['Accessibility:get'].url_for(display_region='cy')
-        self.get_accessibility_statement_ni = self.app.router['Accessibility:get'].url_for(display_region='ni')
 
         self.get_start_saveandexit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
         self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')

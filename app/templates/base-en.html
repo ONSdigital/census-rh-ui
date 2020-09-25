@@ -8,8 +8,8 @@
 
 {%- if page_show_signout == 'true' -%}
     {%- set signout_button_value = {
-            'text': 'Save and sign out',
-            'ariaLabel': 'Toggle main navigation',
+            'text': 'Exit',
+            'buttonStyle': 'exit',
             'url': domain_url_en + '/en/start/save-and-exit/'
         }
     -%}
@@ -39,15 +39,19 @@
                 "title": 'Working on the census',
                 "itemsList": [
                     {
+                        "text": 'Local authorities',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Community groups',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'School campaigns',
+                        "url": '#0'
+                    },
+                    {
                         "text": 'Jobs',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Media and campaigns',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Our partners',
                         "url": '#0'
                     }
                 ]
@@ -56,11 +60,15 @@
                 "title": 'About the census',
                 "itemsList": [
                     {
-                        "text": 'Census 2021',
+                        "text": 'What is the census',
                         "url": '#0'
                     },
                     {
                         "text": 'Why you should take part',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Census stories',
                         "url": '#0'
                     }
                 ]

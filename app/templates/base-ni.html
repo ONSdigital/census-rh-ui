@@ -8,8 +8,8 @@
 
 {%- if page_show_signout == 'true' -%}
     {%- set signout_button_value = {
-            'text': 'Save and sign out',
-            'ariaLabel': 'Toggle main navigation',
+            'text': 'Exit',
+            'buttonStyle': 'exit',
             'url': domain_url_ni + '/start/save-and-exit/'
         }
     -%}
@@ -17,56 +17,52 @@
 
 {%- set footer_content = {
     'crest': true,
-    'poweredBy': {
-        'logo': 'nisra-logo-black-en',
-        'classes': 'footer__poweredby-img--small'
-    },
-    "cols": [
-        {
-            "title": 'Get in touch',
-            "itemsList": [
-                {
-                    "text": 'Media enquiries',
-                    "url": '#0'
-                },
-                {
-                    "text": 'Contact us',
-                    "url": domain_url_ni + '/contact-us/'
-                }
-            ]
+        'poweredBy': {
+            'logo': 'nisra-logo-black-en',
+            'alt': 'NISRA - Northern Ireland Statistics and Research Agency'
         },
-        {
-            "title": 'Working on the census',
-            "itemsList": [
-                {
-                    "text": 'Jobs',
-                    "url": '#0'
-                },
-                {
-                    "text": 'Media and campaigns',
-                    "url": '#0'
-                },
-                {
-                    "text": 'Our partners',
-                    "url": '#0'
-                }
-            ]
-        },
-        {
-            "title": 'About the census',
-            "itemsList": [
-                {
-                    "text": 'Census 2021',
-                    "url": '#0'
-                },
-                {
-                    "text": 'Why you should take part',
-                    "url": '#0'
-                }
-            ]
-        }
-    ],
-    "rows": [
+        'cols': [
+            {
+                "title": 'Get in touch',
+                "itemsList": [
+                    {
+                        "text": 'Contact us',
+                        "url": domain_url_ni + '/contact-us'
+                    },
+                    {
+                        "text": 'Media enquiries',
+                        "url": '#0'
+                    }
+                ]
+            },
+            {
+                "title": 'Working on the census',
+                "itemsList": [
+                    {
+                        "text": 'Get involved',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Jobs',
+                        "url": '#0'
+                    }
+                ]
+            },
+            {
+                "title": 'About the census',
+                "itemsList": [
+                    {
+                        "text": 'What is the census',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Why you should take part',
+                        "url": '#0'
+                    }
+                ]
+            }
+        ],
+"rows": [
         {
             "itemsList": [
                 {
