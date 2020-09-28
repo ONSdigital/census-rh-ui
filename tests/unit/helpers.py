@@ -1121,3 +1121,27 @@ class TestHelpers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
+
+    async def assert_no_direct_access(self, url, display_region, method, data=None):
+        with self.assertLogs('respondent-home', 'WARN') as cm:
+            if method == 'POST':
+                if data:
+                    response = await self.client.request('POST', url, allow_redirects=False, data=data)
+                else:
+                    response = await self.client.request('POST', url, allow_redirects=False)
+            else:
+                response = await self.client.request('GET', url, allow_redirects=False)
+        self.assertLogEvent(cm, 'permission denied')
+        self.assertEqual(response.status, 403)
+        contents = str(await response.content.read())
+        self.assertIn(self.get_logo(display_region), contents)
+        if display_region == 'cy':
+            self.assertNotIn(self.content_common_save_and_exit_link_cy, contents)
+            self.assertIn(self.content_start_timeout_title_cy, contents)
+            self.assertIn(self.content_start_timeout_secondary_cy, contents)
+            self.assertIn(self.content_start_timeout_restart_cy, contents)
+        else:
+            self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_timeout_title_en, contents)
+            self.assertIn(self.content_start_timeout_secondary_en, contents)
+            self.assertIn(self.content_start_timeout_restart_en, contents)

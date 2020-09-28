@@ -230,18 +230,6 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_enter_address_input_invalid(self.post_request_individual_code_enter_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_individual_code_timeout_ew(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_en, 'en')
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_timeout_cy(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_cy, 'cy')
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_timeout_ni(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_ni, 'ni')
-
-    @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_get_cases_error_ew(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')

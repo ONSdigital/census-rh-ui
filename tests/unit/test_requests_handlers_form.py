@@ -245,18 +245,6 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_timeout_ew(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_en, 'en')
-
-    @unittest_run_loop
-    async def test_get_request_paper_form_timeout_cy(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_cy, 'cy')
-
-    @unittest_run_loop
-    async def test_get_request_paper_form_timeout_ni(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_ni, 'ni')
-
-    @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')

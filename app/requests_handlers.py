@@ -11,6 +11,7 @@ from . import (MOBILE_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
+from .exceptions import SessionTimeout
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
     FlashMessage, RHService, ProcessName
 
@@ -24,26 +25,19 @@ class RequestCommon(View):
     valid_request_types_code_and_form = r'{request_type:\bindividual-code|access-code|paper-form\b}'
 
     @staticmethod
-    def request_code_check_session(request, request_type,
-                                   display_region):
+    def request_code_check_session(request, request_type):
         if request.cookies.get('RH_SESSION') is None:
             logger.info('session timed out', client_ip=request['client_ip'])
-            raise HTTPFound(
-                request.app.router['RequestCodeTimeout:get'].url_for(
-                    request_type=request_type, display_region=display_region))
+            raise SessionTimeout('requests', request_type)
 
-    async def get_check_attributes(self, request, request_type,
-                                   display_region):
-        self.request_code_check_session(request, request_type,
-                                        display_region)
+    async def get_check_attributes(self, request, request_type):
+        self.request_code_check_session(request, request_type)
         session = await get_session(request)
         try:
             attributes = session['attributes']
 
         except KeyError:
-            raise HTTPFound(
-                request.app.router['RequestCodeTimeout:get'].url_for(
-                    request_type=request_type, display_region=display_region))
+            raise SessionTimeout('requests', request_type)
 
         return attributes
 
@@ -93,7 +87,7 @@ class RequestCodeSelectMethod(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -120,7 +114,7 @@ class RequestCodeSelectMethod(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -180,7 +174,7 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -205,7 +199,7 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
         attributes['page_title'] = page_title
         attributes['locale'] = locale
         attributes['request_type'] = request_type
@@ -257,7 +251,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -283,7 +277,7 @@ class RequestCodeConfirmMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -383,7 +377,7 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-name')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -409,7 +403,7 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-name')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
         attributes['page_title'] = page_title
         attributes['locale'] = locale
         attributes['request_type'] = request_type
@@ -466,7 +460,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         return {
             'page_title': page_title,
@@ -501,7 +495,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         data = await request.post()
         try:
@@ -672,7 +666,7 @@ class RequestCodeCodeSentSMS(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-sms')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -702,7 +696,7 @@ class RequestCodeCodeSentPost(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-post')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         return {
                 'page_title': page_title,
@@ -797,7 +791,7 @@ class RequestFormSentPost(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/form-sent-post')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         return {
                 'page_title': page_title,
@@ -836,7 +830,7 @@ class RequestLargePrintSentPost(RequestCommon):
 
         self.log_entry(request, display_region + '/requests/paper-form/large-print-sent-post')
 
-        attributes = await self.get_check_attributes(request, request_type, display_region)
+        attributes = await self.get_check_attributes(request, request_type)
 
         return {
                 'page_title': page_title,
@@ -854,31 +848,3 @@ class RequestLargePrintSentPost(RequestCommon):
                 'case_type': attributes['case_type'],
                 'address_level': attributes['address_level']
             }
-
-
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_and_form + '/timeout/')
-class RequestCodeTimeout(RequestCommon):
-    @aiohttp_jinja2.template('timeout.html')
-    async def get(self, request):
-        self.setup_request(request)
-
-        request_type = request.match_info['request_type']
-        display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            page_title = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-            locale = 'cy'
-        else:
-            page_title = 'Your session has timed out due to inactivity'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/timeout')
-
-        return {
-            'request_type': request_type,
-            'display_region': display_region,
-            'page_title': page_title,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
-        }
