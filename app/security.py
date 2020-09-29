@@ -16,41 +16,43 @@ CSP = {
     'font-src': [
         "'self'",
         'data:',
+        'https://fonts.gstatic.com',
         'https://cdn.ons.gov.uk',
     ],
     'script-src': [
         "'self'",
-        "'unsafe-inline'",
         'https://www.googletagmanager.com',
-        'https://tagmanager.google.com',
-        'https://www.google-analytics.com',
+        "'unsafe-inline'",
+        "'unsafe-eval'",
         'https://cdn.ons.gov.uk',
-        'https://connect.facebook.net',
+    ],
+    'style-src': [
+        "'self'",
+        'https://tagmanager.google.com',
+        'https://fonts.googleapis.com',
+        "'unsafe-inline'",
+        'https://cdn.ons.gov.uk'
     ],
     'connect-src': [
         "'self'",
-        'https://www.googletagmanager.com',
-        'https://tagmanager.google.com',
         'https://cdn.ons.gov.uk',
+    ],
+    'frame-src': [
+        'https://www.googletagmanager.com',
+        'https://www.timeforstorm.com/'
     ],
     'img-src': [
         "'self'",
         'data:',
-        'https://www.googletagmanager.com',
-        'https://cdn.ons.gov.uk',
         'https://www.google-analytics.com',
-        'https://www.facebook.com'
+        'https://ssl.gstatic.com',
+        'https://www.gstatic.com',
+        'https://cdn.ons.gov.uk'
     ],
 }
 
-
 FEATURE_POLICY = [
-    "layout-animations 'none';",
-    "unoptimized-images 'none';",
-    "oversized-images 'none';",
-    "sync-script 'none';",
     "sync-xhr 'none';",
-    "unsized-media 'none';",
 ]
 
 

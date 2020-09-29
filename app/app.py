@@ -132,8 +132,7 @@ def create_app(config_name=None) -> Application:
 
     app.on_startup.append(on_startup)
     app.on_cleanup.append(on_cleanup)
-    if not app.debug:
-        app.on_response_prepare.append(security.on_prepare)
+    app.on_response_prepare.append(security.on_prepare)
 
     logger.info('app setup complete', config=config_name)
 
