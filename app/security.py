@@ -8,27 +8,68 @@ from aiohttp.web import HTTPForbidden
 
 from structlog import get_logger
 
+CSP = {
+    'default-src': [
+        "'self'",
+        'https://cdn.ons.gov.uk',
+    ],
+    'font-src': [
+        "'self'",
+        'data:',
+        'https://cdn.ons.gov.uk',
+    ],
+    'script-src': [
+        "'self'",
+        "'unsafe-inline'",
+        'https://www.googletagmanager.com',
+        'https://tagmanager.google.com',
+        'https://www.google-analytics.com',
+        'https://cdn.ons.gov.uk',
+        'https://connect.facebook.net',
+    ],
+    'connect-src': [
+        "'self'",
+        'https://www.googletagmanager.com',
+        'https://tagmanager.google.com',
+        'https://cdn.ons.gov.uk',
+    ],
+    'img-src': [
+        "'self'",
+        'data:',
+        'https://www.googletagmanager.com',
+        'https://cdn.ons.gov.uk',
+        'https://www.google-analytics.com',
+        'https://www.facebook.com'
+    ],
+}
+
+
+FEATURE_POLICY = [
+    "layout-animations 'none';",
+    "unoptimized-images 'none';",
+    "oversized-images 'none';",
+    "sync-script 'none';",
+    "sync-xhr 'none';",
+    "unsized-media 'none';",
+]
+
+
+def _format_csp(csp_dict):
+    return ' '.join([
+        f"{section} {' '.join(content)};"
+        for section, content in csp_dict.items()
+    ])
+
+
 DEFAULT_RESPONSE_HEADERS = {
-    'Strict-Transport-Security': ['max-age=31536000', 'includeSubDomains'],
-    'Content-Security-Policy': {
-        'default-src': ["'self'", 'https://cdn.ons.gov.uk'],
-        'font-src': ["'self'", 'data:', 'https://cdn.ons.gov.uk'],
-        'script-src': [
-            "'self'", 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-        'connect-src': [
-            "'self'", 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-        'img-src': [
-            "'self'", 'data:', 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-    },
-    'X-XSS-Protection': '1',
+    'Strict-Transport-Security': 'max-age=31536000 includeSubDomains',
+    'Content-Security-Policy': _format_csp(CSP),
+    'X-Content-Security-Policy': _format_csp(CSP),
+    'X-XSS-Protection': '1; mode=block',
+    'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
-    'Referrer-Policy': 'same-origin',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Feature-Policy': ' '.join(FEATURE_POLICY),
 }
 
 ADD_NONCE_SECTIONS = [
