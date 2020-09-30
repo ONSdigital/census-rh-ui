@@ -39,7 +39,7 @@ CSP = {
     ],
     'frame-src': [
         'https://www.googletagmanager.com',
-        'https://www.timeforstorm.com/'
+        'https://www.timeforstorm.com'
     ],
     'img-src': [
         "'self'",
@@ -65,8 +65,9 @@ def _format_csp(csp_dict):
 
 DEFAULT_RESPONSE_HEADERS = {
     'Strict-Transport-Security': 'max-age=31536000 includeSubDomains',
-    'Content-Security-Policy': _format_csp(CSP),
-    'X-Content-Security-Policy': _format_csp(CSP),
+    # 'Content-Security-Policy': _format_csp(CSP),
+    'Content-Security-Policy': CSP,
+    'X-Content-Security-Policy': CSP,
     'X-XSS-Protection': '1; mode=block',
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
