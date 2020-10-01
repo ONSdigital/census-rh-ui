@@ -250,7 +250,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_hh_ew_w(self):
@@ -258,7 +258,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_hh_cy(self):
@@ -266,7 +266,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_hh_ni(self):
@@ -274,7 +274,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_spg_ew_e(self):
@@ -282,7 +282,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_spg_ew_w(self):
@@ -290,7 +290,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_spg_cy(self):
@@ -298,7 +298,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_spg_ni(self):
@@ -306,7 +306,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_ce_m_ew_e(self):
@@ -346,7 +346,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_ce_r_ew_w(self):
@@ -354,7 +354,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_ce_r_cy(self):
@@ -362,7 +362,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_ce_r_ni(self):
@@ -370,7 +370,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
         await self.check_post_confirm_address_input_yes_form_new_case(
-            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
 
     @unittest_run_loop
     async def test_get_request_paper_form_confirm_address_new_case_error_ew(self):

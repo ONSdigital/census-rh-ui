@@ -360,6 +360,10 @@ class RHTestCase(AioHTTPTestCase):
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
         self.nisra_logo = '/img/nisra-logo-en.svg'
 
+        self.content_call_centre_number_ew = '0800 141 2021'
+        self.content_call_centre_number_cy = '0800 169 2021'
+        self.content_call_centre_number_ni = '0800 328 2021'
+
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
@@ -395,10 +399,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
-            'Add or change an address'
+            'Register an address'
         # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_title_cy = \
-            'Add or change an address'
+            'Register an address'
         self.content_common_call_contact_centre_address_not_found_text_en = \
             'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
             'it may not be registered on our system.'

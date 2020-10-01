@@ -2162,6 +2162,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_cy(self):
@@ -2227,6 +2228,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_ni(self):
@@ -2290,6 +2292,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_en(self):
@@ -2343,6 +2346,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_cy(self):
@@ -2396,6 +2400,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_ni(self):
@@ -2446,6 +2451,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_post_start_change_address_enter_address_bad_postcode_en(
@@ -3338,6 +3344,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_cy(self):
@@ -3401,6 +3408,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_ni(self):
@@ -3462,6 +3470,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_en(self):
@@ -3525,6 +3534,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_cy(self):
@@ -3588,6 +3598,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_ni(self):
@@ -3649,6 +3660,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_en(self):
@@ -3712,6 +3724,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_cy(self):
@@ -3775,6 +3788,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_ni(self):
@@ -3836,6 +3850,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_no_direct_access(self):

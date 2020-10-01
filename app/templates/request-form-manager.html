@@ -9,6 +9,6 @@
         <p>{{ _('If you are able to complete the census online, you can %(open)srequest a manager access code%(close)s to be sent by text message. As soon as the text arrives, you can start the census.', open='<a href="%s">' % request_manager_code_url, close='</a>')|safe }}</p>
     {% endautoescape %}
 
-    <p>{{ _('If this is not possible, you can call us free on 0800 141 2021 to complete the census another way.') }}</p>
+    <p>{{ _('If this is not possible, you can call us free on %(telephone_number)s to complete the census another way.', telephone_number=call_centre_number)|safe }}</p>
 
 {% endblock %}

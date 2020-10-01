@@ -53,6 +53,16 @@ class View:
         return generic_url
 
     @staticmethod
+    def get_call_centre_number(display_region):
+        if display_region == 'ni':
+            call_centre_number = '0800 328 2021'
+        elif display_region == 'cy':
+            call_centre_number = '0800 169 2021'
+        else:
+            call_centre_number = '0800 141 2021'
+        return call_centre_number
+
+    @staticmethod
     async def _make_request(request,
                             method,
                             url,

@@ -740,7 +740,8 @@ class RequestFormManager(RequestCommon):
                 'display_region': display_region,
                 'locale': locale,
                 'request_type': request_type,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'call_centre_number': View.get_call_centre_number(display_region)
             }
 
 
