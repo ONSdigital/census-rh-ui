@@ -51,10 +51,6 @@ CSP = {
     ],
 }
 
-FEATURE_POLICY = [
-    "sync-xhr 'none';",
-]
-
 
 def _format_csp(csp_dict):
     return ' '.join([
@@ -72,7 +68,6 @@ DEFAULT_RESPONSE_HEADERS = {
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Feature-Policy': ' '.join(FEATURE_POLICY),
 }
 
 ADD_NONCE_SECTIONS = [
@@ -110,6 +105,12 @@ async def on_prepare(request: web.BaseRequest, response: web.StreamResponse):
         elif not isinstance(value, str):
             value = ' '.join(value)
         response.headers[header] = value
+
+
+async def context_processor(request):
+    return {
+        'nonce_csp': request.csp_nonce,
+    }
 
 
 async def check_permission(request):
