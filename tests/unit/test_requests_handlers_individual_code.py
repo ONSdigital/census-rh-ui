@@ -1,8 +1,4 @@
-from unittest import mock
-
 from aiohttp.test_utils import unittest_run_loop
-from aioresponses import aioresponses
-
 from .helpers import TestHelpers
 
 
@@ -234,18 +230,6 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_enter_address_input_invalid(self.post_request_individual_code_enter_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_individual_code_timeout_ew(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_en, 'en')
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_timeout_cy(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_cy, 'cy')
-
-    @unittest_run_loop
-    async def test_get_request_individual_code_timeout_ni(self):
-        await self.check_get_timeout(self.get_request_individual_code_timeout_ni, 'ni')
-
-    @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_get_cases_error_ew(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
@@ -273,122 +257,67 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_individual_address_not_required_ew(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request('GET', self.get_request_individual_code_en)
-            await self.client.request('GET', self.get_request_individual_code_enter_address_en)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'en/requests/call-contact-centre/unable-to-match-address'")
-
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+    async def test_get_request_individual_code_confirm_address_new_case_ew_e(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
 
     @unittest_run_loop
-    async def test_get_request_individual_address_not_required_cy(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request('GET', self.get_request_individual_code_cy)
-            await self.client.request('GET', self.get_request_individual_code_enter_address_cy)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
-
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_cy, contents)
+    async def test_get_request_individual_code_confirm_address_new_case_ew_w(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
+                                                        'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
 
     @unittest_run_loop
-    async def test_get_request_individual_address_not_required_ni(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+    async def test_get_request_individual_code_confirm_address_new_case_cy(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
+                                                        'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
 
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+    @unittest_run_loop
+    async def test_get_request_individual_code_confirm_address_new_case_ni(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
 
-            await self.client.request('GET', self.get_request_individual_code_ni)
-            await self.client.request('GET', self.get_request_individual_code_enter_address_ni)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_select_address_ni,
-                    data=self.common_select_address_input_valid)
+    @unittest_run_loop
+    async def test_get_request_individual_code_confirm_address_new_case_error_ew(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_individual_code_confirm_address_en, 'en')
 
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_individual_code_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/individual-code/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
+    @unittest_run_loop
+    async def test_get_request_individual_code_confirm_address_new_case_error_cy(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_individual_code_confirm_address_cy, 'cy')
 
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_new_case_error_ni(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_individual_code_confirm_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_get_request_individual_code_confirm_address_data_no_ew(self):

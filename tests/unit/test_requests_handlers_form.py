@@ -1,8 +1,4 @@
-from unittest import mock
-
 from aiohttp.test_utils import unittest_run_loop
-from aioresponses import aioresponses
-
 from .helpers import TestHelpers
 
 
@@ -55,8 +51,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_select_address_no_selection_made(self.post_request_paper_form_select_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_post_request_paper_form_select_address_no_selection_ni(
-            self):
+    async def test_post_request_paper_form_select_address_no_selection_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address_no_selection_made(self.post_request_paper_form_select_address_ni, 'ni')
@@ -250,125 +245,156 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_timeout_ew(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_en, 'en')
+    async def test_get_request_paper_form_confirm_address_new_case_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_timeout_cy(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_cy, 'cy')
+    async def test_get_request_paper_form_confirm_address_new_case_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_timeout_ni(self):
-        await self.check_get_timeout(self.get_request_paper_form_timeout_ni, 'ni')
+    async def test_get_request_paper_form_confirm_address_new_case_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_address_not_required_ew(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_en,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_en,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_en,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'en/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/requests/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+    async def test_get_request_paper_form_confirm_address_new_case_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_address_not_required_cy(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
-
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_cy,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_cy,
-                    data=self.common_select_address_input_valid)
-
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_cy,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'cy/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'cy/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
-
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/requests/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_request_contact_centre_cy, contents)
+    async def test_get_request_paper_form_confirm_address_new_case_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
 
     @unittest_run_loop
-    async def test_get_request_paper_form_address_not_required_ni(self):
-        # TODO - to be removed, test will become redundant soon
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+    async def test_get_request_paper_form_confirm_address_new_case_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
 
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
 
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_enter_address_ni,
-                    data=self.common_postcode_input_valid)
-            await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_select_address_ni,
-                    data=self.common_select_address_input_valid)
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
 
-            response = await self.client.request(
-                    'POST',
-                    self.post_request_paper_form_confirm_address_ni,
-                    data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/requests/paper-form/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint "
-                                    "'ni/requests/call-contact-centre/unable-to-match-address'")
-            self.assertEqual(response.status, 200)
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
 
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_request_contact_centre_en, contents)
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce_new_case(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_error_ew(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_paper_form_confirm_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_error_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_paper_form_confirm_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_confirm_address_new_case_error_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_error_from_create_case(
+            self.post_request_paper_form_confirm_address_ni, 'ni')
 
     @unittest_run_loop
     async def test_post_request_paper_form_resident_or_manager_empty_ce_m_ew_e(self):
@@ -1921,7 +1947,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_hh_ew_e(self):
+    async def test_request_paper_form_sent_post_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -1932,7 +1958,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'HH', 'QUESTIONNAIRE', 'E', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_hh_ew_w(self):
+    async def test_request_paper_form_sent_post_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -1943,7 +1969,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'HH', 'QUESTIONNAIRE', 'W', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_hh_cy(self):
+    async def test_request_paper_form_sent_post_hh_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
@@ -1954,7 +1980,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_cy, 'cy', 'HH', 'QUESTIONNAIRE', 'W', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_hh_ni(self):
+    async def test_request_paper_form_sent_post_hh_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
@@ -1965,7 +1991,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_ni, 'ni', 'HH', 'QUESTIONNAIRE', 'N', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_spg_ew_e(self):
+    async def test_request_paper_form_sent_post_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -1976,7 +2002,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'SPG', 'QUESTIONNAIRE', 'E', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_spg_ew_w(self):
+    async def test_request_paper_form_sent_post_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -1987,7 +2013,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'SPG', 'QUESTIONNAIRE', 'W', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_spg_cy(self):
+    async def test_request_paper_form_sent_post_spg_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
@@ -1998,7 +2024,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_cy, 'cy', 'SPG', 'QUESTIONNAIRE', 'W', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_spg_ni(self):
+    async def test_request_paper_form_sent_post_spg_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
@@ -2009,7 +2035,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_ni, 'ni', 'SPG', 'QUESTIONNAIRE', 'N', 'false')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_select_resident_ce_m_ew_e(self):
+    async def test_request_paper_form_sent_post_select_resident_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -2022,7 +2048,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'QUESTIONNAIRE', 'E', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_select_resident_ce_m_ew_w(self):
+    async def test_request_paper_form_sent_post_select_resident_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -2035,7 +2061,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'QUESTIONNAIRE', 'W', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_select_resident_ce_m_cy(self):
+    async def test_request_paper_form_sent_post_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
@@ -2048,7 +2074,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_cy, 'cy', 'CE', 'QUESTIONNAIRE', 'W', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_select_resident_ce_m_ni(self):
+    async def test_request_paper_form_sent_post_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
@@ -2061,7 +2087,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_ni, 'ni', 'CE', 'QUESTIONNAIRE', 'N', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_ce_r_ew_e(self):
+    async def test_request_paper_form_sent_post_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -2072,7 +2098,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'QUESTIONNAIRE', 'E', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_ce_r_ew_w(self):
+    async def test_request_paper_form_sent_post_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
@@ -2083,7 +2109,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'QUESTIONNAIRE', 'W', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_ce_r_cy(self):
+    async def test_request_paper_form_sent_post_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
@@ -2094,7 +2120,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_name_address_cy, 'cy', 'CE', 'QUESTIONNAIRE', 'W', 'true')
 
     @unittest_run_loop
-    async def test_request_paper_form_code_sent_post_ce_r_ni(self):
+    async def test_request_paper_form_sent_post_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
@@ -2103,6 +2129,190 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_paper_form_confirm_name_address_ni, 'ni', 'CE', 'QUESTIONNAIRE', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'HH', 'LARGE_PRINT', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'HH', 'LARGE_PRINT', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', 'HH', 'LARGE_PRINT', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', 'HH', 'LARGE_PRINT', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'SPG', 'LARGE_PRINT', 'E', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'SPG', 'LARGE_PRINT', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', 'SPG', 'LARGE_PRINT', 'W', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', 'SPG', 'LARGE_PRINT', 'N', 'false')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_select_resident_ce_m_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
+        await self.check_post_resident_or_manager_form_resident(
+            self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'LARGE_PRINT', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_select_resident_ce_m_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form_resident(
+            self.post_request_paper_form_resident_or_manager_en, 'en')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'LARGE_PRINT', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_select_resident_ce_m_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
+        await self.check_post_resident_or_manager_form_resident(
+            self.post_request_paper_form_resident_or_manager_cy, 'cy')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', 'CE', 'LARGE_PRINT', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_select_resident_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_ce(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
+        await self.check_post_resident_or_manager_form_resident(
+            self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', 'CE', 'LARGE_PRINT', 'N', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'LARGE_PRINT', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_en, 'en', 'CE', 'LARGE_PRINT', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', 'CE', 'LARGE_PRINT', 'W', 'true')
+
+    @unittest_run_loop
+    async def test_request_paper_form_large_print_sent_post_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
+        await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', 'CE', 'LARGE_PRINT', 'N', 'true')
 
     @unittest_run_loop
     async def test_request_paper_form_select_manager_ce_m_ew_e(self):

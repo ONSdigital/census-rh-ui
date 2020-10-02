@@ -8,13 +8,11 @@ from aiohttp_session import get_session
 from structlog import get_logger
 
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
-               SESSION_TIMEOUT_MSG,
                START_LANGUAGE_OPTION_MSG,
-               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY,
-               SESSION_TIMEOUT_MSG_CY)
+               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import InvalidEqPayLoad
+from .exceptions import InvalidEqPayLoad, SessionTimeout
 from .security import remember, check_permission, forget, get_sha256_hash
 
 from .utils import View, RHService
@@ -247,11 +245,7 @@ class StartConfirmAddress(StartCommon):
         try:
             attributes = session['attributes']
         except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         return {'locale': locale,
                 'page_title': page_title,
@@ -289,11 +283,7 @@ class StartConfirmAddress(StartCommon):
             case = session['case']
             attributes['page_title'] = 'Is this address correct?'
         except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         try:
             address_confirmation = data['address-check-answer']
@@ -385,8 +375,7 @@ class StartNILanguageOptions(StartCommon):
             attributes['page_show_signout'] = 'true'
 
         except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region='ni'))
+            raise SessionTimeout('start')
 
         try:
             language_option = data['language-option']
@@ -447,8 +436,7 @@ class StartNISelectLanguage(StartCommon):
             case = session['case']
 
         except KeyError:
-            flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region='ni'))
+            raise SessionTimeout('start')
 
         try:
             language_option = data['language-option']
@@ -547,11 +535,7 @@ class StartAddressHasBeenLinked(StartCommon):
             attributes = session['attributes']
             case = session['case']
         except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         if case['region'][0] == 'N':
             raise HTTPFound(
@@ -606,11 +590,7 @@ class StartAddressHasBeenChanged(StartCommon):
             attributes = session['attributes']
             case = session['case']
         except KeyError:
-            if display_region == 'cy':
-                flash(request, SESSION_TIMEOUT_MSG_CY)
-            else:
-                flash(request, SESSION_TIMEOUT_MSG)
-            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+            raise SessionTimeout('start')
 
         if case['region'][0] == 'N':
             raise HTTPFound(

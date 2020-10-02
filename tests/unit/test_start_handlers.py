@@ -11,13 +11,15 @@ from app import (BAD_CODE_MSG, INVALID_CODE_MSG,
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.start_handlers import Start
 
-from . import RHTestCase, build_eq_raises, skip_encrypt
+from . import build_eq_raises, skip_encrypt
+
+from .helpers import TestHelpers
 
 attempts_retry_limit = 5
 
 
 # noinspection PyTypeChecker
-class TestStartHandlers(RHTestCase):
+class TestStartHandlers(TestHelpers):
 
     @unittest_run_loop
     async def test_post_start_with_retry_503_ew_e(self):
@@ -1392,143 +1394,20 @@ class TestStartHandlers(RHTestCase):
         # Then an InactiveCaseError is raised
 
     @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_ew(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_en, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_cy, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_ew(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_en,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_cy,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_ni,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_ni_language_options_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_language_options_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_ni_language_options_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST', self.post_start_language_options_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_ni_select_language_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_select_language_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_ni_select_language_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST', self.post_start_select_language_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
+    async def test_no_direct_access(self):
+        await self.assert_no_direct_access(self.get_start_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_confirm_address_en, 'en', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.post_start_confirm_address_cy, 'cy', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.post_start_confirm_address_ni, 'ni', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.get_start_language_options_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_language_options_ni, 'ni', 'POST')
+        await self.assert_no_direct_access(self.get_start_select_language_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_select_language_ni, 'ni', 'POST')
 
     @unittest_run_loop
     async def test_post_start_confirm_address_empty_ew_e(self):

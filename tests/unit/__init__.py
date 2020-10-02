@@ -506,6 +506,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_save_and_exit_title_en = 'Your progress has been saved'
         self.content_start_save_and_exit_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
+        self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
+        self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_secondary_cy = \
+            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
+        self.content_start_timeout_restart_en = 're-enter your access code'
+        self.content_start_timeout_restart_cy = 'nodi eich cod mynediad eto'
+
         # End Start Journey
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
@@ -638,6 +646,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.rhsvc_cases_by_uprn_url = (
             f'{rh_svc_url}/cases/uprn/'
+        )
+
+        self.rhsvc_post_create_case_url = (
+            f'{rh_svc_url}/cases/create'
         )
 
         self.rhsvc_put_modify_address = (
@@ -915,6 +927,12 @@ class RHTestCase(AioHTTPTestCase):
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
         }
 
+        self.request_common_confirm_name_address_data_yes_large_print = {
+            'request-name-address-confirmation': 'yes',
+            'request-name-address-large-print': 'large-print',
+            'action[save_continue]': ''
+        }
+
         self.request_common_confirm_name_address_data_no = {
             'request-name-address-confirmation': 'no', 'action[save_continue]': ''
         }
@@ -1145,16 +1163,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_unlinked_address_has_been_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
-        self.get_start_unlinked_timeout_en = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
-                                                         sub_user_journey='unlinked')
-        self.get_start_unlinked_timeout_cy = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
-                                                         sub_user_journey='unlinked')
-        self.get_start_unlinked_timeout_ni = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
-                                                         sub_user_journey='unlinked')
-
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
             self.unlinked_uac_json_e = json.load(fp)
@@ -1269,16 +1277,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='cy')
         self.post_start_change_address_address_has_been_changed_ni = \
             self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='ni')
-
-        self.get_start_change_address_timeout_en = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='en', user_journey='start',
-                                                         sub_user_journey='change-address')
-        self.get_start_change_address_timeout_cy = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='cy', user_journey='start',
-                                                         sub_user_journey='change-address')
-        self.get_start_change_address_timeout_ni = \
-            self.app.router['CommonTimeout:get'].url_for(display_region='ni', user_journey='start',
-                                                         sub_user_journey='change-address')
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
@@ -1463,16 +1461,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
                                                                             display_region='ni')
 
-        self.get_request_access_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_access_code_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_access_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-
         # Start Request Individual Code
 
         # URLs
@@ -1621,16 +1609,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
                                                                             display_region='ni')
 
-        self.get_request_individual_code_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='en'
-        )
-        self.get_request_individual_code_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='cy'
-        )
-        self.get_request_individual_code_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='individual-code', display_region='ni'
-        )
-
         # Start Request Paper Form
 
         # URLs
@@ -1722,16 +1700,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
                                                                             display_region='ni')
 
-        self.get_request_paper_form_timeout_en = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='en'
-        )
-        self.get_request_paper_form_timeout_cy = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='cy'
-        )
-        self.get_request_paper_form_timeout_ni = self.app.router['RequestCodeTimeout:get'].url_for(
-            request_type='paper-form', display_region='ni'
-        )
-
         # Content
 
         self.content_request_form_enter_address_secondary_en = \
@@ -1742,11 +1710,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_form_sent_post_title_en = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_title_large_print_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_cy = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
@@ -1755,6 +1728,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a paper questionnaire to this address?'
         self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
+        self.content_request_form_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
 
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_title_cy = \
@@ -1763,6 +1737,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_option_no_cy = 'No, cancel and return'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
 
         self.content_request_form_manager_title_en = 'We cannot send census forms to managers by post'
         # TODO Add Welsh Translation

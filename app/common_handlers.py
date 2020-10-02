@@ -14,6 +14,7 @@ from . import (ADDRESS_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
+from .exceptions import SessionTimeout
 from .security import check_permission
 from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
 
@@ -26,57 +27,40 @@ common_routes = RouteTableDef()
 
 class CommonCommon(View):
     @staticmethod
-    def common_check_session(request, user_journey, sub_user_journey, display_region):
+    def common_check_session(request, user_journey, sub_user_journey):
         if request.cookies.get('RH_SESSION') is None:
             logger.info('session timed out', client_ip=request['client_ip'])
-            raise HTTPFound(
-                request.app.router['CommonTimeout:get'].url_for(
-                    display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey))
+            raise SessionTimeout(user_journey, sub_user_journey)
 
-    async def common_check_attributes(self, request, user_journey, sub_user_journey, display_region):
-        self.common_check_session(request, user_journey, sub_user_journey, display_region)
+    async def common_check_attributes(self, request, user_journey, sub_user_journey):
+        self.common_check_session(request, user_journey, sub_user_journey)
         session = await get_session(request)
 
         if session['attributes']:
             attributes = session['attributes']
         else:
-            raise HTTPFound(
-                request.app.router['CommonTimeout:get'].url_for(
-                    display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey))
+            raise SessionTimeout(user_journey, sub_user_journey)
 
         return attributes
 
+    @staticmethod
+    def requests_confirm_address_routing(request, user_journey, sub_user_journey, display_region,
+                                         case_type, address_level):
 
-@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
-                    + '/' + View.valid_sub_user_journeys + '/timeout/')
-class CommonTimeout(CommonCommon):
-    """
-    Route to render a Timeout page that can be triggered during start/unlinked journey and all requests journeys
-    """
-    @aiohttp_jinja2.template('common-timeout.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        user_journey = request.match_info['user_journey']
-        sub_user_journey = request.match_info['sub_user_journey']
-
-        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/timeout')
-
-        if display_region == 'cy':
-            page_title = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-            locale = 'cy'
+        if case_type == 'CE' and address_level == 'E':
+            raise HTTPFound(
+                request.app.router['CommonCEMangerQuestion:get'].url_for(user_journey=user_journey,
+                                                                         sub_user_journey=sub_user_journey,
+                                                                         display_region=display_region))
         else:
-            page_title = 'Your session has timed out due to inactivity'
-            locale = 'en'
-
-        return {
-            'display_region': display_region,
-            'user_journey': user_journey,
-            'sub_user_journey': sub_user_journey,
-            'page_title': page_title,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
-        }
+            if sub_user_journey == 'paper-form':
+                raise HTTPFound(
+                    request.app.router['RequestCommonEnterName:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
+            else:
+                raise HTTPFound(
+                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
 
 
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys + '/address-in-scotland/')
@@ -250,7 +234,7 @@ class CommonSelectAddress(CommonCommon):
             page_title = 'Select your address'
             locale = 'en'
 
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         address_content = await AddressIndex.get_postcode_return(request, attributes['postcode'], display_region)
         address_content['page_title'] = page_title
@@ -281,7 +265,7 @@ class CommonSelectAddress(CommonCommon):
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
 
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -350,7 +334,7 @@ class CommonConfirmAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
         session = await get_session(request)
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         uprn = attributes['uprn']
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
@@ -398,7 +382,7 @@ class CommonConfirmAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
         session = await get_session(request)
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -490,29 +474,32 @@ class CommonConfirmAddress(CommonCommon):
                     session['attributes']['address_level'] = uprn_return['addressLevel']
                     session.changed()
 
-                    if uprn_return['caseType'] == 'CE' and uprn_return['addressLevel'] == 'E':
-                        raise HTTPFound(
-                            request.app.router['CommonCEMangerQuestion:get'].url_for(user_journey=user_journey,
-                                                                                     sub_user_journey=sub_user_journey,
-                                                                                     display_region=display_region))
-                    else:
-                        if sub_user_journey == 'paper-form':
-                            raise HTTPFound(
-                                request.app.router['RequestCommonEnterName:get'].url_for(
-                                    request_type=sub_user_journey, display_region=display_region))
-                        else:
-                            raise HTTPFound(
-                                request.app.router['RequestCodeSelectMethod:get'].url_for(
-                                    request_type=sub_user_journey, display_region=display_region))
+                    await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                display_region,
+                                                                uprn_return['caseType'],
+                                                                uprn_return['addressLevel'])
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
                                     client_ip=request['client_ip'])
-                        raise HTTPFound(
-                            request.app.router['CommonCallContactCentre:get'].url_for(user_journey=user_journey,
-                                                                                      display_region=display_region,
-                                                                                      error='unable-to-match-address'))
+                        logger.info('requesting new case', client_ip=request['client_ip'])
+                        try:
+                            case_creation_return = await RHService.post_case_create(request, session['attributes'])
+                            session['attributes']['case_id'] = case_creation_return['caseId']
+                            session['attributes']['region'] = case_creation_return['region']
+                            session['attributes']['case_type'] = case_creation_return['caseType']
+                            session['attributes']['address_level'] = case_creation_return['addressLevel']
+                            session.changed()
+
+                            await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                        display_region,
+                                                                        case_creation_return['caseType'],
+                                                                        case_creation_return['addressLevel'])
+
+                        except ClientResponseError as ex:
+                            logger.warn('error requesting new case', client_ip=request['client_ip'])
+                            raise ex
                     else:
                         raise ex
 
@@ -552,7 +539,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_session(request)
-        await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             locale = 'cy'
@@ -593,7 +580,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_session(request)
-        await self.common_check_attributes(request, user_journey, sub_user_journey, display_region)
+        await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         data = await request.post()
 
