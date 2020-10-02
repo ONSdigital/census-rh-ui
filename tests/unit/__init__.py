@@ -446,7 +446,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_en = 'Manager'
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
-        self.content_common_resident_or_manager_error_en = 'Please select an option.'
+        self.content_common_resident_or_manager_error_en = 'Please select an option'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -460,11 +460,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_description_manager_cy = \
             'A manager is responsible for answering the census questions about this establishment'
         # TODO: add welsh translation
-        self.content_common_resident_or_manager_error_cy = 'Please select an option.'
+        self.content_common_resident_or_manager_error_cy = 'Please select an option'
 
-        self.content_common_save_and_exit_link_en = 'Save and sign out'
+        self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
-        self.content_common_save_and_exit_link_cy = 'Save and sign out'
+        self.content_common_save_and_exit_link_cy = 'Exit'
         # End Common
 
         # Start Journey
@@ -770,10 +770,6 @@ class RHTestCase(AioHTTPTestCase):
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'
 
-        self.get_accessibility_statement_en = self.app.router['Accessibility:get'].url_for(display_region='en')
-        self.get_accessibility_statement_cy = self.app.router['Accessibility:get'].url_for(display_region='cy')
-        self.get_accessibility_statement_ni = self.app.router['Accessibility:get'].url_for(display_region='ni')
-
         self.get_start_saveandexit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
         self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
@@ -958,7 +954,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_error_en = 'Please select an option.'
+        self.content_request_code_select_method_error_en = 'Please select an option'
         self.content_request_code_select_method_secondary_en = 'Select how to send access code'
         self.content_request_code_select_method_option_text_en = 'Text message'
         self.content_request_code_select_method_option_post_en = 'Post'
@@ -967,7 +963,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_method_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_error_cy = "Please select an option."
+        self.content_request_code_select_method_error_cy = "Please select an option"
         # TODO Add Welsh Translation
         self.content_request_code_select_method_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
@@ -1043,7 +1039,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new manager access code to this address?'
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address.'
+        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
@@ -1057,7 +1053,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_error_cy = \
-            "Please check and confirm the name and address."
+            "Please check and confirm the name and address"
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation

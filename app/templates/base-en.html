@@ -8,52 +8,86 @@
 
 {%- if page_show_signout == 'true' -%}
     {%- set signout_button_value = {
-            'text': 'Save and sign out',
-            'ariaLabel': 'Toggle main navigation',
+            'text': 'Exit',
+            'buttonStyle': 'exit',
             'url': domain_url_en + '/en/start/save-and-exit/'
         }
     -%}
 {%- endif -%}
 
 {%- set footer_content = {
-        'poweredBy': true,
-        'lang': 'en',
-        'rows': [
+        'crest': true,
+        'poweredBy': {
+            "logo": 'ons-logo-black-en',
+            "alt": 'Office for National Statistics'
+        },
+        "cols": [
             {
-                'itemsList': [
+                "title": 'Get in touch',
+                "itemsList": [
                     {
-                        'text': 'About the census',
-                        'url': domain_url_en + '/about-the-census/',
-                        'target': '_blank'
+                        "text": 'Media enquiries',
+                        "url": '#0'
                     },
                     {
-                        'text': 'Help with your census',
-                        'url': domain_url_en + '/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Contact us',
-                        'url': domain_url_en + '/contact-us/',
-                        'target': '_blank'
+                        "text": 'Contact us',
+                        "url": domain_url_en + '/contact-us/'
                     }
                 ]
             },
             {
-                'itemsList': [
+                "title": 'Working on the census',
+                "itemsList": [
                     {
-                        'text': 'Cookies',
-                        'url': domain_url_en + '/cookies/',
-                        'target': '_blank'
+                        "text": 'Local authorities',
+                        "url": '#0'
                     },
                     {
-                        'text': 'Accessibility',
-                        'url': domain_url_en + '/en/start/accessibility/',
-                        'target': '_blank'
+                        "text": 'Community groups',
+                        "url": '#0'
                     },
                     {
-                        'text': 'Privacy and data protection',
-                        'url': domain_url_en + '/privacy-and-data-protection/',
-                        'target': '_blank'
+                        "text": 'School campaigns',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Jobs',
+                        "url": '#0'
+                    }
+                ]
+            },
+            {
+                "title": 'About the census',
+                "itemsList": [
+                    {
+                        "text": 'What is the census',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Why you should take part',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Census stories',
+                        "url": '#0'
+                    }
+                ]
+            }
+        ],
+        "rows": [
+            {
+                "itemsList": [
+                    {
+                        "text": 'Cookies',
+                        "url": domain_url_en + '/cookies/'
+                    },
+                    {
+                        "text": 'Accessibility',
+                        "url": domain_url_en + '/accessibility/'
+                    },
+                    {
+                        "text": 'Privacy and data protection',
+                        "url": domain_url_en + '/privacy-and-data-protection/'
                     }
                 ]
             }
