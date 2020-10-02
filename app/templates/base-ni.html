@@ -8,59 +8,79 @@
 
 {%- if page_show_signout == 'true' -%}
     {%- set signout_button_value = {
-            'text': 'Save and sign out',
-            'ariaLabel': 'Toggle main navigation',
+            'text': 'Exit',
+            'buttonStyle': 'exit',
             'url': domain_url_ni + '/start/save-and-exit/'
         }
     -%}
 {%- endif -%}
 
 {%- set footer_content = {
+    'crest': true,
         'poweredBy': {
             'logo': 'nisra-logo-black-en',
-            'classes': 'footer__poweredby-img--small'
+            'alt': 'NISRA - Northern Ireland Statistics and Research Agency'
         },
-        'rows': [
+        'cols': [
             {
-                'itemsList': [
+                "title": 'Get in touch',
+                "itemsList": [
                     {
-                        'text': 'About the census',
-                        'url': domain_url_ni + '/about-the-census/',
-                        'target': '_blank'
+                        "text": 'Contact us',
+                        "url": domain_url_ni + '/contact-us'
                     },
                     {
-                        'text': 'Help with your census',
-                        'url': domain_url_ni + '/help/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': 'Contact us',
-                        'url': domain_url_ni + '/contact-us/',
-                        'target': '_blank'
+                        "text": 'Media enquiries',
+                        "url": '#0'
                     }
                 ]
             },
             {
-                'itemsList': [
+                "title": 'Working on the census',
+                "itemsList": [
                     {
-                        'text': 'Cookies',
-                        'url': domain_url_ni + '/cookies/',
-                        'target': '_blank'
+                        "text": 'Get involved',
+                        "url": '#0'
                     },
                     {
-                        'text': 'Accessibility',
-                        'url': domain_url_ni + '/start/accessibility/',
-                        'target': '_blank'
+                        "text": 'Jobs',
+                        "url": '#0'
+                    }
+                ]
+            },
+            {
+                "title": 'About the census',
+                "itemsList": [
+                    {
+                        "text": 'What is the census',
+                        "url": '#0'
                     },
                     {
-                        'text': 'Privacy and data protection',
-                        'url': domain_url_ni + '/privacy-and-data-protection/',
-                        'target': '_blank'
+                        "text": 'Why you should take part',
+                        "url": '#0'
                     }
                 ]
             }
-        ]
-    }
+        ],
+"rows": [
+        {
+            "itemsList": [
+                {
+                    "text": 'Cookies',
+                    "url": domain_url_ni + '/cookies/'
+                },
+                {
+                    "text": 'Accessibility',
+                    "url": domain_url_ni + '/accessibility/'
+                },
+                {
+                    "text": 'Privacy and data protection',
+                    "url": domain_url_ni + '/privacy-and-data-protection/'
+                }
+            ]
+        }
+    ]
+}
 -%}
 
 
