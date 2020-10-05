@@ -4,6 +4,7 @@ from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
 from structlog import get_logger
+from datetime import datetime, timezone
 
 from . import (MOBILE_CHECK_MSG,
                MOBILE_CHECK_MSG_CY,
@@ -580,12 +581,17 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     attributes['fulfilmentCode'] = available_fulfilments[0][
                         'fulfilmentCode']
 
+                fulfilment_request = []
+                base_request = {'caseId': attributes['case_id'],
+                                'forename': attributes['first_name'],
+                                'surname': attributes['last_name'],
+                                'fulfilmentCode': attributes['fulfilmentCode'],
+                                'dateTime': datetime.now(timezone.utc).isoformat()}
+
+                fulfilment_request.append(base_request)
+
                 try:
-                    await RHService.request_fulfilment_post(request,
-                                                            attributes['case_id'],
-                                                            attributes['first_name'],
-                                                            attributes['last_name'],
-                                                            attributes['fulfilmentCode'])
+                    await RHService.request_fulfilment_post(request, fulfilment_request)
                 except (KeyError, ClientResponseError) as ex:
                     raise ex
 
