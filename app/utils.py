@@ -380,7 +380,7 @@ class RHService(View):
                                         request_json=fulfilment_json)
 
     @staticmethod
-    async def request_fulfilment_post(request, fulfilment_json):
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
