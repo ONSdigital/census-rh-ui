@@ -154,7 +154,8 @@ class CommonEnterAddress(CommonCommon):
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
-            'page_url': View.gen_page_url(request)
+            'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
     @aiohttp_jinja2.template('common-enter-address.html')

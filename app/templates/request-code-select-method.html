@@ -1,31 +1,28 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/radios/_macro.njk' import onsRadios %}
-{% from "components/collapsible/_macro.njk" import onsCollapsible %}
-{% from "components/panel/_macro.njk" import onsPanel %}
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
-{% if display_region == 'ni' %}
-    {% set contact_us_link = domain_url_ni + '/contact-us/' %}
-{% elif display_region == 'cy' %}
-    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
-{% else %}
-    {% set contact_us_link = domain_url_en + '/contact-us/' %}
-{% endif %}
-{% set request_individual_code_link = url('RequestCode:get', request_type='individual-code', display_region=display_region) %}
+{%- set request_individual_code_link = url('RequestCode:get', request_type='individual-code', display_region=display_region) -%}
 
-{% set form =  {
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('RequestCodeSelectMethod:post', request_type=request_type, display_region=display_region)
     }
-} %}
+} -%}
 
-{% set form_options = [
+{%- if 'method' in field_messages_dict -%}
+    {%- set error_radio = { 'text': _('Please select an option.') } -%}
+{%- endif -%}
+
+{%- set form_options = [
         {
             'id': 'sms',
             'label': {
@@ -43,77 +40,65 @@
             'value': 'post'
         }
     ]
-%}
+-%}
 
-{% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
-    {% set question_title = _('How would you like to receive a new individual access code?') %}
-{% elif (case_type == 'CE' and address_level == 'E') %}
-    {% set question_title = _('How would you like to receive a new manager access code?') %}
-{% else %}
-    {% set question_title = _('How would you like to receive a new household access code?') %}
-{% endif %}
+{%- if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+    {%- set question_title = _('How would you like to receive an individual access code?') -%}
+{%- elif (case_type == 'CE' and address_level == 'E') -%}
+    {%- set question_title = _('How would you like to receive a new manager access code?') -%}
+{%- else -%}
+    {%- set question_title = _('How would you like to receive a new household access code?') -%}
+{%- endif -%}
 
-{% block main %}
+{%- block main -%}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
 
-    {% call onsQuestion({
+    {%- call onsQuestion({
         'title': question_title,
-    }) %}
+    }) -%}
 
-    {% if case_type == 'HH' and request_type != 'individual-code' %}
+        {%- if case_type == 'HH' and request_type != 'individual-code' -%}
 
-        {% set content %}
-            {% autoescape false %}
-                <p>{{ _('If you need to answer separately from the people you live with, you can %(open)srequest an individual access code%(close)s to start a separate census.', open='<a href="%s">' % request_individual_code_link, close='</a>')|safe }}</p>
-            {% endautoescape %}
-            {% call onsPanel({
-                    'type': 'warn'
-                })
-            %}
-            <p><strong>{{ _('Someone in your household must still complete a census using a household access code')}}</strong></p>
-            {% endcall %}
-        {% endset %}
+            {%- set content -%}
+                {%- autoescape false -%}
+                    <p>{{ _('If you need to answer separately from the people you live with, you can %(open)srequest an individual access code%(close)s to start a separate census.', open='<a href="%s">' % request_individual_code_link, close='</a>')|safe }}</p>
+                {%- endautoescape -%}
+                {%- call onsPanel({
+                        'type': 'warn'
+                    })
+                -%}
+                <p><strong>{{ _('Someone in your household must still complete a census using a household access code')}}</strong></p>
+                {%- endcall -%}
+            {%- endset -%}
 
-        {% call onsCollapsible({
-                'id': 'collapsible',
-                'title': _('Need to answer separately from your household?'),
-                'titleTag': 'h2',
-                'button': {
-                    'close': _('Hide this'),
-                    'contextSuffix': 'content'
-                }
-            })
-        %}
-            {{ content | safe }}
-        {% endcall %}
-
-    {% endif %}
-
-        {% if 'method' in field_messages_dict %}
-            {{
-                onsRadios({
-                    'name': 'form-select-method',
-                    'legend': _('Select how to send access code'),
-                    'radios': form_options,
-                    'error': {
-                        'text': _('Please select an option.')
+            {%- call onsCollapsible({
+                    'id': 'collapsible',
+                    'title': _('Need to answer separately from your household?'),
+                    'titleTag': 'h2',
+                    'button': {
+                        'close': _('Hide this'),
+                        'contextSuffix': 'content'
                     }
                 })
-            }}
-        {% else %}
-            {{
-                onsRadios({
-                    'name': 'form-select-method',
-                    'legend': _('Select how to send access code'),
-                    'radios': form_options
-                })
-            }}
-        {% endif %}
+            -%}
+                {{ content | safe }}
+            {%- endcall -%}
 
-    {% endcall %}
+        {%- endif -%}
+
+        {{
+            onsRadios({
+                'name': 'form-select-method',
+                'legend': _('Select how to send access code'),
+                'radios': form_options,
+                'error': error_radio
+            })
+        }}
+
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -122,8 +107,8 @@
         })
     }}
 
-    {% autoescape false %}
+    {%- autoescape false -%}
         <p>{{ _('To request a census in a different format or for further help, please %(open)scontact us%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
-    {% endautoescape %}
+    {%- endautoescape -%}
 
-{% endblock %}
+{%- endblock -%}

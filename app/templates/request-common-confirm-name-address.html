@@ -7,6 +7,7 @@
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from 'components/radios/_macro.njk' import onsRadios -%}
 {%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
 {%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
 
@@ -62,7 +63,7 @@
 {%- if (request_type == 'paper-form') -%}
     {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
 {%- elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
-    {%- set question_title = _('Do you want to send a new individual access code to this address?') -%}
+    {%- set question_title = _('Do you want to send an individual access code to this address?') -%}
 {%- elif (case_type == 'CE' and address_level == 'E') -%}
     {%- set question_title = _('Do you want to send a new manager access code to this address?') -%}
 {%- else -%}
@@ -77,7 +78,8 @@
 
     {%- call onsQuestion({ 'title': question_title }) -%}
 
-        <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
+        <p>
+            {{ first_name }} {{ last_name }}<br>
             {{ addressLine1 }}<br>
             {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
             {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
@@ -86,6 +88,16 @@
         </p>
 
         <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+
+        {%- if (request_type == 'individual-code') or (request_type == 'access-code' and case_type == 'CE' and address_level == 'U') -%}
+            {%- call
+                onsPanel({
+                    'classes': 'u-mb-m'
+                })
+            -%}
+                <p>{{ _('A letter with your individual access code will arrive in a brown unbranded envelope') }}</p>
+            {%- endcall -%}
+        {%- endif -%}
 
         {{
             onsRadios({

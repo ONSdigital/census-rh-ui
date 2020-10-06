@@ -44,10 +44,9 @@ class RequestCommon(View):
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/individual-code/')
 class RequestCode(RequestCommon):
-    @aiohttp_jinja2.template('template-main.html')
+    @aiohttp_jinja2.template('request-code-individual-introduction.html')
     async def get(self, request):
         self.setup_request(request)
-        request_type = 'individual-code'
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             page_title = 'Gofyn am god mynediad unigryw'
@@ -56,13 +55,11 @@ class RequestCode(RequestCommon):
             page_title = 'Request an individual access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type)
+        self.log_entry(request, display_region + '/requests/individual-code')
         return {
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
-            'request_type': request_type,
-            'partial_name': 'request-' + request_type,
             'page_url': View.gen_page_url(request)
         }
 
@@ -94,6 +91,7 @@ class RequestCodeSelectMethod(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['page_url'] = View.gen_page_url(request)
+        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         return attributes
 
@@ -121,6 +119,7 @@ class RequestCodeSelectMethod(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['page_url'] = View.gen_page_url(request)
+        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         data = await request.post()
         try:
@@ -704,6 +703,7 @@ class RequestCodeCodeSentPost(RequestCommon):
                 'locale': locale,
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
+                'census_home_link': View.get_campaign_site_link(request, display_region, 'census-home'),
                 'first_name': attributes['first_name'],
                 'last_name': attributes['last_name'],
                 'addressLine1': attributes['addressLine1'],

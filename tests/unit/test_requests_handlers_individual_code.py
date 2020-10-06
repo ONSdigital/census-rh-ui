@@ -19,10 +19,10 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
                 self.assertIn(self.build_translation_link(self.sub_user_journey, display_region, False), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_individual_title_cy, contents)
-                self.assertIn(self.content_request_secondary_cy, contents)
+                self.assertIn(self.content_request_individual_secondary_cy, contents)
             else:
                 self.assertIn(self.content_request_individual_title_en, contents)
-                self.assertIn(self.content_request_secondary_en, contents)
+                self.assertIn(self.content_request_individual_secondary_en, contents)
 
     @unittest_run_loop
     async def test_request_individual_code_sms_happy_path_hh_ew_e(self):
@@ -311,7 +311,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
             self.post_request_individual_code_confirm_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_get_request_access_code_confirm_address_new_case_error_ni(self):
+    async def test_get_request_individual_code_confirm_address_new_case_error_ni(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')

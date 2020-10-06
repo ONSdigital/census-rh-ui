@@ -941,20 +941,22 @@ class RHTestCase(AioHTTPTestCase):
             'request-name-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
-        self.content_request_household_title_en = 'Request a new access code'
-        self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
         self.content_request_individual_title_en = 'Request an individual access code'
         self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
-        self.content_request_secondary_en = 'You will need to provide:'
-        self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
+        self.content_request_individual_secondary_en = 'You can choose to receive your new access code by text or post.'
+        self.content_request_individual_secondary_cy = 'You can choose to receive your new access code by text or post.'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
-        self.content_request_enter_address_secondary_en = \
-            'To request an access code, we need your address.'
+        self.content_request_access_code_enter_address_secondary_en = \
+            'To request an access code, we need your address. A new access code will start a new census.'
+        self.content_request_individual_code_enter_address_secondary_en = \
+            'To request an individual access code, we need your address'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         # TODO: add welsh translation
-        self.content_request_enter_address_secondary_cy = \
-            'To request an access code, we need your address.'
+        self.content_request_access_code_enter_address_secondary_cy = \
+            'To request an access code, we need your address. A new access code will start a new census.'
+        self.content_request_individual_code_enter_address_secondary_cy = \
+            'To request an individual access code, we need your address'
 
         self.content_request_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
@@ -982,10 +984,10 @@ class RHTestCase(AioHTTPTestCase):
             'How would you like to receive a new household access code?'
 
         self.content_request_code_select_method_individual_title_en = \
-            'How would you like to receive a new individual access code?'
+            'How would you like to receive an individual access code?'
         # TODO Add Welsh Translation
         self.content_request_code_select_method_individual_title_cy = \
-            'How would you like to receive a new individual access code?'
+            'How would you like to receive an individual access code?'
 
         self.content_request_code_select_method_manager_title_en = \
             'How would you like to receive a new manager access code?'
@@ -1011,7 +1013,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_sent_sms_title_en = 'We have sent an access code'
         self.content_request_code_sent_sms_secondary_individual_en = \
-            'The text message with a new individual access code should arrive soon for you to start your census'
+            'The text message with an individual access code should arrive soon for you to start your census'
         self.content_request_code_sent_sms_secondary_manager_en = \
             'The text message with a new manager access code should arrive soon for you to start your census'
         self.content_request_code_sent_sms_secondary_household_en = \
@@ -1019,7 +1021,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_sms_title_cy = 'Rydym ni wedi anfon cod mynediad'
         # TODO Add Welsh Translation
         self.content_request_code_sent_sms_secondary_individual_cy = \
-            'The text message with a new individual access code should arrive soon for you to start your census'
+            'The text message with an individual access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_sms_secondary_manager_cy = \
             'The text message with a new manager access code should arrive soon for you to start your census'
@@ -1038,17 +1040,19 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_enter_name_error_last_name_cy = 'Enter a last name to continue'
 
         self.content_request_common_confirm_name_address_title_individual_en = \
-            'Do you want to send a new individual access code to this address?'
+            'Do you want to send an individual access code to this address?'
         self.content_request_common_confirm_name_address_title_manager_en = \
             'Do you want to send a new manager access code to this address?'
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
         self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address'
+        self.content_request_common_confirm_name_address_individual_message_en = \
+            'A letter with your individual access code will arrive in a brown unbranded envelope'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_title_individual_cy = \
-            'Do you want to send a new individual access code to this address?'
+            'Do you want to send an individual access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_title_manager_cy = \
             'Do you want to send a new manager access code to this address?'
@@ -1059,6 +1063,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_confirm_name_address_error_cy = \
             "Please check and confirm the name and address"
         # TODO Add Welsh Translation
+        self.content_request_common_confirm_name_address_individual_message_cy = \
+            'A letter with your individual access code will arrive in a brown unbranded envelope'
+        # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_no_cy = 'No, send it another way'
@@ -1066,7 +1073,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_code_sent_post_secondary_individual_en = \
-            'The letter with a new individual access code should arrive soon for you to start the census'
+            'The letter with an individual access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_manager_en = \
             'The letter with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_household_en = \
@@ -1075,7 +1082,7 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_individual_cy = \
-            'The letter with a new individual access code should arrive soon for you to start the census'
+            'The letter with an individual access code should arrive soon for you to start the census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_manager_cy = \
             'The letter with a new manager access code should arrive soon for you to start the census'

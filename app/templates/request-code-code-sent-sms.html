@@ -1,42 +1,43 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set start_survey_link = url('Start:get', display_region=display_region) %}
-{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) %}
+{%- set start_survey_link = url('Start:get', display_region=display_region) -%}
+{%- set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
 
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'macros/telephone/_macro.njk' import rhTelephone %}
-{% from "components/panel/_macro.njk" import onsPanel %}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'macros/telephone/_macro.njk' import rhTelephone -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
-{% set formatted_mobile_number = rhTelephone({'number': mobile_number}) %}
+{%- set formatted_mobile_number = rhTelephone({'number': mobile_number}) -%}
 
-{% block main %}
+{%- block main -%}
 
-    {%
+    {%-
         call onsPanel({
             'type': 'success',
             'id': 'success-id',
-            'icon': 'check-green',
+            'icon': 'check',
+            'iconSize': 'xl',
             'classes': 'u-mt-xl u-mb-l'
         })
-    %}
+    -%}
 
         <h1 class="u-mb-xs u-fs-l">{{ _('We have sent a text to %(number)s', number=formatted_mobile_number)|safe }} </h1>
 
-        {% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
-            <p>{{ _('The text message with a new individual access code should arrive soon for you to start your census') }}</p>
-        {% elif (case_type == 'CE' and address_level == 'E') %}
+        {%- if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+            <p>{{ _('The text message with an individual access code should arrive soon for you to start your census') }}</p>
+        {%- elif (case_type == 'CE' and address_level == 'E') -%}
             <p>{{ _('The text message with a new manager access code should arrive soon for you to start your census') }}</p>
-        {% else %}
+        {%- else -%}
             <p>{{ _('The text message with a new household access code should arrive soon for you to start your census') }}</p>
-        {% endif %}
+        {%- endif -%}
 
-    {% endcall %}
+    {%- endcall -%}
 
     <h2 class="u-fs-m u-mb-xs">{{ _("Didn't receive a text?") }}</h2>
 
-    {% autoescape false %}
+    {%- autoescape false -%}
         <p class="u-mb-l">{{ _("It can take a few minutes for the text to arrive. If it doesn't arrive, you can %(open)srequest a new access code%(close)s.", open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
-    {% endautoescape %}
+    {%- endautoescape -%}
 
     <h2 class="u-mb-s u-fs-m">{{ _("Ready to start your census online?") }}</h2>
 
@@ -50,4 +51,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}

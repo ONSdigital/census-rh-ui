@@ -63,6 +63,31 @@ class View:
         return call_centre_number
 
     @staticmethod
+    def get_campaign_site_link(request, display_region, requested_link):
+        base_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN']
+        base_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY']
+        base_ni = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'] + '/ni'
+
+        link = '/'
+
+        if requested_link == 'census-home':
+            if display_region == 'ni':
+                link = base_ni
+            elif display_region == 'cy':
+                link = base_cy
+            else:
+                link = base_en
+        elif requested_link == 'contact-us':
+            if display_region == 'ni':
+                link = base_ni + '/contact-us'
+            elif display_region == 'cy':
+                link = base_cy + '/cysylltu-a-ni'
+            else:
+                link = base_en + '/contact-us'
+
+        return link
+
+    @staticmethod
     async def _make_request(request,
                             method,
                             url,
