@@ -1,20 +1,19 @@
 {
     "apiVersion": "1.0.0-SNAPSHOT",
-    "dataVersion": "77",
+    "dataVersion": "72",
     "response": {
         "address": {
-            "uprn": "187748262",
-            "formattedAddress": "27 Kings Road, Whitehead, BT38 9PT",
-            "addressLine1": "27 Kings Road",
+            "uprn": "10023122451",
+            "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
+            "addressLine1": "1 Gate Reach",
             "addressLine2": "",
             "addressLine3": "",
-            "townName": "Whitehead",
-            "postcode": "BT38 9PT",
-            "foundAddressType": "NISRA",
+            "townName": "Exeter",
+            "postcode": "EX2 6GA",
+            "foundAddressType": "PAF",
             "censusAddressType": "HH",
             "censusEstabType": "Household",
-            "countryCode": "N",
-            "organisationName": ""
+            "countryCode": "W"
         },
         "addressType": "PAF",
         "historical": true,

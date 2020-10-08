@@ -11,8 +11,8 @@
             "townName": "Whitehead",
             "postcode": "BT38 9PT",
             "foundAddressType": "NISRA",
-            "censusAddressType": "HH",
-            "censusEstabType": "Household",
+            "censusAddressType": "NA",
+            "censusEstabType": "NA",
             "countryCode": "N",
             "organisationName": ""
         },

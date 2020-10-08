@@ -786,7 +786,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -803,7 +803,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             response = await self.client.request('GET', self.get_start_ni)
             self.assertEqual(200, response.status)
@@ -917,7 +917,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -936,7 +936,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             response = await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertEqual(200, response.status)
@@ -1050,7 +1050,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1067,7 +1067,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1163,7 +1163,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1182,7 +1182,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1278,7 +1278,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1295,7 +1295,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1391,7 +1391,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1410,7 +1410,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1506,7 +1506,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1523,7 +1523,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1619,7 +1619,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1638,7 +1638,7 @@ class TestStartHandlersUnlinked(TestHelpers):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -2009,7 +2009,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -3092,7 +3092,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3255,7 +3255,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3418,7 +3418,7 @@ class TestStartHandlersUnlinked(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_ni)

@@ -240,7 +240,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni,
-                                             'ni', self.ai_uprn_result_censusaddresstype_na)
+                                             'ni', self.ai_uprn_result_censusaddresstype_na_ni)
         await self.check_post_confirm_address_returns_addresstype_na(
             self.post_request_paper_form_confirm_address_ni, 'ni')
 
@@ -2551,3 +2551,21 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
         await self.check_post_confirm_address_input_yes_form(self.post_request_paper_form_confirm_address_ni, 'ni',
                                                              self.rhsvc_case_by_uprn_ce_r_n)
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_address_not_in_northern_ireland_region_e_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_paper_form_select_address_ni, 'ni', self.ai_uprn_result_england)
+        await self.check_post_confirm_address_address_not_in_northern_ireland(
+            self.post_request_paper_form_confirm_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_get_request_paper_form_address_not_in_northern_ireland_region_w_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_paper_form_select_address_ni, 'ni', self.ai_uprn_result_wales)
+        await self.check_post_confirm_address_address_not_in_northern_ireland(
+            self.post_request_paper_form_confirm_address_ni, 'ni')

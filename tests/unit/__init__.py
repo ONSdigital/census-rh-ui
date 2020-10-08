@@ -345,6 +345,16 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result = f
 
+        with open('tests/test_data/address_index/uprn_england.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_england = f
+
+        with open('tests/test_data/address_index/uprn_wales.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_wales = f
+
         with open('tests/test_data/address_index/uprn_northern_ireland.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -360,6 +370,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_censusaddresstype_na = f
 
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na_ni = f
+
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
@@ -374,6 +389,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_address_in_northern_ireland_cy = \
             'This address is not part of the census for England and Wales'
+        self.content_common_address_not_in_northern_ireland = \
+            'This address is not part of the census for Northern Ireland'
 
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
@@ -790,6 +807,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.selected_uprn = '10023122451'
+        self.selected_uprn_ni = '187748262'
 
         self.mobile_valid = '07012345678'
         self.mobile_invalid_short = '07012'
@@ -1093,6 +1111,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_household_cy = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_title_ni = \
+            'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation
@@ -1734,6 +1754,10 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
+        self.content_request_form_sent_post_title_ni = \
+            'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_title_large_print_ni = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'

@@ -124,6 +124,32 @@ class CommonAddressInNorthernIreland(CommonCommon):
         }
 
 
+@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-not-in-northern-ireland/')
+class CommonAddressNotInNorthernIreland(CommonCommon):
+    """
+    Route to render an 'Address not in Northern Ireland' page during address lookups if display_region is 'ni'
+    and selected address region is E or W
+    """
+    @aiohttp_jinja2.template('common-address-not-in-northern-ireland.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        user_journey = request.match_info['user_journey']
+
+        page_title = 'This address is not part of the census for Northern Ireland'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/address-not-in-northern-ireland')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'user_journey': user_journey,
+            'page_url': View.gen_page_url(request)
+        }
+
+
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/call-contact-centre/{error}/')
 class CommonCallContactCentre(CommonCommon):
@@ -449,6 +475,12 @@ class CommonConfirmAddress(CommonCommon):
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonAddressInNorthernIreland:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+                elif display_region == 'ni' and session['attributes']['countryCode'] != 'N':
+                    logger.info('address is in England or Wales but display_region ni',
+                                client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressNotInNorthernIreland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])

@@ -309,6 +309,8 @@ class TestHelpers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             if ai_uprn_return_value:
                 mocked_get_ai_uprn.return_value = ai_uprn_return_value
+            elif display_region == 'ni':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             else:
                 mocked_get_ai_uprn.return_value = self.ai_uprn_result
 
@@ -402,7 +404,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -441,7 +446,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -481,7 +489,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -512,6 +523,16 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_address_in_northern_ireland_cy, contents)
             else:
                 self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
+
+    async def check_post_confirm_address_address_not_in_northern_ireland(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-not-in-northern-ireland', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
 
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -556,7 +577,10 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=400)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -572,7 +596,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_rhsvc:
 
-            mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_rhsvc.post(self.rhsvc_post_create_case_url, status=400)
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -1044,9 +1071,15 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_form_sent_post_secondary_cy, contents)
                 else:
                     if fulfilment_type == 'LARGE_PRINT':
-                        self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
+                        if display_region == 'ni':
+                            self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
                     else:
-                        self.assertIn(self.content_request_form_sent_post_title_en, contents)
+                        if display_region == 'ni':
+                            self.assertIn(self.content_request_form_sent_post_title_ni, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_en, contents)
                     self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
@@ -1064,7 +1097,10 @@ class TestHelpers(RHTestCase):
                     else:
                         self.assertIn(self.content_request_code_sent_post_secondary_household_cy, contents)
                 else:
-                    self.assertIn(self.content_request_code_sent_post_title_en, contents)
+                    if display_region == 'ni':
+                        self.assertIn(self.content_request_code_sent_post_title_ni, contents)
+                    else:
+                        self.assertIn(self.content_request_code_sent_post_title_en, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
                     elif case_type == 'CE':

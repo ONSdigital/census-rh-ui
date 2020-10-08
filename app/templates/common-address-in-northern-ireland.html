@@ -1,9 +1,9 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% block main %}
+{%- block main -%}
 
     <h1 class="u-mt-l">{{ _('This address is not part of the census for England and Wales') }}</h1>
 
     <p>{{ _('You have selected an address in Northern Ireland. Visit the <a href="https://www.census.gov.uk/ni/">Northern Ireland Statistics and Research Agency census website</a> to find out how to take part in the census for Northern Ireland.') }}</p>
 
-{% endblock %}
+{%- endblock -%}
