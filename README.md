@@ -21,7 +21,7 @@ Install the required Python packages for running and testing Respondent Home wit
 
   `make install`
 
-Requires a version of Python 3.8 to be available.
+Requires a version of Python 3.8.6 to be available.
 
 ## Running
 First, run scripts/load_templates.sh to pull the current/correct version of the ONS Design Patterns.

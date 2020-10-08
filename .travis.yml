@@ -1,7 +1,7 @@
 language: python
 sudo: required
 dist: xenial
-python: '3.8'
+python: '3.8.6'
 
 before_install:
   - ./scripts/load_templates.sh
