@@ -4843,3 +4843,57 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_ew(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_en, 'en', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_address_in_northern_ireland(
+            self.post_request_access_code_confirm_address_en, 'en')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_cy, 'cy', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_address_in_northern_ireland(
+            self.post_request_access_code_confirm_address_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_ce_m_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni, 'ni',
+                                                           self.rhsvc_case_by_uprn_ce_m_n)
+
+    @unittest_run_loop
+    async def test_get_request_access_code_address_in_northern_ireland_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
+                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')

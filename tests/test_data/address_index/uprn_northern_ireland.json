@@ -1,0 +1,27 @@
+{
+    "apiVersion": "1.0.0-SNAPSHOT",
+    "dataVersion": "72",
+    "response": {
+        "address": {
+            "uprn": "10023122451",
+            "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
+            "addressLine1": "1 Gate Reach",
+            "addressLine2": "",
+            "addressLine3": "",
+            "townName": "Exeter",
+            "postcode": "EX2 6GA",
+            "foundAddressType": "PAF",
+            "censusAddressType": "HH",
+            "censusEstabType": "Household",
+            "countryCode": "N"
+        },
+        "addressType": "PAF",
+        "historical": true,
+        "epoch": ""
+    },
+    "status": {
+        "code": 200,
+        "message": "Ok"
+    },
+    "errors": []
+}

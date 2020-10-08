@@ -345,6 +345,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result = f
 
+        with open('tests/test_data/address_index/uprn_northern_ireland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland = f
+
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -363,6 +368,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_ew = '0800 141 2021'
         self.content_call_centre_number_cy = '0800 169 2021'
         self.content_call_centre_number_ni = '0800 328 2021'
+
+        self.content_common_address_in_northern_ireland_en = \
+            'This address is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_common_address_in_northern_ireland_cy = \
+            'This address is not part of the census for England and Wales'
 
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation

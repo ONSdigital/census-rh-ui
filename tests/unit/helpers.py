@@ -497,6 +497,22 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
             self.check_text_resident_or_manager(display_region, contents)
 
+    async def check_post_confirm_address_address_in_northern_ireland(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-northern-ireland', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('address-in-northern-ireland', display_region, False),
+                              contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_common_address_in_northern_ireland_cy, contents)
+            else:
+                self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
+
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
