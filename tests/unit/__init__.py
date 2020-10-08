@@ -331,29 +331,19 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         with open('tests/test_data/address_index/postcode_no_results.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_postcode_no_results = f
+            self.ai_postcode_no_results = json.load(fp)
 
         with open('tests/test_data/address_index/postcode_results.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_postcode_results = f
+            self.ai_postcode_results = json.load(fp)
 
         with open('tests/test_data/address_index/uprn_valid.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result = f
+            self.ai_uprn_result = json.load(fp)
 
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result_scotland = f
+            self.ai_uprn_result_scotland = json.load(fp)
 
         with open('tests/test_data/address_index/uprn_censusaddresstype_na.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ai_uprn_result_censusaddresstype_na = f
+            self.ai_uprn_result_censusaddresstype_na = json.load(fp)
 
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
@@ -788,94 +778,58 @@ class RHTestCase(AioHTTPTestCase):
         self.field_empty = None
 
         with open('tests/test_data/rhsvc/case_by_uprn_hh_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_hh_e = f
+            self.rhsvc_case_by_uprn_hh_e = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_hh_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_hh_w = f
+            self.rhsvc_case_by_uprn_hh_w = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_hh_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_hh_n = f
+            self.rhsvc_case_by_uprn_hh_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_spg_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_spg_e = f
+            self.rhsvc_case_by_uprn_spg_e = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_spg_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_spg_w = f
+            self.rhsvc_case_by_uprn_spg_w = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_spg_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_spg_n = f
+            self.rhsvc_case_by_uprn_spg_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_m_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_m_e = f
+            self.rhsvc_case_by_uprn_ce_m_e = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_m_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_m_w = f
+            self.rhsvc_case_by_uprn_ce_m_w = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_m_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_m_n = f
+            self.rhsvc_case_by_uprn_ce_m_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_r_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_r_e = f
+            self.rhsvc_case_by_uprn_ce_r_e = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_r_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_r_w = f
+            self.rhsvc_case_by_uprn_ce_r_w = json.load(fp)
 
         with open('tests/test_data/rhsvc/case_by_uprn_ce_r_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_case_by_uprn_ce_r_n = f
+            self.rhsvc_case_by_uprn_ce_r_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/get_fulfilment_multi_sms.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_multi_sms = f
+            self.rhsvc_get_fulfilment_multi_sms = json.load(fp)
 
         with open('tests/test_data/rhsvc/get_fulfilment_single_sms.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_single_sms = f
+            self.rhsvc_get_fulfilment_single_sms = json.load(fp)
 
         with open('tests/test_data/rhsvc/get_fulfilment_multi_post.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_multi_post = f
+            self.rhsvc_get_fulfilment_multi_post = json.load(fp)
 
         with open('tests/test_data/rhsvc/get_fulfilment_single_post.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_get_fulfilment_single_post = f
+            self.rhsvc_get_fulfilment_single_post = json.load(fp)
 
         with open('tests/test_data/rhsvc/request_fulfilment_sms.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_request_fulfilment_sms = f
+            self.rhsvc_request_fulfilment_sms = json.load(fp)
 
         with open('tests/test_data/rhsvc/request_fulfilment_post.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_request_fulfilment_post = f
+            self.rhsvc_request_fulfilment_post = json.load(fp)
 
         self.request_code_select_method_data_sms = {
             'form-select-method': 'sms', 'action[save_continue]': ''
@@ -1172,17 +1126,11 @@ class RHTestCase(AioHTTPTestCase):
             self.unlinked_uac_json_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_e = f
+            self.rhsvc_post_linked_uac_e = json.load(fp)
         with open('tests/test_data/rhsvc/uac_linked_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_w = f
+            self.rhsvc_post_linked_uac_w = json.load(fp)
         with open('tests/test_data/rhsvc/uac_linked_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_n = f
+            self.rhsvc_post_linked_uac_n = json.load(fp)
 
         self.start_address_linked = {
             'action[save_continue]': ''
@@ -1280,17 +1228,11 @@ class RHTestCase(AioHTTPTestCase):
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_e = f
+            self.rhsvc_post_linked_uac_e = json.load(fp)
         with open('tests/test_data/rhsvc/uac_linked_w.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_w = f
+            self.rhsvc_post_linked_uac_w = json.load(fp)
         with open('tests/test_data/rhsvc/uac_linked_n.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.rhsvc_post_linked_uac_n = f
+            self.rhsvc_post_linked_uac_n = json.load(fp)
 
         self.start_address_changed = {
             'action[save_continue]': ''
@@ -1961,19 +1903,13 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         with open('tests/test_data/ad_lookup/multiple_return.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ad_multiple_return = f
+            self.ad_multiple_return = json.load(fp)
 
         with open('tests/test_data/ad_lookup/single_return.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ad_single_return = f
+            self.ad_single_return = json.load(fp)
 
         with open('tests/test_data/ad_lookup/no_match_return.json') as fp:
-            f = asyncio.Future()
-            f.set_result(json.load(fp))
-            self.ad_no_match_return = f
+            self.ad_no_match_return = json.load(fp)
 
         self.ad_lookup_url = f'{ad_look_up_svc_url}/centres/postcode?postcode={self.postcode_valid}&limit=10'
 

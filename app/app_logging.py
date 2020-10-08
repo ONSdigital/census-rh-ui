@@ -121,7 +121,7 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
 
 def logger_initial_config(log_level=os.getenv('LOG_LEVEL', 'INFO'),
                           ext_log_level=os.getenv('EXT_LOG_LEVEL', 'WARN')):
-    format = '(message) (asctime) (levelname) (pathname) (lineno) (module) (funcName)'
+    format = '%(message)s %(asctime)s %(levelname)s %(pathname)s %(lineno)s %(module)s %(funcName)s'
     json_handler = logging.StreamHandler(sys.stdout)
     json_handler.setFormatter(CustomJsonFormatter(format, datefmt=date_format))
 

@@ -4,7 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aiohttp = "*"
+# Please see https://github.com/sloria/aiohttp-utils/issues/8
+aiohttp = "<4"
 aiohttp-utils = "*"
 envparse = "*"
 "aiohttp-jinja2" = "*"
@@ -19,6 +20,9 @@ aioredis = "*"
 python-json-logger = "*"
 babel = "*"
 tenacity = "*"
+# Yarl 1.6 double encodes URL. Yarl is used by aiohttp and double encoding of spaces in postcodes
+# e.g. (ZZ99%25209ZZ instead of ZZ99%209ZZ) breaks construction of URL with URLDispatcher url_for functionality.
+yarl= "<1.6"
 
 [dev-packages]
 codecov = "*"
@@ -33,4 +37,4 @@ requests = "*"
 retrying = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"
