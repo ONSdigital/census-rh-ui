@@ -15,8 +15,9 @@
         call onsPanel({
             'type': 'success',
             'id': 'success-id',
-            'icon': 'check-green',
-            'classes': 'u-mt-xl u-mb-l'
+            'icon': 'check',
+            'iconSize': 'xl',
+            'classes': 'u-mt-xl'
         })
     %}
 
@@ -29,6 +30,17 @@
         {% else %}
             <p>{{ _('The text message with a new household access code should arrive soon for you to start your census') }}</p>
         {% endif %}
+
+    {% endcall %}
+
+    {%
+        call onsPanel({
+            'type': 'bare',
+            'icon': 'lock'
+        })
+    %}
+
+        <p>{{ _('The text will be sent from <strong>Census2021</strong>') }}</p>
 
     {% endcall %}
 
