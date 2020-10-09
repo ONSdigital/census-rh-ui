@@ -24,8 +24,10 @@ class TestHelpers(RHTestCase):
             logo = self.ons_logo_en
         return logo
 
-    def build_url_log_entry(self, page, display_region, request_type, include_sub_user_journey=True):
-        if not include_sub_user_journey:
+    def build_url_log_entry(self, page, display_region, request_type, include_sub_user_journey=True, include_page=True):
+        if not include_page:
+            link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey
+        elif not include_sub_user_journey:
             link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey + "/" + \
                    page + "'"
         else:
@@ -33,15 +35,19 @@ class TestHelpers(RHTestCase):
                    self.sub_user_journey + "/" + page + "'"
         return link
 
-    def build_translation_link(self, page, display_region, include_sub_user_journey=True):
+    def build_translation_link(self, page, display_region, include_sub_user_journey=True, include_page=True):
         if display_region == 'cy':
-            if not include_sub_user_journey:
+            if not include_page:
+                link = '<a href="/en/' + self.user_journey + '/" lang="en" >English</a>'
+            elif not include_sub_user_journey:
                 link = '<a href="/en/' + self.user_journey + '/' + page + '/" lang="en" >English</a>'
             else:
                 link = '<a href="/en/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
                        '/" lang="en" >English</a>'
         else:
-            if not include_sub_user_journey:
+            if not include_page:
+                link = '<a href="/cy/' + self.user_journey + '/" lang="cy" >Cymraeg</a>'
+            elif not include_sub_user_journey:
                 link = '<a href="/cy/' + self.user_journey + '/' + page + '/" lang="cy" >Cymraeg</a>'
             else:
                 link = '<a href="/cy/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
@@ -1213,3 +1219,75 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_timeout_title_en, contents)
             self.assertIn(self.content_start_timeout_secondary_en, contents)
             self.assertIn(self.content_start_timeout_restart_en, contents)
+
+    async def assert_start_page_correct(self, url, display_region, ad_location=False):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', url)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
+                                                          include_sub_user_journey=False,
+                                                          include_page=False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_title_cy, contents)
+                self.assertIn(self.content_start_uac_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_title_en, contents)
+                self.assertIn(self.content_start_uac_title_en, contents)
+            self.assertEqual(contents.count('input--text'), 1)
+            self.assertIn('type="submit"', contents)
+            if ad_location:
+                self.assertLogEvent(cm, "assisted digital query parameter found")
+                self.assertIn('type="hidden"', contents)
+                self.assertIn('value="1234567890"', contents)
+
+    async def assert_start_page_post_returns_address_in_northern_ireland(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
+
+            response = await self.client.request('POST', url, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-northern-ireland', display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('code-for-northern-ireland', display_region,
+                                                          include_sub_user_journey=False,
+                                                          include_page=True), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_code_for_northern_ireland_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_code_for_northern_ireland_title_en, contents)
+
+    async def assert_start_page_post_returns_address_not_in_northern_ireland(self, url, display_region, region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            if region == 'W':
+                mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+            elif region == 'E':
+                mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+            else:
+                mocked.get(self.rhsvc_url, payload=self.uac_json_n)
+
+            response = await self.client.request('POST', url, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('code-not-for-northern-ireland', display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)

@@ -513,6 +513,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_uac_expired_en = 'Your unique access code has expired'
         self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
 
+        self.content_start_code_for_northern_ireland_title_en = \
+            'This access code is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_start_code_for_northern_ireland_title_cy = \
+            'This access code is not part of the census for England and Wales'
+        self.content_start_code_not_for_northern_ireland_title = \
+            'This access code is not part of the census for Northern Ireland'
+
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
@@ -554,7 +562,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_adlocation_invalid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "invalid"})
         self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
-        self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
         self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
         self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
@@ -565,7 +572,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_adlocation_invalid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "invalid"})
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
-        self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
         self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
         self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
@@ -576,7 +582,6 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_adlocation_invalid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "invalid"})
         self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
-        self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
         self.get_start_confirm_address_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
         self.post_start_confirm_address_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
 
