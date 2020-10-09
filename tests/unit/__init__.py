@@ -1791,11 +1791,9 @@ class RHTestCase(AioHTTPTestCase):
             'To find your nearest support centre, we need your postcode.'
         self.content_support_centre_enter_postcode_error_empty_en = 'You have not entered a postcode'
         self.content_support_centre_enter_postcode_error_invalid_en = 'The postcode is not a valid UK postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_title_cy = 'Find a support centre'
-        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
-            'To find your nearest support centre, we need your postcode.'
+            "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
         # TODO Add Welsh Translation
