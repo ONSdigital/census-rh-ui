@@ -360,6 +360,10 @@ class RHTestCase(AioHTTPTestCase):
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
         self.nisra_logo = '/img/nisra-logo-en.svg'
 
+        self.content_call_centre_number_ew = '0800 141 2021'
+        self.content_call_centre_number_cy = '0800 169 2021'
+        self.content_call_centre_number_ni = '0800 328 2021'
+
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
@@ -395,10 +399,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
-            'Add or change an address'
+            'Register an address'
         # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_title_cy = \
-            'Add or change an address'
+            'Register an address'
         self.content_common_call_contact_centre_address_not_found_text_en = \
             'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
             'it may not be registered on our system.'
@@ -446,7 +450,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_en = 'Manager'
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
-        self.content_common_resident_or_manager_error_en = 'Please select an option.'
+        self.content_common_resident_or_manager_error_en = 'Please select an option'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -460,11 +464,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_description_manager_cy = \
             'A manager is responsible for answering the census questions about this establishment'
         # TODO: add welsh translation
-        self.content_common_resident_or_manager_error_cy = 'Please select an option.'
+        self.content_common_resident_or_manager_error_cy = 'Please select an option'
 
-        self.content_common_save_and_exit_link_en = 'Save and sign out'
+        self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
-        self.content_common_save_and_exit_link_cy = 'Save and sign out'
+        self.content_common_save_and_exit_link_cy = 'Exit'
         # End Common
 
         # Start Journey
@@ -770,10 +774,6 @@ class RHTestCase(AioHTTPTestCase):
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'
 
-        self.get_accessibility_statement_en = self.app.router['Accessibility:get'].url_for(display_region='en')
-        self.get_accessibility_statement_cy = self.app.router['Accessibility:get'].url_for(display_region='cy')
-        self.get_accessibility_statement_ni = self.app.router['Accessibility:get'].url_for(display_region='ni')
-
         self.get_start_saveandexit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
         self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
@@ -958,7 +958,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_error_en = 'Please select an option.'
+        self.content_request_code_select_method_error_en = 'Please select an option'
         self.content_request_code_select_method_secondary_en = 'Select how to send access code'
         self.content_request_code_select_method_option_text_en = 'Text message'
         self.content_request_code_select_method_option_post_en = 'Post'
@@ -967,7 +967,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_method_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_error_cy = "Please select an option."
+        self.content_request_code_select_method_error_cy = "Please select an option"
         # TODO Add Welsh Translation
         self.content_request_code_select_method_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
@@ -1043,7 +1043,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new manager access code to this address?'
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address.'
+        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
@@ -1057,7 +1057,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_error_cy = \
-            "Please check and confirm the name and address."
+            "Please check and confirm the name and address"
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
@@ -1784,11 +1784,9 @@ class RHTestCase(AioHTTPTestCase):
             'To find your nearest support centre, we need your postcode.'
         self.content_support_centre_enter_postcode_error_empty_en = 'You have not entered a postcode'
         self.content_support_centre_enter_postcode_error_invalid_en = 'The postcode is not a valid UK postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_title_cy = 'Find a support centre'
-        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
-            'To find your nearest support centre, we need your postcode.'
+            "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
         # TODO Add Welsh Translation
         self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
         # TODO Add Welsh Translation

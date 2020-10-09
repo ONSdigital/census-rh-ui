@@ -8,58 +8,91 @@
 
 {%- if page_show_signout == 'true' -%}
     {%- set signout_button_value = {
-            'text': 'Save and sign out',
-            'ariaLabel': 'Toggle main navigation',
+            'text': 'Exit',
+            'buttonStyle': 'exit',
             'url': domain_url_en + '/cy/start/save-and-exit/'
         }
     -%}
 {%- endif -%}
 
 {%- set footer_content = {
-        'poweredBy': true,
-        'lang': 'cy',
-        'rows': [
+        'crest': true,
+        'poweredBy': {
+            "logo": 'ons-logo-black-cy',
+            "alt": 'Office for National Statistics'
+        },
+        "cols": [
             {
-                'itemsList': [
+                "title": 'Cysylltwch',
+                "itemsList": [
                     {
-                        'text': "Ynglŷn â'r cyfrifiad",
-                        'url': domain_url_cy + '/ynglyn-ar-cyfrifiad/',
-                        'target': '_blank'
-                    },
-                    {
-                        'text': "Help gyda'ch cyfrifiad",
-                        'url': domain_url_cy + '/help/',
-                        'target': '_blank'
+                        "text": 'Ymholiadau gan y cyfryngau',
+                        "url": '#0'
                     },
                     {
                         'text': 'Cysylltu â ni',
-                        'url': domain_url_cy + '/cysylltu-a-ni/',
-                        'target': '_blank'
+                        'url': domain_url_cy + '/cysylltu-a-ni/'
                     }
                 ]
             },
             {
-                'itemsList': [
+                "title": 'Gweithio ar y cyfrifiad',
+                "itemsList": [
+                    {
+                        "text": 'Awdurdodau lleol',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Grwpiau cymunedol',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Ymgyrchoedd ysgolion',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Swyddi',
+                        "url": '#0'
+                    }
+                ]
+            },
+            {
+                "title": 'Ynglŷn â’r cyfrifiad',
+                "itemsList": [
+                    {
+                        "text": 'Beth yw’r cyfrifiad',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Pam ddylech chi gymryd rhan',
+                        "url": '#0'
+                    },
+                    {
+                        "text": 'Straeon y cyfrifiad',
+                        "url": '#0'
+                    }
+                ]
+            }
+        ],
+        "rows": [
+            {
+                "itemsList": [
                     {
                         'text': 'Cwcis',
-                        'url': domain_url_cy + '/cwcis/',
-                        'target': '_blank'
+                        'url': domain_url_cy + '/cwcis/'
                     },
                     {
                         'text': 'Hygyrchedd',
-                        'url': domain_url_en + '/cy/start/accessibility/',
-                        'target': '_blank'
+                        'url': domain_url_en + '/cy/start/accessibility/'
                     },
                     {
                         'text': 'Preifatrwydd a diogelu data',
-                        'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/',
-                        'target': '_blank'
+                        'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/'
                     }
                 ]
             }
         ]
     }
-
 -%}
 
 {%- if page_url -%}
@@ -125,10 +158,12 @@
     {%- from 'components/cookies-banner/_macro.njk' import onsCookiesBanner -%}
     {{
         onsCookiesBanner({
-            "statementTitle": 'Tell us whether you accept cookies',
-            "statementText": 'We use <a href="' + domain_url_cy + '/cwcis' + '">cookies to collect information</a> about how you use census.gov.uk. We use this information to make the website work as well as possible and improve our services.',
-            "confirmationText": 'You’ve accepted all cookies. You can <a href="' + domain_url_cy + '/cwcis' + '">change your cookie preferences</a> at any time.',
-            "secondaryButtonUrl": domain_url_cy + '/cwcis'
+            "statementTitle": 'Dywedwch wrthym a ydych yn derbyn cwcis',
+            "statementText": "Rydym ni’n defnyddio <a href='" + domain_url_cy + "/cwcis" + "'>cwcis i gasglu gwybodaeth</a> am y ffordd rydych rydych chi’n defnyddio cyfrifiad.gov.uk. Rydym ni’n defnyddio’r wybodaeth hon i sicrhau bod y wefan yn gweithio cystal â phosibl ac i wella ein gwasanaethau.",
+            "confirmationText": 'Rydych chi wedi derbyn yr holl gwcis. Gallwch chi <a href="' + domain_url_cy + '/cwcis' + '">newd eich dewisiadau o ran cwcis</a> ar unrhyw adeg.',
+            "secondaryButtonUrl": domain_url_cy + '/cwcis',
+            'primaryButtonText': "Derbyn yr holl gwcis",
+            'secondaryButtonText': "Gosod dewisiadau o ran cwcis"
         })
     }}
 {%- endblock -%}

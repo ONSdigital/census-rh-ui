@@ -1,4 +1,4 @@
-from app.utils import ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage
+from app.utils import ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, View
 
 from . import RHTestCase
 
@@ -293,3 +293,14 @@ class TestUtils(RHTestCase):
         built = FlashMessage.generate_flash_message('Test message', 'LEVEL', 'MESSAGE_TYPE', 'field')
         expected = {'text': 'Test message', 'level': 'LEVEL', 'type': 'MESSAGE_TYPE', 'field': 'field'}
         self.assertEqual(built, expected)
+
+    def test_get_call_centre_number(self):
+        built_ew = View.get_call_centre_number('en')
+        built_cy = View.get_call_centre_number('cy')
+        built_ni = View.get_call_centre_number('ni')
+        expected_ew = '0800 141 2021'
+        expected_cy = '0800 169 2021'
+        expected_ni = '0800 328 2021'
+        self.assertEqual(built_ew, expected_ew)
+        self.assertEqual(built_cy, expected_cy)
+        self.assertEqual(built_ni, expected_ni)

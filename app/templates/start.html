@@ -22,6 +22,14 @@
     }
 } %}
 
+{%- if 'uac' in field_messages_dict -%}
+    {%- set error_uac = {
+                    'id': 'uac',
+                    'text': _('Enter an access code')
+                }
+    -%}
+{%- endif -%}
+
 {% if display_region == 'ni' %}
     {% set breadcrumb_items = [
                 {
@@ -80,39 +88,20 @@
 
     <h1 class="u-mt-l">{{_('Start census')}}</h1>
 
-    {% if 'uac' in field_messages_dict %}
-        {{
-            onsUACInput({
-                'id': 'uac',
-                'name': 'uac',
-                'postTextboxLinkText': _('Where to find your access code'),
-                'postTextboxLinkUrl': '#',
-                'label': {
-                    'text': _('Enter your 16-character access code'),
-                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
-                },
-                'securityMessage': _('Your personal information is protected by law and will be kept confidential.'),
-                'error': {
-                    'id': 'uac',
-                    'text': _('Enter an access code to continue')
-                }
-            })
-        }}
-    {% else %}
-        {{
-            onsUACInput({
-                'id': 'uac',
-                'name': 'uac',
-                'postTextboxLinkText': _('Where to find your access code'),
-                'postTextboxLinkUrl': '#',
-                'label': {
-                    'text': _('Enter your 16-character access code'),
-                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
-                },
-                'securityMessage': _('Your personal information is protected by law and will be kept confidential.')
-            })
-        }}
-    {% endif %}
+    {{
+        onsUACInput({
+            'id': 'uac',
+            'name': 'uac',
+            'postTextboxLinkText': _('Where to find your access code'),
+            'postTextboxLinkUrl': '#',
+            'label': {
+                'text': _('Enter your 16-character access code'),
+                'description': _('Keep this code safe. You will need to enter it every time you access your census')
+            },
+            'securityMessage': _('Your personal information is protected by law and will be kept confidential.'),
+            'error': error_uac
+        })
+    }}
 
     {% if adlocation %}
         {{

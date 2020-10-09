@@ -338,10 +338,15 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('call-contact-centre/address-not-found',
                                                           display_region, False), contents)
-            if display_region == 'cy':
+            if display_region == 'ni':
+                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_call_centre_number_ni, contents)
+            elif display_region == 'cy':
                 self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
+                self.assertIn(self.content_call_centre_number_cy, contents)
             else:
                 self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_confirm_address_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
@@ -430,7 +435,7 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
-    async def check_post_confirm_address_input_yes_form_new_case(self, url, display_region, create_case_return, user_type):
+    async def check_post_confirm_address_input_yes_form_new_case(self, url, display_region, create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
             passthrough=[str(self.server._root)]
@@ -518,12 +523,18 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('call-contact-centre/unable-to-match-address',
                                                           display_region, False), contents)
-            if display_region == 'cy':
+            if display_region == 'ni':
+                self.assertIn(self.content_common_call_contact_centre_title_en, contents)
+                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
+                self.assertIn(self.content_call_centre_number_ni, contents)
+            elif display_region == 'cy':
                 self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
                 self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
+                self.assertIn(self.content_call_centre_number_cy, contents)
             else:
                 self.assertIn(self.content_common_call_contact_centre_title_en, contents)
                 self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
+                self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_confirm_address_error_from_get_cases(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
@@ -671,10 +682,15 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('form-manager', display_region), contents)
-            if display_region == 'cy':
+            if display_region == 'ni':
+                self.assertIn(self.content_request_form_manager_title_en, contents)
+                self.assertIn(self.content_call_centre_number_ni, contents)
+            elif display_region == 'cy':
                 self.assertIn(self.content_request_form_manager_title_cy, contents)
+                self.assertIn(self.content_call_centre_number_cy, contents)
             else:
                 self.assertIn(self.content_request_form_manager_title_en, contents)
+                self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_resident_or_manager_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
