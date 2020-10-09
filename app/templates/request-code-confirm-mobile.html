@@ -1,23 +1,20 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/radios/_macro.njk' import onsRadios %}
-{% from 'macros/telephone/_macro.njk' import rhTelephone %}
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
 
-{% set formatted_mobile_number = rhTelephone({'number': mobile_number, 'highlight': 'false'}) %}
-
-{% set form =  {
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('RequestCodeConfirmMobile:post', request_type=request_type, display_region=display_region)
     }
-} %}
+} -%}
 
-{% set form_options = [
+{%- set form_options = [
                 {
                     'id': 'yes',
                     'label': {
@@ -33,39 +30,32 @@
                     'value': 'no'
                 }
             ]
-%}
+-%}
 
-{% block main %}
+{%- if 'mobile' in field_messages_dict -%}
+    {%- set error_mobile = {'text': _('Check and confirm your mobile phone number')} -%}
+{%- endif -%}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+{%- block main -%}
 
-    {% call onsQuestion({
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- call onsQuestion({
         'title': _('Is this mobile phone number correct?'),
-        'description': '<p class="js-mobile-no">'|safe + formatted_mobile_number + '</p>'|safe
-    }) %}
+        'description': '<p class="js-mobile-no">'|safe + submitted_mobile_number + '</p>'|safe
+    }) -%}
 
+        {{
+            onsRadios({
+                'name': 'request-mobile-confirmation',
+                'radios': form_options,
+                'error': error_mobile
+            })
+        }}
 
-{% if 'mobile' in field_messages_dict %}
-    {{
-        onsRadios({
-            'name': 'request-mobile-confirmation',
-            'radios': form_options,
-            'error': {
-                'text': _('Check and confirm your mobile phone number')
-            }
-        })
-    }}
-{% else %}
-    {{
-        onsRadios({
-            'name': 'request-mobile-confirmation',
-            'radios': form_options
-        })
-    }}
-{% endif %}
-    {% endcall %}
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -74,4 +64,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}
