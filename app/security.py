@@ -109,7 +109,7 @@ async def on_prepare(request: web.BaseRequest, response: web.StreamResponse):
 
 async def context_processor(request):
     return {
-        'nonce_csp': request.csp_nonce,
+        'cspNonce': request.csp_nonce,
     }
 
 
