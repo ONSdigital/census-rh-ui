@@ -124,13 +124,13 @@ class CommonAddressInNorthernIreland(CommonCommon):
         }
 
 
-@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-not-in-northern-ireland/')
-class CommonAddressNotInNorthernIreland(CommonCommon):
+@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-in-england/')
+class CommonAddressInEngland(CommonCommon):
     """
-    Route to render an 'Address not in Northern Ireland' page during address lookups if display_region is 'ni'
-    and selected address region is E or W
+    Route to render an 'Address in England' page during address lookups if display_region is 'ni'
+    and selected addresses region is E
     """
-    @aiohttp_jinja2.template('common-address-not-in-northern-ireland.html')
+    @aiohttp_jinja2.template('common-address-in-england.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = 'ni'
@@ -139,7 +139,33 @@ class CommonAddressNotInNorthernIreland(CommonCommon):
         page_title = 'This address is not part of the census for Northern Ireland'
         locale = 'en'
 
-        self.log_entry(request, display_region + '/' + user_journey + '/address-not-in-northern-ireland')
+        self.log_entry(request, display_region + '/' + user_journey + '/address-in-england')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'user_journey': user_journey,
+            'page_url': View.gen_page_url(request)
+        }
+
+
+@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-in-wales/')
+class CommonAddressInWales(CommonCommon):
+    """
+    Route to render an 'Address in Wales' page during address lookups if display_region is 'ni'
+    and selected addresses region is W
+    """
+    @aiohttp_jinja2.template('common-address-in-wales.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        user_journey = request.match_info['user_journey']
+
+        page_title = 'This address is not part of the census for Northern Ireland'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/address-in-wales')
 
         return {
             'page_title': page_title,
@@ -476,11 +502,17 @@ class CommonConfirmAddress(CommonCommon):
                     raise HTTPFound(
                         request.app.router['CommonAddressInNorthernIreland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif display_region == 'ni' and session['attributes']['countryCode'] != 'N':
-                    logger.info('address is in England or Wales but display_region ni',
+                elif display_region == 'ni' and session['attributes']['countryCode'] == 'W':
+                    logger.info('address is in Wales but display_region ni',
                                 client_ip=request['client_ip'])
                     raise HTTPFound(
-                        request.app.router['CommonAddressNotInNorthernIreland:get'].
+                        request.app.router['CommonAddressInWales:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+                elif display_region == 'ni' and session['attributes']['countryCode'] == 'E':
+                    logger.info('address is in England but display_region ni',
+                                client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressInEngland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])

@@ -530,15 +530,27 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
 
-    async def check_post_confirm_address_address_not_in_northern_ireland(self, url, display_region):
+    async def check_post_confirm_address_address_in_england(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('address-not-in-northern-ireland', display_region, 'GET',
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-england', display_region, 'GET',
                                                              False))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
+            self.assertIn(self.content_common_address_in_england_secondary, contents)
+
+    async def check_post_confirm_address_address_in_wales(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-wales', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
+            self.assertIn(self.content_common_address_in_wales_secondary, contents)
 
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:

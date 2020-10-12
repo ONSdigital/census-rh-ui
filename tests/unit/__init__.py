@@ -391,6 +391,10 @@ class RHTestCase(AioHTTPTestCase):
             'This address is not part of the census for England and Wales'
         self.content_common_address_not_in_northern_ireland = \
             'This address is not part of the census for Northern Ireland'
+        self.content_common_address_in_england_secondary = \
+            'You have selected an address in England.'
+        self.content_common_address_in_wales_secondary = \
+            'You have selected an address in Wales.'
 
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation

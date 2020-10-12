@@ -1314,7 +1314,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
             self.post_request_individual_code_select_address_ni, 'ni', self.ai_uprn_result_england)
-        await self.check_post_confirm_address_address_not_in_northern_ireland(
+        await self.check_post_confirm_address_address_in_england(
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
     @unittest_run_loop
@@ -1324,5 +1324,5 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
             self.post_request_individual_code_select_address_ni, 'ni', self.ai_uprn_result_wales)
-        await self.check_post_confirm_address_address_not_in_northern_ireland(
+        await self.check_post_confirm_address_address_in_wales(
             self.post_request_individual_code_confirm_address_ni, 'ni')
