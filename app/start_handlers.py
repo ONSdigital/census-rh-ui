@@ -190,12 +190,12 @@ class Start(StartCommon):
                                 url_for(display_region=display_region))
         elif session['case']['region'][0] == 'W':
             if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartCodeNotForNorthernIreland:get'].url_for())
+                raise HTTPFound(request.app.router['StartCodeForWales:get'].url_for())
             else:
                 raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
         else:
             if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartCodeNotForNorthernIreland:get'].url_for())
+                raise HTTPFound(request.app.router['StartCodeForEngland:get'].url_for())
             else:
                 raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region='en'))
 
@@ -226,13 +226,33 @@ class StartCodeForNorthernIreland(StartCommon):
         }
 
 
-@start_routes.view('/ni/start/code-not-for-northern-ireland/')
-class StartCodeNotForNorthernIreland(StartCommon):
-    @aiohttp_jinja2.template('start-code-not-for-northern-ireland.html')
+@start_routes.view('/ni/start/code-for-england/')
+class StartCodeForEngland(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-england.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = 'ni'
-        self.log_entry(request, display_region + '/start/code-not-for-northern-ireland')
+        self.log_entry(request, display_region + '/start/code-for-england')
+
+        locale = 'en'
+        page_title = 'This access code is not part of the census for Northern Ireland'
+
+        await forget(request)
+
+        return {
+            'display_region': display_region,
+            'locale': locale,
+            'page_title': page_title
+        }
+
+
+@start_routes.view('/ni/start/code-for-wales/')
+class StartCodeForWales(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-wales.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        self.log_entry(request, display_region + '/start/code-for-wales')
 
         locale = 'en'
         page_title = 'This access code is not part of the census for Northern Ireland'

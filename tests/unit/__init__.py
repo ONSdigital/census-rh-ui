@@ -524,6 +524,10 @@ class RHTestCase(AioHTTPTestCase):
             'This access code is not part of the census for England and Wales'
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
+        self.content_start_code_for_england_secondary = \
+            'You have entered an access code for the census in England.'
+        self.content_start_code_for_wales_secondary = \
+            'You have entered an access code for the census in Wales.'
 
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'

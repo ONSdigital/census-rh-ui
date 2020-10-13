@@ -3184,11 +3184,11 @@ class TestStartHandlers(TestHelpers):
         await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_cy, 'cy')
 
     @unittest_run_loop
-    async def test_start_code_not_in_northern_ireland_region_e_ni(self):
+    async def test_start_code_in_england_ni(self):
         await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
-        await self.assert_start_page_post_returns_address_not_in_northern_ireland(self.post_start_ni, 'ni', region='E')
+        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
 
     @unittest_run_loop
-    async def test_start_code_not_in_northern_ireland_region_w_ni(self):
+    async def test_start_code_in_wales_ni(self):
         await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
-        await self.assert_start_page_post_returns_address_not_in_northern_ireland(self.post_start_ni, 'ni', region='W')
+        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
