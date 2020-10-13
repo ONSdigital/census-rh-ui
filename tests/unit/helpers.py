@@ -35,10 +35,15 @@ class TestHelpers(RHTestCase):
                    self.sub_user_journey + "/" + page + "'"
         return link
 
-    def build_translation_link(self, page, display_region, include_sub_user_journey=True, include_page=True):
+    def build_translation_link(self, page, display_region, include_sub_user_journey=True, include_page=True,
+                               include_adlocation=False):
         if display_region == 'cy':
             if not include_page:
-                link = '<a href="/en/' + self.user_journey + '/" lang="en" >English</a>'
+                if include_adlocation:
+                    link = '<a href="/en/' + self.user_journey + '/?adlocation=' + self.adlocation + \
+                           '" lang="en" >English</a>'
+                else:
+                    link = '<a href="/en/' + self.user_journey + '/" lang="en" >English</a>'
             elif not include_sub_user_journey:
                 link = '<a href="/en/' + self.user_journey + '/' + page + '/" lang="en" >English</a>'
             else:
@@ -46,7 +51,11 @@ class TestHelpers(RHTestCase):
                        '/" lang="en" >English</a>'
         else:
             if not include_page:
-                link = '<a href="/cy/' + self.user_journey + '/" lang="cy" >Cymraeg</a>'
+                if include_adlocation:
+                    link = '<a href="/cy/' + self.user_journey + '/?adlocation=' + self.adlocation + \
+                           '" lang="cy" >Cymraeg</a>'
+                else:
+                    link = '<a href="/cy/' + self.user_journey + '/" lang="cy" >Cymraeg</a>'
             elif not include_sub_user_journey:
                 link = '<a href="/cy/' + self.user_journey + '/' + page + '/" lang="cy" >Cymraeg</a>'
             else:
@@ -1242,21 +1251,28 @@ class TestHelpers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
-                                                          include_sub_user_journey=False,
-                                                          include_page=False), contents)
+                if ad_location:
+                    self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
+                                                              include_sub_user_journey=False,
+                                                              include_page=False, include_adlocation=True), contents)
+                else:
+                    self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
+                                                              include_sub_user_journey=False,
+                                                              include_page=False, include_adlocation=False), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_start_title_cy, contents)
                 self.assertIn(self.content_start_uac_title_cy, contents)
             else:
                 self.assertIn(self.content_start_title_en, contents)
                 self.assertIn(self.content_start_uac_title_en, contents)
-            self.assertEqual(contents.count('input--text'), 1)
-            self.assertIn('type="submit"', contents)
             if ad_location:
                 self.assertLogEvent(cm, "assisted digital query parameter found")
                 self.assertIn('type="hidden"', contents)
-                self.assertIn('value="1234567890"', contents)
+                self.assertIn('value="' + self.adlocation + '"', contents)
+                self.assertEqual(contents.count('input--text'), 2)
+            else:
+                self.assertEqual(contents.count('input--text'), 1)
+            self.assertIn('type="submit"', contents)
 
     async def assert_start_page_post_returns_address_in_northern_ireland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \

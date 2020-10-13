@@ -3179,8 +3179,18 @@ class TestStartHandlers(TestHelpers):
         await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_en, 'en')
 
     @unittest_run_loop
+    async def test_start_code_in_northern_ireland_with_adlocation_en(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_en, 'en', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_en, 'en')
+
+    @unittest_run_loop
     async def test_start_code_in_northern_ireland_cy(self):
         await self.assert_start_page_correct(self.get_start_cy, 'cy', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_start_code_in_northern_ireland_with_adlocation_cy(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_cy, 'cy', ad_location=True)
         await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_cy, 'cy')
 
     @unittest_run_loop
@@ -3189,6 +3199,16 @@ class TestStartHandlers(TestHelpers):
         await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
 
     @unittest_run_loop
+    async def test_start_code_in_england_with_adlocation_ni(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
     async def test_start_code_in_wales_ni(self):
         await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_code_in_wales_with_adlocation_ni(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
         await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')

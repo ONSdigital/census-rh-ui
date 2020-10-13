@@ -263,6 +263,7 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
         self.postcode_empty = ''
+        self.adlocation = '1234567890'
 
         self.common_form_data_empty = {}
 
@@ -566,7 +567,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "invalid"})
         self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
@@ -576,7 +577,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
         self.get_start_adlocation_valid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "invalid"})
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
@@ -586,7 +587,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
         self.get_start_adlocation_valid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "invalid"})
         self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
@@ -714,7 +715,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.start_data_valid_with_adlocation = {
-            'uac': self.uac, 'adlocation': '1234567890', 'action[save_continue]': '',
+            'uac': self.uac, 'adlocation': self.adlocation, 'action[save_continue]': '',
         }
 
         self.start_confirm_address_data_yes = {
