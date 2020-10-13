@@ -99,6 +99,9 @@ class Start(StartCommon):
                     'page_url': View.gen_page_url(request)
                 }
         except KeyError:
+            logger.warn('assisted digital query parameter not numeric - ignoring',
+                        adlocation=adlocation,
+                        client_ip=request['client_ip'])
             return {
                 'display_region': display_region,
                 'page_title': page_title,
@@ -146,9 +149,9 @@ class Start(StartCommon):
                     },
                     status=401)
             else:
+                logger.error('attempt to use an invalid access code',
+                            client_ip=request['client_ip'])
                 raise ex
-
-        logger.info('logging uac_json', uac_json=uac_json)
 
         if uac_json['caseId'] is None:
             logger.info('unlinked case', client_ip=request['client_ip'])
