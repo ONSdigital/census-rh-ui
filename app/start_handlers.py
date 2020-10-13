@@ -99,7 +99,7 @@ class Start(StartCommon):
                     'page_url': View.gen_page_url(request)
                 }
         except KeyError:
-            logger.warn('assisted digital query parameter not numeric - ignoring',
+            logger.info('assisted digital query parameter not numeric - ignoring',
                         adlocation=adlocation,
                         client_ip=request['client_ip'])
             return {
