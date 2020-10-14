@@ -3,6 +3,13 @@
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from "components/panel/_macro.njk" import onsPanel -%}
 
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('RequestIndividualCode:post', display_region=display_region)
+    }
+} -%}
+
 {%- block main -%}
 
     <h1 class="u-mb-l u-fs-xxl">{{ _('Request an individual code') }}</h1>
@@ -25,10 +32,8 @@
 
     {{
         onsButton({
-            'type': 'button',
             'text': _('Start'),
             'classes': 'u-mb-m u-mt-s',
-            'url': url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='individual-code'),
             'innerClasses': 'icon--chevron-right-white'
         })
     }}

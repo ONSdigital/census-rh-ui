@@ -1472,13 +1472,13 @@ class RHTestCase(AioHTTPTestCase):
 
         # URLs
 
-        self.get_request_individual_code_en = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_en = self.app.router['RequestIndividualCode:get'].url_for(
             request_type='individual-code', display_region='en'
         )
-        self.get_request_individual_code_cy = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_cy = self.app.router['RequestIndividualCode:get'].url_for(
             request_type='individual-code', display_region='cy'
         )
-        self.get_request_individual_code_ni = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_ni = self.app.router['RequestIndividualCode:get'].url_for(
             request_type='individual-code', display_region='ni'
         )
 

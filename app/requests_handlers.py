@@ -43,7 +43,7 @@ class RequestCommon(View):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/individual-code/')
-class RequestCode(RequestCommon):
+class RequestIndividualCode(RequestCommon):
     @aiohttp_jinja2.template('request-code-individual-introduction.html')
     async def get(self, request):
         self.setup_request(request)
@@ -62,6 +62,24 @@ class RequestCode(RequestCommon):
             'page_title': page_title,
             'page_url': View.gen_page_url(request)
         }
+
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        request_type = 'individual-code'
+        self.log_entry(request, display_region + '/requests/individual-code')
+        try:
+            await get_session(request)
+            logger.info('have session - directing to select method')
+            raise HTTPFound(
+                request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
+                                                                          display_region=display_region))
+        except KeyError:
+            logger.info('no session - directing to enter address')
+            raise HTTPFound(
+                request.app.router['CommonEnterAddress:get'].url_for(user_journey='requests',
+                                                                     sub_user_journey=request_type,
+                                                                     display_region=display_region))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
