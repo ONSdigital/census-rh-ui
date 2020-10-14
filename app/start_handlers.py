@@ -99,7 +99,7 @@ class Start(StartCommon):
                     'page_url': View.gen_page_url(request)
                 }
         except KeyError:
-            logger.info('adlocation error')
+            logger.info('no adlocation present')
             return {
                 'display_region': display_region,
                 'page_title': page_title,
@@ -147,7 +147,7 @@ class Start(StartCommon):
                     },
                     status=401)
             else:
-                logger.error('invalid access code', client_ip=request['client_ip'])
+                logger.error('error processing access code', client_ip=request['client_ip'])
                 raise ex
 
         if uac_json['caseId'] is None:
