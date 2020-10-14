@@ -149,8 +149,7 @@ class Start(StartCommon):
                     },
                     status=401)
             else:
-                logger.error('attempt to use an invalid access code',
-                            client_ip=request['client_ip'])
+                logger.error('attempt to use an invalid access code', client_ip=request['client_ip'])
                 raise ex
 
         if uac_json['caseId'] is None:
