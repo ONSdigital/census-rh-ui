@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-05 15:54+0100\n"
+"POT-Creation-Date: 2020-10-14 12:58+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -427,9 +427,9 @@ msgstr ""
 
 #: app/templates/request-code-select-method.html:85
 #: app/templates/start.html:145
-#: app/templates/support_centre_list_of_centres.html:52
+#: app/templates/support_centre_list_of_centres.html:54
 msgid "Hide this"
-msgstr ""
+msgstr "Cuddio hwn"
 
 #: app/templates/request-code-select-method.html:99
 #: app/templates/request-code-select-method.html:110
@@ -670,7 +670,9 @@ msgstr "Chwilio am ganolfan gymorth"
 
 #: app/templates/support_centre_enter_postcode.html:24
 msgid "To find your nearest support centre, we need your postcode."
-msgstr "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
+msgstr ""
+"Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael "
+"eich cod post."
 
 #: app/templates/support_centre_enter_postcode.html:34
 #: app/templates/support_centre_enter_postcode.html:50
@@ -684,120 +686,129 @@ msgstr "Chwilio"
 #: app/templates/support_centre_list_of_centres.html:11
 #, python-format
 msgid "Support centres near %(highlight_postcode)s"
-msgstr ""
+msgstr "Canolfannau cymorth gerllaw %(highlight_postcode)s"
 
-#: app/templates/support_centre_list_of_centres.html:40
+#: app/templates/support_centre_list_of_centres.html:23
+#, python-format
+msgid "%(distance_in_miles)s miles away"
+msgstr "%(distance_in_miles)s milltir i ffwrdd"
+
+#: app/templates/support_centre_list_of_centres.html:35
+msgid "Find on Google Maps"
+msgstr "Chwilio ar Google Maps"
+
+#: app/templates/support_centre_list_of_centres.html:42
 msgid "Telephone: "
-msgstr ""
+msgstr "Ffôn: "
 
-#: app/templates/support_centre_list_of_centres.html:43
+#: app/templates/support_centre_list_of_centres.html:45
 msgid "Email: "
-msgstr ""
+msgstr "E-bost: "
 
-#: app/templates/support_centre_list_of_centres.html:50
+#: app/templates/support_centre_list_of_centres.html:52
 msgid "Opening times and facilities"
-msgstr ""
+msgstr "Amseroedd agor a chyfleusterau"
 
-#: app/templates/support_centre_list_of_centres.html:56
+#: app/templates/support_centre_list_of_centres.html:58
 msgid "Opening times"
 msgstr "Amseroedd agor"
 
-#: app/templates/support_centre_list_of_centres.html:58
+#: app/templates/support_centre_list_of_centres.html:60
 msgid "Monday"
-msgstr ""
+msgstr "Dydd Llun"
 
-#: app/templates/support_centre_list_of_centres.html:64
-#: app/templates/support_centre_list_of_centres.html:73
-#: app/templates/support_centre_list_of_centres.html:82
-#: app/templates/support_centre_list_of_centres.html:91
-#: app/templates/support_centre_list_of_centres.html:100
-#: app/templates/support_centre_list_of_centres.html:109
-#: app/templates/support_centre_list_of_centres.html:118
-#: app/templates/support_centre_list_of_centres.html:127
-#: app/templates/support_centre_list_of_centres.html:136
-#: app/templates/support_centre_list_of_centres.html:145
-#: app/templates/support_centre_list_of_centres.html:154
-#: app/templates/support_centre_list_of_centres.html:163
+#: app/templates/support_centre_list_of_centres.html:66
+#: app/templates/support_centre_list_of_centres.html:75
+#: app/templates/support_centre_list_of_centres.html:84
+#: app/templates/support_centre_list_of_centres.html:93
+#: app/templates/support_centre_list_of_centres.html:102
+#: app/templates/support_centre_list_of_centres.html:111
+#: app/templates/support_centre_list_of_centres.html:120
+#: app/templates/support_centre_list_of_centres.html:129
+#: app/templates/support_centre_list_of_centres.html:138
+#: app/templates/support_centre_list_of_centres.html:147
+#: app/templates/support_centre_list_of_centres.html:156
+#: app/templates/support_centre_list_of_centres.html:165
 msgid "Closed"
-msgstr ""
+msgstr "Ar gau"
 
-#: app/templates/support_centre_list_of_centres.html:67
+#: app/templates/support_centre_list_of_centres.html:69
 msgid "Tuesday"
-msgstr ""
+msgstr "Dydd Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:76
+#: app/templates/support_centre_list_of_centres.html:78
 msgid "Wednesday"
-msgstr ""
+msgstr "Dydd Mercher"
 
-#: app/templates/support_centre_list_of_centres.html:85
+#: app/templates/support_centre_list_of_centres.html:87
 msgid "Thursday"
-msgstr ""
+msgstr "Dydd Iau"
 
-#: app/templates/support_centre_list_of_centres.html:94
+#: app/templates/support_centre_list_of_centres.html:96
 msgid "Friday"
-msgstr ""
+msgstr "Dydd Gwener"
 
-#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:105
 msgid "Saturday"
-msgstr ""
+msgstr "Dydd Sadwrn"
 
-#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:114
 msgid "Sunday"
-msgstr ""
+msgstr "Dydd Sul"
 
-#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:123
 msgid "Census Saturday, 20 March"
-msgstr ""
+msgstr "Dydd Sadwrn y Cyfrifiad, 20 Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:132
 msgid "Census Day, 21 March"
-msgstr ""
+msgstr "Diwrnod y Cyfrifiad, 21 Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:141
 msgid "Good Friday, 2 April"
-msgstr ""
+msgstr "Dydd Gwener y Groglith, 2 Ebrill"
 
-#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:150
 msgid "Easter Monday, 5 April"
-msgstr ""
+msgstr "Dydd Llun y Pasg, 5 Ebrill"
 
-#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:159
 msgid "May Bank Holiday, 3 May"
-msgstr ""
+msgstr "Gŵyl Banc Calan Mai, 3 Mai"
 
-#: app/templates/support_centre_list_of_centres.html:168
+#: app/templates/support_centre_list_of_centres.html:170
 msgid "Centre facilities"
-msgstr ""
+msgstr "Cyfleusterau'r canolfannau"
 
-#: app/templates/support_centre_list_of_centres.html:172
+#: app/templates/support_centre_list_of_centres.html:174
 msgid "Car park, including disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:174
-msgid "Car park"
-msgstr ""
-
 #: app/templates/support_centre_list_of_centres.html:176
+msgid "Car park"
+msgstr "Maes parcio"
+
+#: app/templates/support_centre_list_of_centres.html:178
 msgid "Disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:178
+#: app/templates/support_centre_list_of_centres.html:180
 msgid "Level access into building entrance"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:179
+#: app/templates/support_centre_list_of_centres.html:181
 msgid "Wheelchair access"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:180
-msgid "Staff are disability aware"
-msgstr ""
-
-#: app/templates/support_centre_list_of_centres.html:181
-msgid "Waiting room seating"
-msgstr ""
-
 #: app/templates/support_centre_list_of_centres.html:182
+msgid "Staff are disability aware"
+msgstr "Staff yn meddu ar ymwybyddiaeth o anableddau"
+
+#: app/templates/support_centre_list_of_centres.html:183
+msgid "Waiting room seating"
+msgstr "Seddi yn yr ystafelloedd aros"
+
+#: app/templates/support_centre_list_of_centres.html:184
 msgid "Hearing loop system"
 msgstr ""
 
@@ -979,3 +990,4 @@ msgstr "eich rhif ffôn symudol fel y gallwn anfon y cod atoch mewn neges destun
 #: app/templates/partials/request-individual-code.html:40
 msgid "your address so we can confirm you are in the rehearsal area"
 msgstr "eich cyfeiriad fel y gallwn gadarnhau eich bod yn ardal yr ymarfer"
+
