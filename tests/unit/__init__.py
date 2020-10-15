@@ -1482,6 +1482,16 @@ class RHTestCase(AioHTTPTestCase):
             request_type='individual-code', display_region='ni'
         )
 
+        self.post_request_individual_code_en = self.app.router['RequestIndividualCode:post'].url_for(
+            request_type='individual-code', display_region='en'
+        )
+        self.post_request_individual_code_cy = self.app.router['RequestIndividualCode:post'].url_for(
+            request_type='individual-code', display_region='cy'
+        )
+        self.post_request_individual_code_ni = self.app.router['RequestIndividualCode:post'].url_for(
+            request_type='individual-code', display_region='ni'
+        )
+
         self.get_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='individual-code'
         )

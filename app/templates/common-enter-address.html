@@ -72,13 +72,13 @@
 
     {%- set content -%}
         {%- autoescape false -%}
-            <p>{{ _('If you have no fixed address, %(open)scontact us to request an access code%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
         {%- endautoescape -%}
     {%- endset -%}
 
     {%- call onsCollapsible({
             'id': 'collapsible',
-            'title': _('I have no fixed address'),
+            'title': _("I don't live at a fixed address"),
             'titleTag': 'h2',
             'classes': 'u-mt-m',
             'button': {

@@ -68,13 +68,12 @@ class RequestIndividualCode(RequestCommon):
         display_region = request.match_info['display_region']
         request_type = 'individual-code'
         self.log_entry(request, display_region + '/requests/individual-code')
-        try:
-            await get_session(request)
+        if request.cookies.get('RH_SESSION'):
             logger.info('have session - directing to select method')
             raise HTTPFound(
                 request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
                                                                           display_region=display_region))
-        except KeyError:
+        else:
             logger.info('no session - directing to enter address')
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(user_journey='requests',

@@ -1175,3 +1175,34 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_timeout_title_en, contents)
             self.assertIn(self.content_start_timeout_secondary_en, contents)
             self.assertIn(self.content_start_timeout_restart_en, contents)
+
+    async def check_get_request_individual_code(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', url)
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code', display_region, 'GET', False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('individual-code', display_region, False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_individual_title_cy, contents)
+                self.assertIn(self.content_request_individual_secondary_cy, contents)
+            else:
+                self.assertIn(self.content_request_individual_title_en, contents)
+                self.assertIn(self.content_request_individual_secondary_en, contents)
+
+    async def check_post_request_individual_code_journey_switch(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url)
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code', display_region, 'POST', False))
+            self.assertLogEvent(cm, 'have session - directing to select method')
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code/select-method', display_region, 'GET',
+                                                             False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('individual-code/select-method', display_region, False),
+                              contents)
+            self.check_text_select_method(display_region, contents, 'individual')
