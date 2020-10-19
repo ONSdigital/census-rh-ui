@@ -370,7 +370,8 @@ class RHService(View):
             'caseId': case_id,
             'telNo': tel_no,
             'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'client_ip': request['client_ip']
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
         return await View._make_request(request,
