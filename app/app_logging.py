@@ -19,7 +19,7 @@ ignored_fields = ('args', 'asctime', 'created', 'exc_info', 'exc_text',
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     lib_dir = os.path.normpath(os.path.split(sys.executable)[0] + '/..')
     cw_dir = os.getcwd()
-
+    # formats time to milliseconds
     def formatTime(self, record, datefmt=None):
         date_format = '%Y-%m-%dT%H:%M:%S'
         msec_format = '%s.%03d'
