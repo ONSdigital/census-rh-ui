@@ -22,8 +22,7 @@ class SupportCentreEnterPostcode(View):
 
         if display_region == 'cy':
             locale = 'cy'
-            # TODO Add welsh translation
-            page_title = 'Find a support centre'
+            page_title = 'Chwilio am ganolfan gymorth'
         else:
             locale = 'en'
             page_title = 'Find a support centre'
@@ -97,8 +96,7 @@ class SupportCentreListCentres(View):
         self.log_entry(request, display_region + '/find-a-support-centre/' + postcode_value)
 
         if display_region == 'cy':
-            # TODO Add welsh translation
-            page_title = 'Support centres near ' + postcode_value
+            page_title = 'Canolfannau cymorth gerllaw ' + postcode_value
         else:
             page_title = 'Support centres near ' + postcode_value
 
