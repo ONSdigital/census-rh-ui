@@ -116,8 +116,6 @@ class WebChat(WebChat):
             page_title = 'Web Chat'
             locale = 'en'
         self.log_entry(request, display_region + '/web-chat')
-
-        logger.info('date/time check', client_ip=request['client_ip'])
         if WebChat.check_open():
             return {
                 'display_region': display_region,
