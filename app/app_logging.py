@@ -19,8 +19,16 @@ ignored_fields = ('args', 'asctime', 'created', 'exc_info', 'exc_text',
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     lib_dir = os.path.normpath(os.path.split(sys.executable)[0] + '/..')
     cw_dir = os.getcwd()
-    # formats time to milliseconds
+
     def formatTime(self, record, datefmt=None):
+
+        # Return the creation time of the specified LogRecord as formatted text, overriding the
+        # superclass version to ensure that millisecond granularity is recorded.
+
+        # The superclass version only has second granularity since that is all time.strftime provides.
+        # This method combines the millisecond parts of the time, with the formatted time (to second granularity)
+        # to provide a millisecond formatted result.
+
         date_format = '%Y-%m-%dT%H:%M:%S'
         msec_format = '%s.%03d'
         ct = self.converter(record.created)
