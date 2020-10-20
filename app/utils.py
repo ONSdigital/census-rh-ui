@@ -120,36 +120,31 @@ class ProcessPostcode:
 
         if len(postcode) == 0:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('You have not entered a postcode')
+                raise InvalidDataErrorWelsh("Nid ydych wedi nodi cod post")
             else:
                 raise InvalidDataError('You have not entered a postcode')
 
         if not postcode.isalnum():
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode must not contain symbols')
+                raise InvalidDataErrorWelsh("Ni ddylai'r cod post gynnwys symbolau")
             else:
                 raise InvalidDataError('The postcode must not contain symbols')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode does not contain enough characters')
+                raise InvalidDataErrorWelsh("Nid yw'r cod post yn cynnwys digon o nodau")
             else:
                 raise InvalidDataError('The postcode does not contain enough characters')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode contains too many characters')
+                raise InvalidDataErrorWelsh("Mae'r cod post yn cynnwys gormod o nodau")
             else:
                 raise InvalidDataError('The postcode contains too many characters')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode is not a valid UK postcode')
+                raise InvalidDataErrorWelsh("Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('The postcode is not a valid UK postcode')
 
