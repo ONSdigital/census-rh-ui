@@ -15,7 +15,6 @@ static_routes = RouteTableDef()
 class Info(View):
     async def get(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'info')
         info = {
             'name': 'respondent-home-ui',
             'version': VERSION,
