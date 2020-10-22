@@ -5,9 +5,7 @@ from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
 from structlog import get_logger
 
-from . import (MOBILE_CHECK_MSG,
-               MOBILE_CHECK_MSG_CY,
-               NO_SELECTION_CHECK_MSG,
+from . import (NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
@@ -309,9 +307,9 @@ class RequestCodeConfirmMobile(RequestCommon):
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, MOBILE_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, MOBILE_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
         if mobile_confirmation == 'yes':
@@ -370,7 +368,7 @@ class RequestCodeConfirmMobile(RequestCommon):
             # catch all just in case, should never get here
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
 
@@ -522,12 +520,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-address-confirmation'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-address-confirmation'))
@@ -637,12 +635,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))

@@ -241,20 +241,20 @@ class ProcessName:
         if not (data.get('name_first_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             name_valid = False
 
         if not (data.get('name_last_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             name_valid = False
 

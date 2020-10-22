@@ -18,8 +18,8 @@
     }
 } -%}
 
-{%- if 'method' in field_messages_dict -%}
-    {%- set error_radio = { 'text': _('Please select an option.') } -%}
+{%- if 'no-selection' in field_messages_dict -%}
+    {%- set error_radio = {'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- set form_options = [

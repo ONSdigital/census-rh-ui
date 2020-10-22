@@ -14,6 +14,13 @@
     }
 } %}
 
+{%- if 'name_first_name' in field_messages_dict -%}
+    {%- set error_first_name = {'text': _('Enter your first name')} -%}
+{%- endif -%}
+{%- if 'name_last_name' in field_messages_dict -%}
+    {%- set error_last_name = {'text': _('Enter your last name')} -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -24,59 +31,29 @@
         'title': _('What is your name?'),
     }) %}
 
-        {% if 'name_first_name' in field_messages_dict %}
-            {{
-                onsInput({
-                    'id': 'name_first_name',
-                    'label': {
-                        'text': _('First name')
-                    },
-                    'value': form_value_name_first_name,
-                    'name': 'name_first_name',
-                    'error': {
-                        'text': _('Enter a first name to continue')
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsInput({
-                    'id': 'name_first_name',
-                    'label': {
-                        'text': _('First name')
-                    },
-                    'value': form_value_name_first_name,
-                    'name': 'name_first_name'
-                })
-            }}
-        {% endif %}
+        {{
+            onsInput({
+                'id': 'name_first_name',
+                'label': {
+                    'text': _('First name')
+                },
+                'value': form_value_name_first_name,
+                'name': 'name_first_name',
+                'error': error_first_name
+            })
+        }}
 
-        {% if 'name_last_name' in field_messages_dict %}
-            {{
-                onsInput({
-                    'id': 'name_last_name',
-                    'label': {
-                        'text': _('Last name')
-                    },
-                    'value': form_value_name_last_name,
-                    'name': 'name_last_name',
-                    'error': {
-                        'text': _('Enter a last name to continue')
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsInput({
-                    'id': 'name_last_name',
-                    'label': {
-                        'text': _('Last name')
-                    },
-                    'value': form_value_name_last_name,
-                    'name': 'name_last_name'
-                })
-            }}
-        {% endif %}
+        {{
+            onsInput({
+                'id': 'name_last_name',
+                'label': {
+                    'text': _('Last name')
+                },
+                'value': form_value_name_last_name,
+                'name': 'name_last_name',
+                'error': error_last_name
+            })
+        }}
 
     {% endcall %}
 

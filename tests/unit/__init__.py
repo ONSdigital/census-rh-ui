@@ -386,13 +386,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
         self.content_common_confirm_address_title_en = 'Is this the correct address?'
-        self.content_common_confirm_address_error_en = 'Check and confirm the address'
+        self.content_common_confirm_address_error_en = 'Select an answer'
         self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
         # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
-        self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        self.content_common_confirm_address_error_cy = "Select an answer"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
@@ -450,7 +450,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_en = 'Manager'
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
-        self.content_common_resident_or_manager_error_en = 'Please select an option'
+        self.content_common_resident_or_manager_error_en = 'Select an answer'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -464,7 +464,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_description_manager_cy = \
             'A manager is responsible for answering the census questions about this establishment'
         # TODO: add welsh translation
-        self.content_common_resident_or_manager_error_cy = 'Please select an option'
+        self.content_common_resident_or_manager_error_cy = 'Select an answer'
 
         self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
@@ -488,7 +488,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
-        self.content_start_confirm_address_error_en = 'Check and confirm the address is correct'
+        self.content_start_confirm_address_error_en = 'Select an answer'
         # TODO: add welsh translation
         self.content_start_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
@@ -496,7 +496,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
         # TODO: add welsh translation
-        self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
+        self.content_start_confirm_address_error_cy = 'Select an answer'
 
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_option_title = 'Select a language option'
@@ -960,7 +960,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_error_en = 'Please select an option'
+        self.content_request_code_select_method_error_en = 'Select an answer'
         self.content_request_code_select_method_secondary_en = 'Select how to send access code'
         self.content_request_code_select_method_option_text_en = 'Text message'
         self.content_request_code_select_method_option_post_en = 'Post'
@@ -969,7 +969,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_method_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_error_cy = "Please select an option"
+        self.content_request_code_select_method_error_cy = "Select an answer"
         # TODO Add Welsh Translation
         self.content_request_code_select_method_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
@@ -1006,10 +1006,10 @@ class RHTestCase(AioHTTPTestCase):
             "This will not be stored and only used once to send the access code"
 
         self.content_request_code_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_code_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_code_confirm_mobile_error_en = 'Select an answer'
         self.content_request_code_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
-        self.content_request_code_confirm_mobile_error_cy = \
-            "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_mobile_error_cy = "Select an answer"
 
         self.content_request_code_sent_sms_title_en = 'We have sent an access code'
         self.content_request_code_sent_sms_secondary_individual_en = \
@@ -1030,14 +1030,14 @@ class RHTestCase(AioHTTPTestCase):
             'The text message with a new household access code should arrive soon for you to start your census'
 
         self.content_request_common_enter_name_title_en = 'What is your name?'
-        self.content_request_common_enter_name_error_first_name_en = 'Enter a first name to continue'
-        self.content_request_common_enter_name_error_last_name_en = 'Enter a last name to continue'
+        self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
+        self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_title_cy = 'What is your name?'
         # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_first_name_cy = "Enter a first name to continue"
+        self.content_request_common_enter_name_error_first_name_cy = "Enter your first name"
         # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_last_name_cy = 'Enter a last name to continue'
+        self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
 
         self.content_request_common_confirm_name_address_title_individual_en = \
             'Do you want to send an individual access code to this address?'
@@ -1045,7 +1045,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new manager access code to this address?'
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address'
+        self.content_request_common_confirm_name_address_error_en = 'Select an answer'
         self.content_request_common_confirm_name_address_individual_message_en = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
@@ -1061,7 +1061,7 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_error_cy = \
-            "Please check and confirm the name and address"
+            "Select an answer"
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_individual_message_cy = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
