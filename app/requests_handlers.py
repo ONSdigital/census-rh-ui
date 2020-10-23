@@ -240,7 +240,12 @@ class RequestCodeEnterMobile(RequestCommon):
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info(exc, client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR', 'mobile')
+            if exc.message_type == 'empty':
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
+                                                                    'mobile_empty')
+            else:
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
+                                                                    'mobile_invalid')
             flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['RequestCodeEnterMobile:post'].url_for(request_type=request_type,

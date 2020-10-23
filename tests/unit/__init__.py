@@ -266,6 +266,12 @@ class RHTestCase(AioHTTPTestCase):
 
         self.common_form_data_empty = {}
 
+        self.content_common_invalid_mobile_error_en = \
+            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
+        # TODO: add welsh translation
+        self.content_common_invalid_mobile_error_cy = \
+            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
+
         self.post_common_select_address_form_data_valid = \
             '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
 

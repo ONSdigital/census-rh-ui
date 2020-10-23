@@ -196,9 +196,11 @@ class ProcessMobileNumber:
         except ValueError:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return number.lstrip('0')
 
@@ -207,26 +209,39 @@ class ProcessMobileNumber:
 
         number = ProcessMobileNumber.normalise_phone_number(number, locale).lstrip(uk_prefix).lstrip('0')
 
+        if len(number) == 0:
+            if locale == 'cy':
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh('Enter your mobile number', message_type='empty')
+            else:
+                raise InvalidDataError('Enter your mobile number', message_type='empty')
+
         if not number.startswith('7'):
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number is not a UK mobile number')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number is not a UK mobile number')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) > 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number contains too many digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number contains too many digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) < 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number does not contain enough digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number does not contain enough digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return '{}{}'.format(uk_prefix, number)
 

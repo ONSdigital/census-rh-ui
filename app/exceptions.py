@@ -32,12 +32,14 @@ class ExerciseClosedError(Exception):
 
 class InvalidDataError(Exception):
     """ Raised when user supplies invalid data in form fields (on english language page) """
-    def __init__(self, message=None):
+    def __init__(self, message=None, message_type=None):
         super().__init__(message or 'The supplied value is invalid')
+        self.message_type = message_type
 
 
 class InvalidDataErrorWelsh(Exception):
     """ Raised when user supplies invalid data in form fields (on welsh language page) """
-    def __init__(self, message=None):
+    def __init__(self, message=None, message_type=None):
         # TODO: Add Welsh Translation
         super().__init__(message or 'WELSH The supplied value is invalid')
+        self.message_type = message_type
