@@ -7,7 +7,7 @@
        "fulfilmentCode": "UACIT1",
        "handler": "NOTIFY",
        "initialContactCode": "",
-       "language": "eng",
+       "language": "E",
        "regions": [
            "W"
        ],
@@ -26,7 +26,7 @@
         "fulfilmentCode": "UACIT2",
         "handler": "NOTIFY",
         "initialContactCode": "",
-        "language": "wel",
+        "language": "W",
         "regions": [
             "W"
         ],
