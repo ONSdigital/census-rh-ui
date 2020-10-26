@@ -37,6 +37,14 @@ class View:
         request['client_ip'] = request.headers.get('X-Forwarded-For', None)
 
     @staticmethod
+    def single_client_ip(request):
+        if request['client_ip']:
+            single_ip = request['client_ip'].split(',', 1)[0]
+        else:
+            single_ip = ''
+        return single_ip
+
+    @staticmethod
     def log_entry(request, endpoint):
         method = request.method
         logger.info(f"received {method} on endpoint '{endpoint}'",
@@ -363,15 +371,14 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def request_fulfilment_sms(request, case_id, tel_no,
-                                     fulfilment_code):
+    async def request_fulfilment_sms(request, case_id, tel_no, fulfilment_code_array):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
             'telNo': tel_no,
-            'fulfilmentCode': fulfilment_code,
+            'fulfilmentCode': fulfilment_code_array,
             'dateTime': datetime.now(timezone.utc).isoformat(),
-            'client_ip': request['client_ip']
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
         return await View._make_request(request,
@@ -381,14 +388,15 @@ class RHService(View):
                                         request_json=fulfilment_json)
 
     @staticmethod
-    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code):
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code_array):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
             'forename': first_name,
             'surname': last_name,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'fulfilmentCode': fulfilment_code_array,
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'
         return await View._make_request(request,
