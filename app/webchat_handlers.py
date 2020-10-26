@@ -172,7 +172,7 @@ class WebChat(WebChat):
 
         context = {
             'screen_name': data.get('screen_name'),
-            'display_language': 'en',
+            'display_language': locale,
             'country': data.get('country'),
             'query': data.get('query'),
             'display_region': display_region,
