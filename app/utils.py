@@ -376,7 +376,7 @@ class RHService(View):
         fulfilment_json = {
             'caseId': case_id,
             'telNo': tel_no,
-            'fulfilmentCode': fulfilment_code_array,
+            'fulfilmentCodes': fulfilment_code_array,
             'dateTime': datetime.now(timezone.utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
@@ -394,7 +394,7 @@ class RHService(View):
             'caseId': case_id,
             'forename': first_name,
             'surname': last_name,
-            'fulfilmentCode': fulfilment_code_array,
+            'fulfilmentCodes': fulfilment_code_array,
             'dateTime': datetime.now(timezone.utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
