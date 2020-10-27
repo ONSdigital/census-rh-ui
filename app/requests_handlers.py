@@ -11,7 +11,7 @@ from . import (MOBILE_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import SessionTimeout
+from .exceptions import SessionTimeout, TooManyRequests
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
     FlashMessage, RHService, ProcessName
 
@@ -336,7 +336,10 @@ class RequestCodeConfirmMobile(RequestCommon):
                                                            attributes['mobile_number'],
                                                            fulfilment_code_array)
                 except (KeyError, ClientResponseError) as ex:
-                    raise ex
+                    if ex.status == 429:
+                        raise TooManyRequests(request_type)
+                    else:
+                        raise ex
 
                 raise HTTPFound(
                     request.app.router['RequestCodeCodeSentSMS:get'].url_for(request_type=request_type,
@@ -587,7 +590,10 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                             attributes['last_name'],
                                                             fulfilment_code_array)
                 except (KeyError, ClientResponseError) as ex:
-                    raise ex
+                    if ex.status == 429:
+                        raise TooManyRequests(request_type)
+                    else:
+                        raise ex
 
                 if request_type == 'paper-form':
                     if 'request-name-address-large-print' in data:
