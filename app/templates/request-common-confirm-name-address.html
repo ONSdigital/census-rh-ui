@@ -9,6 +9,7 @@
 {%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
 
 {%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
+{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
 
 {%- set form =  {
     'method': 'POST',
@@ -77,7 +78,7 @@
 
     {%- call onsQuestion({ 'title': question_title }) -%}
 
-        <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
+        <p>{{ first_name }} {{ last_name }}{%- if roomNumber -%}, {{ roomNumber }}{%- endif -%}<br>
             {{ addressLine1 }}<br>
             {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
             {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
@@ -85,7 +86,11 @@
             {{ postcode }}
         </p>
 
-        <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+        <p><a href="{{ request_common_enter_name_link }}">{{ _('Change name') }}</a>
+            {%- if roomNumber -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a>
+            {%- elif (case_type == 'CE' and address_level == 'U') -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a>
+            {%- endif -%}
+        </p>
 
         {{
             onsRadios({

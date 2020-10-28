@@ -7,6 +7,8 @@
 {% from 'components/button/_macro.njk' import onsButton %}
 {% from 'components/radios/_macro.njk' import onsRadios %}
 
+{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='requests', sub_user_journey=sub_user_journey) -%}
+
 {% set form =  {
     'method': 'POST',
     'attributes': {
@@ -43,12 +45,21 @@
     }) %}
 
     <p class="rh-address-display">
+        {% if roomNumber %}{{ roomNumber }}<br>{% endif %}
         {{ addressLine1 }}<br>
         {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
         {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
         {% if townName %}{{ townName }}<br>{% endif %}
         {{ postcode }}
     </p>
+
+{%- if censusAddressType == 'CE' -%}
+    {%- if roomNumber -%}
+        <p><a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a></p>
+    {%- else -%}
+        <p><a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a></p>
+    {%- endif -%}
+{%- endif -%}
 
 {% if 'address' in field_messages_dict %}
     {{

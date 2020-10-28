@@ -463,6 +463,11 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
             'page_title': page_title,
             'display_region': display_region,
@@ -477,7 +482,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             'townName': attributes['townName'],
             'postcode': attributes['postcode'],
             'case_type': attributes['case_type'],
-            'address_level': attributes['address_level']
+            'address_level': attributes['address_level'],
+            'roomNumber': room_number
         }
 
     @aiohttp_jinja2.template('request-common-confirm-name-address.html')
@@ -515,6 +521,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-address-confirmation'))
+
+            try:
+                room_number = attributes['roomNumber']
+            except KeyError:
+                room_number = None
+
             return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -529,7 +541,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
         if name_address_confirmation == 'yes':
@@ -582,11 +595,35 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         'fulfilmentCode']
 
                 try:
-                    await RHService.request_fulfilment_post(request,
-                                                            attributes['case_id'],
-                                                            attributes['first_name'],
-                                                            attributes['last_name'],
-                                                            attributes['fulfilmentCode'])
+                    room_number = attributes['roomNumber']
+                except KeyError:
+                    room_number = None
+
+                if room_number:
+                    if len(attributes['last_name']) < 48:
+                        last_name = attributes['last_name'] + ', ' + room_number
+                        title = None
+                    else:
+                        last_name = attributes['last_name']
+                        title = room_number
+                else:
+                    last_name = attributes['last_name']
+                    title = None
+
+                try:
+                    if title:
+                        await RHService.request_fulfilment_post(request,
+                                                                attributes['case_id'],
+                                                                attributes['first_name'],
+                                                                last_name,
+                                                                attributes['fulfilmentCode'],
+                                                                title)
+                    else:
+                        await RHService.request_fulfilment_post(request,
+                                                                attributes['case_id'],
+                                                                attributes['first_name'],
+                                                                last_name,
+                                                                attributes['fulfilmentCode'])
                 except (KeyError, ClientResponseError) as ex:
                     raise ex
 
@@ -630,6 +667,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
+
+            try:
+                room_number = attributes['roomNumber']
+            except KeyError:
+                room_number = None
+
             return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -644,7 +687,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -699,6 +743,11 @@ class RequestCodeCodeSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -713,7 +762,8 @@ class RequestCodeCodeSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -795,6 +845,11 @@ class RequestFormSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -809,7 +864,8 @@ class RequestFormSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -834,6 +890,11 @@ class RequestLargePrintSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -848,5 +909,6 @@ class RequestLargePrintSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }

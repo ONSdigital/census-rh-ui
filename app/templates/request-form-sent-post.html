@@ -8,7 +8,7 @@
     {%- set census_home_link = domain_url_en -%}
 {%- endif -%}
 
-{%- set display_name = first_name + ' ' + last_name -%}
+{%- set display_name -%}{{ first_name + ' ' + last_name }} {%- if roomNumber -%} {{ ', ' + roomNumber }}{% endif %}{%- endset -%}
 {%- set display_address -%}{{ addressLine1 }}, {% if addressLine2 %}{{ addressLine2 }}{% elif addressLine3 %}{{ addressLine3 }}{% elif townName %}{{ townName }}{% elif postcode %}{{ postcode }}{% endif %}{%- endset -%}
 
 {%- from 'components/button/_macro.njk' import onsButton -%}
