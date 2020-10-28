@@ -419,26 +419,6 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def put_modify_address(request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await View._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        request_json=case_json)
-
-    @staticmethod
     async def post_case_create(request, address):
         rhsvc_url = request.app['RHSVC_URL']
         rhsvc_auth = request.app['RHSVC_AUTH']
