@@ -216,6 +216,7 @@ class RequestCodeEnterMobile(RequestCommon):
                         client_ip=request['client_ip'])
 
             attributes['mobile_number'] = mobile_number
+            attributes['submitted_mobile_number'] = data['request-mobile-number']
             session = await get_session(request)
             session['attributes'] = attributes
 
