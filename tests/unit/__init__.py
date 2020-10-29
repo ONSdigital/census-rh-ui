@@ -340,10 +340,20 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
-        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+        with open('tests/test_data/address_index/uprn_valid_hh.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result = f
+            self.ai_uprn_result_hh = f
+
+        with open('tests/test_data/address_index/uprn_valid_spg.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_spg = f
+
+        with open('tests/test_data/address_index/uprn_valid_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_ce = f
 
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
@@ -397,6 +407,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
+
+        self.content_common_ce_room_number_text = 'Room A8'
+        self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
+        self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_change_link_cy = 'Change flat or room number'
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Register an address'
@@ -1065,14 +1083,20 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_code_sent_post_title_ce_en = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with a new individual access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_manager_en = \
             'The letter with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_household_en = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
         self.content_request_code_sent_post_title_cy = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_cy = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_individual_cy = \
             'The letter with a new individual access code should arrive soon for you to start the census'
@@ -1712,6 +1736,12 @@ class RHTestCase(AioHTTPTestCase):
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_large_print_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_title_ce_en = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
@@ -1720,6 +1750,14 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
