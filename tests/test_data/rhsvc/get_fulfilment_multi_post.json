@@ -1,40 +1,18 @@
 [
-   {
-       "caseType": "HH",
-       "deliveryChannel": "POST",
-       "description": "Household Unique Access Code for England",
-       "fieldDistributionCode": "",
-       "fulfilmentCode": "UACIT1",
-       "handler": "NOTIFY",
-       "initialContactCode": "",
-       "language": "E",
-       "regions": [
-           "W"
-       ],
-       "reminderContactCode": "",
-       "requestChannels": [
-           "CC",
-           "FIELD",
-           "RH"
-       ]
-   },
     {
-        "caseType": "HH",
-        "deliveryChannel": "POST",
-        "description": "Household Unique Access Code for England",
-        "fieldDistributionCode": "",
-        "fulfilmentCode": "UACIT2",
-        "handler": "NOTIFY",
-        "initialContactCode": "",
-        "language": "W",
+        "fulfilmentCode": "P_UAC_UACHHP2B",
+        "productGroup": "UAC",
+        "description": "Household Unique Access Code for Wales (English/Welsh - Bilingual) via paper",
+        "language": "B",
+        "caseTypes": [
+            "HH",
+            "SPG"
+        ],
+        "individual": false,
         "regions": [
             "W"
         ],
-        "reminderContactCode": "",
-        "requestChannels": [
-            "CC",
-            "FIELD",
-            "RH"
-        ]
+        "deliveryChannel": "POST",
+        "handler": "PRINT"
     }
 ]
