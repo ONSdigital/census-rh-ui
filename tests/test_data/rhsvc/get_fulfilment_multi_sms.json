@@ -1,40 +1,34 @@
 [
-   {
-       "caseType": "HH",
-       "deliveryChannel": "SMS",
-       "description": "Household Unique Access Code for England",
-       "fieldDistributionCode": "",
-       "fulfilmentCode": "UACIT1",
-       "handler": "NOTIFY",
-       "initialContactCode": "",
-       "language": "eng",
-       "regions": [
-           "W"
-       ],
-       "reminderContactCode": "",
-       "requestChannels": [
-           "CC",
-           "FIELD",
-           "RH"
-       ]
-   },
     {
-        "caseType": "HH",
-        "deliveryChannel": "SMS",
-        "description": "Household Unique Access Code for England",
-        "fieldDistributionCode": "",
-        "fulfilmentCode": "UACIT2",
-        "handler": "NOTIFY",
-        "initialContactCode": "",
-        "language": "wel",
+        "fulfilmentCode": "UACHHT2",
+        "productGroup": "UAC",
+        "description": "Household Unique Access Code for Wales (in English) via SMS",
+        "language": "E",
+        "caseTypes": [
+            "HH",
+            "SPG"
+        ],
+        "individual": false,
         "regions": [
             "W"
         ],
-        "reminderContactCode": "",
-        "requestChannels": [
-            "CC",
-            "FIELD",
-            "RH"
-        ]
+        "deliveryChannel": "SMS",
+        "handler": "NOTIFY"
+    },
+    {
+        "fulfilmentCode": "UACHHT2W",
+        "productGroup": "UAC",
+        "description": "Household Unique Access Code for Wales (in Welsh) via SMS",
+        "language": "W",
+        "caseTypes": [
+            "HH",
+            "SPG"
+        ],
+        "individual": false,
+        "regions": [
+            "W"
+        ],
+        "deliveryChannel": "SMS",
+        "handler": "NOTIFY"
     }
 ]
