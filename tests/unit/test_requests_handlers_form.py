@@ -1019,7 +1019,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_hh_ew_w(self):
@@ -1030,7 +1030,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_hh_cy(self):
@@ -1041,7 +1041,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_hh_ni(self):
@@ -1052,7 +1052,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_spg_ew_e(self):
@@ -1063,7 +1063,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_spg_ew_w(self):
@@ -1074,7 +1074,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_spg_cy(self):
@@ -1085,7 +1085,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_spg_ni(self):
@@ -1096,7 +1096,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household')
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_e(self):
@@ -1109,7 +1109,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_resident_or_manager_en, 'en')
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ew_w(self):
@@ -1122,7 +1122,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_resident_or_manager_en, 'en')
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_cy(self):
@@ -1135,7 +1135,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_resident_or_manager_cy, 'cy')
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_select_resident_ce_m_ni(self):
@@ -1148,7 +1148,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_resident_or_manager_ni, 'ni')
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_e(self):
@@ -1159,7 +1159,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_ce_r_ew_w(self):
@@ -1170,7 +1170,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_ce_r_cy(self):
@@ -1181,7 +1181,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_empty_ce_r_ni(self):
@@ -1192,7 +1192,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                                              'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+            self.post_request_paper_form_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_hh_ew_e(self):
@@ -1204,7 +1204,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_hh_ew_w(self):
@@ -1216,7 +1216,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_hh_cy(self):
@@ -1228,7 +1228,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_hh_ni(self):
@@ -1240,7 +1240,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_spg_ew_e(self):
@@ -1252,7 +1252,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_spg_ew_w(self):
@@ -1264,7 +1264,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_spg_cy(self):
@@ -1276,7 +1276,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_spg_ni(self):
@@ -1288,7 +1288,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'household', 'SPG')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household')
+            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_e(self):
@@ -1302,7 +1302,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ew_w(self):
@@ -1316,7 +1316,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_cy(self):
@@ -1330,7 +1330,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_select_resident_ce_m_ni(self):
@@ -1344,7 +1344,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_e(self):
@@ -1356,7 +1356,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_ce_r_ew_w(self):
@@ -1368,7 +1368,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_ce_r_cy(self):
@@ -1380,7 +1380,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_invalid_ce_r_ni(self):
@@ -1392,7 +1392,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_paper_form_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
     async def test_request_paper_form_confirm_name_address_option_no_hh_ew_e(self):

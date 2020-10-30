@@ -1179,7 +1179,8 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_form_request_cancelled_title_en, contents)
 
-    async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data, user_type):
+    async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data, user_type,
+                                                                            case_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
@@ -1190,7 +1191,12 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
-            self.check_text_confirm_name_address(display_region, contents, user_type, check_error=True)
+            if case_type == 'CE':
+                self.check_text_confirm_name_address(display_region, contents, user_type,
+                                                     check_error=True, check_ce=True)
+            else:
+                self.check_text_confirm_name_address(display_region, contents, user_type,
+                                                     check_error=True, check_ce=False)
 
     async def check_post_confirm_name_address_error_from_get_fulfilment(self, url, display_region,
                                                                         case_type, region, product_group, individual):

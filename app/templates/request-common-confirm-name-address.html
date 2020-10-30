@@ -88,7 +88,7 @@
 
         <p><a href="{{ request_common_enter_name_link }}">{{ _('Change name') }}</a>
             {%- if roomNumber -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a>
-            {%- elif (case_type == 'CE' and address_level == 'U') -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a>
+            {%- elif (case_type == 'CE') -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a>
             {%- endif -%}
         </p>
 
