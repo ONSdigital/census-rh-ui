@@ -40,7 +40,7 @@ class View:
     def single_client_ip(request):
         if request['client_ip']:
             single_ip = request['client_ip'].split(',', 1)[0]
-        elif 'localhost' in request.headers.get('Origin', None):
+        elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
             single_ip = '127.0.0.1'
         else:
             single_ip = ''
