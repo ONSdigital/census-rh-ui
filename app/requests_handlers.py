@@ -311,9 +311,9 @@ class RequestCodeConfirmMobile(RequestCommon):
                 fulfilment_individual = 'false'
 
             if display_region == 'cy':
-                fulfilment_language = 'wel'
+                fulfilment_language = 'W'
             else:
-                fulfilment_language = 'eng'
+                fulfilment_language = 'E'
 
             logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
                         f"individual={fulfilment_individual}",
@@ -558,9 +558,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 fulfilment_individual = 'false'
 
             if display_region == 'cy':
-                fulfilment_language = 'wel'
+                fulfilment_language = 'W'
             else:
-                fulfilment_language = 'eng'
+                fulfilment_language = 'E'
 
             if request_type == 'paper-form':
 
