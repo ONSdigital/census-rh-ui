@@ -11,7 +11,7 @@ from . import (MOBILE_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import SessionTimeout
+from .exceptions import SessionTimeout, TooManyRequests
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
     FlashMessage, RHService, ProcessName
 
@@ -319,25 +319,28 @@ class RequestCodeConfirmMobile(RequestCommon):
                         f"individual={fulfilment_individual}",
                         client_ip=request['client_ip'])
 
+            fulfilment_code_array = []
+
             try:
                 available_fulfilments = await RHService.get_fulfilment(
                     request, attributes['case_type'], attributes['region'], 'SMS', 'UAC', fulfilment_individual)
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
-                            attributes['fulfilmentCode'] = fulfilment[
-                                'fulfilmentCode']
+                            fulfilment_code_array.append(fulfilment['fulfilmentCode'])
                 else:
-                    attributes['fulfilmentCode'] = available_fulfilments[0][
-                        'fulfilmentCode']
+                    fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
 
                 try:
                     await RHService.request_fulfilment_sms(request,
                                                            attributes['case_id'],
                                                            attributes['mobile_number'],
-                                                           attributes['fulfilmentCode'])
+                                                           fulfilment_code_array)
                 except (KeyError, ClientResponseError) as ex:
-                    raise ex
+                    if ex.status == 429:
+                        raise TooManyRequests(request_type)
+                    else:
+                        raise ex
 
                 raise HTTPFound(
                     request.app.router['RequestCodeCodeSentSMS:get'].url_for(request_type=request_type,
@@ -563,6 +566,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         f"region={attributes['region']}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'])
 
+            fulfilment_code_array = []
+
             try:
                 available_fulfilments = await RHService.get_fulfilment(
                     request,
@@ -575,20 +580,21 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
-                            attributes['fulfilmentCode'] = fulfilment[
-                                'fulfilmentCode']
+                            fulfilment_code_array.append(fulfilment['fulfilmentCode'])
                 else:
-                    attributes['fulfilmentCode'] = available_fulfilments[0][
-                        'fulfilmentCode']
+                    fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
 
                 try:
                     await RHService.request_fulfilment_post(request,
                                                             attributes['case_id'],
                                                             attributes['first_name'],
                                                             attributes['last_name'],
-                                                            attributes['fulfilmentCode'])
+                                                            fulfilment_code_array)
                 except (KeyError, ClientResponseError) as ex:
-                    raise ex
+                    if ex.status == 429:
+                        raise TooManyRequests(request_type)
+                    else:
+                        raise ex
 
                 if request_type == 'paper-form':
                     if 'request-name-address-large-print' in data:
