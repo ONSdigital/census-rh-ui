@@ -4856,10 +4856,6 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_access_code_confirm_name_address_ni, 'ni')
 
-
-
-
-
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_manager_add_room_early_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
@@ -5087,10 +5083,6 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True)
-
-
-
-
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_manager_add_room_late_ce_m_ew_e(self):
