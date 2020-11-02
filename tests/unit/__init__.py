@@ -411,10 +411,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_text = 'Room A8'
         self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
         self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
+        self.content_common_enter_roon_number_title_en = 'What is your flat or room number?'
         # TODO: add welsh translation
         self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
         # TODO: add welsh translation
         self.content_common_ce_room_number_change_link_cy = 'Change flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_roon_number_title_cy = 'What is your flat or room number?'
+
+        self.common_room_number_input_valid = {
+            'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
+        }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Register an address'
@@ -1085,6 +1092,9 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_code_sent_post_title_ce_en = \
             'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_code_sent_post_title_ce_with_room_en = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with a new individual access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_manager_en = \
@@ -1097,6 +1107,10 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_title_ce_cy = \
             'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_with_room_cy = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_individual_cy = \
             'The letter with a new individual access code should arrive soon for you to start the census'
@@ -1397,6 +1411,25 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
+        
+        self.get_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
 
         self.post_request_access_code_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
@@ -1694,6 +1727,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='paper-form'
         )
 
+        self.get_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
         self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='paper-form'
         )
@@ -1739,8 +1791,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_form_sent_post_title_ce_en = \
             'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_ce_with_room_en = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_large_print_ce_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
@@ -1755,8 +1813,16 @@ class RHTestCase(AioHTTPTestCase):
             'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_with_room_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_ce_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
