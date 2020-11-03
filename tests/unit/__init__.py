@@ -474,6 +474,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
+        self.content_common_429_error_uac_title_en = \
+            'You have reached the maximum number of access codes you can request online'
+        self.content_common_429_error_form_title_en = \
+            'You have reached the maximum number of paper questionnaires you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_uac_title_cy = \
+            'You have reached the maximum number of access codes you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_form_title_cy = \
+            'You have reached the maximum number of paper questionnaires you can request online'
+
         self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
         self.content_common_resident_or_manager_option_resident_en = 'Resident'
         self.content_common_resident_or_manager_description_resident_en = \
