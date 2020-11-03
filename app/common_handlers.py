@@ -719,6 +719,8 @@ class CommonEnterRoomNumber(CommonCommon):
 
         try:
             room_number = data['form-enter-room-number']
+            if room_number == '':
+                raise KeyError
             session['attributes']['roomNumber'] = room_number
             session.changed()
             try:
