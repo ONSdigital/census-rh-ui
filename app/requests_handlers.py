@@ -71,7 +71,7 @@ class RequestIndividualCode(RequestCommon):
             if request.cookies.get('RH_SESSION'):
                 session = await get_session(request)
                 attributes = session['attributes']
-                if attributes['case_type']:
+                if attributes['address_confirmed'] and attributes['address_confirmed'] == 'true':
                     logger.info('have session and case_type - directing to select method')
                     raise HTTPFound(
                         request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
