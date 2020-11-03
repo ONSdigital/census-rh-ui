@@ -1259,7 +1259,7 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('individual-code', display_region, 'POST', False))
-            self.assertLogEvent(cm, 'have session - directing to select method')
+            self.assertLogEvent(cm, 'have session and case_type - directing to select method')
             self.assertLogEvent(cm, self.build_url_log_entry('individual-code/select-method', display_region, 'GET',
                                                              False))
             self.assertEqual(response.status, 200)

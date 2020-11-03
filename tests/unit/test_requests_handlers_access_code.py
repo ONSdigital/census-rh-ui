@@ -5253,7 +5253,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_confirm_name_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ni(
+            self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
@@ -5316,7 +5317,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_confirm_name_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ni(
+            self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
