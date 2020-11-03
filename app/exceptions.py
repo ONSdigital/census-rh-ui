@@ -23,6 +23,13 @@ class SessionTimeout(Exception):
         self.sub_user_journey = sub_user_journey
 
 
+class TooManyRequests(Exception):
+    """Raised when users session expires in journeys requiring sessions"""
+    def __init__(self, sub_user_journey):
+        super().__init__()
+        self.sub_user_journey = sub_user_journey
+
+
 class ExerciseClosedError(Exception):
     """Raised when a user attempts to access an already ended CE"""
     def __init__(self, collection_exercise_id):

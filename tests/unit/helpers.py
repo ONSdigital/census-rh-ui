@@ -843,6 +843,27 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
+    async def check_post_confirm_mobile_error_429_from_request_fulfilment(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_aioresponses:
+
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_sms
+            mocked_aioresponses.post(self.rhsvc_cases_url +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=429)
+
+            response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_common_429_error_uac_title_cy, contents)
+            else:
+                self.assertIn(self.content_common_429_error_uac_title_en, contents)
+
     async def check_post_confirm_mobile_input_invalid_or_no_selection(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
@@ -1137,6 +1158,48 @@ class TestHelpers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
+
+    async def check_post_confirm_name_address_error_429_from_request_fulfilment_uac(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_aioresponses:
+
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_post
+            mocked_aioresponses.post(self.rhsvc_cases_url +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/post', status=429)
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_common_429_error_uac_title_cy, contents)
+            else:
+                self.assertIn(self.content_common_429_error_uac_title_en, contents)
+
+    async def check_post_confirm_name_address_error_429_from_request_fulfilment_form(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_aioresponses:
+
+            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_post
+            mocked_aioresponses.post(self.rhsvc_cases_url +
+                                     'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/post', status=429)
+
+            response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_common_429_error_form_title_cy, contents)
+            else:
+                self.assertIn(self.content_common_429_error_form_title_en, contents)
 
     async def assert_no_direct_access(self, url, display_region, method, data=None):
         with self.assertLogs('respondent-home', 'WARN') as cm:

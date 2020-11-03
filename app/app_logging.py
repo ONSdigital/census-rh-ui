@@ -2,10 +2,10 @@ import os
 import sys
 import logging
 import structlog
+import time
 from collections import OrderedDict
 from pythonjsonlogger import jsonlogger
 
-date_format = '%Y-%m-%dT%H:%M:%S'
 service = 'rhui'
 
 # Standard fields on logging records that we don't want directly inserted into the data dictionary
@@ -19,6 +19,21 @@ ignored_fields = ('args', 'asctime', 'created', 'exc_info', 'exc_text',
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     lib_dir = os.path.normpath(os.path.split(sys.executable)[0] + '/..')
     cw_dir = os.getcwd()
+
+    def formatTime(self, record, datefmt=None):
+
+        # Return the creation time of the specified LogRecord as formatted text, overriding the
+        # superclass version to ensure that millisecond granularity is recorded.
+
+        # The superclass version only has second granularity since that is all time.strftime provides.
+        # This method combines the millisecond parts of the time, with the formatted time (to second granularity)
+        # to provide a millisecond formatted result.
+
+        date_format = '%Y-%m-%dT%H:%M:%S'
+        msec_format = '%s.%03d'
+        ct = self.converter(record.created)
+        t = time.strftime(date_format, ct)
+        return msec_format % (t, record.msecs)
 
     def add_fields(self, log_record, record, message_dict):
         def map_into(dict_from, old_name, dict_into, new_name):
@@ -123,7 +138,7 @@ def logger_initial_config(log_level=os.getenv('LOG_LEVEL', 'INFO'),
                           ext_log_level=os.getenv('EXT_LOG_LEVEL', 'WARN')):
     format = '(message) (asctime) (levelname) (pathname) (lineno) (module) (funcName)'
     json_handler = logging.StreamHandler(sys.stdout)
-    json_handler.setFormatter(CustomJsonFormatter(format, datefmt=date_format))
+    json_handler.setFormatter(CustomJsonFormatter(format))
 
     logging.basicConfig(
         handlers=[json_handler],
