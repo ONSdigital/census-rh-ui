@@ -432,7 +432,6 @@ class CommonConfirmAddress(CommonCommon):
                     uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'],
                                                                 session['attributes'])
                     session['case'] = uprn_return
-                    session['attributes']['address_confirmed'] = 'true'
                     session.changed()
 
                     self.validate_case(uprn_return)
@@ -473,7 +472,6 @@ class CommonConfirmAddress(CommonCommon):
                     session['attributes']['region'] = uprn_return['region']
                     session['attributes']['case_type'] = uprn_return['caseType']
                     session['attributes']['address_level'] = uprn_return['addressLevel']
-                    session['attributes']['address_confirmed'] = 'true'
                     session.changed()
 
                     await self.requests_confirm_address_routing(request, user_journey, sub_user_journey,
