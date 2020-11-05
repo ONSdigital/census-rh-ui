@@ -375,12 +375,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+        self.content_common_enter_address_error_cy = "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_empty_cy = 'You have not entered a postcode'
+        self.content_common_enter_address_error_empty_cy = "Nid ydych wedi nodi cod post"
 
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
@@ -1821,10 +1819,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_cy = 'Nid ydych wedi nodi cod post'
+        self.content_support_centre_enter_postcode_error_invalid_cy = \
+            "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
@@ -1934,20 +1931,16 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
             "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;Ar gau"
 
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
-            'Car park, including disabled parking'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_two_public_parking_cy = 'Disabled parking'
+            'Maes parcio, gan gynnwys parcio anabl'
+        self.content_support_centre_list_of_centres_result_two_public_parking_cy = "Parcio anabl"
         self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Maes parcio'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_level_access_cy = 'Level access into building entrance'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Wheelchair access'
+        self.content_support_centre_list_of_centres_result_one_level_access_cy = \
+            "Mynediad gwastad i mewn i\\\'r adeilad"
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Mynediad i gadeiriau olwyn'
         self.content_support_centre_list_of_centres_result_one_disability_aware_cy = \
             'Staff yn meddu ar ymwybyddiaeth o anableddau'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'System dolen glywed'
 
         # Test Data
 
