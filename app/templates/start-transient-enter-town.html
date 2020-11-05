@@ -1,0 +1,61 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
+
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/input/_macro.njk' import onsInput -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('StartTransientEnterTownName:post', display_region=display_region)
+    }
+} -%}
+
+{%- if 'form-enter-town-name' in field_messages_dict -%}
+    {%- set error_town_name = {'text': _('Enter your nearest town or city')} -%}
+{%- endif -%}
+
+{%- if 'after-census-day' == 'true' -%}
+    {%- set question_title = _('What is the nearest town or city to where you were living on Sunday 21 March 2021?') -%}
+{%- else -%}
+    {%- set question_title = _('What is the nearest town or city to where you will be living on Sunday 21 March 2021?') -%}
+{%- endif -%}
+
+{%- block main -%}
+
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- call onsQuestion({
+        'title': question_title,
+        'useFieldset': true
+    }) -%}
+
+    {{
+        onsInput({
+            'id': 'town-name',
+            'type': 'text',
+            'classes': 'u-mb-m',
+            'label': {
+                'text': _('Enter a town or city and select from results')
+            },
+            'name': 'form-enter-town-name',
+            'error': error_town_name,
+        })
+    }}
+
+    {%- endcall -%}
+
+    {{
+        onsButton({
+            'text': 'Continue',
+            'classes': 'u-mt-l',
+            'name': 'action[save_continue]'
+        })
+    }}
+
+{%- endblock -%}

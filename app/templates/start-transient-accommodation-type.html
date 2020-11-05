@@ -1,0 +1,76 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
+
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('StartTransientAccommodationType:post', display_region=display_region)
+    }
+} -%}
+
+{%- if 'accommodation-type' in field_messages_dict -%}
+    {%- set error_accommodation_type = {'text': 'Select an answer'} -%}
+{%- endif -%}
+
+{%- set radio_options = [
+        {
+            'id': 'barge',
+            'label': {
+                'text': _('Barge or boat')
+            },
+            'value': _('Barge or boat')
+        },
+        {
+            'id': 'caravan',
+            'label': {
+                'text': _('Caravan or live-in vehicle'),
+                'description': _('For example, a motorhome, van or campervan')
+            },
+            'value': _('Caravan or live-in vehicle')
+        },
+        {
+            'id': 'tent',
+            'label': {
+                'text': _('Tent or temporary structure')
+            },
+            'value': _('Tent or temporary structure')
+        }
+    ]
+-%}
+
+{%- block main -%}
+
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- call onsQuestion({
+        'title': _('Which of the following best describes your type of accommodation?'),
+        'useFieldset': true
+    }) -%}
+
+        {{
+            onsRadios({
+                'name': 'accommodation-type',
+                'radios': radio_options,
+                'error': error_accommodation_type
+            })
+        }}
+
+    {%- endcall -%}
+
+    {{
+        onsButton({
+            'text': 'Continue',
+            'classes': 'u-mt-l',
+            'name': 'action[save_continue]'
+        })
+    }}
+
+{%- endblock -%}

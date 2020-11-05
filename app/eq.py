@@ -137,16 +137,28 @@ class EqPayloadConstructor(object):
         :return: string of a single address attribute or a combination of two
         """
         display_address = ''
-        for key in [
-                'addressLine1', 'addressLine2', 'addressLine3', 'townName',
-                'postcode'
-        ]:  # retain order of address attributes
-            val = sample_attributes.get(key)
-            if val:
-                prev_display = display_address
-                display_address = f'{prev_display}, {val}' if prev_display else val
-                if prev_display:
-                    break  # break once two address attributes have been added
+
+        try:
+            transient_town_name = sample_attributes['transientTownName']
+            transient_accommodation_type = sample_attributes['transientAccommodationType']
+            if sample_attributes['language'] == 'cy':
+                # TODO: Add Welsh Translation
+                display_address = transient_accommodation_type + ' near ' + transient_town_name
+            else:
+                display_address = transient_accommodation_type + ' near ' + transient_town_name
+
+        except KeyError:
+            for key in [
+                    'addressLine1', 'addressLine2', 'addressLine3', 'townName',
+                    'postcode'
+            ]:  # retain order of address attributes
+                val = sample_attributes.get(key)
+                if val:
+                    prev_display = display_address
+                    display_address = f'{prev_display}, {val}' if prev_display else val
+                    if prev_display:
+                        break  # break once two address attributes have been added
+
         if not display_address:
             raise InvalidEqPayLoad(
                 'Displayable address not in sample attributes')
