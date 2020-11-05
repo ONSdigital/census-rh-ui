@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-05 15:54+0100\n"
+"POT-Creation-Date: 2020-10-20 15:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: app/templates/common-enter-address.html:85
 #: app/templates/common-resident-or-manager.html:78
 #: app/templates/common-select-address.html:75
-#: app/templates/request-code-confirm-mobile.html:72
+#: app/templates/request-code-confirm-mobile.html:62
 #: app/templates/request-code-enter-mobile.html:66
 #: app/templates/request-code-select-method.html:120
 #: app/templates/request-common-confirm-name-address.html:123
@@ -173,7 +173,7 @@ msgid "UK postcode"
 msgstr ""
 
 #: app/templates/common-enter-address.html:62
-#: app/templates/support_centre_enter_postcode.html:38
+#: app/templates/support_centre_enter_postcode.html:17
 msgid "Enter a valid UK postcode"
 msgstr ""
 
@@ -287,62 +287,66 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:23
+#: app/templates/request-code-code-sent-sms.html:21
 #, python-format
 msgid "We have sent a text to %(number)s"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:26
+#: app/templates/request-code-code-sent-sms.html:24
 msgid ""
 "The text message with a new individual access code should arrive soon for"
 " you to start your census"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:28
+#: app/templates/request-code-code-sent-sms.html:26
 msgid ""
 "The text message with a new manager access code should arrive soon for "
 "you to start your census"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:30
+#: app/templates/request-code-code-sent-sms.html:28
 msgid ""
 "The text message with a new household access code should arrive soon for "
 "you to start your census"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:35
+#: app/templates/request-code-code-sent-sms.html:41
+msgid "The text will be sent from <strong>Census2021</strong>"
+msgstr ""
+
+#: app/templates/request-code-code-sent-sms.html:45
 msgid "Didn't receive a text?"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:38
+#: app/templates/request-code-code-sent-sms.html:48
 #, python-format
 msgid ""
 "It can take a few minutes for the text to arrive. If it doesn't arrive, "
 "you can %(open)srequest a new access code%(close)s."
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:41
+#: app/templates/request-code-code-sent-sms.html:51
 msgid "Ready to start your census online?"
 msgstr ""
 
-#: app/templates/request-code-code-sent-sms.html:46 app/templates/start.html:89
+#: app/templates/request-code-code-sent-sms.html:56 app/templates/start.html:89
 msgid "Start census"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:24
+#: app/templates/request-code-confirm-mobile.html:21
 msgid "Yes, send the text"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:31
+#: app/templates/request-code-confirm-mobile.html:28
 msgid "No, I need to change it"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:45
-msgid "Is this mobile phone number correct?"
+#: app/templates/request-code-confirm-mobile.html:36
+msgid "Check and confirm your mobile phone number"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:56
-msgid "Check and confirm your mobile phone number"
+#: app/templates/request-code-confirm-mobile.html:46
+msgid "Is this mobile phone number correct?"
 msgstr ""
 
 #: app/templates/request-code-enter-mobile.html:24
@@ -414,7 +418,7 @@ msgstr ""
 
 #: app/templates/request-code-select-method.html:85
 #: app/templates/start.html:145
-#: app/templates/support_centre_list_of_centres.html:52
+#: app/templates/support_centre_list_of_centres.html:53
 msgid "Hide this"
 msgstr ""
 
@@ -643,140 +647,148 @@ msgstr ""
 msgid "Web chat"
 msgstr ""
 
-#: app/templates/support_centre_enter_postcode.html:22
+#: app/templates/support_centre_enter_postcode.html:26
 msgid "Find a support centre"
 msgstr ""
 
-#: app/templates/support_centre_enter_postcode.html:24
+#: app/templates/support_centre_enter_postcode.html:28
 msgid "To find your nearest support centre, we need your postcode."
 msgstr ""
 
-#: app/templates/support_centre_enter_postcode.html:34
-#: app/templates/support_centre_enter_postcode.html:50
+#: app/templates/support_centre_enter_postcode.html:37
 msgid "Enter your postcode"
 msgstr ""
 
-#: app/templates/support_centre_enter_postcode.html:59
+#: app/templates/support_centre_enter_postcode.html:46
 msgid "Find"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:11
+#: app/templates/support_centre_list_of_centres.html:10
 #, python-format
 msgid "Support centres near %(highlight_postcode)s"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:40
+#: app/templates/support_centre_list_of_centres.html:22
+#, python-format
+msgid "%(distance_in_miles)s miles away"
+msgstr ""
+
+#: app/templates/support_centre_list_of_centres.html:34
+msgid "Find on Google Maps"
+msgstr ""
+
+#: app/templates/support_centre_list_of_centres.html:41
 msgid "Telephone: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:43
+#: app/templates/support_centre_list_of_centres.html:44
 msgid "Email: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:50
+#: app/templates/support_centre_list_of_centres.html:51
 msgid "Opening times and facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:56
+#: app/templates/support_centre_list_of_centres.html:57
 msgid "Opening times"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:58
+#: app/templates/support_centre_list_of_centres.html:59
 msgid "Monday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:64
-#: app/templates/support_centre_list_of_centres.html:73
-#: app/templates/support_centre_list_of_centres.html:82
-#: app/templates/support_centre_list_of_centres.html:91
-#: app/templates/support_centre_list_of_centres.html:100
-#: app/templates/support_centre_list_of_centres.html:109
-#: app/templates/support_centre_list_of_centres.html:118
-#: app/templates/support_centre_list_of_centres.html:127
-#: app/templates/support_centre_list_of_centres.html:136
-#: app/templates/support_centre_list_of_centres.html:145
-#: app/templates/support_centre_list_of_centres.html:154
-#: app/templates/support_centre_list_of_centres.html:163
+#: app/templates/support_centre_list_of_centres.html:65
+#: app/templates/support_centre_list_of_centres.html:74
+#: app/templates/support_centre_list_of_centres.html:83
+#: app/templates/support_centre_list_of_centres.html:92
+#: app/templates/support_centre_list_of_centres.html:101
+#: app/templates/support_centre_list_of_centres.html:110
+#: app/templates/support_centre_list_of_centres.html:119
+#: app/templates/support_centre_list_of_centres.html:128
+#: app/templates/support_centre_list_of_centres.html:137
+#: app/templates/support_centre_list_of_centres.html:146
+#: app/templates/support_centre_list_of_centres.html:155
+#: app/templates/support_centre_list_of_centres.html:164
 msgid "Closed"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:67
+#: app/templates/support_centre_list_of_centres.html:68
 msgid "Tuesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:76
+#: app/templates/support_centre_list_of_centres.html:77
 msgid "Wednesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:85
+#: app/templates/support_centre_list_of_centres.html:86
 msgid "Thursday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:94
+#: app/templates/support_centre_list_of_centres.html:95
 msgid "Friday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:104
 msgid "Saturday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:113
 msgid "Sunday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:122
 msgid "Census Saturday, 20 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:131
 msgid "Census Day, 21 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:140
 msgid "Good Friday, 2 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:149
 msgid "Easter Monday, 5 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:158
 msgid "May Bank Holiday, 3 May"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:168
+#: app/templates/support_centre_list_of_centres.html:169
 msgid "Centre facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:172
+#: app/templates/support_centre_list_of_centres.html:173
 msgid "Car park, including disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:174
+#: app/templates/support_centre_list_of_centres.html:175
 msgid "Car park"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:176
+#: app/templates/support_centre_list_of_centres.html:177
 msgid "Disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:178
+#: app/templates/support_centre_list_of_centres.html:179
 msgid "Level access into building entrance"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:179
+#: app/templates/support_centre_list_of_centres.html:180
 msgid "Wheelchair access"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:180
+#: app/templates/support_centre_list_of_centres.html:181
 msgid "Staff are disability aware"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:181
+#: app/templates/support_centre_list_of_centres.html:182
 msgid "Waiting room seating"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:182
+#: app/templates/support_centre_list_of_centres.html:183
 msgid "Hearing loop system"
 msgstr ""
 

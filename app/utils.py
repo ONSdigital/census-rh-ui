@@ -37,6 +37,16 @@ class View:
         request['client_ip'] = request.headers.get('X-Forwarded-For', None)
 
     @staticmethod
+    def single_client_ip(request):
+        if request['client_ip']:
+            single_ip = request['client_ip'].split(',', 1)[0]
+        elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
+            single_ip = '127.0.0.1'
+        else:
+            single_ip = ''
+        return single_ip
+
+    @staticmethod
     def log_entry(request, endpoint):
         method = request.method
         logger.info(f"received {method} on endpoint '{endpoint}'",
@@ -120,36 +130,31 @@ class ProcessPostcode:
 
         if len(postcode) == 0:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('You have not entered a postcode')
+                raise InvalidDataErrorWelsh("Nid ydych wedi nodi cod post")
             else:
                 raise InvalidDataError('You have not entered a postcode')
 
         if not postcode.isalnum():
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode must not contain symbols')
+                raise InvalidDataErrorWelsh("Ni ddylai'r cod post gynnwys symbolau")
             else:
                 raise InvalidDataError('The postcode must not contain symbols')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode does not contain enough characters')
+                raise InvalidDataErrorWelsh("Nid yw'r cod post yn cynnwys digon o nodau")
             else:
                 raise InvalidDataError('The postcode does not contain enough characters')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode contains too many characters')
+                raise InvalidDataErrorWelsh("Mae'r cod post yn cynnwys gormod o nodau")
             else:
                 raise InvalidDataError('The postcode contains too many characters')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode is not a valid UK postcode')
+                raise InvalidDataErrorWelsh("Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('The postcode is not a valid UK postcode')
 
@@ -363,14 +368,14 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def request_fulfilment_sms(request, case_id, tel_no,
-                                     fulfilment_code):
+    async def request_fulfilment_sms(request, case_id, tel_no, fulfilment_code_array):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
             'telNo': tel_no,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'fulfilmentCodes': fulfilment_code_array,
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
         return await View._make_request(request,
@@ -380,14 +385,15 @@ class RHService(View):
                                         request_json=fulfilment_json)
 
     @staticmethod
-    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code):
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code_array):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
             'forename': first_name,
             'surname': last_name,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'fulfilmentCodes': fulfilment_code_array,
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'
         return await View._make_request(request,
@@ -408,26 +414,6 @@ class RHService(View):
                                         f'{rhsvc_url}/uacs/{uac_hash}',
                                         auth=request.app['RHSVC_AUTH'],
                                         return_json=True)
-
-    @staticmethod
-    async def put_modify_address(request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await View._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        request_json=case_json)
 
     @staticmethod
     async def post_case_create(request, address):

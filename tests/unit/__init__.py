@@ -402,12 +402,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+        self.content_common_enter_address_error_cy = "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_empty_cy = 'You have not entered a postcode'
+        self.content_common_enter_address_error_empty_cy = "Nid ydych wedi nodi cod post"
 
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
@@ -475,6 +473,17 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+
+        self.content_common_429_error_uac_title_en = \
+            'You have reached the maximum number of access codes you can request online'
+        self.content_common_429_error_form_title_en = \
+            'You have reached the maximum number of paper questionnaires you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_uac_title_cy = \
+            'You have reached the maximum number of access codes you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_form_title_cy = \
+            'You have reached the maximum number of paper questionnaires you can request online'
 
         self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
         self.content_common_resident_or_manager_option_resident_en = 'Resident'
@@ -1836,10 +1845,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_cy = 'Nid ydych wedi nodi cod post'
+        self.content_support_centre_enter_postcode_error_invalid_cy = \
+            "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
@@ -1899,99 +1907,66 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_disability_aware_en = 'Staff are disability aware'
         self.content_support_centre_list_of_centres_result_one_hearing_loop_en = 'Hearing loop system'
 
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_title_cy = 'Support centres near ' + self.postcode_valid
+        self.content_support_centre_list_of_centres_title_cy = 'Canolfannau cymorth gerllaw ' + self.postcode_valid
         self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Welsh Sheffield Central Library'
         self.content_support_centre_list_of_centres_result_two_location_name_cy = 'Welsh University of Sheffield'
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_distance_away_cy = \
-            '<span class="u-mb-s tag">1.3 miles away</span>'
+            '<span class="u-mb-s tag">1.3 milltir i ffwrdd</span>'
         self.content_support_centre_list_of_centres_result_one_address_cy = \
             '<p>Welsh Street<br> Sheffield<br>S1 1XZ</p>'
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_telephone_cy = \
-            'Telephone: <span>+44 (0)11 4273 4712</span>'
-        # TODO Add Welsh Translation
+            "Ff\\xc3\\xb4n: <span>+44 (0)11 4273 4712</span>"
         self.content_support_centre_list_of_centres_result_one_email_cy = \
-            'Email: <a href="mailto:test@email.com">test@email.com</a>'
+            'E-bost: <a href="mailto:test@email.com">test@email.com</a>'
 
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_open_monday_cy = \
-            'Monday &ndash;&nbsp;10:30am tan 5:15pm'
-        # TODO Add Welsh Translation
+            'Dydd Llun &ndash;&nbsp;10:30am tan 5:15pm'
         self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
-            'Tuesday &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
+            'Dydd Mawrth &ndash;&nbsp;10am tan 5pm'
         self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
-            'Wednesday &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Thursday &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Friday &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Saturday &ndash;&nbsp;10am tan 1pm'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Sunday &ndash;&nbsp;10am tan 1pm'
-        # TODO Add Welsh Translation
+            'Dydd Mercher &ndash;&nbsp;10am tan 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Dydd Iau &ndash;&nbsp;10am tan 5pm'
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Dydd Gwener &ndash;&nbsp;10am tan 5pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;10am tan 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Dydd Sul &ndash;&nbsp;10am tan 1pm'
         self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
-            'Census Saturday, 20 March &ndash;&nbsp;10am tan 4pm'
-        # TODO Add Welsh Translation
+            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;10am tan 4pm'
         self.content_support_centre_list_of_centres_result_open_census_day_cy = \
-            'Census Day, 21 March &ndash;&nbsp;10am tan 4pm'
-        # TODO Add Welsh Translation
+            'Diwrnod y Cyfrifiad, 21 Mawrth &ndash;&nbsp;10am tan 4pm'
         self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
-            'Good Friday, 2 April &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
+            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;10am tan 5pm'
         self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
-            'Easter Monday, 5 April &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
+            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;10am tan 5pm'
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
-            'May Bank Holiday, 3 May &ndash;&nbsp;10am tan 5pm'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Monday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Tuesday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Wednesday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_thursday_cy = 'Thursday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_friday_cy = 'Friday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_saturday_cy = 'Saturday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_closed_sunday_cy = 'Sunday &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
+            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;10am tan 5pm"
+        self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Dydd Llun &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Dydd Mawrth &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Dydd Mercher &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_thursday_cy = 'Dydd Iau &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_friday_cy = 'Dydd Gwener &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;Ar gau'
+        self.content_support_centre_list_of_centres_result_closed_sunday_cy = 'Dydd Sul &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_census_saturday_cy = \
-            'Census Saturday, 20 March &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
+            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_census_day_cy = \
-            'Census Day, 21 March &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
+            'Diwrnod y Cyfrifiad, 21 Mawrth &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_good_friday_cy = \
-            'Good Friday, 2 April &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
+            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_easter_monday_cy = \
-            'Easter Monday, 5 April &ndash;&nbsp;Closed'
-        # TODO Add Welsh Translation
+            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
-            'May Bank Holiday, 3 May &ndash;&nbsp;Closed'
+            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;Ar gau"
 
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
-            'Car park, including disabled parking'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_two_public_parking_cy = 'Disabled parking'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Car park'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_level_access_cy = 'Level access into building entrance'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Wheelchair access'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_disability_aware_cy = 'Staff are disability aware'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
+            'Maes parcio, gan gynnwys parcio anabl'
+        self.content_support_centre_list_of_centres_result_two_public_parking_cy = "Parcio anabl"
+        self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Maes parcio'
+        self.content_support_centre_list_of_centres_result_one_level_access_cy = \
+            "Mynediad gwastad i mewn i\\\'r adeilad"
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Mynediad i gadeiriau olwyn'
+        self.content_support_centre_list_of_centres_result_one_disability_aware_cy = \
+            'Staff yn meddu ar ymwybyddiaeth o anableddau'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'System dolen glywed'
 
         # Test Data
 
