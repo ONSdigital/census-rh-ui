@@ -7,9 +7,9 @@ from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
 from structlog import get_logger
 
-from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
+from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
-               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY)
+               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
 from .exceptions import InvalidEqPayLoad, SessionTimeout
@@ -335,9 +335,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),
@@ -372,9 +372,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),

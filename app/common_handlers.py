@@ -6,9 +6,7 @@ from structlog import get_logger
 from aiohttp_session import get_session
 from aiohttp.client_exceptions import (ClientResponseError)
 
-from . import (ADDRESS_CHECK_MSG,
-               ADDRESS_SELECT_CHECK_MSG,
-               ADDRESS_CHECK_MSG_CY,
+from . import (ADDRESS_SELECT_CHECK_MSG,
                ADDRESS_SELECT_CHECK_MSG_CY,
                NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
@@ -237,7 +235,8 @@ class CommonEnterAddress(CommonCommon):
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
-            'page_url': View.gen_page_url(request)
+            'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
     @aiohttp_jinja2.template('common-enter-address.html')
@@ -483,9 +482,9 @@ class CommonConfirmAddress(CommonCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
         if address_confirmation == 'yes':
@@ -615,7 +614,7 @@ class CommonConfirmAddress(CommonCommon):
             # catch all just in case, should never get here
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, NO_SELECTION_CHECK_MSG)
             attributes['page_title'] = page_title
             attributes['display_region'] = display_region
             attributes['user_journey'] = user_journey

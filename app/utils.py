@@ -73,6 +73,31 @@ class View:
         return call_centre_number
 
     @staticmethod
+    def get_campaign_site_link(request, display_region, requested_link):
+        base_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN']
+        base_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY']
+        base_ni = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'] + '/ni'
+
+        link = '/'
+
+        if requested_link == 'census-home':
+            if display_region == 'ni':
+                link = base_ni
+            elif display_region == 'cy':
+                link = base_cy
+            else:
+                link = base_en
+        elif requested_link == 'contact-us':
+            if display_region == 'ni':
+                link = base_ni + '/contact-us'
+            elif display_region == 'cy':
+                link = base_cy + '/cysylltu-a-ni'
+            else:
+                link = base_en + '/contact-us'
+
+        return link
+
+    @staticmethod
     async def _make_request(request,
                             method,
                             url,
@@ -176,9 +201,11 @@ class ProcessMobileNumber:
         except ValueError:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return number.lstrip('0')
 
@@ -187,26 +214,39 @@ class ProcessMobileNumber:
 
         number = ProcessMobileNumber.normalise_phone_number(number, locale).lstrip(uk_prefix).lstrip('0')
 
+        if len(number) == 0:
+            if locale == 'cy':
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh('Enter your mobile number', message_type='empty')
+            else:
+                raise InvalidDataError('Enter your mobile number', message_type='empty')
+
         if not number.startswith('7'):
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number is not a UK mobile number')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number is not a UK mobile number')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) > 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number contains too many digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number contains too many digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) < 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number does not contain enough digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number does not contain enough digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return '{}{}'.format(uk_prefix, number)
 
@@ -221,20 +261,20 @@ class ProcessName:
         if not (data.get('name_first_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             name_valid = False
 
         if not (data.get('name_last_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             name_valid = False
 
