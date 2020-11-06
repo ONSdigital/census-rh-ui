@@ -5253,7 +5253,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_confirm_name_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ni(
+            self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
@@ -5316,7 +5317,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_confirm_name_address_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ni(
+            self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
@@ -5377,3 +5379,135 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual')
         await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
             self.post_request_access_code_confirm_name_address_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_sms_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
+        await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en',
+                                                      override_sub_user_journey='individual-code')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_en, 'en',
+                                           override_sub_user_journey='individual-code')
+        await self.check_post_confirm_mobile(self.post_request_individual_code_confirm_mobile_en, 'en', 'HH', 'E',
+                                             'true', override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_sms_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
+        await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en',
+                                                      override_sub_user_journey='individual-code')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_en, 'en',
+                                           override_sub_user_journey='individual-code')
+        await self.check_post_confirm_mobile(self.post_request_individual_code_confirm_mobile_en, 'en', 'HH', 'W',
+                                             'true', override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_sms_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_cy, 'cy')
+        await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy',
+                                                      override_sub_user_journey='individual-code')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_cy, 'cy',
+                                           override_sub_user_journey='individual-code')
+        await self.check_post_confirm_mobile(self.post_request_individual_code_confirm_mobile_cy, 'cy', 'HH', 'W',
+                                             'true', override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_sms_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_ni, 'ni')
+        await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni',
+                                                      override_sub_user_journey='individual-code')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_ni, 'ni',
+                                           override_sub_user_journey='individual-code')
+        await self.check_post_confirm_mobile(self.post_request_individual_code_confirm_mobile_ni, 'ni', 'HH', 'N',
+                                             'true', override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_post_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
+        await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
+                                                       override_sub_user_journey='individual-code')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+                                         override_sub_user_journey='individual-code')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'true',
+            override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_post_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
+        await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
+                                                       override_sub_user_journey='individual-code')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+                                         override_sub_user_journey='individual-code')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'true',
+            override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_post_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_cy, 'cy')
+        await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy',
+                                                       override_sub_user_journey='individual-code')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual',
+                                         override_sub_user_journey='individual-code')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'true',
+            override_sub_user_journey='individual-code')
+
+    @unittest_run_loop
+    async def test_request_access_to_individual_code_post_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_confirm_address_input_yes(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_ni, 'ni')
+        await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni',
+                                                       override_sub_user_journey='individual-code')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual',
+                                         override_sub_user_journey='individual-code')
+        await self.check_post_confirm_name_address_input_yes(
+            self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'true',
+            override_sub_user_journey='individual-code')
