@@ -1,10 +1,6 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% if case_type == 'HI' %}
-    {% set request_code_link = url('RequestCode:get', request_type='individual', display_region=display_region) %}
-{% else %}
-    {% set request_code_link = url('RequestCode:get', request_type='household', display_region=display_region) %}
-{% endif %}
+{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='access-code') %}
 
 {% block main %}
 

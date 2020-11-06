@@ -57,8 +57,10 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_enter_address_title_cy, contents)
             if self.sub_user_journey == 'paper-form':
                 self.assertIn(self.content_request_form_enter_address_secondary_cy, contents)
+            elif self.sub_user_journey == 'individual-code':
+                self.assertIn(self.content_request_individual_code_enter_address_secondary_cy, contents)
             else:
-                self.assertIn(self.content_request_enter_address_secondary_cy, contents)
+                self.assertIn(self.content_request_access_code_enter_address_secondary_cy, contents)
         else:
             if check_empty:
                 self.assertIn(self.content_common_enter_address_error_empty_en, contents)
@@ -67,8 +69,10 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_enter_address_title_en, contents)
             if self.sub_user_journey == 'paper-form':
                 self.assertIn(self.content_request_form_enter_address_secondary_en, contents)
+            elif self.sub_user_journey == 'individual-code':
+                self.assertIn(self.content_request_individual_code_enter_address_secondary_en, contents)
             else:
-                self.assertIn(self.content_request_enter_address_secondary_en, contents)
+                self.assertIn(self.content_request_access_code_enter_address_secondary_en, contents)
 
     def check_text_select_address(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -192,12 +196,16 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_confirm_name_address_error_cy, contents)
             if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_title_cy, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_cy, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_cy, contents)
+                self.assertIn(self.content_request_common_confirm_name_address_individual_message_cy, contents)
             elif user_type == 'manager':
                 self.assertIn(self.content_request_common_confirm_name_address_title_manager_cy, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_cy, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_title_household_cy, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_cy, contents)
 
             if check_ce:
                 if check_room_number:
@@ -225,12 +233,16 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_confirm_name_address_error_en, contents)
             if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
                 self.assertIn(self.content_request_form_confirm_name_address_title_en, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_en, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_en, contents)
+                self.assertIn(self.content_request_common_confirm_name_address_individual_message_en, contents)
             elif user_type == 'manager':
                 self.assertIn(self.content_request_common_confirm_name_address_title_manager_en, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_en, contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_title_household_en, contents)
+                self.assertNotIn(self.content_request_common_confirm_name_address_individual_message_en, contents)
 
             if check_ce:
                 if check_room_number:
@@ -1403,6 +1415,37 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_timeout_title_en, contents)
             self.assertIn(self.content_start_timeout_secondary_en, contents)
             self.assertIn(self.content_start_timeout_restart_en, contents)
+
+    async def check_get_request_individual_code(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', url)
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code', display_region, 'GET', False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('individual-code', display_region, False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_individual_title_cy, contents)
+                self.assertIn(self.content_request_individual_secondary_cy, contents)
+            else:
+                self.assertIn(self.content_request_individual_title_en, contents)
+                self.assertIn(self.content_request_individual_secondary_en, contents)
+
+    async def check_post_request_individual_code_journey_switch(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url)
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code', display_region, 'POST', False))
+            self.assertLogEvent(cm, 'have session and case_type - directing to select method')
+            self.assertLogEvent(cm, self.build_url_log_entry('individual-code/select-method', display_region, 'GET',
+                                                             False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('individual-code/select-method', display_region, False),
+                              contents)
+            self.check_text_select_method(display_region, contents, 'individual')
 
     async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \

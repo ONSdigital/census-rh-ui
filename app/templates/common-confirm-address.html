@@ -34,6 +34,10 @@
 ]
 %}
 
+{%- if 'no-selection' in field_messages_dict -%}
+    {%- set error_address = {'text': _('Select an answer')} -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -44,22 +48,30 @@
         'title': _('Is this the correct address?')
     }) %}
 
-    <p class="rh-address-display">
-        {% if roomNumber %}{{ roomNumber }}<br>{% endif %}
-        {{ addressLine1 }}<br>
-        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName %}{{ townName }}<br>{% endif %}
-        {{ postcode }}
-    </p>
+        <p class="rh-address-display">
+            {% if roomNumber %}{{ roomNumber }}<br>{% endif %}
+            {{ addressLine1 }}<br>
+            {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
+            {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
+            {% if townName %}{{ townName }}<br>{% endif %}
+            {{ postcode }}
+        </p>
 
-{%- if censusAddressType == 'CE' -%}
-    {%- if roomNumber -%}
-        <p><a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a></p>
-    {%- else -%}
-        <p><a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a></p>
-    {%- endif -%}
-{%- endif -%}
+        {%- if censusAddressType == 'CE' -%}
+            {%- if roomNumber -%}
+                <p><a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a></p>
+            {%- else -%}
+                <p><a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a></p>
+            {%- endif -%}
+        {%- endif -%}
+
+        {{
+            onsRadios({
+                'name': 'form-confirm-address',
+                'radios': form_options,
+                'error': error_address
+            })
+        }}
 
 {% if 'address' in field_messages_dict %}
     {{
