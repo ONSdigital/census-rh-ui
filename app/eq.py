@@ -1,3 +1,8 @@
+import binascii
+import hashlib
+import os
+import random
+import string
 import time
 from collections import namedtuple
 from uuid import uuid4
@@ -9,6 +14,8 @@ from .exceptions import InvalidEqPayLoad
 logger = get_logger('respondent-home')
 
 Request = namedtuple('Request', ['method', 'path', 'auth', 'func'])
+
+global_questionnaire_id = 0
 
 
 class EqPayloadConstructor(object):
@@ -113,13 +120,13 @@ class EqPayloadConstructor(object):
             'language_code': self._language_code,
             'display_address':
             self.build_display_address(self._sample_attributes),
-            'response_id': self._response_id,
+            'response_id': self.generate_and_encrypt_response_id(self._response_id),
             'account_service_url': self._account_service_url,
             'account_service_log_out_url':
             self._account_service_log_out_url,  # required for save/continue
             'channel': self._channel,
             'user_id': self._user_id,
-            'questionnaire_id': self._questionnaire_id,
+            'questionnaire_id': global_questionnaire_id,
             'eq_id': 'census',  # hardcoded for rehearsal
             'period_id': '2019',  # hardcoded for rehearsal
             'form_type': self._form_type,
@@ -127,6 +134,30 @@ class EqPayloadConstructor(object):
         }
 
         return self._payload
+
+    @staticmethod
+    def generate_and_encrypt_response_id(response_id):
+        """
+        Encrypts the response_id (and assigned questionnaire_id) using the PBKDF2 key derivation function
+        using HMAC as the pseudorandom function, using a sha512 hash digest algorithm for HMAC
+
+        :param  response_id: the response_id to be encrypted and also assigned as the
+                questionnaire_id
+        :return: the encrypted response_id
+        """
+        try:
+            response_id = ''.join(random.choice(string.ascii_letters) for _ in range(31))
+
+            salt = hashlib.sha256(os.urandom(64)).hexdigest().encode('ascii')
+            pwdhash = hashlib.pbkdf2_hmac('sha512', response_id.encode('utf-8'), salt, 100000)
+            pwdhash = binascii.hexlify(pwdhash)
+
+            global global_questionnaire_id
+            global_questionnaire_id = (salt + pwdhash).decode('ascii')
+
+            return (salt + pwdhash).decode('ascii')
+        except ValueError:
+            raise InvalidEqPayLoad('Error. Unable to encrypt response id and questionnaire id')
 
     @staticmethod
     def build_display_address(sample_attributes):

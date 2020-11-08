@@ -629,7 +629,7 @@ class RHTestCase(AioHTTPTestCase):
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
             'channel': self.channel,
             'user_id': '',
-            'questionnaire_id': self.questionnaire_id,
+            'questionnaire_id': self.response_id,
             'eq_id': self.eq_id,
             'period_id': self.period_id,
             'form_type': self.form_type,

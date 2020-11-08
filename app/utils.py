@@ -133,7 +133,7 @@ class View:
                         key_store=app['key_store'],
                         key_purpose='authentication')
 
-        await RHService.post_surveylaunched(request, case, adlocation)
+        await RHService.post_surveylaunched(request, case, adlocation, eq_payload)
 
         logger.info('redirecting to eq', client_ip=request['client_ip'])
         eq_url = app['EQ_URL']
@@ -478,11 +478,11 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def post_surveylaunched(request, case, adlocation):
+    async def post_surveylaunched(request, case, adlocation, eq_payload):
         if not adlocation:
             adlocation = ''
         launch_json = {
-            'questionnaireId': case['questionnaireId'],
+            'questionnaireId': eq_payload['questionnaire_id'],
             'caseId': case['caseId'],
             'agentId': adlocation
         }

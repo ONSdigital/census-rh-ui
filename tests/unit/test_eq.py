@@ -56,6 +56,15 @@ class TestEq(RHTestCase):
             self.assertIn(f'Could not retrieve address uprn from case JSON',
                           ex.exception.message)
 
+    @staticmethod
+    async def patch_response_id(payload, eq_payload):
+        rid_generated = payload.get("response_id")
+        qid_generated = payload.get("questionnaire_id")
+        eq_payload['response_id'] = rid_generated
+        eq_payload['questionnaire_id'] = qid_generated
+
+        return eq_payload
+
     @unittest_run_loop
     async def test_build_en(self):
         eq_payload = self.eq_payload.copy()
@@ -86,6 +95,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -120,6 +130,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -154,6 +165,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -189,6 +201,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -224,6 +237,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -259,6 +273,7 @@ class TestEq(RHTestCase):
                                 case_id=self.case_id,
                                 tx_id=self.jti)
 
+        await self.patch_response_id(payload, eq_payload)
         mocked_uuid4.assert_called()
         mocked_time.assert_called()
         self.assertEqual(payload, eq_payload)
@@ -272,6 +287,39 @@ class TestEq(RHTestCase):
             await eq.EqPayloadConstructor(self.uac_json_e, None, self.app,
                                           None).build()
         self.assertIn('Attributes is empty', ex.exception.message)
+
+    @unittest_run_loop
+    async def generate_and_encrypt_response_id_success(self):
+        from app import eq
+
+        eq_payload_1 = eq.EqPayloadConstructor.build()
+        eq_payload_1_response_id = eq_payload_1.get("response_id")
+        self.assertIsNotNone(eq_payload_1_response_id)
+
+    @unittest_run_loop
+    async def generate_and_encrypt_response_id_unique_response_ids_and_unique_questionnaire_ids(self):
+        from app import eq
+
+        eq_payload_1 = eq.EqPayloadConstructor.build()
+        eq_payload_1_response_id = eq_payload_1.get("response_id")
+        eq_payload_1_questionnaire_id = eq_payload_1.get("questionnaire_id")
+
+        eq_payload_2 = eq.EqPayloadConstructor.build()
+        eq_payload_2_response_id = eq_payload_2.get("response_id")
+        eq_payload_2_questionnaire_id = eq_payload_2.get("questionnaire_id")
+
+        self.assertNotEqual(eq_payload_1_response_id, eq_payload_2_response_id)
+        self.assertNotEqual(eq_payload_1_questionnaire_id, eq_payload_2_questionnaire_id)
+
+    @unittest_run_loop
+    async def generate_and_encrypt_response_id_equals_questionnaire_id(self):
+        from app import eq
+
+        eq_payload = eq.EqPayloadConstructor.build()
+        actual_response_id = eq_payload.get("response_id")
+        actual_questionnaire_id = eq_payload.get("questionnaire_id")
+
+        self.assertEqual(actual_response_id, actual_questionnaire_id)
 
     def test_build_display_address_en(self):
         eq_payload = self.eq_payload.copy()
