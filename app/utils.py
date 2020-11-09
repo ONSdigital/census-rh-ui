@@ -1,6 +1,7 @@
 import string
 import re
 import json
+import math
 
 from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh
 from aiohttp.web import HTTPFound
@@ -279,6 +280,64 @@ class ProcessName:
             name_valid = False
 
         return name_valid
+
+
+class ProcessNumberOfPeople:
+
+    @staticmethod
+    def validate_number_of_people(request, data, display_region):
+
+        number_of_people_valid = True
+
+        if (data.get('number_of_people')) == '':
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_empty'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_empty'))
+            number_of_people_valid = False
+
+        elif not (data.get('number_of_people')).isnumeric():
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_nan'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_nan'))
+            number_of_people_valid = False
+
+        return number_of_people_valid
+
+    @staticmethod
+    def form_calculation(region, number_of_people, include_household=False, large_print=False):
+        number_of_people = int(number_of_people)
+        number_of_household_forms = 0
+        number_of_continuation_forms = 0
+        number_of_large_print_forms = 0
+
+        if large_print:
+            number_of_large_print_forms = math.ceil(number_of_people / 2)
+        elif include_household:
+            if region == 'N':
+                offset = 6
+            else:
+                offset = 5
+            number_of_household_forms = 1
+            if number_of_people > offset:
+                number_of_continuation_forms = math.ceil((number_of_people - offset) / 5)
+        else:
+            number_of_continuation_forms = math.ceil(number_of_people / 5)
+
+        return {'number_of_household_forms': number_of_household_forms,
+                'number_of_continuation_forms': number_of_continuation_forms,
+                'number_of_large_print_forms': number_of_large_print_forms}
 
 
 class FlashMessage:

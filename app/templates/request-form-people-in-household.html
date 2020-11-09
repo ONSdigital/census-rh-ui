@@ -1,0 +1,55 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
+
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/input/_macro.njk' import onsInput -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('RequestFormPeopleInHousehold:post', display_region=display_region)
+    }
+} -%}
+
+{%- if 'number_of_people_empty' in field_messages_dict -%}
+    {%- set error_number_of_people = {'text': _('Enter the number of people in your household')} -%}
+{%- elif 'number_of_people_nan' in field_messages_dict -%}
+    {%- set error_number_of_people = {'text': _('Enter a numeral')} -%}
+{%- endif -%}
+
+{%- block main -%}
+
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- call onsQuestion({
+        'title': _('How many people are in your household?'),
+        'description': _('<p>This is to make sure we send you the right number of paper questionnaires</p>')
+    }) -%}
+
+        {{
+            onsInput({
+                'id': 'number_of_people',
+                'label': {
+                    'text': _('Number of people')
+                },
+                'value': form_value_number_of_people,
+                'name': 'number_of_people',
+                'error': error_number_of_people
+            })
+        }}
+
+    {%- endcall -%}
+
+    {{
+        onsButton({
+            'text': _('Continue'),
+            'classes': 'u-mt-l'
+        })
+    }}
+
+{%- endblock -%}

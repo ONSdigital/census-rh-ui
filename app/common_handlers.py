@@ -52,9 +52,13 @@ class CommonCommon(View):
                                                                          display_region=display_region))
         else:
             if sub_user_journey == 'paper-form':
-                raise HTTPFound(
-                    request.app.router['RequestCommonEnterName:get'].url_for(
-                        request_type=sub_user_journey, display_region=display_region))
+                if case_type == 'HH':
+                    raise HTTPFound(
+                        request.app.router['RequestFormPeopleInHousehold:get'].url_for(display_region=display_region))
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestCommonEnterName:get'].url_for(
+                            request_type=sub_user_journey, display_region=display_region))
             else:
                 raise HTTPFound(
                     request.app.router['RequestCodeSelectMethod:get'].url_for(

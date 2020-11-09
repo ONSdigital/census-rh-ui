@@ -11,7 +11,7 @@ from . import (NO_SELECTION_CHECK_MSG,
 from .flash import flash
 from .exceptions import SessionTimeout, TooManyRequests
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
-    FlashMessage, RHService, ProcessName
+    FlashMessage, RHService, ProcessName, ProcessNumberOfPeople
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
@@ -612,6 +612,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 else:
                     fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
 
+
+
                 try:
                     await RHService.request_fulfilment_post(request,
                                                             attributes['case_id'],
@@ -750,6 +752,77 @@ class RequestCodeCodeSentPost(RequestCommon):
                 'case_type': attributes['case_type'],
                 'address_level': attributes['address_level']
             }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/number-of-people-in-your-household/')
+class RequestFormPeopleInHousehold(RequestCommon):
+    @aiohttp_jinja2.template('request-form-people-in-household.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = "How many people are in your household?"
+            locale = 'cy'
+        else:
+            page_title = 'How many people are in your household?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/paper-form/number-of-people-in-your-household')
+
+        attributes = await self.get_check_attributes(request, 'paper-form')
+
+        attributes['page_title'] = page_title
+        attributes['display_region'] = display_region
+        attributes['locale'] = locale
+        attributes['page_url'] = View.gen_page_url(request)
+
+        return attributes
+
+    @aiohttp_jinja2.template('request-form-people-in-household.html')
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = "How many people are in your household?"
+            locale = 'cy'
+        else:
+            page_title = 'How many people are in your household?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/paper-form/number-of-people-in-your-household')
+
+        attributes = await self.get_check_attributes(request, 'paper-form')
+        attributes['page_title'] = page_title
+        attributes['locale'] = locale
+        attributes['display_region'] = display_region
+        attributes['page_url'] = View.gen_page_url(request)
+
+        data = await request.post()
+
+        form_valid = ProcessNumberOfPeople.validate_number_of_people(request, data, display_region)
+
+        if not form_valid:
+            logger.info('form submission error',
+                        client_ip=request['client_ip'])
+            return {
+                'display_region': display_region,
+                'page_title': page_title,
+                'page_url': View.gen_page_url(request),
+                'locale': locale
+            }
+
+        session = await get_session(request)
+        session['attributes']['number_of_people'] = data['number_of_people']
+        session.changed()
+
+        raise HTTPFound(
+            request.app.router['RequestCommonEnterName:get'].url_for(display_region=display_region,
+                                                                     request_type='paper-form'))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-manager/')
