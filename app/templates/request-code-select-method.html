@@ -42,7 +42,7 @@
     ]
 -%}
 
-{%- if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+{%- if (individual == True) -%}
     {%- set question_title = _('How would you like to receive an individual access code?') -%}
 {%- elif (case_type == 'CE' and address_level == 'E') -%}
     {%- set question_title = _('How would you like to receive a new manager access code?') -%}
@@ -59,35 +59,6 @@
     {%- call onsQuestion({
         'title': question_title,
     }) -%}
-
-        {%- if case_type == 'HH' and request_type != 'individual-code' -%}
-
-            {%- set content -%}
-                {%- autoescape false -%}
-                    <p>{{ _('If you need to answer separately from the people you live with, you can %(open)srequest an individual access code%(close)s to start a separate census.', open='<a href="%s">' % request_individual_code_link, close='</a>')|safe }}</p>
-                {%- endautoescape -%}
-                {%- call onsPanel({
-                        'type': 'warn'
-                    })
-                -%}
-                <p><strong>{{ _('Someone in your household must still complete a census using a household access code')}}</strong></p>
-                {%- endcall -%}
-            {%- endset -%}
-
-            {%- call onsCollapsible({
-                    'id': 'collapsible',
-                    'title': _('Need to answer separately from your household?'),
-                    'titleTag': 'h2',
-                    'button': {
-                        'close': _('Hide this'),
-                        'contextSuffix': 'content'
-                    }
-                })
-            -%}
-                {{ content | safe }}
-            {%- endcall -%}
-
-        {%- endif -%}
 
         {{
             onsRadios({

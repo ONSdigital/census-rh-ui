@@ -27,7 +27,7 @@
 
         <h1 class="u-mb-xs u-fs-l">{{ _('A letter will be sent to %(name)s at %(address)s', name=display_name, address=display_address)|safe }} </h1>
 
-        {%- if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+        {%- if (individual == True) -%}
             <p>{{ _('The letter with an individual access code should arrive soon for you to start the census') }}</p>
         {%- elif (case_type == 'CE' and address_level == 'E') -%}
             <p>{{ _('The letter with a new manager access code should arrive soon for you to start the census') }}</p>
