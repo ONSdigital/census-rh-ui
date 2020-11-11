@@ -12,6 +12,14 @@ from .helpers import TestHelpers
 
 # noinspection PyTypeChecker
 class TestStartHandlersUnlinked(TestHelpers):
+
+    @staticmethod
+    async def patch_response_id(payload, eq_payload):
+        encrypted_response_id = payload.get("response_id")
+        eq_payload['response_id'] = encrypted_response_id
+
+        return eq_payload
+
     @skip_encrypt
     @unittest_run_loop
     async def test_unlinked_uac_happy_path_region_e_display_en(self):
@@ -129,6 +137,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -257,6 +266,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -383,6 +393,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -511,6 +522,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -637,6 +649,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -765,6 +778,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -896,6 +910,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1029,6 +1044,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1142,6 +1158,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1257,6 +1274,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1370,6 +1388,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1485,6 +1504,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1598,6 +1618,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():
@@ -1713,6 +1734,7 @@ class TestStartHandlersUnlinked(TestHelpers):
         _, _, _, query, *_ = urlsplit(redirected_url)
         # convert token to dict
         token = json.loads(parse_qs(query)['token'][0])
+        await self.patch_response_id(token, eq_payload)
         # fail early if payload keys differ
         self.assertEqual(eq_payload.keys(), token.keys())
         for key in eq_payload.keys():

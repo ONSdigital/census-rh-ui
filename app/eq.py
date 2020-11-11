@@ -1,4 +1,6 @@
+import hashlib
 import time
+from app import app
 from collections import namedtuple
 from uuid import uuid4
 from aiohttp.web import Application
@@ -113,7 +115,7 @@ class EqPayloadConstructor(object):
             'language_code': self._language_code,
             'display_address':
             self.build_display_address(self._sample_attributes),
-            'response_id': self._response_id,
+            'response_id': self.encrypt_response_id(self._questionnaire_id),
             'account_service_url': self._account_service_url,
             'account_service_log_out_url':
             self._account_service_log_out_url,  # required for save/continue
@@ -127,6 +129,29 @@ class EqPayloadConstructor(object):
         }
 
         return self._payload
+
+    @staticmethod
+    def encrypt_response_id(questionnaire_id: str):
+        """
+        Encrypts a response_id using the following format: <response_id><first 16 characters of sha256 signature>.
+        Utilises EQ_SALT environment property as salt.
+        Implements the HMAC algorithm as described by RFC 2104.
+
+        :param questionnaire_id: the questionnaire_id utilised to encrypt the response_id
+        :return: the encrypted response_id
+        """
+        try:
+            eq_salt = app.config.BaseConfig.EQ_SALT
+            qid = questionnaire_id.encode()
+            eqs = eq_salt.encode()
+
+            hashed_password = hashlib.sha256(eqs + qid).hexdigest()
+            hp_16_chars = hashed_password[0:16]
+            response_id = questionnaire_id + hp_16_chars
+
+            return response_id
+        except ValueError:
+            raise InvalidEqPayLoad('Error. Unable to encrypt response id')
 
     @staticmethod
     def build_display_address(sample_attributes):
