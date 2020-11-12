@@ -16,6 +16,9 @@ from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataError
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
 
+# Limit for last name field to include room number (60 char limit - 10 char room number value max - a comma and a space)
+last_name_char_limit = 48
+
 
 class RequestCommon(View):
 
@@ -631,7 +634,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     room_number = None
 
                 if room_number:
-                    if len(attributes['last_name']) < 48:
+                    if len(attributes['last_name']) < last_name_char_limit:
                         last_name = attributes['last_name'] + ', ' + room_number
                         title = None
                     else:
@@ -642,19 +645,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     title = None
 
                 try:
-                    if title:
-                        await RHService.request_fulfilment_post(request,
-                                                                attributes['case_id'],
-                                                                attributes['first_name'],
-                                                                last_name,
-                                                                fulfilment_code_array,
-                                                                title)
-                    else:
-                        await RHService.request_fulfilment_post(request,
-                                                                attributes['case_id'],
-                                                                attributes['first_name'],
-                                                                last_name,
-                                                                fulfilment_code_array)
+                    await RHService.request_fulfilment_post(request,
+                                                            attributes['case_id'],
+                                                            attributes['first_name'],
+                                                            last_name,
+                                                            fulfilment_code_array,
+                                                            title)
                 except (KeyError, ClientResponseError) as ex:
                     if ex.status == 429:
                         raise TooManyRequests(request_type)
