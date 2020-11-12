@@ -1224,3 +1224,59 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_timeout_title_en, contents)
             self.assertIn(self.content_start_timeout_secondary_en, contents)
             self.assertIn(self.content_start_timeout_restart_en, contents)
+
+    def check_text_start_transient_enter_town_name(self, display_region, contents,
+                                                   after_census_day=False, check_error=False):
+        if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_start_transient_accommodation_type_error_cy, contents)
+            if after_census_day:
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+        else:
+            if check_error:
+                self.assertIn(self.content_start_transient_accommodation_type_error_en, contents)
+            if after_census_day:
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+
+    def check_text_start_transient_accommodation_type(self, display_region, contents, check_error=False):
+        if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_start_transient_accommodation_type_error_cy, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_title_cy, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_barge_cy, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_caravan_cy, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_tent_cy, contents)
+        else:
+            if check_error:
+                self.assertIn(self.content_start_transient_accommodation_type_error_en, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_title_en, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_barge_en, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_caravan_en, contents)
+            self.assertIn(self.content_start_transient_accommodation_type_value_tent_en, contents)
+
+    async def check_post_start_transient_enter_town_name_valid(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.start_transient_town_name_input_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'POST'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('accommodation-type', display_region), contents)
+            self.check_text_start_transient_accommodation_type(display_region, contents, check_error=False)
+
+    async def check_post_start_transient_accommodation_type_no_selection(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_form_data_empty)
+            self.assertLogEvent(cm, self.build_url_log_entry('accommodation-type', display_region, 'POST'))
+            self.assertLogEvent(cm, "transient accommodation type error")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('accommodation-type', display_region), contents)
+            self.check_text_start_transient_accommodation_type(display_region, contents, check_error=True)

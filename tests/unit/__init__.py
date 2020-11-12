@@ -1957,4 +1957,59 @@ class RHTestCase(AioHTTPTestCase):
 
         self.ad_lookup_url = f'{ad_look_up_svc_url}/centres/postcode?postcode={self.postcode_valid}&limit=10'
 
-        # yapf: enable
+        # Transient
+
+        # Content
+
+        self.content_start_transient_enter_town_name_pre_census_day_title_en = \
+            'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+        self.content_start_transient_enter_town_name_post_census_day_title_en = \
+            'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
+            'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_post_census_day_title_cy = \
+            'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+
+        self.content_start_transient_accommodation_type_title_en = \
+            "Which of the following best describes your type of accommodation?"
+        self.content_start_transient_accommodation_type_error_en = "Select an answer"
+        self.content_start_transient_accommodation_type_value_barge_en = "Barge or boat"
+        self.content_start_transient_accommodation_type_value_caravan_en = "Caravan or live-in vehicle"
+        self.content_start_transient_accommodation_type_value_tent_en = "Tent or temporary structure"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_title_cy = \
+            "Which of the following best describes your type of accommodation?"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_error_cy = "Select an answer"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_barge_cy = "Barge or boat"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_caravan_cy = "Caravan or live-in vehicle"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_tent_cy = "Tent or temporary structure"
+
+        # Test Data
+
+        self.start_transient_town_name_input_valid = {
+            'form-enter-town-name': 'Fareham', 'action[save_continue]': '',
+        }
+        self.start_transient_town_name_input_empty = {
+            'form-enter-town-name': '', 'action[save_continue]': '',
+        }
+
+        with open('tests/test_data/rhsvc/uac_transient_e.json') as fp:
+            self.transient_uac_json_e = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_transient_w.json') as fp:
+            self.transient_uac_json_w = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_transient_n.json') as fp:
+            self.transient_uac_json_n = json.load(fp)
+
+    # URL functions
+
+    def get_url_from_class(self, class_name, method_type, display_region):
+        url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region)
+        return url
+
+    # yapf: enable

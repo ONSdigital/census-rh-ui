@@ -182,7 +182,7 @@ class Start(StartCommon):
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
 
-        if session['attributes']['estabType'] == 'Transient':
+        if session['case']['estabType'] == 'TRANSIENT':
             raise HTTPFound(request.app.router['StartTransientEnterTownName:get'].
                             url_for(display_region=display_region))
 
@@ -765,8 +765,7 @@ class StartTransientAccommodationType(StartCommon):
                                               session.get('adlocation'))
 
         except KeyError:
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+            logger.info('transient accommodation type error', client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
                                                                    'ACCOMMODATION_TYPE_ERROR', 'accommodation-type'))
