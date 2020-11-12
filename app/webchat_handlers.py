@@ -44,10 +44,13 @@ uk_zone = timezone('Europe/London')
 
 
 class WebChat(View):
+    @staticmethod
+    def get_now_utc():
+        return datetime.utcnow()
 
     @staticmethod
     def todays_opening_hours() -> (int, int, int):
-        wall_clock = utc.localize(View.get_now_utc()).astimezone(uk_zone)
+        wall_clock = utc.localize(WebChat.get_now_utc()).astimezone(uk_zone)
         now_date = wall_clock.date()
         weekday = wall_clock.weekday()
         hour = wall_clock.hour

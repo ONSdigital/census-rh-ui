@@ -4,7 +4,7 @@ import json
 
 from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh
 from aiohttp.web import HTTPFound
-from datetime import datetime, date, timezone
+from datetime import datetime, date
 from pytz import timezone, utc
 
 from sdc.crypto.encrypter import encrypt
@@ -28,6 +28,7 @@ uk_prefix = '44'
 uk_zone = timezone('Europe/London')
 
 census_day = date(2021, 3, 21)
+
 
 class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
@@ -396,7 +397,7 @@ class RHService(View):
             'caseId': case_id,
             'telNo': tel_no,
             'fulfilmentCodes': fulfilment_code_array,
-            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'dateTime': datetime.now(utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
@@ -414,7 +415,7 @@ class RHService(View):
             'forename': first_name,
             'surname': last_name,
             'fulfilmentCodes': fulfilment_code_array,
-            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'dateTime': datetime.now(utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'
