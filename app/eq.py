@@ -28,7 +28,7 @@ class EqPayloadConstructor(object):
 
         self._sample_attributes = attributes
 
-        salt = app['RESPONSE_ID_SALT']
+        salt = app['EQ_RESPONSE_ID_SALT']
         domain_url_protocol = app['DOMAIN_URL_PROTOCOL']
         domain_url = app['DOMAIN_URL_EN']
         url_path_prefix = app['URL_PATH_PREFIX']
