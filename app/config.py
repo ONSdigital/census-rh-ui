@@ -75,7 +75,7 @@ class BaseConfig:
     AD_LOOK_UP_SVC_AUTH = (env('AD_LOOK_UP_SVC_USERNAME'), env('AD_LOOK_UP_SVC_PASSWORD'))
     AD_LOOK_UP_SVC_APIKEY = env('AD_LOOK_UP_SVC_APIKEY')
     AD_LOOK_UP_SVC_APPID = env('AD_LOOK_UP_SVC_APPID')
-    EQ_RESPONSE_ID_SALT = env('EQ_RESPONSE_ID_SALT', default='s3cr3tS4lt')
+    EQ_SALT = env('EQ_SALT', default='s3cr3tS4lt')
 
 
 class ProductionConfig(BaseConfig):
@@ -131,7 +131,7 @@ class DevelopmentConfig:
                            env.str('AD_LOOK_UP_SVC_PASSWORD', default='secret'))
     AD_LOOK_UP_SVC_APIKEY = env.str('AD_LOOK_UP_SVC_APIKEY', default='apikey')
     AD_LOOK_UP_SVC_APPID = env.str('AD_LOOK_UP_SVC_APPID', default='appid')
-    EQ_RESPONSE_ID_SALT = env('EQ_RESPONSE_ID_SALT', default='s3cr3tS4lt')
+    EQ_SALT = env('EQ_SALT', default='s3cr3tS4lt')
 
 
 class TestingConfig:
@@ -173,4 +173,4 @@ class TestingConfig:
     AD_LOOK_UP_SVC_AUTH = ('admin', 'secret')
     AD_LOOK_UP_SVC_APIKEY = 'apikey'
     AD_LOOK_UP_SVC_APPID = 'appid'
-    EQ_RESPONSE_ID_SALT = 's3cr3tS4lt'
+    EQ_SALT = 's3cr3tS4lt'
