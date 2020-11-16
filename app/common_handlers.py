@@ -117,7 +117,6 @@ class CommonAddressInNorthernIreland(CommonCommon):
             'page_title': page_title,
             'display_region': display_region,
             'locale': locale,
-            'user_journey': user_journey,
             'page_url': View.gen_page_url(request)
         }
 
@@ -141,10 +140,7 @@ class CommonAddressInEngland(CommonCommon):
 
         return {
             'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'user_journey': user_journey,
-            'page_url': View.gen_page_url(request)
+            'locale': locale
         }
 
 
@@ -167,10 +163,7 @@ class CommonAddressInWales(CommonCommon):
 
         return {
             'page_title': page_title,
-            'display_region': display_region,
-            'locale': locale,
-            'user_journey': user_journey,
-            'page_url': View.gen_page_url(request)
+            'locale': locale
         }
 
 

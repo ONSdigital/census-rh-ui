@@ -260,7 +260,6 @@ class StartCodeForWales(StartCommon):
         await forget(request)
 
         return {
-            'display_region': display_region,
             'locale': locale,
             'page_title': page_title
         }
