@@ -6077,7 +6077,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_en, 'en', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_en, 'en', 'HH', self.ai_uprn_result_northern_ireland)
         await self.check_post_confirm_address_address_in_northern_ireland(
             self.post_request_access_code_confirm_address_en, 'en')
 
@@ -6086,7 +6086,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_cy, 'cy', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_cy, 'cy', 'HH', self.ai_uprn_result_northern_ireland)
         await self.check_post_confirm_address_address_in_northern_ireland(
             self.post_request_access_code_confirm_address_cy, 'cy')
 
@@ -6095,7 +6095,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_ni, 'ni', 'HH', self.ai_uprn_result_northern_ireland)
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
 
@@ -6104,7 +6104,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_ni, 'ni', 'SPG', self.ai_uprn_result_northern_ireland)
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
 
@@ -6113,7 +6113,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_ni, 'ni', 'CE', self.ai_uprn_result_northern_ireland_ce)
         await self.check_post_confirm_address_input_yes_ce(self.post_request_access_code_confirm_address_ni, 'ni',
                                                            self.rhsvc_case_by_uprn_ce_m_n)
 
@@ -6122,7 +6122,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_northern_ireland)
+            self.post_request_access_code_select_address_ni, 'ni', 'CE', self.ai_uprn_result_northern_ireland_ce)
         await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
 
@@ -6131,7 +6131,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_england)
+            self.post_request_access_code_select_address_ni, 'ni', 'HH', self.ai_uprn_result_england)
         await self.check_post_confirm_address_address_in_england(
             self.post_request_access_code_confirm_address_ni, 'ni')
 
@@ -6140,6 +6140,6 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_access_code_select_address_ni, 'ni', self.ai_uprn_result_wales)
+            self.post_request_access_code_select_address_ni, 'ni', 'HH', self.ai_uprn_result_wales)
         await self.check_post_confirm_address_address_in_wales(
             self.post_request_access_code_confirm_address_ni, 'ni')

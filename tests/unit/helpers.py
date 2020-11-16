@@ -402,7 +402,10 @@ class TestHelpers(RHTestCase):
             if ai_uprn_return_value:
                 mocked_get_ai_uprn.return_value = ai_uprn_return_value
             elif display_region == 'ni':
-                mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+                if address_type == 'CE':
+                    mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
+                else:
+                    mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             else:
                 if address_type == 'CE':
                     mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
@@ -1229,7 +1232,36 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.build_translation_link('large-print-sent-post', display_region), contents)
                     else:
                         self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
-                if display_region == 'cy':
+                if display_region == 'ni':
+                    if fulfilment_type == 'LARGE_PRINT':
+                        if case_type == 'CE':
+                            if check_room_number:
+                                if long_surname:
+                                    self.assertIn(
+                                        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
+                                                  contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
+                    else:
+                        if case_type == 'CE':
+                            if check_room_number:
+                                if long_surname:
+                                    self.assertIn(
+                                        self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
+                                        contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en, contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_ni, contents)
+                    self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
+                elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
                             if check_room_number:
@@ -1260,11 +1292,6 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_form_sent_post_secondary_cy, contents)
                 else:
                     if fulfilment_type == 'LARGE_PRINT':
-                        if display_region == 'ni':
-                            self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
-                        else:
-                            self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
-                    else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
@@ -1272,16 +1299,13 @@ class TestHelpers(RHTestCase):
                                         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
                                         contents)
                                 else:
-                                    self.assertIn(
-                                        self.content_request_form_sent_post_title_large_print_ce_with_room_en,
-                                        contents)
+                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
+                                                  contents)
                             else:
                                 self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
                         else:
-                            if display_region == 'ni':
-                                self.assertIn(self.content_request_form_sent_post_title_ni, contents)
-                            else:
-                                self.assertIn(self.content_request_form_sent_post_title_en, contents)
+                            self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
+                    else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
@@ -1302,7 +1326,25 @@ class TestHelpers(RHTestCase):
                                                                   display_region, False), contents)
                     else:
                         self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
-                if display_region == 'cy':
+                if display_region == 'ni':
+                    if case_type == 'CE':
+                        if check_room_number:
+                            if long_surname:
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_long_surname_en,
+                                              contents)
+                            else:
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_en, contents)
+                        else:
+                            self.assertIn(self.content_request_code_sent_post_title_ce_en, contents)
+                    else:
+                        self.assertIn(self.content_request_code_sent_post_title_ni, contents)
+                    if individual == 'true':
+                        self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
+                    elif case_type == 'CE':
+                        self.assertIn(self.content_request_code_sent_post_secondary_manager_en, contents)
+                    else:
+                        self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
+                elif display_region == 'cy':
                     if case_type == 'CE':
                         if check_room_number:
                             if long_surname:
@@ -1331,11 +1373,7 @@ class TestHelpers(RHTestCase):
                         else:
                             self.assertIn(self.content_request_code_sent_post_title_ce_en, contents)
                     else:
-                        if display_region == 'ni':
-                            self.assertIn(self.content_request_code_sent_post_title_ni, contents)
-                        else:
-                            self.assertIn(self.content_request_code_sent_post_title_en, contents)
-
+                        self.assertIn(self.content_request_code_sent_post_title_en, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
                     elif case_type == 'CE':
@@ -1533,7 +1571,10 @@ class TestHelpers(RHTestCase):
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
+            if display_region == 'ni':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
+            else:
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
 
             response = await self.client.request('GET', url_get)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'GET'))

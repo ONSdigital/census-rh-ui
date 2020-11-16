@@ -377,6 +377,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_northern_ireland = f
 
+        with open('tests/test_data/address_index/uprn_northern_ireland_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland_ce = f
+
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
