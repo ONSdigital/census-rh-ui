@@ -197,7 +197,7 @@ class Start(StartCommon):
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartCodeForEngland:get'].url_for())
             else:
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region='en'))
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
 
 @start_routes.view(r'/' + View.valid_ew_display_regions + '/start/code-for-northern-ireland/')
