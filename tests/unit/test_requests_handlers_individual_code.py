@@ -26,7 +26,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(
             self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -39,7 +39,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(
             self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -52,7 +52,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(
             self.post_request_individual_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -65,7 +65,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(
             self.post_request_individual_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -130,7 +130,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(
-            self.post_request_individual_code_select_address_en, 'en', self.ai_uprn_result_scotland)
+            self.post_request_individual_code_select_address_en, 'en', 'HH', self.ai_uprn_result_scotland)
         await self.check_post_confirm_address_address_in_scotland(
             self.post_request_individual_code_confirm_address_en, 'en')
 
@@ -140,7 +140,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(
-            self.post_request_individual_code_select_address_cy, 'cy', self.ai_uprn_result_scotland)
+            self.post_request_individual_code_select_address_cy, 'cy', 'HH', self.ai_uprn_result_scotland)
         await self.check_post_confirm_address_address_in_scotland(
             self.post_request_individual_code_confirm_address_cy, 'cy')
 
@@ -150,7 +150,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
-            self.post_request_individual_code_select_address_ni, 'ni', self.ai_uprn_result_scotland)
+            self.post_request_individual_code_select_address_ni, 'ni', 'HH', self.ai_uprn_result_scotland)
         await self.check_post_confirm_address_address_in_scotland(
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
@@ -184,7 +184,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_individual_code_select_address_en,
-                                             'en', self.ai_uprn_result_censusaddresstype_na)
+                                             'en', 'HH', self.ai_uprn_result_censusaddresstype_na)
         await self.check_post_confirm_address_returns_addresstype_na(
             self.post_request_individual_code_confirm_address_en, 'en')
 
@@ -194,7 +194,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_individual_code_select_address_cy,
-                                             'cy', self.ai_uprn_result_censusaddresstype_na)
+                                             'cy', 'HH', self.ai_uprn_result_censusaddresstype_na)
         await self.check_post_confirm_address_returns_addresstype_na(
             self.post_request_individual_code_confirm_address_cy, 'cy')
 
@@ -204,7 +204,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni,
-                                             'ni', self.ai_uprn_result_censusaddresstype_na_ni)
+                                             'ni', 'HH', self.ai_uprn_result_censusaddresstype_na_ni)
         await self.check_post_confirm_address_returns_addresstype_na(
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
@@ -231,7 +231,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_error_from_get_cases(
             self.post_request_individual_code_confirm_address_en, 'en')
 
@@ -240,7 +240,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_error_from_get_cases(
             self.post_request_individual_code_confirm_address_cy, 'cy')
 
@@ -249,7 +249,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_error_from_get_cases(
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
@@ -258,7 +258,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
 
@@ -267,7 +267,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
 
@@ -276,7 +276,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
 
@@ -285,7 +285,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
 
@@ -294,7 +294,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_error_from_create_case(
             self.post_request_individual_code_confirm_address_en, 'en')
 
@@ -303,7 +303,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_error_from_create_case(
             self.post_request_individual_code_confirm_address_cy, 'cy')
 
@@ -312,7 +312,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_error_from_create_case(
             self.post_request_individual_code_confirm_address_ni, 'ni')
 
@@ -321,7 +321,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_no(self.post_request_individual_code_confirm_address_en, 'en')
 
     @unittest_run_loop
@@ -329,7 +329,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_no(self.post_request_individual_code_confirm_address_cy, 'cy')
 
     @unittest_run_loop
@@ -337,7 +337,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_no(self.post_request_individual_code_confirm_address_ni, 'ni')
 
     @unittest_run_loop
@@ -345,7 +345,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_en, 'en', self.common_confirm_address_input_invalid)
 
@@ -354,7 +354,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_cy, 'cy', self.common_confirm_address_input_invalid)
 
@@ -363,7 +363,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_ni, 'ni', self.common_confirm_address_input_invalid)
 
@@ -372,7 +372,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_en, 'en', self.common_form_data_empty)
 
@@ -381,7 +381,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_cy, 'cy', self.common_form_data_empty)
 
@@ -390,7 +390,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_address_ni, 'ni', self.common_form_data_empty)
 
@@ -423,7 +423,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -434,7 +434,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -445,7 +445,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -456,7 +456,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -467,7 +467,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -479,7 +479,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -491,7 +491,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -503,7 +503,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_invalid_or_no_selection(
@@ -515,7 +515,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -526,7 +526,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -537,7 +537,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -548,7 +548,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -559,7 +559,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -571,7 +571,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -583,7 +583,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -595,7 +595,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -607,7 +607,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -620,7 +620,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -633,7 +633,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -646,7 +646,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -659,7 +659,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -673,7 +673,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -687,7 +687,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -701,7 +701,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -715,7 +715,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -728,7 +728,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -741,7 +741,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -754,7 +754,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -767,7 +767,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -780,7 +780,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -793,7 +793,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -806,7 +806,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -819,7 +819,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -832,7 +832,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en')
@@ -845,7 +845,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy')
@@ -858,7 +858,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni')
@@ -871,7 +871,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -883,7 +883,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -895,7 +895,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
@@ -907,7 +907,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
@@ -919,7 +919,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -931,7 +931,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -943,7 +943,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
@@ -955,7 +955,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
@@ -967,7 +967,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -979,7 +979,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
@@ -991,7 +991,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
@@ -1003,7 +1003,7 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
@@ -1015,119 +1015,123 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_individual_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_individual_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+            'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_empty_hh_ew_w(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_individual_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'individual')
+            self.post_request_individual_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+            'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_empty_hh_cy(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_individual_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'individual')
+            self.post_request_individual_code_confirm_name_address_cy, 'cy', self.common_form_data_empty,
+            'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_empty_hh_ni(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_individual_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'individual')
+            self.post_request_individual_code_confirm_name_address_ni, 'ni', self.common_form_data_empty,
+            'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_invalid_hh_ew_e(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_invalid_hh_ew_w(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_invalid_hh_cy(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_invalid_hh_ni(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_invalid_or_no_selection(
             self.post_request_individual_code_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'individual')
+            self.request_common_confirm_name_address_data_invalid, 'individual', 'HH')
 
     @unittest_run_loop
     async def test_request_individual_code_post_confirm_name_address_option_no_hh_ew_e(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_no(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'individual')
 
@@ -1136,11 +1140,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_no(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'individual')
 
@@ -1149,11 +1153,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_no(
             self.post_request_individual_code_confirm_name_address_cy, 'cy', 'individual')
 
@@ -1162,11 +1166,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_no(
             self.post_request_individual_code_confirm_name_address_ni, 'ni', 'individual')
 
@@ -1175,11 +1179,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'true')
 
@@ -1188,11 +1192,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'true')
 
@@ -1201,11 +1205,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'true')
 
@@ -1214,11 +1218,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'true')
 
@@ -1227,11 +1231,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_get_fulfilment(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'E', 'UAC', 'true')
 
@@ -1240,11 +1244,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_get_fulfilment(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'W', 'UAC', 'true')
 
@@ -1253,11 +1257,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_get_fulfilment(
             self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'W', 'UAC', 'true')
 
@@ -1266,11 +1270,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_get_fulfilment(
             self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'N', 'UAC', 'true')
 
@@ -1279,11 +1283,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_individual_code_confirm_name_address_en, 'en')
 
@@ -1292,11 +1296,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_individual_code_confirm_name_address_en, 'en')
 
@@ -1305,11 +1309,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_individual_code_confirm_name_address_cy, 'cy')
 
@@ -1318,11 +1322,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_from_request_fulfilment(
             self.post_request_individual_code_confirm_name_address_ni, 'ni')
 
@@ -1331,11 +1335,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
             self.post_request_individual_code_confirm_name_address_en, 'en')
 
@@ -1344,11 +1348,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_en,
                                                         'en', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
             self.post_request_individual_code_confirm_name_address_en, 'en')
 
@@ -1357,11 +1361,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_cy,
                                                         'cy', self.rhsvc_case_by_uprn_hh_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
             self.post_request_individual_code_confirm_name_address_cy, 'cy')
 
@@ -1370,11 +1374,11 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_get_enter_address(self.get_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
                                                         'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
             self.post_request_individual_code_confirm_name_address_ni, 'ni')
 

@@ -1,4 +1,5 @@
 import time
+import hashlib
 from collections import namedtuple
 from uuid import uuid4
 from aiohttp.web import Application
@@ -27,6 +28,7 @@ class EqPayloadConstructor(object):
 
         self._sample_attributes = attributes
 
+        salt = app['EQ_SALT']
         domain_url_protocol = app['DOMAIN_URL_PROTOCOL']
         domain_url = app['DOMAIN_URL_EN']
         url_path_prefix = app['URL_PATH_PREFIX']
@@ -61,14 +63,11 @@ class EqPayloadConstructor(object):
             raise InvalidEqPayLoad('No collection id in supplied case JSON')
 
         try:
-            self._response_id = case['questionnaireId']
-        except KeyError:
-            raise InvalidEqPayLoad('No questionnaireId in supplied case JSON')
-
-        try:
             self._questionnaire_id = case['questionnaireId']
         except KeyError:
             raise InvalidEqPayLoad('No questionnaireId in supplied case JSON')
+
+        self._response_id = self.hash_qid(self._questionnaire_id, salt)
 
         try:
             self._uprn = case['address']['uprn']
@@ -125,8 +124,11 @@ class EqPayloadConstructor(object):
             'form_type': self._form_type,
             'survey': 'CENSUS'  # hardcoded for rehearsal
         }
-
         return self._payload
+
+    def hash_qid(self, qid, salt):
+        hashed = hashlib.sha256(salt.encode() + qid.encode()).hexdigest()
+        return qid + hashed[0:16]
 
     @staticmethod
     def build_display_address(sample_attributes):

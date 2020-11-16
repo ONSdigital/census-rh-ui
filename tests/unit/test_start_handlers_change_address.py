@@ -24,7 +24,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -167,7 +167,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -312,7 +312,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -455,7 +455,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -600,7 +600,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -743,7 +743,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -3292,7 +3292,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_en)
@@ -3356,7 +3356,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3482,7 +3482,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_en)
@@ -3546,7 +3546,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3672,7 +3672,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_en)
@@ -3736,7 +3736,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_cy)
