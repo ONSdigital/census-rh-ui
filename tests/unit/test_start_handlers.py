@@ -1637,7 +1637,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_ni_language_options_title, contents)
-            self.assertIn(self.content_start_ni_language_options_option_title, contents)
+            self.assertIn(self.content_start_ni_language_options_error, contents)
 
     @unittest_run_loop
     async def test_post_start_ni_language_options_empty(self):
@@ -1669,7 +1669,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_ni_language_options_title, contents)
-            self.assertIn(self.content_start_ni_language_options_option_title, contents)
+            self.assertIn(self.content_start_ni_language_options_error, contents)
 
     @unittest_run_loop
     async def test_get_ni_select_language(self):
@@ -1699,7 +1699,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn('/ni/start/select-language', response.headers['Location'])
 
             response = await self.client.request('GET', self.get_start_select_language_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             contents = str(await response.content.read())
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
@@ -1734,12 +1734,12 @@ class TestStartHandlers(TestHelpers):
             response = await self.client.request('POST', self.post_start_select_language_ni,
                                                  allow_redirects=False,
                                                  data=self.start_ni_select_language_data_empty)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
 
             contents = str(await response.content.read())
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
-            self.assertIn(self.content_start_ni_select_language_option_title, contents)
+            self.assertIn(self.content_start_ni_select_language_error, contents)
             self.assertIn(self.content_start_ni_select_language_switch_back, contents)
             self.assertIn(self.nisra_logo, contents)
 
@@ -1770,12 +1770,12 @@ class TestStartHandlers(TestHelpers):
             response = await self.client.request('POST', self.post_start_select_language_ni,
                                                  allow_redirects=False,
                                                  data=self.start_ni_select_language_data_invalid)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
 
             contents = str(await response.content.read())
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
-            self.assertIn(self.content_start_ni_select_language_option_title, contents)
+            self.assertIn(self.content_start_ni_select_language_error, contents)
             self.assertIn(self.content_start_ni_select_language_switch_back, contents)
             self.assertIn(self.nisra_logo, contents)
 
@@ -2702,7 +2702,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -2717,7 +2717,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_en)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)
@@ -2811,7 +2811,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -2826,7 +2826,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_en)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)
@@ -2919,7 +2919,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -2934,7 +2934,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ga)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)
@@ -3028,7 +3028,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -3043,7 +3043,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ga)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)
@@ -3136,7 +3136,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -3151,7 +3151,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ul)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)
@@ -3245,7 +3245,7 @@ class TestStartHandlers(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(200, post_ni_language_options_response.status)
             select_language_options_content = str(await post_ni_language_options_response.content.read())
@@ -3260,7 +3260,7 @@ class TestStartHandlers(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ul)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(post_ni_select_language_response.status, 302)

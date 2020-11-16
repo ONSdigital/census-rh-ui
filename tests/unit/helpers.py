@@ -1,3 +1,7 @@
+import datetime
+import json
+
+from urllib.parse import urlsplit, parse_qs
 from unittest import mock
 
 from aiohttp.client_exceptions import ClientConnectionError
@@ -26,26 +30,39 @@ class TestHelpers(RHTestCase):
 
     def build_url_log_entry(self, page, display_region, request_type, include_sub_user_journey=True):
         if not include_sub_user_journey:
-            link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey + "/" + \
-                   page + "'"
+            if page == '':
+                link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey + "'"
+            else:
+                link = "received " + request_type + " on endpoint '" + display_region + "/" + \
+                       self.user_journey + "/" + page + "'"
         else:
             link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey + "/" + \
                    self.sub_user_journey + "/" + page + "'"
         return link
 
-    def build_translation_link(self, page, display_region, include_sub_user_journey=True):
+    def build_translation_link(self, page, display_region, include_sub_user_journey=True, adlocation=False):
+        if adlocation:
+            params = '/?adlocation=1234567890'
+        else:
+            params = '/'
         if display_region == 'cy':
             if not include_sub_user_journey:
-                link = '<a href="/en/' + self.user_journey + '/' + page + '/" lang="en" >English</a>'
+                if page == '':
+                    link = '<a href="/en/' + self.user_journey + params + '" lang="en" >English</a>'
+                else:
+                    link = '<a href="/en/' + self.user_journey + '/' + page + params + '" lang="en" >English</a>'
             else:
                 link = '<a href="/en/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
-                       '/" lang="en" >English</a>'
+                       params + '" lang="en" >English</a>'
         else:
             if not include_sub_user_journey:
-                link = '<a href="/cy/' + self.user_journey + '/' + page + '/" lang="cy" >Cymraeg</a>'
+                if page == '':
+                    link = '<a href="/cy/' + self.user_journey + params + '" lang="cy" >Cymraeg</a>'
+                else:
+                    link = '<a href="/cy/' + self.user_journey + '/' + page + params + '" lang="cy" >Cymraeg</a>'
             else:
                 link = '<a href="/cy/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
-                       '/" lang="cy" >Cymraeg</a>'
+                       params + '" lang="cy" >Cymraeg</a>'
         return link
 
     def check_text_enter_address(self, display_region, contents, check_empty=False, check_error=False):
@@ -1229,14 +1246,14 @@ class TestHelpers(RHTestCase):
                                                    after_census_day=False, check_error=False):
         if display_region == 'cy':
             if check_error:
-                self.assertIn(self.content_start_transient_accommodation_type_error_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_error_cy, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
         else:
             if check_error:
-                self.assertIn(self.content_start_transient_accommodation_type_error_en, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_error_en, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
@@ -1258,10 +1275,97 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_tent_en, contents)
 
-    async def check_post_start_transient_enter_town_name_valid(self, url, display_region):
+    def check_text_start_transient_ni_select_language(self, contents, check_error=False):
+        if check_error:
+            self.assertIn(self.content_start_ni_select_language_error, contents)
+        self.assertIn(self.content_common_save_and_exit_link_en, contents)
+        self.assertIn(self.content_start_ni_select_language_title, contents)
+        self.assertIn(self.content_start_ni_select_language_option, contents)
+        self.assertIn(self.content_start_ni_select_language_switch_back, contents)
+
+    def check_text_start_transient_ni_language_options(self, contents, check_error=False):
+        if check_error:
+            self.assertIn(self.content_start_ni_language_options_error, contents)
+        self.assertIn(self.content_common_save_and_exit_link_en, contents)
+        self.assertIn(self.content_start_ni_language_options_title, contents)
+        self.assertIn(self.content_start_ni_language_options_option_yes, contents)
+
+    async def check_get_start(self, display_region, adlocation=False):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST', url, data=self.start_transient_town_name_input_valid)
+            if adlocation:
+                response = await self.client.request('GET', self.get_url_from_class(
+                    'Start', 'get', display_region, {"adlocation": "1234567890"}))
+            else:
+                response = await self.client.request('GET', self.get_url_from_class('Start', 'get', display_region))
+            self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'GET', include_sub_user_journey=False))
+            self.assertEqual(200, response.status)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('', display_region, include_sub_user_journey=False,
+                                                          adlocation=adlocation), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_title_cy, contents)
+                self.assertIn(self.content_start_uac_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_title_en, contents)
+                self.assertIn(self.content_start_uac_title_en, contents)
+            if adlocation:
+                self.assertLogEvent(cm, "assisted digital query parameter found")
+                self.assertIn('type="submit"', contents)
+                self.assertIn('type="hidden"', contents)
+                self.assertIn('value="1234567890"', contents)
+            if adlocation:
+                self.assertEqual(contents.count('input--text'), 2)
+            else:
+                self.assertEqual(contents.count('input--text'), 1)
+            self.assertIn('type="submit"', contents)
+
+    async def check_post_start_transient(self, display_region, region, after_census_day=False, adlocation=False):
+        if after_census_day:
+            mocked_now_utc = datetime.datetime(2021, 3, 22, 0, 0, 0, 0)
+        else:
+            mocked_now_utc = datetime.datetime(2021, 3, 21, 0, 0, 0, 0)
+        if region == 'N':
+            uac_payload = self.transient_uac_json_n
+        elif region == 'W':
+            uac_payload = self.transient_uac_json_w
+        else:
+            uac_payload = self.transient_uac_json_e
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.View.get_now_utc') as mocked_get_now_utc, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked_get_now_utc.return_value = mocked_now_utc
+            mocked.get(self.rhsvc_url, payload=uac_payload)
+            if adlocation:
+                data = self.start_data_valid_with_adlocation
+            else:
+                data = self.start_data_valid
+            response = await self.client.request('POST', self.get_url_from_class('Start', 'post', display_region),
+                                                 allow_redirects=True, data=data)
+
+            self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'POST',
+                                                             include_sub_user_journey=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'GET'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-town-name', display_region), contents)
+            if after_census_day:
+                self.check_text_start_transient_enter_town_name(display_region, contents,
+                                                                after_census_day=True, check_error=False)
+            else:
+                self.check_text_start_transient_enter_town_name(display_region, contents,
+                                                                after_census_day=False, check_error=False)
+
+    async def check_post_start_transient_enter_town_name_valid(self, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartTransientEnterTownName', 'post', display_region),
+                data=self.start_transient_town_name_input_valid)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('accommodation-type', display_region, 'GET'))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -1269,9 +1373,121 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('accommodation-type', display_region), contents)
             self.check_text_start_transient_accommodation_type(display_region, contents, check_error=False)
 
-    async def check_post_start_transient_accommodation_type_no_selection(self, url, display_region):
+    async def check_post_start_transient_enter_town_name_empty(self, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST', url, data=self.common_form_data_empty)
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartTransientEnterTownName', 'post', display_region),
+                data=self.start_transient_town_name_input_empty)
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'POST'))
+            self.assertLogEvent(cm, "error town name empty")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-town-name', display_region), contents)
+            self.check_text_start_transient_enter_town_name(display_region, contents, check_error=True)
+
+    async def check_post_start_transient_accommodation_type_selection(
+            self, display_region, selection, region, adlocation=False):
+        if display_region == 'cy':
+            if selection == 'barge':
+                data = self.start_transient_accommodation_type_input_barge_cy
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_barge_cy
+            elif selection == 'caravan':
+                data = self.start_transient_accommodation_type_input_caravan_cy
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_caravan_cy
+            else:
+                data = self.start_transient_accommodation_type_input_tent_cy
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_tent_cy
+        else:
+            if selection == 'barge':
+                data = self.start_transient_accommodation_type_input_barge_en
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_barge_en
+            elif selection == 'caravan':
+                data = self.start_transient_accommodation_type_input_caravan_en
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_caravan_en
+            else:
+                data = self.start_transient_accommodation_type_input_tent_en
+                accommodation_type_text = self.content_start_transient_accommodation_type_value_tent_en
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            if region == 'W':
+                eq_payload['region_code'] = 'GB-WLS'
+            else:
+                eq_payload['region_code'] = 'GB-ENG'
+            if display_region == 'cy':
+                eq_payload['language_code'] = 'cy'
+            else:
+                eq_payload['language_code'] = 'en'
+            if adlocation:
+                eq_payload['channel'] = 'ad'
+                eq_payload['user_id'] = '1234567890'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/' + display_region
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '9999999999999'
+            eq_payload['case_type'] = 'SPG'
+            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+
+            response = await self.client.request(
+                'POST',
+                self.get_url_from_class('StartTransientAccommodationType', 'post', display_region),
+                allow_redirects=False,
+                data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('accommodation-type', display_region, 'POST'))
+            self.assertLogEvent(cm, 'redirecting to eq')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)
+
+    async def check_post_start_transient_accommodation_type_selection_ni(self, selection):
+        display_region = 'ni'
+        if selection == 'barge':
+            data = self.start_transient_accommodation_type_input_barge_en
+        elif selection == 'caravan':
+            data = self.start_transient_accommodation_type_input_caravan_en
+        else:
+            data = self.start_transient_accommodation_type_input_tent_en
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST',
+                self.get_url_from_class('StartTransientAccommodationType', 'post', display_region), data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('accommodation-type', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('language-options', display_region,
+                                                             'GET', include_sub_user_journey=False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_start_transient_ni_language_options(contents, check_error=False)
+
+    async def check_post_start_transient_accommodation_type_no_selection(self, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartTransientAccommodationType', 'post', display_region),
+                data=self.common_form_data_empty)
             self.assertLogEvent(cm, self.build_url_log_entry('accommodation-type', display_region, 'POST'))
             self.assertLogEvent(cm, "transient accommodation type error")
             self.assertEqual(response.status, 200)
@@ -1280,3 +1496,171 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('accommodation-type', display_region), contents)
             self.check_text_start_transient_accommodation_type(display_region, contents, check_error=True)
+
+    async def check_post_start_transient_ni_language_options_yes(self, selection, adlocation=False):
+        display_region = 'ni'
+        if selection == 'barge':
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_barge_en
+        elif selection == 'caravan':
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_caravan_en
+        else:
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_tent_en
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            eq_payload['language_code'] = 'en'
+            if adlocation:
+                eq_payload['channel'] = 'ad'
+                eq_payload['user_id'] = '1234567890'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/' + display_region
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '9999999999999'
+            eq_payload['case_type'] = 'SPG'
+            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+
+            response = await self.client.request(
+                'POST',
+                self.get_url_from_class('StartNILanguageOptions', 'post'),
+                allow_redirects=False,
+                data=self.start_ni_language_option_data_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('language-options', display_region,
+                                                             'POST', include_sub_user_journey=False))
+            self.assertLogEvent(cm, 'redirecting to eq')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)
+
+    async def check_post_start_transient_ni_language_options_no(self):
+        display_region = 'ni'
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartNILanguageOptions', 'post'),
+                data=self.start_ni_language_option_data_no)
+            self.assertLogEvent(cm, self.build_url_log_entry('language-options', display_region,
+                                                             'POST', include_sub_user_journey=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-language', display_region,
+                                                             'GET', include_sub_user_journey=False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_start_transient_ni_select_language(contents, check_error=False)
+
+    async def check_post_start_transient_ni_language_options_no_selection(self):
+        display_region = 'ni'
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartNILanguageOptions', 'post'),
+                data=self.common_form_data_empty)
+            self.assertLogEvent(cm, self.build_url_log_entry('language-options', display_region,
+                                                             'POST', include_sub_user_journey=False))
+            self.assertLogEvent(cm, 'ni language option error')
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_start_transient_ni_language_options(contents, check_error=True)
+
+    async def check_post_start_transient_ni_select_language(self, selection, language_selection, adlocation=False):
+        display_region = 'ni'
+        if selection == 'barge':
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_barge_en
+        elif selection == 'caravan':
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_caravan_en
+        else:
+            accommodation_type_text = self.content_start_transient_accommodation_type_value_tent_en
+        if language_selection == 'ga':
+            data = self.start_ni_select_language_data_ga
+        elif language_selection == 'ul':
+            data = self.start_ni_select_language_data_ul
+        else:
+            data = self.start_ni_select_language_data_en
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-NIR'
+            if language_selection == 'ga':
+                eq_payload['language_code'] = 'ga'
+            elif language_selection == 'ul':
+                eq_payload['language_code'] = 'eo'
+            else:
+                eq_payload['language_code'] = 'en'
+            if adlocation:
+                eq_payload['channel'] = 'ad'
+                eq_payload['user_id'] = '1234567890'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/' + display_region
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '9999999999999'
+            eq_payload['case_type'] = 'SPG'
+            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+
+            response = await self.client.request(
+                'POST',
+                self.get_url_from_class('StartNISelectLanguage', 'post'),
+                allow_redirects=False,
+                data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-language', display_region,
+                                                             'POST', include_sub_user_journey=False))
+            self.assertLogEvent(cm, 'redirecting to eq')
+
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)
+
+    async def check_post_start_transient_ni_select_language_no_selection(self):
+        display_region = 'ni'
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartNISelectLanguage', 'post'),
+                data=self.common_form_data_empty)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-language', display_region,
+                                                             'POST', include_sub_user_journey=False))
+            self.assertLogEvent(cm, 'ni language option error')
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_start_transient_ni_select_language(contents, check_error=True)

@@ -419,7 +419,7 @@ class StartNISelectLanguage(StartCommon):
         Address Confirmation get.
         """
         self.setup_request(request)
-        self.log_entry(request, 'ni/start/ni-select-language')
+        self.log_entry(request, 'ni/start/select-language')
         await check_permission(request)
 
         return {'locale': 'en',
@@ -430,7 +430,7 @@ class StartNISelectLanguage(StartCommon):
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'ni/start/ni-select-language')
+        self.log_entry(request, 'ni/start/select-language')
         await check_permission(request)
         data = await request.post()
 
@@ -680,7 +680,7 @@ class StartTransientEnterTownName(StartCommon):
             )
 
         except KeyError:
-            logger.info('address confirmation error',
+            logger.info('error town name empty',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',

@@ -510,11 +510,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
 
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
-        self.content_start_ni_language_options_option_title = 'Select a language option'
+        self.content_start_ni_language_options_error = 'Select a language option'
         self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
         self.content_start_ni_select_language_title = 'Choose your language'
-        self.content_start_ni_select_language_option_title = 'Select a language option'
+        self.content_start_ni_select_language_error = 'Select a language option'
         self.content_start_ni_select_language_option = 'Continue in English'
         self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
 
@@ -1965,12 +1965,15 @@ class RHTestCase(AioHTTPTestCase):
             'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
         self.content_start_transient_enter_town_name_post_census_day_title_en = \
             'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+        self.content_start_transient_enter_town_name_error_en = "Enter your nearest town or city"
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
             'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_post_census_day_title_cy = \
             'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_error_cy = "Enter your nearest town or city"
 
         self.content_start_transient_accommodation_type_title_en = \
             "Which of the following best describes your type of accommodation?"
@@ -1991,12 +1994,34 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_transient_accommodation_type_value_tent_cy = "Tent or temporary structure"
 
         # Test Data
-
+        self.data_start_transient_town_name = 'Fareham'
         self.start_transient_town_name_input_valid = {
-            'form-enter-town-name': 'Fareham', 'action[save_continue]': '',
+            'form-enter-town-name': self.data_start_transient_town_name, 'action[save_continue]': '',
         }
         self.start_transient_town_name_input_empty = {
             'form-enter-town-name': '', 'action[save_continue]': '',
+        }
+
+        self.start_transient_accommodation_type_input_barge_en = {
+            'accommodation-type': 'Barge or boat', 'action[save_continue]': '',
+        }
+        self.start_transient_accommodation_type_input_caravan_en = {
+            'accommodation-type': 'Caravan or live-in vehicle', 'action[save_continue]': '',
+        }
+        self.start_transient_accommodation_type_input_tent_en = {
+            'accommodation-type': 'Tent or temporary structure', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_barge_cy = {
+            'accommodation-type': 'Barge or boat', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_caravan_cy = {
+            'accommodation-type': 'Caravan or live-in vehicle', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_tent_cy = {
+            'accommodation-type': 'Tent or temporary structure', 'action[save_continue]': '',
         }
 
         with open('tests/test_data/rhsvc/uac_transient_e.json') as fp:
@@ -2008,8 +2033,18 @@ class RHTestCase(AioHTTPTestCase):
 
     # URL functions
 
-    def get_url_from_class(self, class_name, method_type, display_region):
-        url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region)
+    def get_url_from_class(self, class_name, method_type, display_region=None, query=None):
+        if display_region:
+            if query:
+                url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region).\
+                    with_query(query)
+            else:
+                url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region)
+        else:
+            if query:
+                url = self.app.router[class_name + ':' + method_type].url_for().with_query(query)
+            else:
+                url = self.app.router[class_name + ':' + method_type].url_for()
         return url
 
     # yapf: enable
