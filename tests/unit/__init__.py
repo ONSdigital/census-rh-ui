@@ -263,6 +263,7 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
         self.postcode_empty = ''
+        self.adlocation = '1234567890'
 
         self.common_form_data_empty = {}
 
@@ -361,6 +362,26 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_ce = f
 
+        with open('tests/test_data/address_index/uprn_england.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_england = f
+
+        with open('tests/test_data/address_index/uprn_wales.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_wales = f
+
+        with open('tests/test_data/address_index/uprn_northern_ireland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland = f
+
+        with open('tests/test_data/address_index/uprn_northern_ireland_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland_ce = f
+
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -371,6 +392,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_censusaddresstype_na = f
 
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na_ni = f
+
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
@@ -379,6 +405,18 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_ew = '0800 141 2021'
         self.content_call_centre_number_cy = '0800 169 2021'
         self.content_call_centre_number_ni = '0800 328 2021'
+
+        self.content_common_address_in_northern_ireland_en = \
+            'This address is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_common_address_in_northern_ireland_cy = \
+            'This address is not part of the census for England and Wales'
+        self.content_common_address_not_in_northern_ireland = \
+            'This address is not part of the census for Northern Ireland'
+        self.content_common_address_in_england_secondary = \
+            'You have selected an address in England.'
+        self.content_common_address_in_wales_secondary = \
+            'You have selected an address in Wales.'
 
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
@@ -531,6 +569,18 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_uac_expired_en = 'Your unique access code has expired'
         self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
 
+        self.content_start_code_for_northern_ireland_title_en = \
+            'This access code is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_start_code_for_northern_ireland_title_cy = \
+            'This access code is not part of the census for England and Wales'
+        self.content_start_code_not_for_northern_ireland_title = \
+            'This access code is not part of the census for Northern Ireland'
+        self.content_start_code_for_england_secondary = \
+            'You have entered an access code for the census in England.'
+        self.content_start_code_for_wales_secondary = \
+            'You have entered an access code for the census in Wales.'
+
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
@@ -568,33 +618,30 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "invalid"})
         self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
-        self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
         self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
         self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
         self.get_start_adlocation_valid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "invalid"})
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
-        self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
         self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
         self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
         self.get_start_adlocation_valid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "invalid"})
         self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
-        self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
         self.get_start_confirm_address_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
         self.post_start_confirm_address_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
 
@@ -719,7 +766,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.start_data_valid_with_adlocation = {
-            'uac': self.uac, 'adlocation': '1234567890', 'action[save_continue]': '',
+            'uac': self.uac, 'adlocation': self.adlocation, 'action[save_continue]': '',
         }
 
         self.start_confirm_address_data_yes = {
@@ -825,6 +872,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.selected_uprn = '10023122451'
+        self.selected_uprn_ni = '187748262'
 
         self.mobile_valid = '07012345678'
         self.mobile_invalid_short = '07012'
@@ -1185,6 +1233,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_household_cy = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_title_ni = \
+            'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation
@@ -2021,6 +2071,10 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
+        self.content_request_form_sent_post_title_ni = \
+            'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_title_large_print_ni = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'
