@@ -2071,10 +2071,15 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
+
         self.content_request_form_sent_post_title_ni = \
             'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_individual_title_ni = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_form_sent_post_title_large_print_ni = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_individual_title_large_print_ni = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'

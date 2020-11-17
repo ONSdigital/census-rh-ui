@@ -539,7 +539,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -623,7 +626,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -1366,22 +1372,48 @@ class TestHelpers(RHTestCase):
                                     self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
                                                   contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
+                                if individual == 'true':
+                                    self.assertIn(
+                                        self.content_request_form_sent_post_individual_title_large_print_ce_en,
+                                        contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
                         else:
-                            self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
+                            if individual == 'true':
+                                self.assertIn(self.content_request_form_sent_post_individual_title_large_print_ni,
+                                              contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
-                                    self.assertIn(
-                                        self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
-                                        contents)
+                                    if individual == 'true':
+                                        self.assertIn(
+                                            self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en,
+                                            contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
+                                            contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en, contents)
+                                    if individual == 'true':
+                                        self.assertIn(
+                                            self.content_request_form_sent_post_individual_title_ce_with_room_en,
+                                            contents)
+                                    else:
+                                        self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en,
+                                                      contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
+                                if individual == 'true':
+                                    self.assertIn(self.content_request_form_sent_post_individual_title_ce_en, contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
                         else:
-                            self.assertIn(self.content_request_form_sent_post_title_ni, contents)
+                            if individual == 'true':
+                                self.assertIn(self.content_request_form_sent_post_individual_title_ni, contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_ni, contents)
                     self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
                 elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
@@ -1430,7 +1462,7 @@ class TestHelpers(RHTestCase):
                                     if individual == 'true':
                                         self.assertIn(
                                             self.content_request_form_sent_post_individual_title_ce_with_room_cy,
-                                                      contents)
+                                            contents)
                                     else:
                                         self.assertIn(self.content_request_form_sent_post_title_ce_with_room_cy,
                                                       contents)
@@ -1491,7 +1523,7 @@ class TestHelpers(RHTestCase):
                                     if individual == 'true':
                                         self.assertIn(
                                             self.content_request_form_sent_post_individual_title_ce_with_room_en,
-                                                      contents)
+                                            contents)
                                     else:
                                         self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en,
                                                       contents)

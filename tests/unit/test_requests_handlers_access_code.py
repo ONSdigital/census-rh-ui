@@ -6568,8 +6568,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
             self.post_request_access_code_select_address_ni, 'ni', 'HH', self.ai_uprn_result_northern_ireland)
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+        await self.check_post_confirm_address_input_yes_code(self.post_request_access_code_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_hh_n)
 
     @unittest_run_loop
     async def test_get_request_access_code_address_in_northern_ireland_spg_ni(self):
@@ -6577,8 +6577,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
             self.post_request_access_code_select_address_ni, 'ni', 'SPG', self.ai_uprn_result_northern_ireland)
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+        await self.check_post_confirm_address_input_yes_code(self.post_request_access_code_confirm_address_ni,
+                                                             'ni', self.rhsvc_case_by_uprn_spg_n)
 
     @unittest_run_loop
     async def test_get_request_access_code_address_in_northern_ireland_ce_m_ni(self):
@@ -6595,8 +6595,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(
             self.post_request_access_code_select_address_ni, 'ni', 'CE', self.ai_uprn_result_northern_ireland_ce)
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
 
     @unittest_run_loop
     async def test_get_request_access_code_address_not_in_northern_ireland_region_e_ni(self):
