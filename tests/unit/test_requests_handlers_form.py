@@ -2818,7 +2818,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
                                    self.post_request_paper_form_enter_room_number_en,
                                    'en', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
@@ -2834,7 +2834,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
                                    self.post_request_paper_form_enter_room_number_en,
                                    'en', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
@@ -2850,7 +2850,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.add_room_number(self.get_request_paper_form_enter_room_number_cy,
                                    self.post_request_paper_form_enter_room_number_cy,
                                    'cy', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE',
                                          check_room_number=True)
@@ -2866,7 +2866,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
                                    self.post_request_paper_form_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE',
                                          check_room_number=True)
@@ -2947,7 +2947,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
@@ -2962,7 +2962,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE')
         await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
@@ -2977,7 +2977,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE')
         await self.add_room_number(self.get_request_paper_form_enter_room_number_cy,
@@ -2992,7 +2992,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE')
         await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
@@ -3043,7 +3043,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE',
                                          long_surname=True)
@@ -3059,7 +3059,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_en, 'en', 'individual', 'CE',
                                          long_surname=True)
@@ -3075,7 +3075,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_cy, 'cy', 'individual', 'CE',
                                          long_surname=True)
@@ -3091,7 +3091,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes_form(
+        await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name(self.post_request_paper_form_enter_name_ni, 'ni', 'individual', 'CE',
                                          long_surname=True)
@@ -3106,12 +3106,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'HH', 'QUESTIONNAIRE', 'E', 'true')
 
@@ -3119,12 +3119,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'HH', 'QUESTIONNAIRE', 'W', 'true')
 
@@ -3132,12 +3132,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_hh_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_cy, 'cy')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_cy, 'cy', 'HH', 'QUESTIONNAIRE', 'W', 'true')
 
@@ -3145,12 +3145,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_hh_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_get_request_individual_form(self.get_request_individual_form_ni, 'ni')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_ni, 'ni', 'HH', 'QUESTIONNAIRE', 'N', 'true')
 
@@ -3158,12 +3158,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'SPG', 'QUESTIONNAIRE', 'E', 'true')
 
@@ -3171,12 +3171,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'SPG', 'QUESTIONNAIRE', 'W', 'true')
 
@@ -3184,12 +3184,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_spg_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_cy, 'cy')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_cy, 'cy', 'SPG', 'QUESTIONNAIRE', 'W', 'true')
 
@@ -3197,12 +3197,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_individual_spg_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_get_request_individual_form(self.get_request_individual_form_ni, 'ni')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_ni, 'ni', 'SPG', 'QUESTIONNAIRE', 'N', 'true')
 
@@ -3210,12 +3210,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'HH', 'LARGE_PRINT', 'E', 'true')
 
@@ -3223,12 +3223,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'HH', 'LARGE_PRINT', 'W', 'true')
 
@@ -3236,12 +3236,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_hh_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_cy, 'cy')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_cy, 'cy', 'HH', 'LARGE_PRINT', 'W', 'true')
 
@@ -3249,12 +3249,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_hh_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_get_request_individual_form(self.get_request_individual_form_ni, 'ni')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_ni, 'ni', 'HH', 'LARGE_PRINT', 'N', 'true')
 
@@ -3262,12 +3262,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'SPG', 'LARGE_PRINT', 'E', 'true')
 
@@ -3275,12 +3275,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_en, 'en')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_en, 'en')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_en, 'en', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_en, 'en', 'SPG', 'LARGE_PRINT', 'W', 'true')
 
@@ -3288,12 +3288,12 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_spg_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_form(self.get_request_individual_form_cy, 'cy')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_cy, 'cy')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_cy, 'cy', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_cy, 'cy', 'SPG', 'LARGE_PRINT', 'W', 'true')
 
@@ -3301,11 +3301,11 @@ class TestRequestsHandlersPaperForm(TestHelpers):
     async def test_request_paper_form_large_print_individual_spg_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'SPG')
         await self.check_post_confirm_address_input_yes_form(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_get_request_individual_form(self.get_request_individual_form_ni, 'ni')
         await self.check_post_request_individual_form_journey_switch(self.post_request_individual_form_ni, 'ni')
-        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual')
+        await self.check_post_enter_name(self.post_request_individual_form_enter_name_ni, 'ni', 'individual', 'SPG')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_form_confirm_name_address_ni, 'ni', 'SPG', 'LARGE_PRINT', 'N', 'true')

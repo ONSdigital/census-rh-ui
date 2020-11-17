@@ -364,6 +364,11 @@ class CommonConfirmAddress(CommonCommon):
         uprn = attributes['uprn']
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
+        try:
+            room_number = session['attributes']['roomNumber']
+        except KeyError:
+            room_number = None
+
         session['attributes']['addressLine1'] = uprn_ai_return['response']['address']['addressLine1']
         session['attributes']['addressLine2'] = uprn_ai_return['response']['address']['addressLine2']
         session['attributes']['addressLine3'] = uprn_ai_return['response']['address']['addressLine3']
@@ -373,6 +378,7 @@ class CommonConfirmAddress(CommonCommon):
         session['attributes']['countryCode'] = uprn_ai_return['response']['address']['countryCode']
         session['attributes']['censusEstabType'] = uprn_ai_return['response']['address']['censusEstabType']
         session['attributes']['censusAddressType'] = uprn_ai_return['response']['address']['censusAddressType']
+        session['attributes']['roomNumber'] = room_number
         session.changed()
 
         return {
@@ -386,7 +392,9 @@ class CommonConfirmAddress(CommonCommon):
             'addressLine2': session['attributes']['addressLine2'],
             'addressLine3': session['attributes']['addressLine3'],
             'townName': session['attributes']['townName'],
-            'postcode': session['attributes']['postcode']
+            'postcode': session['attributes']['postcode'],
+            'roomNumber': session['attributes']['roomNumber'],
+            'censusAddressType': session['attributes']['censusAddressType']
         }
 
     @aiohttp_jinja2.template('common-confirm-address.html')

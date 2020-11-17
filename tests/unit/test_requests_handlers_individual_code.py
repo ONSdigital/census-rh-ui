@@ -1235,8 +1235,8 @@ class TestRequestsHandlersIndividualCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code_individual(
             self.post_request_individual_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
-        await self.check_post_confirm_address_input_yes(self.post_request_individual_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_individual_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH')
         await self.check_post_confirm_name_address_input_yes(

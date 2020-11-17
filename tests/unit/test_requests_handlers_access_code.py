@@ -468,7 +468,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_hh_ew_w(self):
@@ -476,7 +476,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_hh_cy(self):
@@ -484,7 +484,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_hh_ni(self):
@@ -492,7 +492,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_spg_ew_e(self):
@@ -500,7 +500,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_spg_ew_w(self):
@@ -508,7 +508,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_spg_cy(self):
@@ -516,7 +516,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w, 'household')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_spg_ni(self):
@@ -524,7 +524,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
         await self.check_post_confirm_address_input_yes_code_new_case(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n, 'household')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
 
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_new_case_ce_m_ew_e(self):
@@ -2394,7 +2394,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_en, 'en', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
@@ -2408,7 +2408,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_en, 'en', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
@@ -2422,7 +2422,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_cy, 'cy', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy')
@@ -2436,7 +2436,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_ni, 'ni', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni')
@@ -2450,7 +2450,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_en, 'en', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
@@ -2464,7 +2464,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
             self.post_request_access_code_household_information_en, 'en', 'household')
         await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en')
@@ -5738,7 +5738,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en',
@@ -5754,7 +5754,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_en, 'en',
@@ -5770,7 +5770,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_cy, 'cy')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_cy, 'cy',
@@ -5786,7 +5786,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_ni, 'ni')
         await self.check_post_select_method_input_sms(self.post_request_individual_code_select_method_ni, 'ni',
@@ -5800,7 +5800,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_sms_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
@@ -5816,7 +5816,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_sms_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
@@ -5832,7 +5832,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_sms_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
@@ -5848,7 +5848,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_sms_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
@@ -5866,12 +5866,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'true',
@@ -5883,12 +5883,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'true',
@@ -5900,12 +5900,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w, 'household')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_cy, 'cy')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'true',
@@ -5917,12 +5917,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
         await self.check_post_confirm_address_input_yes_code(
-            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n, 'household')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_ni, 'ni')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'true',
@@ -5932,14 +5932,14 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_post_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'E', 'true',
@@ -5949,14 +5949,14 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_post_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
-        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_en, 'en')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_en, 'en',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'W', 'true',
@@ -5966,14 +5966,14 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_post_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
-        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_cy, 'cy')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_cy, 'cy',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_cy, 'cy', 'SPG', 'UAC', 'W', 'true',
@@ -5983,14 +5983,14 @@ class TestRequestsHandlersAccessCode(TestHelpers):
     async def test_request_access_to_individual_code_post_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
         await self.check_post_request_individual_code_journey_switch(self.post_request_individual_code_ni, 'ni')
         await self.check_post_select_method_input_post(self.post_request_individual_code_select_method_ni, 'ni',
                                                        override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual',
+        await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_individual_code_confirm_name_address_ni, 'ni', 'SPG', 'UAC', 'N', 'true',
@@ -6164,8 +6164,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
@@ -6181,8 +6181,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
@@ -6198,8 +6198,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
                                    self.post_request_access_code_enter_room_number_cy,
                                    'cy', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE',
                                          check_room_number=True)
@@ -6215,8 +6215,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_ni,
                                    self.post_request_access_code_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmAddress')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE',
                                          check_room_number=True)
@@ -6381,8 +6381,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
@@ -6397,8 +6397,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
@@ -6413,8 +6413,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
@@ -6429,8 +6429,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
         await self.add_room_number(self.get_request_access_code_enter_room_number_ni,
@@ -6481,8 +6481,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          long_surname=True)
@@ -6498,8 +6498,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_en,
-                                                        'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          long_surname=True)
@@ -6515,8 +6515,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_cy,
-                                                        'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE',
                                          long_surname=True)
@@ -6532,8 +6532,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes(self.post_request_access_code_confirm_address_ni,
-                                                        'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n, 'individual')
         await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE',
                                          long_surname=True)
