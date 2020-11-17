@@ -24,8 +24,10 @@ class TestHelpers(RHTestCase):
             logo = self.ons_logo_en
         return logo
 
-    def build_url_log_entry(self, page, display_region, request_type, include_sub_user_journey=True):
-        if not include_sub_user_journey:
+    def build_url_log_entry(self, page, display_region, request_type, include_sub_user_journey=True, include_page=True):
+        if not include_page:
+            link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey
+        elif not include_sub_user_journey:
             link = "received " + request_type + " on endpoint '" + display_region + "/" + self.user_journey + "/" + \
                    page + "'"
         else:
@@ -33,15 +35,28 @@ class TestHelpers(RHTestCase):
                    self.sub_user_journey + "/" + page + "'"
         return link
 
-    def build_translation_link(self, page, display_region, include_sub_user_journey=True):
+    def build_translation_link(self, page, display_region, include_sub_user_journey=True, include_page=True,
+                               include_adlocation=False):
         if display_region == 'cy':
-            if not include_sub_user_journey:
+            if not include_page:
+                if include_adlocation:
+                    link = '<a href="/en/' + self.user_journey + '/?adlocation=' + self.adlocation + \
+                           '" lang="en" >English</a>'
+                else:
+                    link = '<a href="/en/' + self.user_journey + '/" lang="en" >English</a>'
+            elif not include_sub_user_journey:
                 link = '<a href="/en/' + self.user_journey + '/' + page + '/" lang="en" >English</a>'
             else:
                 link = '<a href="/en/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
                        '/" lang="en" >English</a>'
         else:
-            if not include_sub_user_journey:
+            if not include_page:
+                if include_adlocation:
+                    link = '<a href="/cy/' + self.user_journey + '/?adlocation=' + self.adlocation + \
+                           '" lang="cy" >Cymraeg</a>'
+                else:
+                    link = '<a href="/cy/' + self.user_journey + '/" lang="cy" >Cymraeg</a>'
+            elif not include_sub_user_journey:
                 link = '<a href="/cy/' + self.user_journey + '/' + page + '/" lang="cy" >Cymraeg</a>'
             else:
                 link = '<a href="/cy/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
@@ -386,6 +401,11 @@ class TestHelpers(RHTestCase):
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             if ai_uprn_return_value:
                 mocked_get_ai_uprn.return_value = ai_uprn_return_value
+            elif display_region == 'ni':
+                if address_type == 'CE':
+                    mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
+                else:
+                    mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             else:
                 if address_type == 'CE':
                     mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
@@ -490,7 +510,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -529,7 +552,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -569,7 +595,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -584,6 +613,44 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('resident-or-manager', display_region), contents)
             self.check_text_resident_or_manager(display_region, contents)
+
+    async def check_post_confirm_address_address_in_northern_ireland(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-northern-ireland', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('address-in-northern-ireland', display_region, False),
+                              contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_common_address_in_northern_ireland_cy, contents)
+            else:
+                self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
+
+    async def check_post_confirm_address_address_in_england(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-england', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
+            self.assertIn(self.content_common_address_in_england_secondary, contents)
+
+    async def check_post_confirm_address_address_in_wales(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('address-in-wales', display_region, 'GET',
+                                                             False))
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
+            self.assertIn(self.content_common_address_in_wales_secondary, contents)
 
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -628,7 +695,10 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
 
-            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=400)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -644,7 +714,10 @@ class TestHelpers(RHTestCase):
             passthrough=[str(self.server._root)]
         ) as mocked_rhsvc:
 
-            mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            if display_region == 'ni':
+                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_rhsvc.post(self.rhsvc_post_create_case_url, status=400)
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -1159,7 +1232,36 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.build_translation_link('large-print-sent-post', display_region), contents)
                     else:
                         self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
-                if display_region == 'cy':
+                if display_region == 'ni':
+                    if fulfilment_type == 'LARGE_PRINT':
+                        if case_type == 'CE':
+                            if check_room_number:
+                                if long_surname:
+                                    self.assertIn(
+                                        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
+                                                  contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
+                    else:
+                        if case_type == 'CE':
+                            if check_room_number:
+                                if long_surname:
+                                    self.assertIn(
+                                        self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
+                                        contents)
+                                else:
+                                    self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en, contents)
+                            else:
+                                self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
+                        else:
+                            self.assertIn(self.content_request_form_sent_post_title_ni, contents)
+                    self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
+                elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
                             if check_room_number:
@@ -1197,9 +1299,8 @@ class TestHelpers(RHTestCase):
                                         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
                                         contents)
                                 else:
-                                    self.assertIn(
-                                        self.content_request_form_sent_post_title_large_print_ce_with_room_en,
-                                        contents)
+                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
+                                                  contents)
                             else:
                                 self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
                         else:
@@ -1225,7 +1326,25 @@ class TestHelpers(RHTestCase):
                                                                   display_region, False), contents)
                     else:
                         self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
-                if display_region == 'cy':
+                if display_region == 'ni':
+                    if case_type == 'CE':
+                        if check_room_number:
+                            if long_surname:
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_long_surname_en,
+                                              contents)
+                            else:
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_en, contents)
+                        else:
+                            self.assertIn(self.content_request_code_sent_post_title_ce_en, contents)
+                    else:
+                        self.assertIn(self.content_request_code_sent_post_title_ni, contents)
+                    if individual == 'true':
+                        self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
+                    elif case_type == 'CE':
+                        self.assertIn(self.content_request_code_sent_post_secondary_manager_en, contents)
+                    else:
+                        self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
+                elif display_region == 'cy':
                     if case_type == 'CE':
                         if check_room_number:
                             if long_surname:
@@ -1452,7 +1571,10 @@ class TestHelpers(RHTestCase):
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
+            if display_region == 'ni':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
+            else:
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
 
             response = await self.client.request('GET', url_get)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'GET'))
@@ -1500,3 +1622,96 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.build_translation_link('confirm-name-address', display_region), contents)
                     self.check_text_confirm_name_address(display_region, contents, user_type,
                                                          check_error=False, check_ce=True, check_room_number=True)
+
+    async def assert_start_page_correct(self, url, display_region, ad_location=False):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('GET', url)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                if ad_location:
+                    self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
+                                                              include_sub_user_journey=False,
+                                                              include_page=False, include_adlocation=True), contents)
+                else:
+                    self.assertIn(self.build_translation_link(self.sub_user_journey, display_region,
+                                                              include_sub_user_journey=False,
+                                                              include_page=False, include_adlocation=False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_title_cy, contents)
+                self.assertIn(self.content_start_uac_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_title_en, contents)
+                self.assertIn(self.content_start_uac_title_en, contents)
+            if ad_location:
+                self.assertLogEvent(cm, "assisted digital query parameter found")
+                self.assertIn('type="hidden"', contents)
+                self.assertIn('value="' + self.adlocation + '"', contents)
+                self.assertEqual(contents.count('input--text'), 2)
+            else:
+                self.assertEqual(contents.count('input--text'), 1)
+            self.assertIn('type="submit"', contents)
+
+    async def assert_start_page_post_returns_address_in_northern_ireland(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
+
+            response = await self.client.request('POST', url, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-northern-ireland', display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('code-for-northern-ireland', display_region,
+                                                          include_sub_user_journey=False,
+                                                          include_page=True), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_code_for_northern_ireland_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_code_for_northern_ireland_title_en, contents)
+
+    async def assert_start_page_post_returns_address_in_england(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+
+            response = await self.client.request('POST', url, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-england', display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
+            self.assertIn(self.content_start_code_for_england_secondary, contents)
+
+    async def assert_start_page_post_returns_address_in_wales(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+
+            response = await self.client.request('POST', url, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-wales', display_region, 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
+            self.assertIn(self.content_start_code_for_wales_secondary, contents)
