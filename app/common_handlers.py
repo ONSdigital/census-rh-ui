@@ -689,3 +689,99 @@ class CommonCEMangerQuestion(CommonCommon):
                 'townName': session['attributes']['townName'],
                 'postcode': session['attributes']['postcode']
             }
+
+
+@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
+                    + '/' + View.valid_sub_user_journeys + '/enter-room-number/')
+class CommonEnterRoomNumber(CommonCommon):
+    """
+    Common route to allow user to enter a room number if in a CE
+    """
+    @aiohttp_jinja2.template('common-enter-room-number.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+
+        await self.common_check_attributes(request, user_journey, sub_user_journey)
+
+        if display_region == 'cy':
+            locale = 'cy'
+            # TODO Add Welsh translation
+            page_title = 'What is your flat or room number?'
+        else:
+            locale = 'en'
+            page_title = 'What is your flat or room number?'
+        return {
+            'display_region': display_region,
+            'user_journey': user_journey,
+            'sub_user_journey': sub_user_journey,
+            'locale': locale,
+            'page_url': View.gen_page_url(request),
+            'page_title': page_title
+        }
+
+    @aiohttp_jinja2.template('common-enter-room-number.html')
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        if display_region == 'cy':
+            locale = 'cy'
+            # TODO Add Welsh translation
+            page_title = 'What is your flat or room number?'
+        else:
+            locale = 'en'
+            page_title = 'What is your flat or room number?'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+
+        session = await get_session(request)
+        session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
+
+        data = await request.post()
+
+        try:
+            room_number = data['form-enter-room-number']
+            if room_number == '':
+                raise KeyError
+            session['attributes']['roomNumber'] = room_number
+            session.changed()
+            try:
+                if session_attributes['first_name']:
+                    raise HTTPFound(
+                        request.app.router['RequestCommonConfirmNameAddress:get'].url_for(
+                            display_region=display_region,
+                            user_journey=user_journey,
+                            request_type=sub_user_journey
+                        ))
+            except KeyError:
+                raise HTTPFound(
+                    request.app.router['CommonConfirmAddress:get'].url_for(
+                        display_region=display_region,
+                        user_journey=user_journey,
+                        sub_user_journey=sub_user_journey
+                    ))
+
+        except KeyError:
+            logger.info('room number question error',
+                        client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+            return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'user_journey': user_journey,
+                'sub_user_journey': sub_user_journey,
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
+            }

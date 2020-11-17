@@ -346,10 +346,20 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
-        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+        with open('tests/test_data/address_index/uprn_valid_hh.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result = f
+            self.ai_uprn_result_hh = f
+
+        with open('tests/test_data/address_index/uprn_valid_spg.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_spg = f
+
+        with open('tests/test_data/address_index/uprn_valid_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_ce = f
 
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
@@ -401,6 +411,27 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
+
+        self.content_common_ce_room_number_text = 'Room A8'
+        self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
+        self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
+        self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
+        self.content_common_enter_room_number_error_en = 'Enter your flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_change_link_cy = 'Change flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_error_cy = 'Enter your flat or room number'
+
+        self.common_room_number_input_valid = {
+            'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
+        }
+        self.common_room_number_input_empty = {
+            'form-enter-room-number': '', 'action[save_continue]': '',
+        }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Register an address'
@@ -585,7 +616,7 @@ class RHTestCase(AioHTTPTestCase):
         self.uac = 'w4nwwpphjjptp7fn'
         self.uacHash = self.uac_json_e['uacHash']
         self.uprn = self.uac_json_e['address']['uprn']
-        self.response_id = self.uac_json_e['questionnaireId']
+        self.response_id = '111000000092a445af12905967d'
         self.questionnaire_id = self.uac_json_e['questionnaireId']
         self.case_type = self.uac_json_e['caseType']
         self.channel = 'rh'
@@ -930,6 +961,11 @@ class RHTestCase(AioHTTPTestCase):
             'name_first_name': 'Bob', 'name_last_name': 'Bobbington', 'action[save_continue]': '',
         }
 
+        self.request_common_enter_name_form_data_long_surname = {
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe',
+            'action[save_continue]': '',
+        }
+
         self.request_common_enter_name_form_data_no_first = {
             'name_last_name': 'Bobbington', 'action[save_continue]': '',
         }
@@ -1112,14 +1148,34 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_code_sent_post_title_ce_en = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_code_sent_post_title_ce_with_room_en = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_code_sent_post_title_ce_with_room_long_surname_en = \
+            'A letter will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, Room A8 ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with an individual access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_manager_en = \
             'The letter with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_household_en = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
         self.content_request_code_sent_post_title_cy = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_cy = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_with_room_cy = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_with_room_long_surname_cy = \
+            'A letter will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, Room A8 ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_individual_cy = \
             'The letter with an individual access code should arrive soon for you to start the census'
@@ -1418,6 +1474,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+
+        self.get_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
@@ -1767,6 +1842,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='paper-form'
         )
 
+        self.get_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
         self.post_request_access_code_household_information_en = self.app.router['RequestHouseholdCode:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
@@ -1833,6 +1927,24 @@ class RHTestCase(AioHTTPTestCase):
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_individual_title_large_print_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_title_ce_en = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_ce_with_room_en = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_ce_with_room_long_surname_en = \
+            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
@@ -1847,6 +1959,30 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_large_print_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_with_room_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_with_room_long_surname_cy = \
+            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
