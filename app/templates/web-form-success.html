@@ -1,10 +1,10 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
-{% from 'components/panel/_macro.njk' import onsPanel %}
+{%- from "components/breadcrumb/_macro.njk" import onsBreadcrumb -%}
+{%- from 'components/panel/_macro.njk' import onsPanel -%}
 
-{% if display_region == 'ni' %}
-    {% set breadcrumb_items = [
+{%- if display_region == 'ni' -%}
+    {%- set breadcrumb_items = [
                 {
                     "url": domain_url_ni,
                     "text": 'Home'
@@ -14,9 +14,9 @@
                     "text": 'Web form'
                 }
             ]
-    %}
-{% elif display_region == 'cy' %}
-    {% set breadcrumb_items = [
+    -%}
+{%- elif display_region == 'cy' -%}
+    {%- set breadcrumb_items = [
                 {
                     "url": domain_url_cy,
                     "text": 'Hafan'
@@ -26,9 +26,9 @@
                     "text": 'Web form'
                 }
             ]
-    %}
-{% else %}
-    {% set breadcrumb_items = [
+    -%}
+{%- else -%}
+    {%- set breadcrumb_items = [
                 {
                     "url": domain_url_en,
                     "text": 'Home'
@@ -38,24 +38,24 @@
                     "text": 'Web form'
                 }
             ]
-    %}
-{% endif %}
+    -%}
+{%- endif -%}
 
-{% block preMain %}
+{%- block preMain -%}
     {{
         onsBreadcrumb({
             "ariaLabel": 'Breadcrumb',
             "itemsList": breadcrumb_items
         })
     }}
-{% endblock %}
+{%- endblock -%}
 
-{% block main %}
+{%- block main -%}
 
-    {% set panel_content %}
+    {%- set panel_content -%}
         <h1 class="u-fs-xxl">{{ _('Thank you for contacting us') }}</h1>
         <p>{{ _('You message has been sent.') }}</p>
-    {% endset %}
+    {%- endset -%}
 
     {{
         onsPanel({
@@ -69,4 +69,4 @@
 
     <p>{{_('We will respond to your message within 48 working hours.')}}</p>
 
-{% endblock %}
+{%- endblock -%}

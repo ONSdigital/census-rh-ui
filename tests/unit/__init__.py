@@ -863,6 +863,21 @@ class RHTestCase(AioHTTPTestCase):
 
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
+        self.get_webform_en = self.app.router['WebForm:get'].url_for(display_region='en')
+        self.get_webform_cy = self.app.router['WebForm:get'].url_for(display_region='cy')
+        self.get_webform_ni = self.app.router['WebForm:get'].url_for(display_region='ni')
+        self.post_webform_en = self.app.router['WebForm:post'].url_for(display_region='en')
+        self.post_webform_cy = self.app.router['WebForm:post'].url_for(display_region='cy')
+        self.post_webform_ni = self.app.router['WebForm:post'].url_for(display_region='ni')
+
+        self.webform_form_data = {
+            'name': 'Bob Bobbington',
+            'email': 'bob.bobbington@theinternet.co.uk',
+            'description': 'Hello this is Bob',
+            'query': 'MISSING_INFORMATION',
+            'country': 'E'
+        }
+
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'

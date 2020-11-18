@@ -1,16 +1,25 @@
 import aiohttp_jinja2
 import re
 
+from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
-
 from structlog import get_logger
 
-from . import (WEBCHAT_MISSING_COUNTRY_MSG,
-               WEBCHAT_MISSING_QUERY_MSG,
-               WEBCHAT_MISSING_COUNTRY_MSG_CY,
-               WEBCHAT_MISSING_QUERY_MSG_CY)
+from . import (WEBFORM_MISSING_COUNTRY_MSG,
+               WEBFORM_MISSING_QUERY_MSG,
+               WEBFORM_MISSING_DESCRIPTION_MSG,
+               WEBFORM_MISSING_NAME_MSG,
+               WEBFORM_MISSING_EMAIL_EMPTY_MSG,
+               WEBFORM_MISSING_EMAIL_INVALID_MSG,
+               WEBFORM_MISSING_COUNTRY_MSG_CY,
+               WEBFORM_MISSING_QUERY_MSG_CY,
+               WEBFORM_MISSING_DESCRIPTION_MSG_CY,
+               WEBFORM_MISSING_NAME_MSG_CY,
+               WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY,
+               WEBFORM_MISSING_EMAIL_INVALID_MSG_CY
+               )
 from .flash import flash
-from .utils import View, FlashMessage
+from .utils import View, FlashMessage, RHService
 
 logger = get_logger('respondent-home')
 web_form_routes = RouteTableDef()
@@ -28,47 +37,50 @@ class WebForm(View):
 
         if not (data.get('country')):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_COUNTRY_MSG_CY)
+                flash(request, WEBFORM_MISSING_COUNTRY_MSG_CY)
             else:
-                flash(request, WEBCHAT_MISSING_COUNTRY_MSG)
+                flash(request, WEBFORM_MISSING_COUNTRY_MSG)
             form_valid = False
 
         if not (data.get('query')):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_QUERY_MSG_CY)
+                flash(request, WEBFORM_MISSING_QUERY_MSG_CY)
             else:
-                flash(request, WEBCHAT_MISSING_QUERY_MSG)
+                flash(request, WEBFORM_MISSING_QUERY_MSG)
+            form_valid = False
+
+        if not data.get('description'):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG)
             form_valid = False
 
         if not data.get('name'):
             if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message('Nodwch eich enw',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+                flash(request, WEBFORM_MISSING_NAME_MSG_CY)
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'name'))
+                flash(request, WEBFORM_MISSING_NAME_MSG)
             form_valid = False
 
-        if not (data.get('email')):
-            if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No email provided',
-                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
-            else:
-                flash(request, FlashMessage.generate_flash_message('No email provided',
-                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
-            form_valid = False
+        if not (data.get('email')) or not WebForm.email_validation_pattern.fullmatch(str(data.get('email'))):
+            if not (data.get('email')):
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY)
+                else:
+                    flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG)
+                form_valid = False
 
-        elif not WebForm.email_validation_pattern.fullmatch(data.get('email')):
-            if display_region == 'cy':
-                # TODO: Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Email address invalid',
-                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
-            else:
-                flash(request, FlashMessage.generate_flash_message('Email address invalid',
-                                                                   'ERROR', 'EMAIL_VALUE_ERROR', 'email'))
+            elif not WebForm.email_validation_pattern.fullmatch(str(data.get('email'))):
+                if display_region == 'cy':
+                    # TODO: Add Welsh Translation
+                    flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG_CY)
+                else:
+                    flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG)
 
-            form_valid = False
+                form_valid = False
 
         return form_valid
 
@@ -119,6 +131,7 @@ class WebForm(WebForm):
                 'form_value_country': data.get('country'),
                 'form_value_query': data.get('query'),
                 'form_value_email': data.get('email'),
+                'form_value_description': data.get('description'),
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
@@ -127,7 +140,23 @@ class WebForm(WebForm):
 
         else:
             logger.info('call web form endpoint', client_ip=request['client_ip'])
-            # TODO Call new endpoint for form with data
+            if display_region == 'cy':
+                language = 'CY'
+            else:
+                language = 'EN'
+            form_data = {
+                'category': data.get('query'),
+                'region': data.get('country'),
+                'language': language,
+                'name': data.get('name'),
+                'description': data.get('description'),
+                'email': data.get('email')
+            }
+
+            try:
+                await RHService.post_webform(request, form_data)
+            except (ClientResponseError) as ex:
+                raise ex
 
             raise HTTPFound(
                 request.app.router['WebFormSuccess:get'].url_for(display_region=display_region))
