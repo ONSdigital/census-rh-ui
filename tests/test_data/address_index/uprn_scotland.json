@@ -1,19 +1,20 @@
 {
     "apiVersion": "1.0.0-SNAPSHOT",
-    "dataVersion": "72",
+    "dataVersion": "77",
     "response": {
         "address": {
-            "uprn": "10023122451",
-            "formattedAddress": "1 Gate Reach, Exeter, EX2 6GA",
-            "addressLine1": "1 Gate Reach",
-            "addressLine2": "",
+            "uprn": "906268212",
+            "formattedAddress": "2F1, 29 Jeffrey Street, Edinburgh, EH1 1DH",
+            "addressLine1": "2F1",
+            "addressLine2": "29 Jeffrey Street",
             "addressLine3": "",
-            "townName": "Exeter",
-            "postcode": "EX2 6GA",
+            "townName": "Edinburgh",
+            "postcode": "EH1 1DH",
             "foundAddressType": "PAF",
             "censusAddressType": "HH",
             "censusEstabType": "Household",
-            "countryCode": "S"
+            "countryCode": "S",
+            "organisationName": ""
         },
         "addressType": "PAF",
         "historical": true,

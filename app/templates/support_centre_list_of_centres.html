@@ -2,8 +2,7 @@
 
 {%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
 {%- from "components/lists/_macro.njk" import onsList -%}
-{%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink -%}
-{%- from 'macros/telephone/_macro.njk' import rhADTelephone -%}
+{%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink, rhADTelephone -%}
 
 {%- block main -%}
 
@@ -13,12 +12,14 @@
 
     {%- for centre in ad_response['centres'] %}
         <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
+
             {% if display_region == 'cy' -%}
                 <h2 class="u-fs-l u-mb-xs">{{ centre['welshLanguageLocationName'] }}</h2>
             {%- else -%}
                 <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
             {%- endif %}
-            <div><span class="u-mb-s tag">{{ centre['distanceInMiles'] }} miles away</span></div>
+
+            <div><span class="u-mb-s tag">{{ _('%(distance_in_miles)s miles away', distance_in_miles=centre['distanceInMiles'] )|safe }}</span></div>
 
             {%- if display_region == 'cy' -%}
                 {% autoescape false %}
@@ -30,7 +31,7 @@
                 {% endautoescape %}
             {%- endif -%}
 
-            <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">Find on Google Maps</a></p>
+            <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">{{ _('Find on Google Maps') }}</a></p>
 
             {{
                 onsList({

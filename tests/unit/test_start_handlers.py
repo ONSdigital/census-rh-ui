@@ -11,13 +11,16 @@ from app import (BAD_CODE_MSG, INVALID_CODE_MSG,
 from app.exceptions import InactiveCaseError, InvalidEqPayLoad
 from app.start_handlers import Start
 
-from . import RHTestCase, build_eq_raises, skip_encrypt
+from . import build_eq_raises, skip_encrypt
+
+from .helpers import TestHelpers
 
 attempts_retry_limit = 5
 
 
 # noinspection PyTypeChecker
-class TestStartHandlers(RHTestCase):
+class TestStartHandlers(TestHelpers):
+    user_journey = 'start'
 
     @unittest_run_loop
     async def test_post_start_with_retry_503_ew_e(self):
@@ -1089,30 +1092,32 @@ class TestStartHandlers(RHTestCase):
     @unittest_run_loop
     async def test_post_start_confirm_address_survey_launched_connection_error_ni(
             self):
-        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+        with self.assertLogs('respondent-home', 'WARN') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
             mocked.post(self.rhsvc_url_surveylaunched,
                         exception=ClientConnectionError('Failed'))
 
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 data=self.start_data_valid)
-            self.assertEqual(response.status, 200)
+            await self.client.request('POST', self.post_start_ni, data=self.start_data_valid)
 
-            with self.assertLogs('respondent-home', 'WARN') as cm:
-                response = await self.client.request(
-                    'POST',
-                    self.post_start_confirm_address_ni,
-                    allow_redirects=False,
-                    data=self.start_confirm_address_data_yes)
-            self.assertLogEvent(cm,
-                                'client failed to connect',
-                                url=self.rhsvc_url_surveylaunched)
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      data=self.start_confirm_address_data_yes)
 
-        self.assertEqual(response.status, 500)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_common_500_error_en, contents)
+            await self.client.request('POST', self.post_start_language_options_ni,
+                                      data=self.start_ni_language_option_data_no)
+
+            response = await self.client.request(
+                'POST',
+                self.post_start_select_language_ni,
+                allow_redirects=False,
+                data=self.start_ni_select_language_data_ul)
+
+            self.assertLogEvent(cm, 'client failed to connect', url=self.rhsvc_url_surveylaunched)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_common_500_error_en, contents)
 
     @unittest_run_loop
     async def test_post_start_confirm_address_get_survey_launched_401_ew_e(self):
@@ -1392,143 +1397,20 @@ class TestStartHandlers(RHTestCase):
         # Then an InactiveCaseError is raised
 
     @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_ew(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_en, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_cy, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_confirm_address_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_ew(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_en,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_cy,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST',
-                self.post_start_confirm_address_ni,
-                allow_redirects=False,
-                data=self.start_confirm_address_data_yes)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_ni_language_options_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_language_options_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_ni_language_options_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST', self.post_start_language_options_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_ni_select_language_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'GET', self.get_start_select_language_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_ni_select_language_direct_access(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request(
-                'POST', self.post_start_select_language_ni, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
+    async def test_no_direct_access(self):
+        await self.assert_no_direct_access(self.get_start_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_confirm_address_en, 'en', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.post_start_confirm_address_cy, 'cy', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.post_start_confirm_address_ni, 'ni', 'POST',
+                                           self.start_confirm_address_data_yes)
+        await self.assert_no_direct_access(self.get_start_language_options_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_language_options_ni, 'ni', 'POST')
+        await self.assert_no_direct_access(self.get_start_select_language_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_select_language_ni, 'ni', 'POST')
 
     @unittest_run_loop
     async def test_post_start_confirm_address_empty_ew_e(self):
@@ -1978,117 +1860,6 @@ class TestStartHandlers(RHTestCase):
         self.assertIn('type="submit"', contents)
         self.assertNotIn('type="hidden"', contents)
         self.assertNotIn('value="invalid"', contents)
-
-    @unittest_run_loop
-    async def test_get_change_of_region(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            await self.client.request('POST', self.post_start_en, allow_redirects=False, data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            response = await self.client.request('GET',
-                                                 self.get_start_region_change_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/region-change'")
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn('Change of region', contents)
-
-    @unittest_run_loop
-    async def test_get_change_of_region_ew_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-
-            await self.client.request('GET', self.get_start_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_en,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
-
-            self.assertIn('/ni/start/region-change/', response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_cy_ni(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/ni/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_cy_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-
-            await self.client.request('GET', self.get_start_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_cy,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_ni_cy(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
-
-    @unittest_run_loop
-    async def test_get_change_of_region_ni_ew(self):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
-
-            await self.client.request('GET', self.get_start_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
-
-            response = await self.client.request('POST',
-                                                 self.post_start_ni,
-                                                 allow_redirects=False,
-                                                 data=self.start_data_valid)
-
-        self.assertEqual(response.status, 302)
-        self.assertIn('/en/start/region-change/',
-                      response.headers['Location'])
 
     @skip_encrypt
     @unittest_run_loop
@@ -3401,3 +3172,43 @@ class TestStartHandlers(RHTestCase):
                 continue
             # outputs failed key as msg
             self.assertEqual(eq_payload[key], token[key], key)
+
+    @unittest_run_loop
+    async def test_start_code_in_northern_ireland_en(self):
+        await self.assert_start_page_correct(self.get_start_en, 'en', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_en, 'en')
+
+    @unittest_run_loop
+    async def test_start_code_in_northern_ireland_with_adlocation_en(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_en, 'en', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_en, 'en')
+
+    @unittest_run_loop
+    async def test_start_code_in_northern_ireland_cy(self):
+        await self.assert_start_page_correct(self.get_start_cy, 'cy', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_start_code_in_northern_ireland_with_adlocation_cy(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_cy, 'cy', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_northern_ireland(self.post_start_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_start_code_in_england_ni(self):
+        await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_code_in_england_with_adlocation_ni(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_code_in_wales_ni(self):
+        await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
+        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_code_in_wales_with_adlocation_ni(self):
+        await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
+        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')

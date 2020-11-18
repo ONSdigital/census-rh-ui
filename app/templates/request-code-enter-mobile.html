@@ -14,6 +14,12 @@
     }
 } %}
 
+{%- if 'mobile_empty' in field_messages_dict -%}
+    {%- set error_mobile = {'text': _('Enter your mobile number')} -%}
+{%- elif 'mobile_invalid' in field_messages_dict -%}
+    {%- set error_mobile = {'text': _('Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345')} -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -24,40 +30,20 @@
         'title': _('What is your mobile phone number?'),
     }) %}
 
-        {% if 'mobile' in field_messages_dict %}
-
-            {{
-                onsInput({
-                    'id': 'telephone',
-                    'type': 'tel',
-                    'autocomplete': 'tel',
-                    'classes': 'input--w-8',
-                    'label': {
-                        'text': _('UK mobile phone number'),
-                        'description': _('This will not be stored and only used once to send the access code')
-                    },
-                    'name': 'request-mobile-number',
-                    'error': {
-                        'text': _('Enter a valid UK mobile phone number')
-                    }
-                })
-            }}
-
-        {% else %}
-            {{
-                onsInput({
-                    'id': 'telephone',
-                    'type': 'tel',
-                    'autocomplete': 'tel',
-                    'classes': 'input--w-8',
-                    'label': {
-                        'text': _('UK mobile phone number'),
-                        'description': _('This will not be stored and only used once to send the access code')
-                    },
-                    'name': 'request-mobile-number'
-                })
-            }}
-        {% endif %}
+        {{
+            onsInput({
+                'id': 'telephone',
+                'type': 'tel',
+                'autocomplete': 'tel',
+                'classes': 'input--w-8',
+                'label': {
+                    'text': _('UK mobile phone number'),
+                    'description': _('This will not be stored and only used once to send the access code')
+                },
+                'name': 'request-mobile-number',
+                'error': error_mobile
+            })
+        }}
 
     {% endcall %}
 

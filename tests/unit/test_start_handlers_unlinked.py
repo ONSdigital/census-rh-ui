@@ -6,11 +6,12 @@ from urllib.parse import urlsplit, parse_qs
 from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
-from . import RHTestCase, skip_encrypt
+from . import skip_encrypt
+from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestStartHandlersUnlinked(RHTestCase):
+class TestStartHandlersUnlinked(TestHelpers):
     @skip_encrypt
     @unittest_run_loop
     async def test_unlinked_uac_happy_path_region_e_display_en(self):
@@ -23,7 +24,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -149,7 +150,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -277,7 +278,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -403,7 +404,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -531,7 +532,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -657,7 +658,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -785,7 +786,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -802,7 +803,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             response = await self.client.request('GET', self.get_start_ni)
             self.assertEqual(200, response.status)
@@ -916,7 +917,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -935,7 +936,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             response = await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertEqual(200, response.status)
@@ -1049,7 +1050,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1066,7 +1067,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1162,7 +1163,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1181,7 +1182,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1277,7 +1278,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1294,7 +1295,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1390,7 +1391,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1409,7 +1410,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1505,7 +1506,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1522,7 +1523,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1618,7 +1619,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1637,7 +1638,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                 'account_service_log_out_url'] = \
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '10023122451'
-            eq_payload['display_address'] = '1 Gate Reach, Exeter'
+            eq_payload['display_address'] = '27 Kings Road, Whitehead'
 
             await self.client.request('GET', self.get_start_adlocation_valid_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1939,6 +1940,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_census_address_type_na_cy(self):
@@ -1995,6 +1997,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_census_address_type_na_ni(self):
@@ -2006,7 +2009,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -2049,6 +2052,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_address_not_listed_en(self):
@@ -2093,6 +2097,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_address_not_listed_cy(self):
@@ -2137,6 +2142,7 @@ class TestStartHandlersUnlinked(RHTestCase):
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_address_not_listed_ni(self):
@@ -2178,6 +2184,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_post_start_unlinked_enter_address_bad_postcode_en(
@@ -2897,11 +2904,9 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.get_start_unlinked_select_address_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/start/unlinked/timeout/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
             self.assertIn(self.content_common_timeout_en, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
 
@@ -2930,11 +2935,9 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.get_start_unlinked_select_address_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/start/unlinked/timeout/" lang="en" >English</a>',
-                          str(resp_content))
             self.assertIn(self.content_common_timeout_cy, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
 
@@ -2963,57 +2966,11 @@ class TestStartHandlersUnlinked(RHTestCase):
                     self.get_start_unlinked_select_address_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/select-address'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(403, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_timeout_en, str(resp_content))
             self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_en(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_en)
-        self.assertLogEvent(cm, "received GET on endpoint 'en/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_en, str(resp_content))
-        self.assertIn('<a href="/cy/start/unlinked/timeout/" lang="cy" >Cymraeg</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_cy(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_cy)
-        self.assertLogEvent(cm, "received GET on endpoint 'cy/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_cy, str(resp_content))
-        self.assertIn('<a href="/en/start/unlinked/timeout/" lang="en" >English</a>',
-                      str(resp_content))
-        self.assertIn(self.content_common_timeout_cy, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_cy, str(resp_content))
-
-    @unittest_run_loop
-    async def test_unlinked_timeout_ni(self):
-
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_timeout_ni)
-        self.assertLogEvent(cm, "received GET on endpoint 'ni/start/unlinked/timeout'")
-        self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.nisra_logo, str(resp_content))
-        self.assertIn(self.content_common_timeout_en, str(resp_content))
-        self.assertIn(self.content_unlinked_timeout_error_en, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_404_en(self):
@@ -3025,7 +2982,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_en)
@@ -3068,6 +3025,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_404_cy(self):
@@ -3079,7 +3037,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3122,6 +3080,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_404_ni(self):
@@ -3133,7 +3092,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3174,6 +3133,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_400_en(self):
@@ -3185,7 +3145,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_en)
@@ -3228,6 +3188,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_400_cy(self):
@@ -3239,7 +3200,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3282,6 +3243,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_400_ni(self):
@@ -3293,7 +3255,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3334,6 +3296,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_500_en(self):
@@ -3345,7 +3308,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_en)
@@ -3388,6 +3351,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_500_cy(self):
@@ -3399,7 +3363,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3442,6 +3406,7 @@ class TestStartHandlersUnlinked(RHTestCase):
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, str(resp_content))
+            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
     async def test_unlinked_confirm_address_unable_to_link_500_ni(self):
@@ -3453,7 +3418,7 @@ class TestStartHandlersUnlinked(RHTestCase):
 
             mocked.get(self.rhsvc_url, payload=self.unlinked_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3494,339 +3459,31 @@ class TestStartHandlersUnlinked(RHTestCase):
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, str(resp_content))
+            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
-    async def test_get_start_unlinked_enter_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_enter_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_enter_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_enter_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_enter_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_enter_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_enter_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_enter_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_enter_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_enter_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_enter_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_enter_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_select_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_select_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_select_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_select_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_select_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_select_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_select_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_select_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_select_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_select_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_select_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_select_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_confirm_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_confirm_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_confirm_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_confirm_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_confirm_address_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_confirm_address_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_confirm_address_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_confirm_address_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_confirm_address_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_confirm_address_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_address_has_been_changed_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_address_has_been_linked_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_address_has_been_changed_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_address_has_been_linked_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_get_start_unlinked_address_has_been_changed_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.get_start_unlinked_address_has_been_linked_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_address_has_been_changed_direct_access_en(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_address_has_been_linked_en,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_address_has_been_changed_direct_access_cy(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_address_has_been_linked_cy,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertIn(self.content_start_title_cy, contents)
-        self.assertIn(self.content_start_uac_title_cy, contents)
-
-    @unittest_run_loop
-    async def test_post_start_unlinked_address_has_been_changed_direct_access_ni(self):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            response = await self.client.request('GET',
-                                                 self.post_start_unlinked_address_has_been_linked_ni,
-                                                 allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertIn(self.content_start_title_en, contents)
-        self.assertIn(self.content_start_uac_title_en, contents)
+    async def test_no_direct_access(self):
+        await self.assert_no_direct_access(self.get_start_unlinked_enter_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_enter_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_enter_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_enter_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_enter_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_enter_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_select_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_select_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_select_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_select_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_select_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_select_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_confirm_address_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_confirm_address_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_confirm_address_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_address_has_been_linked_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_address_has_been_linked_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.get_start_unlinked_address_has_been_linked_ni, 'ni', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_address_has_been_linked_en, 'en', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_address_has_been_linked_cy, 'cy', 'GET')
+        await self.assert_no_direct_access(self.post_start_unlinked_address_has_been_linked_ni, 'ni', 'GET')

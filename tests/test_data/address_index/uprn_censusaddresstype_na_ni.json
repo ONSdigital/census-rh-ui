@@ -1,0 +1,28 @@
+{
+    "apiVersion": "1.0.0-SNAPSHOT",
+    "dataVersion": "77",
+    "response": {
+        "address": {
+            "uprn": "187748262",
+            "formattedAddress": "27 Kings Road, Whitehead, BT38 9PT",
+            "addressLine1": "27 Kings Road",
+            "addressLine2": "",
+            "addressLine3": "",
+            "townName": "Whitehead",
+            "postcode": "BT38 9PT",
+            "foundAddressType": "NISRA",
+            "censusAddressType": "NA",
+            "censusEstabType": "NA",
+            "countryCode": "N",
+            "organisationName": ""
+        },
+        "addressType": "PAF",
+        "historical": true,
+        "epoch": ""
+    },
+    "status": {
+        "code": 200,
+        "message": "Ok"
+    },
+    "errors": []
+}

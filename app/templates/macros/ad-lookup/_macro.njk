@@ -50,3 +50,32 @@
     <a href="mailto:{{ email_string }}">{{ email_string }}</a>
 
 {%- endmacro -%}
+
+{% macro rhADTelephone(params) %}
+
+    {%- set prefix_code = '44' -%}
+    {%- set number = params.number -%}
+
+    {%- if params.number.startswith('44') -%}
+        {%- set number = number[2:] -%}
+    {%- endif -%}
+
+    {%- if params.number.startswith('0') -%}
+        {%- set number = number[1:] -%}
+    {%- endif -%}
+
+    {%- if number|length == 9 -%}
+        {%- set area_code = number[0:2] -%}
+        {%- set first_three = number[2:5] -%}
+        {%- set last_four = number[5:9] -%}
+        <span>+{{ prefix_code }} (0){{ area_code }} {{ first_three }} {{ last_four }}</span>
+    {%- elif number|length == 10 -%}
+        {%- set area_code = number[0:2] -%}
+        {%- set first_four = number[2:6] -%}
+        {%- set last_four = number[6:10] -%}
+        <span>+{{ prefix_code }} (0){{ area_code }} {{ first_four }} {{ last_four }}</span>
+    {%- else -%}
+        <span>Not available</span>
+    {%- endif -%}
+
+{% endmacro %}

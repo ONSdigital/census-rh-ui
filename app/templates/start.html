@@ -1,7 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
 {% set request_access_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='access-code') %}
-{% set request_individual_code_link = url('RequestCode:get', request_type='individual-code', display_region=display_region) %}
+{% set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) %}
 {% set webchat_link = url('WebChat:get', display_region=display_region) %}
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}
@@ -22,16 +22,19 @@
     }
 } %}
 
+{%- if 'uac' in field_messages_dict -%}
+    {%- set error_uac = {
+                    'id': 'uac',
+                    'text': _('Enter an access code')
+                }
+    -%}
+{%- endif -%}
+
 {% if display_region == 'ni' %}
     {% set breadcrumb_items = [
                 {
                     "url": domain_url_ni,
                     "text": 'Home'
-                },
-                {
-                    "url": domain_url_ni + '/ni/start/#',
-                    "text": 'Start census',
-                    "current": true
                 }
             ]
     %}
@@ -40,11 +43,6 @@
                 {
                     "url": domain_url_cy,
                     "text": 'Hafan'
-                },
-                {
-                    "url": domain_url_cy + '/cy/start/#',
-                    "text": 'Start census',
-                    "current": true
                 }
             ]
     %}
@@ -53,11 +51,6 @@
                 {
                     "url": domain_url_en,
                     "text": 'Home'
-                },
-                {
-                    "url": domain_url_en + '/en/start/#',
-                    "text": 'Start census',
-                    "current": true
                 }
             ]
     %}
@@ -80,39 +73,20 @@
 
     <h1 class="u-mt-l">{{_('Start census')}}</h1>
 
-    {% if 'uac' in field_messages_dict %}
-        {{
-            onsUACInput({
-                'id': 'uac',
-                'name': 'uac',
-                'postTextboxLinkText': _('Where to find your access code'),
-                'postTextboxLinkUrl': '#',
-                'label': {
-                    'text': _('Enter your 16-character access code'),
-                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
-                },
-                'securityMessage': _('Your personal information is protected by law and will be kept confidential.'),
-                'error': {
-                    'id': 'uac',
-                    'text': _('Enter an access code to continue')
-                }
-            })
-        }}
-    {% else %}
-        {{
-            onsUACInput({
-                'id': 'uac',
-                'name': 'uac',
-                'postTextboxLinkText': _('Where to find your access code'),
-                'postTextboxLinkUrl': '#',
-                'label': {
-                    'text': _('Enter your 16-character access code'),
-                    'description': _('Keep this code safe. You will need to enter it every time you access your census')
-                },
-                'securityMessage': _('Your personal information is protected by law and will be kept confidential.')
-            })
-        }}
-    {% endif %}
+    {{
+        onsUACInput({
+            'id': 'uac',
+            'name': 'uac',
+            'postTextboxLinkText': _('Where to find your access code'),
+            'postTextboxLinkUrl': '#',
+            'label': {
+                'text': _('Enter your 16-character access code'),
+                'description': _('Keep this code safe. You will need to enter it every time you access your census')
+            },
+            'securityMessage': _('Your personal information is protected by law and will be kept confidential.'),
+            'error': error_uac
+        })
+    }}
 
     {% if adlocation %}
         {{

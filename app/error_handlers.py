@@ -6,7 +6,9 @@ from aiohttp.client_exceptions import (ClientResponseError,
                                        ClientConnectionError, ContentTypeError)
 
 from .exceptions import (ExerciseClosedError, InactiveCaseError,
-                         InvalidEqPayLoad)
+                         InvalidEqPayLoad,
+                         SessionTimeout,
+                         TooManyRequests)
 from structlog import get_logger
 
 from .utils import View
@@ -42,6 +44,10 @@ def create_error_middleware(overrides):
             return await not_found_error(request)
         except web.HTTPForbidden:
             return await forbidden(request)
+        except SessionTimeout as ex:
+            return await session_timeout(request, ex.user_journey, ex.sub_user_journey)
+        except TooManyRequests as ex:
+            return await too_many_requests(request, ex.sub_user_journey)
         except InactiveCaseError as ex:
             return await inactive_case(request, ex.case_type)
         except ExerciseClosedError as ex:
@@ -113,7 +119,23 @@ async def not_found_error(request):
 
 async def forbidden(request):
     attributes = check_display_region(request)
-    return jinja.render_template('start.html', request, attributes, status=403)
+    return jinja.render_template('start-timeout.html', request, attributes, status=403)
+
+
+async def too_many_requests(request, sub_user_journey: str):
+    attributes = check_display_region(request)
+    attributes['sub_user_journey'] = sub_user_journey
+    return jinja.render_template('request-too-many-requests.html', request, attributes, status=429)
+
+
+async def session_timeout(request, user_journey: str, sub_user_journey: str):
+    attributes = check_display_region(request)
+    if user_journey == 'start':
+        return jinja.render_template('start-timeout.html', request, attributes, status=403)
+    else:
+        attributes['user_journey'] = user_journey
+        attributes['sub_user_journey'] = sub_user_journey
+        return jinja.render_template('request-timeout.html', request, attributes, status=403)
 
 
 def setup(app):

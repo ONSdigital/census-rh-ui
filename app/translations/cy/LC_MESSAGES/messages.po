@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-12-06 12:44+0000\n"
+"POT-Creation-Date: 2020-10-20 15:58+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -17,590 +17,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.7.0\n"
+"Generated-By: Babel 2.8.0\n"
 
-#: app/templates/404.html:14
+#: app/templates/404.html:13
 msgid "Page not found"
 msgstr "Heb ddod o hyd i'r dudalen"
 
-#: app/templates/404.html:16
+#: app/templates/404.html:15
 msgid "If you entered a web address, check it is correct."
 msgstr "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn siŵr ei fod yn gywir."
 
-#: app/templates/404.html:17
+#: app/templates/404.html:16
 msgid "If you pasted the web address, check that you copied the entire address."
 msgstr ""
 "Os gwnaethoch ludo cyfeiriad y wefan, gwnewch yn siŵr eich bod wedi "
 "copïo'r cyfeiriad cyfan."
 
-#: app/templates/404.html:19
+#: app/templates/404.html:18
 #, python-format
 msgid ""
 "If you still encounter problems please %(open)scontact us%(close)s. We "
 "apologise for any inconvenience this may have caused."
 msgstr "Os ydych chi'n cael problemau o hyd, %(open)scysylltwch â ni%(close)s."
-
-#: app/templates/accessibility.html:20 app/templates/accessibility.html:27
-msgid "Accessibility"
-msgstr "Hygyrchedd"
-
-#: app/templates/accessibility.html:24
-msgid "Home"
-msgstr "Hafan"
-
-#: app/templates/accessibility.html:34
-msgid "Census questionnaire accessibility statement"
-msgstr "Datganiad hygyrchedd holiadur y cyfrifiad"
-
-#: app/templates/accessibility.html:36
-msgid ""
-"This census is run by the Office for National Statistics. We want as many"
-" people as possible to be able to do the census online. For example, that"
-" means you should be able to:"
-msgstr ""
-"Cynhelir y cyfrifiad hwn gan y Swyddfa Ystadegau Gwladol. Rydym am i "
-"gynifer o bobl â phosibl allu gwneud y cyfrifiad ar lein. Er enghraifft, "
-"mae hynny'n golygu y dylech fod yn gallu:"
-
-#: app/templates/accessibility.html:39
-msgid "change colours, contrast levels and fonts"
-msgstr "newid lliwiau, lefelau cyferbyniad a ffontiau"
-
-#: app/templates/accessibility.html:40
-#, python-format
-msgid "zoom in up to 300%% without the text spilling off the screen"
-msgstr "chwyddo'r testun hyd at 300%% heb iddo ddiflannu oddi ar y sgrin"
-
-#: app/templates/accessibility.html:41
-msgid "navigate most of the questionnaire using just a keyboard"
-msgstr "defnyddio'r rhan fwyaf o'r holiadur â bysellfwrdd yn unig"
-
-#: app/templates/accessibility.html:42
-msgid "navigate most of the questionnaire using speech recognition software"
-msgstr "defnyddio'r rhan fwyaf o'r holiadur â meddalwedd adnabod lleferydd"
-
-#: app/templates/accessibility.html:43
-msgid ""
-"listen to most of the questionnaire using a screen reader (including the "
-"most recent versions of JAWS, NVDA and VoiceOver)"
-msgstr ""
-"gwrando ar y rhan fwyaf o'r holiadur gan ddefnyddio rhaglen darllen sgrin"
-" (gan gynnwys fersiynau diweddaraf JAWS, NVDA a VoiceOver)"
-
-#: app/templates/accessibility.html:46
-msgid "We’ve used simple language as much as possible."
-msgstr "Rydym wedi defnyddio iaith syml cymaint â phosibl."
-
-#: app/templates/accessibility.html:49
-#, python-format
-msgid ""
-"%(start_abilitynet_link)sAbilityNet%(end_link)s has advice on making your"
-" device easier to use if you have a disability."
-msgstr ""
-"Mae gan %(start_abilitynet_link)sAbilityNet%(end_link)s gyngor ar wneud "
-"eich dyfais yn haws i'w defnyddio os oes gennych chi anabledd"
-
-#: app/templates/accessibility.html:52
-msgid "How accessible is this questionnaire?"
-msgstr "Pa mor hygyrch yw'r holiadur hwn?"
-
-#: app/templates/accessibility.html:54
-msgid ""
-"We know that the following parts of this questionnaire are not fully "
-"accessible:"
-msgstr "Rydym yn gwybod nad yw'r rhannau canlynol o'r holiadur yn gwbl hygyrch:"
-
-#: app/templates/accessibility.html:57
-msgid "you cannot modify the line height or spacing of text"
-msgstr "ni allwch addasu uchder llinellau na'r bylchau rhwng testun"
-
-#: app/templates/accessibility.html:58
-msgid ""
-"the online system for getting a new census code has not been fully tested"
-" so parts of it may not be accessible to all users"
-msgstr ""
-"nid yw'r system ar-lein ar gyfer cael cod cyfrifiad newydd wedi cael ei "
-"phrofi'n llawn felly mae'n bosibl na fydd rhannau ohoni yn hygyrch i bob "
-"defnyddiwr"
-
-#: app/templates/accessibility.html:59
-msgid "the Web chat tool may not be fully accessible"
-msgstr "mae'n bosibl na fydd yr adnodd sgwrs dros y we yn gwbl hygyrch"
-
-#: app/templates/accessibility.html:60
-msgid ""
-"some page titles may not accurately reflect the content on the page for "
-"audio users"
-msgstr ""
-"mae'n bosibl na fydd teitlau rhai tudalennau yn adlewyrchu cynnwys y "
-"dudalen yn gywir i ddefnyddwyr clywedol"
-
-#: app/templates/accessibility.html:64
-msgid "What to do if you need guidance"
-msgstr "Beth i'w wneud os bydd angen arweiniad arnoch"
-
-#: app/templates/accessibility.html:67
-#, python-format
-msgid ""
-"Our %(start_languages_and_accessibility_link)sguidance leaflets about the"
-" census%(end_link)s are available:"
-msgstr ""
-"Mae ein %(start_languages_and_accessibility_link)staflenni canllaw am y "
-"cyfrifiad%(end_link)s ar gael:"
-
-#: app/templates/accessibility.html:71
-msgid "in Braille"
-msgstr "mewn Braille"
-
-#: app/templates/accessibility.html:72
-msgid "in British Sign Language (BSL)"
-msgstr "yn Iaith Arwyddion Prydain"
-
-#: app/templates/accessibility.html:73
-msgid "as an easy read version (which uses pictures to explain the census)"
-msgstr ""
-"mewn fersiwn hawdd ei darllen (sy'n defnyddio lluniau i esbonio'r "
-"cyfrifiad)"
-
-#: app/templates/accessibility.html:74
-msgid "as a Welsh audio"
-msgstr "fel fersiwn glywedol Gymraeg"
-
-#: app/templates/accessibility.html:75
-msgid "as large print in English or large print in Welsh"
-msgstr "mewn print mawr yn Gymraeg neu'n Saesneg"
-
-#: app/templates/accessibility.html:78
-msgid "Reporting accessibility problems"
-msgstr "Rhoi gwybod am broblemau hygyrchedd"
-
-#: app/templates/accessibility.html:80
-msgid ""
-"We’re always looking to improve the accessibility of this service. If you"
-" find any problems that are not listed on this page or think we’re not "
-"meeting accessibility requirements, you can contact us."
-msgstr ""
-"Rydym bob amser yn ceisio gwella hygyrchedd y gwasanaeth hwn. Os byddwch "
-"yn dod ar draws unrhyw broblemau sydd heb eu rhestru ar y dudalen hon neu"
-" os na fyddwch chi'n credu ein bod ni'n bodloni ein gofynion hygyrchedd, "
-"gallwch gysylltu â ni."
-
-#: app/templates/accessibility.html:82
-msgid "Enforcement procedure"
-msgstr "Gweithdrefn gorfodi"
-
-#: app/templates/accessibility.html:84
-msgid ""
-"The Equality and Human Rights Commission (EHRC) is responsible for "
-"enforcing the Public Sector Bodies (Website and Mobile Applications) (No."
-" 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If "
-"you’re not happy with how we respond to your complaint, contact the:"
-msgstr ""
-"Y Comisiwn Cydraddoldeb a Hawliau Dynol sy'n gyfrifol am orfodi "
-"Rheoliadau Hygyrchedd Cyrff y Sector Cyhoeddus (Gwefannau a Chymwysiadau "
-"Symudol) (Rhif 2) 2018 (y 'rheoliadau hygyrchedd').  Os na fyddwch yn "
-"fodlon ar y ffordd rydym yn ymateb i'ch cwyn, cysylltwch â'r canlynol:"
-
-#: app/templates/accessibility.html:88
-#, python-format
-msgid ""
-"%(start_equalityadvisoryservice_link)sEquality Advisory and Support "
-"Service (EASS)%(end_link)s if you live in England or Wales"
-msgstr ""
-"%(start_equalityadvisoryservice_link)sGwasanaeth Cynghori a Chymorth "
-"Cydraddoldeb (EASS)%(end_link)s os ydych chi'n byw yng Nghymru neu Loegr"
-
-#: app/templates/accessibility.html:89
-#, python-format
-msgid ""
-"%(start_equalityni_link)sEqualities Commission for Northern Ireland "
-"(ECNI)%(end_link)s if you live in Northern Ireland"
-msgstr ""
-"%(start_equalityni_link)sComisiwn Cydraddoldeb dros Ogledd Iwerddon "
-"(ECNI)%(end_link)s os ydych chi'n byw yng Ngogledd Iwerddon"
-
-#: app/templates/accessibility.html:93
-msgid "Technical information about this questionnaire’s accessibility"
-msgstr "Gwybodaeth dechnegol am hygyrchedd yr holiadur hwn"
-
-#: app/templates/accessibility.html:95
-msgid ""
-"The Office for National Statistics is committed to making its website "
-"accessible, in accordance with the Public Sector Bodies (Website and "
-"Mobile Applications) (No. 2) Accessibility Regulations 2018."
-msgstr ""
-"Mae'r Swyddfa Ystadegau Gwladol yn ymrwymedig i wneud ei gwefan yn "
-"hygyrch, yn unol â Rheoliadau Hygyrchedd Cyrff y Sector Cyhoeddus "
-"(Gwefannau a Chymwysiadau Symudol) (Rhif 2) 2018."
-
-#: app/templates/accessibility.html:98
-#, python-format
-msgid ""
-"This service is partially compliant with the %(start_wcag_link)sWeb "
-"Content Accessibility Guidelines version 2.1%(end_link)s AA standard, due"
-" to the non-compliances listed."
-msgstr ""
-"Mae'r wefan hon yn cydymffurfio'n rhannol â "
-"%(start_wcag_link)sChanllawiau Hygyrchedd Cynnwys y We fersiwn "
-"2.1%(end_link)s safon AA, oherwydd yr achosion o ddiffyg cydymffurfio a "
-"restrir."
-
-#: app/templates/accessibility.html:101
-msgid "Non-accessible content"
-msgstr "Cynnwys nad yw'n hygyrch"
-
-#: app/templates/accessibility.html:103
-msgid ""
-"The content listed is non-accessible for the following reasons. We are "
-"planning to fix the following issues for Census 2021."
-msgstr ""
-"Nid yw'r cynnwys a restrir yn hygyrch am y rhesymau canlynol. Rydym yn "
-"bwriadu delio â'r problemau canlynol ar gyfer Cyfrifiad 2021."
-
-#: app/templates/accessibility.html:105
-msgid "Non-compliance with the accessibility regulations"
-msgstr "Diffyg cydymffurfio â'r rheoliadau hygyrchedd"
-
-#: app/templates/accessibility.html:107
-msgid ""
-"Non-descriptive form elements. On the ‘Check your answers’ summary page "
-"there is an option to “change” items, but the link does not describe "
-"where it goes to. Fails on WCAG 2.1 A number 1.3.1."
-msgstr ""
-"Elfennau o'r ffurflen nad ydynt yn ddisgrifiadol. Ar dudalen grynhoi "
-"‘Edrych dros eich atebion‘, mae opsiwn i “newid“ eitemau, ond nid yw'r "
-"ddolen yn disgrifio i ble mae'n mynd. Methu ar WCAG 2.1 A rhif 1.3.1."
-
-#: app/templates/accessibility.html:109
-msgid ""
-"Error messages are too generic. If the text in a field is incorrect or in"
-" the wrong format, the answer validation page says the answer is "
-"incorrect without explaining what you need to do. Fails on WCAG 2.1 A "
-"number 3.3.1."
-msgstr ""
-"Mae'r negeseuon gwall yn rhy generig. Os yw'r testun mewn blwch yn "
-"anghywir neu yn y fformat anghywir, mae tudalen dilysu'r ateb yn dweud "
-"bod yr ateb yn anghywir heb esbonio'r hyn y mae angen i chi ei wneud. "
-"Methu ar WCAG 2.1 A rhif 3.3.1."
-
-#: app/templates/accessibility.html:111
-msgid ""
-"Form label issue. On the ‘What is your name?’ page, middle name is "
-"optional but this is not clear to the user. Fails on WCAG 2.1 A number "
-"3.3.2."
-msgstr ""
-"Problem gyda label ar y ffurflen. Ar y dudalen ‘Beth yw eich enw?’ mae'r "
-"enw canol yn ddewisol ond nid yw hyn yn glir i'r defnyddiwr. Methu ar "
-"WCAG 2.1 A rhif 3.3.2."
-
-#: app/templates/accessibility.html:113
-msgid ""
-"Form label issue. When selecting the appropriate relationship, it is "
-"possible to ‘Save and continue’ without selecting an option. Fails on "
-"WCAG 2.1 A number 2.4.6."
-msgstr ""
-"Problem gyda label ar y ffurflen. Wrth ddewis y berthynas briodol, mae'n "
-"bosibl clicio ar 'Cadw a pharhau' heb ddewis opsiwn. Methu ar WCAG 2.1 A "
-"rhif 2.4.6."
-
-#: app/templates/accessibility.html:115
-msgid ""
-"On the ‘Is this address correct?’ page, the title may not accurately "
-"reflect the content on the page for audio users. The ‘Submit survey’ page"
-" does not have a page title. Fails on WCAG 2.1 A number 2.4.2."
-msgstr ""
-"Ar dudalen 'Ydy'r cyfeiriad hwn yn gywir?', mae'n bosibl nad yw'r teitl "
-"yn adlewyrchu'r cynnwys ar y dudalen yn gywir ar gyfer defnyddwyr "
-"clywedol. Nid oes teitl ar dudalen 'Cyflwyno holiadur'. Methu ar WCAG 2.1"
-" A rhif 2.4.2."
-
-#: app/templates/accessibility.html:117
-msgid ""
-"Timeout issue. Users are not informed of a time limit and service times "
-"out without warning. During the validation process there is no return "
-"link on the session timeout page. Fails on WCAG 2.1 A number 2.2.1 and "
-"AAA number 2.2.6."
-msgstr ""
-"Problem gyda therfyn amser. Nid yw'r defnyddwyr yn cael gwybod bod terfyn"
-" amser ac mae'r gwasanaeth yn cyrraedd ei derfyn amser heb rybudd. Yn "
-"ystod y broses ddilysu, nid yw'r dudalen sy'n nodi bod y sesiwn wedi "
-"cyrraedd ei therfyn amser yn cynnwys dolen i fynd yn ôl. Methu ar WCAG "
-"2.1 A rhif 2.2.1 ac AAA rhif 2.2.6."
-
-#: app/templates/accessibility.html:119
-msgid ""
-"The ‘Hide this’ button text on accordions such as ‘What does “usually "
-"live” mean?’ is non-descriptive for JAWS users as the text above it is "
-"read back to users. Fails on WCAG 2.1 AA number 2.4.6."
-msgstr ""
-"Nid yw testun y botwm 'Cuddio hyn' ar acordiynau megis ‘Beth mae “byw fel"
-" arfer” yn ei olygu?’ yn ddisgrifiadol ar gyfer defnyddwyr JAWS gan fod y"
-" testun uwch ei ben yn cael ei ddarllen yn ôl i ddefnyddwyr. Methu ar "
-"WCAG 2.1 AA rhif 2.4.6."
-
-#: app/templates/accessibility.html:121
-msgid ""
-"Screen readers may not let users know when an accordion is expanded or "
-"collapsed. Fails on WCAG 2.1 A number 2.4.4."
-msgstr ""
-"Mae'n bosibl na fydd darllenwyr sgrin yn rhoi gwybod i ddefnyddwyr pan "
-"fydd acordion wedi'i ehangu neu ei gau. Methu ar WCAG 2.1 A rhif 2.4.4."
-
-#: app/templates/accessibility.html:123
-msgid ""
-"Non-descriptive headings. On the relationships page, the heading does not"
-" accurately describe the content for screen readers. Fails on WCAG 2.1 A "
-"number 2.4.6."
-msgstr ""
-"Penawdau nad ydynt yn ddisgrifiadol. Ar y dudalen ar gyfer nodi "
-"perthynas, nid yw'r pennawd yn disgrifio'r cynnwys yn gywir i ddefnyddwyr"
-" darllenwyr sgrin. Methu ar WCAG 2.1 A rhif 2.4.6."
-
-#: app/templates/accessibility.html:125
-msgid ""
-"Some links are not descriptive enough for screen reader users. Fails on "
-"WCAG 2.1 AAA number 2.4.9."
-msgstr ""
-"Nid yw rhai dolenni yn ddigon disgrifiadol ar gyfer defnyddwyr darllenwyr"
-" sgrin. Methu ar WCAG AAA 2.1 rhif 2.4.9."
-
-#: app/templates/accessibility.html:127
-msgid ""
-"Some headings do not follow a logical hierarchical structure. Fails on "
-"WCAG AAA 2.1 number 2.4.10."
-msgstr ""
-"Nid yw rhai penawdau yn dilyn strwythur hierarchaidd rhesymegol. Methu ar"
-" WCAG AAA 2.1 rhif 2.4.10."
-
-#: app/templates/accessibility.html:129
-msgid ""
-"Some text is highlighted, such as addresses and names that a user has "
-"confirmed. Highlighting is not accessible for some users. This does not "
-"conform to Government Digital Service (GDS) guidelines."
-msgstr ""
-"Mae rhywfaint o'r testun wedi'i amlygu, megis cyfeiriadau ac enwau y mae "
-"defnyddiwr wedi'u cadarnhau. Nid yw rhai defnyddwyr yn cael hyn. Nid yw "
-"hyn yn cydymffurfio â chanllawiau Gwasanaeth Digidol y Llywodraeth (GDS)."
-
-#: app/templates/accessibility.html:131
-msgid ""
-"Some radio inputs on the relationships page do not conform to GDS "
-"guidelines. When selected, three different elements on the page are "
-"updated."
-msgstr ""
-"Nid yw rhai mewnbynnau radio ar y dudalen ar gyfer nodi perthynas yn "
-"cydymffurfio â chanllawiau GDS. Wrth ddewis, caiff tair elfen wahanol ar "
-"y sgrin eu diweddaru."
-
-#: app/templates/accessibility.html:133
-msgid ""
-"On ‘Who lives here?’ there is a ‘Previous’ link on the page that does not"
-" conform with GDS guidelines. The text used should read as ‘Back’."
-msgstr ""
-"Ar dudalen ‘Pwy sy'n byw yma?’ mae dolen ‘Blaenorol’ ar y dudalen nad "
-"yw'n cydymffurfio â chanllawiau GDS. Dylai'r testun sy'n cael ei "
-"ddefnyddio ddweud ‘Yn ôl’."
-
-#: app/templates/accessibility.html:135
-msgid ""
-"Error messages do not result in a change to the page title to reflect "
-"that an error has been made. This does not conform to GDS guidelines."
-msgstr ""
-"Nid yw negeseuon gwall yn newid teitl y dudalen er mwyn dangos bod gwall "
-"wedi'i wneud. Nid yw hyn yn cydymffurfio â chanllawiau GDS."
-
-#: app/templates/accessibility.html:137
-msgid "How we tested this questionnaire"
-msgstr "Sut y gwnaethom brofi'r holiadur hwn"
-
-#: app/templates/accessibility.html:139
-msgid "Over the last few years we have tested the full questionnaire, including:"
-msgstr ""
-"Dros y blynyddoedd diwethaf, rydym wedi profi'r holiadur llawn, gan "
-"gynnwys:"
-
-#: app/templates/accessibility.html:143
-#, python-format
-msgid ""
-"%(start_dac_link)sDigital Accessibility Centre (DAC)%(end_link)s carrying"
-" out a professional, technical audit"
-msgstr ""
-"Cael y %(start_dac_link)sGanolfan Hygyrchedd Digidol (DAC)%(end_link)s i "
-"gynnal archwiliad technegol proffesiynol"
-
-#: app/templates/accessibility.html:145
-msgid ""
-"user testing with the public on different devices, different locations, "
-"in their homes with various assistive technologies including free and "
-"paid versions"
-msgstr ""
-"cynnal profion defnyddwyr gyda'r cyhoedd ar ddyfeisiau gwahanol, mewn "
-"lleoliadau gwahanol, yn eu cartrefi gyda thechnolegau cynorthwyol "
-"amrywiol, gan gynnwys fersiynau am ddim a rhai y mae'n rhaid talu "
-"amdanynt"
-
-#: app/templates/accessibility.html:146
-msgid "testing with charities, such as Scope and RNIB in their labs"
-msgstr ""
-"cynnal profion gydag elusennau, megis Scope a Sefydliad Cenedlaethol "
-"Brenhinol Pobl Ddall (RNIB) yn eu labordai"
-
-#: app/templates/accessibility.html:147
-msgid "using job centres and libraries for pop-up testing"
-msgstr ""
-"defnyddio canolfannau gwaith a llyfrgelloedd i gynnal profion ar adegau "
-"penodol"
-
-#: app/templates/accessibility.html:148
-msgid "covering a wide range of ages, additional needs and disabilities"
-msgstr "cwmpasu ystod eang o oedrannau, anghenion ychwanegol ac anableddau"
-
-#: app/templates/accessibility.html:149
-msgid ""
-"making sure the offline journey and non-digital products were considered "
-"in the end-to-end journey"
-msgstr ""
-"sicrhau bod y daith all-lein a chynhyrchion nad ydynt yn ddigidol yn cael"
-" eu hystyried o'r dechrau i'r diwedd"
-
-#: app/templates/accessibility.html:150
-msgid ""
-"changing designs based on feedback from user testing, such as letter "
-"structure and the summary of sections and progress through questionnaire"
-msgstr ""
-"newid dyluniadau yn seiliedig ar adborth o brofion defnyddwyr, megis "
-"strwythur llythyrau, crynodeb o adrannau a chynnydd drwy'r holiadur"
-
-#: app/templates/accessibility.html:153
-msgid "Digital Accessibility Centre testing"
-msgstr "Profion y Ganolfan Hygyrchedd Digidol"
-
-#: app/templates/accessibility.html:155
-msgid ""
-"Parts of this questionnaire were last tested on 3 September 2019 by the "
-"Digital Accessibility Centre (DAC)."
-msgstr ""
-"Cafodd rhannau o'r holiadur hwn eu profi ddiwethaf ar 3 Medi 2019 gan y "
-"Ganolfan Hygyrchedd Digidol (DAC)."
-
-#: app/templates/accessibility.html:158
-msgid "DAC Report - September 2019"
-msgstr ""
-
-#: app/templates/accessibility.html:161
-msgid "You can read the last full accessibility test report from 28 June 2019."
-msgstr ""
-"Gallwch ddarllen yr adroddiad ar y prawf hygyrchedd llawn diwethaf o 28 "
-"Mehefin 2019."
-
-#: app/templates/accessibility.html:164
-msgid "DAC Report - June 2019"
-msgstr ""
-
-#: app/templates/accessibility.html:167
-msgid "What we’re doing to improve accessibility"
-msgstr "Yr hyn rydym yn ei wneud i wella hygyrchedd"
-
-#: app/templates/accessibility.html:169
-msgid ""
-"We are continuing to work with various charities and local deaf "
-"communities to understand their needs for the census."
-msgstr ""
-"Rydym yn parhau i weithio gydag elusennau amrywiol a chymunedau byddar "
-"lleol i ddeall eu hanghenion ar gyfer y cyfrifiad."
-
-#: app/templates/accessibility.html:171
-msgid ""
-"We are looking at designs to see if it is possible to have British Sign "
-"Language on every page. This is challenging as we have been unable to "
-"find another service that does this, but we continue to investigate."
-msgstr ""
-"Rydym yn edrych ar ddyluniadau er mwyn gweld a yw hi'n bosibl cael Iaith "
-"Arwyddion Prydain ar bob tudalen. Mae hyn yn heriol oherwydd nid ydym "
-"wedi llwyddo i ddod o hyd i wasanaeth arall sy'n gwneud hyn, ond rydym yn"
-" parhau i ymchwilio."
-
-#: app/templates/accessibility.html:173
-msgid "We will act on feedback from the 2019 Rehearsal in October."
-msgstr "Byddwn yn gweithredu ar adborth o Ymarfer 2019 ym mis Hydref."
-
-#: app/templates/accessibility.html:175
-msgid ""
-"This statement was prepared on 17 September. It was last updated on 17 "
-"September."
-msgstr ""
-"Cafodd y datganiad hwn ei lunio ar 17 Medi. Cafodd ei ddiweddaru "
-"ddiwethaf ar 17 Medi."
-
-#: app/templates/address-confirmation.html:30
-#: app/templates/request-code-confirm-address.html:42
-msgid "Yes, this address is correct"
-msgstr "Ydy, mae'r cyfeiriad hwn yn gywir"
-
-#: app/templates/address-confirmation.html:37
-#: app/templates/request-code-confirm-address.html:49
-#: app/templates/request-code-confirm-mobile.html:52
-msgid "No, I need to change it"
-msgstr "Nac ydy, mae angen i mi ei newid"
-
-#: app/templates/address-confirmation.html:50
-msgid ""
-"Your address is in England, so you can only complete your census in "
-"English."
-msgstr ""
-"Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi "
-"gwblhau eich cyfrifiad."
-
-#: app/templates/address-confirmation.html:61
-#: app/templates/request-code-confirm-address.html:65
-msgid "Is this address correct?"
-msgstr "Ydy'r cyfeiriad hwn yn gywir?"
-
-#: app/templates/address-confirmation.html:80
-#: app/templates/request-code-confirm-address.html:74
-msgid "Check and confirm the address"
-msgstr "Edrychwch eto ar y cyfeiriad a'i gadarnhau"
-
-#: app/templates/address-confirmation.html:97
-#: app/templates/request-code-confirm-address.html:90
-#: app/templates/request-code-confirm-mobile.html:93
-#: app/templates/request-code-enter-address.html:84
-#: app/templates/request-code-enter-mobile.html:86
-#: app/templates/request-code-select-address.html:89
-msgid "Continue"
-msgstr "Parhau"
-
-#: app/templates/address-edit.html:33
-msgid "Change your address"
-msgstr "Newid eich cyfeiriad"
-
-#: app/templates/address-edit.html:40 app/templates/address-edit.html:67
-msgid "Building and street"
-msgstr "Adeilad a stryd"
-
-#: app/templates/address-edit.html:43
-msgid "Enter address to continue"
-msgstr ""
-
-#: app/templates/address-edit.html:47 app/templates/address-edit.html:71
-msgid "Line 2"
-msgstr "Llinell 2"
-
-#: app/templates/address-edit.html:51 app/templates/address-edit.html:75
-msgid "Line 3"
-msgstr "Llinell 3"
-
-#: app/templates/address-edit.html:55 app/templates/address-edit.html:79
-msgid "Town or City"
-msgstr "Tref neu Ddinas"
-
-#: app/templates/address-edit.html:59 app/templates/address-edit.html:83
-msgid "Postcode"
-msgstr "Cod post"
-
-#: app/templates/address-edit.html:92
-msgid "Save and continue"
-msgstr "Cadw a pharhaue"
 
 #: app/templates/closed.html:12
 msgid "This survey has closed"
@@ -613,6 +51,196 @@ msgstr "Mae eich cod mynediad ar gyfer arolwg sydd bellach wedi cau."
 #: app/templates/closed.html:17
 msgid "Thank you for your help."
 msgstr "Diolch am eich help."
+
+#: app/templates/common-address-in-scotland.html:13
+msgid "This address is not part of the census for England and Wales"
+msgstr ""
+
+#: app/templates/common-address-in-scotland.html:15
+msgid ""
+"You have selected an address in Scotland. Visit the <a "
+"href=\"https://www.scotlandscensus.gov.uk/\">National Records of Scotland"
+" website</a> to find out how to take part in the census for Scotland."
+msgstr ""
+
+#: app/templates/common-address-in-scotland.html:18
+#, python-format
+msgid "Alternatively, you can %(open)scontact us for help%(close)s."
+msgstr ""
+
+#: app/templates/common-confirm-address.html:21
+#: app/templates/start-confirm-address.html:21
+msgid "Yes, this is the correct address"
+msgstr ""
+
+#: app/templates/common-confirm-address.html:28
+msgid "No, search for address again"
+msgstr ""
+
+#: app/templates/common-confirm-address.html:42
+#: app/templates/start-confirm-address.html:52
+msgid "Is this the correct address?"
+msgstr ""
+
+#: app/templates/common-confirm-address.html:59
+msgid "Check and confirm the address"
+msgstr "Edrychwch eto ar y cyfeiriad a'i gadarnhau"
+
+#: app/templates/common-confirm-address.html:75
+#: app/templates/common-enter-address.html:85
+#: app/templates/common-resident-or-manager.html:78
+#: app/templates/common-select-address.html:75
+#: app/templates/request-code-confirm-mobile.html:62
+#: app/templates/request-code-enter-mobile.html:66
+#: app/templates/request-code-select-method.html:120
+#: app/templates/request-common-confirm-name-address.html:123
+#: app/templates/request-common-enter-name.html:85
+#: app/templates/start-address-changed.html:20
+#: app/templates/start-confirm-address.html:88
+#: app/templates/start-region-change.html:14
+#: app/templates/start-unlinked-linked.html:20
+msgid "Continue"
+msgstr "Parhau"
+
+#: app/templates/common-contact-centre.html:15
+#: app/templates/common-contact-centre.html:21
+#: app/templates/common-contact-centre.html:35
+msgid "You need to call the Census customer contact centre"
+msgstr ""
+
+#: app/templates/common-contact-centre.html:17
+msgid "There is an issue linking your address via the website."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:23
+msgid "There is an issue changing your address via the website."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:27
+msgid "Register an address"
+msgstr ""
+
+#: app/templates/common-contact-centre.html:29
+msgid ""
+"If you can’t find your address or part of your address has changed, it "
+"may not be registered on our system."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:31
+msgid "To register your address, we need you to get in touch."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:37
+msgid "There is an issue processing your address via the website."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:42
+#, python-format
+msgid ""
+"You can call us free on %(telephone_number)s or %(open)schoose another "
+"way to contact us%(close)s."
+msgstr ""
+
+#: app/templates/common-enter-address.html:17
+msgid "What is your postcode?"
+msgstr "Beth yw eich cod post?"
+
+#: app/templates/common-enter-address.html:20
+msgid "<p>This will enable us to associate your code to your address</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:24
+msgid "<p>To request an access code, we need your address.</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:26
+msgid "<p>To send a paper questionnaire, we need your address</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:28
+msgid "<p>We need to know the address for which you are answering.</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:39
+msgid "Please supply your address"
+msgstr ""
+
+#: app/templates/common-enter-address.html:41
+msgid ""
+"The access code that you have entered is not currently linked to an "
+"address. Please select your address so we can make the link."
+msgstr ""
+
+#: app/templates/common-enter-address.html:58
+#: app/templates/common-enter-address.html:74
+msgid "UK postcode"
+msgstr "Cod post yn y Deyrnas Unedig"
+
+#: app/templates/common-enter-address.html:62
+#: app/templates/support_centre_enter_postcode.html:17
+msgid "Enter a valid UK postcode"
+msgstr "Nodwch god post dilys yn y Deyrnas Unedig"
+
+#: app/templates/common-resident-or-manager.html:21
+msgid "Resident"
+msgstr ""
+
+#: app/templates/common-resident-or-manager.html:22
+msgid ""
+"Residents are responsible for answering the census questions about "
+"themselves"
+msgstr ""
+
+#: app/templates/common-resident-or-manager.html:29
+msgid "Manager"
+msgstr ""
+
+#: app/templates/common-resident-or-manager.html:30
+msgid ""
+"A manager is responsible for answering the census questions about this "
+"establishment"
+msgstr ""
+
+#: app/templates/common-resident-or-manager.html:45
+msgid "Are you a resident or manager of this establishment?"
+msgstr ""
+
+#: app/templates/common-resident-or-manager.html:62
+#: app/templates/request-code-select-method.html:102
+msgid "Please select an option."
+msgstr ""
+
+#: app/templates/common-select-address.html:27
+#, python-format
+msgid ""
+"<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
+"%(pcode)s</p>"
+msgstr ""
+"<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer "
+"y cod post %(pcode)s</p>"
+
+#: app/templates/common-select-address.html:37
+msgid "We cannot find your address"
+msgstr "Allwn ni ddim dod o hyd i'ch cyfeiriad"
+
+#: app/templates/common-select-address.html:40
+#, python-format
+msgid ""
+"If this is incorrect you can %(start_request_code_link)senter the "
+"address%(end_link)s  again or %(start_contact_link)scontact "
+"us%(end_link)s."
+msgstr ""
+"Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
+"cyfeiriad%(end_link)s eto neu %(start_contact_link)sgysylltu â "
+"ni%(end_link)s."
+
+#: app/templates/common-select-address.html:46
+msgid "Select your address"
+msgstr "Dewiswch eich cyfeiriad"
+
+#: app/templates/common-select-address.html:57
+msgid "Select an address"
+msgstr "Dewiswch gyfeiriad"
 
 #: app/templates/error.html:15
 msgid "Sorry, something went wrong"
@@ -631,11 +259,11 @@ msgstr ""
 "Rhowch gynnig arall arni yn nes ymlaen, neu %(open)scysylltwch â "
 "ni%(close)s os yw'r broblem yn parhau."
 
-#: app/templates/expired.html:27
+#: app/templates/expired.html:12
 msgid "Your unique access code has expired"
 msgstr "Mae eich cod mynediad unigryw wedi dod i ben"
 
-#: app/templates/expired.html:31
+#: app/templates/expired.html:16
 #, python-format
 msgid ""
 "You can %(open)srequest a new code%(close)s if you have not submitted a "
@@ -644,260 +272,302 @@ msgstr ""
 "Gallwch %(open)sofyn am god newydd%(close)s os nad ydych chi wedi "
 "cyflwyno cyfrifiad eto."
 
-#: app/templates/index.html:42
-msgid "Enter the 16 character code printed on the letter"
-msgstr "Rhowch y cod 16 nod sydd wedi'i argraffu ar y llythyr"
-
-#: app/templates/index.html:43
-msgid "Keep this code safe and only share it with others in your household"
-msgstr ""
-"Cadwch y cod hwn yn ddiogel a pheidiwch â'i rannu ag unrhyw un heblaw "
-"aelodau eraill eich cartref"
-
-#: app/templates/index.html:45
-msgid ""
-"Your personal information is protected by law and will be kept "
-"confidential."
-msgstr ""
-"Mae eich gwybodaeth bersonol yn cael ei diogelu gan y gyfraith a chaiff "
-"ei chadw'n gyfrinachol."
-
-#: app/templates/index.html:51
-msgid "Start Census"
-msgstr "Dechrau'r Cyfrifiad"
-
-#: app/templates/index.html:71
-msgid "Enter a valid code"
-msgstr "Rhowch god dilys"
-
-#: app/templates/index.html:83
-msgid "Access Census"
-msgstr "Mynediad at y Cyfrifiad"
-
-#: app/templates/index.html:88
-msgid "Don't have a code?"
-msgstr "Dim cod gennych chi?"
-
-#: app/templates/index.html:90
+#: app/templates/request-code-code-sent-post.html:28
 #, python-format
-msgid ""
-"You can %(open)srequest a new code%(close)s to start a new survey if you "
-"have lost, forgotten or not received an access code."
+msgid "A letter will be sent to %(name)s at %(address)s"
 msgstr ""
-"Gallwch chi %(open)sofyn am god newydd%(close)s i ddechrau arolwg newydd "
-"os ydych chi wedi colli, anghofio neu heb gael cod mynediad."
 
-#: app/templates/index.html:93
-msgid "Want to answer separately from your household?"
-msgstr "Am ateb ar wahân i aelodau'ch cartref?"
+#: app/templates/request-code-code-sent-post.html:31
+msgid ""
+"The letter with a new individual access code should arrive soon for you "
+"to start the census"
+msgstr ""
 
-#: app/templates/index.html:95
+#: app/templates/request-code-code-sent-post.html:33
+msgid ""
+"The letter with a new manager access code should arrive soon for you to "
+"start the census"
+msgstr ""
+
+#: app/templates/request-code-code-sent-post.html:35
+msgid ""
+"The letter with a new household access code should arrive soon for you to"
+" start the census"
+msgstr ""
+
+#: app/templates/request-code-code-sent-post.html:43
+#: app/templates/request-form-sent-post.html:41
+msgid "Done"
+msgstr ""
+
+#: app/templates/request-code-code-sent-sms.html:21
 #, python-format
-msgid ""
-"If you prefer to answer separately from the people you live with, you can"
-"  %(open)srequest an individual access code%(close)s."
+msgid "We have sent a text to %(number)s"
 msgstr ""
-"Os hoffech chi ateb ar wahân i'r bobl rydych chi'n byw gyda nhw, gallwch "
-"chi %(open)sofyn am god mynediad i unigolion%(close)s."
 
-#: app/templates/index.html:98
-msgid "Need help?"
-msgstr "Angen help?"
-
-#: app/templates/index.html:100 app/templates/webchat-form.html:37
-#: app/templates/webchat-form.html:144 app/templates/webchat-window.html:11
-msgid "Web chat"
-msgstr "Gwe-sgwrs"
-
-#: app/templates/request-code-code-sent.html:33
-#, python-format
-msgid "We have sent an access code to <br>%(mobile_no)s"
-msgstr "Rydym ni wedi anfon cod mynediad i <br>%(mobile_no)s"
-
-#: app/templates/request-code-code-sent.html:35
+#: app/templates/request-code-code-sent-sms.html:24
 msgid ""
-"A text with the code should arrive shortly. Once you get the code, you "
-"can start the survey."
+"The text message with a new individual access code should arrive soon for"
+" you to start your census"
 msgstr ""
-"Dylai neges destun yn cynnwys y cod gyrraedd cyn bo hir. Ar ôl i chi gael"
-" y cod, gallwch chi ddechrau'r arolwg."
 
-#: app/templates/request-code-code-sent.html:40
-msgid "Start your survey"
-msgstr "Dechrau eich arolwg"
+#: app/templates/request-code-code-sent-sms.html:26
+msgid ""
+"The text message with a new manager access code should arrive soon for "
+"you to start your census"
+msgstr ""
 
-#: app/templates/request-code-code-sent.html:47
+#: app/templates/request-code-code-sent-sms.html:28
+msgid ""
+"The text message with a new household access code should arrive soon for "
+"you to start your census"
+msgstr ""
+
+#: app/templates/request-code-code-sent-sms.html:41
+msgid "The text will be sent from <strong>Census2021</strong>"
+msgstr ""
+
+#: app/templates/request-code-code-sent-sms.html:45
 msgid "Didn't receive a text?"
 msgstr "Heb gael neges destun?"
 
-#: app/templates/request-code-code-sent.html:50
+#: app/templates/request-code-code-sent-sms.html:48
 #, python-format
 msgid ""
 "It can take a few minutes for the text to arrive. If it doesn't arrive, "
-"you can %(open)srequest a new code%(close)s."
+"you can %(open)srequest a new access code%(close)s."
 msgstr ""
-"Gall gymryd ychydig funudau i'r neges destun gyrraedd. Os na fydd yn "
-"cyrraedd, gallwch chi %(open)sofyn am god newydd%(close)s."
 
-#: app/templates/request-code-confirm-mobile.html:45
-msgid "Yes, send the text now"
-msgstr "Ydy, anfonwch y neges destun nawr"
+#: app/templates/request-code-code-sent-sms.html:51
+msgid "Ready to start your census online?"
+msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:66
-msgid "Is this mobile phone number correct?"
-msgstr "Ydy'r rhif ffôn symudol hwn yn gywir?"
+#: app/templates/request-code-code-sent-sms.html:56 app/templates/start.html:89
+msgid "Start census"
+msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:77
+#: app/templates/request-code-confirm-mobile.html:21
+msgid "Yes, send the text"
+msgstr ""
+
+#: app/templates/request-code-confirm-mobile.html:28
+msgid "No, I need to change it"
+msgstr "Nac ydy, mae angen i mi ei newid"
+
+#: app/templates/request-code-confirm-mobile.html:36
 msgid "Check and confirm your mobile phone number"
 msgstr "Edrychwch eto ar eich rhif ffôn symudol a'i gadarnhau"
 
-#: app/templates/request-code-enter-address.html:45
-msgid "What is your postcode?"
-msgstr "Beth yw eich cod post?"
+#: app/templates/request-code-confirm-mobile.html:46
+msgid "Is this mobile phone number correct?"
+msgstr "Ydy'r rhif ffôn symudol hwn yn gywir?"
 
-#: app/templates/request-code-enter-address.html:46
-msgid ""
-"<p>To text you a new code we need to know the address for which you are "
-"answering.</p>"
-msgstr ""
-"<p>Er mwyn i ni anfon cod newydd atoch chi, mae angen i ni wybod ar gyfer"
-" pa gyfeiriad rydych chi'n ateb.</p>"
-
-#: app/templates/request-code-enter-address.html:57
-#: app/templates/request-code-enter-address.html:73
-msgid "UK postcode"
-msgstr "Cod post yn y Deyrnas Unedig"
-
-#: app/templates/request-code-enter-address.html:61
-msgid "Enter a valid UK postcode"
-msgstr "Nodwch god post dilys yn y Deyrnas Unedig"
-
-#: app/templates/request-code-enter-mobile.html:45
+#: app/templates/request-code-enter-mobile.html:24
 msgid "What is your mobile phone number?"
 msgstr "Beth yw eich rhif ffôn symudol?"
 
-#: app/templates/request-code-enter-mobile.html:46
-msgid "<p>We will send an access code by text to this number.</p>"
-msgstr "<p>Byddwn ni'n anfon cod mynediad drwy neges destun i'r rhif hwn.</p>"
-
-#: app/templates/request-code-enter-mobile.html:58
-#: app/templates/request-code-enter-mobile.html:75
+#: app/templates/request-code-enter-mobile.html:36
+#: app/templates/request-code-enter-mobile.html:54
 msgid "UK mobile phone number"
 msgstr "Rhif ffôn symudol yn y Deyrnas Unedig"
 
-#: app/templates/request-code-enter-mobile.html:62
+#: app/templates/request-code-enter-mobile.html:37
+#: app/templates/request-code-enter-mobile.html:55
+msgid "This will not be stored and only used once to send the access code"
+msgstr ""
+
+#: app/templates/request-code-enter-mobile.html:41
 msgid "Enter a valid UK mobile phone number"
 msgstr "Nodwch rif ffôn dilys yn y Deyrnas Unedig"
 
-#: app/templates/request-code-household.html:15
-msgid "Request a new access code"
-msgstr "Gofyn am god mynediad newydd"
-
-#: app/templates/request-code-household.html:21
-msgid ""
-"To do the census online you need a 16 character unique access code which "
-"we have sent you in a letter."
+#: app/templates/request-code-select-method.html:32
+msgid "Text message"
 msgstr ""
-"I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad "
-"unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
 
-#: app/templates/request-code-household.html:23
-#: app/templates/request-code-individual.html:23
-msgid ""
-"If you are in a rehearsal area and don’t have a code you can get a new "
-"one."
+#: app/templates/request-code-select-method.html:33
+msgid "We will need your mobile number for this"
 msgstr ""
-"Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, "
-"gallwch ofyn am un newydd."
 
-#: app/templates/request-code-household.html:25
-#: app/templates/request-code-individual.html:25
-msgid "You will need to provide:"
-msgstr "Bydd angen i chi ddarparu:"
-
-#: app/templates/request-code-household.html:27
-#: app/templates/request-code-individual.html:27
-msgid "your mobile phone number so we can send you the code by text"
-msgstr "eich rhif ffôn symudol fel y gallwn anfon y cod atoch mewn neges destun"
-
-#: app/templates/request-code-household.html:28
-#: app/templates/request-code-individual.html:28
-msgid "your address so we can confirm you are in the rehearsal area"
-msgstr "eich cyfeiriad fel y gallwn gadarnhau eich bod yn ardal yr ymarfer"
-
-#: app/templates/request-code-household.html:34
-msgid "Request a new code"
-msgstr "Gofyn am god newydd"
-
-#: app/templates/request-code-individual.html:15
-msgid "Request an individual access code"
-msgstr "Gofyn am god mynediad unigryw"
-
-#: app/templates/request-code-individual.html:21
-msgid "To do the census online you need a 16 character unique access code."
+#: app/templates/request-code-select-method.html:40
+msgid "Post"
 msgstr ""
-"I wneud y cyfrifiad ar lein, mae angen cod mynediad unigryw 16 nod arnoch"
-" chi."
 
-#: app/templates/request-code-individual.html:34
-msgid "Request an individual code"
-msgstr "Gofyn am god unigol"
+#: app/templates/request-code-select-method.html:41
+msgid "We can only send access codes to the registered household address"
+msgstr ""
 
-#: app/templates/request-code-not-required.html:29
-msgid "Your address is not part of the 2019 rehearsal"
-msgstr "Nid yw eich cyfeiriad yn rhan o ymarfer 2019"
+#: app/templates/request-code-select-method.html:49
+msgid "How would you like to receive a new individual access code?"
+msgstr ""
 
-#: app/templates/request-code-not-required.html:34
+#: app/templates/request-code-select-method.html:51
+msgid "How would you like to receive a new manager access code?"
+msgstr ""
+
+#: app/templates/request-code-select-method.html:53
+msgid "How would you like to receive a new household access code?"
+msgstr ""
+
+#: app/templates/request-code-select-method.html:70
+#: app/templates/start.html:130
 #, python-format
 msgid ""
-"Based on the address you have provided you are not required to take part."
-" If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or find out more "
-"%(start_about_census_link)sabout the census rehearsal%(end_link)s."
+"If you need to answer separately from the people you live with, you can "
+"%(open)srequest an individual access code%(close)s to start a separate "
+"census."
 msgstr ""
-"Ar sail y cyfeiriad rydych chi wedi'i roi, nid oes angen i chi gymryd "
-"rhan. Os yw hyn yn anghywir, gallwch chi "
-"%(start_request_code_link)snodi'r cyfeiriad%(end_link)s eto neu gael "
-"gwybod rhagor %(start_about_census_link)sam ymarfer y "
-"cyfrifiad%(end_link)s."
 
-#: app/templates/request-code-select-address.html:47
+#: app/templates/request-code-select-method.html:76
+#: app/templates/start.html:136
+msgid ""
+"Someone in your household must still complete a census using a household "
+"access code"
+msgstr ""
+
+#: app/templates/request-code-select-method.html:82
+#: app/templates/start.html:142
+msgid "Need to answer separately from your household?"
+msgstr ""
+
+#: app/templates/request-code-select-method.html:85
+#: app/templates/start.html:145
+#: app/templates/support_centre_list_of_centres.html:53
+msgid "Hide this"
+msgstr "Cuddio hwn"
+
+#: app/templates/request-code-select-method.html:99
+#: app/templates/request-code-select-method.html:110
+msgid "Select how to send access code"
+msgstr ""
+
+#: app/templates/request-code-select-method.html:126
 #, python-format
 msgid ""
-"<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
-"%(pcode)s</p>"
+"To request a census in a different format or for further help, please "
+"%(open)scontact us%(close)s."
 msgstr ""
-"<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer "
-"y cod post %(pcode)s</p>"
 
-#: app/templates/request-code-select-address.html:53
-msgid "We cannot find your address"
-msgstr "Allwn ni ddim dod o hyd i'ch cyfeiriad"
+#: app/templates/request-common-confirm-name-address.html:21
+#: app/templates/webchat-form.html:184 app/templates/webchat-form.html:209
+msgid "Select an option"
+msgstr "Dewiswch opsiwn"
 
-#: app/templates/request-code-select-address.html:56
+#: app/templates/request-common-confirm-name-address.html:29
+msgid "Yes, send the questionnaire by post"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:36
+msgid "No, cancel and return"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:47
+msgid "Yes, send the access code by post"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:54
+msgid "No, send it another way"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:63
+msgid "Do you want to send a paper questionnaire to this address?"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:65
+msgid "Do you want to send a new individual access code to this address?"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:67
+msgid "Do you want to send a new manager access code to this address?"
+msgstr ""
+
+#: app/templates/request-common-confirm-name-address.html:69
+msgid "Do you want to send a new household access code to this address?"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:24
+msgid "What is your name?"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:32
+#: app/templates/request-common-enter-name.html:46
+msgid "First name"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:37
+msgid "Enter a first name to continue"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:59
+#: app/templates/request-common-enter-name.html:73
+msgid "Last name"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:64
+msgid "Enter a last name to continue"
+msgstr ""
+
+#: app/templates/request-form-cancelled.html:12
+msgid "Your request for a paper form has been cancelled"
+msgstr ""
+
+#: app/templates/request-form-cancelled.html:15
+#, python-format
+msgid "Return to the %(open)scensus homepage%(close)s."
+msgstr ""
+
+#: app/templates/request-form-manager.html:6
+msgid "We cannot send census forms to managers by post"
+msgstr ""
+
+#: app/templates/request-form-manager.html:9
 #, python-format
 msgid ""
-"If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or %(start_contact_link)scontact "
-"us%(end_link)s."
+"If you are able to complete the census online, you can %(open)srequest a "
+"manager access code%(close)s to be sent by text message. As soon as the "
+"text arrives, you can start the census."
 msgstr ""
-"Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
-"cyfeiriad%(end_link)s eto neu %(start_contact_link)sgysylltu â "
-"ni%(end_link)s."
 
-#: app/templates/request-code-select-address.html:62
-msgid "Select your address"
-msgstr "Dewiswch eich cyfeiriad"
+#: app/templates/request-form-manager.html:12
+#, python-format
+msgid ""
+"If this is not possible, you can call us free on %(telephone_number)s to "
+"complete the census another way."
+msgstr ""
 
-#: app/templates/request-code-select-address.html:72
-msgid "Select an address"
-msgstr "Dewiswch gyfeiriad"
+#: app/templates/request-form-sent-post.html:29
+#, python-format
+msgid "A large-print paper questionnaire will be sent to %(name)s at %(address)s"
+msgstr ""
 
-#: app/templates/save-and-exit.html:15
+#: app/templates/request-form-sent-post.html:31
+#, python-format
+msgid "A paper questionnaire will be sent to %(name)s at %(address)s"
+msgstr ""
+
+#: app/templates/request-form-sent-post.html:34
+msgid "This should arrive soon for you to complete your census"
+msgstr ""
+
+#: app/templates/request-timeout.html:8 app/templates/start-timeout.html:7
+msgid "Your session has timed out due to inactivity"
+msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
+
+#: app/templates/request-timeout.html:12 app/templates/start-timeout.html:11
+msgid "To protect your information we have timed you out."
+msgstr ""
+"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
+"amser"
+
+#: app/templates/request-timeout.html:16
+#, python-format
+msgid "You will need to %(open)sre-enter your postcode%(close)s"
+msgstr "Bydd angen i chi %(open)snodi eich cod post eto%(close)s"
+
+#: app/templates/save-and-exit.html:8
 msgid "Your progress has been saved"
 msgstr "Mae eich cynnydd wedi cael ei gadw"
 
-#: app/templates/save-and-exit.html:19
+#: app/templates/save-and-exit.html:12
 #, python-format
 msgid ""
 "You will need to %(open)senter your unique access code%(close)s to access"
@@ -906,60 +576,287 @@ msgstr ""
 "Bydd angen i chi %(open)snodi eich cod mynediad unigryw%(close)s i gael "
 "mynediad at y cyfrifiad eto."
 
-#: app/templates/timeout.html:21
-msgid "Your session has timed out due to inactivity"
-msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
-
-#: app/templates/timeout.html:25
-msgid "To protect your information we have timed you out."
+#: app/templates/start-address-changed.html:14
+msgid "Your address has been changed"
 msgstr ""
-"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
-"amser"
 
-#: app/templates/timeout.html:30 app/templates/timeout.html:32
-#, python-format
-msgid "You will need to %(open)sre-enter your postcode%(close)s"
-msgstr "Bydd angen i chi %(open)snodi eich cod post eto%(close)s"
+#: app/templates/start-address-changed.html:16
+#: app/templates/start-unlinked-linked.html:16
+msgid "You are now ready to start your Census questions"
+msgstr ""
 
-#: app/templates/timeout.html:34
+#: app/templates/start-confirm-address.html:28
+msgid "No, this is not the correct address"
+msgstr ""
+
+#: app/templates/start-confirm-address.html:41
+msgid ""
+"Your address is in England, so you can only complete your census in "
+"English."
+msgstr ""
+"Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi "
+"gwblhau eich cyfrifiad."
+
+#: app/templates/start-confirm-address.html:71
+msgid "Check and confirm the address is correct"
+msgstr ""
+
+#: app/templates/start-launch-eq.html:15
+msgid "Launch EQ"
+msgstr ""
+
+#: app/templates/start-launch-eq.html:17
+msgid "Press the below button to launch census EQ"
+msgstr ""
+
+#: app/templates/start-launch-eq.html:31
+msgid "Launch census"
+msgstr ""
+
+#: app/templates/start-timeout.html:15
 #, python-format
 msgid "You will need to %(open)sre-enter your access code%(close)s"
 msgstr "Bydd angen i chi %(open)snodi eich cod mynediad eto%(close)s"
 
-#: app/templates/webchat-form.html:39
+#: app/templates/start-unlinked-linked.html:14
+msgid "Your address has been linked to your code"
+msgstr ""
+
+#: app/templates/start.html:28
+msgid "Enter an access code"
+msgstr ""
+
+#: app/templates/start.html:95
+msgid "Where to find your access code"
+msgstr ""
+
+#: app/templates/start.html:98
+msgid "Enter your 16-character access code"
+msgstr ""
+
+#: app/templates/start.html:99
+msgid ""
+"Keep this code safe. You will need to enter it every time you access your"
+" census"
+msgstr ""
+
+#: app/templates/start.html:101
+msgid ""
+"Your personal information is protected by law and will be kept "
+"confidential."
+msgstr ""
+"Mae eich gwybodaeth bersonol yn cael ei diogelu gan y gyfraith a chaiff "
+"ei chadw'n gyfrinachol."
+
+#: app/templates/start.html:118
+msgid "Access census"
+msgstr ""
+
+#: app/templates/start.html:123
+msgid "If you don’t have an access code"
+msgstr ""
+
+#: app/templates/start.html:125
 #, python-format
 msgid ""
-"Contact Centre is closed. Please contact during the working hours or "
-"%(open)sGet Help Online%(close)s."
+"You can %(open)srequest a new access code%(close)s to start a new census "
+"if you have lost or not received an access code. This can be sent to you "
+"by text or post."
 msgstr ""
-"Mae'r Ganolfan Gyswllt ar gau. Cysylltwch â ni yn ystod yr oriau gwaith "
-"neu gallwch chi %(open)sGael Help Ar Lein%(close)s."
 
-#: app/templates/webchat-form.html:41
+#: app/templates/start.html:154 app/templates/webchat-window.html:5
+msgid "Web chat"
+msgstr "Gwe-sgwrs"
+
+#: app/templates/support_centre_enter_postcode.html:26
+msgid "Find a support centre"
+msgstr "Chwilio am ganolfan gymorth"
+
+#: app/templates/support_centre_enter_postcode.html:28
+msgid "To find your nearest support centre, we need your postcode."
+msgstr ""
+"Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael "
+"eich cod post."
+
+#: app/templates/support_centre_enter_postcode.html:37
+msgid "Enter your postcode"
+msgstr "Rhowch eich cod post"
+
+#: app/templates/support_centre_enter_postcode.html:46
+msgid "Find"
+msgstr "Chwilio"
+
+#: app/templates/support_centre_list_of_centres.html:10
+#, python-format
+msgid "Support centres near %(highlight_postcode)s"
+msgstr "Canolfannau cymorth gerllaw %(highlight_postcode)s"
+
+#: app/templates/support_centre_list_of_centres.html:22
+#, python-format
+msgid "%(distance_in_miles)s miles away"
+msgstr "%(distance_in_miles)s milltir i ffwrdd"
+
+#: app/templates/support_centre_list_of_centres.html:34
+msgid "Find on Google Maps"
+msgstr "Chwilio ar Google Maps"
+
+#: app/templates/support_centre_list_of_centres.html:41
+msgid "Telephone: "
+msgstr "Ffôn: "
+
+#: app/templates/support_centre_list_of_centres.html:44
+msgid "Email: "
+msgstr "E-bost: "
+
+#: app/templates/support_centre_list_of_centres.html:51
+msgid "Opening times and facilities"
+msgstr "Amseroedd agor a chyfleusterau"
+
+#: app/templates/support_centre_list_of_centres.html:57
 msgid "Opening times"
 msgstr "Amseroedd agor"
 
-#: app/templates/webchat-form.html:43
-msgid "Monday to Friday: 8am to 7pm"
-msgstr "O ddydd Llun i ddydd Gwener: 8am tan 7pm"
+#: app/templates/support_centre_list_of_centres.html:59
+msgid "Monday"
+msgstr "Dydd Llun"
+
+#: app/templates/support_centre_list_of_centres.html:65
+#: app/templates/support_centre_list_of_centres.html:74
+#: app/templates/support_centre_list_of_centres.html:83
+#: app/templates/support_centre_list_of_centres.html:92
+#: app/templates/support_centre_list_of_centres.html:101
+#: app/templates/support_centre_list_of_centres.html:110
+#: app/templates/support_centre_list_of_centres.html:119
+#: app/templates/support_centre_list_of_centres.html:128
+#: app/templates/support_centre_list_of_centres.html:137
+#: app/templates/support_centre_list_of_centres.html:146
+#: app/templates/support_centre_list_of_centres.html:155
+#: app/templates/support_centre_list_of_centres.html:164
+msgid "Closed"
+msgstr "Ar gau"
+
+#: app/templates/support_centre_list_of_centres.html:68
+msgid "Tuesday"
+msgstr "Dydd Mawrth"
+
+#: app/templates/support_centre_list_of_centres.html:77
+msgid "Wednesday"
+msgstr "Dydd Mercher"
+
+#: app/templates/support_centre_list_of_centres.html:86
+msgid "Thursday"
+msgstr "Dydd Iau"
+
+#: app/templates/support_centre_list_of_centres.html:95
+msgid "Friday"
+msgstr "Dydd Gwener"
+
+#: app/templates/support_centre_list_of_centres.html:104
+msgid "Saturday"
+msgstr "Dydd Sadwrn"
+
+#: app/templates/support_centre_list_of_centres.html:113
+msgid "Sunday"
+msgstr "Dydd Sul"
+
+#: app/templates/support_centre_list_of_centres.html:122
+msgid "Census Saturday, 20 March"
+msgstr "Dydd Sadwrn y Cyfrifiad, 20 Mawrth"
+
+#: app/templates/support_centre_list_of_centres.html:131
+msgid "Census Day, 21 March"
+msgstr "Diwrnod y Cyfrifiad, 21 Mawrth"
+
+#: app/templates/support_centre_list_of_centres.html:140
+msgid "Good Friday, 2 April"
+msgstr "Dydd Gwener y Groglith, 2 Ebrill"
+
+#: app/templates/support_centre_list_of_centres.html:149
+msgid "Easter Monday, 5 April"
+msgstr "Dydd Llun y Pasg, 5 Ebrill"
+
+#: app/templates/support_centre_list_of_centres.html:158
+msgid "May Bank Holiday, 3 May"
+msgstr "Gŵyl Banc Calan Mai, 3 Mai"
+
+#: app/templates/support_centre_list_of_centres.html:169
+msgid "Centre facilities"
+msgstr "Cyfleusterau'r canolfannau"
+
+#: app/templates/support_centre_list_of_centres.html:173
+msgid "Car park, including disabled parking"
+msgstr "Maes parcio, gan gynnwys parcio anabl"
+
+#: app/templates/support_centre_list_of_centres.html:175
+msgid "Car park"
+msgstr "Maes parcio"
+
+#: app/templates/support_centre_list_of_centres.html:177
+msgid "Disabled parking"
+msgstr "Parcio anabl"
+
+#: app/templates/support_centre_list_of_centres.html:179
+msgid "Level access into building entrance"
+msgstr "Mynediad gwastad i mewn i'r adeilad"
+
+#: app/templates/support_centre_list_of_centres.html:180
+msgid "Wheelchair access"
+msgstr "Mynediad i gadeiriau olwyn"
+
+#: app/templates/support_centre_list_of_centres.html:181
+msgid "Staff are disability aware"
+msgstr "Staff yn meddu ar ymwybyddiaeth o anableddau"
+
+#: app/templates/support_centre_list_of_centres.html:182
+msgid "Waiting room seating"
+msgstr "Seddi yn yr ystafelloedd aros"
+
+#: app/templates/support_centre_list_of_centres.html:183
+msgid "Hearing loop system"
+msgstr "System dolen glywed"
+
+#: app/templates/webchat-form.html:34
+msgid "Web chat unavailable"
+msgstr ""
+
+#: app/templates/webchat-form.html:36
+msgid "Our contact centre is now closed."
+msgstr ""
+
+#: app/templates/webchat-form.html:39
+#, python-format
+msgid "You can still contact us through our %(open)sweb form%(close)s."
+msgstr ""
+
+#: app/templates/webchat-form.html:42
+msgid "Web chat opening times"
+msgstr ""
 
 #: app/templates/webchat-form.html:44
-msgid "Saturday: 8am to 1pm"
-msgstr "Dydd Sadwrn: 8am tan 1pm"
+#, python-format
+msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
+msgstr ""
 
 #: app/templates/webchat-form.html:45
-msgid "Sunday / Bank Holidays: Closed"
-msgstr "Dydd Sul / Gwyliau Banc: Ar Gau"
+#, python-format
+msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
+msgstr ""
 
 #: app/templates/webchat-form.html:46
-msgid "Census weekend: 8am to 4pm"
-msgstr "Penwythnos y cyfrifiad: 8am tan 4pm"
+#, python-format
+msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
+msgstr ""
 
-#: app/templates/webchat-form.html:52
+#: app/templates/webchat-form.html:47
+#, python-format
+msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
+msgstr ""
+
+#: app/templates/webchat-form.html:53
 msgid "Javascript disabled"
 msgstr "JavaScript wedi'i analluogi"
 
-#: app/templates/webchat-form.html:54
+#: app/templates/webchat-form.html:55
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
@@ -967,74 +864,70 @@ msgstr ""
 "Mae JavaScript wedi'i analluogi ar eich porwr. I ddechrau sesiwn Gwe-"
 "sgwrs, mae angen i JavaScript fod wedi'i alluogi ar eich porwr."
 
-#: app/templates/webchat-form.html:56
+#: app/templates/webchat-form.html:57
 msgid "Get Help"
 msgstr "Cael Help"
 
-#: app/templates/webchat-form.html:68
+#: app/templates/webchat-form.html:69
 msgid "England"
 msgstr "Lloegr"
 
-#: app/templates/webchat-form.html:75
+#: app/templates/webchat-form.html:76
 msgid "Wales"
 msgstr "Cymru"
 
-#: app/templates/webchat-form.html:82
+#: app/templates/webchat-form.html:83
 msgid "Northern Ireland"
 msgstr "Gogledd Iwerddon"
 
-#: app/templates/webchat-form.html:94
-msgid "I have a question about my census form"
-msgstr "Mae gen i gwestiwn am ffurflen y cyfrifiad"
+#: app/templates/webchat-form.html:95
+msgid "I don’t have everything I need to complete my census"
+msgstr ""
 
-#: app/templates/webchat-form.html:101
+#: app/templates/webchat-form.html:102
 msgid "I am having technical difficulties"
 msgstr "Rwy'n cael anawsterau technegol"
 
-#: app/templates/webchat-form.html:108
+#: app/templates/webchat-form.html:109
+msgid "I need help with my census form"
+msgstr ""
+
+#: app/templates/webchat-form.html:116
 msgid "I have a complaint"
 msgstr "Mae gen i gŵyn"
 
-#: app/templates/webchat-form.html:115
-msgid "I have a question about my address"
-msgstr "Mae gen i gwestiwn am fy nghyfeiriad"
+#: app/templates/webchat-form.html:123
+msgid "I need help with my address"
+msgstr ""
 
-#: app/templates/webchat-form.html:122
-msgid "I need something sent to me"
-msgstr "Mae angen i rywbeth gael ei anfon ataf i"
+#: app/templates/webchat-form.html:130
+msgid "Something else"
+msgstr ""
 
-#: app/templates/webchat-form.html:129
-msgid "I need to speak to an adviser face-to-face"
-msgstr "Mae angen i mi siarad â chynghorydd wyneb yn wyneb"
+#: app/templates/webchat-form.html:138
+msgid "Enter web chat details"
+msgstr ""
 
-#: app/templates/webchat-form.html:136
-msgid "I need some help"
-msgstr "Mae angen help arnaf i"
+#: app/templates/webchat-form.html:142
+msgid "Data stored during web chat sessions will not be shared with third parties"
+msgstr ""
 
-#: app/templates/webchat-form.html:146
-msgid "Our advisers can help you with your census survey."
-msgstr "Gall ein cynghorwyr eich helpu chi gydag arolwg y cyfrifiad."
-
-#: app/templates/webchat-form.html:154 app/templates/webchat-form.html:159
-#: app/templates/webchat-form.html:169
+#: app/templates/webchat-form.html:152 app/templates/webchat-form.html:157
+#: app/templates/webchat-form.html:167
 msgid "Enter your name"
 msgstr "Nodwch eich enw"
 
-#: app/templates/webchat-form.html:180 app/templates/webchat-form.html:193
+#: app/templates/webchat-form.html:178 app/templates/webchat-form.html:191
 msgid "Select your country"
 msgstr "Dewiswch eich gwlad"
 
-#: app/templates/webchat-form.html:186 app/templates/webchat-form.html:211
-msgid "Select an option"
-msgstr "Dewiswch opsiwn"
+#: app/templates/webchat-form.html:203 app/templates/webchat-form.html:216
+msgid "What do you need help with?"
+msgstr ""
 
-#: app/templates/webchat-form.html:205 app/templates/webchat-form.html:218
-msgid "What type of query do you have"
-msgstr "Pa fath o ymholiad sydd gennych chi?"
-
-#: app/templates/webchat-form.html:229
-msgid "Start chat"
-msgstr "Dechrau'r sgwrs"
+#: app/templates/webchat-form.html:227
+msgid "Start web chat"
+msgstr ""
 
 #: app/templates/partials/closing-warning.html:6
 msgid "The census rehearsal is coming to an end."
@@ -1050,16 +943,54 @@ msgstr ""
 "<br>\n"
 "    Postiwch unrhyw holiaduron papur erbyn <strong>22 Tachwedd</strong>."
 
-#: app/templates/partials/messages.html:7
-msgid "This page has an error"
-msgstr "Mae gwall ar y dudalen hon"
+#: app/templates/partials/messages.html:8
+msgid "There is a problem with this page"
+msgstr ""
 
-#: app/templates/partials/messages.html:9
-#, python-format
-msgid "This page has %(errorcount)s errors"
-msgstr "Mae %(errorcount)s gwall ar y dudalen hon"
+#: app/templates/partials/messages.html:10
+msgid "There is a problem with your answer"
+msgstr "Mae problem gyda'ch ateb"
 
-#: app/templates/partials/messages.html:36
+#: app/templates/partials/messages.html:14
 #, python-format
-msgid "These %(startbold)smust be corrected%(endbold)s to continue."
-msgstr "Rhaid %(startbold)scywiro'r rhain%(endbold)s i barhau."
+msgid "There are %(errorcount)s problems with this page"
+msgstr ""
+
+#: app/templates/partials/messages.html:16
+#, python-format
+msgid "There are %(errorcount)s problems with your answer"
+msgstr ""
+
+#: app/templates/partials/request-individual-code.html:4
+#: app/templates/partials/request-individual-code.html:28
+msgid "Request an individual code"
+msgstr "Gofyn am god unigol"
+
+#: app/templates/partials/request-individual-code.html:6
+msgid ""
+"To do the census online you need a 16 character unique access code which "
+"we have sent you in a letter."
+msgstr ""
+"I wneud y cyfrifiad ar lein, mae angen bod gennych chi god mynediad "
+"unigryw 16 nod rydym ni wedi'i anfon atoch mewn llythyr."
+
+#: app/templates/partials/request-individual-code.html:8
+msgid ""
+"If you are in a rehearsal area and don’t have a code you can get a new "
+"one."
+msgstr ""
+"Os ydych chi yn un o ardaloedd yr ymarfer ac nad oes gennych chi god, "
+"gallwch ofyn am un newydd."
+
+#: app/templates/partials/request-individual-code.html:37
+msgid "You will need to provide:"
+msgstr "Bydd angen i chi ddarparu:"
+
+#: app/templates/partials/request-individual-code.html:39
+msgid "your mobile phone number so we can send you the code by text"
+msgstr "eich rhif ffôn symudol fel y gallwn anfon y cod atoch mewn neges destun"
+
+#: app/templates/partials/request-individual-code.html:40
+msgid "your address so we can confirm you are in the rehearsal area"
+msgstr "eich cyfeiriad fel y gallwn gadarnhau eich bod yn ardal yr ymarfer"
+

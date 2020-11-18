@@ -1,87 +1,139 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/radios/_macro.njk' import onsRadios %}
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
-{% set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) %}
+{%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
+{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
 
-{% set form =  {
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('RequestCommonConfirmNameAddress:post', display_region=display_region, request_type=request_type)
     }
-} %}
+} -%}
 
-{% set form_options = [
-                {
-                    'id': 'yes',
-                    'label': {
-                        'text': _('Yes, send the access code by post')
+{%- if 'request-name-address-confirmation' in field_messages_dict -%}
+    {%- set error_radio = { 'text': _('Select an answer') } -%}
+{%- endif -%}
+
+{%- if (request_type == 'paper-form') -%}
+{%- set form_options = [
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, send the questionnaire by post')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'yes'
-                },
-                {
-                    'id': 'no',
-                    'label': {
-                        'text': _('No, send it another way')
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, cancel and return')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    -%}
+{%- else -%}
+    {%- set form_options = [
+                    {
+                        'id': 'yes',
+                        'label': {
+                            'text': _('Yes, send the access code by post')
+                        },
+                        'value': 'yes'
                     },
-                    'value': 'no'
-                }
-            ]
-%}
+                    {
+                        'id': 'no',
+                        'label': {
+                            'text': _('No, send it another way')
+                        },
+                        'value': 'no'
+                    }
+                ]
+    -%}
+{%- endif -%}
 
-{% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
-    {% set question_title = _('Do you want to send a new individual access code to this address?') %}
-{% elif (case_type == 'CE' and address_level == 'E') %}
-    {% set question_title = _('Do you want to send a new manager access code to this address?') %}
-{% else %}
-    {% set question_title = _('Do you want to send a new household access code to this address?') %}
-{% endif %}
+{%- if (request_type == 'paper-form') -%}
+    {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
+{%- elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+    {%- set question_title = _('Do you want to send an individual access code to this address?') -%}
+{%- elif (case_type == 'CE' and address_level == 'E') -%}
+    {%- set question_title = _('Do you want to send a new manager access code to this address?') -%}
+{%- else -%}
+    {%- set question_title = _('Do you want to send a new household access code to this address?') -%}
+{%- endif -%}
 
-{% block main %}
+{%- block main -%}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
 
-    {% call onsQuestion({
-        'title': question_title
-    }) %}
+    {%- call onsQuestion({ 'title': question_title }) -%}
 
-    <p><div><strong>{{ first_name }} {{ last_name }}</strong></div>
-        {{ addressLine1 }}<br>
-        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName %}{{ townName }}<br>{% endif %}
-        {{ postcode }}
-    </p>
+        <p>
+            {{ first_name }} {{ last_name }}{%- if roomNumber -%}, {{ roomNumber }}{%- endif -%}<br>
+            {{ addressLine1 }}<br>
+            {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
+            {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
+            {%- if townName -%}{{ townName }}<br>{%- endif -%}
+            {{ postcode }}
+        </p>
 
-    <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+        <p><a href="{{ request_common_enter_name_link }}">{{ _('Change name') }}</a>
+            {%- if roomNumber -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a>
+            {%- elif (case_type == 'CE') -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a>
+            {%- endif -%}
+        </p>
 
+        {%- if (request_type == 'individual-code') or (request_type == 'access-code' and case_type == 'CE' and address_level == 'U') -%}
+            {%- call
+                onsPanel({
+                    'classes': 'u-mb-m'
+                })
+            -%}
+                <p>{{ _('A letter with your individual access code will arrive in a brown unbranded envelope') }}</p>
+            {%- endcall -%}
+        {%- endif -%}
 
-{% if 'request-name-address-confirmation' in field_messages_dict %}
-    {{
-        onsRadios({
-            'name': 'request-name-address-confirmation',
-            'radios': form_options,
-            'error': {
-                'text': _('Select an option')
-            }
-        })
-    }}
-{% else %}
-    {{
-        onsRadios({
-            'name': 'request-name-address-confirmation',
-            'radios': form_options
-        })
-    }}
-{% endif %}
-    {% endcall %}
+        {{
+            onsRadios({
+                'name': 'request-name-address-confirmation',
+                'radios': form_options,
+                'error': error_radio
+            })
+        }}
+
+        {%- if (request_type == 'paper-form') -%}
+
+            {{
+                onsCheckboxes({
+                    'legend': 'Large print',
+                    'legendClasses': 'u-fs-m u-mt-l',
+                    'checkboxes': [
+                        {
+                            'id': 'large-print-yes',
+                            'name': 'request-name-address-large-print',
+                            'label': {
+                                'text': 'I need a large-print questionnaire'
+                            },
+                            'value': 'large-print'
+                        }
+                    ]
+                })
+            }}
+
+        {%- endif -%}
+
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -90,4 +142,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}

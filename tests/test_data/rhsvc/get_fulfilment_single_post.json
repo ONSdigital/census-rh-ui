@@ -1,21 +1,18 @@
 [
-   {
-       "caseType": "HH",
-       "deliveryChannel": "POST",
-       "description": "Household Unique Access Code for England",
-       "fieldDistributionCode": "",
-       "fulfilmentCode": "UACIT1",
-       "handler": "NOTIFY",
-       "initialContactCode": "",
-       "language": "eng",
-       "regions": [
-           "W"
-       ],
-       "reminderContactCode": "",
-       "requestChannels": [
-           "CC",
-           "FIELD",
-           "RH"
-       ]
-   }
+    {
+        "fulfilmentCode": "P_UAC_UACHHP1",
+        "productGroup": "UAC",
+        "description": "Household Unique Access Code for England via paper",
+        "language": "E",
+        "caseTypes": [
+            "HH",
+            "SPG"
+        ],
+        "individual": false,
+        "regions": [
+            "E"
+        ],
+        "deliveryChannel": "POST",
+        "handler": "PRINT"
+    }
 ]
