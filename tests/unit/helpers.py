@@ -52,7 +52,7 @@ class TestHelpers(RHTestCase):
                 link = '<a href="/en/' + self.user_journey + '/' + page + '/" lang="en" >English</a>'
             else:
                 link = '<a href="/en/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
-                       params + '" lang="en" >English</a>'
+                       '/" lang="en" >English</a>'
         else:
             if not include_page:
                 if include_adlocation:
@@ -64,7 +64,7 @@ class TestHelpers(RHTestCase):
                 link = '<a href="/cy/' + self.user_journey + '/' + page + '/" lang="cy" >Cymraeg</a>'
             else:
                 link = '<a href="/cy/' + self.user_journey + '/' + self.sub_user_journey + '/' + page + \
-                       params + '" lang="cy" >Cymraeg</a>'
+                       '/" lang="cy" >Cymraeg</a>'
         return link
 
     def check_text_enter_address(self, display_region, contents, check_empty=False, check_error=False):
@@ -1775,13 +1775,15 @@ class TestHelpers(RHTestCase):
                     'Start', 'get', display_region, {"adlocation": "1234567890"}))
             else:
                 response = await self.client.request('GET', self.get_url_from_class('Start', 'get', display_region))
-            self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'GET', include_sub_user_journey=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'GET', include_sub_user_journey=False,
+                                                             include_page=False))
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('', display_region, include_sub_user_journey=False,
-                                                          adlocation=adlocation), contents)
+                                                          include_page=False,
+                                                          include_adlocation=adlocation), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_start_title_cy, contents)
                 self.assertIn(self.content_start_uac_title_cy, contents)
@@ -1823,7 +1825,8 @@ class TestHelpers(RHTestCase):
                                                  allow_redirects=True, data=data)
 
             self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'POST',
-                                                             include_sub_user_journey=False))
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
             self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'GET'))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())

@@ -2237,8 +2237,9 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac_transient_n.json') as fp:
             self.transient_uac_json_n = json.load(fp)
 
-    # URL functions
+        # yapf: enable
 
+    # URL functions
     def get_url_from_class(self, class_name, method_type, display_region=None, query=None):
         if display_region:
             if query:
@@ -2252,5 +2253,3 @@ class RHTestCase(AioHTTPTestCase):
             else:
                 url = self.app.router[class_name + ':' + method_type].url_for()
         return url
-
-    # yapf: enable
