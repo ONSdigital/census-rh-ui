@@ -42,7 +42,10 @@ class TestWebFormHandlers(TestHelpers):
     async def form_submission_success(self, get_url, post_url, display_region):
         form_data = self.webform_form_data.copy()
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.post(self.rhsvc_url_web_form, status=200)
+
             get_response = await self.client.request('GET', get_url)
             self.assertLogEvent(cm, self.build_url_log_entry('web-form', display_region, 'GET',
                                                              include_sub_user_journey=False, include_page=False))
