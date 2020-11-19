@@ -229,6 +229,8 @@ class CommonEnterAddress(CommonCommon):
 
         session = await get_session(request)
 
+        individual = False
+
         if user_journey == 'start':
             session['attributes']['individual'] = False
             session.changed()
@@ -241,8 +243,6 @@ class CommonEnterAddress(CommonCommon):
                 attributes = {'individual': False}
                 session['attributes'] = attributes
                 session.changed()
-        else:
-            individual = False
 
         if display_region == 'cy':
             locale = 'cy'
