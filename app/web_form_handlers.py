@@ -19,7 +19,7 @@ from . import (WEBFORM_MISSING_COUNTRY_MSG,
                WEBFORM_MISSING_EMAIL_INVALID_MSG_CY
                )
 from .flash import flash
-from .utils import View, FlashMessage, RHService
+from .utils import View, RHService
 
 logger = get_logger('respondent-home')
 web_form_routes = RouteTableDef()

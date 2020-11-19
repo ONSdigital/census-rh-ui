@@ -153,18 +153,18 @@
             'name': 'description',
             'classes': 'input--w-30',
             'label': {
-                'text': 'Please provide more detail'
+                'text': _('Please provide more detail')
             },
             'charCheckLimit': {
                 'limit': 5000,
-                'charCountSingular': 'You have {x} character remaining',
-                'charCountPlural': 'You have {x} characters remaining'
+                'charCountSingular': _('You have {x} character remaining'),
+                'charCountPlural': _('You have {x} characters remaining')
             },
             'error': error_description
         })
     }}
 
-    <h2 class="u-mt-m">Your contact details</h2>
+    <h2 class="u-mt-m">{{ _('Your contact details') }}</h2>
 
     {{
         onsInput({
@@ -186,7 +186,7 @@
             'autocomplete': 'email',
             'label': {
                 'text': _('Email address'),
-                'description': 'We will only use this to send you a reply'
+                'description': _('We will only use this to send you a reply')
             },
             'value': form_value_email,
             'error': error_email
@@ -202,6 +202,6 @@
 
     }}
 
-    <p class="u-fs-s">For information about what we do with your personal data see our <a href="#0">privacy and data protection</a></p>
+    <p class="u-fs-s">{{ _('For information about what we do with your personal data see our <a href="#0">privacy and data protection</a>') }}</p>
 
 {%- endblock -%}
