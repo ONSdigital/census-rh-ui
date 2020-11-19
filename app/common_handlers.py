@@ -6,9 +6,7 @@ from structlog import get_logger
 from aiohttp_session import get_session
 from aiohttp.client_exceptions import (ClientResponseError)
 
-from . import (ADDRESS_CHECK_MSG,
-               ADDRESS_SELECT_CHECK_MSG,
-               ADDRESS_CHECK_MSG_CY,
+from . import (ADDRESS_SELECT_CHECK_MSG,
                ADDRESS_SELECT_CHECK_MSG_CY,
                NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
@@ -93,6 +91,82 @@ class CommonAddressInScotland(CommonCommon):
         }
 
 
+@common_routes.view(r'/' + View.valid_ew_display_regions + '/' + View.valid_user_journeys +
+                    '/address-in-northern-ireland/')
+class CommonAddressInNorthernIreland(CommonCommon):
+    """
+    Route to render an 'Address in Northern Ireland' page during address lookups if display_region is not 'ni'
+    """
+    @aiohttp_jinja2.template('common-address-in-northern-ireland.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'This address is not part of the census for England and Wales'
+            locale = 'cy'
+        else:
+            page_title = 'This address is not part of the census for England and Wales'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/address-in-northern-ireland')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'page_url': View.gen_page_url(request)
+        }
+
+
+@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-in-england/')
+class CommonAddressInEngland(CommonCommon):
+    """
+    Route to render an 'Address in England' page during address lookups if display_region is 'ni'
+    and selected addresses region is E
+    """
+    @aiohttp_jinja2.template('common-address-in-england.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        user_journey = request.match_info['user_journey']
+
+        page_title = 'This address is not part of the census for Northern Ireland'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/address-in-england')
+
+        return {
+            'page_title': page_title,
+            'locale': locale
+        }
+
+
+@common_routes.view(r'/ni/' + View.valid_user_journeys + '/address-in-wales/')
+class CommonAddressInWales(CommonCommon):
+    """
+    Route to render an 'Address in Wales' page during address lookups if display_region is 'ni'
+    and selected addresses region is W
+    """
+    @aiohttp_jinja2.template('common-address-in-wales.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        user_journey = request.match_info['user_journey']
+
+        page_title = 'This address is not part of the census for Northern Ireland'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/address-in-wales')
+
+        return {
+            'page_title': page_title,
+            'locale': locale
+        }
+
+
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
                     + '/call-contact-centre/{error}/')
 class CommonCallContactCentre(CommonCommon):
@@ -154,7 +228,8 @@ class CommonEnterAddress(CommonCommon):
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
-            'page_url': View.gen_page_url(request)
+            'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
     @aiohttp_jinja2.template('common-enter-address.html')
@@ -340,6 +415,11 @@ class CommonConfirmAddress(CommonCommon):
         uprn = attributes['uprn']
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         attributes = {
             "addressLine1": uprn_ai_return['response']['address']['addressLine1'],
             "addressLine2": uprn_ai_return['response']['address']['addressLine2'],
@@ -351,6 +431,8 @@ class CommonConfirmAddress(CommonCommon):
             "censusEstabType": uprn_ai_return['response']['address']['censusEstabType'],
             "censusAddressType": uprn_ai_return['response']['address']['censusAddressType']
         }
+        if room_number:
+            attributes['roomNumber'] = room_number
 
         session['attributes'] = attributes
         session.changed()
@@ -400,9 +482,9 @@ class CommonConfirmAddress(CommonCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
         if address_confirmation == 'yes':
@@ -412,6 +494,24 @@ class CommonConfirmAddress(CommonCommon):
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+                elif session['attributes']['countryCode'] == 'N' and display_region != 'ni':
+                    logger.info('address is in Northern Ireland but not display_region ni',
+                                client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressInNorthernIreland:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+                elif display_region == 'ni' and session['attributes']['countryCode'] == 'W':
+                    logger.info('address is in Wales but display_region ni',
+                                client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressInWales:get'].
+                        url_for(display_region=display_region, user_journey=user_journey))
+                elif display_region == 'ni' and session['attributes']['countryCode'] == 'E':
+                    logger.info('address is in England but display_region ni',
+                                client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonAddressInEngland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
@@ -514,7 +614,7 @@ class CommonConfirmAddress(CommonCommon):
             # catch all just in case, should never get here
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
-            flash(request, ADDRESS_CHECK_MSG)
+            flash(request, NO_SELECTION_CHECK_MSG)
             attributes['page_title'] = page_title
             attributes['display_region'] = display_region
             attributes['user_journey'] = user_journey
@@ -652,4 +752,100 @@ class CommonCEMangerQuestion(CommonCommon):
                 'addressLine3': session['attributes']['addressLine3'],
                 'townName': session['attributes']['townName'],
                 'postcode': session['attributes']['postcode']
+            }
+
+
+@common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
+                    + '/' + View.valid_sub_user_journeys + '/enter-room-number/')
+class CommonEnterRoomNumber(CommonCommon):
+    """
+    Common route to allow user to enter a room number if in a CE
+    """
+    @aiohttp_jinja2.template('common-enter-room-number.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+
+        await self.common_check_attributes(request, user_journey, sub_user_journey)
+
+        if display_region == 'cy':
+            locale = 'cy'
+            # TODO Add Welsh translation
+            page_title = 'What is your flat or room number?'
+        else:
+            locale = 'en'
+            page_title = 'What is your flat or room number?'
+        return {
+            'display_region': display_region,
+            'user_journey': user_journey,
+            'sub_user_journey': sub_user_journey,
+            'locale': locale,
+            'page_url': View.gen_page_url(request),
+            'page_title': page_title
+        }
+
+    @aiohttp_jinja2.template('common-enter-room-number.html')
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        user_journey = request.match_info['user_journey']
+        sub_user_journey = request.match_info['sub_user_journey']
+
+        if display_region == 'cy':
+            locale = 'cy'
+            # TODO Add Welsh translation
+            page_title = 'What is your flat or room number?'
+        else:
+            locale = 'en'
+            page_title = 'What is your flat or room number?'
+
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+
+        session = await get_session(request)
+        session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
+
+        data = await request.post()
+
+        try:
+            room_number = data['form-enter-room-number']
+            if room_number == '':
+                raise KeyError
+            session['attributes']['roomNumber'] = room_number
+            session.changed()
+            try:
+                if session_attributes['first_name']:
+                    raise HTTPFound(
+                        request.app.router['RequestCommonConfirmNameAddress:get'].url_for(
+                            display_region=display_region,
+                            user_journey=user_journey,
+                            request_type=sub_user_journey
+                        ))
+            except KeyError:
+                raise HTTPFound(
+                    request.app.router['CommonConfirmAddress:get'].url_for(
+                        display_region=display_region,
+                        user_journey=user_journey,
+                        sub_user_journey=sub_user_journey
+                    ))
+
+        except KeyError:
+            logger.info('room number question error',
+                        client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+            return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'user_journey': user_journey,
+                'sub_user_journey': sub_user_journey,
+                'locale': locale,
+                'page_url': View.gen_page_url(request)
             }

@@ -263,8 +263,15 @@ class RHTestCase(AioHTTPTestCase):
         self.postcode_invalid = 'ZZ99 9ZZ'
         self.postcode_no_results = 'GU34 6DU'
         self.postcode_empty = ''
+        self.adlocation = '1234567890'
 
         self.common_form_data_empty = {}
+
+        self.content_common_invalid_mobile_error_en = \
+            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
+        # TODO: add welsh translation
+        self.content_common_invalid_mobile_error_cy = \
+            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
 
         self.post_common_select_address_form_data_valid = \
             '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
@@ -340,10 +347,40 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_postcode_results = f
 
-        with open('tests/test_data/address_index/uprn_valid.json') as fp:
+        with open('tests/test_data/address_index/uprn_valid_hh.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result = f
+            self.ai_uprn_result_hh = f
+
+        with open('tests/test_data/address_index/uprn_valid_spg.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_spg = f
+
+        with open('tests/test_data/address_index/uprn_valid_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_ce = f
+
+        with open('tests/test_data/address_index/uprn_england.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_england = f
+
+        with open('tests/test_data/address_index/uprn_wales.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_wales = f
+
+        with open('tests/test_data/address_index/uprn_northern_ireland.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland = f
+
+        with open('tests/test_data/address_index/uprn_northern_ireland_ce.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_northern_ireland_ce = f
 
         with open('tests/test_data/address_index/uprn_scotland.json') as fp:
             f = asyncio.Future()
@@ -355,6 +392,11 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_censusaddresstype_na = f
 
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_ni.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na_ni = f
+
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
         self.ons_logo_cy = '/img/ons-logo-pos-cy.svg'
@@ -364,17 +406,27 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_cy = '0800 169 2021'
         self.content_call_centre_number_ni = '0800 328 2021'
 
+        self.content_common_address_in_northern_ireland_en = \
+            'This address is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_common_address_in_northern_ireland_cy = \
+            'This address is not part of the census for England and Wales'
+        self.content_common_address_not_in_northern_ireland = \
+            'This address is not part of the census for Northern Ireland'
+        self.content_common_address_in_england_secondary = \
+            'You have selected an address in England.'
+        self.content_common_address_in_wales_secondary = \
+            'You have selected an address in Wales.'
+
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
         self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_cy = 'The postcode is not a valid UK postcode'
+        self.content_common_enter_address_error_cy = "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
-        # TODO: add welsh translation
-        self.content_common_enter_address_error_empty_cy = 'You have not entered a postcode'
+        self.content_common_enter_address_error_empty_cy = "Nid ydych wedi nodi cod post"
 
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
@@ -386,17 +438,38 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
         self.content_common_confirm_address_title_en = 'Is this the correct address?'
-        self.content_common_confirm_address_error_en = 'Check and confirm the address'
+        self.content_common_confirm_address_error_en = 'Select an answer'
         self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
         # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
-        self.content_common_confirm_address_error_cy = "Edrychwch eto ar y cyfeiriad a\\\'i gadarnhau"
+        self.content_common_confirm_address_error_cy = "Select an answer"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_yes_cy = "Yes, this is the correct address"
         # TODO: add welsh translation
         self.content_common_confirm_address_value_no_cy = 'No, search for address again'
+
+        self.content_common_ce_room_number_text = 'Room A8'
+        self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
+        self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
+        self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
+        self.content_common_enter_room_number_error_en = 'Enter your flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
+        # TODO: add welsh translation
+        self.content_common_ce_room_number_change_link_cy = 'Change flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_error_cy = 'Enter your flat or room number'
+
+        self.common_room_number_input_valid = {
+            'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
+        }
+        self.common_room_number_input_empty = {
+            'form-enter-room-number': '', 'action[save_continue]': '',
+        }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
             'Register an address'
@@ -461,7 +534,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_en = 'Manager'
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
-        self.content_common_resident_or_manager_error_en = 'Please select an option'
+        self.content_common_resident_or_manager_error_en = 'Select an answer'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -475,7 +548,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_description_manager_cy = \
             'A manager is responsible for answering the census questions about this establishment'
         # TODO: add welsh translation
-        self.content_common_resident_or_manager_error_cy = 'Please select an option'
+        self.content_common_resident_or_manager_error_cy = 'Select an answer'
 
         self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
@@ -496,10 +569,22 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_uac_expired_en = 'Your unique access code has expired'
         self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
 
+        self.content_start_code_for_northern_ireland_title_en = \
+            'This access code is not part of the census for England and Wales'
+        # TODO: add welsh translation
+        self.content_start_code_for_northern_ireland_title_cy = \
+            'This access code is not part of the census for England and Wales'
+        self.content_start_code_not_for_northern_ireland_title = \
+            'This access code is not part of the census for Northern Ireland'
+        self.content_start_code_for_england_secondary = \
+            'You have entered an access code for the census in England.'
+        self.content_start_code_for_wales_secondary = \
+            'You have entered an access code for the census in Wales.'
+
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
-        self.content_start_confirm_address_error_en = 'Check and confirm the address is correct'
+        self.content_start_confirm_address_error_en = 'Select an answer'
         # TODO: add welsh translation
         self.content_start_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
@@ -507,7 +592,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
         # TODO: add welsh translation
-        self.content_start_confirm_address_error_cy = 'Check and confirm the address is correct'
+        self.content_start_confirm_address_error_cy = 'Select an answer'
 
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_error = 'Select a language option'
@@ -533,33 +618,30 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
             {"adlocation": "invalid"})
         self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
-        self.get_start_region_change_en = self.app.router['StartRegionChange:get'].url_for(display_region='en')
         self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
         self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
         self.get_start_adlocation_valid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
             {"adlocation": "invalid"})
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
-        self.get_start_region_change_cy = self.app.router['StartRegionChange:get'].url_for(display_region='cy')
         self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
         self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
         self.get_start_adlocation_valid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
-            {"adlocation": "1234567890"})
+            {"adlocation": self.adlocation})
         self.get_start_adlocation_invalid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
             {"adlocation": "invalid"})
         self.post_start_ni = self.app.router['Start:post'].url_for(display_region='ni')
-        self.get_start_region_change_ni = self.app.router['StartRegionChange:get'].url_for(display_region='ni')
         self.get_start_confirm_address_ni = self.app.router['StartConfirmAddress:get'].url_for(display_region='ni')
         self.post_start_confirm_address_ni = self.app.router['StartConfirmAddress:post'].url_for(display_region='ni')
 
@@ -581,7 +663,7 @@ class RHTestCase(AioHTTPTestCase):
         self.uac = 'w4nwwpphjjptp7fn'
         self.uacHash = self.uac_json_e['uacHash']
         self.uprn = self.uac_json_e['address']['uprn']
-        self.response_id = self.uac_json_e['questionnaireId']
+        self.response_id = '111000000092a445af12905967d'
         self.questionnaire_id = self.uac_json_e['questionnaireId']
         self.case_type = self.uac_json_e['caseType']
         self.channel = 'rh'
@@ -684,7 +766,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.start_data_valid_with_adlocation = {
-            'uac': self.uac, 'adlocation': '1234567890', 'action[save_continue]': '',
+            'uac': self.uac, 'adlocation': self.adlocation, 'action[save_continue]': '',
         }
 
         self.start_confirm_address_data_yes = {
@@ -790,6 +872,7 @@ class RHTestCase(AioHTTPTestCase):
         self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.selected_uprn = '10023122451'
+        self.selected_uprn_ni = '187748262'
 
         self.mobile_valid = '07012345678'
         self.mobile_invalid_short = '07012'
@@ -926,6 +1009,11 @@ class RHTestCase(AioHTTPTestCase):
             'name_first_name': 'Bob', 'name_last_name': 'Bobbington', 'action[save_continue]': '',
         }
 
+        self.request_common_enter_name_form_data_long_surname = {
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe',
+            'action[save_continue]': '',
+        }
+
         self.request_common_enter_name_form_data_no_first = {
             'name_last_name': 'Bobbington', 'action[save_continue]': '',
         }
@@ -952,24 +1040,26 @@ class RHTestCase(AioHTTPTestCase):
             'request-name-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
-        self.content_request_household_title_en = 'Request a new access code'
-        self.content_request_household_title_cy = 'Gofyn am god mynediad newydd'
         self.content_request_individual_title_en = 'Request an individual access code'
         self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
-        self.content_request_secondary_en = 'You will need to provide:'
-        self.content_request_secondary_cy = 'Bydd angen i chi ddarparu:'
+        self.content_request_individual_secondary_en = 'You can choose to receive your new access code by text or post.'
+        self.content_request_individual_secondary_cy = 'You can choose to receive your new access code by text or post.'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
-        self.content_request_enter_address_secondary_en = \
-            'To request an access code, we need your address.'
+        self.content_request_access_code_enter_address_secondary_en = \
+            'To request an access code, we need your address. A new access code will start a new census.'
+        self.content_request_individual_code_enter_address_secondary_en = \
+            'To request an individual access code, we need your address'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         # TODO: add welsh translation
-        self.content_request_enter_address_secondary_cy = \
-            'To request an access code, we need your address.'
+        self.content_request_access_code_enter_address_secondary_cy = \
+            'To request an access code, we need your address. A new access code will start a new census.'
+        self.content_request_individual_code_enter_address_secondary_cy = \
+            'To request an individual access code, we need your address'
 
         self.content_request_code_select_method_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_error_en = 'Please select an option'
+        self.content_request_code_select_method_error_en = 'Select an answer'
         self.content_request_code_select_method_secondary_en = 'Select how to send access code'
         self.content_request_code_select_method_option_text_en = 'Text message'
         self.content_request_code_select_method_option_post_en = 'Post'
@@ -978,7 +1068,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_method_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_error_cy = "Please select an option"
+        self.content_request_code_select_method_error_cy = "Select an answer"
         # TODO Add Welsh Translation
         self.content_request_code_select_method_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
@@ -993,10 +1083,10 @@ class RHTestCase(AioHTTPTestCase):
             'How would you like to receive a new household access code?'
 
         self.content_request_code_select_method_individual_title_en = \
-            'How would you like to receive a new individual access code?'
+            'How would you like to receive an individual access code?'
         # TODO Add Welsh Translation
         self.content_request_code_select_method_individual_title_cy = \
-            'How would you like to receive a new individual access code?'
+            'How would you like to receive an individual access code?'
 
         self.content_request_code_select_method_manager_title_en = \
             'How would you like to receive a new manager access code?'
@@ -1015,14 +1105,14 @@ class RHTestCase(AioHTTPTestCase):
             "This will not be stored and only used once to send the access code"
 
         self.content_request_code_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_code_confirm_mobile_error_en = 'Check and confirm your mobile phone number'
+        self.content_request_code_confirm_mobile_error_en = 'Select an answer'
         self.content_request_code_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
-        self.content_request_code_confirm_mobile_error_cy = \
-            "Edrychwch eto ar eich rhif ff\\xc3\\xb4n symudol a\\\'i gadarnhau"
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_mobile_error_cy = "Select an answer"
 
         self.content_request_code_sent_sms_title_en = 'We have sent an access code'
         self.content_request_code_sent_sms_secondary_individual_en = \
-            'The text message with a new individual access code should arrive soon for you to start your census'
+            'The text message with an individual access code should arrive soon for you to start your census'
         self.content_request_code_sent_sms_secondary_manager_en = \
             'The text message with a new manager access code should arrive soon for you to start your census'
         self.content_request_code_sent_sms_secondary_household_en = \
@@ -1030,7 +1120,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_sms_title_cy = 'Rydym ni wedi anfon cod mynediad'
         # TODO Add Welsh Translation
         self.content_request_code_sent_sms_secondary_individual_cy = \
-            'The text message with a new individual access code should arrive soon for you to start your census'
+            'The text message with an individual access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_sms_secondary_manager_cy = \
             'The text message with a new manager access code should arrive soon for you to start your census'
@@ -1039,27 +1129,29 @@ class RHTestCase(AioHTTPTestCase):
             'The text message with a new household access code should arrive soon for you to start your census'
 
         self.content_request_common_enter_name_title_en = 'What is your name?'
-        self.content_request_common_enter_name_error_first_name_en = 'Enter a first name to continue'
-        self.content_request_common_enter_name_error_last_name_en = 'Enter a last name to continue'
+        self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
+        self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_title_cy = 'What is your name?'
         # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_first_name_cy = "Enter a first name to continue"
+        self.content_request_common_enter_name_error_first_name_cy = "Enter your first name"
         # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_last_name_cy = 'Enter a last name to continue'
+        self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
 
         self.content_request_common_confirm_name_address_title_individual_en = \
-            'Do you want to send a new individual access code to this address?'
+            'Do you want to send an individual access code to this address?'
         self.content_request_common_confirm_name_address_title_manager_en = \
             'Do you want to send a new manager access code to this address?'
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_common_confirm_name_address_error_en = 'Please check and confirm the name and address'
+        self.content_request_common_confirm_name_address_error_en = 'Select an answer'
+        self.content_request_common_confirm_name_address_individual_message_en = \
+            'A letter with your individual access code will arrive in a brown unbranded envelope'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_title_individual_cy = \
-            'Do you want to send a new individual access code to this address?'
+            'Do you want to send an individual access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_title_manager_cy = \
             'Do you want to send a new manager access code to this address?'
@@ -1068,7 +1160,10 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_error_cy = \
-            "Please check and confirm the name and address"
+            "Select an answer"
+        # TODO Add Welsh Translation
+        self.content_request_common_confirm_name_address_individual_message_cy = \
+            'A letter with your individual access code will arrive in a brown unbranded envelope'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
@@ -1076,23 +1171,45 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_code_sent_post_title_ce_en = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_code_sent_post_title_ce_with_room_en = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_code_sent_post_title_ce_with_room_long_surname_en = \
+            'A letter will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, Room A8 ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
-            'The letter with a new individual access code should arrive soon for you to start the census'
+            'The letter with an individual access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_manager_en = \
             'The letter with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_household_en = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
         self.content_request_code_sent_post_title_cy = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_cy = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_with_room_cy = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_post_title_ce_with_room_long_surname_cy = \
+            'A letter will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, Room A8 ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_individual_cy = \
-            'The letter with a new individual access code should arrive soon for you to start the census'
+            'The letter with an individual access code should arrive soon for you to start the census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_manager_cy = \
             'The letter with a new manager access code should arrive soon for you to start the census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_secondary_household_cy = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        self.content_request_code_sent_post_title_ni = \
+            'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         # TODO: add welsh translation
@@ -1384,6 +1501,25 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
+        
+        self.get_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.get_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
 
         self.post_request_access_code_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
@@ -1476,13 +1612,23 @@ class RHTestCase(AioHTTPTestCase):
 
         # URLs
 
-        self.get_request_individual_code_en = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_en = self.app.router['RequestIndividualCode:get'].url_for(
             request_type='individual-code', display_region='en'
         )
-        self.get_request_individual_code_cy = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_cy = self.app.router['RequestIndividualCode:get'].url_for(
             request_type='individual-code', display_region='cy'
         )
-        self.get_request_individual_code_ni = self.app.router['RequestCode:get'].url_for(
+        self.get_request_individual_code_ni = self.app.router['RequestIndividualCode:get'].url_for(
+            request_type='individual-code', display_region='ni'
+        )
+
+        self.post_request_individual_code_en = self.app.router['RequestIndividualCode:post'].url_for(
+            request_type='individual-code', display_region='en'
+        )
+        self.post_request_individual_code_cy = self.app.router['RequestIndividualCode:post'].url_for(
+            request_type='individual-code', display_region='cy'
+        )
+        self.post_request_individual_code_ni = self.app.router['RequestIndividualCode:post'].url_for(
             request_type='individual-code', display_region='ni'
         )
 
@@ -1681,6 +1827,25 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='paper-form'
         )
 
+        self.get_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.get_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
         self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='paper-form'
         )
@@ -1723,6 +1888,24 @@ class RHTestCase(AioHTTPTestCase):
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_large_print_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_title_ce_en = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_ce_with_room_en = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_ce_with_room_long_surname_en = \
+            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en = \
+            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
@@ -1731,9 +1914,37 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_with_room_cy = \
+            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_ce_with_room_long_surname_cy = \
+            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy = \
+            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
+        self.content_request_form_sent_post_title_ni = \
+            'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_title_large_print_ni = \
+            'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'
@@ -1798,10 +2009,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_empty_cy = 'You have not entered a postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_invalid_cy = 'The postcode is not a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_cy = 'Nid ydych wedi nodi cod post'
+        self.content_support_centre_enter_postcode_error_invalid_cy = \
+            "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
@@ -1911,20 +2121,16 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_closed_may_bank_holiday_cy = \
             "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;Ar gau"
 
-        # TODO Add Welsh Translation
         self.content_support_centre_list_of_centres_result_one_public_parking_cy = \
-            'Car park, including disabled parking'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_two_public_parking_cy = 'Disabled parking'
+            'Maes parcio, gan gynnwys parcio anabl'
+        self.content_support_centre_list_of_centres_result_two_public_parking_cy = "Parcio anabl"
         self.content_support_centre_list_of_centres_result_three_public_parking_cy = 'Maes parcio'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_level_access_cy = 'Level access into building entrance'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Wheelchair access'
+        self.content_support_centre_list_of_centres_result_one_level_access_cy = \
+            "Mynediad gwastad i mewn i\\\'r adeilad"
+        self.content_support_centre_list_of_centres_result_one_wheelchair_access_cy = 'Mynediad i gadeiriau olwyn'
         self.content_support_centre_list_of_centres_result_one_disability_aware_cy = \
             'Staff yn meddu ar ymwybyddiaeth o anableddau'
-        # TODO Add Welsh Translation
-        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'Hearing loop system'
+        self.content_support_centre_list_of_centres_result_one_hearing_loop_cy = 'System dolen glywed'
 
         # Test Data
 

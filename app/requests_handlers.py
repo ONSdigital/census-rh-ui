@@ -5,9 +5,7 @@ from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
 from structlog import get_logger
 
-from . import (MOBILE_CHECK_MSG,
-               MOBILE_CHECK_MSG_CY,
-               NO_SELECTION_CHECK_MSG,
+from . import (NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
@@ -17,6 +15,9 @@ from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataError
 
 logger = get_logger('respondent-home')
 requests_routes = RouteTableDef()
+
+# Limit for last name field to include room number (60 char limit - 10 char room number value max - a comma and a space)
+last_name_char_limit = 48
 
 
 class RequestCommon(View):
@@ -43,11 +44,10 @@ class RequestCommon(View):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/individual-code/')
-class RequestCode(RequestCommon):
-    @aiohttp_jinja2.template('template-main.html')
+class RequestIndividualCode(RequestCommon):
+    @aiohttp_jinja2.template('request-code-individual-introduction.html')
     async def get(self, request):
         self.setup_request(request)
-        request_type = 'individual-code'
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             page_title = 'Gofyn am god mynediad unigryw'
@@ -56,15 +56,39 @@ class RequestCode(RequestCommon):
             page_title = 'Request an individual access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type)
+        self.log_entry(request, display_region + '/requests/individual-code')
         return {
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
-            'request_type': request_type,
-            'partial_name': 'request-' + request_type,
             'page_url': View.gen_page_url(request)
         }
+
+    async def post(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        request_type = 'individual-code'
+        self.log_entry(request, display_region + '/requests/individual-code')
+
+        try:
+            if request.cookies.get('RH_SESSION'):
+                session = await get_session(request)
+                attributes = session['attributes']
+                if attributes['case_type']:
+                    logger.info('have session and case_type - directing to select method')
+                    raise HTTPFound(
+                        request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
+                                                                                  display_region=display_region))
+                else:
+                    raise KeyError
+            else:
+                raise KeyError
+        except KeyError:
+            logger.info('no session - directing to enter address')
+            raise HTTPFound(
+                request.app.router['CommonEnterAddress:get'].url_for(user_journey='requests',
+                                                                     sub_user_journey=request_type,
+                                                                     display_region=display_region))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -94,6 +118,7 @@ class RequestCodeSelectMethod(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['page_url'] = View.gen_page_url(request)
+        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         return attributes
 
@@ -121,6 +146,7 @@ class RequestCodeSelectMethod(RequestCommon):
         attributes['locale'] = locale
         attributes['request_type'] = request_type
         attributes['page_url'] = View.gen_page_url(request)
+        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         data = await request.post()
         try:
@@ -226,7 +252,12 @@ class RequestCodeEnterMobile(RequestCommon):
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info(exc, client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR', 'mobile')
+            if exc.message_type == 'empty':
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
+                                                                    'mobile_empty')
+            else:
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
+                                                                    'mobile_invalid')
             flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['RequestCodeEnterMobile:post'].url_for(request_type=request_type,
@@ -293,9 +324,9 @@ class RequestCodeConfirmMobile(RequestCommon):
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, MOBILE_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, MOBILE_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
         if mobile_confirmation == 'yes':
@@ -357,7 +388,7 @@ class RequestCodeConfirmMobile(RequestCommon):
             # catch all just in case, should never get here
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
-            flash(request, MOBILE_CHECK_MSG)
+            flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
 
@@ -466,6 +497,11 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
             'page_title': page_title,
             'display_region': display_region,
@@ -480,7 +516,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             'townName': attributes['townName'],
             'postcode': attributes['postcode'],
             'case_type': attributes['case_type'],
-            'address_level': attributes['address_level']
+            'address_level': attributes['address_level'],
+            'roomNumber': room_number
         }
 
     @aiohttp_jinja2.template('request-common-confirm-name-address.html')
@@ -509,15 +546,21 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-address-confirmation'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-address-confirmation'))
+
+            try:
+                room_number = attributes['roomNumber']
+            except KeyError:
+                room_number = None
+
             return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -532,7 +575,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
         if name_address_confirmation == 'yes':
@@ -585,11 +629,28 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
 
                 try:
+                    room_number = attributes['roomNumber']
+                except KeyError:
+                    room_number = None
+
+                if room_number:
+                    if len(attributes['last_name']) < last_name_char_limit:
+                        last_name = attributes['last_name'] + ', ' + room_number
+                        title = None
+                    else:
+                        last_name = attributes['last_name']
+                        title = room_number
+                else:
+                    last_name = attributes['last_name']
+                    title = None
+
+                try:
                     await RHService.request_fulfilment_post(request,
                                                             attributes['case_id'],
                                                             attributes['first_name'],
-                                                            attributes['last_name'],
-                                                            fulfilment_code_array)
+                                                            last_name,
+                                                            fulfilment_code_array,
+                                                            title)
                 except (KeyError, ClientResponseError) as ex:
                     if ex.status == 429:
                         raise TooManyRequests(request_type)
@@ -627,15 +688,21 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Please check and confirm the name and address.',
+                flash(request, FlashMessage.generate_flash_message('Select an answer',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
+
+            try:
+                room_number = attributes['roomNumber']
+            except KeyError:
+                room_number = None
+
             return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -650,7 +717,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -705,12 +773,18 @@ class RequestCodeCodeSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
                 'locale': locale,
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
+                'census_home_link': View.get_campaign_site_link(request, display_region, 'census-home'),
                 'first_name': attributes['first_name'],
                 'last_name': attributes['last_name'],
                 'addressLine1': attributes['addressLine1'],
@@ -719,7 +793,8 @@ class RequestCodeCodeSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -801,6 +876,11 @@ class RequestFormSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -815,7 +895,8 @@ class RequestFormSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }
 
 
@@ -840,6 +921,11 @@ class RequestLargePrintSentPost(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
+        try:
+            room_number = attributes['roomNumber']
+        except KeyError:
+            room_number = None
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -854,5 +940,6 @@ class RequestLargePrintSentPost(RequestCommon):
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
                 'case_type': attributes['case_type'],
-                'address_level': attributes['address_level']
+                'address_level': attributes['address_level'],
+                'roomNumber': room_number
             }

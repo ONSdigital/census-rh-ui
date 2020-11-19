@@ -103,7 +103,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'You have not entered a postcode',
+            'Nid ydych wedi nodi cod post',
             str(cm.exception)
         )
         # With the correct message
@@ -117,7 +117,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode must not contain symbols',
+            "Ni ddylai'r cod post gynnwys symbolau",
             str(cm.exception)
         )
         # With the correct message
@@ -131,7 +131,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode does not contain enough characters',
+            "Nid yw'r cod post yn cynnwys digon o nodau",
             str(cm.exception)
         )
         # With the correct message
@@ -145,7 +145,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode contains too many characters',
+            "Mae'r cod post yn cynnwys gormod o nodau",
             str(cm.exception)
         )
         # With the correct message
@@ -159,7 +159,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode is not a valid UK postcode',
+            "Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig",
             str(cm.exception)
         )
         # With the correct message
@@ -181,7 +181,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number does not contain enough digits',
+            self.content_common_invalid_mobile_error_en,
             str(cm.exception)
         )
         # With the correct message
@@ -195,7 +195,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number contains too many digits',
+            self.content_common_invalid_mobile_error_en,
             str(cm.exception)
         )
         # With the correct message
@@ -209,7 +209,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number is not a UK mobile number',
+            self.content_common_invalid_mobile_error_en,
             str(cm.exception)
         )
         # With the correct message
@@ -223,7 +223,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number must not contain letters or symbols',
+            self.content_common_invalid_mobile_error_en,
             str(cm.exception)
         )
         # With the correct message
@@ -245,7 +245,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number does not contain enough digits',
+            self.content_common_invalid_mobile_error_cy,
             str(cm.exception)
         )
         # With the correct message
@@ -259,7 +259,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number contains too many digits',
+            self.content_common_invalid_mobile_error_cy,
             str(cm.exception)
         )
         # With the correct message
@@ -273,7 +273,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number is not a UK mobile number',
+            self.content_common_invalid_mobile_error_cy,
             str(cm.exception)
         )
         # With the correct message
@@ -287,7 +287,7 @@ class TestUtils(RHTestCase):
             ProcessMobileNumber.validate_uk_mobile_phone_number(mobile_number, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The mobile phone number must not contain letters or symbols',
+            self.content_common_invalid_mobile_error_cy,
             str(cm.exception)
         )
         # With the correct message
