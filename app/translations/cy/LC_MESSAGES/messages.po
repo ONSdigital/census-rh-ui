@@ -843,7 +843,7 @@ msgstr "%(distance_in_miles)s milltir i ffwrdd"
 #: app/templates/support_centre_list_of_centres.html:36
 #, python-format
 msgid "Find %(location_name_span)s on Google Maps"
-msgstr "Chwilio am %(location_name_span)s ar Google Maps"
+msgstr "Chwilio %(location_name_span)s ar Google Maps"
 
 #: app/templates/support_centre_list_of_centres.html:43
 msgid "Telephone: "
