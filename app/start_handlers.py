@@ -9,6 +9,7 @@ from structlog import get_logger
 
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
+               ADDRESS_CHECK_MSG, ADDRESS_CHECK_MSG_CY,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
@@ -334,9 +335,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, NO_SELECTION_CHECK_MSG_CY)
+                flash(request, ADDRESS_CHECK_MSG_CY)
             else:
-                flash(request, NO_SELECTION_CHECK_MSG)
+                flash(request, ADDRESS_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),

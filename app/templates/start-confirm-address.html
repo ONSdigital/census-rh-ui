@@ -15,22 +15,26 @@
 } %}
 
 {% set form_radio_options = [
-                        {
-                            'id': 'yes',
-                            'label': {
-                                'text': _('Yes, this is the correct address')
-                            },
-                            'value': 'Yes'
-                        },
-                        {
-                            'id': 'no',
-                            'label': {
-                                'text': _('No, this is not the correct address')
-                            },
-                            'value': 'No'
-                        }
-                    ]
+        {
+            'id': 'yes',
+            'label': {
+                'text': _('Yes, this is the correct address')
+            },
+            'value': 'Yes'
+        },
+        {
+            'id': 'no',
+            'label': {
+                'text': _('No, this is not the correct address')
+            },
+            'value': 'No'
+        }
+    ]
 %}
+
+{%- if 'address' in field_messages_dict -%}
+    {%- set error_address = {'text': _('Select an answer')} -%}
+{%- endif -%}
 
 {% block main %}
     {% if messages_dict %}
@@ -61,25 +65,14 @@
         {{ postcode }}
     </p>
 
-
-        {% if 'address' in field_messages_dict %}
-            {{
-                onsRadios({
-                    'name': 'address-check-answer',
-                    'radios': form_radio_options,
-                    'error': {
-                        'text': _('Check and confirm the address is correct')
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsRadios({
-                    'name': 'address-check-answer',
-                    'radios': form_radio_options
-                })
-            }}
-        {% endif %}
+    {{
+        onsRadios({
+            'id': 'address',
+            'name': 'address',
+            'radios': form_radio_options,
+            'error': error_address
+        })
+    }}
 
     {% endcall %}
 
