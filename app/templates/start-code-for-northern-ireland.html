@@ -1,13 +1,15 @@
 {%- extends 'base-' + display_region + '.html' -%}
-
+{%- set census_home_link = domain_url_ni -%}
 {%- block main -%}
 
     <h1 class="u-mt-l">{{ _('This access code is not part of the census for England and Wales') }}</h1>
 
     <p>{{ _('You have entered an access code for the census in Northern Ireland.') }}</p>
 
-    <p>{{ _('The Northern Ireland Statistics and Research Agency (NISRA) runs the census in Northern Ireland. Visit the <a href="https://www.census.gov.uk/ni/">NISRA census website</a> to find out how to take part in the census for Northern Ireland.') }}</p>
+    {%- autoescape false -%}
+        <p>{{ _('The Northern Ireland Statistics and Research Agency (NISRA) runs the census in Northern Ireland. Visit the %(open)sNISRA census website%(close)s to find out how to take part in the census for Northern Ireland.', open='<a href="%s">' % census_home_link, close='</a>')|safe }}</p>
 
-    <p>{{ _('Alternatively, you can <a href="/contact-us/">contact us for help</a>.') }}</p>
+        <p>{{ _('Alternatively, you can %(open)scontact us for help%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
 
 {%- endblock -%}
