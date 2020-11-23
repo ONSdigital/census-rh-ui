@@ -6,13 +6,13 @@ from aiohttp.web import HTTPFound, RouteTableDef
 from structlog import get_logger
 
 from . import (WEBFORM_MISSING_COUNTRY_MSG,
-               WEBFORM_MISSING_QUERY_MSG,
+               WEBFORM_MISSING_CATEGORY_MSG,
                WEBFORM_MISSING_DESCRIPTION_MSG,
                WEBFORM_MISSING_NAME_MSG,
                WEBFORM_MISSING_EMAIL_EMPTY_MSG,
                WEBFORM_MISSING_EMAIL_INVALID_MSG,
                WEBFORM_MISSING_COUNTRY_MSG_CY,
-               WEBFORM_MISSING_QUERY_MSG_CY,
+               WEBFORM_MISSING_CATEGORY_MSG_CY,
                WEBFORM_MISSING_DESCRIPTION_MSG_CY,
                WEBFORM_MISSING_NAME_MSG_CY,
                WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY,
@@ -42,11 +42,11 @@ class WebForm(View):
                 flash(request, WEBFORM_MISSING_COUNTRY_MSG)
             form_valid = False
 
-        if not (data.get('query')):
+        if not (data.get('category')):
             if display_region == 'cy':
-                flash(request, WEBFORM_MISSING_QUERY_MSG_CY)
+                flash(request, WEBFORM_MISSING_CATEGORY_MSG_CY)
             else:
-                flash(request, WEBFORM_MISSING_QUERY_MSG)
+                flash(request, WEBFORM_MISSING_CATEGORY_MSG)
             form_valid = False
 
         if not data.get('description'):
@@ -129,7 +129,7 @@ class WebForm(WebForm):
             return {
                 'form_value_name': data.get('name'),
                 'form_value_country': data.get('country'),
-                'form_value_query': data.get('query'),
+                'form_value_category': data.get('category'),
                 'form_value_email': data.get('email'),
                 'form_value_description': data.get('description'),
                 'display_region': display_region,
@@ -145,7 +145,7 @@ class WebForm(WebForm):
             else:
                 language = 'EN'
             form_data = {
-                'category': data.get('query'),
+                'category': data.get('category'),
                 'region': data.get('country'),
                 'language': language,
                 'name': data.get('name'),
@@ -155,7 +155,7 @@ class WebForm(WebForm):
 
             try:
                 await RHService.post_webform(request, form_data)
-            except (ClientResponseError) as ex:
+            except ClientResponseError as ex:
                 raise ex
 
             raise HTTPFound(

@@ -43,7 +43,7 @@
             ]
         -%}
 
-        {%- set query_options =
+        {%- set category_options =
             [
                 {
                     'id': 'missing_information',
@@ -90,24 +90,24 @@
             ]
         -%}
 
-{%- if 'country' in field_messages_dict -%}
-    {%- set error_country = {'text': _('Select an option')} -%}
+{%- if 'error-country' in field_messages_dict -%}
+    {%- set error_country = {'id': 'error-country', 'text': _('Select an option')} -%}
 {%- endif -%}
 
-{%- if 'query' in field_messages_dict -%}
-    {%- set error_query = {'text': _('Select an option')} -%}
+{%- if 'error-category' in field_messages_dict -%}
+    {%- set error_category = {'id': 'error-category', 'text': _('Select an option')} -%}
 {%- endif -%}
 
-{%- if 'description' in field_messages_dict -%}
-    {%- set error_description = {'text': _('Enter detail of your issue')} -%}
+{%- if 'error-description' in field_messages_dict -%}
+    {%- set error_description = {'id': 'error-description', 'text': _('Enter detail of your issue')} -%}
 {%- endif -%}
 
-{%- if 'name' in field_messages_dict -%}
-    {%- set error_name = {'text': _('Enter your name')} -%}
+{%- if 'error-name' in field_messages_dict -%}
+    {%- set error_name = {'id': 'error-name', 'text': _('Enter your name')} -%}
 {%- endif -%}
 
-{%- if 'email' in field_messages_dict -%}
-    {%- set error_email = {'text': _('Enter a valid email address')} -%}
+{%- if 'error-email' in field_messages_dict -%}
+    {%- set error_email = {'id': 'error-email', 'text': _('Enter a valid email address')} -%}
 {%- endif -%}
 
 {%- block main -%}
@@ -139,11 +139,11 @@
     {{
         onsRadios({
             'legend': _('What do you need help with?'),
-            'name': 'query',
+            'name': 'category',
             'dontVisuallyHideLegend': true,
-            'value': form_value_query,
-            'radios': query_options,
-            'error': error_query
+            'value': form_value_category,
+            'radios': category_options,
+            'error': error_category
         })
     }}
 

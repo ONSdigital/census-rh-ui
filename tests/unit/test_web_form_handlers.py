@@ -2,13 +2,13 @@ from aiohttp.test_utils import unittest_run_loop
 from aioresponses import aioresponses
 
 from app import (WEBFORM_MISSING_COUNTRY_MSG,
-                 WEBFORM_MISSING_QUERY_MSG,
+                 WEBFORM_MISSING_CATEGORY_MSG,
                  WEBFORM_MISSING_DESCRIPTION_MSG,
                  WEBFORM_MISSING_NAME_MSG,
                  WEBFORM_MISSING_EMAIL_EMPTY_MSG,
                  WEBFORM_MISSING_EMAIL_INVALID_MSG,
                  WEBFORM_MISSING_COUNTRY_MSG_CY,
-                 WEBFORM_MISSING_QUERY_MSG_CY,
+                 WEBFORM_MISSING_CATEGORY_MSG_CY,
                  WEBFORM_MISSING_DESCRIPTION_MSG_CY,
                  WEBFORM_MISSING_NAME_MSG_CY,
                  WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY,
@@ -112,11 +112,11 @@ class TestWebFormHandlers(TestHelpers):
                     self.assertMessagePanel(WEBFORM_MISSING_COUNTRY_MSG_CY, contents)
                 else:
                     self.assertMessagePanel(WEBFORM_MISSING_COUNTRY_MSG, contents)
-            elif missing_value == 'query':
+            elif missing_value == 'category':
                 if display_region == 'cy':
-                    self.assertMessagePanel(WEBFORM_MISSING_QUERY_MSG_CY, contents)
+                    self.assertMessagePanel(WEBFORM_MISSING_CATEGORY_MSG_CY, contents)
                 else:
-                    self.assertMessagePanel(WEBFORM_MISSING_QUERY_MSG, contents)
+                    self.assertMessagePanel(WEBFORM_MISSING_CATEGORY_MSG, contents)
             elif missing_value == 'description':
                 if display_region == 'cy':
                     self.assertMessagePanel(WEBFORM_MISSING_DESCRIPTION_MSG_CY, contents)
@@ -172,9 +172,9 @@ class TestWebFormHandlers(TestHelpers):
         await self.form_submission_incomplete(self.post_webform_en, 'en', 'country')
         await self.form_submission_incomplete(self.post_webform_cy, 'cy', 'country')
         await self.form_submission_incomplete(self.post_webform_ni, 'ni', 'country')
-        await self.form_submission_incomplete(self.post_webform_en, 'en', 'query')
-        await self.form_submission_incomplete(self.post_webform_cy, 'cy', 'query')
-        await self.form_submission_incomplete(self.post_webform_ni, 'ni', 'query')
+        await self.form_submission_incomplete(self.post_webform_en, 'en', 'category')
+        await self.form_submission_incomplete(self.post_webform_cy, 'cy', 'category')
+        await self.form_submission_incomplete(self.post_webform_ni, 'ni', 'category')
         await self.form_submission_incomplete(self.post_webform_en, 'en', 'description')
         await self.form_submission_incomplete(self.post_webform_cy, 'cy', 'description')
         await self.form_submission_incomplete(self.post_webform_ni, 'ni', 'description')

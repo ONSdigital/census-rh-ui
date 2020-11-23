@@ -2176,7 +2176,7 @@ class RHTestCase(AioHTTPTestCase):
             'name': 'Bob Bobbington',
             'email': 'bob.bobbington@theinternet.co.uk',
             'description': 'Hello this is Bob',
-            'query': 'MISSING_INFORMATION',
+            'category': 'MISSING_INFORMATION',
             'country': 'E'
         }
 

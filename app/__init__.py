@@ -8,12 +8,12 @@ WEBCHAT_MISSING_NAME_MSG = {'text': 'Enter your name', 'clickable': True, 'level
 WEBCHAT_MISSING_COUNTRY_MSG = {'text': 'Select your country', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'country'}  # NOQA
 WEBCHAT_MISSING_QUERY_MSG = {'text': 'What type of query do you have', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'query'}  # NOQA
 
-WEBFORM_MISSING_COUNTRY_MSG = {'text': 'Select your country', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_COUNTRY', 'field': 'country'}  # NOQA
-WEBFORM_MISSING_QUERY_MSG = {'text': 'What type of query do you have', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_QUERY', 'field': 'query'}  # NOQA
-WEBFORM_MISSING_DESCRIPTION_MSG = {'text': 'No detail provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'description'}  # NOQA
-WEBFORM_MISSING_NAME_MSG = {'text': 'Enter your name', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_NAME', 'field': 'name'}  # NOQA
-WEBFORM_MISSING_EMAIL_EMPTY_MSG = {'text': 'No email provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'email'}  # NOQA
-WEBFORM_MISSING_EMAIL_INVALID_MSG = {'text': 'Email address invalid', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'email'}  # NOQA
+WEBFORM_MISSING_COUNTRY_MSG = {'text': 'Select your country', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_COUNTRY', 'field': 'error-country'}  # NOQA
+WEBFORM_MISSING_CATEGORY_MSG = {'text': 'What type of query do you have', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_QUERY', 'field': 'error-category'}  # NOQA
+WEBFORM_MISSING_DESCRIPTION_MSG = {'text': 'No detail provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'error-description'}  # NOQA
+WEBFORM_MISSING_NAME_MSG = {'text': 'Enter your name', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_NAME', 'field': 'error-name'}  # NOQA
+WEBFORM_MISSING_EMAIL_EMPTY_MSG = {'text': 'No email provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
+WEBFORM_MISSING_EMAIL_INVALID_MSG = {'text': 'Email address invalid', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
 
 ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'address-select'}  # NOQA
 START_LANGUAGE_OPTION_MSG = {'text': 'Select a language option', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'language-option'}  # NOQA
@@ -27,15 +27,15 @@ WEBCHAT_MISSING_NAME_MSG_CY = {'text': 'Nodwch eich enw', 'clickable': True, 'le
 WEBCHAT_MISSING_COUNTRY_MSG_CY = {'text': 'Dewiswch eich gwlad', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'country'}  # NOQA
 WEBCHAT_MISSING_QUERY_MSG_CY = {'text': 'Pa fath o ymholiad sydd gennych chi?', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'query'}  # NOQA
 
-WEBFORM_MISSING_COUNTRY_MSG_CY = {'text': 'Dewiswch eich gwlad', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_COUNTRY', 'field': 'country'}  # NOQA
-WEBFORM_MISSING_QUERY_MSG_CY = {'text': 'Pa fath o ymholiad sydd gennych chi?', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_QUERY', 'field': 'query'}  # NOQA
+WEBFORM_MISSING_COUNTRY_MSG_CY = {'text': 'Dewiswch eich gwlad', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_COUNTRY', 'field': 'error-country'}  # NOQA
+WEBFORM_MISSING_CATEGORY_MSG_CY = {'text': 'Pa fath o ymholiad sydd gennych chi?', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_QUERY', 'field': 'error-category'}  # NOQA
 # TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_DESCRIPTION_MSG_CY = {'text': 'No detail provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'description'}  # NOQA
-WEBFORM_MISSING_NAME_MSG_CY = {'text': 'Nodwch eich enw', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_NAME', 'field': 'name'}  # NOQA
+WEBFORM_MISSING_DESCRIPTION_MSG_CY = {'text': 'No detail provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'error-description'}  # NOQA
+WEBFORM_MISSING_NAME_MSG_CY = {'text': 'Nodwch eich enw', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_NAME', 'field': 'error-name'}  # NOQA
 # TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY = {'text': 'No email provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'email'}  # NOQA
+WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY = {'text': 'No email provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
 # TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_EMAIL_INVALID_MSG_CY = {'text': 'Email address invalid', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'email'}  # NOQA
+WEBFORM_MISSING_EMAIL_INVALID_MSG_CY = {'text': 'Email address invalid', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
 
 ADDRESS_SELECT_CHECK_MSG_CY = {'text': 'Dewiswch gyfeiriad', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'address-select'}  # NOQA
 START_LANGUAGE_OPTION_MSG_CY = {'text': 'Dewiswch opsiwn iaith', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'language-option'}  # NOQA
