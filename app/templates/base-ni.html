@@ -16,71 +16,48 @@
 {%- endif -%}
 
 {%- set footer_content = {
-    'crest': true,
+        'crest': true,
         'poweredBy': {
             'logo': 'nisra-logo-black-en',
             'alt': 'NISRA - Northern Ireland Statistics and Research Agency'
         },
-        'cols': [
+        'rows': [
             {
-                "title": 'Get in touch',
-                "itemsList": [
+                'itemsList': [
                     {
-                        "text": 'Contact us',
-                        "url": domain_url_ni + '/contact-us'
+                        'text': 'Help',
+                        'url': domain_url_ni + '/help/'
                     },
                     {
-                        "text": 'Media enquiries',
-                        "url": '#0'
-                    }
-                ]
-            },
-            {
-                "title": 'Working on the census',
-                "itemsList": [
-                    {
-                        "text": 'Get involved',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Jobs',
-                        "url": '#0'
-                    }
-                ]
-            },
-            {
-                "title": 'About the census',
-                "itemsList": [
-                    {
-                        "text": 'What is the census',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Why you should take part',
-                        "url": '#0'
+                        'text': 'Contact us',
+                        'url': domain_url_ni + '/contact-us/'
                     }
                 ]
             }
         ],
-"rows": [
-        {
-            "itemsList": [
-                {
-                    "text": 'Cookies',
-                    "url": domain_url_ni + '/cookies/'
-                },
-                {
-                    "text": 'Accessibility',
-                    "url": domain_url_ni + '/accessibility/'
-                },
-                {
-                    "text": 'Privacy and data protection',
-                    "url": domain_url_ni + '/privacy-and-data-protection/'
-                }
-            ]
-        }
-    ]
-}
+        'legal': [
+            {
+                'itemsList': [
+                    {
+                        'text': 'Cookies',
+                        'url': domain_url_ni + '/cookies/'
+                    },
+                    {
+                        'text': 'Accessibility statement',
+                        'url': domain_url_ni + '/accessibility/'
+                    },
+                    {
+                        'text': 'Privacy and data protection',
+                        'url': domain_url_ni + '/privacy-and-data-protection/'
+                    },
+                    {
+                        'text': 'Terms and conditions',
+                        'url': '#0'
+                    }
+                ]
+            }
+        ]
+    }
 -%}
 
 

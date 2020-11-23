@@ -16,67 +16,25 @@
 {%- endif -%}
 
 {%- set footer_content = {
+        'lang': 'cy',
         'crest': true,
-        'poweredBy': {
-            "logo": 'ons-logo-black-cy',
-            "alt": 'Office for National Statistics'
-        },
-        "cols": [
+        'rows': [
             {
-                "title": 'Cysylltwch',
-                "itemsList": [
+                'itemsList': [
                     {
-                        "text": 'Ymholiadau gan y cyfryngau',
-                        "url": '#0'
+                        'text': 'Help',
+                        'url': domain_url_cy + '/help/'
                     },
                     {
                         'text': 'Cysylltu â ni',
-                        'url': domain_url_cy + '/cysylltu-a-ni/'
-                    }
-                ]
-            },
-            {
-                "title": 'Gweithio ar y cyfrifiad',
-                "itemsList": [
-                    {
-                        "text": 'Awdurdodau lleol',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Grwpiau cymunedol',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Ymgyrchoedd ysgolion',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Swyddi',
-                        "url": '#0'
-                    }
-                ]
-            },
-            {
-                "title": 'Ynglŷn â’r cyfrifiad',
-                "itemsList": [
-                    {
-                        "text": 'Beth yw’r cyfrifiad',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Pam ddylech chi gymryd rhan',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Straeon y cyfrifiad',
-                        "url": '#0'
+                        'url': domain_url_cy + '/contact-us/'
                     }
                 ]
             }
         ],
-        "rows": [
+        'legal': [
             {
-                "itemsList": [
+                'itemsList': [
                     {
                         'text': 'Cwcis',
                         'url': domain_url_cy + '/cwcis/'
@@ -88,6 +46,10 @@
                     {
                         'text': 'Preifatrwydd a diogelu data',
                         'url': domain_url_cy + '/preifatrwydd-a-diogelu-data/'
+                    },
+                    {
+                        'text': 'Terms and conditions',
+                        'url': '#0'
                     }
                 ]
             }

@@ -32,8 +32,8 @@
     ]
 %}
 
-{%- if 'address' in field_messages_dict -%}
-    {%- set error_address = {'text': _('Select an answer')} -%}
+{%- if 'no-selection' in field_messages_dict -%}
+    {%- set error_address = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {% block main %}
@@ -41,7 +41,7 @@
         {% include 'partials/messages.html' with context %}
     {% endif %}
 
-    {% if display_region_warning == 'yes' %}
+    {% if display_region_warning %}
         {% set region_warning_message = _('Your address is in England, so you can only complete your census in English.') %}
         {% from "components/panel/_macro.njk" import onsPanel %}
         {% call onsPanel({
@@ -67,7 +67,6 @@
 
     {{
         onsRadios({
-            'id': 'address',
             'name': 'address',
             'radios': form_radio_options,
             'error': error_address

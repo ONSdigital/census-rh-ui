@@ -9,7 +9,6 @@ from structlog import get_logger
 
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
-               ADDRESS_CHECK_MSG, ADDRESS_CHECK_MSG_CY,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
@@ -291,6 +290,12 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
+        display_region_warning = False
+        if (display_region == 'cy') and (session['case']['region'][0] == 'E'):
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            display_region_warning = True
+
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
@@ -300,7 +305,9 @@ class StartConfirmAddress(StartCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']}
+                'postcode': attributes['postcode'],
+                'display_region_warning': display_region_warning
+                }
 
     @aiohttp_jinja2.template('start-confirm-address.html')
     async def post(self, request):
@@ -335,9 +342,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),
