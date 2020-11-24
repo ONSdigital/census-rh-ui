@@ -2535,8 +2535,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
         await self.check_post_confirm_address_input_yes_ce(
             self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
-        await self.check_post_resident_or_manager_form_manager(
-            self.post_request_paper_form_resident_or_manager_ni, 'ni')
+        await self.check_post_resident_or_manager_form_manager_ni(
+            self.post_request_paper_form_resident_or_manager_ni, self.common_resident_or_manager_input_manager)
 
     @unittest_run_loop
     async def test_request_paper_form_select_manager_uac_sms_ew_e(self):
@@ -2593,24 +2593,6 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
-    async def test_request_paper_form_select_manager_uac_sms_ni(self):
-        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes_ce(
-            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
-        await self.check_post_resident_or_manager_form_manager(
-            self.post_request_paper_form_resident_or_manager_ni, 'ni')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_ni, 'ni')
-        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_ni, 'ni',
-                                                      override_sub_user_journey='access-code')
-        await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni',
-                                           override_sub_user_journey='access-code')
-        await self.check_post_confirm_mobile(
-            self.post_request_access_code_confirm_mobile_ni, 'ni', 'CE', 'N', 'false',
-            override_sub_user_journey='access-code')
-
-    @unittest_run_loop
     async def test_request_paper_form_select_manager_uac_post_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
@@ -2662,24 +2644,6 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                          'manager', 'CE', override_sub_user_journey='access-code')
         await self.check_post_confirm_name_address_input_yes(
             self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'false',
-            override_sub_user_journey='access-code')
-
-    @unittest_run_loop
-    async def test_request_paper_form_select_manager_uac_post_ni(self):
-        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
-        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
-        await self.check_post_confirm_address_input_yes_ce(
-            self.post_request_paper_form_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_m_n)
-        await self.check_post_resident_or_manager_form_manager(
-            self.post_request_paper_form_resident_or_manager_ni, 'ni')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_ni, 'ni')
-        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_ni, 'ni',
-                                                       override_sub_user_journey='access-code')
-        await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni',
-                                         'manager', 'CE', override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'false',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop

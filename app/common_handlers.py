@@ -727,13 +727,21 @@ class CommonCEMangerQuestion(CommonCommon):
 
         elif resident_or_manager == 'manager':
             if sub_user_journey == 'paper-form':
-                raise HTTPFound(
-                    request.app.router['RequestFormManager:get'].url_for(
-                        request_type=sub_user_journey, display_region=display_region))
+                if display_region == 'ni':
+                    raise HTTPFound(
+                        request.app.router['RequestFormNIManager:get'].url_for())
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestFormManager:get'].url_for(
+                            request_type=sub_user_journey, display_region=display_region))
             else:
-                raise HTTPFound(
-                    request.app.router['RequestCodeSelectMethod:get'].url_for(
-                        request_type=sub_user_journey, display_region=display_region))
+                if display_region == 'ni':
+                    raise HTTPFound(
+                        request.app.router['RequestCodeNIManager:get'].url_for())
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                            request_type=sub_user_journey, display_region=display_region))
 
         else:
             # catch all just in case, should never get here
