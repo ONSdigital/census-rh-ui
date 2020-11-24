@@ -1,0 +1,207 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- from 'components/input/_macro.njk' import onsInput -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from 'components/textarea/_macro.njk' import onsTextarea -%}
+{%- from 'components/panel/_macro.njk' import onsPanel -%}
+
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('WebForm:post', display_region=display_region)
+    }
+} -%}
+
+        {%- set country_options =
+            [
+                {
+                    'id': 'england',
+                    'label': {
+                        'text': _('England')
+                    },
+                    'value': 'E'
+                },
+                {
+                    'id': 'wales',
+                    'label': {
+                        'text': _('Wales')
+                    },
+                    'value': 'W'
+                },
+                {
+                    'id': 'northern_ireland',
+                    'label': {
+                        'text': _('Northern Ireland')
+                    },
+                    'value': 'N'
+                }
+            ]
+        -%}
+
+        {%- set category_options =
+            [
+                {
+                    'id': 'missing_information',
+                    'label': {
+                        'text': _('I don’t have everything I need to complete my census')
+                    },
+                    'value': 'MISSING_INFORMATION'
+                },
+                {
+                    'id': 'technical',
+                    'label': {
+                        'text': _('I am having technical difficulties')
+                    },
+                    'value': 'TECHNICAL'
+                },
+                {
+                    'id': 'form',
+                    'label': {
+                        'text': _('I need help with my census form')
+                    },
+                    'value': 'FORM'
+                },
+                {
+                    'id': 'complaint',
+                    'label': {
+                        'text': _('I have a complaint')
+                    },
+                    'value': 'COMPLAINT'
+                },
+                {
+                    'id': 'address',
+                    'label': {
+                        'text': _('I need help with my address')
+                    },
+                    'value': 'ADDRESS'
+                },
+                {
+                    'id': 'something_else',
+                    'label': {
+                        'text': _('Something else')
+                    },
+                    'value': 'OTHER'
+                }
+            ]
+        -%}
+
+{%- if 'error-country' in field_messages_dict -%}
+    {%- set error_country = {'id': 'error-country', 'text': _('Select an option')} -%}
+{%- endif -%}
+
+{%- if 'error-category' in field_messages_dict -%}
+    {%- set error_category = {'id': 'error-category', 'text': _('Select an option')} -%}
+{%- endif -%}
+
+{%- if 'error-description' in field_messages_dict -%}
+    {%- set error_description = {'id': 'error-description', 'text': _('Enter detail of your issue')} -%}
+{%- endif -%}
+
+{%- if 'error-name' in field_messages_dict -%}
+    {%- set error_name = {'id': 'error-name', 'text': _('Enter your name')} -%}
+{%- endif -%}
+
+{%- if 'error-email' in field_messages_dict -%}
+    {%- set error_email = {'id': 'error-email', 'text': _('Enter a valid email address')} -%}
+{%- endif -%}
+
+{%- block main -%}
+
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    <h1 class="u-fs-xxl u-mt-l">{{_('Web form')}}</h1>
+
+    {{
+        onsPanel({
+            'body': _('Do not include any personal information, for example, your access code'),
+            'type': 'warn'
+        })
+    }}
+
+    {{
+        onsRadios({
+            'legend': _('Select your country'),
+            'name': 'country',
+            'dontVisuallyHideLegend': true,
+            'value': form_value_country,
+            'radios': country_options,
+            'error': error_country
+        })
+    }}
+
+    {{
+        onsRadios({
+            'legend': _('What do you need help with?'),
+            'name': 'category',
+            'dontVisuallyHideLegend': true,
+            'value': form_value_category,
+            'radios': category_options,
+            'error': error_category
+        })
+    }}
+
+    {{
+        onsTextarea({
+            'id': 'description',
+            'name': 'description',
+            'classes': 'input--w-30',
+            'label': {
+                'text': _('Please provide more detail')
+            },
+            'charCheckLimit': {
+                'limit': 5000,
+                'charCountSingular': _('You have {x} character remaining'),
+                'charCountPlural': _('You have {x} characters remaining')
+            },
+            'value': form_value_description,
+            'error': error_description
+        })
+    }}
+
+    <h2 class="u-mt-m">{{ _('Your contact details') }}</h2>
+
+    {{
+        onsInput({
+            'id': 'name',
+            'name': 'name',
+            'label': {
+                'text': _('Name')
+            },
+            'value': form_value_name,
+            'error': error_name
+        })
+    }}
+
+    {{
+        onsInput({
+            'id': 'email',
+            'name': 'email',
+            'type': 'email',
+            'autocomplete': 'email',
+            'label': {
+                'text': _('Email address'),
+                'description': _('We will only use this to send you a reply')
+            },
+            'value': form_value_email,
+            'error': error_email
+        })
+    }}
+
+
+    {{
+        onsButton({
+            'text': _('Send message'),
+            'classes': 'btn-group__btn u-mb-m u-mt-m'
+        })
+
+    }}
+
+    <p class="u-fs-s">{{ _('For information about what we do with your personal data see our <a href="#0">privacy and data protection</a>') }}</p>
+
+{%- endblock -%}
