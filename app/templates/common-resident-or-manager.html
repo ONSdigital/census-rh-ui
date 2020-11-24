@@ -33,7 +33,9 @@
         }
     ]
 %}
-
+{%- if 'no-selection' in field_messages_dict -%}
+    {%- set error_resident_or_manager = {'id': 'no-selection', 'text': _('Select an answer')} -%}
+{%- endif -%}
 
 {% block main %}
 
@@ -45,32 +47,22 @@
         'title': _('Are you a resident or manager of this establishment?')
     }) %}
 
-    <p class="rh-address-display">
-        {{ addressLine1 }}<br>
-        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName %}{{ townName }}<br>{% endif %}
-        {{ postcode }}
-    </p>
+        <p class="rh-address-display">
+            {{ addressLine1 }}<br>
+            {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
+            {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
+            {% if townName %}{{ townName }}<br>{% endif %}
+            {{ postcode }}
+        </p>
 
-{% if 'no-selection' in field_messages_dict %}
-    {{
-        onsRadios({
-            'name': 'form-resident-or-manager',
-            'radios': form_options,
-            'error': {
-                'text': _('Please select an option.')
-            }
-        })
-    }}
-{% else %}
-    {{
-        onsRadios({
-            'name': 'form-resident-or-manager',
-            'radios': form_options
-        })
-    }}
-{% endif %}
+        {{
+            onsRadios({
+                'name': 'form-resident-or-manager',
+                'radios': form_options,
+                'error': error_resident_or_manager
+            })
+        }}
+
     {% endcall %}
 
     {{
