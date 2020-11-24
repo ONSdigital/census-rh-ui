@@ -25,68 +25,8 @@ logger = get_logger('respondent-home')
 web_form_routes = RouteTableDef()
 
 
-class WebForm(View):
-    email_validation_pattern = re.compile(
-        r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)'
-    )
-
-    @staticmethod
-    def validate_form(request, data, display_region):
-
-        form_valid = True
-
-        if not (data.get('country')):
-            if display_region == 'cy':
-                flash(request, WEBFORM_MISSING_COUNTRY_MSG_CY)
-            else:
-                flash(request, WEBFORM_MISSING_COUNTRY_MSG)
-            form_valid = False
-
-        if not (data.get('category')):
-            if display_region == 'cy':
-                flash(request, WEBFORM_MISSING_CATEGORY_MSG_CY)
-            else:
-                flash(request, WEBFORM_MISSING_CATEGORY_MSG)
-            form_valid = False
-
-        if not data.get('description'):
-            if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG_CY)
-            else:
-                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG)
-            form_valid = False
-
-        if not data.get('name'):
-            if display_region == 'cy':
-                flash(request, WEBFORM_MISSING_NAME_MSG_CY)
-            else:
-                flash(request, WEBFORM_MISSING_NAME_MSG)
-            form_valid = False
-
-        if not (data.get('email')) or not WebForm.email_validation_pattern.fullmatch(str(data.get('email'))):
-            if not (data.get('email')):
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY)
-                else:
-                    flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG)
-                form_valid = False
-
-            elif not WebForm.email_validation_pattern.fullmatch(str(data.get('email'))):
-                if display_region == 'cy':
-                    # TODO: Add Welsh Translation
-                    flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG_CY)
-                else:
-                    flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG)
-
-                form_valid = False
-
-        return form_valid
-
-
 @web_form_routes.view(r'/' + View.valid_display_regions + '/web-form/')
-class WebForm(WebForm):
+class WebForm(View):
     @aiohttp_jinja2.template('web-form.html')
     async def get(self, request):
         self.setup_request(request)
@@ -122,7 +62,56 @@ class WebForm(WebForm):
 
         data = await request.post()
 
-        form_valid = self.validate_form(request, data, display_region)
+        email_validation_pattern = re.compile(
+            r'(^[^@\s]+@[^@\s]+\.[^@\s]+$)'
+        )
+
+        form_valid = True
+
+        if not (data.get('country')):
+            if display_region == 'cy':
+                flash(request, WEBFORM_MISSING_COUNTRY_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_COUNTRY_MSG)
+            form_valid = False
+
+        if not (data.get('category')):
+            if display_region == 'cy':
+                flash(request, WEBFORM_MISSING_CATEGORY_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_CATEGORY_MSG)
+            form_valid = False
+
+        if not data.get('description'):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_DESCRIPTION_MSG)
+            form_valid = False
+
+        if not data.get('name'):
+            if display_region == 'cy':
+                flash(request, WEBFORM_MISSING_NAME_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_NAME_MSG)
+            form_valid = False
+
+        if not (data.get('email')):
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG)
+            form_valid = False
+
+        elif not email_validation_pattern.fullmatch(str(data.get('email'))):
+            if display_region == 'cy':
+                # TODO: Add Welsh Translation
+                flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG_CY)
+            else:
+                flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG)
+            form_valid = False
 
         if not form_valid:
             logger.info('web form submission error', client_ip=request['client_ip'])
@@ -163,7 +152,7 @@ class WebForm(WebForm):
 
 
 @web_form_routes.view(r'/' + View.valid_display_regions + '/web-form/success/')
-class WebFormSuccess(WebForm):
+class WebFormSuccess(View):
     @aiohttp_jinja2.template('web-form-success.html')
     async def get(self, request):
         self.setup_request(request)

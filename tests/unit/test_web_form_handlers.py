@@ -193,6 +193,3 @@ class TestWebFormHandlers(TestHelpers):
         await self.form_submission_email_invalid(self.post_webform_en, 'en', 'cheese@scone')
         await self.form_submission_email_invalid(self.post_webform_cy, 'cy', 'cheese@scone')
         await self.form_submission_email_invalid(self.post_webform_ni, 'ni', 'cheese@scone')
-        await self.form_submission_email_invalid(self.post_webform_en, 'en', '!?%^@£$*.com')
-        await self.form_submission_email_invalid(self.post_webform_cy, 'cy', '!?%^@£$*.com')
-        await self.form_submission_email_invalid(self.post_webform_ni, 'ni', '!?%^@£$*.com')
