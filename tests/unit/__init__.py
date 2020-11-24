@@ -2163,4 +2163,37 @@ class RHTestCase(AioHTTPTestCase):
 
         self.ad_lookup_url = f'{ad_look_up_svc_url}/centres/postcode?postcode={self.postcode_valid}&limit=10'
 
+        # Start Web Form
+
+        self.get_webform_en = self.app.router['WebForm:get'].url_for(display_region='en')
+        self.get_webform_cy = self.app.router['WebForm:get'].url_for(display_region='cy')
+        self.get_webform_ni = self.app.router['WebForm:get'].url_for(display_region='ni')
+        self.post_webform_en = self.app.router['WebForm:post'].url_for(display_region='en')
+        self.post_webform_cy = self.app.router['WebForm:post'].url_for(display_region='cy')
+        self.post_webform_ni = self.app.router['WebForm:post'].url_for(display_region='ni')
+
+        self.webform_form_data = {
+            'name': 'Bob Bobbington',
+            'email': 'bob.bobbington@theinternet.co.uk',
+            'description': 'Hello this is Bob',
+            'category': 'MISSING_INFORMATION',
+            'country': 'E'
+        }
+
+        self.rhsvc_url_web_form = (
+            f'{rh_svc_url}/webform'
+        )
+
+        self.content_web_form_title_en = 'Web form'
+        self.content_web_form_warning_en = 'Do not include any personal information, for example, your access code'
+        self.content_web_form_title_cy = 'Web form'
+        self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
+
+        self.content_web_form_success_title_en = 'Thank you for contacting us'
+        self.content_web_form_success_confirmation_en = 'You message has been sent'
+        self.content_web_form_success_secondary_en = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_title_cy = 'Thank you for contacting us'
+        self.content_web_form_success_confirmation_cy = 'You message has been sent'
+        self.content_web_form_success_secondary_cy = 'We will respond to your message within 48 working hours'
+
         # yapf: enable
