@@ -3,8 +3,10 @@
 {%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
 {%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{%- if 'postcode' in field_messages_dict -%}
-    {%- set error_postcode = { 'text': _('Enter a valid UK postcode') } -%}
+{%- if 'error_postcode_empty' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a postcode') } -%}
+{%- elif 'error_postcode_invalid' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a valid UK postcode') } -%}
 {%- endif -%}
 
 {%- from 'components/question/_macro.njk' import onsQuestion -%}
@@ -28,7 +30,7 @@
 {%- elif sub_user_journey == 'individual-code' -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'access-code' -%}
-    {%- set question_description = _('<p>To request an access code, we need your address. A new access code will start a new census.</p>') -%}
+    {%- set question_description = _('<p>To request an access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'paper-form' -%}
     {%- set question_description = _('<p>To send a paper questionnaire, we need your address</p>') -%}
 {%- else -%}
@@ -59,7 +61,7 @@
                 'id': 'postcode',
                 'type': 'postcode',
                 'autocomplete': 'postcode',
-                'classes': 'input--w-8',
+                'classes': 'input--w-6',
                 'label': {
                     'text': _('UK postcode')
                 },
@@ -78,7 +80,7 @@
 
     {%- call onsCollapsible({
             'id': 'collapsible',
-            'title': _("I don't live at a fixed address"),
+            'title': _("I don’t live at a fixed address"),
             'titleTag': 'h2',
             'classes': 'u-mt-m',
             'button': {
