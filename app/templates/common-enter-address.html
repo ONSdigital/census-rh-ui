@@ -3,8 +3,10 @@
 {%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
 {%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{%- if 'postcode' in field_messages_dict -%}
-    {%- set error_postcode = { 'text': _('Enter a valid UK postcode') } -%}
+{%- if 'error_postcode_empty' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a postcode') } -%}
+{%- elif 'error_postcode_invalid' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a valid UK postcode') } -%}
 {%- endif -%}
 
 {%- from 'components/question/_macro.njk' import onsQuestion -%}
@@ -25,14 +27,14 @@
     {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
 {%- elif sub_user_journey == 'change-address' -%}
     {%- set question_description = '' -%}
-{%- elif individual == True -%}
+{%- elif (individual == True) -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'access-code' -%}
-    {%- set question_description = _('<p>To request an access code, we need your address. A new access code will start a new census.</p>') -%}
+    {%- set question_description = _('<p>To request an access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'paper-form' -%}
-    {%- set question_description = _('<p>To send a paper questionnaire, we need your address</p>') -%}
+    {%- set question_description = _('<p>To send a paper census questionnaire, we need your address</p>') -%}
 {%- else -%}
-    {%- set question_description = _('<p>We need to know the address for which you are answering.</p>') -%}
+    {%- set question_description = _('<p>We need to know the address for which you are answering</p>') -%}
 {%- endif -%}
 
 {%- block main -%}
@@ -59,7 +61,7 @@
                 'id': 'postcode',
                 'type': 'postcode',
                 'autocomplete': 'postcode',
-                'classes': 'input--w-8',
+                'classes': 'input--w-6',
                 'label': {
                     'text': _('UK postcode')
                 },
@@ -70,15 +72,23 @@
 
     {%- endcall -%}
 
-    {%- set content -%}
-        {%- autoescape false -%}
-            <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
-        {%- endautoescape -%}
-    {%- endset -%}
+    {%- if sub_user_journey == 'paper-form' -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request aa paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- else -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- endif -%}
 
     {%- call onsCollapsible({
             'id': 'collapsible',
-            'title': _("I don't live at a fixed address"),
+            'title': _("I don’t live at a fixed address"),
             'titleTag': 'h2',
             'classes': 'u-mt-m',
             'button': {
