@@ -74,7 +74,6 @@ class RequestIndividualCode(RequestCommon):
 
         try:
             if request.cookies.get('RH_SESSION'):
-                session = await get_session(request)
                 session['attributes']['individual'] = True
                 session.changed()
 

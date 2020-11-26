@@ -6,8 +6,6 @@
 {%- from 'components/question/_macro.njk' import onsQuestion -%}
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from 'components/radios/_macro.njk' import onsRadios -%}
-{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
-{%- from "components/panel/_macro.njk" import onsPanel -%}
 
 {%- set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) -%}
 
@@ -19,7 +17,7 @@
 } -%}
 
 {%- if 'no-selection' in field_messages_dict -%}
-    {%- set error_radio = {'text': _('Select an answer')} -%}
+    {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- set form_options = [
