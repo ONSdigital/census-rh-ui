@@ -1,0 +1,60 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
+
+{%- set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': url('RequestHouseholdCode:post', display_region=display_region)
+    }
+} -%}
+
+{%- block main -%}
+
+    <h1 class="u-mb-l u-fs-xxl">{{ _('Request a new household access code') }}</h1>
+
+    <p>{{ _('A household access code lets you start a new census for your household and the people who live there. You will lose any answers entered using a previous access code.') }}</p>
+
+    <p>{{ _('All households should complete the census on <strong>Sunday 21 March 2021</strong> or as soon as possible after. The census should take around 10 minutes per person to fill in.') }}</p>
+
+    <p>{{ _('You can choose to receive your new access code by text or post.') }}</p>
+
+    {%- set content -%}
+        <p>{{ _('If you need to answer separately from the people you live with, you can request an individual access code to start a separate census.') }}</p>
+        {%- autoescape false -%}
+            <p><a href="{{ request_individual_code_link }}">{{ _('Request individual access code') }}</a></p>
+        {%- endautoescape -%}
+        {%- call onsPanel({
+                'type': 'warn'
+            })
+        -%}
+        <p><strong>{{ _('Someone in your household must still complete a census using a household access code')}}</strong></p>
+        {%- endcall -%}
+    {%- endset -%}
+
+    {%- call onsCollapsible({
+            'id': 'collapsible',
+            'title': _('Need to answer separately from your household?'),
+            'titleTag': 'h2',
+            'button': {
+                'close': _('Hide this'),
+                'contextSuffix': 'content'
+            }
+        })
+    -%}
+        {{ content | safe }}
+    {%- endcall -%}
+
+    {{
+        onsButton({
+            'text': _('Continue'),
+            'classes': 'u-mb-m u-mt-l',
+            'innerClasses': 'icon--chevron-right-white'
+        })
+    }}
+
+{%- endblock -%}

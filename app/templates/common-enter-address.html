@@ -25,7 +25,7 @@
     {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
 {%- elif sub_user_journey == 'change-address' -%}
     {%- set question_description = '' -%}
-{%- elif sub_user_journey == 'individual-code' -%}
+{%- elif individual == True -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'access-code' -%}
     {%- set question_description = _('<p>To request an access code, we need your address. A new access code will start a new census.</p>') -%}
