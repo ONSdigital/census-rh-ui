@@ -1043,7 +1043,19 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_individual_title_en = 'Request an individual access code'
         self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
         self.content_request_individual_secondary_en = 'You can choose to receive your new access code by text or post.'
+        # TODO: add welsh translation
         self.content_request_individual_secondary_cy = 'You can choose to receive your new access code by text or post.'
+
+        self.content_request_individual_form_title_en = 'Request an individual paper questionnaire'
+        # TODO: add welsh translation
+        self.content_request_individual_form_title_cy = 'Request an individual paper questionnaire'
+        self.content_request_individual_form_secondary_en = \
+            'An individual paper questionnaire lets you answer your census questions separately from the people ' \
+            'you live with, so they can\\xe2\\x80\\x99t see your answers.'
+        # TODO: add welsh translation
+        self.content_request_individual_form_secondary_cy = \
+            'An individual paper questionnaire lets you answer your census questions separately from the people ' \
+            'you live with, so they can\\xe2\\x80\\x99t see your answers.'
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
         self.content_request_access_code_enter_address_secondary_en = \
@@ -1128,6 +1140,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_sms_secondary_household_cy = \
             'The text message with a new household access code should arrive soon for you to start your census'
 
+        self.content_request_code_household_information_title_en = 'Request a new household access code'
+        # TODO Add Welsh Translation
+        self.content_request_code_household_information_title_cy = 'Request a new household access code'
+
+        self.content_request_form_household_information_title_en = 'Request a household paper questionnaire'
+        # TODO Add Welsh Translation
+        self.content_request_form_household_information_title_cy = 'Request a household paper questionnaire'
+
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
@@ -1145,8 +1165,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_confirm_name_address_title_household_en = \
             'Do you want to send a new household access code to this address?'
         self.content_request_common_confirm_name_address_error_en = 'Select an answer'
-        self.content_request_common_confirm_name_address_individual_message_en = \
+        self.content_request_code_confirm_name_address_individual_message_en = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
+        self.content_request_form_confirm_name_address_individual_message_en = \
+            'Your individual paper questionnaire will arrive in a white unbranded envelope'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
@@ -1162,8 +1184,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_confirm_name_address_error_cy = \
             "Select an answer"
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_individual_message_cy = \
+        self.content_request_code_confirm_name_address_individual_message_cy = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_individual_message_cy = \
+            'Your individual paper questionnaire will arrive in a white unbranded envelope'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
@@ -1501,7 +1526,7 @@ class RHTestCase(AioHTTPTestCase):
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
-        
+
         self.get_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
@@ -1613,157 +1638,197 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
 
         self.get_request_individual_code_en = self.app.router['RequestIndividualCode:get'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.get_request_individual_code_cy = self.app.router['RequestIndividualCode:get'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.get_request_individual_code_ni = self.app.router['RequestIndividualCode:get'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
+        )
+
+        self.get_request_individual_form_en = self.app.router['RequestIndividualForm:get'].url_for(
+            request_type='paper-form', display_region='en'
+        )
+        self.get_request_individual_form_cy = self.app.router['RequestIndividualForm:get'].url_for(
+            request_type='paper-form', display_region='cy'
+        )
+        self.get_request_individual_form_ni = self.app.router['RequestIndividualForm:get'].url_for(
+            request_type='paper-form', display_region='ni'
         )
 
         self.post_request_individual_code_en = self.app.router['RequestIndividualCode:post'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.post_request_individual_code_cy = self.app.router['RequestIndividualCode:post'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.post_request_individual_code_ni = self.app.router['RequestIndividualCode:post'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
+        )
+
+        self.post_request_individual_form_en = self.app.router['RequestIndividualForm:post'].url_for(
+            request_type='paper-form', display_region='en'
+        )
+        self.post_request_individual_form_cy = self.app.router['RequestIndividualForm:post'].url_for(
+            request_type='paper-form', display_region='cy'
+        )
+        self.post_request_individual_form_ni = self.app.router['RequestIndividualForm:post'].url_for(
+            request_type='paper-form', display_region='ni'
         )
 
         self.get_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.get_request_individual_code_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='individual-code'
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='individual-code'
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='individual-code'
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.get_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.get_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
         self.post_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.post_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.post_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
 
         self.get_request_individual_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.get_request_individual_code_enter_mobile_cy = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.get_request_individual_code_enter_mobile_ni = self.app.router['RequestCodeEnterMobile:get'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
         self.post_request_individual_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.post_request_individual_code_enter_mobile_cy = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.post_request_individual_code_enter_mobile_ni = self.app.router['RequestCodeEnterMobile:post'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
 
         self.get_request_individual_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.get_request_individual_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.get_request_individual_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
         self.post_request_individual_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.post_request_individual_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.post_request_individual_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
         )
 
         self.post_request_individual_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='individual-code', display_region='en'
+            request_type='access-code', display_region='en'
         )
         self.post_request_individual_code_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='individual-code', display_region='cy'
+            request_type='access-code', display_region='cy'
         )
         self.post_request_individual_code_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='individual-code', display_region='ni'
+            request_type='access-code', display_region='ni'
+        )
+
+        self.post_request_individual_form_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='en'
+        )
+        self.post_request_individual_form_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='cy'
+        )
+        self.post_request_individual_form_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-form', display_region='ni'
         )
 
         self.post_request_individual_code_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
                                                                             display_region='en')
         self.post_request_individual_code_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
                                                                             display_region='cy')
         self.post_request_individual_code_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='individual-code',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+                                                                            display_region='ni')
+
+        self.post_request_individual_form_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+                                                                            display_region='en')
+        self.post_request_individual_form_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+                                                                            display_region='cy')
+        self.post_request_individual_form_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
                                                                             display_region='ni')
 
         # Start Request Paper Form
@@ -1846,6 +1911,26 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='paper-form'
         )
 
+        self.post_request_access_code_household_information_en = self.app.router['RequestHouseholdCode:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_household_information_cy = self.app.router['RequestHouseholdCode:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+        )
+        self.post_request_access_code_household_information_ni = self.app.router['RequestHouseholdCode:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+        )
+
+        self.post_request_paper_form_household_information_en = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_household_information_cy = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_household_information_ni = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
         self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='paper-form'
         )
@@ -1886,23 +1971,42 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_form_sent_post_title_en = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_individual_title_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_large_print_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_form_sent_post_individual_title_large_print_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_ce_en = \
             'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_individual_title_ce_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_ce_with_room_en = \
             'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_individual_title_ce_with_room_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_ce_with_room_long_surname_en = \
             'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_large_print_ce_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_individual_title_large_print_ce_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
+        self.content_request_form_sent_post_individual_title_lp_ce_with_room_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en = \
             'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
@@ -1912,28 +2016,54 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_form_sent_post_title_cy = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_cy = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_large_print_cy = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_cy = \
             'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_ce_cy = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_with_room_cy = \
             'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_ce_with_room_cy = \
+            'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_with_room_long_surname_cy = \
             'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_cy = \
+            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_ce_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_large_print_ce_cy = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
+        # TODO: add welsh translation
+        self.content_request_form_sent_post_individual_title_lp_ce_with_room_cy = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy = \
             'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
@@ -1941,13 +2071,20 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
+
         self.content_request_form_sent_post_title_ni = \
             'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_individual_title_ni = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_form_sent_post_title_large_print_ni = \
             'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_form_sent_post_individual_title_large_print_ni = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
             'Do you want to send a paper questionnaire to this address?'
+        self.content_request_form_confirm_name_address_individual_title_en = \
+            'Do you want to send an individual paper questionnaire to this address?'
         self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
         self.content_request_form_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
@@ -1955,6 +2092,9 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_title_cy = \
             'Do you want to send a paper questionnaire to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_form_confirm_name_address_individual_title_cy = \
+            'Do you want to send an individual paper questionnaire to this address?'
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
         # TODO Add Welsh Translation
