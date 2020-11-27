@@ -1,85 +1,77 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/radios/_macro.njk' import onsRadios %}
-{% from 'components/button/_macro.njk' import onsButton %}
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/radios/_macro.njk' import onsRadios -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
 
-{% set form =  {
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('StartConfirmAddress:post', display_region=display_region)
     }
-} %}
+} -%}
 
-{% set form_radio_options = [
-                        {
-                            'id': 'yes',
-                            'label': {
-                                'text': _('Yes, this is the correct address')
-                            },
-                            'value': 'Yes'
-                        },
-                        {
-                            'id': 'no',
-                            'label': {
-                                'text': _('No, this is not the correct address')
-                            },
-                            'value': 'No'
-                        }
-                    ]
-%}
+{%- set form_radio_options = [
+        {
+            'id': 'yes',
+            'label': {
+                'text': _('Yes, this is the correct address')
+            },
+            'value': 'Yes'
+        },
+        {
+            'id': 'no',
+            'label': {
+                'text': _('No, this is not the correct address')
+            },
+            'value': 'No'
+        }
+    ]
+-%}
 
-{% block main %}
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+{%- if 'no-selection' in field_messages_dict -%}
+    {%- set error_address = {'id': 'no-selection', 'text': _('Select an answer')} -%}
+{%- endif -%}
 
-    {% if display_region_warning == 'yes' %}
-        {% set region_warning_message = _('Your address is in England, so you can only complete your census in English.') %}
-        {% from "components/panel/_macro.njk" import onsPanel %}
-        {% call onsPanel({
+{%- block main -%}
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- if display_region_warning -%}
+        {%- set region_warning_message = _('Your address is in England, so you can only complete your census in English.') -%}
+        {%- from "components/panel/_macro.njk" import onsPanel -%}
+        {%- call onsPanel({
                 type: "branded"
             })
-        %}
+        -%}
            <p>{{ region_warning_message }}</p>
-        {% endcall %}
-    {% endif %}
+        {%- endcall -%}
+    {%- endif -%}
 
-    {% call onsQuestion({
+    {%- call onsQuestion({
         'title': _('Is this the correct address?'),
         'useFieldset': true
-    }) %}
+    }) -%}
 
     <p>
         {{ addressLine1 }}<br>
-        {% if addressLine2 %}{{ addressLine2 }}<br>{% endif %}
-        {% if addressLine3 %}{{ addressLine3 }}<br>{% endif %}
-        {% if townName %}{{ townName }}<br>{% endif %}
+        {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
+        {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
+        {%- if townName -%}{{ townName }}<br>{%- endif -%}
         {{ postcode }}
     </p>
 
-
-        {% if 'address' in field_messages_dict %}
-            {{
-                onsRadios({
-                    'name': 'address-check-answer',
-                    'radios': form_radio_options,
-                    'error': {
-                        'text': _('Check and confirm the address is correct')
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsRadios({
-                    'name': 'address-check-answer',
-                    'radios': form_radio_options
-                })
-            }}
-        {% endif %}
+    {{
+        onsRadios({
+            'name': 'address',
+            'radios': form_radio_options,
+            'error': error_address
+        })
+    }}
 
     {% endcall %}
 
@@ -91,4 +83,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}

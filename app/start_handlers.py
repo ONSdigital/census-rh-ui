@@ -293,6 +293,12 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
+        display_region_warning = False
+        if (display_region == 'cy') and (session['case']['region'][0] == 'E'):
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            display_region_warning = True
+
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
@@ -302,7 +308,9 @@ class StartConfirmAddress(StartCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']}
+                'postcode': attributes['postcode'],
+                'display_region_warning': display_region_warning
+                }
 
     @aiohttp_jinja2.template('start-confirm-address.html')
     async def post(self, request):
