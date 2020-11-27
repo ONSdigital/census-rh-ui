@@ -593,7 +593,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
         # TODO: add welsh translation
         self.content_start_confirm_address_error_cy = 'Select an answer'
-        # TODO: add welsh translation
         self.content_start_confirm_address_region_warning_cy = \
             'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
 
