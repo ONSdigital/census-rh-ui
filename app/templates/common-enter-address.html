@@ -75,7 +75,7 @@
     {%- if sub_user_journey == 'paper-form' -%}
         {%- set content -%}
             {%- autoescape false -%}
-                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request aa paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request a paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
             {%- endautoescape -%}
         {%- endset -%}
     {%- else -%}
