@@ -14,8 +14,8 @@
     }
 } -%}
 
-{%- if 'accommodation-type' in field_messages_dict -%}
-    {%- set error_accommodation_type = {'text': 'Select an answer'} -%}
+{%- if 'error-accommodation-type' in field_messages_dict -%}
+    {%- set error_accommodation_type = {'id': 'error-accommodation-type', 'text': 'Select an answer'} -%}
 {%- endif -%}
 
 {%- set radio_options = [

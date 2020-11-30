@@ -730,10 +730,10 @@ class StartTransientEnterTownName(StartCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
-                                                                   'TOWN_NAME_ENTER_ERROR', 'form-enter-town-name'))
+                                                                   'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
-                                                                   'TOWN_NAME_ENTER_ERROR', 'form-enter-town-name'))
+                                                                   'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
             return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -814,10 +814,12 @@ class StartTransientAccommodationType(StartCommon):
             logger.info('transient accommodation type error', client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
-                                                                   'ACCOMMODATION_TYPE_ERROR', 'accommodation-type'))
+                                                                   'ACCOMMODATION_TYPE_ERROR',
+                                                                   'error-accommodation-type'))
             else:
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
-                                                                   'ACCOMMODATION_TYPE_ERROR', 'accommodation-type'))
+                                                                   'ACCOMMODATION_TYPE_ERROR',
+                                                                   'error-accommodation-type'))
             return {
                 'page_title': page_title,
                 'display_region': display_region,

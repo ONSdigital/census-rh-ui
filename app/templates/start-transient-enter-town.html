@@ -14,8 +14,8 @@
     }
 } -%}
 
-{%- if 'form-enter-town-name' in field_messages_dict -%}
-    {%- set error_town_name = {'text': _('Enter your nearest town or city')} -%}
+{%- if 'error-enter-town-name' in field_messages_dict -%}
+    {%- set error_town_name = {'id': 'error-enter-town-name', 'text': _('Enter your nearest town or city')} -%}
 {%- endif -%}
 
 {%- if 'after-census-day' == 'true' -%}
