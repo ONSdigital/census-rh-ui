@@ -30,7 +30,7 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|individual-code|access-code|paper-form\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form\b}'
 
     @staticmethod
     def setup_request(request):
@@ -162,18 +162,21 @@ class ProcessPostcode:
 
         if not postcode.isalnum():
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')

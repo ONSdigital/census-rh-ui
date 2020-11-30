@@ -27,14 +27,14 @@
     {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
 {%- elif sub_user_journey == 'change-address' -%}
     {%- set question_description = '' -%}
-{%- elif sub_user_journey == 'individual-code' -%}
+{%- elif (individual == True) -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'access-code' -%}
     {%- set question_description = _('<p>To request an access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'paper-form' -%}
-    {%- set question_description = _('<p>To send a paper questionnaire, we need your address</p>') -%}
+    {%- set question_description = _('<p>To send a paper census questionnaire, we need your address</p>') -%}
 {%- else -%}
-    {%- set question_description = _('<p>We need to know the address for which you are answering.</p>') -%}
+    {%- set question_description = _('<p>We need to know the address for which you are answering</p>') -%}
 {%- endif -%}
 
 {%- block main -%}
@@ -72,11 +72,19 @@
 
     {%- endcall -%}
 
-    {%- set content -%}
-        {%- autoescape false -%}
-            <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
-        {%- endautoescape -%}
-    {%- endset -%}
+    {%- if sub_user_journey == 'paper-form' -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request a paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- else -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- endif -%}
 
     {%- call onsCollapsible({
             'id': 'collapsible',
