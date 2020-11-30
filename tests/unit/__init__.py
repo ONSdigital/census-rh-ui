@@ -479,12 +479,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_call_contact_centre_address_not_found_title_cy = \
             'Register an address'
         self.content_common_call_contact_centre_address_not_found_text_en = \
-            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
-            'it may not be registered on our system.'
+            'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_text_cy = \
-            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
-            'it may not be registered on our system.'
+            'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         self.content_common_call_contact_centre_address_linking_en = \
             'There is an issue linking your address via the website.'
         # TODO: add welsh translation
