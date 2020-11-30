@@ -162,18 +162,21 @@ class ProcessPostcode:
 
         if not postcode.isalnum():
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
+                # TODO: Add Welsh Translation
                 raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
