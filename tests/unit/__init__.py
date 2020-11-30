@@ -566,8 +566,9 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_start_uac_title_cy = "Enter your 16-character access code"
 
-        self.content_start_uac_expired_en = 'Your unique access code has expired'
-        self.content_start_uac_expired_cy = 'Mae eich cod mynediad unigryw wedi dod i ben'
+        self.content_start_uac_expired_en = 'This access code has already been used'
+        # TODO: add welsh translation
+        self.content_start_uac_expired_cy = 'This access code has already been used'
 
         self.content_start_code_for_northern_ireland_title_en = \
             'This access code is not part of the census for England and Wales'
