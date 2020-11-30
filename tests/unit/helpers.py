@@ -943,6 +943,28 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region), contents)
             self.check_text_select_method(display_region, contents, user_type)
 
+    async def check_post_resident_or_manager_code_manager_ni(self, url, data):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', 'ni', 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('ce-manager', 'ni', 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo('ni'), contents)
+            self.assertIn(self.content_common_nisra_ce_manager_title, contents)
+
+    async def check_post_resident_or_manager_form_manager_ni(self, url, data):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', 'ni', 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('ce-manager', 'ni', 'GET'))
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo('ni'), contents)
+            self.assertIn(self.content_common_nisra_ce_manager_title, contents)
+
     async def check_post_resident_or_manager_form_resident(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_resident_or_manager_input_resident)
