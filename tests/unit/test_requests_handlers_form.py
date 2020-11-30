@@ -3003,7 +3003,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             check_room_number=True)
 
     @unittest_run_loop
-    async def test_request_paper_form_sent_post_add_room_early_error_ce_r_ew_e(self):
+    async def test_request_paper_form_sent_post_add_room_early_empty_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
@@ -3012,7 +3012,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                    'en', 'individual', 'ConfirmAddress', no_data=True)
 
     @unittest_run_loop
-    async def test_request_paper_form_sent_post_add_room_early_error_ce_r_ew_w(self):
+    async def test_request_paper_form_sent_post_add_room_early_empty_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
@@ -3021,7 +3021,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                    'en', 'individual', 'ConfirmAddress', no_data=True)
 
     @unittest_run_loop
-    async def test_request_paper_form_sent_post_add_room_early_error_ce_r_cy(self):
+    async def test_request_paper_form_sent_post_add_room_early_empty_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'CE')
@@ -3030,13 +3030,97 @@ class TestRequestsHandlersPaperForm(TestHelpers):
                                    'cy', 'individual', 'ConfirmAddress', no_data=True)
 
     @unittest_run_loop
-    async def test_request_paper_form_sent_post_add_room_early_error_ce_r_ni(self):
+    async def test_request_paper_form_sent_post_add_room_early_empty_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
         await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
                                    self.post_request_paper_form_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmAddress', no_data=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_over_length_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', data_over_length=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_over_length_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', data_over_length=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_over_length_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_cy,
+                                   self.post_request_paper_form_enter_room_number_cy,
+                                   'cy', 'individual', 'ConfirmAddress', data_over_length=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_over_length_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
+                                   self.post_request_paper_form_enter_room_number_ni,
+                                   'ni', 'individual', 'ConfirmAddress', data_over_length=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_check_for_value_ce_r_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', check_for_value=False)
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', check_for_value=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_check_for_value_ce_r_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_en, 'en', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', check_for_value=False)
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_en,
+                                   self.post_request_paper_form_enter_room_number_en,
+                                   'en', 'individual', 'ConfirmAddress', check_for_value=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_check_for_value_ce_r_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_cy, 'cy', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_cy,
+                                   self.post_request_paper_form_enter_room_number_cy,
+                                   'cy', 'individual', 'ConfirmAddress', check_for_value=False)
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_cy,
+                                   self.post_request_paper_form_enter_room_number_cy,
+                                   'cy', 'individual', 'ConfirmAddress', check_for_value=True)
+
+    @unittest_run_loop
+    async def test_request_paper_form_sent_post_add_room_early_check_for_value_ce_r_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_form_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_form_select_address_ni, 'ni', 'CE')
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
+                                   self.post_request_paper_form_enter_room_number_ni,
+                                   'ni', 'individual', 'ConfirmAddress', check_for_value=False)
+        await self.add_room_number(self.get_request_paper_form_enter_room_number_ni,
+                                   self.post_request_paper_form_enter_room_number_ni,
+                                   'ni', 'individual', 'ConfirmAddress', check_for_value=True)
 
     @unittest_run_loop
     async def test_request_paper_form_sent_post_add_room_late_long_surname_ce_r_ew_e(self):

@@ -296,15 +296,22 @@ class TestHelpers(RHTestCase):
         else:
             self.assertIn(self.content_common_500_error_en, contents)
 
-    def check_text_enter_room_number(self, display_region, contents, check_error=False):
+    def check_text_enter_room_number(self, display_region, contents, check_empty=False, check_over_length=False,
+                                     check_for_value=False):
         if display_region == 'cy':
             self.assertIn(self.content_common_enter_room_number_title_cy, contents)
-            if check_error:
-                self.assertIn(self.content_common_enter_room_number_error_cy, contents)
+            if check_empty:
+                self.assertIn(self.content_common_enter_room_number_empty_cy, contents)
+            if check_over_length:
+                self.assertIn(self.content_common_enter_room_number_over_length_cy, contents)
         else:
             self.assertIn(self.content_common_enter_room_number_title_en, contents)
-            if check_error:
-                self.assertIn(self.content_common_enter_room_number_error_en, contents)
+            if check_empty:
+                self.assertIn(self.content_common_enter_room_number_empty_en, contents)
+            if check_over_length:
+                self.assertIn(self.content_common_enter_room_number_over_length_en, contents)
+        if check_for_value:
+            self.assertIn('value="' + self.content_common_ce_room_number_text + '"', contents)
 
     async def check_get_enter_address(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1802,7 +1809,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region, True), contents)
             self.check_text_select_method(display_region, contents, 'individual')
 
-    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False):
+    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
+                              data_over_length=False, check_for_value=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -1820,10 +1828,14 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-room-number', display_region), contents)
-            self.check_text_enter_room_number(display_region, contents)
+            self.check_text_enter_room_number(display_region, contents, check_for_value=check_for_value)
 
-            if no_data:
-                response = await self.client.request('POST', url_post, data=self.common_room_number_input_empty)
+            if no_data or data_over_length:
+                if no_data:
+                    response = await self.client.request('POST', url_post, data=self.common_room_number_input_empty)
+                else:
+                    response = await self.client.request('POST', url_post,
+                                                         data=self.common_room_number_input_over_length)
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'POST'))
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'GET'))
 
@@ -1832,7 +1844,12 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.get_logo(display_region), contents)
                 if not display_region == 'ni':
                     self.assertIn(self.build_translation_link('enter-room-number', display_region), contents)
-                self.check_text_enter_room_number(display_region, contents, check_error=True)
+                if no_data:
+                    self.check_text_enter_room_number(display_region, contents,
+                                                      check_empty=True, check_over_length=False)
+                else:
+                    self.check_text_enter_room_number(display_region, contents,
+                                                      check_empty=False, check_over_length=True)
 
             else:
                 response = await self.client.request('POST', url_post, data=self.common_room_number_input_valid)
