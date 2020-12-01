@@ -2337,9 +2337,9 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_web_form_success_title_en = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_en = 'You message has been sent'
-        self.content_web_form_success_secondary_en = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_secondary_en = 'We will aim to respond to your query in 2 working days'
         self.content_web_form_success_title_cy = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_cy = 'You message has been sent'
-        self.content_web_form_success_secondary_cy = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_secondary_cy = 'We will aim to respond to your query in 2 working days'
 
         # yapf: enable
