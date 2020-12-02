@@ -7,9 +7,9 @@ from aiohttp.web import HTTPFound, RouteTableDef
 from aiohttp_session import get_session
 from structlog import get_logger
 
-from . import (BAD_CODE_MSG, INVALID_CODE_MSG, ADDRESS_CHECK_MSG,
+from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
-               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, ADDRESS_CHECK_MSG_CY)
+               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
 from .exceptions import InvalidEqPayLoad, SessionTimeout
@@ -182,43 +182,89 @@ class Start(StartCommon):
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
 
-        if session['case']['region'][0] == 'N':
+        if session['case']['region'] == 'N':
             if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region='ni'))
             else:
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='ni'))
-        elif session['case']['region'][0] == 'W':
+                raise HTTPFound(request.app.router['StartCodeForNorthernIreland:get'].
+                                url_for(display_region=display_region))
+        elif session['case']['region'] == 'W':
             if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
+                raise HTTPFound(request.app.router['StartCodeForWales:get'].url_for())
             else:
                 raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
         else:
-            if display_region == 'en':
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
+            if display_region == 'ni':
+                raise HTTPFound(request.app.router['StartCodeForEngland:get'].url_for())
             else:
-                raise HTTPFound(request.app.router['StartRegionChange:get'].url_for(display_region='en'))
+                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
 
-@start_routes.view(r'/' + View.valid_display_regions + '/start/region-change/')
-class StartRegionChange(StartCommon):
-    @aiohttp_jinja2.template('start-region-change.html')
+@start_routes.view(r'/' + View.valid_ew_display_regions + '/start/code-for-northern-ireland/')
+class StartCodeForNorthernIreland(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-northern-ireland.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/region-change')
+        self.log_entry(request, display_region + '/start/code-for-northern-ireland')
 
-        await check_permission(request)
+        if display_region == 'cy':
+            locale = 'cy'
+            # TODO: add welsh translation
+            page_title = "This access code is not part of the census for England and Wales"
+        else:
+            locale = 'en'
+            page_title = 'This access code is not part of the census for England and Wales'
 
-        locale = 'en'
-        page_title = 'Change of region'
+        await forget(request)
 
-        self.log_entry(request, 'start/region-change')
         return {
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
             'page_url': View.gen_page_url(request),
-            'page_show_signout': 'true'
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+        }
+
+
+@start_routes.view('/ni/start/code-for-england/')
+class StartCodeForEngland(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-england.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        self.log_entry(request, display_region + '/start/code-for-england')
+
+        locale = 'en'
+        page_title = 'This access code is not part of the census for Northern Ireland'
+
+        await forget(request)
+
+        return {
+            'display_region': display_region,
+            'locale': locale,
+            'page_title': page_title,
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+        }
+
+
+@start_routes.view('/ni/start/code-for-wales/')
+class StartCodeForWales(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-wales.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        self.log_entry(request, display_region + '/start/code-for-wales')
+
+        locale = 'en'
+        page_title = 'This access code is not part of the census for Northern Ireland'
+
+        await forget(request)
+
+        return {
+            'locale': locale,
+            'page_title': page_title,
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
 
@@ -247,6 +293,12 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
+        display_region_warning = False
+        if (display_region == 'cy') and (session['case']['region'] == 'E'):
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            display_region_warning = True
+
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
@@ -256,7 +308,9 @@ class StartConfirmAddress(StartCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']}
+                'postcode': attributes['postcode'],
+                'display_region_warning': display_region_warning
+                }
 
     @aiohttp_jinja2.template('start-confirm-address.html')
     async def post(self, request):
@@ -291,9 +345,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),
@@ -306,7 +360,7 @@ class StartConfirmAddress(StartCommon):
                     'postcode': attributes['postcode']}
 
         if address_confirmation == 'Yes':
-            if case['region'][0] == 'N':
+            if case['region'] == 'N':
                 raise HTTPFound(
                     request.app.router['StartNILanguageOptions:get'].url_for())
             else:
@@ -328,9 +382,9 @@ class StartConfirmAddress(StartCommon):
             logger.info('address confirmation error',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
-                flash(request, ADDRESS_CHECK_MSG_CY)
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, ADDRESS_CHECK_MSG)
+                flash(request, NO_SELECTION_CHECK_MSG)
             return {'locale': locale,
                     'page_title': page_title,
                     'page_url': View.gen_page_url(request),
@@ -537,7 +591,7 @@ class StartAddressHasBeenLinked(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
-        if case['region'][0] == 'N':
+        if case['region'] == 'N':
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
         else:
@@ -592,7 +646,7 @@ class StartAddressHasBeenChanged(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
-        if case['region'][0] == 'N':
+        if case['region'] == 'N':
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
         else:

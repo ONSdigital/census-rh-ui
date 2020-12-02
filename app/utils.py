@@ -30,11 +30,21 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|individual-code|access-code|paper-form\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form\b}'
 
     @staticmethod
     def setup_request(request):
         request['client_ip'] = request.headers.get('X-Forwarded-For', None)
+
+    @staticmethod
+    def single_client_ip(request):
+        if request['client_ip']:
+            single_ip = request['client_ip'].split(',', 1)[0]
+        elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
+            single_ip = '127.0.0.1'
+        else:
+            single_ip = ''
+        return single_ip
 
     @staticmethod
     def log_entry(request, endpoint):
@@ -61,6 +71,31 @@ class View:
         else:
             call_centre_number = '0800 141 2021'
         return call_centre_number
+
+    @staticmethod
+    def get_campaign_site_link(request, display_region, requested_link):
+        base_en = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN']
+        base_cy = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_CY']
+        base_ni = request.app['DOMAIN_URL_PROTOCOL'] + request.app['DOMAIN_URL_EN'] + '/ni'
+
+        link = '/'
+
+        if requested_link == 'census-home':
+            if display_region == 'ni':
+                link = base_ni
+            elif display_region == 'cy':
+                link = base_cy
+            else:
+                link = base_en
+        elif requested_link == 'contact-us':
+            if display_region == 'ni':
+                link = base_ni + '/contact-us'
+            elif display_region == 'cy':
+                link = base_cy + '/cysylltu-a-ni'
+            else:
+                link = base_en + '/contact-us'
+
+        return link
 
     @staticmethod
     async def _make_request(request,
@@ -121,37 +156,37 @@ class ProcessPostcode:
         if len(postcode) == 0:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('You have not entered a postcode')
+                raise InvalidDataErrorWelsh("Enter a postcode", 'empty')
             else:
-                raise InvalidDataError('You have not entered a postcode')
+                raise InvalidDataError('Enter a postcode', 'empty')
 
         if not postcode.isalnum():
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode must not contain symbols')
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode must not contain symbols')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode does not contain enough characters')
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode does not contain enough characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode contains too many characters')
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode contains too many characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The postcode is not a valid UK postcode')
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode is not a valid UK postcode')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         postcode_formatted = postcode[:-3] + ' ' + postcode[-3:]
 
@@ -171,9 +206,11 @@ class ProcessMobileNumber:
         except ValueError:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number must not contain letters or symbols')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return number.lstrip('0')
 
@@ -182,26 +219,39 @@ class ProcessMobileNumber:
 
         number = ProcessMobileNumber.normalise_phone_number(number, locale).lstrip(uk_prefix).lstrip('0')
 
+        if len(number) == 0:
+            if locale == 'cy':
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh('Enter your mobile number', message_type='empty')
+            else:
+                raise InvalidDataError('Enter your mobile number', message_type='empty')
+
         if not number.startswith('7'):
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number is not a UK mobile number')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number is not a UK mobile number')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) > 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number contains too many digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number contains too many digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) < 10:
             if locale == 'cy':
                 # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('The mobile phone number does not contain enough digits')
+                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
+                                            '07700 900345 or +44 7700 900345', message_type='invalid')
             else:
-                raise InvalidDataError('The mobile phone number does not contain enough digits')
+                raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
+                                       '07700 900345 or +44 7700 900345', message_type='invalid')
 
         return '{}{}'.format(uk_prefix, number)
 
@@ -216,20 +266,20 @@ class ProcessName:
         if not (data.get('name_first_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No first name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your first name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_first_name'))
             name_valid = False
 
         if not (data.get('name_last_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             else:
-                flash(request, FlashMessage.generate_flash_message('No last name provided',
+                flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'name_last_name'))
             name_valid = False
 
@@ -363,14 +413,14 @@ class RHService(View):
                                         return_json=True)
 
     @staticmethod
-    async def request_fulfilment_sms(request, case_id, tel_no,
-                                     fulfilment_code):
+    async def request_fulfilment_sms(request, case_id, tel_no, fulfilment_code_array):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
             'telNo': tel_no,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'fulfilmentCodes': fulfilment_code_array,
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
         return await View._make_request(request,
@@ -380,14 +430,16 @@ class RHService(View):
                                         request_json=fulfilment_json)
 
     @staticmethod
-    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code):
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code_array, title=None):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
+            'title': title,
             'forename': first_name,
             'surname': last_name,
-            'fulfilmentCode': fulfilment_code,
-            'dateTime': datetime.now(timezone.utc).isoformat()
+            'fulfilmentCodes': fulfilment_code_array,
+            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'
         return await View._make_request(request,
@@ -408,26 +460,6 @@ class RHService(View):
                                         f'{rhsvc_url}/uacs/{uac_hash}',
                                         auth=request.app['RHSVC_AUTH'],
                                         return_json=True)
-
-    @staticmethod
-    async def put_modify_address(request, case, address):
-        rhsvc_url = request.app['RHSVC_URL']
-        rhsvc_auth = request.app['RHSVC_AUTH']
-        case_json = {
-            'caseId': case['caseId'],
-            'uprn': case['address']['uprn'],
-            'addressLine1': address['addressLine1'],
-            'addressLine2': address['addressLine2'],
-            'addressLine3': address['addressLine3'],
-            'townName': address['townName'],
-            'postcode': address['postcode']
-        }
-        return await View._make_request(request,
-                                        'PUT',
-                                        f'{rhsvc_url}/cases/' +
-                                        case['caseId'] + '/address',
-                                        auth=rhsvc_auth,
-                                        request_json=case_json)
 
     @staticmethod
     async def post_case_create(request, address):
@@ -466,6 +498,23 @@ class RHService(View):
                                         f'{rhsvc_url}/surveyLaunched',
                                         auth=request.app['RHSVC_AUTH'],
                                         request_json=launch_json)
+
+    @staticmethod
+    async def post_webform(request, form_data):
+        form_json = {
+            'category': form_data['category'],
+            'region': form_data['region'],
+            'language': form_data['language'],
+            'name': form_data['name'],
+            'description': form_data['description'],
+            'email': form_data['email']
+        }
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/webform',
+                                        auth=request.app['RHSVC_AUTH'],
+                                        request_json=form_json)
 
 
 class ADLookUp(View):

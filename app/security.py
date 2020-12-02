@@ -8,27 +8,66 @@ from aiohttp.web import HTTPForbidden
 
 from structlog import get_logger
 
+CSP = {
+    'default-src': [
+        "'self'",
+        'https://cdn.ons.gov.uk',
+    ],
+    'font-src': [
+        "'self'",
+        'data:',
+        'https://fonts.gstatic.com',
+        'https://cdn.ons.gov.uk',
+    ],
+    'script-src': [
+        "'self'",
+        'https://www.googletagmanager.com',
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        'https://cdn.ons.gov.uk',
+    ],
+    'style-src': [
+        "'self'",
+        'https://tagmanager.google.com',
+        'https://fonts.googleapis.com',
+        "'unsafe-inline'",
+        'https://cdn.ons.gov.uk'
+    ],
+    'connect-src': [
+        "'self'",
+        'https://cdn.ons.gov.uk',
+    ],
+    'frame-src': [
+        'https://www.googletagmanager.com',
+        'https://www.timeforstorm.com'
+    ],
+    'img-src': [
+        "'self'",
+        'data:',
+        'https://www.google-analytics.com',
+        'https://ssl.gstatic.com',
+        'https://www.gstatic.com',
+        'https://cdn.ons.gov.uk'
+    ],
+}
+
+
+def _format_csp(csp_dict):
+    return ' '.join([
+        f"{section} {' '.join(content)};"
+        for section, content in csp_dict.items()
+    ])
+
+
 DEFAULT_RESPONSE_HEADERS = {
-    'Strict-Transport-Security': ['max-age=31536000', 'includeSubDomains'],
-    'Content-Security-Policy': {
-        'default-src': ["'self'", 'https://cdn.ons.gov.uk'],
-        'font-src': ["'self'", 'data:', 'https://cdn.ons.gov.uk'],
-        'script-src': [
-            "'self'", 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-        'connect-src': [
-            "'self'", 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-        'img-src': [
-            "'self'", 'data:', 'https://www.google-analytics.com',
-            'https://cdn.ons.gov.uk'
-        ],
-    },
-    'X-XSS-Protection': '1',
+    'Strict-Transport-Security': 'max-age=31536000 includeSubDomains',
+    # 'Content-Security-Policy': _format_csp(CSP),
+    'Content-Security-Policy': CSP,
+    'X-Content-Security-Policy': CSP,
+    'X-XSS-Protection': '1; mode=block',
+    'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
-    'Referrer-Policy': 'same-origin',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
 }
 
 ADD_NONCE_SECTIONS = [
@@ -66,6 +105,12 @@ async def on_prepare(request: web.BaseRequest, response: web.StreamResponse):
         elif not isinstance(value, str):
             value = ' '.join(value)
         response.headers[header] = value
+
+
+async def context_processor(request):
+    return {
+        'cspNonce': request.csp_nonce,
+    }
 
 
 async def check_permission(request):

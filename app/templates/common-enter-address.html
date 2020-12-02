@@ -1,84 +1,104 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
-{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
+{%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
-{% from 'components/question/_macro.njk' import onsQuestion %}
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from 'components/input/_macro.njk' import onsInput %}
+{%- if 'error_postcode_empty' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a postcode') } -%}
+{%- elif 'error_postcode_invalid' in field_messages_dict -%}
+    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a valid UK postcode') } -%}
+{%- endif -%}
 
-{% set form =  {
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/input/_macro.njk' import onsInput -%}
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
+
+{%- set form =  {
     'method': 'POST',
     'attributes': {
         'action': url('CommonEnterAddress:post', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey)
     }
-} %}
+} -%}
 
-{% set question_title = _('What is your postcode?') %}
+{%- set question_title = _('What is your postcode?') -%}
 
-{% if sub_user_journey == 'unlinked' %}
-    {% set question_description = _('<p>This will enable us to associate your code to your address</p>') %}
-{% elif sub_user_journey == 'change-address' %}
-    {% set question_description = '' %}
-{% elif sub_user_journey == 'individual-code' or sub_user_journey == 'access-code' %}
-    {% set question_description = _('<p>To request an access code, we need your address.</p>') %}
-{% elif sub_user_journey == 'paper-form' %}
-    {% set question_description = _('<p>To send a paper questionnaire, we need your address</p>') %}
-{% else %}
-    {% set question_description = _('<p>We need to know the address for which you are answering.</p>') %}
-{% endif %}
+{%- if sub_user_journey == 'unlinked' -%}
+    {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
+{%- elif sub_user_journey == 'change-address' -%}
+    {%- set question_description = '' -%}
+{%- elif (individual == True) -%}
+    {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
+{%- elif sub_user_journey == 'access-code' -%}
+    {%- set question_description = _('<p>To request an access code, we need your address</p>') -%}
+{%- elif sub_user_journey == 'paper-form' -%}
+    {%- set question_description = _('<p>To send a paper census questionnaire, we need your address</p>') -%}
+{%- else -%}
+    {%- set question_description = _('<p>We need to know the address for which you are answering</p>') -%}
+{%- endif -%}
 
-{% block main %}
+{%- block main -%}
 
-    {% if messages_dict %}
-        {% include 'partials/messages.html' with context %}
-    {% endif %}
+    {%- if messages_dict -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
 
-    {% if sub_user_journey == 'unlinked' %}
+    {%- if sub_user_journey == 'unlinked' -%}
 
         <h1 class="u-mb-l u-fs-xxl">{{_('Please supply your address')}}</h1>
 
         <p>{{_('The access code that you have entered is not currently linked to an address. Please select your address so we can make the link.')}}</p>
 
-    {% endif %}
+    {%- endif -%}
 
-    {% call onsQuestion({
+    {%- call onsQuestion({
         'title': question_title,
         'description': question_description
-    }) %}
+    }) -%}
 
-        {% if 'postcode' in field_messages_dict %}
-            {{
-                onsInput({
-                    'id': 'postcode',
-                    'type': 'postcode',
-                    'autocomplete': 'postcode',
-                    'classes': 'input--w-8',
-                    'label': {
-                        'text': _('UK postcode')
-                    },
-                    'name': 'form-enter-address-postcode',
-                    'error': {
-                        'text': _('Enter a valid UK postcode')
-                    },
-                })
-            }}
-        {% else %}
-            {{
-                onsInput({
-                    'id': 'postcode',
-                    'type': 'postcode',
-                    'autocomplete': 'postcode',
-                    'classes': 'input--w-8',
-                    'label': {
-                        'text': _('UK postcode')
-                    },
-                    'name': 'form-enter-address-postcode'
-                })
-            }}
-        {% endif %}
+        {{
+            onsInput({
+                'id': 'postcode',
+                'type': 'postcode',
+                'autocomplete': 'postcode',
+                'classes': 'input--w-6',
+                'label': {
+                    'text': _('UK postcode')
+                },
+                'name': 'form-enter-address-postcode',
+                'error': error_postcode
+            })
+        }}
 
-    {% endcall %}
+    {%- endcall -%}
+
+    {%- if sub_user_journey == 'paper-form' -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request a paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- else -%}
+        {%- set content -%}
+            {%- autoescape false -%}
+                <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request an access code%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
+        {%- endset -%}
+    {%- endif -%}
+
+    {%- call onsCollapsible({
+            'id': 'collapsible',
+            'title': _("I don’t live at a fixed address"),
+            'titleTag': 'h2',
+            'classes': 'u-mt-m',
+            'button': {
+                'close': _('Hide this'),
+                'contextSuffix': 'content'
+            }
+        })
+    -%}
+        {{ content | safe }}
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -87,4 +107,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}

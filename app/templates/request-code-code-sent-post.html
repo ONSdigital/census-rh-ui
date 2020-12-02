@@ -1,41 +1,44 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% if display_region == 'ni' %}
-    {% set census_home_link = domain_url_ni %}
-{% elif display_region == 'cy' %}
-    {% set census_home_link = domain_url_cy %}
-{% else %}
-    {% set census_home_link = domain_url_en %}
-{% endif %}
+{%- set display_name = first_name + ' ' + last_name -%}
+{%- set display_address -%}
+    {{ addressLine1 + ', ' }}
+    {%- if addressLine2 -%}{{ addressLine2 }}
+    {%- elif addressLine3 -%}{{ addressLine3 }}
+    {%- elif townName -%}{{ townName }}
+    {%- elif postcode -%}{{ postcode }}
+    {%- endif -%}
+{%- endset -%}
 
-{% set display_name = first_name + ' ' + last_name %}
+{%- set display_name -%}{{ first_name + ' ' + last_name }} {%- if roomNumber -%} {{ ', ' + roomNumber }}{% endif %}{%- endset -%}
 {% set display_address %}{{ addressLine1 }}, {% if addressLine2 %}{{ addressLine2 }}{% elif addressLine3 %}{{ addressLine3 }}{% elif townName %}{{ townName }}{% elif postcode %}{{ postcode }}{% endif %}{% endset %}
 
-{% from 'components/button/_macro.njk' import onsButton %}
-{% from "components/panel/_macro.njk" import onsPanel %}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
-{% block main %}
+{%- block main -%}
 
-    {%
+    {%-
         call onsPanel({
             'type': 'success',
             'id': 'success-id',
-            'icon': 'check-green',
+            'icon': 'check',
+            'iconSize': 'xl',
             'classes': 'u-mt-xl'
         })
-    %}
+    -%}
 
         <h1 class="u-mb-xs u-fs-l">{{ _('A letter will be sent to %(name)s at %(address)s', name=display_name, address=display_address)|safe }} </h1>
 
-        {% if (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') %}
-            <p>{{ _('The letter with a new individual access code should arrive soon for you to start the census') }}</p>
-        {% elif (case_type == 'CE' and address_level == 'E') %}
+        {%- if (individual == True) -%}
+            <p>{{ _('The letter with an individual access code should arrive soon for you to start the census') }}</p>
+        {%- elif (case_type == 'CE' and address_level == 'E') -%}
             <p>{{ _('The letter with a new manager access code should arrive soon for you to start the census') }}</p>
-        {% else %}
+        {%- else -%}
             <p>{{ _('The letter with a new household access code should arrive soon for you to start the census') }}</p>
-        {% endif %}
+        {%- endif -%}
 
-    {% endcall %}
+    {%- endcall -%}
 
     {{
         onsButton({
@@ -46,4 +49,4 @@
         })
     }}
 
-{% endblock %}
+{%- endblock -%}
