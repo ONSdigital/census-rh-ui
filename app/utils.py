@@ -175,33 +175,38 @@ class ProcessPostcode:
 
         if len(postcode) == 0:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid ydych wedi nodi cod post")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a postcode", 'empty')
             else:
-                raise InvalidDataError('You have not entered a postcode')
+                raise InvalidDataError('Enter a postcode', 'empty')
 
         if not postcode.isalnum():
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Ni ddylai'r cod post gynnwys symbolau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode must not contain symbols')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid yw'r cod post yn cynnwys digon o nodau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode does not contain enough characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Mae'r cod post yn cynnwys gormod o nodau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode contains too many characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode is not a valid UK postcode')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         postcode_formatted = postcode[:-3] + ' ' + postcode[-3:]
 

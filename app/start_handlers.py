@@ -186,13 +186,13 @@ class Start(StartCommon):
             raise HTTPFound(request.app.router['StartTransientEnterTownName:get'].
                             url_for(display_region=display_region))
 
-        if session['case']['region'][0] == 'N':
+        if session['case']['region'] == 'N':
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region='ni'))
             else:
                 raise HTTPFound(request.app.router['StartCodeForNorthernIreland:get'].
                                 url_for(display_region=display_region))
-        elif session['case']['region'][0] == 'W':
+        elif session['case']['region'] == 'W':
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartCodeForWales:get'].url_for())
             else:
@@ -297,6 +297,12 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
+        display_region_warning = False
+        if (display_region == 'cy') and (session['case']['region'] == 'E'):
+            logger.info('welsh url with english region - language_code will be set to en for eq',
+                        client_ip=request['client_ip'])
+            display_region_warning = True
+
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
@@ -306,7 +312,9 @@ class StartConfirmAddress(StartCommon):
                 'addressLine2': attributes['addressLine2'],
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
-                'postcode': attributes['postcode']}
+                'postcode': attributes['postcode'],
+                'display_region_warning': display_region_warning
+                }
 
     @aiohttp_jinja2.template('start-confirm-address.html')
     async def post(self, request):
@@ -356,7 +364,7 @@ class StartConfirmAddress(StartCommon):
                     'postcode': attributes['postcode']}
 
         if address_confirmation == 'Yes':
-            if case['region'][0] == 'N':
+            if case['region'] == 'N':
                 raise HTTPFound(
                     request.app.router['StartNILanguageOptions:get'].url_for())
             else:
@@ -587,7 +595,7 @@ class StartAddressHasBeenLinked(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
-        if case['region'][0] == 'N':
+        if case['region'] == 'N':
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
         else:
@@ -642,7 +650,7 @@ class StartAddressHasBeenChanged(StartCommon):
         except KeyError:
             raise SessionTimeout('start')
 
-        if case['region'][0] == 'N':
+        if case['region'] == 'N':
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
         else:
