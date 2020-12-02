@@ -1052,3 +1052,43 @@ class RequestLargePrintSentPost(RequestCommon):
                 'roomNumber': room_number,
                 'individual': attributes['individual']
             }
+
+
+@requests_routes.view(r'/ni/requests/access-code/ce-manager/')
+class RequestCodeNIManager(RequestCommon):
+    @aiohttp_jinja2.template('request-code-nisra-manager.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        display_region = 'ni'
+        page_title = 'You need to visit the Communal Establishment Portal'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/access-code/ce-manager')
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+            }
+
+
+@requests_routes.view(r'/ni/requests/paper-form/ce-manager/')
+class RequestFormNIManager(RequestCommon):
+    @aiohttp_jinja2.template('request-form-nisra-manager.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        display_region = 'ni'
+        page_title = 'You need to visit the Communal Establishment Portal'
+        locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/paper-form/ce-manager')
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+            }

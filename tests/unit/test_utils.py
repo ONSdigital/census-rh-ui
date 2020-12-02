@@ -22,7 +22,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'You have not entered a postcode',
+            'Enter a postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -36,7 +36,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode must not contain symbols',
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -50,7 +50,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode does not contain enough characters',
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -64,7 +64,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode contains too many characters',
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -78,7 +78,7 @@ class TestUtils(RHTestCase):
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
         self.assertEqual(
-            'The postcode is not a valid UK postcode',
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -99,8 +99,9 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
+        # TODO Add Welsh Translation
         self.assertEqual(
-            'Nid ydych wedi nodi cod post',
+            'Enter a postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -113,8 +114,9 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
+        # TODO Add Welsh Translation
         self.assertEqual(
-            "Ni ddylai'r cod post gynnwys symbolau",
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -127,8 +129,9 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
+        # TODO Add Welsh Translation
         self.assertEqual(
-            "Nid yw'r cod post yn cynnwys digon o nodau",
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -141,8 +144,9 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
+        # TODO Add Welsh Translation
         self.assertEqual(
-            "Mae'r cod post yn cynnwys gormod o nodau",
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message
@@ -155,8 +159,9 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
+        # TODO Add Welsh Translation
         self.assertEqual(
-            "Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig",
+            'Enter a valid UK postcode',
             str(cm.exception)
         )
         # With the correct message

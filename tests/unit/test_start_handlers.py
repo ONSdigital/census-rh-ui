@@ -3212,3 +3212,22 @@ class TestStartHandlers(TestHelpers):
     async def test_start_code_in_wales_with_adlocation_ni(self):
         await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
         await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_page_post_displays_welsh_warning(self):
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+
+            response = await self.client.request('POST', self.post_start_cy, data=self.start_data_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, 'cy', 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', 'cy', 'GET',
+                                                             include_sub_user_journey=False,
+                                                             include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo('cy'), contents)
+            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_region_warning_cy, contents)
