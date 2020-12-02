@@ -269,7 +269,7 @@ class TestStartHandlers(TestHelpers):
     @unittest_run_loop
     async def test_post_start_invalid_blank_ew(self):
         form_data = self.start_data_valid.copy()
-        del form_data['uac']
+        form_data['uac'] = ''
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
@@ -286,7 +286,7 @@ class TestStartHandlers(TestHelpers):
     @unittest_run_loop
     async def test_post_start_invalid_blank_cy(self):
         form_data = self.start_data_valid.copy()
-        del form_data['uac']
+        form_data['uac'] = ''
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
@@ -303,7 +303,7 @@ class TestStartHandlers(TestHelpers):
     @unittest_run_loop
     async def test_post_start_invalid_blank_ni(self):
         form_data = self.start_data_valid.copy()
-        del form_data['uac']
+        form_data['uac'] = ''
 
         with self.assertLogs('respondent-home', 'WARNING') as cm:
             response = await self.client.request('POST',
@@ -3212,6 +3212,21 @@ class TestStartHandlers(TestHelpers):
     async def test_start_code_in_wales_with_adlocation_ni(self):
         await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
         await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+
+    @unittest_run_loop
+    async def test_start_code_ce4_en(self):
+        await self.assert_start_page_correct(self.get_start_en, 'en', ad_location=False)
+        await self.assert_start_page_post_ce4_code_test(self.post_start_en, 'en')
+
+    @unittest_run_loop
+    async def test_start_code_ce4_cy(self):
+        await self.assert_start_page_correct(self.get_start_cy, 'cy', ad_location=False)
+        await self.assert_start_page_post_ce4_code_test(self.post_start_cy, 'cy')
+
+    @unittest_run_loop
+    async def test_start_code_ce4_ni(self):
+        await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
+        await self.assert_start_page_post_ce4_code_test(self.post_start_ni, 'ni')
 
     @unittest_run_loop
     async def test_start_page_post_displays_welsh_warning(self):
