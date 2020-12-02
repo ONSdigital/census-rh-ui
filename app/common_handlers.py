@@ -286,7 +286,12 @@ class CommonEnterAddress(CommonCommon):
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
-            flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
+            if exc.message_type == 'empty':
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR',
+                                                                    'error_postcode_empty')
+            else:
+                flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR',
+                                                                    'error_postcode_invalid')
             flash(request, flash_message)
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(
@@ -765,13 +770,21 @@ class CommonCEMangerQuestion(CommonCommon):
             session.changed()
 
             if sub_user_journey == 'paper-form':
-                raise HTTPFound(
-                    request.app.router['RequestFormManager:get'].url_for(
-                        request_type=sub_user_journey, display_region=display_region))
+                if display_region == 'ni':
+                    raise HTTPFound(
+                        request.app.router['RequestFormNIManager:get'].url_for())
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestFormManager:get'].url_for(
+                            request_type=sub_user_journey, display_region=display_region))
             else:
-                raise HTTPFound(
-                    request.app.router['RequestCodeSelectMethod:get'].url_for(
-                        request_type=sub_user_journey, display_region=display_region))
+                if display_region == 'ni':
+                    raise HTTPFound(
+                        request.app.router['RequestCodeNIManager:get'].url_for())
+                else:
+                    raise HTTPFound(
+                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                            request_type=sub_user_journey, display_region=display_region))
 
         else:
             # catch all just in case, should never get here

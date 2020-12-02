@@ -422,11 +422,13 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
 
-        self.content_common_enter_address_error_en = 'The postcode is not a valid UK postcode'
-        self.content_common_enter_address_error_cy = "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
+        self.content_common_enter_address_error_en = 'Enter a valid UK postcode'
+        # TODO Add Welsh Translation
+        self.content_common_enter_address_error_cy = "Enter a valid UK postcode"
 
-        self.content_common_enter_address_error_empty_en = 'You have not entered a postcode'
-        self.content_common_enter_address_error_empty_cy = "Nid ydych wedi nodi cod post"
+        self.content_common_enter_address_error_empty_en = 'Enter a postcode'
+        # TODO Add Welsh Translation
+        self.content_common_enter_address_error_empty_cy = "Enter a postcode"
 
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
@@ -485,12 +487,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_call_contact_centre_address_not_found_title_cy = \
             'Register an address'
         self.content_common_call_contact_centre_address_not_found_text_en = \
-            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
-            'it may not be registered on our system.'
+            'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         # TODO: add welsh translation
         self.content_common_call_contact_centre_address_not_found_text_cy = \
-            'If you can\\xe2\\x80\\x99t find your address or part of your address has changed, ' \
-            'it may not be registered on our system.'
+            'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         self.content_common_call_contact_centre_address_linking_en = \
             'There is an issue linking your address via the website.'
         # TODO: add welsh translation
@@ -558,6 +558,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_resident_or_manager_error_cy = 'Select an answer'
 
+        self.content_common_nisra_ce_manager_title = 'You need to visit the Communal Establishment Portal'
+
         self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
         self.content_common_save_and_exit_link_cy = 'Exit'
@@ -602,6 +604,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_option_no_cy = "No, this is not the correct address"
         # TODO: add welsh translation
         self.content_start_confirm_address_error_cy = 'Select an answer'
+        self.content_start_confirm_address_region_warning_cy = \
+            'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
 
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_option_title = 'Select a language option'
@@ -1068,13 +1072,13 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_enter_address_title_en = 'What is your postcode?'
         self.content_request_access_code_enter_address_secondary_en = \
-            'To request an access code, we need your address. A new access code will start a new census.'
+            'To request an access code, we need your address'
         self.content_request_individual_code_enter_address_secondary_en = \
             'To request an individual access code, we need your address'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         # TODO: add welsh translation
         self.content_request_access_code_enter_address_secondary_cy = \
-            'To request an access code, we need your address. A new access code will start a new census.'
+            'To request an access code, we need your address'
         self.content_request_individual_code_enter_address_secondary_cy = \
             'To request an individual access code, we need your address'
 
@@ -1973,10 +1977,10 @@ class RHTestCase(AioHTTPTestCase):
         # Content
 
         self.content_request_form_enter_address_secondary_en = \
-            'To send a paper questionnaire, we need your address'
+            'To send a paper census questionnaire, we need your address'
         # TODO: add welsh translation
         self.content_request_form_enter_address_secondary_cy = \
-            'To send a paper questionnaire, we need your address'
+            'To send a paper census questionnaire, we need your address'
 
         self.content_request_form_sent_post_title_en = \
             'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -2153,14 +2157,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_en = 'Find a support centre'
         self.content_support_centre_enter_postcode_secondary_en = \
             'To find your nearest support centre, we need your postcode.'
-        self.content_support_centre_enter_postcode_error_empty_en = 'You have not entered a postcode'
-        self.content_support_centre_enter_postcode_error_invalid_en = 'The postcode is not a valid UK postcode'
+        self.content_support_centre_enter_postcode_error_empty_en = 'Enter a postcode'
+        self.content_support_centre_enter_postcode_error_invalid_en = 'Enter a valid UK postcode'
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
-        self.content_support_centre_enter_postcode_error_empty_cy = 'Nid ydych wedi nodi cod post'
-        self.content_support_centre_enter_postcode_error_invalid_cy = \
-            "Nid yw\\\'r cod post yn god post dilys yn y Deyrnas Unedig"
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_empty_cy = 'Enter a postcode'
+        # TODO Add Welsh Translation
+        self.content_support_centre_enter_postcode_error_invalid_cy = "Enter a valid UK postcode"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
