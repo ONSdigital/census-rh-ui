@@ -31,7 +31,7 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|individual-code|access-code|paper-form\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form\b}'
 
     @staticmethod
     def setup_request(request):
@@ -156,33 +156,38 @@ class ProcessPostcode:
 
         if len(postcode) == 0:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid ydych wedi nodi cod post")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a postcode", 'empty')
             else:
-                raise InvalidDataError('You have not entered a postcode')
+                raise InvalidDataError('Enter a postcode', 'empty')
 
         if not postcode.isalnum():
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Ni ddylai'r cod post gynnwys symbolau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode must not contain symbols')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid yw'r cod post yn cynnwys digon o nodau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode does not contain enough characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Mae'r cod post yn cynnwys gormod o nodau")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode contains too many characters')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                raise InvalidDataErrorWelsh("Nid yw'r cod post yn god post dilys yn y Deyrnas Unedig")
+                # TODO: Add Welsh Translation
+                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
             else:
-                raise InvalidDataError('The postcode is not a valid UK postcode')
+                raise InvalidDataError('Enter a valid UK postcode')
 
         postcode_formatted = postcode[:-3] + ' ' + postcode[-3:]
 
@@ -484,10 +489,11 @@ class RHService(View):
                                         request_json=fulfilment_json)
 
     @staticmethod
-    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code_array):
+    async def request_fulfilment_post(request, case_id, first_name, last_name, fulfilment_code_array, title=None):
         rhsvc_url = request.app['RHSVC_URL']
         fulfilment_json = {
             'caseId': case_id,
+            'title': title,
             'forename': first_name,
             'surname': last_name,
             'fulfilmentCodes': fulfilment_code_array,
@@ -551,6 +557,23 @@ class RHService(View):
                                         f'{rhsvc_url}/surveyLaunched',
                                         auth=request.app['RHSVC_AUTH'],
                                         request_json=launch_json)
+
+    @staticmethod
+    async def post_webform(request, form_data):
+        form_json = {
+            'category': form_data['category'],
+            'region': form_data['region'],
+            'language': form_data['language'],
+            'name': form_data['name'],
+            'description': form_data['description'],
+            'email': form_data['email']
+        }
+        rhsvc_url = request.app['RHSVC_URL']
+        return await View._make_request(request,
+                                        'POST',
+                                        f'{rhsvc_url}/webform',
+                                        auth=request.app['RHSVC_AUTH'],
+                                        request_json=form_json)
 
 
 class ADLookUp(View):

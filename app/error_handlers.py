@@ -73,7 +73,7 @@ async def inactive_case(request, case_type):
     logger.warn('attempt to use an inactive access code')
     attributes = check_display_region(request)
     attributes['case_type'] = case_type
-    return jinja.render_template('expired.html', request, attributes)
+    return jinja.render_template('start-expired.html', request, attributes)
 
 
 async def ce_closed(request, collex_id):

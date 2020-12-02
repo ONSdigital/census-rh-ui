@@ -10,6 +10,7 @@
 {%- from "components/panel/_macro.njk" import onsPanel -%}
 
 {%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
+{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
 
 {%- set form =  {
     'method': 'POST',
@@ -61,8 +62,12 @@
 {%- endif -%}
 
 {%- if (request_type == 'paper-form') -%}
-    {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
-{%- elif (request_type == 'individual-code') or (case_type == 'CE' and address_level == 'U') -%}
+    {%- if (individual == True) -%}
+        {%- set question_title = _('Do you want to send an individual paper questionnaire to this address?') -%}
+    {%- else -%}
+        {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
+    {%- endif -%}
+{%- elif (individual == True) -%}
     {%- set question_title = _('Do you want to send an individual access code to this address?') -%}
 {%- elif (case_type == 'CE' and address_level == 'E') -%}
     {%- set question_title = _('Do you want to send a new manager access code to this address?') -%}
@@ -79,7 +84,7 @@
     {%- call onsQuestion({ 'title': question_title }) -%}
 
         <p>
-            {{ first_name }} {{ last_name }}<br>
+            {{ first_name }} {{ last_name }}{%- if roomNumber -%}, {{ roomNumber }}{%- endif -%}<br>
             {{ addressLine1 }}<br>
             {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
             {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}
@@ -87,15 +92,23 @@
             {{ postcode }}
         </p>
 
-        <p><a href="{{ request_common_enter_name_link }}">Change name</a></p>
+        <p><a href="{{ request_common_enter_name_link }}">{{ _('Change name') }}</a>
+            {%- if roomNumber -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a>
+            {%- elif (case_type == 'CE') -%}&nbsp;|&nbsp;<a href="{{ room_number_link }}">{{ _('Add flat or room number') }}</a>
+            {%- endif -%}
+        </p>
 
-        {%- if (request_type == 'individual-code') or (request_type == 'access-code' and case_type == 'CE' and address_level == 'U') -%}
+        {%- if (individual == True) -%}
             {%- call
                 onsPanel({
                     'classes': 'u-mb-m'
                 })
             -%}
-                <p>{{ _('A letter with your individual access code will arrive in a brown unbranded envelope') }}</p>
+                {%- if request_type == 'paper-form' -%}
+                    <p>{{ _('Your individual paper questionnaire will arrive in a white unbranded envelope') }}</p>
+                {%- else -%}
+                    <p>{{ _('A letter with your individual access code will arrive in a brown unbranded envelope') }}</p>
+                {%- endif -%}
             {%- endcall -%}
         {%- endif -%}
 
