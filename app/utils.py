@@ -80,8 +80,6 @@ class View:
             call_centre_number = '0800 141 2021'
         return call_centre_number
 
-
-
     @staticmethod
     def check_if_after_census_day():
         wall_clock = utc.localize(View.get_now_utc()).astimezone(uk_zone)

@@ -808,7 +808,7 @@ class StartTransientAccommodationType(StartCommon):
             session['attributes']['transientAccommodationType'] = accommodation_type
             session.changed()
 
-            if case['region'][0] == 'N':
+            if case['region'] == 'N':
                 raise HTTPFound(
                     request.app.router['StartNILanguageOptions:get'].url_for())
             else:
