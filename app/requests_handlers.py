@@ -197,7 +197,6 @@ class RequestHouseholdForm(RequestCommon):
     async def post(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        request_type = 'paper-form'
         self.log_entry(request, display_region + '/requests/paper-form/household-information')
 
         session = await get_session(request)
@@ -205,9 +204,7 @@ class RequestHouseholdForm(RequestCommon):
         session.changed()
 
         raise HTTPFound(
-            request.app.router['RequestCommonEnterName:get'].url_for(user_journey='requests',
-                                                                     request_type=request_type,
-                                                                     display_region=display_region))
+            request.app.router['RequestFormPeopleInHousehold:get'].url_for(display_region=display_region))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -707,83 +704,211 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             else:
                 fulfilment_language = 'E'
 
-            if request_type == 'paper-form':
-
-                if 'request-name-address-large-print' in data:
-                    fulfilment_type = 'LARGE_PRINT'
+            if (request_type == 'access-code') or (fulfilment_individual == 'true'):
+                if request_type == 'access-code':
+                    fulfilment_type = 'UAC'
                 else:
-                    fulfilment_type = 'QUESTIONNAIRE'
+                    if 'request-name-address-large-print' in data:
+                        fulfilment_type = 'LARGE_PRINT'
+                    else:
+                        fulfilment_type = 'QUESTIONNAIRE'
 
-            else:
-                fulfilment_type = 'UAC'
+                fulfilment_code_array = []
+                fulfilment_type_array = []
 
-            logger.info(f"fulfilment query: case_type={attributes['case_type']}, fulfilment_type={fulfilment_type}, "
+                try:
+                    available_fulfilments = await RHService.get_fulfilment(
+                        request,
+                        attributes['case_type'],
+                        attributes['region'],
+                        'POST',
+                        fulfilment_type,
+                        fulfilment_individual)
+
+                    if len(available_fulfilments) > 1:
+                        for fulfilment in available_fulfilments:
+                            if fulfilment['language'] == fulfilment_language:
+                                fulfilment_code_array.append(fulfilment['fulfilmentCode'])
+                    else:
+                        fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
+
+                    fulfilment_type_array.append(fulfilment_type)
+
+                    logger.info(
+                        f"fulfilment query: case_type={attributes['case_type']}, "
+                        f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'])
 
-            fulfilment_code_array = []
+                    try:
+                        room_number = attributes['roomNumber']
+                    except KeyError:
+                        room_number = None
 
-            try:
-                available_fulfilments = await RHService.get_fulfilment(
-                    request,
-                    attributes['case_type'],
-                    attributes['region'],
-                    'POST',
-                    fulfilment_type,
-                    fulfilment_individual)
-
-                if len(available_fulfilments) > 1:
-                    for fulfilment in available_fulfilments:
-                        if fulfilment['language'] == fulfilment_language:
-                            fulfilment_code_array.append(fulfilment['fulfilmentCode'])
-                else:
-                    fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
-
-
-
-                try:
-                    room_number = attributes['roomNumber']
-                except KeyError:
-                    room_number = None
-
-                if room_number:
-                    if len(attributes['last_name']) < last_name_char_limit:
-                        last_name = attributes['last_name'] + ', ' + room_number
-                        title = None
+                    if room_number:
+                        if len(attributes['last_name']) < last_name_char_limit:
+                            last_name = attributes['last_name'] + ', ' + room_number
+                            title = None
+                        else:
+                            last_name = attributes['last_name']
+                            title = room_number
                     else:
                         last_name = attributes['last_name']
-                        title = room_number
+                        title = None
+
+                    try:
+                        await RHService.request_fulfilment_post(request,
+                                                                attributes['case_id'],
+                                                                attributes['first_name'],
+                                                                last_name,
+                                                                fulfilment_code_array,
+                                                                title)
+                    except (KeyError, ClientResponseError) as ex:
+                        if ex.status == 429:
+                            raise TooManyRequests(request_type)
+                        else:
+                            raise ex
+
+                    if request_type == 'access-code':
+                        raise HTTPFound(
+                            request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
+                                                                                      request_type=request_type))
+                    else:
+                        if 'request-name-address-large-print' in data:
+                            raise HTTPFound(
+                                request.app.router['RequestLargePrintSentPost:get'].url_for(
+                                    display_region=display_region))
+                        else:
+                            raise HTTPFound(
+                                request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
+
+                except ClientResponseError as ex:
+                    raise ex
+
+            else:
+                if 'request-name-address-large-print' in data:
+                    large_print = True
                 else:
-                    last_name = attributes['last_name']
-                    title = None
+                    large_print = False
+
+                fulfilment_code_array = []
+                fulfilment_type_array = []
+
+                required_forms = ProcessNumberOfPeople.form_calculation(
+                    attributes['region'], attributes['number_of_people'],
+                    include_household=True, large_print=large_print)
+
+                logger.info(required_forms, client_ip=request['client_ip'])
+
+                number_of_household_forms = required_forms['number_of_household_forms']
+                number_of_continuation_forms = required_forms['number_of_continuation_forms']
+                number_of_large_print_forms = required_forms['number_of_large_print_forms']
 
                 try:
-                    await RHService.request_fulfilment_post(request,
-                                                            attributes['case_id'],
-                                                            attributes['first_name'],
-                                                            last_name,
-                                                            fulfilment_code_array,
-                                                            title)
-                except (KeyError, ClientResponseError) as ex:
-                    if ex.status == 429:
-                        raise TooManyRequests(request_type)
-                    else:
-                        raise ex
+                    if number_of_household_forms == 1:
+                        available_fulfilments = await RHService.get_fulfilment(
+                            request,
+                            attributes['case_type'],
+                            attributes['region'],
+                            'POST',
+                            'QUESTIONNAIRE',
+                            fulfilment_individual)
 
-                if request_type == 'paper-form':
+                        if len(available_fulfilments) > 1:
+                            for fulfilment in available_fulfilments:
+                                if fulfilment['language'] == fulfilment_language:
+                                    fulfilment_code_array.append(fulfilment['fulfilmentCode'])
+                        else:
+                            fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
+
+                        fulfilment_type_array.append('QUESTIONNAIRE')
+
+                    if number_of_continuation_forms > 0:
+                        count = 1
+                        while count <= number_of_continuation_forms:
+                            available_fulfilments = await RHService.get_fulfilment(
+                                request,
+                                attributes['case_type'],
+                                attributes['region'],
+                                'POST',
+                                'CONTINUATION',
+                                fulfilment_individual)
+
+                            if len(available_fulfilments) > 1:
+                                for fulfilment in available_fulfilments:
+                                    if fulfilment['language'] == fulfilment_language:
+                                        fulfilment_code_array.append(fulfilment['fulfilmentCode'])
+                            else:
+                                fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
+
+                            fulfilment_type_array.append('CONTINUATION')
+                            count += 1
+
+                    if number_of_large_print_forms > 0:
+                        count = 1
+                        while count <= number_of_large_print_forms:
+                            available_fulfilments = await RHService.get_fulfilment(
+                                request,
+                                attributes['case_type'],
+                                attributes['region'],
+                                'POST',
+                                'LARGE_PRINT',
+                                fulfilment_individual)
+
+                            if len(available_fulfilments) > 1:
+                                for fulfilment in available_fulfilments:
+                                    if fulfilment['language'] == fulfilment_language:
+                                        fulfilment_code_array.append(fulfilment['fulfilmentCode'])
+                            else:
+                                fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
+
+                            fulfilment_type_array.append('LARGE_PRINT')
+                            count += 1
+
+                    logger.info(
+                        f"fulfilment query: case_type={attributes['case_type']}, "
+                        f"fulfilment_type={fulfilment_type_array}, "
+                        f"region={attributes['region']}, individual={fulfilment_individual}",
+                        client_ip=request['client_ip'])
+
+                    try:
+                        room_number = attributes['roomNumber']
+                    except KeyError:
+                        room_number = None
+
+                    if room_number:
+                        if len(attributes['last_name']) < last_name_char_limit:
+                            last_name = attributes['last_name'] + ', ' + room_number
+                            title = None
+                        else:
+                            last_name = attributes['last_name']
+                            title = room_number
+                    else:
+                        last_name = attributes['last_name']
+                        title = None
+
+                    try:
+                        await RHService.request_fulfilment_post(request,
+                                                                attributes['case_id'],
+                                                                attributes['first_name'],
+                                                                last_name,
+                                                                fulfilment_code_array,
+                                                                title)
+                    except (KeyError, ClientResponseError) as ex:
+                        if ex.status == 429:
+                            raise TooManyRequests(request_type)
+                        else:
+                            raise ex
+
                     if 'request-name-address-large-print' in data:
                         raise HTTPFound(
                             request.app.router['RequestLargePrintSentPost:get'].url_for(display_region=display_region))
                     else:
                         raise HTTPFound(
                             request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
-                else:
-                    raise HTTPFound(
-                        request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
-                                                                                  request_type=request_type))
 
-            except ClientResponseError as ex:
-                raise ex
+                except ClientResponseError as ex:
+                    raise ex
 
         elif name_address_confirmation == 'no':
             if request_type == 'paper-form':

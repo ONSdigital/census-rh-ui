@@ -15,9 +15,9 @@
 } -%}
 
 {%- if 'number_of_people_empty' in field_messages_dict -%}
-    {%- set error_number_of_people = {'text': _('Enter the number of people in your household')} -%}
+    {%- set error_number_of_people = {'id': 'number_of_people_empty', 'text': _('Enter the number of people in your household')} -%}
 {%- elif 'number_of_people_nan' in field_messages_dict -%}
-    {%- set error_number_of_people = {'text': _('Enter a numeral')} -%}
+    {%- set error_number_of_people = {'id': 'number_of_people_nan', 'text': _('Enter a numeral')} -%}
 {%- endif -%}
 
 {%- block main -%}
@@ -39,7 +39,8 @@
                 },
                 'value': form_value_number_of_people,
                 'name': 'number_of_people',
-                'error': error_number_of_people
+                'error': error_number_of_people,
+                'classes': 'input--w-2'
             })
         }}
 

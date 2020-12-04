@@ -295,6 +295,7 @@ class ProcessNumberOfPeople:
         number_of_people_valid = True
 
         if (data.get('number_of_people')) == '':
+            logger.info('number_of_people empty', client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
@@ -307,6 +308,7 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif not (data.get('number_of_people')).isnumeric():
+            logger.info('number_of_people nan', client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter a numeral',

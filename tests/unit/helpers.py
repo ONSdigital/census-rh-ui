@@ -847,6 +847,25 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('household-information', display_region, 'POST', True))
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'GET'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_form_people_in_household_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_form_people_in_household_title_en, contents)
+
+    async def check_post_people_in_household(self, url, display_region, number_of_people):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            data = {'number_of_people': number_of_people, 'action[save_continue]': ''}
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'POST', True))
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -857,6 +876,35 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
+
+    async def check_post_people_in_household_invalid(self, url, display_region, number_of_people):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            data = {'number_of_people': number_of_people, 'action[save_continue]': ''}
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'POST', True))
+            if number_of_people == '':
+                self.assertLogEvent(cm, "number_of_people empty")
+            else:
+                self.assertLogEvent(cm, "number_of_people nan")
+
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                if number_of_people == '':
+                    self.assertIn(self.content_request_form_people_in_household_error_empty_cy, contents)
+                else:
+                    self.assertIn(self.content_request_form_people_in_household_error_nan_cy, contents)
+                self.assertIn(self.content_request_form_people_in_household_title_cy, contents)
+            else:
+                if number_of_people == '':
+                    self.assertIn(self.content_request_form_people_in_household_error_empty_en, contents)
+                else:
+                    self.assertIn(self.content_request_form_people_in_household_error_nan_en, contents)
+                self.assertIn(self.content_request_form_people_in_household_title_en, contents)
 
     async def check_get_select_method_form_manager(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1339,7 +1387,8 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_name_address_input_yes(self, url, display_region, case_type, fulfilment_type,
                                                         region, individual, override_sub_user_journey=None,
-                                                        check_room_number=False, long_surname=False):
+                                                        check_room_number=False, long_surname=False,
+                                                        number_in_household=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
@@ -1358,8 +1407,12 @@ class TestHelpers(RHTestCase):
                                                                  display_region, 'POST', False))
             else:
                 self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+
+            fulfilment_type_array = self.assert_fulfilment_type_array(display_region, fulfilment_type,
+                                                                      number_in_household=number_in_household,
+                                                                      individual=individual)
             self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type +
-                                ", fulfilment_type=" + fulfilment_type +
+                                ", fulfilment_type=" + fulfilment_type_array +
                                 ", region=" + region + ", individual=" + individual)
             if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
                 if fulfilment_type == 'LARGE_PRINT':
@@ -1989,3 +2042,31 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
+
+    @staticmethod
+    def assert_fulfilment_type_array(display_region, fulfilment_type, number_in_household=None, individual=None):
+        fulfilment_type_array = ''
+        if fulfilment_type == 'LARGE_PRINT':
+            if (individual == 'true') or (number_in_household and number_in_household <= 2):
+                fulfilment_type_array = str(['LARGE_PRINT'])
+            if number_in_household == 7:
+                fulfilment_type_array = str(['LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT'])
+        elif fulfilment_type == 'QUESTIONNAIRE':
+            if (individual == 'true') or (number_in_household and number_in_household <= 5):
+                fulfilment_type_array = str(['QUESTIONNAIRE'])
+            else:
+                if number_in_household == 6:
+                    if display_region == 'ni':
+                        fulfilment_type_array = str(['QUESTIONNAIRE'])
+                    else:
+                        fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION'])
+                elif number_in_household == 7:
+                    fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION'])
+                elif number_in_household == 18:
+                    fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION', 'CONTINUATION', 'CONTINUATION'])
+        elif fulfilment_type == 'UAC':
+            fulfilment_type_array = str(['UAC'])
+        elif fulfilment_type == 'CONTINUATION':
+            if number_in_household == 7:
+                fulfilment_type_array = str(['CONTINUATION', 'CONTINUATION'])
+        return fulfilment_type_array

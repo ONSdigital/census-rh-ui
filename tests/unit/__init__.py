@@ -1153,6 +1153,16 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_household_information_title_cy = 'Request a household paper questionnaire'
 
+        self.content_request_form_people_in_household_title_en = 'How many people are in your household?'
+        self.content_request_form_people_in_household_error_empty_en = 'Enter the number of people in your household'
+        self.content_request_form_people_in_household_error_nan_en = 'Enter a numeral'
+        # TODO Add Welsh Translation
+        self.content_request_form_people_in_household_title_cy = 'How many people are in your household?'
+        # TODO Add Welsh Translation
+        self.content_request_form_people_in_household_error_empty_cy = 'Enter the number of people in your household'
+        # TODO Add Welsh Translation
+        self.content_request_form_people_in_household_error_nan_cy = 'Enter a numeral'
+
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
@@ -1933,6 +1943,19 @@ class RHTestCase(AioHTTPTestCase):
             display_region='cy', user_journey='requests', sub_user_journey='paper-form'
         )
         self.post_request_paper_form_household_information_ni = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        )
+
+        self.post_request_paper_form_people_in_household_en = \
+            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_people_in_household_cy = \
+            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        )
+        self.post_request_paper_form_people_in_household_ni = \
+            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='paper-form'
         )
 
