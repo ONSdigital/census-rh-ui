@@ -13,25 +13,31 @@
     {%- for centre in ad_response['centres'] %}
         <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
 
-            {% if display_region == 'cy' -%}
-                <h2 class="u-fs-l u-mb-xs">{{ centre['welshLanguageLocationName'] }}</h2>
+            {%- if display_region == 'cy' -%}
+                {%- set location_name = centre['welshLanguageLocationName'] -%}
+                {%- set location_string_google = ' am ' + centre['welshLanguageLocationName'] -%}
             {%- else -%}
-                <h2 class="u-fs-l u-mb-xs">{{ centre['locationName'] }}</h2>
+                {%- set location_name = centre['locationName'] -%}
+                {%- set location_string_google = location_name -%}
             {%- endif %}
+
+            <h2 class="u-fs-l u-mb-xs">{{ location_name }}</h2>
 
             <div><span class="u-mb-s tag">{{ _('%(distance_in_miles)s miles away', distance_in_miles=centre['distanceInMiles'] )|safe }}</span></div>
 
             {%- if display_region == 'cy' -%}
-                {% autoescape false %}
+                {%- autoescape false -%}
                     <p>{{ centre['welshLanguageAddress'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
-                {% endautoescape %}
+                {%- endautoescape -%}
             {%- else -%}
-                {% autoescape false %}
+                {%- autoescape false -%}
                     <p>{{ centre['address'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
-                {% endautoescape %}
+                {%- endautoescape -%}
             {%- endif -%}
 
-            <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">{{ _('Find on Google Maps') }}</a></p>
+            {%- autoescape false -%}
+                <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">{{ _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe }}</a></p>
+            {%- endautoescape -%}
 
             {{
                 onsList({

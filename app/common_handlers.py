@@ -891,10 +891,10 @@ class CommonEnterRoomNumber(CommonCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                   'ROOM_NUMBER_ENTER_ERROR', 'form-enter-room-number'))
+                                                                   'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
             return {
                 'page_title': page_title,
                 'display_region': display_region,

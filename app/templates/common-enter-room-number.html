@@ -16,8 +16,8 @@
     }
 } -%}
 
-{%- if 'form-enter-room-number' in field_messages_dict -%}
-    {%- set error_room_number = {'text': _('Enter your flat or room number')} -%}
+{%- if 'error-room-number' in field_messages_dict -%}
+    {%- set error_room_number = {'id': 'error-room-number', 'text': _('Enter your flat or room number')} -%}
 {%- endif -%}
 
 {%- set question_title = _('What is your flat or room number?') -%}
