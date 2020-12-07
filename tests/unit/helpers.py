@@ -1393,7 +1393,10 @@ class TestHelpers(RHTestCase):
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
 
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            if display_region == 'cy':
+                mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            else:
+                mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_post
             mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
 
             if fulfilment_type == 'LARGE_PRINT':
