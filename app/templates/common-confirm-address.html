@@ -35,7 +35,7 @@
 -%}
 
 {%- if 'no-selection' in field_messages_dict -%}
-    {%- set error_address = {'text': _('Select an answer')} -%}
+    {%- set error_address = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- block main -%}

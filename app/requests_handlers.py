@@ -661,15 +661,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Select an answer',
-                                                                   'ERROR',
-                                                                   'NAME_CONFIRMATION_ERROR',
-                                                                   'request-name-address-confirmation'))
+                flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
-                flash(request, FlashMessage.generate_flash_message('Select an answer',
-                                                                   'ERROR',
-                                                                   'NAME_CONFIRMATION_ERROR',
-                                                                   'request-name-address-confirmation'))
+                flash(request, NO_SELECTION_CHECK_MSG)
 
             try:
                 room_number = attributes['roomNumber']
