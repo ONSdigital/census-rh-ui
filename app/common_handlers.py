@@ -824,7 +824,7 @@ class CommonEnterRoomNumber(CommonCommon):
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
 
-        await self.common_check_attributes(request, user_journey, sub_user_journey)
+        session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             locale = 'cy'
@@ -833,13 +833,19 @@ class CommonEnterRoomNumber(CommonCommon):
         else:
             locale = 'en'
             page_title = 'What is your flat or room number?'
+
+        if session_attributes['roomNumber']:
+            room_number = session_attributes['roomNumber']
+        else:
+            room_number = None
         return {
             'display_region': display_region,
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
             'page_url': View.gen_page_url(request),
-            'page_title': page_title
+            'page_title': page_title,
+            'room_number': room_number
         }
 
     @aiohttp_jinja2.template('common-enter-room-number.html')
@@ -866,7 +872,7 @@ class CommonEnterRoomNumber(CommonCommon):
 
         try:
             room_number = data['form-enter-room-number']
-            if room_number == '':
+            if (room_number == '') or (len(room_number) > 10):
                 raise KeyError
             session['attributes']['roomNumber'] = room_number
             session.changed()
@@ -887,19 +893,31 @@ class CommonEnterRoomNumber(CommonCommon):
                     ))
 
         except KeyError:
-            logger.info('room number question error',
-                        client_ip=request['client_ip'])
-            if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                   'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
+            logger.info('room number question error', client_ip=request['client_ip'])
+            if len(data['form-enter-room-number']) > 10:
+                if display_region == 'cy':
+                    # TODO Add Welsh translation
+                    flash(request, FlashMessage.generate_flash_message(
+                        'You have entered too many characters. Enter up to 10 characters', 'ERROR',
+                        'ROOM_NUMBER_ENTER_ERROR', 'error-room-number-len'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message(
+                        'You have entered too many characters. Enter up to 10 characters', 'ERROR',
+                        'ROOM_NUMBER_ENTER_ERROR', 'error-room-number-len'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                   'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
+                if display_region == 'cy':
+                    # TODO Add Welsh translation
+                    flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                       'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
+                                                                       'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
             return {
                 'page_title': page_title,
                 'display_region': display_region,
                 'user_journey': user_journey,
                 'sub_user_journey': sub_user_journey,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'room_number': data['form-enter-room-number']
             }

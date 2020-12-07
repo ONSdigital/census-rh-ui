@@ -456,7 +456,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
         self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
         self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
-        self.content_common_enter_room_number_error_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_over_length_en = \
+            'You have entered too many characters. Enter up to 10 characters'
         # TODO: add welsh translation
         self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
         # TODO: add welsh translation
@@ -464,13 +466,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
         # TODO: add welsh translation
-        self.content_common_enter_room_number_error_cy = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_cy = 'Enter your flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_over_length_cy = \
+            'You have entered too many characters. Enter up to 10 characters'
 
         self.common_room_number_input_valid = {
             'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
         }
         self.common_room_number_input_empty = {
             'form-enter-room-number': '', 'action[save_continue]': '',
+        }
+        self.common_room_number_input_over_length = {
+            'form-enter-room-number': 'Room A8, Flat 47', 'action[save_continue]': '',
         }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
