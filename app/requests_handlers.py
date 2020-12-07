@@ -23,7 +23,8 @@ last_name_char_limit = 48
 class RequestCommon(View):
 
     valid_request_types_code_only = r'{request_type:\baccess-code\b}'
-    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-form\b}'
+    valid_request_types_form_only = r'{request_type:\bpaper-form|continuation-form\b}'
+    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-form|continuation-form\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type):
@@ -1002,12 +1003,13 @@ class RequestCodeCodeSentPost(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/number-of-people-in-your-household/')
-class RequestFormPeopleInHousehold(RequestCommon):
-    @aiohttp_jinja2.template('request-form-people-in-household.html')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types_form_only + '/number-of-people-in-your-household/')
+class RequestCommonPeopleInHousehold(RequestCommon):
+    @aiohttp_jinja2.template('request-common-people-in-household.html')
     async def get(self, request):
         self.setup_request(request)
-
+        request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -1018,20 +1020,22 @@ class RequestFormPeopleInHousehold(RequestCommon):
             page_title = 'How many people are in your household?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/number-of-people-in-your-household')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/number-of-people-in-your-household')
 
-        attributes = await self.get_check_attributes(request, 'paper-form')
+        await self.get_check_attributes(request, request_type)
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['page_url'] = View.gen_page_url(request)
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request)
+        }
 
-        return attributes
-
-    @aiohttp_jinja2.template('request-form-people-in-household.html')
+    @aiohttp_jinja2.template('request-common-people-in-household.html')
     async def post(self, request):
         self.setup_request(request)
+        request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -1042,13 +1046,7 @@ class RequestFormPeopleInHousehold(RequestCommon):
             page_title = 'How many people are in your household?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/number-of-people-in-your-household')
-
-        attributes = await self.get_check_attributes(request, 'paper-form')
-        attributes['page_title'] = page_title
-        attributes['locale'] = locale
-        attributes['display_region'] = display_region
-        attributes['page_url'] = View.gen_page_url(request)
+        self.log_entry(request, display_region + '/requests/' + request_type + '/number-of-people-in-your-household')
 
         data = await request.post()
 
@@ -1061,6 +1059,7 @@ class RequestFormPeopleInHousehold(RequestCommon):
                 'display_region': display_region,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
+                'request_type': request_type,
                 'locale': locale
             }
 
@@ -1070,7 +1069,7 @@ class RequestFormPeopleInHousehold(RequestCommon):
 
         raise HTTPFound(
             request.app.router['RequestCommonEnterName:get'].url_for(display_region=display_region,
-                                                                     request_type='paper-form'))
+                                                                     request_type=request_type))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-manager/')

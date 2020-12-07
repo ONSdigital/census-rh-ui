@@ -10,7 +10,7 @@
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestFormPeopleInHousehold:post', display_region=display_region)
+        'action': url('RequestCommonPeopleInHousehold:post', display_region=display_region, request_type=request_type)
     }
 } -%}
 
@@ -18,6 +18,12 @@
     {%- set error_number_of_people = {'id': 'number_of_people_empty', 'text': _('Enter the number of people in your household')} -%}
 {%- elif 'number_of_people_nan' in field_messages_dict -%}
     {%- set error_number_of_people = {'id': 'number_of_people_nan', 'text': _('Enter a numeral')} -%}
+{%- endif -%}
+
+{%- if request_type == 'continuation-form' -%}
+    {%- set question_description = _('<p>This is to make sure we send you the right number of continuation questionnaires if there are more than 5 people in your household</p>') -%}
+{%- else -%}
+    {%- set question_description = _('<p>This is to make sure we send you the right number of paper questionnaires</p>') -%}
 {%- endif -%}
 
 {%- block main -%}
