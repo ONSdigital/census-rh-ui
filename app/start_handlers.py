@@ -643,9 +643,10 @@ class StartTransientEnterTownName(StartCommon):
         self.setup_request(request)
         await check_permission(request)
         display_region = request.match_info['display_region']
+        after_census_day = View.check_if_after_census_day()
 
         if display_region == 'cy':
-            if View.check_if_after_census_day():
+            if after_census_day:
                 # TODO: add welsh translation
                 page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
             else:
@@ -653,7 +654,7 @@ class StartTransientEnterTownName(StartCommon):
                 page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
             locale = 'cy'
         else:
-            if View.check_if_after_census_day():
+            if after_census_day:
                 page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
             else:
                 page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
@@ -675,9 +676,10 @@ class StartTransientEnterTownName(StartCommon):
         self.setup_request(request)
         await check_permission(request)
         display_region = request.match_info['display_region']
+        after_census_day = View.check_if_after_census_day()
 
         if display_region == 'cy':
-            if View.check_if_after_census_day():
+            if after_census_day:
                 # TODO: add welsh translation
                 page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
             else:
@@ -685,7 +687,7 @@ class StartTransientEnterTownName(StartCommon):
                 page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
             locale = 'cy'
         else:
-            if View.check_if_after_census_day():
+            if after_census_day:
                 page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
             else:
                 page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
@@ -699,7 +701,7 @@ class StartTransientEnterTownName(StartCommon):
 
         try:
             town_name = data['form-enter-town-name']
-            if town_name == '':
+            if not town_name:
                 raise KeyError
             session['attributes']['transientTownName'] = town_name
             session.changed()
@@ -712,6 +714,7 @@ class StartTransientEnterTownName(StartCommon):
             logger.info('error town name empty',
                         client_ip=request['client_ip'])
             if display_region == 'cy':
+                # TODO: add welsh translation
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
                                                                    'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
             else:
@@ -796,6 +799,7 @@ class StartTransientAccommodationType(StartCommon):
         except KeyError:
             logger.info('transient accommodation type error', client_ip=request['client_ip'])
             if display_region == 'cy':
+                # TODO: add welsh translation
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
                                                                    'ACCOMMODATION_TYPE_ERROR',
                                                                    'error-accommodation-type'))
