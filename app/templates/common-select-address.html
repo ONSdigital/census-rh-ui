@@ -26,6 +26,10 @@
 
 {% set question_description = _('<p class="u-fs-r--b">%(total)s addresses found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) %}
 
+{%- if 'error-no-address-selected' in field_messages_dict -%}
+    {%- set error_select_address = {'id': 'error-no-address-selected', 'text': _('Select an address')} -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -47,26 +51,14 @@
             'description': question_description
         }) %}
 
-            {% if 'address-select' in field_messages_dict %}
-                {{
-                    onsRadios({
-                        'name': 'form-select-address',
-                        'or': 'Or',
-                        'radios': addresses,
-                        'error': {
-                            'text': _('Select an address')
-                        }
-                    })
-                }}
-            {% else %}
-                {{
-                    onsRadios({
-                        'name': 'form-select-address',
-                        'or': 'Or',
-                        'radios': addresses
-                    })
-                }}
-            {% endif %}
+            {{
+                onsRadios({
+                    'name': 'form-select-address',
+                    'or': 'Or',
+                    'radios': addresses,
+                    'error': error_select_address
+                })
+            }}
 
         {% endcall %}
 

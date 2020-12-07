@@ -21,6 +21,18 @@
     }
 } %}
 
+{%- if 'error_screen_name' in field_messages_dict -%}
+    {%- set error_name = {'id': 'error_screen_name', 'text': _('Enter your name')} -%}
+{%- endif -%}
+
+{%- if 'error_country' in field_messages_dict -%}
+    {%- set error_country = {'id': 'error_country', 'text': _('Select an option')} -%}
+{%- endif -%}
+
+{%- if 'error_query' in field_messages_dict -%}
+    {%- set error_query = {'id': 'error_query', 'text': _('Select an option')} -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if webchat_status == 'closed' %}
@@ -137,84 +149,39 @@
                 })
             }}
 
-            {% if 'screen_name' in field_messages_dict %}
-                {{
-                    onsInput({
-                        'id': 'screen_name',
-                        'name': 'screen_name',
-                        'label': {
-                            'text': _('Enter your name')
-                        },
-                        'value': form_value_screen_name,
-                        'classes': 'input--w-20@m js-name',
-                        'error': {
-                            'text': _('Enter your name')
-                        }
-                    })
-                }}
-            {% else %}
-                {{
-                    onsInput({
-                        'id': 'screen_name',
-                        'name': 'screen_name',
-                        'label': {
-                            'text': _('Enter your name')
-                        },
-                        'value': form_value_screen_name,
-                        'classes': 'input--w-20@m js-name'
-                    })
-                }}
-            {% endif %}
+            {{
+                onsInput({
+                    'name': 'screen_name',
+                    'label': {
+                        'text': _('Enter your name')
+                    },
+                    'value': form_value_screen_name,
+                    'classes': 'input--w-20@m js-name',
+                    'error': error_name
+                })
+            }}
 
-            {% if 'country' in field_messages_dict %}
-                {{
-                    onsRadios({
-                        'legend': _('Select your country'),
-                        'name': 'country',
-                        'dontVisuallyHideLegend': true,
-                        'value': form_value_country,
-                        'radios': country_options,
-                        'error': {
-                            'text': _('Select an option')
-                        }
-                    })
-                }}
-            {% else %}
-                {{
-                    onsRadios({
-                        'legend': _('Select your country'),
-                        'name': 'country',
-                        'dontVisuallyHideLegend': true,
-                        'value': form_value_country,
-                        'radios': country_options
-                    })
-                }}
-            {% endif %}
+            {{
+                onsRadios({
+                    'legend': _('Select your country'),
+                    'name': 'country',
+                    'dontVisuallyHideLegend': true,
+                    'value': form_value_country,
+                    'radios': country_options,
+                    'error': error_country
+                })
+            }}
 
-            {% if 'query' in field_messages_dict %}
-                {{
-                    onsRadios({
-                        'legend': _('What do you need help with?'),
-                        'name': 'query',
-                        'dontVisuallyHideLegend': true,
-                        'value': form_value_query,
-                        'radios': query_options,
-                        'error': {
-                            'text': _('Select an option')
-                        }
-                    })
-                }}
-            {% else %}
-                {{
-                    onsRadios({
-                        'legend': _('What do you need help with?'),
-                        'name': 'query',
-                        'dontVisuallyHideLegend': true,
-                        'value': form_value_query,
-                        'radios': query_options
-                    })
-                }}
-            {% endif %}
+            {{
+                onsRadios({
+                    'legend': _('What do you need help with?'),
+                    'name': 'query',
+                    'dontVisuallyHideLegend': true,
+                    'value': form_value_query,
+                    'radios': query_options,
+                    'error': error_query
+                })
+            }}
 
             {{
                 onsButton({

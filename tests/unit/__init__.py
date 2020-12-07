@@ -579,10 +579,8 @@ class RHTestCase(AioHTTPTestCase):
             'This access code is not part of the census for England and Wales'
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
-        self.content_start_code_for_england_secondary = \
-            'You have entered an access code for the census in England.'
-        self.content_start_code_for_wales_secondary = \
-            'You have entered an access code for the census in Wales.'
+        self.content_start_code_for_england_and_wales_secondary = \
+            'You have entered an access code for the census in England and Wales.'
 
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
@@ -2341,10 +2339,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
 
         self.content_web_form_success_title_en = 'Thank you for contacting us'
-        self.content_web_form_success_confirmation_en = 'You message has been sent'
-        self.content_web_form_success_secondary_en = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_confirmation_en = 'Your message has been sent'
+        self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
         self.content_web_form_success_title_cy = 'Thank you for contacting us'
-        self.content_web_form_success_confirmation_cy = 'You message has been sent'
-        self.content_web_form_success_secondary_cy = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_confirmation_cy = 'Your message has been sent'
+        self.content_web_form_success_secondary_cy = 'We will respond to you within 2 working days'
 
         # yapf: enable

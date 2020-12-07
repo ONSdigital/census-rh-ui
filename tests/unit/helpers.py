@@ -1938,41 +1938,26 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_code_for_northern_ireland_title_en, contents)
 
-    async def assert_start_page_post_returns_address_in_england(self, url, display_region):
+    async def assert_start_page_post_returns_address_in_england_and_wales(self, url, display_region, payload):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
                 as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+            if payload == 'w':
+                mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+            else:
+                mocked.get(self.rhsvc_url, payload=self.uac_json_e)
 
             response = await self.client.request('POST', url, data=self.start_data_valid)
             self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
                                                              include_sub_user_journey=False,
                                                              include_page=False))
-            self.assertLogEvent(cm, self.build_url_log_entry('code-for-england', display_region, 'GET',
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-england-and-wales', display_region, 'GET',
                                                              include_sub_user_journey=False,
                                                              include_page=True))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
-            self.assertIn(self.content_start_code_for_england_secondary, contents)
-
-    async def assert_start_page_post_returns_address_in_wales(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-
-            response = await self.client.request('POST', url, data=self.start_data_valid)
-            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
-                                                             include_sub_user_journey=False,
-                                                             include_page=False))
-            self.assertLogEvent(cm, self.build_url_log_entry('code-for-wales', display_region, 'GET',
-                                                             include_sub_user_journey=False,
-                                                             include_page=True))
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.get_logo(display_region), contents)
-            self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
-            self.assertIn(self.content_start_code_for_wales_secondary, contents)
+            self.assertIn(self.content_start_code_for_england_and_wales_secondary, contents)
 
     async def assert_start_page_post_ce4_code_test(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:

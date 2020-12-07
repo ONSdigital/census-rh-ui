@@ -197,14 +197,9 @@ class Start(StartCommon):
             else:
                 raise HTTPFound(request.app.router['StartCodeForNorthernIreland:get'].
                                 url_for(display_region=display_region))
-        elif session['case']['region'] == 'W':
-            if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartCodeForWales:get'].url_for())
-            else:
-                raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
         else:
             if display_region == 'ni':
-                raise HTTPFound(request.app.router['StartCodeForEngland:get'].url_for())
+                raise HTTPFound(request.app.router['StartCodeForEnglandAndWales:get'].url_for())
             else:
                 raise HTTPFound(request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
@@ -258,13 +253,13 @@ class StartNICE4Code(StartCommon):
         }
 
 
-@start_routes.view('/ni/start/code-for-england/')
-class StartCodeForEngland(StartCommon):
-    @aiohttp_jinja2.template('start-code-for-england.html')
+@start_routes.view('/ni/start/code-for-england-and-wales/')
+class StartCodeForEnglandAndWales(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-england-and-wales.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = 'ni'
-        self.log_entry(request, display_region + '/start/code-for-england')
+        self.log_entry(request, display_region + '/start/code-for-england-and-wales')
 
         locale = 'en'
         page_title = 'This access code is not part of the census for Northern Ireland'
@@ -273,26 +268,6 @@ class StartCodeForEngland(StartCommon):
 
         return {
             'display_region': display_region,
-            'locale': locale,
-            'page_title': page_title,
-            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
-        }
-
-
-@start_routes.view('/ni/start/code-for-wales/')
-class StartCodeForWales(StartCommon):
-    @aiohttp_jinja2.template('start-code-for-wales.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = 'ni'
-        self.log_entry(request, display_region + '/start/code-for-wales')
-
-        locale = 'en'
-        page_title = 'This access code is not part of the census for Northern Ireland'
-
-        await forget(request)
-
-        return {
             'locale': locale,
             'page_title': page_title,
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')

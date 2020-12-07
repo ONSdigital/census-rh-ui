@@ -3196,22 +3196,22 @@ class TestStartHandlers(TestHelpers):
     @unittest_run_loop
     async def test_start_code_in_england_ni(self):
         await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
-        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
+        await self.assert_start_page_post_returns_address_in_england_and_wales(self.post_start_ni, 'ni', 'e')
 
     @unittest_run_loop
     async def test_start_code_in_england_with_adlocation_ni(self):
         await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
-        await self.assert_start_page_post_returns_address_in_england(self.post_start_ni, 'ni')
+        await self.assert_start_page_post_returns_address_in_england_and_wales(self.post_start_ni, 'ni', 'e')
 
     @unittest_run_loop
     async def test_start_code_in_wales_ni(self):
         await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
-        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+        await self.assert_start_page_post_returns_address_in_england_and_wales(self.post_start_ni, 'ni', 'w')
 
     @unittest_run_loop
     async def test_start_code_in_wales_with_adlocation_ni(self):
         await self.assert_start_page_correct(self.get_start_adlocation_valid_ni, 'ni', ad_location=True)
-        await self.assert_start_page_post_returns_address_in_wales(self.post_start_ni, 'ni')
+        await self.assert_start_page_post_returns_address_in_england_and_wales(self.post_start_ni, 'ni', 'w')
 
     @unittest_run_loop
     async def test_start_code_ce4_en(self):
