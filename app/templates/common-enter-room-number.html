@@ -16,8 +16,10 @@
     }
 } -%}
 
-{%- if 'form-enter-room-number' in field_messages_dict -%}
-    {%- set error_room_number = {'text': _('Enter your flat or room number')} -%}
+{%- if 'error-room-number-len' in field_messages_dict -%}
+    {%- set error_room_number = {'id': 'error-room-number-len', 'text': _('You have entered too many characters. Enter up to 10 characters')} -%}
+{%- elif 'error-room-number' in field_messages_dict -%}
+    {%- set error_room_number = {'id': 'error-room-number', 'text': _('Enter your flat or room number')} -%}
 {%- endif -%}
 
 {%- set question_title = _('What is your flat or room number?') -%}
@@ -35,11 +37,12 @@
         {{
             onsInput({
                 'id': 'form-enter-room-number',
-                'classes': 'input--w-8',
+                'classes': 'input--w-10',
                 'label': {
                     'text': _('Flat or room number')
                 },
                 'name': 'form-enter-room-number',
+                'value': room_number,
                 'error': error_room_number,
                 'charCheckLimit': {
                     'limit': 10,

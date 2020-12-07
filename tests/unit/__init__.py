@@ -456,7 +456,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
         self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
         self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
-        self.content_common_enter_room_number_error_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_over_length_en = \
+            'You have entered too many characters. Enter up to 10 characters'
         # TODO: add welsh translation
         self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
         # TODO: add welsh translation
@@ -464,13 +466,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
         # TODO: add welsh translation
-        self.content_common_enter_room_number_error_cy = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_cy = 'Enter your flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_over_length_cy = \
+            'You have entered too many characters. Enter up to 10 characters'
 
         self.common_room_number_input_valid = {
             'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
         }
         self.common_room_number_input_empty = {
             'form-enter-room-number': '', 'action[save_continue]': '',
+        }
+        self.common_room_number_input_over_length = {
+            'form-enter-room-number': 'Room A8, Flat 47', 'action[save_continue]': '',
         }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
@@ -579,10 +587,8 @@ class RHTestCase(AioHTTPTestCase):
             'This access code is not part of the census for England and Wales'
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
-        self.content_start_code_for_england_secondary = \
-            'You have entered an access code for the census in England.'
-        self.content_start_code_for_wales_secondary = \
-            'You have entered an access code for the census in Wales.'
+        self.content_start_code_for_england_and_wales_secondary = \
+            'You have entered an access code for the census in England and Wales.'
 
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
@@ -2336,11 +2342,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
 
         self.content_web_form_success_title_en = 'Thank you for contacting us'
-        self.content_web_form_success_confirmation_en = 'You message has been sent'
-        self.content_web_form_success_secondary_en = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_confirmation_en = 'Your message has been sent'
+        self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
         self.content_web_form_success_title_cy = 'Thank you for contacting us'
-        self.content_web_form_success_confirmation_cy = 'You message has been sent'
-        self.content_web_form_success_secondary_cy = 'We will respond to your message within 48 working hours'
+        self.content_web_form_success_confirmation_cy = 'Your message has been sent'
+        self.content_web_form_success_secondary_cy = 'We will respond to you within 2 working days'
 
         # Transient
 

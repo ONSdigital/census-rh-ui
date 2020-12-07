@@ -300,15 +300,22 @@ class TestHelpers(RHTestCase):
         else:
             self.assertIn(self.content_common_500_error_en, contents)
 
-    def check_text_enter_room_number(self, display_region, contents, check_error=False):
+    def check_text_enter_room_number(self, display_region, contents, check_empty=False, check_over_length=False,
+                                     check_for_value=False):
         if display_region == 'cy':
             self.assertIn(self.content_common_enter_room_number_title_cy, contents)
-            if check_error:
-                self.assertIn(self.content_common_enter_room_number_error_cy, contents)
+            if check_empty:
+                self.assertIn(self.content_common_enter_room_number_empty_cy, contents)
+            if check_over_length:
+                self.assertIn(self.content_common_enter_room_number_over_length_cy, contents)
         else:
             self.assertIn(self.content_common_enter_room_number_title_en, contents)
-            if check_error:
-                self.assertIn(self.content_common_enter_room_number_error_en, contents)
+            if check_empty:
+                self.assertIn(self.content_common_enter_room_number_empty_en, contents)
+            if check_over_length:
+                self.assertIn(self.content_common_enter_room_number_over_length_en, contents)
+        if check_for_value:
+            self.assertIn('value="' + self.content_common_ce_room_number_text + '"', contents)
 
     async def check_get_enter_address(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1828,7 +1835,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-method', display_region, True), contents)
             self.check_text_select_method(display_region, contents, 'individual')
 
-    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False):
+    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
+                              data_over_length=False, check_for_value=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -1846,10 +1854,14 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-room-number', display_region), contents)
-            self.check_text_enter_room_number(display_region, contents)
+            self.check_text_enter_room_number(display_region, contents, check_for_value=check_for_value)
 
-            if no_data:
-                response = await self.client.request('POST', url_post, data=self.common_room_number_input_empty)
+            if no_data or data_over_length:
+                if no_data:
+                    response = await self.client.request('POST', url_post, data=self.common_room_number_input_empty)
+                else:
+                    response = await self.client.request('POST', url_post,
+                                                         data=self.common_room_number_input_over_length)
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'POST'))
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-room-number', display_region, 'GET'))
 
@@ -1858,7 +1870,12 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.get_logo(display_region), contents)
                 if not display_region == 'ni':
                     self.assertIn(self.build_translation_link('enter-room-number', display_region), contents)
-                self.check_text_enter_room_number(display_region, contents, check_error=True)
+                if no_data:
+                    self.check_text_enter_room_number(display_region, contents,
+                                                      check_empty=True, check_over_length=False)
+                else:
+                    self.check_text_enter_room_number(display_region, contents,
+                                                      check_empty=False, check_over_length=True)
 
             else:
                 response = await self.client.request('POST', url_post, data=self.common_room_number_input_valid)
@@ -1942,41 +1959,26 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_code_for_northern_ireland_title_en, contents)
 
-    async def assert_start_page_post_returns_address_in_england(self, url, display_region):
+    async def assert_start_page_post_returns_address_in_england_and_wales(self, url, display_region, payload):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
                 as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+            if payload == 'w':
+                mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+            else:
+                mocked.get(self.rhsvc_url, payload=self.uac_json_e)
 
             response = await self.client.request('POST', url, data=self.start_data_valid)
             self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
                                                              include_sub_user_journey=False,
                                                              include_page=False))
-            self.assertLogEvent(cm, self.build_url_log_entry('code-for-england', display_region, 'GET',
+            self.assertLogEvent(cm, self.build_url_log_entry('code-for-england-and-wales', display_region, 'GET',
                                                              include_sub_user_journey=False,
                                                              include_page=True))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
-            self.assertIn(self.content_start_code_for_england_secondary, contents)
-
-    async def assert_start_page_post_returns_address_in_wales(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)]) \
-                as mocked:
-            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
-
-            response = await self.client.request('POST', url, data=self.start_data_valid)
-            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
-                                                             include_sub_user_journey=False,
-                                                             include_page=False))
-            self.assertLogEvent(cm, self.build_url_log_entry('code-for-wales', display_region, 'GET',
-                                                             include_sub_user_journey=False,
-                                                             include_page=True))
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.get_logo(display_region), contents)
-            self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
-            self.assertIn(self.content_start_code_for_wales_secondary, contents)
+            self.assertIn(self.content_start_code_for_england_and_wales_secondary, contents)
 
     async def check_post_request_individual_form_journey_switch(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
