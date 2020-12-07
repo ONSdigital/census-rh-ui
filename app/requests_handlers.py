@@ -1250,3 +1250,27 @@ class RequestFormNIManager(RequestCommon):
                 'locale': locale,
                 'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
             }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/continuation-form/not-a-household/')
+class RequestContinuationNotAHousehold(RequestCommon):
+    @aiohttp_jinja2.template('request-continuation-not-a-household.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = 'This address is not a household address'
+            locale = 'cy'
+        else:
+            page_title = 'This address is not a household address'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/continuation-form/not-a-household')
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+            }
