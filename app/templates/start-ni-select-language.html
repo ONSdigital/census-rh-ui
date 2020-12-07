@@ -40,6 +40,10 @@
 %}
 {% set radio_legend = 'You can change your language back to English at any time.' %}
 
+{%- if 'error-language-option' in field_messages_dict -%}
+    {%- set error_language_option = {'id': 'error-language-option', 'text': 'Select a language option'} -%}
+{%- endif -%}
+
 {% block main %}
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
@@ -50,28 +54,15 @@
         'useFieldset': true
     }) %}
 
-        {% if 'language-option' in field_messages_dict %}
-            {{
-                onsRadios({
-                    'legend': radio_legend,
-                    'name': 'language-option',
-                    'or': 'Or',
-                    'radios': radio_options,
-                    'error': {
-                        'text': 'Select a language option'
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsRadios({
-                    'legend': radio_legend,
-                    'name': 'language-option',
-                    'or': 'Or',
-                    'radios': radio_options
-                })
-            }}
-        {% endif %}
+        {{
+            onsRadios({
+                'legend': radio_legend,
+                'name': 'language-option',
+                'or': 'Or',
+                'radios': radio_options,
+                'error': error_language_option
+            })
+        }}
 
     {% endcall %}
 

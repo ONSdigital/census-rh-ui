@@ -32,6 +32,10 @@
                     ]
 %}
 
+{%- if 'error-language-option' in field_messages_dict -%}
+    {%- set error_language_option = {'id': 'error-language-option', 'text': 'Select a language option'} -%}
+{%- endif -%}
+
 {% block main %}
     {% if messages_dict %}
         {% include 'partials/messages.html' with context %}
@@ -42,24 +46,13 @@
         'useFieldset': true
     }) %}
 
-        {% if 'language-option' in field_messages_dict %}
-            {{
-                onsRadios({
-                    'name': 'language-option',
-                    'radios': radio_options,
-                    'error': {
-                        'text': 'Select a language option'
-                    }
-                })
-            }}
-        {% else %}
-            {{
-                onsRadios({
-                    'name': 'language-option',
-                    'radios': radio_options
-                })
-            }}
-        {% endif %}
+        {{
+            onsRadios({
+                'name': 'language-option',
+                'radios': radio_options,
+                'error': error_language_option
+            })
+        }}
 
     {% endcall %}
 
