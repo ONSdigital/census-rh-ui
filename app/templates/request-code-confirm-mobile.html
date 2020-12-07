@@ -33,7 +33,7 @@
 -%}
 
 {%- if 'no-selection' in field_messages_dict -%}
-    {%- set error_mobile = {'text': _('Select an answer')} -%}
+    {%- set error_mobile = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- block main -%}
