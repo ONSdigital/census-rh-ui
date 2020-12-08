@@ -246,13 +246,9 @@ class StartNICE4Code(StartCommon):
         locale = 'en'
         page_title = 'This access code is not part of the census for England and Wales'
 
-        await forget(request)
-
         return {
-            'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
-            'page_url': View.gen_page_url(request),
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
