@@ -2004,63 +2004,63 @@ class RHTestCase(AioHTTPTestCase):
             'To send a paper census questionnaire, we need your address'
 
         self.content_request_form_sent_post_title_en = \
-            'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+            'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_individual_title_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_large_print_en = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_individual_title_large_print_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_form_sent_post_title_ce_en = \
-            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_individual_title_ce_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_ce_with_room_en = \
-            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_individual_title_ce_with_room_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_ce_with_room_long_surname_en = \
-            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en = \
-            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_large_print_ce_en = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_individual_title_large_print_ce_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_individual_title_lp_ce_with_room_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en = \
-            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_form_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_cy = \
-            'A paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+            'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_cy = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_large_print_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_cy = \
-            'A paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_ce_cy = \
@@ -2068,7 +2068,7 @@ class RHTestCase(AioHTTPTestCase):
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_with_room_cy = \
-            'A paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_ce_with_room_cy = \
@@ -2076,15 +2076,15 @@ class RHTestCase(AioHTTPTestCase):
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_ce_with_room_long_surname_cy = \
-            'A paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_cy = \
-            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_ce_cy = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_large_print_ce_cy = \
@@ -2092,31 +2092,31 @@ class RHTestCase(AioHTTPTestCase):
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_individual_title_lp_ce_with_room_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy = \
-            'A large-print paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
+            'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
         self.content_request_form_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
 
         self.content_request_form_sent_post_title_ni = \
-            'A paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+            'A household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_form_sent_post_individual_title_ni = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_form_sent_post_title_large_print_ni = \
-            'A large-print paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_form_sent_post_individual_title_large_print_ni = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_form_confirm_name_address_title_en = \
-            'Do you want to send a paper questionnaire to this address?'
+            'Do you want to send a household paper questionnaire to this address?'
         self.content_request_form_confirm_name_address_individual_title_en = \
             'Do you want to send an individual paper questionnaire to this address?'
         self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
@@ -2125,7 +2125,7 @@ class RHTestCase(AioHTTPTestCase):
 
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_title_cy = \
-            'Do you want to send a paper questionnaire to this address?'
+            'Do you want to send a household paper questionnaire to this address?'
         # TODO Add Welsh Translation
         self.content_request_form_confirm_name_address_individual_title_cy = \
             'Do you want to send an individual paper questionnaire to this address?'
@@ -2140,9 +2140,11 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_form_manager_title_cy = 'We cannot send census forms to managers by post'
 
-        self.content_request_form_request_cancelled_title_en = 'Your request for a paper form has been cancelled'
+        self.content_request_form_request_cancelled_title_en = \
+            'Your request for a paper questionnaire has been cancelled'
         # TODO Add Welsh Translation
-        self.content_request_form_request_cancelled_title_cy = 'Your request for a paper form has been cancelled'
+        self.content_request_form_request_cancelled_title_cy = \
+            'Your request for a paper questionnaire has been cancelled'
 
         # Start Support Centre Pages
 

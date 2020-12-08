@@ -884,6 +884,9 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     if 'request-name-address-large-print' in data:
                         raise HTTPFound(
                             request.app.router['RequestLargePrintSentPost:get'].url_for(display_region=display_region))
+                    elif request_type == 'continuation-questionnaire':
+                        raise HTTPFound(
+                            request.app.router['RequestContinuationSent:get'].url_for(display_region=display_region))
                     else:
                         raise HTTPFound(
                             request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
@@ -892,7 +895,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     raise ex
 
         elif name_address_confirmation == 'no':
-            if request_type == 'paper-form':
+            if (request_type == 'paper-form') or (request_type == 'continuation-questionnaire'):
                 raise HTTPFound(
                     request.app.router['RequestFormCancelled:get'].url_for(display_region=display_region,
                                                                            request_type=request_type))
@@ -1107,21 +1110,22 @@ class RequestFormManager(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/request-cancelled/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
+                      RequestCommon.valid_request_types_form_only + '/request-cancelled/')
 class RequestFormCancelled(RequestCommon):
     @aiohttp_jinja2.template('request-form-cancelled.html')
     async def get(self, request):
         self.setup_request(request)
 
-        request_type = 'paper-form'
+        request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Your request for a paper form has been cancelled'
+            page_title = 'Your request for a questionnaire has been cancelled'
             locale = 'cy'
         else:
-            page_title = 'Your request for a paper form has been cancelled'
+            page_title = 'Your request for a questionnaire has been cancelled'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/request-cancelled')
@@ -1131,7 +1135,8 @@ class RequestFormCancelled(RequestCommon):
                 'display_region': display_region,
                 'locale': locale,
                 'request_type': request_type,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'census_home_link': View.get_campaign_site_link(request, display_region, 'census-home'),
             }
 
 
@@ -1153,6 +1158,47 @@ class RequestFormSentPost(RequestCommon):
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/form-sent-post')
+
+        attributes = await self.get_check_attributes(request, request_type)
+
+        return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'request_type': request_type,
+                'page_url': View.gen_page_url(request),
+                'first_name': attributes['first_name'],
+                'last_name': attributes['last_name'],
+                'addressLine1': attributes['addressLine1'],
+                'addressLine2': attributes['addressLine2'],
+                'addressLine3': attributes['addressLine3'],
+                'townName': attributes['townName'],
+                'postcode': attributes['postcode'],
+                'case_type': attributes['case_type'],
+                'address_level': attributes['address_level'],
+                'roomNumber': attributes['roomNumber'],
+                'individual': attributes['individual']
+            }
+
+
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/continuation-questionnaire/sent/')
+class RequestContinuationSent(RequestCommon):
+    @aiohttp_jinja2.template('request-form-sent-post.html')
+    async def get(self, request):
+        self.setup_request(request)
+
+        request_type = 'continuation-questionnaire'
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO Add Welsh Translation
+            page_title = 'A continuation questionnaire will be sent'
+            locale = 'cy'
+        else:
+            page_title = 'A continuation questionnaire will be sent'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/requests/' + request_type + '/sent')
 
         attributes = await self.get_check_attributes(request, request_type)
 

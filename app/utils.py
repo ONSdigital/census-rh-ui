@@ -362,16 +362,15 @@ class ProcessNumberOfPeople:
 
         if large_print:
             number_of_large_print_forms = math.ceil(number_of_people / 2)
-        elif include_household:
+        else:
             if region == 'N':
                 offset = 6
             else:
                 offset = 5
-            number_of_household_forms = 1
+            if include_household:
+                number_of_household_forms = 1
             if number_of_people > offset:
                 number_of_continuation_forms = math.ceil((number_of_people - offset) / 5)
-        else:
-            number_of_continuation_forms = math.ceil(number_of_people / 5)
 
         return {'number_of_household_forms': number_of_household_forms,
                 'number_of_continuation_forms': number_of_continuation_forms,
