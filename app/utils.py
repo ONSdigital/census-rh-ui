@@ -5,7 +5,8 @@ import math
 
 from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh
 from aiohttp.web import HTTPFound
-from datetime import datetime, timezone
+from datetime import datetime, date
+from pytz import timezone, utc
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
@@ -25,6 +26,9 @@ OBSCURE_WHITESPACE = (
 )
 
 uk_prefix = '44'
+uk_zone = timezone('Europe/London')
+
+census_day = date(2021, 3, 21)
 
 
 class View:
@@ -36,6 +40,10 @@ class View:
     @staticmethod
     def setup_request(request):
         request['client_ip'] = request.headers.get('X-Forwarded-For', None)
+
+    @staticmethod
+    def get_now_utc():
+        return datetime.utcnow()
 
     @staticmethod
     def single_client_ip(request):
@@ -72,6 +80,16 @@ class View:
         else:
             call_centre_number = '0800 141 2021'
         return call_centre_number
+
+    @staticmethod
+    def check_if_after_census_day():
+        wall_clock = utc.localize(View.get_now_utc()).astimezone(uk_zone)
+        now_date = wall_clock.date()
+        if now_date > census_day:
+            after_census_day = True
+        else:
+            after_census_day = False
+        return after_census_day
 
     @staticmethod
     def get_campaign_site_link(request, display_region, requested_link):
@@ -480,7 +498,7 @@ class RHService(View):
             'caseId': case_id,
             'telNo': tel_no,
             'fulfilmentCodes': fulfilment_code_array,
-            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'dateTime': datetime.now(utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/sms'
@@ -499,7 +517,7 @@ class RHService(View):
             'forename': first_name,
             'surname': last_name,
             'fulfilmentCodes': fulfilment_code_array,
-            'dateTime': datetime.now(timezone.utc).isoformat(),
+            'dateTime': datetime.now(utc).isoformat(),
             'clientIP': View.single_client_ip(request)
         }
         url = f'{rhsvc_url}/cases/{case_id}/fulfilments/post'

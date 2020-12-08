@@ -456,7 +456,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
         self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
         self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
-        self.content_common_enter_room_number_error_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_en = 'Enter your flat or room number'
+        self.content_common_enter_room_number_over_length_en = \
+            'You have entered too many characters. Enter up to 10 characters'
         # TODO: add welsh translation
         self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
         # TODO: add welsh translation
@@ -464,13 +466,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
         # TODO: add welsh translation
-        self.content_common_enter_room_number_error_cy = 'Enter your flat or room number'
+        self.content_common_enter_room_number_empty_cy = 'Enter your flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_over_length_cy = \
+            'You have entered too many characters. Enter up to 10 characters'
 
         self.common_room_number_input_valid = {
             'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
         }
         self.common_room_number_input_empty = {
             'form-enter-room-number': '', 'action[save_continue]': '',
+        }
+        self.common_room_number_input_over_length = {
+            'form-enter-room-number': 'Room A8, Flat 47', 'action[save_continue]': '',
         }
 
         self.content_common_call_contact_centre_address_not_found_title_en = \
@@ -579,10 +587,8 @@ class RHTestCase(AioHTTPTestCase):
             'This access code is not part of the census for England and Wales'
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
-        self.content_start_code_for_england_secondary = \
-            'You have entered an access code for the census in England.'
-        self.content_start_code_for_wales_secondary = \
-            'You have entered an access code for the census in Wales.'
+        self.content_start_code_for_england_and_wales_secondary = \
+            'You have entered an access code for the census in England and Wales.'
 
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
@@ -600,11 +606,11 @@ class RHTestCase(AioHTTPTestCase):
             'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
 
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
-        self.content_start_ni_language_options_option_title = 'Select a language option'
+        self.content_start_ni_language_options_error = 'Select a language option'
         self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
         self.content_start_ni_select_language_title = 'Choose your language'
-        self.content_start_ni_select_language_option_title = 'Select a language option'
+        self.content_start_ni_select_language_error = 'Select a language option'
         self.content_start_ni_select_language_option = 'Continue in English'
         self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
 
@@ -2365,4 +2371,93 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_success_confirmation_cy = 'Your message has been sent'
         self.content_web_form_success_secondary_cy = 'We will respond to you within 2 working days'
 
+        # Transient
+
+        # Content
+
+        self.content_start_transient_enter_town_name_pre_census_day_title_en = \
+            'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+        self.content_start_transient_enter_town_name_post_census_day_title_en = \
+            'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+        self.content_start_transient_enter_town_name_error_en = "Enter your nearest town or city"
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
+            'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_post_census_day_title_cy = \
+            'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_error_cy = "Enter your nearest town or city"
+
+        self.content_start_transient_accommodation_type_title_en = \
+            "Which of the following best describes your type of accommodation?"
+        self.content_start_transient_accommodation_type_error_en = "Select an answer"
+        self.content_start_transient_accommodation_type_value_barge_en = "Barge or boat"
+        self.content_start_transient_accommodation_type_value_caravan_en = "Caravan or live-in vehicle"
+        self.content_start_transient_accommodation_type_value_tent_en = "Tent or temporary structure"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_title_cy = \
+            "Which of the following best describes your type of accommodation?"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_error_cy = "Select an answer"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_barge_cy = "Barge or boat"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_caravan_cy = "Caravan or live-in vehicle"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_value_tent_cy = "Tent or temporary structure"
+
+        # Test Data
+        self.data_start_transient_town_name = 'Fareham'
+        self.start_transient_town_name_input_valid = {
+            'form-enter-town-name': self.data_start_transient_town_name, 'action[save_continue]': '',
+        }
+        self.start_transient_town_name_input_empty = {
+            'form-enter-town-name': '', 'action[save_continue]': '',
+        }
+
+        self.start_transient_accommodation_type_input_barge_en = {
+            'accommodation-type': 'Barge or boat', 'action[save_continue]': '',
+        }
+        self.start_transient_accommodation_type_input_caravan_en = {
+            'accommodation-type': 'Caravan or live-in vehicle', 'action[save_continue]': '',
+        }
+        self.start_transient_accommodation_type_input_tent_en = {
+            'accommodation-type': 'Tent or temporary structure', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_barge_cy = {
+            'accommodation-type': 'Barge or boat', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_caravan_cy = {
+            'accommodation-type': 'Caravan or live-in vehicle', 'action[save_continue]': '',
+        }
+        # TODO Add Welsh Translation
+        self.start_transient_accommodation_type_input_tent_cy = {
+            'accommodation-type': 'Tent or temporary structure', 'action[save_continue]': '',
+        }
+
+        with open('tests/test_data/rhsvc/uac_transient_e.json') as fp:
+            self.transient_uac_json_e = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_transient_w.json') as fp:
+            self.transient_uac_json_w = json.load(fp)
+        with open('tests/test_data/rhsvc/uac_transient_n.json') as fp:
+            self.transient_uac_json_n = json.load(fp)
+
         # yapf: enable
+
+    # URL functions
+    def get_url_from_class(self, class_name, method_type, display_region=None, query=None):
+        if display_region:
+            if query:
+                url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region).\
+                    with_query(query)
+            else:
+                url = self.app.router[class_name + ':' + method_type].url_for(display_region=display_region)
+        else:
+            if query:
+                url = self.app.router[class_name + ':' + method_type].url_for().with_query(query)
+            else:
+                url = self.app.router[class_name + ':' + method_type].url_for()
+        return url
