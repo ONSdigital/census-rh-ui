@@ -15,7 +15,7 @@ from .flash import flash
 from .exceptions import InvalidEqPayLoad, SessionTimeout
 from .security import remember, check_permission, forget, get_sha256_hash
 
-from .utils import View, RHService
+from .utils import View, RHService, FlashMessage
 
 logger = get_logger('respondent-home')
 start_routes = RouteTableDef()
@@ -190,6 +190,10 @@ class Start(StartCommon):
 
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
+
+        if session['case']['estabType'] == 'Transient':
+            raise HTTPFound(request.app.router['StartTransientEnterTownName:get'].
+                            url_for(display_region=display_region))
 
         if session['case']['region'] == 'N':
             if display_region == 'ni':
@@ -475,7 +479,7 @@ class StartNISelectLanguage(StartCommon):
         Address Confirmation get.
         """
         self.setup_request(request)
-        self.log_entry(request, 'ni/start/ni-select-language')
+        self.log_entry(request, 'ni/start/select-language')
         await check_permission(request)
 
         return {'locale': 'en',
@@ -486,7 +490,7 @@ class StartNISelectLanguage(StartCommon):
     @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
         self.setup_request(request)
-        self.log_entry(request, 'ni/start/ni-select-language')
+        self.log_entry(request, 'ni/start/select-language')
         await check_permission(request)
         data = await request.post()
 
@@ -661,3 +665,183 @@ class StartAddressHasBeenChanged(StartCommon):
             await self.call_questionnaire(request, case,
                                           attributes, request.app,
                                           session.get('adlocation'))
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/transient/enter-town-name/')
+class StartTransientEnterTownName(StartCommon):
+    @aiohttp_jinja2.template('start-transient-enter-town.html')
+    async def get(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+        after_census_day = View.check_if_after_census_day()
+
+        if display_region == 'cy':
+            if after_census_day:
+                # TODO: add welsh translation
+                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+            else:
+                # TODO: add welsh translation
+                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            locale = 'cy'
+        else:
+            if after_census_day:
+                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+            else:
+                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/transient/enter-town-name')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'page_url': View.gen_page_url(request),
+            'after-census-day': after_census_day,
+            'page_show_signout': 'true'
+        }
+
+    @aiohttp_jinja2.template('start-transient-enter-town.html')
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+        after_census_day = View.check_if_after_census_day()
+
+        if display_region == 'cy':
+            if after_census_day:
+                # TODO: add welsh translation
+                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+            else:
+                # TODO: add welsh translation
+                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            locale = 'cy'
+        else:
+            if after_census_day:
+                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
+            else:
+                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/transient/enter-town-name')
+
+        data = await request.post()
+
+        session = await get_session(request)
+
+        try:
+            town_name = data['form-enter-town-name']
+            if not town_name:
+                raise KeyError
+            session['attributes']['transientTownName'] = town_name
+            session.changed()
+
+            raise HTTPFound(
+                request.app.router['StartTransientAccommodationType:get'].url_for(display_region=display_region)
+            )
+
+        except KeyError:
+            logger.info('error town name empty',
+                        client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO: add welsh translation
+                flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
+                                                                   'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
+                                                                   'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
+            return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'page_url': View.gen_page_url(request),
+                'after-census-day': after_census_day,
+                'page_show_signout': 'true'
+            }
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/transient/accommodation-type/')
+class StartTransientAccommodationType(StartCommon):
+    @aiohttp_jinja2.template('start-transient-accommodation-type.html')
+    async def get(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'Which of the following best describes your type of accommodation?'
+            locale = 'cy'
+        else:
+            page_title = 'Which of the following best describes your type of accommodation?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/transient/accommodation-type')
+
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'page_url': View.gen_page_url(request),
+            'page_show_signout': 'true'
+        }
+
+    @aiohttp_jinja2.template('start-transient-accommodation-type.html')
+    async def post(self, request):
+        self.setup_request(request)
+        await check_permission(request)
+        display_region = request.match_info['display_region']
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'Which of the following best describes your type of accommodation?'
+            locale = 'cy'
+        else:
+            page_title = 'Which of the following best describes your type of accommodation?'
+            locale = 'en'
+
+        self.log_entry(request, display_region + '/start/transient/accommodation-type')
+
+        data = await request.post()
+
+        session = await get_session(request)
+        try:
+            attributes = session['attributes']
+            case = session['case']
+        except KeyError:
+            raise SessionTimeout('start')
+
+        try:
+            accommodation_type = data['accommodation-type']
+            session['attributes']['transientAccommodationType'] = accommodation_type
+            session.changed()
+
+            if case['region'] == 'N':
+                raise HTTPFound(
+                    request.app.router['StartNILanguageOptions:get'].url_for())
+            else:
+                attributes['language'] = locale
+                attributes['display_region'] = display_region
+                await self.call_questionnaire(request, case,
+                                              attributes, request.app,
+                                              session.get('adlocation'))
+
+        except KeyError:
+            logger.info('transient accommodation type error', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO: add welsh translation
+                flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
+                                                                   'ACCOMMODATION_TYPE_ERROR',
+                                                                   'error-accommodation-type'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
+                                                                   'ACCOMMODATION_TYPE_ERROR',
+                                                                   'error-accommodation-type'))
+            return {
+                'page_title': page_title,
+                'display_region': display_region,
+                'locale': locale,
+                'page_url': View.gen_page_url(request),
+                'page_show_signout': 'true'
+            }
