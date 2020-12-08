@@ -1,6 +1,9 @@
 from app.utils import ProcessPostcode, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, View
 
 from . import RHTestCase
+import datetime
+
+from unittest import mock
 
 
 class TestUtils(RHTestCase):
@@ -309,3 +312,20 @@ class TestUtils(RHTestCase):
         self.assertEqual(built_ew, expected_ew)
         self.assertEqual(built_cy, expected_cy)
         self.assertEqual(built_ni, expected_ni)
+
+    def after_census_day(self, year, month=None, day=None, hour=0, minute=0, second=0):
+        mocked_now_utc = datetime.datetime(year, month, day, hour, minute, second, 0)
+        with mock.patch('app.utils.View.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = mocked_now_utc
+            self.assertTrue(View.check_if_after_census_day())
+
+    def before_census_day(self, year, month=None, day=None, hour=0, minute=0, second=0):
+        mocked_now_utc = datetime.datetime(year, month, day, hour, minute, second, 0)
+        with mock.patch('app.utils.View.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = mocked_now_utc
+            self.assertFalse(View.check_if_after_census_day())
+
+    def test_check_before_after_census_day(self):
+        self.after_census_day(2021, 3, 22)
+        self.before_census_day(2021, 3, 21)
+        self.before_census_day(2021, 3, 20)
