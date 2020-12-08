@@ -5,6 +5,7 @@
 	"questionnaireId": "11100000009",
 	"caseType": "HH",
 	"region": "E",
+	"estabType": "HOUSEHOLD",
 	"caseId": null,
 	"collectionExerciseId": "4a6c6e0a-6384-4da8-8c3c-7c56a801f792",
 	"address": null,

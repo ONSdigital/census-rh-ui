@@ -1257,7 +1257,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1271,7 +1271,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_en)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1381,7 +1381,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1395,7 +1395,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_en)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1503,7 +1503,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1517,7 +1517,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ul)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1627,7 +1627,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1641,7 +1641,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ul)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1749,7 +1749,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1763,7 +1763,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ga)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1873,7 +1873,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 data=self.start_ni_language_option_data_no)
 
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/language-options'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
@@ -1887,7 +1887,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
                 allow_redirects=False,
                 data=self.start_ni_select_language_data_ga)
 
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/ni-select-language'")
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/select-language'")
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
