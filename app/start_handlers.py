@@ -667,7 +667,7 @@ class StartTransientEnterTownName(StartCommon):
             'display_region': display_region,
             'locale': locale,
             'page_url': View.gen_page_url(request),
-            'after-census-day': View.check_if_after_census_day(),
+            'after-census-day': after_census_day,
             'page_show_signout': 'true'
         }
 
@@ -725,7 +725,7 @@ class StartTransientEnterTownName(StartCommon):
                 'display_region': display_region,
                 'locale': locale,
                 'page_url': View.gen_page_url(request),
-                'after-census-day': View.check_if_after_census_day(),
+                'after-census-day': after_census_day,
                 'page_show_signout': 'true'
             }
 
