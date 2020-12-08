@@ -23,7 +23,7 @@
     {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
-{%- if (request_type == 'paper-form') -%}
+{%- if (request_type == 'paper-form') or (request_type == 'continuation-questionnaire') -%}
 {%- set form_options = [
                     {
                         'id': 'yes',
@@ -65,8 +65,10 @@
     {%- if (individual == True) -%}
         {%- set question_title = _('Do you want to send an individual paper questionnaire to this address?') -%}
     {%- else -%}
-        {%- set question_title = _('Do you want to send a paper questionnaire to this address?') -%}
+        {%- set question_title = _('Do you want to send a household paper questionnaire to this address?') -%}
     {%- endif -%}
+{%- elif (request_type == 'continuation-questionnaire') -%}
+    {%- set question_title = _('Do you want to send a continuation questionnaire to this address?') -%}
 {%- elif (individual == True) -%}
     {%- set question_title = _('Do you want to send an individual access code to this address?') -%}
 {%- elif (case_type == 'CE' and address_level == 'E') -%}

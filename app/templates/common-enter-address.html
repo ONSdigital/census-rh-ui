@@ -33,7 +33,7 @@
     {%- set question_description = _('<p>To request an access code, we need your address</p>') -%}
 {%- elif sub_user_journey == 'paper-form' -%}
     {%- set question_description = _('<p>To send a paper census questionnaire, we need your address</p>') -%}
-{%- elif sub_user_journey == 'continuation-form' -%}
+{%- elif sub_user_journey == 'continuation-questionnaire' -%}
     {%- set question_description = _('<p>To send a continuation questionnaire, we need your address</p>') -%}
 {%- else -%}
     {%- set question_description = _('<p>We need to know the address for which you are answering</p>') -%}
@@ -80,7 +80,7 @@
                 <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request a paper census questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
             {%- endautoescape -%}
         {%- endset -%}
-    {%- elif sub_user_journey == 'continuation-form' -%}
+    {%- elif sub_user_journey == 'continuation-questionnaire' -%}
         {%- set content -%}
             {%- autoescape false -%}
                 <p>{{ _('If you live somewhere that is mobile, such as a canal boat or motorhome, %(open)scontact us to request a continuation questionnaire%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>

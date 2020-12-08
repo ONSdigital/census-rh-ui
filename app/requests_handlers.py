@@ -23,8 +23,8 @@ last_name_char_limit = 48
 class RequestCommon(View):
 
     valid_request_types_code_only = r'{request_type:\baccess-code\b}'
-    valid_request_types_form_only = r'{request_type:\bpaper-form|continuation-form\b}'
-    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-form|continuation-form\b}'
+    valid_request_types_form_only = r'{request_type:\bpaper-form|continuation-questionnaire\b}'
+    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-form|continuation-questionnaire\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type):
@@ -205,7 +205,8 @@ class RequestHouseholdForm(RequestCommon):
         session.changed()
 
         raise HTTPFound(
-            request.app.router['RequestFormPeopleInHousehold:get'].url_for(display_region=display_region))
+            request.app.router['RequestCommonPeopleInHousehold:get'].url_for(display_region=display_region,
+                                                                             request_type='paper-form'))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -771,12 +772,17 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                 else:
                     large_print = False
 
+                if request_type == 'continuation-questionnaire':
+                    include_household = False
+                else:
+                    include_household = True
+
                 fulfilment_code_array = []
                 fulfilment_type_array = []
 
                 required_forms = ProcessNumberOfPeople.form_calculation(
                     attributes['region'], attributes['number_of_people'],
-                    include_household=True, large_print=large_print)
+                    include_household=include_household, large_print=large_print)
 
                 logger.info(required_forms, client_ip=request['client_ip'])
 
@@ -1050,7 +1056,7 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         data = await request.post()
 
-        form_valid = ProcessNumberOfPeople.validate_number_of_people(request, data, display_region)
+        form_valid = ProcessNumberOfPeople.validate_number_of_people(request, data, display_region, request_type)
 
         if not form_valid:
             logger.info('form submission error',
@@ -1251,7 +1257,7 @@ class RequestFormNIManager(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/continuation-form/not-a-household/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/continuation-questionnaire/not-a-household/')
 class RequestContinuationNotAHousehold(RequestCommon):
     @aiohttp_jinja2.template('request-continuation-not-a-household.html')
     async def get(self, request):
@@ -1265,7 +1271,7 @@ class RequestContinuationNotAHousehold(RequestCommon):
             page_title = 'This address is not a household address'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/continuation-form/not-a-household')
+        self.log_entry(request, display_region + '/requests/continuation-questionnaire/not-a-household')
 
         return {
                 'page_title': page_title,

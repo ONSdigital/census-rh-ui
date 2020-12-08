@@ -59,7 +59,7 @@ class CommonCommon(View):
                     raise HTTPFound(
                         request.app.router['RequestCommonEnterName:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
-            elif sub_user_journey == 'continuation-form':
+            elif sub_user_journey == 'continuation-questionnaire':
                 raise HTTPFound(
                     request.app.router['RequestCommonPeopleInHousehold:get'].url_for(
                         request_type=sub_user_journey, display_region=display_region))
@@ -534,7 +534,8 @@ class CommonConfirmAddress(CommonCommon):
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-                elif (session['attributes']['censusAddressType'] == 'CE') and (sub_user_journey == 'continuation-form'):
+                elif (session['attributes']['censusAddressType'] == 'CE') and \
+                        (sub_user_journey == 'continuation-questionnaire'):
                     logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'])
                     raise HTTPFound(
                         request.app.router['RequestContinuationNotAHousehold:get'].url_for(

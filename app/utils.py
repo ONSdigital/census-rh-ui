@@ -35,7 +35,7 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form|continuation-form\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form|continuation-questionnaire\b}'
 
     @staticmethod
     def setup_request(request):
@@ -308,7 +308,7 @@ class ProcessName:
 class ProcessNumberOfPeople:
 
     @staticmethod
-    def validate_number_of_people(request, data, display_region):
+    def validate_number_of_people(request, data, display_region, request_type):
 
         number_of_people_valid = True
 
@@ -336,6 +336,19 @@ class ProcessNumberOfPeople:
                 flash(request, FlashMessage.generate_flash_message('Enter a numeral',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
+            number_of_people_valid = False
+
+        elif (int(data.get('number_of_people')) < 6) and (request_type == 'continuation-questionnaire'):
+            logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_continuation'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_continuation'))
             number_of_people_valid = False
 
         return number_of_people_valid

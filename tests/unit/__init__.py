@@ -1953,17 +1953,17 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_paper_form_people_in_household_en = \
-            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
-        )
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='en', user_journey='requests', request_type='paper-form'
+            )
         self.post_request_paper_form_people_in_household_cy = \
-            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
-        )
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='cy', user_journey='requests', request_type='paper-form'
+            )
         self.post_request_paper_form_people_in_household_ni = \
-            self.app.router['RequestFormPeopleInHousehold:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
-        )
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='ni', user_journey='requests', request_type='paper-form'
+            )
 
         self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='paper-form'
