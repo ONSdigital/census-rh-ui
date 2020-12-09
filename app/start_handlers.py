@@ -125,6 +125,15 @@ class Start(StartCommon):
             locale = 'en'
             page_title = 'Start census'
         data = await request.post()
+
+        if data.get('uac').upper()[0:3] == 'CE4':
+            logger.info('CE4 case', client_ip=request['client_ip'])
+            if display_region == 'ni':
+                raise HTTPFound(request.app.router['StartNICE4Code:get'].url_for())
+            else:
+                raise HTTPFound(request.app.router['StartCodeForNorthernIreland:get'].
+                                url_for(display_region=display_region))
+
         self.setup_uac_hash(request, data.get('uac'), lang=display_region)
 
         try:
@@ -222,6 +231,24 @@ class StartCodeForNorthernIreland(StartCommon):
             'locale': locale,
             'page_title': page_title,
             'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+        }
+
+
+@start_routes.view('/ni/start/code-for-ce-manager/')
+class StartNICE4Code(StartCommon):
+    @aiohttp_jinja2.template('start-code-for-ni-ce-manager.html')
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = 'ni'
+        self.log_entry(request, display_region + '/start/code-for-ce-manager')
+
+        locale = 'en'
+        page_title = 'This access code is not part of the census for England and Wales'
+
+        return {
+            'locale': locale,
+            'page_title': page_title,
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
