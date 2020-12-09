@@ -672,6 +672,7 @@ class RHTestCase(AioHTTPTestCase):
         self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = '2019'
         self.uac = 'w4nwwpphjjptp7fn'
+        self.uac_ce4 = 'ce4fghtykjuiplku'
         self.uacHash = self.uac_json_e['uacHash']
         self.uprn = self.uac_json_e['address']['uprn']
         self.response_id = '111000000092a445af12905967d'
@@ -778,6 +779,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.start_data_valid_with_adlocation = {
             'uac': self.uac, 'adlocation': self.adlocation, 'action[save_continue]': '',
+        }
+
+        self.start_data_ce4 = {
+            'uac': self.uac_ce4, 'action[save_continue]': '',
         }
 
         self.start_confirm_address_data_yes = {

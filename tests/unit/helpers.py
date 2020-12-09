@@ -2036,6 +2036,31 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_code_not_for_northern_ireland_title, contents)
             self.assertIn(self.content_start_code_for_england_and_wales_secondary, contents)
 
+    async def assert_start_page_post_ce4_code_test(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+
+            response = await self.client.request('POST', url, data=self.start_data_ce4)
+            self.assertLogEvent(cm, self.build_url_log_entry(self.sub_user_journey, display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            if display_region == 'ni':
+                self.assertLogEvent(cm, self.build_url_log_entry('code-for-ce-manager', display_region, 'GET',
+                                                                 include_sub_user_journey=False,
+                                                                 include_page=True))
+            else:
+                self.assertLogEvent(cm, self.build_url_log_entry('code-for-northern-ireland', display_region, 'GET',
+                                                                 include_sub_user_journey=False,
+                                                                 include_page=True))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'ni':
+                self.assertIn(self.content_common_nisra_ce_manager_title, contents)
+            elif display_region == 'cy':
+                self.assertIn(self.content_start_code_for_northern_ireland_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_code_for_northern_ireland_title_en, contents)
+
     async def check_post_request_individual_form_journey_switch(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
