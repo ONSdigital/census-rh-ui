@@ -1324,5 +1324,6 @@ class RequestContinuationNotAHousehold(RequestCommon):
                 'page_title': page_title,
                 'display_region': display_region,
                 'locale': locale,
+                'page_url': View.gen_page_url(request),
                 'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
             }

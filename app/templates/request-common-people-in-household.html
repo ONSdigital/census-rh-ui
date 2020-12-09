@@ -21,7 +21,11 @@
 {%- elif 'number_of_people_nan' in field_messages_dict -%}
     {%- set error_number_of_people = {'id': 'number_of_people_nan', 'text': _('Enter a numeral')} -%}
 {%- elif 'number_of_people_continuation' in field_messages_dict -%}
-    {%- set error_number_of_people = {'id': 'number_of_people_continuation', 'text': _('Enter a number greater than 5')} -%}
+    {%- if display_region == 'ni' -%}
+        {%- set error_number_of_people = {'id': 'number_of_people_continuation', 'text': _('Enter a number greater than 6')} -%}
+    {%- else -%}
+        {%- set error_number_of_people = {'id': 'number_of_people_continuation', 'text': _('Enter a number greater than 5')} -%}
+    {%- endif -%}
 {%- endif -%}
 
 {%- if request_type == 'continuation-questionnaire' -%}

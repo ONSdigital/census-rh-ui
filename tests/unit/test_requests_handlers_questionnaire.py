@@ -3923,7 +3923,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=6)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ew_e(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
@@ -3939,7 +3939,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ew_w(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
@@ -3955,7 +3955,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_cy(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_hh_cy(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'HH')
@@ -3971,7 +3971,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ni(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_hh_ni(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'HH')
@@ -3987,7 +3987,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ew_e(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
@@ -4003,7 +4003,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ew_w(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
@@ -4019,7 +4019,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_cy(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_spg_cy(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'SPG')
@@ -4035,7 +4035,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ni(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_7_spg_ni(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'SPG')
@@ -4051,7 +4051,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=7)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ew_e(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
@@ -4067,7 +4067,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ew_w(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
@@ -4083,7 +4083,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_cy(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_hh_cy(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'HH')
@@ -4099,7 +4099,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ni(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_hh_ni(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'HH')
@@ -4115,7 +4115,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ew_e(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
@@ -4131,7 +4131,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ew_w(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
@@ -4147,7 +4147,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_cy(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_spg_cy(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'SPG')
@@ -4163,7 +4163,7 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
-    async def test_request_paper_questionnaire_sent_post_no_in_household_6_spg_ni(self):
+    async def test_request_paper_questionnaire_sent_post_no_in_household_18_spg_ni(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'SPG')

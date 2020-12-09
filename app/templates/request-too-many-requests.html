@@ -52,6 +52,11 @@
         {%- autoescape false -%}
             <p>{{ _('If you need a new paper questionnaire, please %(open)scontact us%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
         {%- endautoescape -%}
+    {%- elif sub_user_journey == 'continuation-questionnaire' -%}
+        <h1>{{ _('You have reached the maximum number of continuation questionnaires you can request online') }}</h1>
+        {%- autoescape false -%}
+            <p>{{ _('If you need a new continuation questionnaire, please %(open)scontact us%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+        {%- endautoescape -%}
     {%- else -%}
         <h1>{{ _('You have reached the maximum number of access codes you can request online') }}</h1>
         {%- autoescape false -%}

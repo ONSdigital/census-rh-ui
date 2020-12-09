@@ -526,14 +526,19 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_429_error_uac_title_en = \
             'You have reached the maximum number of access codes you can request online'
-        self.content_common_429_error_form_title_en = \
+        self.content_common_429_error_paper_questionnaire_title_en = \
             'You have reached the maximum number of paper questionnaires you can request online'
+        self.content_common_429_error_continuation_questionnaire_title_en = \
+            'You have reached the maximum number of continuation questionnaires you can request online'
         # TODO: add welsh translation
         self.content_common_429_error_uac_title_cy = \
             'You have reached the maximum number of access codes you can request online'
         # TODO: add welsh translation
-        self.content_common_429_error_form_title_cy = \
+        self.content_common_429_error_paper_questionnaire_title_cy = \
             'You have reached the maximum number of paper questionnaires you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_continuation_questionnaire_title_cy = \
+            'You have reached the maximum number of continuation questionnaires you can request online'
 
         self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
         self.content_common_resident_or_manager_option_resident_en = 'Resident'
@@ -1165,12 +1170,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_household_information_title_cy = 'Request a household paper questionnaire'
 
         self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
-        self.content_request_questionnaire_people_in_household_error_empty_en = 'Enter the number of people in your household'
+        self.content_request_questionnaire_people_in_household_error_empty_en = \
+            'Enter the number of people in your household'
         self.content_request_questionnaire_people_in_household_error_nan_en = 'Enter a numeral'
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_title_cy = 'How many people are in your household?'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_people_in_household_error_empty_cy = 'Enter the number of people in your household'
+        self.content_request_questionnaire_people_in_household_error_empty_cy = \
+            'Enter the number of people in your household'
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a numeral'
 
@@ -1857,7 +1864,7 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='ni')
 
-        # Start Request Paper Form
+        # Start Request Paper Questionnaire
 
         # URLs
 
@@ -1970,13 +1977,16 @@ class RHTestCase(AioHTTPTestCase):
                 display_region='ni', user_journey='requests', request_type='paper-questionnaire'
             )
 
-        self.post_request_paper_questionnaire_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
+        self.post_request_paper_questionnaire_resident_or_manager_en = \
+            self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_questionnaire_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
+        self.post_request_paper_questionnaire_resident_or_manager_cy = \
+            self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_questionnaire_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
+        self.post_request_paper_questionnaire_resident_or_manager_ni = \
+            self.app.router['CommonCEMangerQuestion:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
@@ -2002,10 +2012,10 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
 
-        self.content_request_questionnaire_enter_address_secondary_en = \
+        self.content_request_paper_questionnaire_enter_address_secondary_en = \
             'To send a paper census questionnaire, we need your address'
         # TODO: add welsh translation
-        self.content_request_questionnaire_enter_address_secondary_cy = \
+        self.content_request_paper_questionnaire_enter_address_secondary_cy = \
             'To send a paper census questionnaire, we need your address'
 
         self.content_request_questionnaire_sent_post_title_en = \
@@ -2139,7 +2149,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_questionnaire_confirm_name_address_option_no_cy = 'No, cancel and return'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy = \
+            'I need a large-print questionnaire'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'
@@ -2152,6 +2163,150 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_questionnaire_request_cancelled_title_cy = \
             'Your request for a paper questionnaire has been cancelled'
+
+        # Start Request Continuation Questionnaire
+
+        # URLs
+
+        self.get_request_continuation_questionnaire_enter_address_en = \
+            self.app.router['CommonEnterAddress:get'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.get_request_continuation_questionnaire_enter_address_cy = \
+            self.app.router['CommonEnterAddress:get'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.get_request_continuation_questionnaire_enter_address_ni = \
+            self.app.router['CommonEnterAddress:get'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_enter_address_en = \
+            self.app.router['CommonEnterAddress:post'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_enter_address_cy = \
+            self.app.router['CommonEnterAddress:post'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_enter_address_ni = \
+            self.app.router['CommonEnterAddress:post'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+
+        self.post_request_continuation_questionnaire_select_address_en = \
+            self.app.router['CommonSelectAddress:post'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_select_address_cy = \
+            self.app.router['CommonSelectAddress:post'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_select_address_ni = \
+            self.app.router['CommonSelectAddress:post'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+
+        self.post_request_continuation_questionnaire_confirm_address_en = \
+            self.app.router['CommonConfirmAddress:post'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_confirm_address_cy = \
+            self.app.router['CommonConfirmAddress:post'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_confirm_address_ni = \
+            self.app.router['CommonConfirmAddress:post'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+            )
+
+        self.post_request_continuation_questionnaire_people_in_household_en = \
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='en', user_journey='requests', request_type='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_people_in_household_cy = \
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='cy', user_journey='requests', request_type='continuation-questionnaire'
+            )
+        self.post_request_continuation_questionnaire_people_in_household_ni = \
+            self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
+                display_region='ni', user_journey='requests', request_type='continuation-questionnaire'
+            )
+
+        self.post_request_continuation_questionnaire_enter_name_en = \
+            self.app.router['RequestCommonEnterName:post'].url_for(
+                request_type='continuation-questionnaire', display_region='en'
+            )
+        self.post_request_continuation_questionnaire_enter_name_cy = \
+            self.app.router['RequestCommonEnterName:post'].url_for(
+                request_type='continuation-questionnaire', display_region='cy'
+            )
+        self.post_request_continuation_questionnaire_enter_name_ni = \
+            self.app.router['RequestCommonEnterName:post'].url_for(
+                request_type='continuation-questionnaire', display_region='ni'
+            )
+
+        self.post_request_continuation_questionnaire_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+                                                                            display_region='en')
+        self.post_request_continuation_questionnaire_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+                                                                            display_region='cy')
+        self.post_request_continuation_questionnaire_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+                                                                            display_region='ni')
+
+        # Content
+
+        self.content_request_continuation_questionnaire_enter_address_secondary_en = \
+            'To send a continuation questionnaire, we need your address'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_enter_address_secondary_cy = \
+            'To send a continuation questionnaire, we need your address'
+
+        self.content_request_continuation_questionnaire_not_a_household_title_en = \
+            'This address is not a household address'
+        self.content_request_continuation_questionnaire_not_a_household_secondary_en = \
+            'Continuation questionnaires can only be requested for household addresses.'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_not_a_household_title_cy = \
+            'This address is not a household address'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_not_a_household_secondary_cy = \
+            'Continuation questionnaires can only be requested for household addresses.'
+
+        self.content_request_continuation_questionnaire_people_in_household_error_number_en = \
+            'Enter a number greater than 5'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_people_in_household_error_number_cy = \
+            'Enter a number greater than 5'
+        self.content_request_continuation_questionnaire_people_in_household_error_number_ni = \
+            'Enter a number greater than 6'
+
+        self.content_request_continuation_questionnaire_sent_post_title_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        self.content_request_continuation_questionnaire_sent_post_secondary_en = \
+            'This should arrive soon for you to complete your census'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_sent_post_title_cy = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+        # TODO Add Welsh Translation
+        self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
+            'This should arrive soon for you to complete your census'
+
+        self.content_request_continuation_questionnaire_sent_post_title_ni = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+
+        self.content_request_continuation_questionnaire_confirm_name_address_title_en = \
+            'Do you want to send a continuation questionnaire to this address?'
+        # TODO Add Welsh Translation
+        self.content_request_continuation_questionnaire_confirm_name_address_title_cy = \
+            'Do you want to send a continuation questionnaire to this address?'
+
+        self.content_request_continuation_questionnaire_request_cancelled_title_en = \
+            'Your request for a continuation questionnaire has been cancelled'
+        # TODO Add Welsh Translation
+        self.content_request_continuation_questionnaire_request_cancelled_title_cy = \
+            'Your request for a continuation questionnaire has been cancelled'
 
         # Start Support Centre Pages
 

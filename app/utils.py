@@ -338,18 +338,26 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_nan'))
             number_of_people_valid = False
 
-        elif (int(data.get('number_of_people')) < 6) and (request_type == 'continuation-questionnaire'):
-            logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'])
-            if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+        elif request_type == 'continuation-questionnaire':
+            if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
+                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'])
+                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_continuation'))
-            else:
-                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
-                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                   'number_of_people_continuation'))
-            number_of_people_valid = False
+                number_of_people_valid = False
+
+            elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
+                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'])
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation'))
+                number_of_people_valid = False
 
         return number_of_people_valid
 
