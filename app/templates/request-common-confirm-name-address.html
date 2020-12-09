@@ -23,7 +23,7 @@
     {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
-{%- if (request_type == 'paper-form') or (request_type == 'continuation-questionnaire') -%}
+{%- if (request_type == 'paper-questionnaire') or (request_type == 'continuation-questionnaire') -%}
 {%- set form_options = [
                     {
                         'id': 'yes',
@@ -61,7 +61,7 @@
     -%}
 {%- endif -%}
 
-{%- if (request_type == 'paper-form') -%}
+{%- if (request_type == 'paper-questionnaire') -%}
     {%- if (individual == True) -%}
         {%- set question_title = _('Do you want to send an individual paper questionnaire to this address?') -%}
     {%- else -%}
@@ -106,7 +106,7 @@
                     'classes': 'u-mb-m'
                 })
             -%}
-                {%- if request_type == 'paper-form' -%}
+                {%- if request_type == 'paper-questionnaire' -%}
                     <p>{{ _('Your individual paper questionnaire will arrive in a white unbranded envelope') }}</p>
                 {%- else -%}
                     <p>{{ _('A letter with your individual access code will arrive in a brown unbranded envelope') }}</p>
@@ -122,7 +122,7 @@
             })
         }}
 
-        {%- if (request_type == 'paper-form') -%}
+        {%- if (request_type == 'paper-questionnaire') -%}
 
             {{
                 onsCheckboxes({

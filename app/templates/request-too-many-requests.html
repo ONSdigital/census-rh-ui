@@ -47,7 +47,7 @@
 
 {%- block main -%}
 
-    {%- if sub_user_journey == 'paper-form' -%}
+    {%- if sub_user_journey == 'paper-questionnaire' -%}
         <h1>{{ _('You have reached the maximum number of paper questionnaires you can request online') }}</h1>
         {%- autoescape false -%}
             <p>{{ _('If you need a new paper questionnaire, please %(open)scontact us%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>

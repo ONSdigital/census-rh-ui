@@ -1155,19 +1155,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_household_information_title_cy = 'Request a new household access code'
 
-        self.content_request_form_household_information_title_en = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_information_title_en = 'Request a household paper questionnaire'
         # TODO Add Welsh Translation
-        self.content_request_form_household_information_title_cy = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_information_title_cy = 'Request a household paper questionnaire'
 
-        self.content_request_form_people_in_household_title_en = 'How many people are in your household?'
-        self.content_request_form_people_in_household_error_empty_en = 'Enter the number of people in your household'
-        self.content_request_form_people_in_household_error_nan_en = 'Enter a numeral'
+        self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
+        self.content_request_questionnaire_people_in_household_error_empty_en = 'Enter the number of people in your household'
+        self.content_request_questionnaire_people_in_household_error_nan_en = 'Enter a numeral'
         # TODO Add Welsh Translation
-        self.content_request_form_people_in_household_title_cy = 'How many people are in your household?'
+        self.content_request_questionnaire_people_in_household_title_cy = 'How many people are in your household?'
         # TODO Add Welsh Translation
-        self.content_request_form_people_in_household_error_empty_cy = 'Enter the number of people in your household'
+        self.content_request_questionnaire_people_in_household_error_empty_cy = 'Enter the number of people in your household'
         # TODO Add Welsh Translation
-        self.content_request_form_people_in_household_error_nan_cy = 'Enter a numeral'
+        self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a numeral'
 
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
@@ -1188,7 +1188,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_confirm_name_address_error_en = 'Select an answer'
         self.content_request_code_confirm_name_address_individual_message_en = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
-        self.content_request_form_confirm_name_address_individual_message_en = \
+        self.content_request_questionnaire_confirm_name_address_individual_message_en = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
         self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
@@ -1208,7 +1208,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_confirm_name_address_individual_message_cy = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_individual_message_cy = \
+        self.content_request_questionnaire_confirm_name_address_individual_message_cy = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         # TODO Add Welsh Translation
         self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
@@ -1669,13 +1669,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.get_request_individual_form_en = self.app.router['RequestIndividualForm:get'].url_for(
-            request_type='paper-form', display_region='en'
+            request_type='paper-questionnaire', display_region='en'
         )
         self.get_request_individual_form_cy = self.app.router['RequestIndividualForm:get'].url_for(
-            request_type='paper-form', display_region='cy'
+            request_type='paper-questionnaire', display_region='cy'
         )
         self.get_request_individual_form_ni = self.app.router['RequestIndividualForm:get'].url_for(
-            request_type='paper-form', display_region='ni'
+            request_type='paper-questionnaire', display_region='ni'
         )
 
         self.post_request_individual_code_en = self.app.router['RequestIndividualCode:post'].url_for(
@@ -1689,13 +1689,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_individual_form_en = self.app.router['RequestIndividualForm:post'].url_for(
-            request_type='paper-form', display_region='en'
+            request_type='paper-questionnaire', display_region='en'
         )
         self.post_request_individual_form_cy = self.app.router['RequestIndividualForm:post'].url_for(
-            request_type='paper-form', display_region='cy'
+            request_type='paper-questionnaire', display_region='cy'
         )
         self.post_request_individual_form_ni = self.app.router['RequestIndividualForm:post'].url_for(
-            request_type='paper-form', display_region='ni'
+            request_type='paper-questionnaire', display_region='ni'
         )
 
         self.get_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
@@ -1823,13 +1823,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_individual_form_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='en'
+            request_type='paper-questionnaire', display_region='en'
         )
         self.post_request_individual_form_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='cy'
+            request_type='paper-questionnaire', display_region='cy'
         )
         self.post_request_individual_form_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='ni'
+            request_type='paper-questionnaire', display_region='ni'
         )
 
         self.post_request_individual_code_confirm_name_address_en = \
@@ -1843,93 +1843,93 @@ class RHTestCase(AioHTTPTestCase):
                                                                             display_region='ni')
 
         self.post_request_individual_form_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='en')
         self.post_request_individual_form_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='cy')
         self.post_request_individual_form_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='ni')
 
         # Start Request Paper Form
 
         # URLs
 
-        self.get_request_paper_form_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
-        )
-
-        self.get_request_paper_form_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
-        )
-        self.get_request_paper_form_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
-        )
-        self.get_request_paper_form_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
-        )
-        self.post_request_paper_form_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
-        )
-        self.post_request_paper_form_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
-        )
-        self.post_request_paper_form_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
-        self.get_request_paper_form_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
-        self.get_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.get_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.get_request_paper_questionnaire_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+
+        self.get_request_paper_questionnaire_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+        self.get_request_paper_questionnaire_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+        self.get_request_paper_questionnaire_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+        self.post_request_paper_questionnaire_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+        self.post_request_paper_questionnaire_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+        )
+        self.post_request_paper_questionnaire_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
         self.post_request_access_code_household_information_en = self.app.router['RequestHouseholdCode:post'].url_for(
@@ -1942,208 +1942,208 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.post_request_paper_form_household_information_en = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_household_information_en = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_household_information_cy = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_household_information_cy = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_household_information_ni = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_household_information_ni = self.app.router['RequestHouseholdForm:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
-        self.post_request_paper_form_people_in_household_en = \
+        self.post_request_paper_questionnaire_people_in_household_en = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='en', user_journey='requests', request_type='paper-form'
+                display_region='en', user_journey='requests', request_type='paper-questionnaire'
             )
-        self.post_request_paper_form_people_in_household_cy = \
+        self.post_request_paper_questionnaire_people_in_household_cy = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='cy', user_journey='requests', request_type='paper-form'
+                display_region='cy', user_journey='requests', request_type='paper-questionnaire'
             )
-        self.post_request_paper_form_people_in_household_ni = \
+        self.post_request_paper_questionnaire_people_in_household_ni = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='ni', user_journey='requests', request_type='paper-form'
+                display_region='ni', user_journey='requests', request_type='paper-questionnaire'
             )
 
-        self.post_request_paper_form_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-form'
+        self.post_request_paper_questionnaire_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
-        self.post_request_paper_form_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-form'
-        )
-
-        self.post_request_paper_form_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='en'
-        )
-        self.post_request_paper_form_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='cy'
-        )
-        self.post_request_paper_form_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
-            request_type='paper-form', display_region='ni'
+        self.post_request_paper_questionnaire_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
+            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
-        self.post_request_paper_form_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+        self.post_request_paper_questionnaire_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-questionnaire', display_region='en'
+        )
+        self.post_request_paper_questionnaire_enter_name_cy = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-questionnaire', display_region='cy'
+        )
+        self.post_request_paper_questionnaire_enter_name_ni = self.app.router['RequestCommonEnterName:post'].url_for(
+            request_type='paper-questionnaire', display_region='ni'
+        )
+
+        self.post_request_paper_questionnaire_confirm_name_address_en = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='en')
-        self.post_request_paper_form_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+        self.post_request_paper_questionnaire_confirm_name_address_cy = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='cy')
-        self.post_request_paper_form_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-form',
+        self.post_request_paper_questionnaire_confirm_name_address_ni = \
+            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='ni')
 
         # Content
 
-        self.content_request_form_enter_address_secondary_en = \
+        self.content_request_questionnaire_enter_address_secondary_en = \
             'To send a paper census questionnaire, we need your address'
         # TODO: add welsh translation
-        self.content_request_form_enter_address_secondary_cy = \
+        self.content_request_questionnaire_enter_address_secondary_cy = \
             'To send a paper census questionnaire, we need your address'
 
-        self.content_request_form_sent_post_title_en = \
+        self.content_request_questionnaire_sent_post_title_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_form_sent_post_individual_title_en = \
+        self.content_request_questionnaire_sent_post_individual_title_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_form_sent_post_title_large_print_en = \
+        self.content_request_questionnaire_sent_post_title_large_print_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_form_sent_post_individual_title_large_print_en = \
+        self.content_request_questionnaire_sent_post_individual_title_large_print_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_form_sent_post_title_ce_en = \
+        self.content_request_questionnaire_sent_post_title_ce_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_individual_title_ce_en = \
+        self.content_request_questionnaire_sent_post_individual_title_ce_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_title_ce_with_room_en = \
+        self.content_request_questionnaire_sent_post_title_ce_with_room_en = \
             'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_individual_title_ce_with_room_en = \
+        self.content_request_questionnaire_sent_post_individual_title_ce_with_room_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_title_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_en = \
             'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_en = \
             'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_title_large_print_ce_en = \
+        self.content_request_questionnaire_sent_post_title_large_print_ce_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_individual_title_large_print_ce_en = \
+        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_title_large_print_ce_with_room_en = \
+        self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_individual_title_lp_ce_with_room_en = \
+        self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_form_sent_post_secondary_en = \
+        self.content_request_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_cy = \
+        self.content_request_questionnaire_sent_post_title_cy = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_large_print_cy = \
+        self.content_request_questionnaire_sent_post_title_large_print_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_large_print_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_large_print_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_ce_cy = \
+        self.content_request_questionnaire_sent_post_title_ce_cy = \
             'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_ce_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_ce_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_post_title_ce_with_room_cy = \
             'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_ce_with_room_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_cy = \
             'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_large_print_ce_cy = \
+        self.content_request_questionnaire_sent_post_title_large_print_ce_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_large_print_ce_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_large_print_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_individual_title_lp_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
-        self.content_request_form_sent_post_secondary_cy = \
+        self.content_request_questionnaire_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
 
-        self.content_request_form_sent_post_title_ni = \
+        self.content_request_questionnaire_sent_post_title_ni = \
             'A household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_form_sent_post_individual_title_ni = \
+        self.content_request_questionnaire_sent_post_individual_title_ni = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_form_sent_post_title_large_print_ni = \
+        self.content_request_questionnaire_sent_post_title_large_print_ni = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_form_sent_post_individual_title_large_print_ni = \
+        self.content_request_questionnaire_sent_post_individual_title_large_print_ni = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
-        self.content_request_form_confirm_name_address_title_en = \
+        self.content_request_questionnaire_confirm_name_address_title_en = \
             'Do you want to send a household paper questionnaire to this address?'
-        self.content_request_form_confirm_name_address_individual_title_en = \
+        self.content_request_questionnaire_confirm_name_address_individual_title_en = \
             'Do you want to send an individual paper questionnaire to this address?'
-        self.content_request_form_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
-        self.content_request_form_confirm_name_address_option_no_en = 'No, cancel and return'
-        self.content_request_form_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
+        self.content_request_questionnaire_confirm_name_address_option_no_en = 'No, cancel and return'
+        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
 
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_title_cy = \
+        self.content_request_questionnaire_confirm_name_address_title_cy = \
             'Do you want to send a household paper questionnaire to this address?'
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_individual_title_cy = \
+        self.content_request_questionnaire_confirm_name_address_individual_title_cy = \
             'Do you want to send an individual paper questionnaire to this address?'
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
+        self.content_request_questionnaire_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_option_no_cy = 'No, cancel and return'
+        self.content_request_questionnaire_confirm_name_address_option_no_cy = 'No, cancel and return'
         # TODO Add Welsh Translation
-        self.content_request_form_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
 
-        self.content_request_form_manager_title_en = 'We cannot send census forms to managers by post'
+        self.content_request_questionnaire_manager_title_en = 'We cannot send census forms to managers by post'
         # TODO Add Welsh Translation
-        self.content_request_form_manager_title_cy = 'We cannot send census forms to managers by post'
+        self.content_request_questionnaire_manager_title_cy = 'We cannot send census forms to managers by post'
 
-        self.content_request_form_request_cancelled_title_en = \
+        self.content_request_questionnaire_request_cancelled_title_en = \
             'Your request for a paper questionnaire has been cancelled'
         # TODO Add Welsh Translation
-        self.content_request_form_request_cancelled_title_cy = \
+        self.content_request_questionnaire_request_cancelled_title_cy = \
             'Your request for a paper questionnaire has been cancelled'
 
         # Start Support Centre Pages

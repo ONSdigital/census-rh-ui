@@ -51,7 +51,7 @@ class CommonCommon(View):
                                                                          sub_user_journey=sub_user_journey,
                                                                          display_region=display_region))
         else:
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 if (case_type == 'HH' or case_type == 'SPG') and not individual:
                     raise HTTPFound(
                         request.app.router['RequestHouseholdForm:get'].url_for(display_region=display_region))
@@ -765,7 +765,7 @@ class CommonCEMangerQuestion(CommonCommon):
             session['attributes']['individual'] = True
             session.changed()
 
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 raise HTTPFound(
                     request.app.router['RequestCommonEnterName:get'].url_for(
                         request_type=sub_user_journey, display_region=display_region))
@@ -779,7 +779,7 @@ class CommonCEMangerQuestion(CommonCommon):
             session['attributes']['individual'] = False
             session.changed()
 
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 if display_region == 'ni':
                     raise HTTPFound(
                         request.app.router['RequestFormNIManager:get'].url_for())

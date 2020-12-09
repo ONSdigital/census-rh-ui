@@ -23,8 +23,8 @@ last_name_char_limit = 48
 class RequestCommon(View):
 
     valid_request_types_code_only = r'{request_type:\baccess-code\b}'
-    valid_request_types_form_only = r'{request_type:\bpaper-form|continuation-questionnaire\b}'
-    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-form|continuation-questionnaire\b}'
+    valid_request_types_form_only = r'{request_type:\bpaper-questionnaire|continuation-questionnaire\b}'
+    valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-questionnaire|continuation-questionnaire\b}'
 
     @staticmethod
     def request_code_check_session(request, request_type):
@@ -98,9 +98,9 @@ class RequestIndividualCode(RequestCommon):
                                                                      display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/individual-information/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/individual-information/')
 class RequestIndividualForm(RequestCommon):
-    @aiohttp_jinja2.template('request-form-individual-information.html')
+    @aiohttp_jinja2.template('request-questionnaire-individual-information.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
@@ -112,7 +112,7 @@ class RequestIndividualForm(RequestCommon):
             page_title = 'Request an individual paper questionnaire'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/individual-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual-information')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -123,8 +123,8 @@ class RequestIndividualForm(RequestCommon):
     async def post(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        request_type = 'paper-form'
-        self.log_entry(request, display_region + '/requests/paper-form/individual-information')
+        request_type = 'paper-questionnaire'
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual-information')
 
         session = await get_session(request)
         session['attributes']['individual'] = True
@@ -173,9 +173,9 @@ class RequestHouseholdCode(RequestCommon):
                                                                       display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/household-information/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/household-information/')
 class RequestHouseholdForm(RequestCommon):
-    @aiohttp_jinja2.template('request-form-household-information.html')
+    @aiohttp_jinja2.template('request-questionnaire-household-information.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
@@ -187,7 +187,7 @@ class RequestHouseholdForm(RequestCommon):
             page_title = 'Request a household paper questionnaire'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/household-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/household-information')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -198,7 +198,7 @@ class RequestHouseholdForm(RequestCommon):
     async def post(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/requests/paper-form/household-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/household-information')
 
         session = await get_session(request)
         session['attributes']['individual'] = False
@@ -206,7 +206,7 @@ class RequestHouseholdForm(RequestCommon):
 
         raise HTTPFound(
             request.app.router['RequestCommonPeopleInHousehold:get'].url_for(display_region=display_region,
-                                                                             request_type='paper-form'))
+                                                                             request_type='paper-questionnaire'))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
@@ -895,7 +895,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                     raise ex
 
         elif name_address_confirmation == 'no':
-            if (request_type == 'paper-form') or (request_type == 'continuation-questionnaire'):
+            if (request_type == 'paper-questionnaire') or (request_type == 'continuation-questionnaire'):
                 raise HTTPFound(
                     request.app.router['RequestFormCancelled:get'].url_for(display_region=display_region,
                                                                            request_type=request_type))
@@ -1081,13 +1081,13 @@ class RequestCommonPeopleInHousehold(RequestCommon):
                                                                      request_type=request_type))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-manager/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/form-manager/')
 class RequestFormManager(RequestCommon):
-    @aiohttp_jinja2.template('request-form-manager.html')
+    @aiohttp_jinja2.template('request-questionnaire-manager.html')
     async def get(self, request):
         self.setup_request(request)
 
-        request_type = 'paper-form'
+        request_type = 'paper-questionnaire'
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -1113,7 +1113,7 @@ class RequestFormManager(RequestCommon):
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
                       RequestCommon.valid_request_types_form_only + '/request-cancelled/')
 class RequestFormCancelled(RequestCommon):
-    @aiohttp_jinja2.template('request-form-cancelled.html')
+    @aiohttp_jinja2.template('request-questionnaire-cancelled.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -1140,13 +1140,13 @@ class RequestFormCancelled(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/form-sent-post/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/form-sent-post/')
 class RequestFormSentPost(RequestCommon):
-    @aiohttp_jinja2.template('request-form-sent-post.html')
+    @aiohttp_jinja2.template('request-questionnaire-sent.html')
     async def get(self, request):
         self.setup_request(request)
 
-        request_type = 'paper-form'
+        request_type = 'paper-questionnaire'
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -1183,7 +1183,7 @@ class RequestFormSentPost(RequestCommon):
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/continuation-questionnaire/sent/')
 class RequestContinuationSent(RequestCommon):
-    @aiohttp_jinja2.template('request-form-sent-post.html')
+    @aiohttp_jinja2.template('request-questionnaire-sent.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -1222,9 +1222,9 @@ class RequestContinuationSent(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/large-print-sent-post/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/large-print-sent-post/')
 class RequestLargePrintSentPost(RequestCommon):
-    @aiohttp_jinja2.template('request-form-sent-post.html')
+    @aiohttp_jinja2.template('request-questionnaire-sent.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -1239,7 +1239,7 @@ class RequestLargePrintSentPost(RequestCommon):
             page_title = 'A large-print paper questionnaire will be sent'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/large-print-sent-post')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/large-print-sent-post')
 
         attributes = await self.get_check_attributes(request, request_type)
 
@@ -1283,9 +1283,9 @@ class RequestCodeNIManager(RequestCommon):
             }
 
 
-@requests_routes.view(r'/ni/requests/paper-form/ce-manager/')
+@requests_routes.view(r'/ni/requests/paper-questionnaire/ce-manager/')
 class RequestFormNIManager(RequestCommon):
-    @aiohttp_jinja2.template('request-form-nisra-manager.html')
+    @aiohttp_jinja2.template('request-questionnaire-nisra-manager.html')
     async def get(self, request):
         self.setup_request(request)
 
@@ -1293,7 +1293,7 @@ class RequestFormNIManager(RequestCommon):
         page_title = 'You need to visit the Communal Establishment Portal'
         locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-form/ce-manager')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/ce-manager')
 
         return {
                 'page_title': page_title,
