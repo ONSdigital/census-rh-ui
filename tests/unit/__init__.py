@@ -2136,9 +2136,11 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy = 'I need a large-print questionnaire'
 
-        self.content_request_questionnaire_manager_title_en = 'We cannot send census forms to managers by post'
+        self.content_request_questionnaire_manager_title_en = \
+            'We cannot send communal establishment paper questionnaires to managers'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_manager_title_cy = 'We cannot send census forms to managers by post'
+        self.content_request_questionnaire_manager_title_cy = \
+            'We cannot send communal establishment paper questionnaires to managers'
 
         self.content_request_questionnaire_request_cancelled_title_en = \
             'Your request for a paper questionnaire has been cancelled'

@@ -3,7 +3,7 @@
 {% set request_manager_code_url = url('RequestCodeSelectMethod:get', display_region=display_region, request_type='access-code') %}
 
 {% block main %}
-    <h1>{{ _('We cannot send census forms to managers by post') }}</h1>
+    <h1>{{ _('We cannot send communal establishment paper questionnaires to managers') }}</h1>
 
     {% autoescape false %}
         <p>{{ _('If you are able to complete the census online, you can %(open)srequest a manager access code%(close)s to be sent by text message. As soon as the text arrives, you can start the census.', open='<a href="%s">' % request_manager_code_url, close='</a>')|safe }}</p>

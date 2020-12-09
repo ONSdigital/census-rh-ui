@@ -761,7 +761,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                     display_region=display_region))
                         else:
                             raise HTTPFound(
-                                request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
+                                request.app.router['RequestQuestionnaireSent:get'].url_for(
+                                    display_region=display_region))
 
                 except ClientResponseError as ex:
                     raise ex
@@ -889,7 +890,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                             request.app.router['RequestContinuationSent:get'].url_for(display_region=display_region))
                     else:
                         raise HTTPFound(
-                            request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
+                            request.app.router['RequestQuestionnaireSent:get'].url_for(display_region=display_region))
 
                 except ClientResponseError as ex:
                     raise ex
@@ -897,8 +898,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
         elif name_address_confirmation == 'no':
             if (request_type == 'paper-questionnaire') or (request_type == 'continuation-questionnaire'):
                 raise HTTPFound(
-                    request.app.router['RequestFormCancelled:get'].url_for(display_region=display_region,
-                                                                           request_type=request_type))
+                    request.app.router['RequestQuestionnaireCancelled:get'].url_for(display_region=display_region,
+                                                                                    request_type=request_type))
             else:
                 raise HTTPFound(
                     request.app.router['RequestCodeSelectMethod:get'].url_for(display_region=display_region,
@@ -1081,8 +1082,8 @@ class RequestCommonPeopleInHousehold(RequestCommon):
                                                                      request_type=request_type))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/form-manager/')
-class RequestFormManager(RequestCommon):
+@requests_routes.view(r'/' + View.valid_ew_display_regions + '/requests/paper-questionnaire/manager/')
+class RequestQuestionnaireManager(RequestCommon):
     @aiohttp_jinja2.template('request-questionnaire-manager.html')
     async def get(self, request):
         self.setup_request(request)
@@ -1092,13 +1093,13 @@ class RequestFormManager(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'We cannot send census forms to managers by post'
+            page_title = 'Cannot send paper questionnaires to managers'
             locale = 'cy'
         else:
-            page_title = 'We cannot send census forms to managers by post'
+            page_title = 'Cannot send paper questionnaires to managers'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '/form-manager')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/manager')
 
         return {
                 'page_title': page_title,
@@ -1112,7 +1113,7 @@ class RequestFormManager(RequestCommon):
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
                       RequestCommon.valid_request_types_form_only + '/request-cancelled/')
-class RequestFormCancelled(RequestCommon):
+class RequestQuestionnaireCancelled(RequestCommon):
     @aiohttp_jinja2.template('request-questionnaire-cancelled.html')
     async def get(self, request):
         self.setup_request(request)
@@ -1140,8 +1141,8 @@ class RequestFormCancelled(RequestCommon):
             }
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/form-sent-post/')
-class RequestFormSentPost(RequestCommon):
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/sent/')
+class RequestQuestionnaireSent(RequestCommon):
     @aiohttp_jinja2.template('request-questionnaire-sent.html')
     async def get(self, request):
         self.setup_request(request)
@@ -1157,7 +1158,7 @@ class RequestFormSentPost(RequestCommon):
             page_title = 'A paper questionnaire will be sent'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '/form-sent-post')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/sent')
 
         attributes = await self.get_check_attributes(request, request_type)
 

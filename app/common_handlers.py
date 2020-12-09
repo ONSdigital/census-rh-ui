@@ -785,7 +785,7 @@ class CommonCEMangerQuestion(CommonCommon):
                         request.app.router['RequestFormNIManager:get'].url_for())
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestFormManager:get'].url_for(
+                        request.app.router['RequestQuestionnaireManager:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
             else:
                 if display_region == 'ni':

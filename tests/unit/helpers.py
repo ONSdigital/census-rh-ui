@@ -1044,13 +1044,13 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('form-manager', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('manager', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('form-manager', display_region), contents)
+                self.assertIn(self.build_translation_link('manager', display_region), contents)
             if display_region == 'ni':
                 self.assertIn(self.content_request_questionnaire_manager_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ni, contents)
@@ -1432,7 +1432,7 @@ class TestHelpers(RHTestCase):
                 if fulfilment_type == 'LARGE_PRINT':
                     self.assertLogEvent(cm, self.build_url_log_entry('large-print-sent-post', display_region, 'GET'))
                 else:
-                    self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
+                    self.assertLogEvent(cm, self.build_url_log_entry('sent', display_region, 'GET'))
             else:
                 if override_sub_user_journey:
                     self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-post',
@@ -1448,7 +1448,7 @@ class TestHelpers(RHTestCase):
                     if fulfilment_type == 'LARGE_PRINT':
                         self.assertIn(self.build_translation_link('large-print-sent-post', display_region), contents)
                     else:
-                        self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
+                        self.assertIn(self.build_translation_link('sent', display_region), contents)
                 if display_region == 'ni':
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
