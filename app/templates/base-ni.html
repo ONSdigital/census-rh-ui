@@ -16,83 +16,67 @@
 {%- endif -%}
 
 {%- set footer_content = {
-    'crest': true,
+        'crest': true,
         'poweredBy': {
             'logo': 'nisra-logo-black-en',
             'alt': 'NISRA - Northern Ireland Statistics and Research Agency'
         },
-        'cols': [
+        'rows': [
             {
-                "title": 'Get in touch',
-                "itemsList": [
+                'itemsList': [
                     {
-                        "text": 'Contact us',
-                        "url": domain_url_ni + '/contact-us'
+                        'text': 'Help',
+                        'url': domain_url_ni + '/help/'
                     },
                     {
-                        "text": 'Media enquiries',
-                        "url": '#0'
-                    }
-                ]
-            },
-            {
-                "title": 'Working on the census',
-                "itemsList": [
-                    {
-                        "text": 'Get involved',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Jobs',
-                        "url": '#0'
-                    }
-                ]
-            },
-            {
-                "title": 'About the census',
-                "itemsList": [
-                    {
-                        "text": 'What is the census',
-                        "url": '#0'
-                    },
-                    {
-                        "text": 'Why you should take part',
-                        "url": '#0'
+                        'text': 'Contact us',
+                        'url': domain_url_ni + '/contact-us/'
                     }
                 ]
             }
         ],
-"rows": [
-        {
-            "itemsList": [
-                {
-                    "text": 'Cookies',
-                    "url": domain_url_ni + '/cookies/'
-                },
-                {
-                    "text": 'Accessibility',
-                    "url": domain_url_ni + '/accessibility/'
-                },
-                {
-                    "text": 'Privacy and data protection',
-                    "url": domain_url_ni + '/privacy-and-data-protection/'
-                }
-            ]
+        'legal': [
+            {
+                'itemsList': [
+                    {
+                        'text': 'Cookies',
+                        'url': domain_url_ni + '/cookies/'
+                    },
+                    {
+                        'text': 'Accessibility statement',
+                        'url': domain_url_ni + '/accessibility/'
+                    },
+                    {
+                        'text': 'Privacy and data protection',
+                        'url': domain_url_ni + '/privacy-and-data-protection/'
+                    },
+                    {
+                        'text': 'Terms and conditions',
+                        'url': domain_url_ni + '/terms-and-conditions/'
+                    }
+                ]
+            }
+        ],
+        'copyrightDeclaration': {
+            'copyright': 'Crown copyright and database rights 2020 OS 100019153.',
+            'text': 'Use of address data is subject to the',
+            'link': 'terms and conditions',
+            'url': domain_url_ni + '/terms-and-conditions/'
         }
-    ]
-}
+    }
 -%}
-
 
 {%- set pageConfig = {
     'title': page_title_value,
     'theme': 'census',
     'header': {
         'logo': 'nisra-logo-en',
+        'logoHref': 'https://www.nisra.gov.uk/',
         'mobileLogo': 'nisra-logo-en',
         'logoAlt': 'Northern Ireland Statistics and Research Agency logo',
         'customHeaderLogo': 'nisra',
         'titleLogo': 'census-logo-en',
+        'titleLogoHref': domain_url_ni,
         'titleLogoAlt': 'Census 2021',
     },
     'signoutButton': signout_button_value,

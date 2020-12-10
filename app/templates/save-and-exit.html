@@ -1,15 +1,35 @@
-{% extends 'base-' + display_region + '.html' %}
+{%- extends 'base-' + display_region + '.html' -%}
 
-{% set start_link = url('Start:get', display_region=display_region) %}
+{%- set start_link = url('Start:get', display_region=display_region) -%}
 
-{% block main %}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 
-    <h1 class="u-mt-l" data-ga="error" data-ga-category="info" data-ga-action="info-message">
-        {{ _('Your progress has been saved') }}
-    </h1>
+{%- block main -%}
 
-    {% autoescape false %}
-        <p>{{ _('You will need to %(open)senter your unique access code%(close)s to access the census again.', open='<a href="%s">' % start_link, close='</a>')|safe }}</p>
-    {% endautoescape %}
+    {%-
+        call onsPanel({
+            'type': 'success',
+            'id': 'success-id',
+            'icon': 'check',
+            'iconSize': 'xl',
+        })
+    -%}
 
-{% endblock main %}
+        <h1 class="u-mb-xs u-fs-xl">
+            {{ _('Your progress has been saved') }}
+        </h1>
+
+    {%- endcall -%}
+
+    {%- call onsPanel({
+            'type': 'warn'
+        })
+    -%}
+
+        {%- autoescape false -%}
+            <p>{{ _('Keep your 16-character access code safe. You will need to enter it again to %(open)saccess your census%(close)s.', open='<a href="%s">' % start_link, close='</a>')|safe }}</p>
+        {%- endautoescape -%}
+
+    {%- endcall -%}
+
+{%- endblock main -%}
