@@ -15,7 +15,7 @@
 
 {%- block main -%}
 
-    <h1 class="u-mb-l u-fs-xxl">{{ _('Request a household paper questionnaire') }}</h1>
+    <h1 class="u-fs-xxl">{{ _('Request a household paper questionnaire') }}</h1>
 
     <p>{{ _('A household paper questionnaire lets you fill in a new census for your household and the people who live there.') }}</p>
 
@@ -51,7 +51,10 @@
         onsButton({
             'text': _('Continue'),
             'classes': 'u-mb-m u-mt-l',
-            'innerClasses': 'icon--chevron-right-white'
+            'icon': {
+                'iconType': 'chevron',
+                'iconPosition': 'after'
+            }
         })
     }}
 
