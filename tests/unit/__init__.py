@@ -674,7 +674,8 @@ class RHTestCase(AioHTTPTestCase):
         self.form_type = self.uac_json_e['formType']
         self.jti = str(uuid.uuid4())
         self.uac_code = ''.join([str(n) for n in range(13)])
-        self.uac1, self.uac2, self.uac3, self.uac4 = self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
+        self.uac1, self.uac2, self.uac3, self.uac4 = \
+            self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
         self.period_id = '2019'
         self.uac = 'w4nwwpphjjptp7fn'
         self.uac_ce4 = 'ce4fghtykjuiplku'
@@ -717,8 +718,8 @@ class RHTestCase(AioHTTPTestCase):
             'ru_ref': self.uprn,
             'case_id': self.case_id,
             'language_code': 'en',
-            'display_address': self.uac_json_e['address']['addressLine1'] + ', '
-                               + self.uac_json_e['address']['addressLine2'],
+            'display_address':
+                self.uac_json_e['address']['addressLine1'] + ', ' + self.uac_json_e['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
             'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
@@ -1925,24 +1926,30 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
         )
 
-        self.get_request_paper_questionnaire_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.get_request_paper_questionnaire_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.get_request_paper_questionnaire_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.post_request_paper_questionnaire_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.post_request_paper_questionnaire_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.post_request_paper_questionnaire_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
+        self.get_request_paper_questionnaire_enter_room_number_en = \
+            self.app.router['CommonEnterRoomNumber:get'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.get_request_paper_questionnaire_enter_room_number_cy = \
+            self.app.router['CommonEnterRoomNumber:get'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.get_request_paper_questionnaire_enter_room_number_ni = \
+            self.app.router['CommonEnterRoomNumber:get'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.post_request_paper_questionnaire_enter_room_number_en = \
+            self.app.router['CommonEnterRoomNumber:post'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.post_request_paper_questionnaire_enter_room_number_cy = \
+            self.app.router['CommonEnterRoomNumber:post'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.post_request_paper_questionnaire_enter_room_number_ni = \
+            self.app.router['CommonEnterRoomNumber:post'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
 
         self.post_request_access_code_household_information_en = self.app.router['RequestHouseholdCode:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
@@ -1954,15 +1961,18 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.post_request_paper_questionnaire_household_information_en = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.post_request_paper_questionnaire_household_information_cy = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
-        self.post_request_paper_questionnaire_household_information_ni = self.app.router['RequestHouseholdForm:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
+        self.post_request_paper_questionnaire_household_information_en = \
+            self.app.router['RequestHouseholdForm:post'].url_for(
+                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.post_request_paper_questionnaire_household_information_cy = \
+            self.app.router['RequestHouseholdForm:post'].url_for(
+                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
+        self.post_request_paper_questionnaire_household_information_ni = \
+            self.app.router['RequestHouseholdForm:post'].url_for(
+                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
 
         self.post_request_paper_questionnaire_people_in_household_en = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
@@ -1979,16 +1989,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.post_request_paper_questionnaire_resident_or_manager_en = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
+                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
         self.post_request_paper_questionnaire_resident_or_manager_cy = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
+                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
         self.post_request_paper_questionnaire_resident_or_manager_ni = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
-        )
+                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            )
 
         self.post_request_paper_questionnaire_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
             request_type='paper-questionnaire', display_region='en'
@@ -2035,13 +2045,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_sent_post_title_ce_with_room_en = \
             'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_individual_title_ce_with_room_en = \
+        self.content_request_questionnaire_sent_indi_title_ce_room_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_title_ce_room_long_last_en = \
             'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en = \
             'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_title_large_print_ce_en = \
@@ -2050,13 +2060,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_en = \
+        self.content_request_questionnaire_sent_title_large_print_ce_room_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_en = \
+        self.content_request_questionnaire_sent_indi_title_lp_ce_room_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_en = \
+        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_en = \
@@ -2082,19 +2092,19 @@ class RHTestCase(AioHTTPTestCase):
             'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_title_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_title_ce_with_room_cy = \
             'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_individual_title_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_individual_title_ce_with_room_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_title_ce_with_room_long_last_cy = \
             'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy = \
             'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
@@ -2106,15 +2116,15 @@ class RHTestCase(AioHTTPTestCase):
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_title_lp_ce_room_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_cy = \
+        self.content_request_questionnaire_sent_indi_title_lp_ce_room_cy = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
-        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_cy = \
+        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO Add Welsh Translation
@@ -2136,7 +2146,8 @@ class RHTestCase(AioHTTPTestCase):
             'Do you want to send an individual paper questionnaire to this address?'
         self.content_request_questionnaire_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_questionnaire_confirm_name_address_option_no_en = 'No, cancel and return'
-        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en = 'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en = \
+            'I need a large-print questionnaire'
 
         # TODO Add Welsh Translation
         self.content_request_questionnaire_confirm_name_address_title_cy = \

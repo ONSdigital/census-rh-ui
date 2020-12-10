@@ -1570,11 +1570,11 @@ class TestHelpers(RHTestCase):
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
                                         contents)
                                 else:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_en,
+                                        self.content_request_questionnaire_sent_title_large_print_ce_room_en,
                                         contents)
                             else:
                                 if individual == 'true':
@@ -1598,16 +1598,16 @@ class TestHelpers(RHTestCase):
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_individual_title_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
                                             contents)
                                     else:
                                         self.assertIn(
@@ -1635,16 +1635,16 @@ class TestHelpers(RHTestCase):
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_cy,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy,
                                         contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_indi_title_lp_ce_room_cy,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_title_lp_ce_room_cy,
                                             contents)
                             else:
                                 if individual == 'true':
@@ -1668,19 +1668,19 @@ class TestHelpers(RHTestCase):
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_cy,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_cy,
+                                            self.content_request_questionnaire_sent_title_ce_with_room_long_last_cy,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_individual_title_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_individual_title_ce_with_room_cy,
                                             contents)
                                     else:
-                                        self.assertIn(self.content_request_questionnaire_sent_post_title_ce_with_room_cy,
+                                        self.assertIn(self.content_request_questionnaire_sent_title_ce_with_room_cy,
                                                       contents)
                             else:
                                 if individual == 'true':
@@ -1704,16 +1704,16 @@ class TestHelpers(RHTestCase):
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
                                         contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_individual_title_lp_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_lp_ce_room_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_large_print_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_title_large_print_ce_room_en,
                                             contents)
                             else:
                                 if individual == 'true':
@@ -1737,16 +1737,16 @@ class TestHelpers(RHTestCase):
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_indi_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_individual_title_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
                                             contents)
                                     else:
                                         self.assertIn(

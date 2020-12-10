@@ -858,24 +858,12 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                         f"region={attributes['region']}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'])
 
-                    if attributes['roomNumber']:
-                        if len(attributes['last_name']) < last_name_char_limit:
-                            last_name = attributes['last_name'] + ', ' + attributes['roomNumber']
-                            title = None
-                        else:
-                            last_name = attributes['last_name']
-                            title = attributes['roomNumber']
-                    else:
-                        last_name = attributes['last_name']
-                        title = None
-
                     try:
                         await RHService.request_fulfilment_post(request,
                                                                 attributes['case_id'],
                                                                 attributes['first_name'],
-                                                                last_name,
-                                                                fulfilment_code_array,
-                                                                title)
+                                                                attributes['last_name'],
+                                                                fulfilment_code_array)
                     except (KeyError, ClientResponseError) as ex:
                         if ex.status == 429:
                             raise TooManyRequests(request_type)
