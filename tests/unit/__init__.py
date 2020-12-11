@@ -643,16 +643,23 @@ class RHTestCase(AioHTTPTestCase):
         self.content_signed_out_page_title_cy = '<title>Progress saved - Cyfrifiad 2021</title>'
         self.content_signed_out_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
-        self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
-        self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
+        # End Start Journey
+
+        # Session Timeout
+
+        self.content_timeout_title_en = 'Your session has timed out due to inactivity'
+        self.content_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        self.content_timeout_secondary_en = 'To protect your information we have timed you out'
+        self.content_request_timeout_secondary_cy = 'To protect your information we have timed you out'
         self.content_start_timeout_secondary_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_start_timeout_restart_en = 'enter your 16-character access code'
         # TODO: add welsh translation
         self.content_start_timeout_restart_cy = 'enter your 16-character access code'
+        self.content_request_timeout_restart_en = 're-enter your postcode'
+        self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
 
-        # End Start Journey
+        # End Session Timeout
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(

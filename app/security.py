@@ -3,7 +3,7 @@ import string
 import hashlib
 
 from aiohttp import web
-from aiohttp_session import get_session
+from aiohttp_session import get_session, Session
 from aiohttp.web import HTTPForbidden
 
 from structlog import get_logger
@@ -113,10 +113,10 @@ async def context_processor(request):
     }
 
 
-async def check_permission(request):
+async def check_permission(request) -> Session:
     """
     Check request permission.
-    Raise HTTPForbidden if not previously remembered.
+    Raise HTTPForbidden if not previously remembered, else return session.
     """
     session = await get_session(request)
     try:
@@ -125,6 +125,7 @@ async def check_permission(request):
                     identity=identity,
                     url=request.rel_url.human_repr(),
                     client_ip=request['client_ip'])
+        return session
     except KeyError:
         logger.warn('permission denied',
                     url=request.rel_url.human_repr(),
