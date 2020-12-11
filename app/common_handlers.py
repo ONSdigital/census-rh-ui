@@ -62,10 +62,10 @@ class CommonCommon(View):
             else:
                 if (case_type == 'HH' or case_type == 'SPG') and not individual:
                     raise HTTPFound(
-                        request.app.router['RequestHouseholdCode:get'].url_for(display_region=display_region))
+                        request.app.router['RequestCodeHousehold:get'].url_for(display_region=display_region))
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
 
 
@@ -761,7 +761,7 @@ class CommonCEMangerQuestion(CommonCommon):
                         request_type=sub_user_journey, display_region=display_region))
             else:
                 raise HTTPFound(
-                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                    request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                         request_type=sub_user_journey, display_region=display_region))
 
         elif resident_or_manager == 'manager':
@@ -783,7 +783,7 @@ class CommonCEMangerQuestion(CommonCommon):
                         request.app.router['RequestCodeNIManager:get'].url_for())
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
 
         else:

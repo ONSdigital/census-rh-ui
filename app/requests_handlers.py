@@ -43,20 +43,21 @@ class RequestCommon(View):
         return attributes
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/access-code/individual-information/')
-class RequestIndividualCode(RequestCommon):
-    @aiohttp_jinja2.template('request-code-individual-introduction.html')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/access-code/individual/')
+class RequestCodeIndividual(RequestCommon):
+    @aiohttp_jinja2.template('request-code-individual.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            page_title = 'Gofyn am god mynediad unigryw'
+            # TODO Add Welsh Translation
+            page_title = 'Request individual access code'
             locale = 'cy'
         else:
-            page_title = 'Request an individual access code'
+            page_title = 'Request individual access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/access-code/individual-information')
+        self.log_entry(request, display_region + '/requests/access-code/individual')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -68,7 +69,7 @@ class RequestIndividualCode(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         request_type = 'access-code'
-        self.log_entry(request, display_region + '/requests/access-code/individual-information')
+        self.log_entry(request, display_region + '/requests/access-code/individual')
 
         session = await get_session(request)
 
@@ -81,8 +82,8 @@ class RequestIndividualCode(RequestCommon):
                 if attributes['case_type']:
                     logger.info('have session and case_type - directing to select method')
                     raise HTTPFound(
-                        request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
-                                                                                  display_region=display_region))
+                        request.app.router['RequestCodeSelectHowToReceive:get'].url_for(request_type=request_type,
+                                                                                        display_region=display_region))
                 else:
                     raise KeyError
             else:
@@ -135,21 +136,21 @@ class RequestIndividualForm(RequestCommon):
                                                                      display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/access-code/household-information/')
-class RequestHouseholdCode(RequestCommon):
-    @aiohttp_jinja2.template('request-code-household-information.html')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/access-code/household/')
+class RequestCodeHousehold(RequestCommon):
+    @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Request a new household access code'
+            page_title = 'Request new household access code'
             locale = 'cy'
         else:
-            page_title = 'Request a new household access code'
+            page_title = 'Request new household access code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/access-code/household-information')
+        self.log_entry(request, display_region + '/requests/access-code/household')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -161,15 +162,15 @@ class RequestHouseholdCode(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         request_type = 'access-code'
-        self.log_entry(request, display_region + '/requests/access-code/household-information')
+        self.log_entry(request, display_region + '/requests/access-code/household')
 
         session = await get_session(request)
         session['attributes']['individual'] = False
         session.changed()
 
         raise HTTPFound(
-            request.app.router['RequestCodeSelectMethod:get'].url_for(request_type=request_type,
-                                                                      display_region=display_region))
+            request.app.router['RequestCodeSelectHowToReceive:get'].url_for(request_type=request_type,
+                                                                            display_region=display_region))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-form/household-information/')
@@ -211,26 +212,38 @@ class RequestHouseholdForm(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_only + '/select-method/')
-class RequestCodeSelectMethod(RequestCommon):
-    @aiohttp_jinja2.template('request-code-select-method.html')
+                      RequestCommon.valid_request_types_code_only + '/select-how-to-receive/')
+class RequestCodeSelectHowToReceive(RequestCommon):
+    @aiohttp_jinja2.template('request-code-select-how-to-receive.html')
     async def get(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'How would you like to receive a new access code?'
-            locale = 'cy'
-        else:
-            page_title = 'How would you like to receive a new access code?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/select-how-to-receive')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive manager access code'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive household access code'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Select how to receive manager access code'
+            else:
+                page_title = 'Select how to receive household access code'
+            locale = 'en'
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -241,24 +254,36 @@ class RequestCodeSelectMethod(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-select-method.html')
+    @aiohttp_jinja2.template('request-code-select-how-to-receive.html')
     async def post(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'How would you like to receive a new access code?'
-            locale = 'cy'
-        else:
-            page_title = 'How would you like to receive a new access code?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/select-method')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/select-how-to-receive')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Error: Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Error: Select how to receive manager access code'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Error: Select how to receive household access code'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Error: Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Error: Select how to receive manager access code'
+            else:
+                page_title = 'Error: Select how to receive household access code'
+            locale = 'en'
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -311,10 +336,11 @@ class RequestCodeEnterMobile(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = "Beth yw eich rhif ffôn symudol?"
+            # TODO Add Welsh Translation
+            page_title = "Enter mobile number"
             locale = 'cy'
         else:
-            page_title = 'What is your mobile phone number?'
+            page_title = 'Enter mobile number'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
@@ -336,10 +362,11 @@ class RequestCodeEnterMobile(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = "Beth yw eich rhif ffôn symudol?"
+            # TODO Add Welsh Translation
+            page_title = "Error: Enter mobile number"
             locale = 'cy'
         else:
-            page_title = 'What is your mobile phone number?'
+            page_title = 'Error: Enter mobile number'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
@@ -366,8 +393,8 @@ class RequestCodeEnterMobile(RequestCommon):
             session['attributes'] = attributes
 
             raise HTTPFound(
-                request.app.router['RequestCodeConfirmMobile:get'].url_for(request_type=request_type,
-                                                                           display_region=display_region))
+                request.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type=request_type,
+                                                                               display_region=display_region))
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info(exc, client_ip=request['client_ip'])
@@ -378,31 +405,43 @@ class RequestCodeEnterMobile(RequestCommon):
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
                                                                     'mobile_invalid')
             flash(request, flash_message)
-            raise HTTPFound(
-                request.app.router['RequestCodeEnterMobile:post'].url_for(request_type=request_type,
-                                                                          display_region=display_region))
+
+            return attributes
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_only + '/confirm-mobile/')
-class RequestCodeConfirmMobile(RequestCommon):
-    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+                      RequestCommon.valid_request_types_code_only + '/confirm-send-by-text/')
+class RequestCodeConfirmSendByText(RequestCommon):
+    @aiohttp_jinja2.template('request-code-confirm-send-by-text.html')
     async def get(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            page_title = "Ydy'r rhif ffôn symudol hwn yn gywir?"
-            locale = 'cy'
-        else:
-            page_title = 'Is this mobile phone number correct?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-text')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send manager access code by text'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send household access code by text'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Confirm to send manager access code by text'
+            else:
+                page_title = 'Confirm to send household access code by text'
+            locale = 'en'
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -412,23 +451,36 @@ class RequestCodeConfirmMobile(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-confirm-mobile.html')
+    @aiohttp_jinja2.template('request-code-confirm-send-by-text.html')
     async def post(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            page_title = "Ydy'r rhif ffôn symudol hwn yn gywir?"
-            locale = 'cy'
-        else:
-            page_title = 'Is this mobile phone number correct?'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-mobile')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-text')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Error: Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Error: Confirm to send manager access code by text'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Error: Confirm to send household access code by text'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Error: Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Error: Confirm to send manager access code by text'
+            else:
+                page_title = 'Error: Confirm to send household access code by text'
+            locale = 'en'
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -488,8 +540,8 @@ class RequestCodeConfirmMobile(RequestCommon):
                         raise ex
 
                 raise HTTPFound(
-                    request.app.router['RequestCodeCodeSentSMS:get'].url_for(request_type=request_type,
-                                                                             display_region=display_region))
+                    request.app.router['RequestCodeSentByText:get'].url_for(request_type=request_type,
+                                                                            display_region=display_region))
             except ClientResponseError as ex:
                 raise ex
 
@@ -756,8 +808,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                             request.app.router['RequestFormSentPost:get'].url_for(display_region=display_region))
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
-                                                                                  request_type=request_type))
+                        request.app.router['RequestCodeSentByPost:get'].url_for(display_region=display_region,
+                                                                                request_type=request_type))
 
             except ClientResponseError as ex:
                 raise ex
@@ -769,8 +821,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
                                                                            request_type=request_type))
             else:
                 raise HTTPFound(
-                    request.app.router['RequestCodeSelectMethod:get'].url_for(display_region=display_region,
-                                                                              request_type=request_type))
+                    request.app.router['RequestCodeSelectHowToReceive:get'].url_for(display_region=display_region,
+                                                                                    request_type=request_type))
 
         else:
             # catch all just in case, should never get here
@@ -809,25 +861,38 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_only + '/code-sent-sms/')
-class RequestCodeCodeSentSMS(RequestCommon):
-    @aiohttp_jinja2.template('request-code-code-sent-sms.html')
+                      RequestCommon.valid_request_types_code_only + '/code-sent-by-text/')
+class RequestCodeSentByText(RequestCommon):
+    @aiohttp_jinja2.template('request-code-sent-by-text.html')
     async def get(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            page_title = 'Rydym ni wedi anfon cod mynediad'
-            locale = 'cy'
-        else:
-            page_title = 'We have sent an access code'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-sms')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-by-text')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Individual access code has been sent by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Manager access code has been sent by text'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Household access code has been sent by text'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Individual access code has been sent by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Manager access code has been sent by text'
+            else:
+                page_title = 'Household access code has been sent by text'
+            locale = 'en'
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -839,25 +904,38 @@ class RequestCodeCodeSentSMS(RequestCommon):
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_only + '/code-sent-post/')
-class RequestCodeCodeSentPost(RequestCommon):
-    @aiohttp_jinja2.template('request-code-code-sent-post.html')
+                      RequestCommon.valid_request_types_code_only + '/code-sent-by-post/')
+class RequestCodeSentByPost(RequestCommon):
+    @aiohttp_jinja2.template('request-code-sent-by-post.html')
     async def get(self, request):
         self.setup_request(request)
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            page_title = 'Rydym ni wedi anfon cod mynediad'
-            locale = 'cy'
-        else:
-            page_title = 'We have sent an access code'
-            locale = 'en'
-
-        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-post')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/code-sent-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Individual access code will be sent by post'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Manager access code will be sent by post'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Household access code will be sent by post'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Individual access code will be sent by post'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Manager access code will be sent by post'
+            else:
+                page_title = 'Household access code will be sent by post'
+            locale = 'en'
 
         return {
                 'page_title': page_title,

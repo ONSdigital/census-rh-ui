@@ -147,31 +147,59 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_en, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_en, contents)
 
-    def check_text_select_method(self, display_region, contents, user_type, check_error=False):
+    def check_text_select_how_to_receive(self, display_region, contents, user_type, check_error=False):
         if display_region == 'cy':
             if check_error:
-                self.assertIn(self.content_request_code_select_method_error_cy, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_error_cy, contents)
             if user_type == 'individual':
-                self.assertIn(self.content_request_code_select_method_individual_title_cy, contents)
+                if check_error:
+                    self.assertIn(
+                        self.content_request_code_select_how_to_receive_individual_page_title_error_cy, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_individual_page_title_cy, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_individual_title_cy, contents)
             elif user_type == 'manager':
-                self.assertIn(self.content_request_code_select_method_manager_title_cy, contents)
+                if check_error:
+                    self.assertIn(self.content_request_code_select_how_to_receive_manager_page_title_error_cy, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_manager_page_title_cy, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_manager_title_cy, contents)
             else:
-                self.assertIn(self.content_request_code_select_method_household_title_cy, contents)
-            self.assertIn(self.content_request_code_select_method_secondary_cy, contents)
-            self.assertIn(self.content_request_code_select_method_option_text_cy, contents)
-            self.assertIn(self.content_request_code_select_method_option_post_cy, contents)
+                if check_error:
+                    self.assertIn(
+                        self.content_request_code_select_how_to_receive_household_page_title_error_cy, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_household_page_title_cy, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_household_title_cy, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_secondary_cy, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_option_text_cy, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_option_post_cy, contents)
         else:
             if check_error:
-                self.assertIn(self.content_request_code_select_method_error_en, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_error_en, contents)
             if user_type == 'individual':
-                self.assertIn(self.content_request_code_select_method_individual_title_en, contents)
+                if check_error:
+                    self.assertIn(
+                        self.content_request_code_select_how_to_receive_individual_page_title_error_en, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_individual_page_title_en, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_individual_title_en, contents)
             elif user_type == 'manager':
-                self.assertIn(self.content_request_code_select_method_manager_title_en, contents)
+                if check_error:
+                    self.assertIn(self.content_request_code_select_how_to_receive_manager_page_title_error_en, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_manager_page_title_en, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_manager_title_en, contents)
             else:
-                self.assertIn(self.content_request_code_select_method_household_title_en, contents)
-            self.assertIn(self.content_request_code_select_method_secondary_en, contents)
-            self.assertIn(self.content_request_code_select_method_option_text_en, contents)
-            self.assertIn(self.content_request_code_select_method_option_post_en, contents)
+                if check_error:
+                    self.assertIn(
+                        self.content_request_code_select_how_to_receive_household_page_title_error_en, contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_household_page_title_en, contents)
+                self.assertIn(self.content_request_code_select_how_to_receive_household_title_en, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_secondary_en, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_option_text_en, contents)
+            self.assertIn(self.content_request_code_select_how_to_receive_option_post_en, contents)
 
     def check_text_resident_or_manager(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -199,7 +227,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_enter_mobile_title_en, contents)
             self.assertIn(self.content_request_code_enter_mobile_secondary_en, contents)
 
-    def check_text_confirm_mobile(self, display_region, contents, check_error=False):
+    def check_text_confirm_send_by_text(self, display_region, contents, check_error=False):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_request_code_confirm_mobile_error_cy, contents)
@@ -517,11 +545,11 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('household-information', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('household-information', display_region), contents)
+                self.assertIn(self.build_translation_link('household', display_region), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_code_household_information_title_cy, contents)
             else:
@@ -536,12 +564,12 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type)
 
     async def check_post_confirm_address_input_yes_code_new_case(self, url, display_region,
                                                                  create_case_return):
@@ -560,11 +588,11 @@ class TestHelpers(RHTestCase):
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
-            self.assertLogEvent(cm, self.build_url_log_entry('household-information', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('household-information', display_region), contents)
+                self.assertIn(self.build_translation_link('household', display_region), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_code_household_information_title_cy, contents)
             else:
@@ -587,13 +615,13 @@ class TestHelpers(RHTestCase):
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
 
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type)
 
     async def check_post_confirm_address_input_yes_form(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -846,13 +874,13 @@ class TestHelpers(RHTestCase):
     async def check_post_household_information_code(self, url, display_region, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
-            self.assertLogEvent(cm, self.build_url_log_entry('household-information', display_region, 'POST', True))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'POST', True))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type)
 
     async def check_post_household_information_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -873,26 +901,26 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('GET', url)
-            self.assertLogEvent(cm, self.build_url_log_entry('access-code/select-method',
+            self.assertLogEvent(cm, self.build_url_log_entry('access-code/select-how-to-receive',
                                                              display_region, 'GET', False))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('access-code/select-method', display_region, False),
+                self.assertIn(self.build_translation_link('access-code/select-how-to-receive', display_region, False),
                               contents)
-            self.check_text_select_method(display_region, contents, 'manager')
+            self.check_text_select_how_to_receive(display_region, contents, 'manager')
 
     async def check_post_select_method_input_sms(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
-            response = await self.client.request('POST', url, data=self.request_code_select_method_data_sms)
+            response = await self.client.request('POST', url, data=self.request_code_select_how_to_receive_data_sms)
             if override_sub_user_journey:
-                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-method',
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-how-to-receive',
                                                                  display_region, 'POST', False))
                 self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-mobile',
                                                                  display_region, 'GET', False))
             else:
-                self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'POST'))
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -907,14 +935,14 @@ class TestHelpers(RHTestCase):
     async def check_post_select_method_input_post(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
-            response = await self.client.request('POST', url, data=self.request_code_select_method_data_post)
+            response = await self.client.request('POST', url, data=self.request_code_select_how_to_receive_data_post)
             if override_sub_user_journey:
-                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-method',
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/select-how-to-receive',
                                                                  display_region, 'POST', False))
                 self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-name',
                                                                  display_region, 'GET', False))
             else:
-                self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'POST'))
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -933,26 +961,26 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'POST'))
             self.assertLogEvent(cm, "request method selection error")
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type, check_error=True)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=True)
 
     async def check_post_resident_or_manager(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=data)
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type)
 
     async def check_post_resident_or_manager_code_manager_ni(self, url, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1032,20 +1060,20 @@ class TestHelpers(RHTestCase):
             if override_sub_user_journey:
                 self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/enter-mobile',
                                                                  display_region, 'POST', False))
-                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-mobile',
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-send-by-text',
                                                                  display_region, 'GET', False))
             else:
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'POST'))
-                self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'GET'))
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'GET'))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 if override_sub_user_journey:
-                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/confirm-mobile',
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/confirm-send-by-text',
                                                               display_region, False), contents)
                 else:
-                    self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
-            self.check_text_confirm_mobile(display_region, contents, check_error=False)
+                    self.assertIn(self.build_translation_link('confirm-send-by-text', display_region), contents)
+            self.check_text_confirm_send_by_text(display_region, contents, check_error=False)
 
     async def check_post_enter_mobile_input_invalid(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1053,7 +1081,6 @@ class TestHelpers(RHTestCase):
             response = await self.client.request('POST', url, data=self.request_code_enter_mobile_form_data_invalid)
 
             self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1075,27 +1102,27 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
             if override_sub_user_journey:
-                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-mobile',
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/confirm-send-by-text',
                                                                  display_region, 'POST', False))
             else:
-                self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+                self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
             self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type + ", region=" + region +
                                 ", individual=" + individual)
             if override_sub_user_journey:
-                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-sms',
+                self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-by-text',
                                                                  display_region, 'GET', False))
             else:
-                self.assertLogEvent(cm, self.build_url_log_entry('code-sent-sms', display_region, 'GET'))
+                self.assertLogEvent(cm, self.build_url_log_entry('code-sent-by-text', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 if override_sub_user_journey:
-                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-sms',
+                    self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-by-text',
                                                               display_region, False), contents)
                 else:
-                    self.assertIn(self.build_translation_link('code-sent-sms', display_region), contents)
+                    self.assertIn(self.build_translation_link('code-sent-by-text', display_region), contents)
             if display_region == 'cy':
                 self.assertIn(self.content_request_code_sent_sms_title_cy, contents)
                 if individual == 'true':
@@ -1124,7 +1151,7 @@ class TestHelpers(RHTestCase):
                                     '&deliveryChannel=SMS&productGroup=UAC&individual=' + individual, status=400)
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -1136,7 +1163,7 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_no)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
@@ -1156,7 +1183,7 @@ class TestHelpers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=400)
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
             self.assertLogEvent(cm, 'error in response', status_code=400)
 
             self.assertEqual(response.status, 500)
@@ -1174,7 +1201,7 @@ class TestHelpers(RHTestCase):
                                      'dc4477d1-dd3f-4c69-b181-7ff725dc9fa4/fulfilments/sms', status=429)
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
             self.assertLogEvent(cm, 'error in response', status_code=429)
 
             self.assertEqual(response.status, 429)
@@ -1189,14 +1216,14 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-mobile', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('confirm-mobile', display_region), contents)
-            self.check_text_confirm_mobile(display_region, contents, check_error=True)
+                self.assertIn(self.build_translation_link('confirm-send-by-text', display_region), contents)
+            self.check_text_confirm_send_by_text(display_region, contents, check_error=True)
 
     async def check_post_enter_address_error_from_ai(self, get_url, post_url, display_region, status):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
@@ -1379,10 +1406,10 @@ class TestHelpers(RHTestCase):
                     self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
             else:
                 if override_sub_user_journey:
-                    self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-post',
+                    self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-by-post',
                                                                      display_region, 'GET', False))
                 else:
-                    self.assertLogEvent(cm, self.build_url_log_entry('code-sent-post', display_region, 'GET'))
+                    self.assertLogEvent(cm, self.build_url_log_entry('code-sent-by-post', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -1574,10 +1601,10 @@ class TestHelpers(RHTestCase):
             else:
                 if not display_region == 'ni':
                     if override_sub_user_journey:
-                        self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-post',
+                        self.assertIn(self.build_translation_link(override_sub_user_journey + '/code-sent-by-post',
                                                                   display_region, False), contents)
                     else:
-                        self.assertIn(self.build_translation_link('code-sent-post', display_region), contents)
+                        self.assertIn(self.build_translation_link('code-sent-by-post', display_region), contents)
                 if display_region == 'ni':
                     if case_type == 'CE':
                         if check_room_number:
@@ -1638,14 +1665,14 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_name_address_data_no)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region), contents)
-            self.check_text_select_method(display_region, contents, user_type, check_error=False)
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=False)
 
     async def check_post_confirm_name_address_input_no_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1790,18 +1817,20 @@ class TestHelpers(RHTestCase):
     async def check_get_request_individual_code(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('GET', url)
-            self.assertLogEvent(cm, self.build_url_log_entry('individual-information',
+            self.assertLogEvent(cm, self.build_url_log_entry('individual',
                                                              display_region, 'GET', True))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('individual-information',
+                self.assertIn(self.build_translation_link('individual',
                                                           display_region, True), contents)
             if display_region == 'cy':
+                self.assertIn(self.content_request_individual_page_title_cy, contents)
                 self.assertIn(self.content_request_individual_title_cy, contents)
                 self.assertIn(self.content_request_individual_secondary_cy, contents)
             else:
+                self.assertIn(self.content_request_individual_page_title_en, contents)
                 self.assertIn(self.content_request_individual_title_en, contents)
                 self.assertIn(self.content_request_individual_secondary_en, contents)
 
@@ -1824,16 +1853,16 @@ class TestHelpers(RHTestCase):
     async def check_post_request_individual_code_journey_switch(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
-            self.assertLogEvent(cm, self.build_url_log_entry('individual-information', display_region, 'POST', True))
+            self.assertLogEvent(cm, self.build_url_log_entry('individual', display_region, 'POST', True))
             self.assertLogEvent(cm, 'have session and case_type - directing to select method')
-            self.assertLogEvent(cm, self.build_url_log_entry('select-method', display_region, 'GET',
+            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET',
                                                              True))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-method', display_region, True), contents)
-            self.check_text_select_method(display_region, contents, 'individual')
+                self.assertIn(self.build_translation_link('select-how-to-receive', display_region, True), contents)
+            self.check_text_select_how_to_receive(display_region, contents, 'individual')
 
     async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
                               data_over_length=False, check_for_value=False):

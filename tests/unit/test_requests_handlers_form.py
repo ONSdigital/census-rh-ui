@@ -2603,8 +2603,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_en, 'en')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_en, 'en')
-        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_en, 'en')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_how_to_receive_en, 'en',
                                                       override_sub_user_journey='access-code')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en',
                                            override_sub_user_journey='access-code')
@@ -2621,8 +2621,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_en, 'en')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_en, 'en')
-        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_en, 'en',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_en, 'en')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_how_to_receive_en, 'en',
                                                       override_sub_user_journey='access-code')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en',
                                            override_sub_user_journey='access-code')
@@ -2639,8 +2639,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_cy, 'cy')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_cy, 'cy')
-        await self.check_post_select_method_input_sms(self.post_request_access_code_select_method_cy, 'cy',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_cy, 'cy')
+        await self.check_post_select_method_input_sms(self.post_request_access_code_select_how_to_receive_cy, 'cy',
                                                       override_sub_user_journey='access-code')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy',
                                            override_sub_user_journey='access-code')
@@ -2657,8 +2657,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_e)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_en, 'en')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_en, 'en')
-        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_en, 'en')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_how_to_receive_en, 'en',
                                                        override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en',
                                          'manager', 'CE', override_sub_user_journey='access-code')
@@ -2675,8 +2675,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_en, 'en')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_en, 'en')
-        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_en, 'en',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_en, 'en')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_how_to_receive_en, 'en',
                                                        override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en',
                                          'manager', 'CE', override_sub_user_journey='access-code')
@@ -2693,8 +2693,8 @@ class TestRequestsHandlersPaperForm(TestHelpers):
             self.post_request_paper_form_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_m_w)
         await self.check_post_resident_or_manager_form_manager(
             self.post_request_paper_form_resident_or_manager_cy, 'cy')
-        await self.check_get_select_method_form_manager(self.get_request_access_code_select_method_cy, 'cy')
-        await self.check_post_select_method_input_post(self.post_request_access_code_select_method_cy, 'cy',
+        await self.check_get_select_method_form_manager(self.get_request_access_code_select_how_to_receive_cy, 'cy')
+        await self.check_post_select_method_input_post(self.post_request_access_code_select_how_to_receive_cy, 'cy',
                                                        override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy',
                                          'manager', 'CE', override_sub_user_journey='access-code')

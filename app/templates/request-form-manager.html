@@ -1,6 +1,6 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% set request_manager_code_url = url('RequestCodeSelectMethod:get', display_region=display_region, request_type='access-code') %}
+{% set request_manager_code_url = url('RequestCodeSelectHowToReceive:get', display_region=display_region, request_type='access-code') %}
 
 {% block main %}
     <h1 class="u-fs-xl">{{ _('We cannot send census forms to managers by post') }}</h1>
