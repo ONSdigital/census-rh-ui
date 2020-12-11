@@ -3,6 +3,7 @@ import re
 
 from aiohttp.client_exceptions import (ClientResponseError)
 from aiohttp.web import HTTPFound, RouteTableDef
+from .exceptions import TooManyRequestsWebForm
 from structlog import get_logger
 
 from . import (WEBFORM_MISSING_COUNTRY_MSG,
@@ -145,7 +146,10 @@ class WebForm(View):
             try:
                 await RHService.post_webform(request, form_data)
             except ClientResponseError as ex:
-                raise ex
+                if ex.status == 429:
+                    raise TooManyRequestsWebForm()
+                else:
+                    raise ex
 
             raise HTTPFound(
                 request.app.router['WebFormSuccess:get'].url_for(display_region=display_region))

@@ -89,6 +89,26 @@ class TestWebFormHandlers(TestHelpers):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
+    async def form_submission_error_429(self, url, display_region):
+        form_data = self.webform_form_data.copy()
+
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.post(self.rhsvc_url_web_form, status=429)
+
+            response = await self.client.request('POST', url, data=form_data)
+            self.assertLogEvent(cm, self.build_url_log_entry('web-form', display_region, 'POST',
+                                                             include_sub_user_journey=False, include_page=False))
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_web_form_error_429_title_cy, contents)
+            else:
+                self.assertIn(self.content_web_form_error_429_title_en, contents)
+
     async def form_submission_incomplete(self, url, display_region, missing_value):
         form_data = self.webform_form_data.copy()
         del form_data[missing_value]
@@ -166,6 +186,12 @@ class TestWebFormHandlers(TestHelpers):
         await self.form_submission_error(self.post_webform_en, 'en', 400)
         await self.form_submission_error(self.post_webform_cy, 'cy', 400)
         await self.form_submission_error(self.post_webform_ni, 'ni', 400)
+
+    @unittest_run_loop
+    async def test_form_submission_error_429(self):
+        await self.form_submission_error_429(self.post_webform_en, 'en')
+        await self.form_submission_error_429(self.post_webform_cy, 'cy')
+        await self.form_submission_error_429(self.post_webform_ni, 'ni')
 
     @unittest_run_loop
     async def test_form_submission_incomplete(self):
