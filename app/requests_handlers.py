@@ -1026,7 +1026,7 @@ class RequestCodeNIManager(RequestCommon):
         self.setup_request(request)
 
         display_region = 'ni'
-        page_title = 'You need to visit the Communal Establishment Portal'
+        page_title = 'Communal Establishment Manager Portal'
         locale = 'en'
 
         self.log_entry(request, display_region + '/requests/access-code/ce-manager')
@@ -1046,7 +1046,7 @@ class RequestFormNIManager(RequestCommon):
         self.setup_request(request)
 
         display_region = 'ni'
-        page_title = 'You need to visit the Communal Establishment Portal'
+        page_title = 'Communal Establishment Manager Portal'
         locale = 'en'
 
         self.log_entry(request, display_region + '/requests/paper-form/ce-manager')
