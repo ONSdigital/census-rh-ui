@@ -1,0 +1,14 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- block main -%}
+    {%- if request_type == 'continuation-questionnaire' -%}
+        <h1>{{ _('Your request for a continuation questionnaire has been cancelled') }}</h1>
+    {%- else -%}
+        <h1>{{ _('Your request for a paper questionnaire has been cancelled') }}</h1>
+    {%- endif -%}
+
+    {%- autoescape false -%}
+        <p>{{ _('Return to the %(open)scensus homepage%(close)s.', open='<a href="%s">' % census_home_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
+
+{%- endblock -%}

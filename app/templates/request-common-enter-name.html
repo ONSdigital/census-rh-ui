@@ -21,6 +21,12 @@
     {%- set error_last_name = {'id': 'error_last_name', 'text': _('Enter your last name')} -%}
 {%- endif -%}
 
+{%- if (sub_user_journey == 'paper-questionnaire') or (sub_user_journey == 'continuation-questionnaire') -%}
+    {%- set question_description = _('<p>This is who the questionnaire will be addressed to</p>') -%}
+{%- else -%}
+    {%- set question_description = _('<p>This is who the letter will be addressed to</p>') -%}
+{%- endif -%}
+
 {% block main %}
 
     {% if messages_dict %}
@@ -29,7 +35,7 @@
 
     {% call onsQuestion({
         'title': _('What is your name?'),
-        'description': _('<p>This is who the letter will be addressed to</p>')
+        'description': question_description
     }) %}
 
         {{

@@ -75,8 +75,10 @@ class TestHelpers(RHTestCase):
             if check_error:
                 self.assertIn(self.content_common_enter_address_error_cy, contents)
             self.assertIn(self.content_request_enter_address_title_cy, contents)
-            if self.sub_user_journey == 'paper-form':
-                self.assertIn(self.content_request_form_enter_address_secondary_cy, contents)
+            if self.sub_user_journey == 'paper-questionnaire':
+                self.assertIn(self.content_request_paper_questionnaire_enter_address_secondary_cy, contents)
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                self.assertIn(self.content_request_continuation_questionnaire_enter_address_secondary_cy, contents)
             elif self.individual:
                 self.assertIn(self.content_request_individual_code_enter_address_secondary_cy, contents)
             else:
@@ -87,8 +89,10 @@ class TestHelpers(RHTestCase):
             if check_error:
                 self.assertIn(self.content_common_enter_address_error_en, contents)
             self.assertIn(self.content_request_enter_address_title_en, contents)
-            if self.sub_user_journey == 'paper-form':
-                self.assertIn(self.content_request_form_enter_address_secondary_en, contents)
+            if self.sub_user_journey == 'paper-questionnaire':
+                self.assertIn(self.content_request_paper_questionnaire_enter_address_secondary_en, contents)
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                self.assertIn(self.content_request_continuation_questionnaire_enter_address_secondary_en, contents)
             elif self.individual:
                 self.assertIn(self.content_request_individual_code_enter_address_secondary_en, contents)
             else:
@@ -214,13 +218,19 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_request_common_confirm_name_address_error_cy, contents)
-            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
+            if (self.sub_user_journey == 'paper-questionnaire') and (override_sub_user_journey is False):
                 if user_type == 'individual':
-                    self.assertIn(self.content_request_form_confirm_name_address_individual_title_cy, contents)
-                    self.assertIn(self.content_request_form_confirm_name_address_individual_message_cy, contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_individual_title_cy,
+                                  contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_individual_message_cy,
+                                  contents)
                 else:
-                    self.assertIn(self.content_request_form_confirm_name_address_title_cy, contents)
-                    self.assertNotIn(self.content_request_form_confirm_name_address_individual_message_cy, contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_title_cy, contents)
+                    self.assertNotIn(self.content_request_questionnaire_confirm_name_address_individual_message_cy,
+                                     contents)
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                self.assertIn(self.content_request_continuation_questionnaire_confirm_name_address_title_cy, contents)
+                self.assertNotIn(self.content_request_code_confirm_name_address_individual_message_cy, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_cy, contents)
                 self.assertIn(self.content_request_code_confirm_name_address_individual_message_cy, contents)
@@ -245,23 +255,34 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_cy, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_cy, contents)
 
-            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
-                self.assertIn(self.content_request_form_confirm_name_address_option_yes_cy, contents)
-                self.assertIn(self.content_request_form_confirm_name_address_option_no_cy, contents)
-                self.assertIn(self.content_request_form_confirm_name_address_large_print_checkbox_cy, contents)
+            if ((self.sub_user_journey == 'paper-questionnaire') or (
+                    self.sub_user_journey == 'continuation-questionnaire')) and (override_sub_user_journey is False):
+                self.assertIn(self.content_request_questionnaire_confirm_name_address_option_yes_cy, contents)
+                self.assertIn(self.content_request_questionnaire_confirm_name_address_option_no_cy, contents)
+                if self.sub_user_journey == 'continuation-questionnaire':
+                    self.assertNotIn(self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy,
+                                     contents)
+                else:
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy,
+                                  contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_option_yes_cy, contents)
                 self.assertIn(self.content_request_common_confirm_name_address_option_no_cy, contents)
         else:
             if check_error:
                 self.assertIn(self.content_request_common_confirm_name_address_error_en, contents)
-            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
+            if (self.sub_user_journey == 'paper-questionnaire') and (override_sub_user_journey is False):
                 if user_type == 'individual':
-                    self.assertIn(self.content_request_form_confirm_name_address_individual_title_en, contents)
-                    self.assertIn(self.content_request_form_confirm_name_address_individual_message_en, contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_individual_title_en, contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_individual_message_en,
+                                  contents)
                 else:
-                    self.assertIn(self.content_request_form_confirm_name_address_title_en, contents)
-                    self.assertNotIn(self.content_request_form_confirm_name_address_individual_message_en, contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_title_en, contents)
+                    self.assertNotIn(self.content_request_questionnaire_confirm_name_address_individual_message_en,
+                                     contents)
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                self.assertIn(self.content_request_continuation_questionnaire_confirm_name_address_title_en, contents)
+                self.assertNotIn(self.content_request_code_confirm_name_address_individual_message_en, contents)
             elif user_type == 'individual':
                 self.assertIn(self.content_request_common_confirm_name_address_title_individual_en, contents)
                 self.assertIn(self.content_request_code_confirm_name_address_individual_message_en, contents)
@@ -286,10 +307,16 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_en, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_en, contents)
 
-            if (self.sub_user_journey == 'paper-form') and (override_sub_user_journey is False):
-                self.assertIn(self.content_request_form_confirm_name_address_option_yes_en, contents)
-                self.assertIn(self.content_request_form_confirm_name_address_option_no_en, contents)
-                self.assertIn(self.content_request_form_confirm_name_address_large_print_checkbox_en, contents)
+            if ((self.sub_user_journey == 'paper-questionnaire') or (
+                    self.sub_user_journey == 'continuation-questionnaire')) and (override_sub_user_journey is False):
+                self.assertIn(self.content_request_questionnaire_confirm_name_address_option_yes_en, contents)
+                self.assertIn(self.content_request_questionnaire_confirm_name_address_option_no_en, contents)
+                if self.sub_user_journey == 'continuation-questionnaire':
+                    self.assertNotIn(self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en,
+                                     contents)
+                else:
+                    self.assertIn(self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en,
+                                  contents)
             else:
                 self.assertIn(self.content_request_common_confirm_name_address_option_yes_en, contents)
                 self.assertIn(self.content_request_common_confirm_name_address_option_no_en, contents)
@@ -609,9 +636,9 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('household-information', display_region), contents)
             if display_region == 'cy':
-                self.assertIn(self.content_request_form_household_information_title_cy, contents)
+                self.assertIn(self.content_request_questionnaire_household_information_title_cy, contents)
             else:
-                self.assertIn(self.content_request_form_household_information_title_en, contents)
+                self.assertIn(self.content_request_questionnaire_household_information_title_en, contents)
 
     async def check_post_confirm_address_input_yes_form_individual(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -653,9 +680,9 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('household-information', display_region), contents)
             if display_region == 'cy':
-                self.assertIn(self.content_request_form_household_information_title_cy, contents)
+                self.assertIn(self.content_request_questionnaire_household_information_title_cy, contents)
             else:
-                self.assertIn(self.content_request_form_household_information_title_en, contents)
+                self.assertIn(self.content_request_questionnaire_household_information_title_en, contents)
 
     async def check_post_confirm_address_input_yes_form_new_case_individual(
             self, url, display_region, create_case_return):
@@ -683,6 +710,56 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
+
+    async def check_post_confirm_address_input_yes_continuation(self, url, display_region, case_by_uprn_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'GET'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
+
+    async def check_post_confirm_address_input_yes_continuation_new_case(self, url, display_region, create_case_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+            mocked_post_case_create.return_value = create_case_return
+
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'requesting new case')
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'GET'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
 
     async def check_post_confirm_address_input_yes_ce(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -803,6 +880,25 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
                 self.assertIn(self.content_call_centre_number_ew, contents)
 
+    async def check_post_confirm_address_continuation_ce(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('continuation-questionnaire/not-a-household',
+                                                             display_region, 'GET', False))
+
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('continuation-questionnaire/not-a-household',
+                                                          display_region, False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_continuation_questionnaire_not_a_household_title_cy, contents)
+                self.assertIn(self.content_request_continuation_questionnaire_not_a_household_secondary_cy, contents)
+            else:
+                self.assertIn(self.content_request_continuation_questionnaire_not_a_household_title_en, contents)
+                self.assertIn(self.content_request_continuation_questionnaire_not_a_household_secondary_en, contents)
+
     async def check_post_confirm_address_error_from_get_cases(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
@@ -858,6 +954,25 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('household-information', display_region, 'POST', True))
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'GET'))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
+            else:
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
+
+    async def check_post_people_in_household(self, url, display_region, number_of_people):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            data = {'number_of_people': number_of_people, 'action[save_continue]': ''}
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'POST', True))
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
@@ -868,6 +983,52 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
+
+    async def check_post_people_in_household_invalid(self, url, display_region, number_of_people):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            data = {'number_of_people': number_of_people, 'action[save_continue]': ''}
+            response = await self.client.request('POST', url, data=data)
+            self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
+                                                             display_region, 'POST', True))
+            if number_of_people == '':
+                self.assertLogEvent(cm, "number_of_people empty")
+            elif not number_of_people.isnumeric():
+                self.assertLogEvent(cm, "number_of_people nan")
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                if display_region == 'ni' and int(number_of_people) < 7:
+                    self.assertLogEvent(cm, "number_of_people continuation less than 7")
+                elif not display_region == 'ni' and int(number_of_people) < 6:
+                    self.assertLogEvent(cm, "number_of_people continuation less than 6")
+
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('number-of-people-in-your-household',
+                                                          display_region), contents)
+            if display_region == 'cy':
+                if number_of_people == '':
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_cy, contents)
+                elif not number_of_people.isnumeric():
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_cy, contents)
+                elif self.sub_user_journey == 'continuation-questionnaire' and int(number_of_people) < 6:
+                    self.assertIn(
+                        self.content_request_continuation_questionnaire_people_in_household_error_number_cy, contents)
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
+            else:
+                if number_of_people == '':
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_en, contents)
+                elif not number_of_people.isnumeric():
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_en, contents)
+                elif self.sub_user_journey == 'continuation-questionnaire':
+                    if display_region == 'ni' and int(number_of_people) < 7:
+                        self.assertIn(
+                            self.content_request_continuation_questionnaire_people_in_household_error_number_ni,
+                            contents)
+                    elif not display_region == 'ni' and int(number_of_people) < 6:
+                        self.assertIn(
+                            self.content_request_continuation_questionnaire_people_in_household_error_number_en,
+                            contents)
+                self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
 
     async def check_get_select_method_form_manager(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -996,21 +1157,21 @@ class TestHelpers(RHTestCase):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_resident_or_manager_input_manager)
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('form-manager', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('manager', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('form-manager', display_region), contents)
+                self.assertIn(self.build_translation_link('manager', display_region), contents)
             if display_region == 'ni':
-                self.assertIn(self.content_request_form_manager_title_en, contents)
+                self.assertIn(self.content_request_questionnaire_manager_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ni, contents)
             elif display_region == 'cy':
-                self.assertIn(self.content_request_form_manager_title_cy, contents)
+                self.assertIn(self.content_request_questionnaire_manager_title_cy, contents)
                 self.assertIn(self.content_call_centre_number_cy, contents)
             else:
-                self.assertIn(self.content_request_form_manager_title_en, contents)
+                self.assertIn(self.content_request_questionnaire_manager_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_resident_or_manager_input_invalid_or_no_selection(self, url, display_region, data):
@@ -1350,12 +1511,16 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_name_address_input_yes(self, url, display_region, case_type, fulfilment_type,
                                                         region, individual, override_sub_user_journey=None,
-                                                        check_room_number=False, long_surname=False):
+                                                        check_room_number=False, long_surname=False,
+                                                        number_in_household=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
 
-            mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            if display_region == 'cy':
+                mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_multi_post
+            else:
+                mocked_get_fulfilment.return_value = self.rhsvc_get_fulfilment_single_post
             mocked_request_fulfilment_post.return_value = self.rhsvc_request_fulfilment_post
 
             if fulfilment_type == 'LARGE_PRINT':
@@ -1369,14 +1534,19 @@ class TestHelpers(RHTestCase):
                                                                  display_region, 'POST', False))
             else:
                 self.assertLogEvent(cm, self.build_url_log_entry('confirm-name-address', display_region, 'POST'))
+
+            fulfilment_type_array = self.assert_fulfilment_type_array(display_region, fulfilment_type,
+                                                                      number_in_household=number_in_household,
+                                                                      individual=individual)
             self.assertLogEvent(cm, "fulfilment query: case_type=" + case_type +
-                                ", fulfilment_type=" + fulfilment_type +
+                                ", fulfilment_type=" + fulfilment_type_array +
                                 ", region=" + region + ", individual=" + individual)
-            if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
+            if ((self.sub_user_journey == 'paper-questionnaire') or (
+                    self.sub_user_journey == 'continuation-questionnaire')) and not override_sub_user_journey:
                 if fulfilment_type == 'LARGE_PRINT':
                     self.assertLogEvent(cm, self.build_url_log_entry('large-print-sent-post', display_region, 'GET'))
                 else:
-                    self.assertLogEvent(cm, self.build_url_log_entry('form-sent-post', display_region, 'GET'))
+                    self.assertLogEvent(cm, self.build_url_log_entry('sent', display_region, 'GET'))
             else:
                 if override_sub_user_journey:
                     self.assertLogEvent(cm, self.build_url_log_entry(override_sub_user_journey + '/code-sent-post',
@@ -1387,190 +1557,217 @@ class TestHelpers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
-            if self.sub_user_journey == 'paper-form' and not override_sub_user_journey:
+            if ((self.sub_user_journey == 'paper-questionnaire') or (
+                    self.sub_user_journey == 'continuation-questionnaire')) and not override_sub_user_journey:
                 if not display_region == 'ni':
                     if fulfilment_type == 'LARGE_PRINT':
                         self.assertIn(self.build_translation_link('large-print-sent-post', display_region), contents)
                     else:
-                        self.assertIn(self.build_translation_link('form-sent-post', display_region), contents)
+                        self.assertIn(self.build_translation_link('sent', display_region), contents)
                 if display_region == 'ni':
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
                                         contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_with_room_en,
-                                                  contents)
+                                    self.assertIn(
+                                        self.content_request_questionnaire_sent_title_large_print_ce_room_en,
+                                        contents)
                             else:
                                 if individual == 'true':
                                     self.assertIn(
-                                        self.content_request_form_sent_post_individual_title_large_print_ce_en,
+                                        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en,
                                         contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
+                                    self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ce_en,
+                                                  contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_large_print_ni,
-                                              contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_large_print_ni,
+                                    contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_large_print_ni, contents)
+                                self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ni,
+                                              contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_individual_title_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
                                             contents)
                                     else:
-                                        self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en,
-                                                      contents)
+                                        self.assertIn(
+                                            self.content_request_questionnaire_sent_post_title_ce_with_room_en,
+                                            contents)
                             else:
                                 if individual == 'true':
-                                    self.assertIn(self.content_request_form_sent_post_individual_title_ce_en, contents)
+                                    self.assertIn(
+                                        self.content_request_questionnaire_sent_post_individual_title_ce_en, contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
+                                    self.assertIn(self.content_request_questionnaire_sent_post_title_ce_en, contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_ni, contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_ni, contents)
+                            elif self.sub_user_journey == 'continuation-questionnaire':
+                                self.assertIn(
+                                    self.content_request_continuation_questionnaire_sent_post_title_ni, contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_ni, contents)
-                    self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
+                                self.assertIn(self.content_request_questionnaire_sent_post_title_ni, contents)
+                    self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
                 elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_cy,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy,
                                         contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_individual_title_lp_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_indi_title_lp_ce_room_cy,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_form_sent_post_title_large_print_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_title_lp_ce_room_cy,
                                             contents)
                             else:
                                 if individual == 'true':
                                     self.assertIn(
-                                        self.content_request_form_sent_post_individual_title_large_print_ce_cy,
+                                        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_cy,
                                         contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_cy,
+                                    self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ce_cy,
                                                   contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_large_print_cy,
-                                              contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_large_print_cy,
+                                    contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_large_print_cy, contents)
+                                self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_cy,
+                                              contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_cy,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_form_sent_post_title_ce_with_room_long_surname_cy,
+                                            self.content_request_questionnaire_sent_title_ce_with_room_long_last_cy,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_individual_title_ce_with_room_cy,
+                                            self.content_request_questionnaire_sent_individual_title_ce_with_room_cy,
                                             contents)
                                     else:
-                                        self.assertIn(self.content_request_form_sent_post_title_ce_with_room_cy,
+                                        self.assertIn(self.content_request_questionnaire_sent_title_ce_with_room_cy,
                                                       contents)
                             else:
                                 if individual == 'true':
-                                    self.assertIn(self.content_request_form_sent_post_individual_title_ce_cy, contents)
+                                    self.assertIn(
+                                        self.content_request_questionnaire_sent_post_individual_title_ce_cy, contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_ce_cy, contents)
+                                    self.assertIn(self.content_request_questionnaire_sent_post_title_ce_cy, contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_cy, contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_cy, contents)
+                            elif self.sub_user_journey == 'continuation-questionnaire':
+                                self.assertIn(
+                                    self.content_request_continuation_questionnaire_sent_post_title_cy, contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_cy, contents)
-                    self.assertIn(self.content_request_form_sent_post_secondary_cy, contents)
+                                self.assertIn(self.content_request_questionnaire_sent_post_title_cy, contents)
+                    self.assertIn(self.content_request_questionnaire_sent_post_secondary_cy, contents)
                 else:
                     if fulfilment_type == 'LARGE_PRINT':
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_form_sent_post_title_lp_ce_with_room_long_surname_en,
+                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
                                         contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_individual_title_lp_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_lp_ce_room_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_form_sent_post_title_large_print_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_title_large_print_ce_room_en,
                                             contents)
                             else:
                                 if individual == 'true':
                                     self.assertIn(
-                                        self.content_request_form_sent_post_individual_title_large_print_ce_en,
+                                        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en,
                                         contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_large_print_ce_en, contents)
+                                    self.assertIn(
+                                        self.content_request_questionnaire_sent_post_title_large_print_ce_en, contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_large_print_en,
-                                              contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_large_print_en,
+                                    contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_large_print_en, contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_title_large_print_en, contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_indi_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_form_sent_post_title_ce_with_room_long_surname_en,
+                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
                                             contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_form_sent_post_individual_title_ce_with_room_en,
+                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
                                             contents)
                                     else:
-                                        self.assertIn(self.content_request_form_sent_post_title_ce_with_room_en,
-                                                      contents)
+                                        self.assertIn(
+                                            self.content_request_questionnaire_sent_post_title_ce_with_room_en,
+                                            contents)
                             else:
                                 if individual == 'true':
-                                    self.assertIn(self.content_request_form_sent_post_individual_title_ce_en, contents)
+                                    self.assertIn(
+                                        self.content_request_questionnaire_sent_post_individual_title_ce_en, contents)
                                 else:
-                                    self.assertIn(self.content_request_form_sent_post_title_ce_en, contents)
+                                    self.assertIn(self.content_request_questionnaire_sent_post_title_ce_en, contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(self.content_request_form_sent_post_individual_title_en, contents)
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_title_en, contents)
+                            elif self.sub_user_journey == 'continuation-questionnaire':
+                                self.assertIn(
+                                    self.content_request_continuation_questionnaire_sent_post_title_en, contents)
                             else:
-                                self.assertIn(self.content_request_form_sent_post_title_en, contents)
-                    self.assertIn(self.content_request_form_sent_post_secondary_en, contents)
+                                self.assertIn(self.content_request_questionnaire_sent_post_title_en, contents)
+                    self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
                     if override_sub_user_journey:
@@ -1659,10 +1856,16 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('request-cancelled', display_region), contents)
-            if display_region == 'cy':
-                self.assertIn(self.content_request_form_request_cancelled_title_cy, contents)
+            if self.sub_user_journey == 'continuation-questionnaire':
+                if display_region == 'cy':
+                    self.assertIn(self.content_request_continuation_questionnaire_request_cancelled_title_cy, contents)
+                else:
+                    self.assertIn(self.content_request_continuation_questionnaire_request_cancelled_title_en, contents)
             else:
-                self.assertIn(self.content_request_form_request_cancelled_title_en, contents)
+                if display_region == 'cy':
+                    self.assertIn(self.content_request_questionnaire_request_cancelled_title_cy, contents)
+                else:
+                    self.assertIn(self.content_request_questionnaire_request_cancelled_title_en, contents)
 
     async def check_post_confirm_name_address_input_invalid_or_no_selection(self, url, display_region, data, user_type,
                                                                             case_type):
@@ -1758,10 +1961,16 @@ class TestHelpers(RHTestCase):
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
-            if display_region == 'cy':
-                self.assertIn(self.content_common_429_error_form_title_cy, contents)
+            if self.sub_user_journey == 'continuation-questionnaire':
+                if display_region == 'cy':
+                    self.assertIn(self.content_common_429_error_continuation_questionnaire_title_cy, contents)
+                else:
+                    self.assertIn(self.content_common_429_error_continuation_questionnaire_title_en, contents)
             else:
-                self.assertIn(self.content_common_429_error_form_title_en, contents)
+                if display_region == 'cy':
+                    self.assertIn(self.content_common_429_error_paper_questionnaire_title_cy, contents)
+                else:
+                    self.assertIn(self.content_common_429_error_paper_questionnaire_title_en, contents)
 
     async def assert_no_direct_access(self, url, display_region, method, data=None):
         with self.assertLogs('respondent-home', 'WARN') as cm:
@@ -2446,3 +2655,38 @@ class TestHelpers(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_start_transient_ni_select_language(contents, check_error=True)
+
+    @staticmethod
+    def assert_fulfilment_type_array(display_region, fulfilment_type, number_in_household=None, individual=None):
+        fulfilment_type_array = ''
+        if fulfilment_type == 'LARGE_PRINT':
+            if (individual == 'true') or (number_in_household and number_in_household <= 2):
+                fulfilment_type_array = str(['LARGE_PRINT'])
+            if number_in_household == 7:
+                fulfilment_type_array = str(['LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT'])
+        elif fulfilment_type == 'QUESTIONNAIRE':
+            if (individual == 'true') or (number_in_household and number_in_household <= 5):
+                fulfilment_type_array = str(['QUESTIONNAIRE'])
+            else:
+                if number_in_household == 6:
+                    if display_region == 'ni':
+                        fulfilment_type_array = str(['QUESTIONNAIRE'])
+                    else:
+                        fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION'])
+                elif number_in_household == 7:
+                    fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION'])
+                elif number_in_household == 18:
+                    fulfilment_type_array = str(['QUESTIONNAIRE', 'CONTINUATION', 'CONTINUATION', 'CONTINUATION'])
+        elif fulfilment_type == 'UAC':
+            fulfilment_type_array = str(['UAC'])
+        elif fulfilment_type == 'CONTINUATION':
+            if number_in_household == 6:
+                if display_region == 'ni':
+                    fulfilment_type_array = str('[]')
+                else:
+                    fulfilment_type_array = str(['CONTINUATION'])
+            elif number_in_household == 7:
+                fulfilment_type_array = str(['CONTINUATION'])
+            elif number_in_household == 18:
+                fulfilment_type_array = str(['CONTINUATION', 'CONTINUATION', 'CONTINUATION'])
+        return fulfilment_type_array
