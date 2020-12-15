@@ -804,8 +804,8 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
                     if request_type == 'access-code':
                         raise HTTPFound(
-                            request.app.router['RequestCodeCodeSentPost:get'].url_for(display_region=display_region,
-                                                                                      request_type=request_type))
+                            request.app.router['RequestCodeSentByPost:get'].url_for(display_region=display_region,
+                                                                                    request_type=request_type))
                     else:
                         if 'request-name-address-large-print' in data:
                             raise HTTPFound(
@@ -1245,8 +1245,6 @@ class RequestQuestionnaireSent(RequestCommon):
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
                 'roomNumber': attributes['roomNumber'],
                 'individual': attributes['individual']
             }
@@ -1325,8 +1323,6 @@ class RequestLargePrintSentPost(RequestCommon):
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
                 'roomNumber': attributes['roomNumber'],
                 'individual': attributes['individual']
             }

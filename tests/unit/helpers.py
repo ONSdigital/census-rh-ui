@@ -1131,7 +1131,6 @@ class TestHelpers(RHTestCase):
                             contents)
                 self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
 
-
     async def check_get_select_how_to_receive_form_manager(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
