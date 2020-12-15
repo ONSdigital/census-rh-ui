@@ -1,6 +1,7 @@
 import string
 import re
 import json
+import math
 
 from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh
 from aiohttp.web import HTTPFound
@@ -34,7 +35,7 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-form\b}'
+    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
 
     @staticmethod
     def setup_request(request):
@@ -302,6 +303,86 @@ class ProcessName:
             name_valid = False
 
         return name_valid
+
+
+class ProcessNumberOfPeople:
+
+    @staticmethod
+    def validate_number_of_people(request, data, display_region, request_type):
+
+        number_of_people_valid = True
+
+        if (data.get('number_of_people')) == '':
+            logger.info('number_of_people empty', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_empty'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_empty'))
+            number_of_people_valid = False
+
+        elif not (data.get('number_of_people')).isnumeric():
+            logger.info('number_of_people nan', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_nan'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_nan'))
+            number_of_people_valid = False
+
+        elif request_type == 'continuation-questionnaire':
+            if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
+                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'])
+                flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_continuation'))
+                number_of_people_valid = False
+
+            elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
+                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'])
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation'))
+                number_of_people_valid = False
+
+        return number_of_people_valid
+
+    @staticmethod
+    def form_calculation(region, number_of_people, include_household=False, large_print=False):
+        number_of_people = int(number_of_people)
+        number_of_household_forms = 0
+        number_of_continuation_forms = 0
+        number_of_large_print_forms = 0
+
+        if large_print:
+            number_of_large_print_forms = math.ceil(number_of_people / 2)
+        else:
+            if region == 'N':
+                offset = 6
+            else:
+                offset = 5
+            if include_household:
+                number_of_household_forms = 1
+            if number_of_people > offset:
+                number_of_continuation_forms = math.ceil((number_of_people - offset) / 5)
+
+        return {'number_of_household_forms': number_of_household_forms,
+                'number_of_continuation_forms': number_of_continuation_forms,
+                'number_of_large_print_forms': number_of_large_print_forms}
 
 
 class FlashMessage:

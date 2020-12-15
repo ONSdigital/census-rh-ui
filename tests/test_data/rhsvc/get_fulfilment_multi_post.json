@@ -1,9 +1,9 @@
 [
     {
-        "fulfilmentCode": "P_UAC_UACHHP2B",
-        "productGroup": "UAC",
-        "description": "Household Unique Access Code for Wales (English/Welsh - Bilingual) via paper",
-        "language": "B",
+        "fulfilmentCode": "P_OR_H2",
+        "productGroup": "QUESTIONNAIRE",
+        "description": "Household Questionnaire for Wales (in English)",
+        "language": "E",
         "caseTypes": [
             "HH",
             "SPG"
@@ -13,6 +13,22 @@
             "W"
         ],
         "deliveryChannel": "POST",
-        "handler": "PRINT"
+        "handler": "QM"
+    },
+    {
+        "fulfilmentCode": "P_OR_H2W",
+        "productGroup": "QUESTIONNAIRE",
+        "description": "Household Questionnaire for Wales (in Welsh)",
+        "language": "W",
+        "caseTypes": [
+            "HH",
+            "SPG"
+        ],
+        "individual": false,
+        "regions": [
+            "W"
+        ],
+        "deliveryChannel": "POST",
+        "handler": "QM"
     }
 ]
