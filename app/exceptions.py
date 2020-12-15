@@ -24,10 +24,14 @@ class SessionTimeout(Exception):
 
 
 class TooManyRequests(Exception):
-    """Raised when users session expires in journeys requiring sessions"""
+    """Raised when request fulfilment returns a 429"""
     def __init__(self, sub_user_journey):
         super().__init__()
         self.sub_user_journey = sub_user_journey
+
+
+class TooManyRequestsWebForm(Exception):
+    """Raised when web form returns a 429 error"""
 
 
 class ExerciseClosedError(Exception):

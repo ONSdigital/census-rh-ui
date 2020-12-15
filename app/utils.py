@@ -606,7 +606,8 @@ class RHService(View):
             'language': form_data['language'],
             'name': form_data['name'],
             'description': form_data['description'],
-            'email': form_data['email']
+            'email': form_data['email'],
+            'clientIP': View.single_client_ip(request)
         }
         rhsvc_url = request.app['RHSVC_URL']
         return await View._make_request(request,
