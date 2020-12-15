@@ -812,43 +812,47 @@ class RequestCommonConfirmNameAddress(RequestCommon):
 
                     if number_of_continuation_forms > 0:
                         count = 1
+                        fulfilment_code = ''
+                        available_fulfilments = await RHService.get_fulfilment(
+                            request,
+                            attributes['case_type'],
+                            attributes['region'],
+                            'POST',
+                            'CONTINUATION',
+                            fulfilment_individual)
+
+                        if len(available_fulfilments) > 1:
+                            for fulfilment in available_fulfilments:
+                                if fulfilment['language'] == fulfilment_language:
+                                    fulfilment_code = fulfilment['fulfilmentCode']
+                        else:
+                            fulfilment_code = available_fulfilments[0]['fulfilmentCode']
+
                         while count <= number_of_continuation_forms:
-                            available_fulfilments = await RHService.get_fulfilment(
-                                request,
-                                attributes['case_type'],
-                                attributes['region'],
-                                'POST',
-                                'CONTINUATION',
-                                fulfilment_individual)
-
-                            if len(available_fulfilments) > 1:
-                                for fulfilment in available_fulfilments:
-                                    if fulfilment['language'] == fulfilment_language:
-                                        fulfilment_code_array.append(fulfilment['fulfilmentCode'])
-                            else:
-                                fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
-
+                            fulfilment_code_array.append(fulfilment_code)
                             fulfilment_type_array.append('CONTINUATION')
                             count += 1
 
                     if number_of_large_print_forms > 0:
                         count = 1
+                        fulfilment_code = ''
+                        available_fulfilments = await RHService.get_fulfilment(
+                            request,
+                            attributes['case_type'],
+                            attributes['region'],
+                            'POST',
+                            'LARGE_PRINT',
+                            fulfilment_individual)
+
+                        if len(available_fulfilments) > 1:
+                            for fulfilment in available_fulfilments:
+                                if fulfilment['language'] == fulfilment_language:
+                                    fulfilment_code = fulfilment['fulfilmentCode']
+                        else:
+                            fulfilment_code = available_fulfilments[0]['fulfilmentCode']
+
                         while count <= number_of_large_print_forms:
-                            available_fulfilments = await RHService.get_fulfilment(
-                                request,
-                                attributes['case_type'],
-                                attributes['region'],
-                                'POST',
-                                'LARGE_PRINT',
-                                fulfilment_individual)
-
-                            if len(available_fulfilments) > 1:
-                                for fulfilment in available_fulfilments:
-                                    if fulfilment['language'] == fulfilment_language:
-                                        fulfilment_code_array.append(fulfilment['fulfilmentCode'])
-                            else:
-                                fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
-
+                            fulfilment_code_array.append(fulfilment_code)
                             fulfilment_type_array.append('LARGE_PRINT')
                             count += 1
 
@@ -1204,8 +1208,6 @@ class RequestContinuationSent(RequestCommon):
                 'addressLine3': attributes['addressLine3'],
                 'townName': attributes['townName'],
                 'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
                 'roomNumber': attributes['roomNumber'],
                 'individual': attributes['individual']
             }

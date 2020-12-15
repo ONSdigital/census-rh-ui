@@ -29,7 +29,11 @@
 {%- endif -%}
 
 {%- if request_type == 'continuation-questionnaire' -%}
-    {%- set question_description = _('<p>This is to make sure we send you the right number of continuation questionnaires if there are more than 5 people in your household</p>') -%}
+    {%- if display_region == 'ni' -%}
+        {%- set question_description = _('<p>This is to make sure we send you the right number of continuation questionnaires if there are more than 6 people in your household</p>') -%}
+    {%- else -%}
+        {%- set question_description = _('<p>This is to make sure we send you the right number of continuation questionnaires if there are more than 5 people in your household</p>') -%}
+    {%- endif -%}
 {%- else -%}
     {%- set question_description = _('<p>This is to make sure we send you the right number of paper questionnaires</p>') -%}
 {%- endif -%}
