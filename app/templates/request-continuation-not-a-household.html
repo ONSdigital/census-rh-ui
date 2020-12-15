@@ -1,0 +1,14 @@
+{% extends 'base-' + display_region + '.html' %}
+
+{% block main %}
+    <h1>{{ _('This address is not a household address') }}</h1>
+
+    <p>{{ _('You have selected an address for an establishment.') }}</p>
+
+    <p>{{ _('Continuation questionnaires can only be requested for household addresses.') }}</p>
+
+    {% autoescape false %}
+        <p>{{ _('If you need help, please %(open)scontact us%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {% endautoescape %}
+
+{% endblock %}

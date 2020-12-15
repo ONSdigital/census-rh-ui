@@ -57,7 +57,7 @@
             {{ postcode }}
         </p>
 
-        {%- if censusAddressType == 'CE' -%}
+        {%- if (censusAddressType == 'CE') and (sub_user_journey != 'continuation-questionnaire') -%}
             {%- if roomNumber -%}
                 <p><a href="{{ room_number_link }}">{{ _('Change flat or room number') }}</a></p>
             {%- else -%}

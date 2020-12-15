@@ -51,7 +51,7 @@ class CommonCommon(View):
                                                                          sub_user_journey=sub_user_journey,
                                                                          display_region=display_region))
         else:
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 if (case_type == 'HH' or case_type == 'SPG') and not individual:
                     raise HTTPFound(
                         request.app.router['RequestHouseholdForm:get'].url_for(display_region=display_region))
@@ -59,6 +59,10 @@ class CommonCommon(View):
                     raise HTTPFound(
                         request.app.router['RequestCommonEnterName:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
+            elif sub_user_journey == 'continuation-questionnaire':
+                raise HTTPFound(
+                    request.app.router['RequestCommonPeopleInHousehold:get'].url_for(
+                        request_type=sub_user_journey, display_region=display_region))
             else:
                 if (case_type == 'HH' or case_type == 'SPG') and not individual:
                     raise HTTPFound(
@@ -530,6 +534,24 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
+                if session['attributes']['censusAddressType'] == 'NA':
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['CommonCallContactCentre:get'].url_for(
+                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+                elif (session['attributes']['censusAddressType'] == 'CE') and \
+                        (sub_user_journey == 'continuation-questionnaire'):
+                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'])
+                    raise HTTPFound(
+                        request.app.router['RequestContinuationNotAHousehold:get'].url_for(
+                            display_region=display_region))
+            except KeyError:
+                logger.info('unable to check censusAddressType', client_ip=request['client_ip'])
+                raise HTTPFound(
+                    request.app.router['CommonCallContactCentre:get'].url_for(
+                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+
+            try:
                 if session['attributes']['countryCode'] == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'])
                     raise HTTPFound(
@@ -555,18 +577,6 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
                 logger.info('unable to check for region', client_ip=request['client_ip'])
-
-            try:
-                if session['attributes']['censusAddressType'] == 'NA':
-                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
-                    raise HTTPFound(
-                        request.app.router['CommonCallContactCentre:get'].url_for(
-                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-            except KeyError:
-                logger.info('unable to check censusAddressType', client_ip=request['client_ip'])
-                raise HTTPFound(
-                    request.app.router['CommonCallContactCentre:get'].url_for(
-                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             if sub_user_journey == 'unlinked' or sub_user_journey == 'change-address':
                 try:
@@ -760,7 +770,7 @@ class CommonCEMangerQuestion(CommonCommon):
             session['attributes']['individual'] = True
             session.changed()
 
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 raise HTTPFound(
                     request.app.router['RequestCommonEnterName:get'].url_for(
                         request_type=sub_user_journey, display_region=display_region))
@@ -774,13 +784,13 @@ class CommonCEMangerQuestion(CommonCommon):
             session['attributes']['individual'] = False
             session.changed()
 
-            if sub_user_journey == 'paper-form':
+            if sub_user_journey == 'paper-questionnaire':
                 if display_region == 'ni':
                     raise HTTPFound(
                         request.app.router['RequestFormNIManager:get'].url_for())
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestFormManager:get'].url_for(
+                        request.app.router['RequestQuestionnaireManager:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
             else:
                 if display_region == 'ni':
