@@ -8,7 +8,7 @@ from aiohttp.client_exceptions import (ClientResponseError,
 from .exceptions import (ExerciseClosedError, InactiveCaseError,
                          InvalidEqPayLoad,
                          SessionTimeout,
-                         TooManyRequests)
+                         TooManyRequests, TooManyRequestsWebForm)
 from structlog import get_logger
 
 from .utils import View
@@ -48,6 +48,8 @@ def create_error_middleware(overrides):
             return await session_timeout(request, ex.user_journey, ex.sub_user_journey)
         except TooManyRequests as ex:
             return await too_many_requests(request, ex.sub_user_journey)
+        except TooManyRequestsWebForm:
+            return await too_many_requests_web_form(request)
         except InactiveCaseError as ex:
             return await inactive_case(request, ex.case_type)
         except ExerciseClosedError as ex:
@@ -126,6 +128,11 @@ async def too_many_requests(request, sub_user_journey: str):
     attributes = check_display_region(request)
     attributes['sub_user_journey'] = sub_user_journey
     return jinja.render_template('request-too-many-requests.html', request, attributes, status=429)
+
+
+async def too_many_requests_web_form(request):
+    attributes = check_display_region(request)
+    return jinja.render_template('web-form-too-many-requests.html', request, attributes, status=429)
 
 
 async def session_timeout(request, user_journey: str, sub_user_journey: str):

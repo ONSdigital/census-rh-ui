@@ -2343,15 +2343,24 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_web_form_title_en = 'Web form'
         self.content_web_form_warning_en = 'Do not include any personal information, for example, your access code'
+        # TODO Add Welsh Translation
         self.content_web_form_title_cy = 'Web form'
+        # TODO Add Welsh Translation
         self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
 
         self.content_web_form_success_title_en = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_en = 'Your message has been sent'
         self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
+        # TODO Add Welsh Translation
         self.content_web_form_success_title_cy = 'Thank you for contacting us'
+        # TODO Add Welsh Translation
         self.content_web_form_success_confirmation_cy = 'Your message has been sent'
+        # TODO Add Welsh Translation
         self.content_web_form_success_secondary_cy = 'We will respond to you within 2 working days'
+
+        self.content_web_form_error_429_title_en = 'You have reached the maximum number web form submissions'
+        # TODO Add Welsh Translation
+        self.content_web_form_error_429_title_cy = 'You have reached the maximum number web form submissions'
 
         # Transient
 
