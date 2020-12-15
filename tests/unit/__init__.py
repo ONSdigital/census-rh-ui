@@ -1105,14 +1105,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_request_individual_secondary_cy = 'You can choose to receive your new access code by text or post.'
 
-        self.content_request_individual_form_title_en = 'Request an individual paper questionnaire'
+        self.content_request_individual_questionnaire_page_title_en = \
+            '<title>Request individual paper questionnaire - Census 2021</title>'
+        self.content_request_individual_questionnaire_title_en = 'Request an individual paper questionnaire'
         # TODO: add welsh translation
-        self.content_request_individual_form_title_cy = 'Request an individual paper questionnaire'
-        self.content_request_individual_form_secondary_en = \
+        self.content_request_individual_questionnaire_page_title_cy = \
+            '<title>Request individual paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_individual_questionnaire_title_cy = 'Request an individual paper questionnaire'
+        self.content_request_individual_questionnaire_secondary_en = \
             'An individual paper questionnaire lets you answer your census questions separately from the people ' \
             'you live with, so they can\\xe2\\x80\\x99t see your answers.'
         # TODO: add welsh translation
-        self.content_request_individual_form_secondary_cy = \
+        self.content_request_individual_questionnaire_secondary_cy = \
             'An individual paper questionnaire lets you answer your census questions separately from the people ' \
             'you live with, so they can\\xe2\\x80\\x99t see your answers.'
 
@@ -1300,9 +1305,14 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_household_title_cy = 'Request a new household access code'
 
-        self.content_request_questionnaire_household_information_title_en = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_page_title_en = \
+            '<title>Request household paper questionnaire - Census 2021</title>'
+        self.content_request_questionnaire_household_title_en = 'Request a household paper questionnaire'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_household_information_title_cy = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_page_title_cy = \
+            '<title>Request household paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_household_title_cy = 'Request a household paper questionnaire'
 
         self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
         self.content_request_questionnaire_people_in_household_error_empty_en = \
@@ -1316,9 +1326,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a numeral'
 
+        self.content_request_common_enter_name_page_title_en = \
+            '<title>Enter name - Census 2021</title>'
+        self.content_request_common_enter_name_page_title_error_en = \
+            '<title>Error: Enter name - Census 2021</title>'
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_page_title_cy = \
+            '<title>Enter name - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_page_title_error_cy = \
+            '<title>Error: Enter name - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_title_cy = 'What is your name?'
         # TODO Add Welsh Translation
@@ -1810,13 +1830,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_access_code_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='en')
         self.post_request_access_code_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='cy')
         self.post_request_access_code_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='ni')
 
         # Start Request Individual Code
@@ -1964,24 +1984,21 @@ class RHTestCase(AioHTTPTestCase):
             request_type='access-code', display_region='ni'
         )
 
-        self.get_request_individual_code_confirm_send_by_text_en = self.app.router['RequestCodeConfirmSendByText:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_individual_code_confirm_send_by_text_cy = self.app.router['RequestCodeConfirmSendByText:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_individual_code_confirm_send_by_text_ni = self.app.router['RequestCodeConfirmSendByText:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-        self.post_request_individual_code_confirm_send_by_text_en = self.app.router['RequestCodeConfirmSendByText:post'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.post_request_individual_code_confirm_send_by_text_cy = self.app.router['RequestCodeConfirmSendByText:post'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.post_request_individual_code_confirm_send_by_text_ni = self.app.router['RequestCodeConfirmSendByText:post'].url_for(
-            request_type='access-code', display_region='ni'
-        )
+        self.get_request_individual_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='en')
+        self.get_request_individual_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='cy')
+        self.get_request_individual_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='ni')
+        self.post_request_individual_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='en')
+        self.post_request_individual_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='cy')
+        self.post_request_individual_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='ni')
 
         self.post_request_individual_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
             request_type='access-code', display_region='en'
@@ -2004,23 +2021,23 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_individual_code_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='en')
         self.post_request_individual_code_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='cy')
         self.post_request_individual_code_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
                                                                             display_region='ni')
 
         self.post_request_individual_form_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='en')
         self.post_request_individual_form_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='cy')
         self.post_request_individual_form_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='ni')
 
         # Start Request Paper Questionnaire
@@ -2109,25 +2126,25 @@ class RHTestCase(AioHTTPTestCase):
                 display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
 
-        self.post_request_access_code_household_information_en = self.app.router['RequestCodeHousehold:post'].url_for(
+        self.post_request_access_code_household_en = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
-        self.post_request_access_code_household_information_cy = self.app.router['RequestCodeHousehold:post'].url_for(
+        self.post_request_access_code_household_cy = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
-        self.post_request_access_code_household_information_ni = self.app.router['RequestCodeHousehold:post'].url_for(
+        self.post_request_access_code_household_ni = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.post_request_paper_questionnaire_household_information_en = \
+        self.post_request_paper_questionnaire_household_en = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
-        self.post_request_paper_questionnaire_household_information_cy = \
+        self.post_request_paper_questionnaire_household_cy = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
-        self.post_request_paper_questionnaire_household_information_ni = \
+        self.post_request_paper_questionnaire_household_ni = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
@@ -2169,13 +2186,13 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.post_request_paper_questionnaire_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='en')
         self.post_request_paper_questionnaire_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='cy')
         self.post_request_paper_questionnaire_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
                                                                             display_region='ni')
 
         # Content
@@ -2415,13 +2432,13 @@ class RHTestCase(AioHTTPTestCase):
             )
 
         self.post_request_continuation_questionnaire_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
                                                                             display_region='en')
         self.post_request_continuation_questionnaire_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
                                                                             display_region='cy')
         self.post_request_continuation_questionnaire_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
                                                                             display_region='ni')
 
         # Content

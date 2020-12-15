@@ -99,21 +99,21 @@ class RequestCodeIndividual(RequestCommon):
                                                                      display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/individual-information/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/individual/')
 class RequestIndividualForm(RequestCommon):
-    @aiohttp_jinja2.template('request-questionnaire-individual-information.html')
+    @aiohttp_jinja2.template('request-questionnaire-individual.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Request an individual paper questionnaire'
+            page_title = 'Request individual paper questionnaire'
             locale = 'cy'
         else:
-            page_title = 'Request an individual paper questionnaire'
+            page_title = 'Request individual paper questionnaire'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -125,7 +125,7 @@ class RequestIndividualForm(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         request_type = 'paper-questionnaire'
-        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/individual')
 
         session = await get_session(request)
         session['attributes']['individual'] = True
@@ -174,21 +174,21 @@ class RequestCodeHousehold(RequestCommon):
                                                                             display_region=display_region))
 
 
-@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/household-information/')
+@requests_routes.view(r'/' + View.valid_display_regions + '/requests/paper-questionnaire/household/')
 class RequestHouseholdForm(RequestCommon):
-    @aiohttp_jinja2.template('request-questionnaire-household-information.html')
+    @aiohttp_jinja2.template('request-questionnaire-household.html')
     async def get(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Request a household paper questionnaire'
+            page_title = 'Request household paper questionnaire'
             locale = 'cy'
         else:
-            page_title = 'Request a household paper questionnaire'
+            page_title = 'Request household paper questionnaire'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/paper-questionnaire/household-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/household')
         return {
             'display_region': display_region,
             'locale': locale,
@@ -199,7 +199,7 @@ class RequestHouseholdForm(RequestCommon):
     async def post(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/requests/paper-questionnaire/household-information')
+        self.log_entry(request, display_region + '/requests/paper-questionnaire/household')
 
         session = await get_session(request)
         session['attributes']['individual'] = False
@@ -569,10 +569,10 @@ class RequestCommonEnterName(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "What is your name?"
+            page_title = "Enter name"
             locale = 'cy'
         else:
-            page_title = 'What is your name?'
+            page_title = 'Enter name'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-name')
@@ -595,10 +595,10 @@ class RequestCommonEnterName(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "What is your name?"
+            page_title = "Error: Enter name"
             locale = 'cy'
         else:
-            page_title = 'What is your name?'
+            page_title = 'Error: Enter name'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-name')
@@ -637,14 +637,14 @@ class RequestCommonEnterName(RequestCommon):
         session['attributes'] = attributes
 
         raise HTTPFound(
-            request.app.router['RequestCommonConfirmNameAddress:get'].url_for(display_region=display_region,
-                                                                              request_type=request_type))
+            request.app.router['RequestCommonConfirmSendByPost:get'].url_for(display_region=display_region,
+                                                                             request_type=request_type))
 
 
 @requests_routes.view(r'/' + View.valid_display_regions + '/requests/' +
-                      RequestCommon.valid_request_types_code_and_form + '/confirm-name-address/')
-class RequestCommonConfirmNameAddress(RequestCommon):
-    @aiohttp_jinja2.template('request-common-confirm-name-address.html')
+                      RequestCommon.valid_request_types_code_and_form + '/confirm-send-by-post/')
+class RequestCommonConfirmSendByPost(RequestCommon):
+    @aiohttp_jinja2.template('request-common-confirm-send-by-post.html')
     async def get(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -658,7 +658,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
 
@@ -681,7 +681,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             'individual': attributes['individual']
         }
 
-    @aiohttp_jinja2.template('request-common-confirm-name-address.html')
+    @aiohttp_jinja2.template('request-common-confirm-send-by-post.html')
     async def post(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -695,7 +695,7 @@ class RequestCommonConfirmNameAddress(RequestCommon):
             page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-name-address')
+        self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
 

@@ -16,7 +16,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -31,7 +31,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -46,7 +46,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -61,7 +61,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -76,7 +76,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -91,7 +91,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -106,7 +106,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -121,7 +121,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -796,7 +796,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en', self.common_form_data_empty, 'household')
 
@@ -808,7 +808,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en', self.common_form_data_empty, 'household')
 
@@ -820,7 +820,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_cy, 'cy', self.common_form_data_empty, 'household')
 
@@ -832,7 +832,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_ni, 'ni', self.common_form_data_empty, 'household')
 
@@ -844,7 +844,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en', self.common_form_data_empty, 'household')
 
@@ -856,7 +856,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en', self.common_form_data_empty, 'household')
 
@@ -868,7 +868,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_cy, 'cy', self.common_form_data_empty, 'household')
 
@@ -880,7 +880,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_ni, 'ni', self.common_form_data_empty, 'household')
 
@@ -1023,7 +1023,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1036,7 +1036,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1049,7 +1049,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w,)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_cy, 'cy',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1062,7 +1062,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_ni, 'ni',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1075,7 +1075,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1088,7 +1088,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_en, 'en',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1101,7 +1101,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_cy, 'cy',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1114,7 +1114,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_invalid_or_no_selection(
             self.post_request_access_code_select_how_to_receive_ni, 'ni',
             self.request_code_select_how_to_receive_data_invalid, 'household')
@@ -1269,7 +1269,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
@@ -1282,7 +1282,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
@@ -1295,7 +1295,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
@@ -1308,7 +1308,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_ni, 'ni')
@@ -1321,7 +1321,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -1332,7 +1332,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -1343,7 +1343,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -1354,7 +1354,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_enter_mobile_input_invalid(self.post_request_access_code_enter_mobile_ni, 'ni')
 
     @unittest_run_loop
@@ -1445,7 +1445,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_en, 'en')
@@ -1458,7 +1458,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_en, 'en')
@@ -1471,7 +1471,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_cy, 'cy')
@@ -1484,7 +1484,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_ni, 'ni')
@@ -1497,7 +1497,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -1508,7 +1508,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_en, 'en')
 
     @unittest_run_loop
@@ -1519,7 +1519,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_cy, 'cy')
 
     @unittest_run_loop
@@ -1530,7 +1530,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_enter_mobile_input_empty(self.post_request_access_code_enter_mobile_ni, 'ni')
 
     @unittest_run_loop
@@ -1621,7 +1621,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1635,7 +1635,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1649,7 +1649,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -1663,7 +1663,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -1677,7 +1677,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1691,7 +1691,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1705,7 +1705,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -1719,7 +1719,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -1826,7 +1826,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1842,7 +1842,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1858,7 +1858,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -1874,7 +1874,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -1890,7 +1890,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1906,7 +1906,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -1922,7 +1922,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -1938,7 +1938,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2061,7 +2061,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2077,7 +2077,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2093,7 +2093,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2109,7 +2109,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2125,7 +2125,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2141,7 +2141,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2157,7 +2157,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2173,7 +2173,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2296,7 +2296,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2311,7 +2311,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2326,7 +2326,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2341,7 +2341,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2356,7 +2356,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2371,7 +2371,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2386,7 +2386,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2401,7 +2401,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2580,7 +2580,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2595,7 +2595,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2610,7 +2610,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2625,7 +2625,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2640,7 +2640,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2655,7 +2655,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2670,7 +2670,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2685,7 +2685,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2864,7 +2864,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2879,7 +2879,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2894,7 +2894,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2909,7 +2909,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -2924,7 +2924,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2939,7 +2939,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_en, 'en', 'household')
@@ -2954,7 +2954,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_cy, 'cy', 'household')
@@ -2969,7 +2969,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_sms(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_mobile(self.post_request_access_code_enter_mobile_ni, 'ni', 'household')
@@ -3150,7 +3150,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3164,7 +3164,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3178,7 +3178,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3192,7 +3192,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3206,7 +3206,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3220,7 +3220,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3234,7 +3234,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3248,7 +3248,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3415,7 +3415,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3429,7 +3429,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3443,7 +3443,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3457,7 +3457,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3471,7 +3471,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3485,7 +3485,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3499,7 +3499,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3513,7 +3513,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3680,7 +3680,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3694,7 +3694,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3708,7 +3708,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3722,7 +3722,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3736,7 +3736,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3750,7 +3750,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_en, 'en',
@@ -3764,7 +3764,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_cy, 'cy',
@@ -3778,7 +3778,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_access_code_enter_name_ni, 'ni',
@@ -3945,7 +3945,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -3960,7 +3960,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -3975,7 +3975,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -3990,7 +3990,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -4005,7 +4005,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4021,7 +4021,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4037,7 +4037,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -4053,7 +4053,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -4241,7 +4241,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4257,7 +4257,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4273,7 +4273,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -4289,7 +4289,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -4305,7 +4305,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4321,7 +4321,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4337,7 +4337,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -4353,7 +4353,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -4544,7 +4544,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4559,7 +4559,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4574,7 +4574,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -4589,7 +4589,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -4604,7 +4604,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4619,7 +4619,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4634,7 +4634,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -4649,7 +4649,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -4828,7 +4828,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4843,7 +4843,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -4858,7 +4858,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -4873,7 +4873,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -4888,7 +4888,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4903,7 +4903,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -4918,7 +4918,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -4933,7 +4933,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -5112,7 +5112,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5127,7 +5127,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5142,7 +5142,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -5157,7 +5157,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -5172,7 +5172,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5187,7 +5187,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5202,7 +5202,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -5217,7 +5217,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -5396,7 +5396,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5411,7 +5411,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5426,7 +5426,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -5441,7 +5441,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -5456,7 +5456,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5471,7 +5471,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5486,7 +5486,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -5501,7 +5501,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
@@ -5684,7 +5684,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5699,7 +5699,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
@@ -5714,7 +5714,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
@@ -5729,7 +5729,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
@@ -5744,7 +5744,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5759,7 +5759,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_en, 'en', 'household')
+            self.post_request_access_code_household_en, 'en', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
@@ -5774,7 +5774,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_cy, 'cy', 'household')
+            self.post_request_access_code_household_cy, 'cy', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
@@ -5789,7 +5789,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_confirm_address_input_yes_code(
             self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
         await self.check_post_household_information_code(
-            self.post_request_access_code_household_information_ni, 'ni', 'household')
+            self.post_request_access_code_household_ni, 'ni', 'household')
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')

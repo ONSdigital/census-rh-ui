@@ -894,7 +894,7 @@ class CommonEnterRoomNumber(CommonCommon):
             try:
                 if session_attributes['first_name']:
                     raise HTTPFound(
-                        request.app.router['RequestCommonConfirmNameAddress:get'].url_for(
+                        request.app.router['RequestCommonConfirmSendByPost:get'].url_for(
                             display_region=display_region,
                             user_journey=user_journey,
                             request_type=sub_user_journey
