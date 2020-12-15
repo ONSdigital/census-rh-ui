@@ -98,11 +98,17 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_common_select_address_error_cy, contents)
+                self.assertIn(self.content_common_select_address_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_common_select_address_page_title_cy, contents)
             self.assertIn(self.content_common_select_address_title_cy, contents)
             self.assertIn(self.content_common_select_address_value_cy, contents)
         else:
             if check_error:
                 self.assertIn(self.content_common_select_address_error_en, contents)
+                self.assertIn(self.content_common_select_address_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_common_select_address_page_title_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -111,6 +117,9 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_common_confirm_address_error_cy, contents)
+                self.assertIn(self.content_common_confirm_address_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_common_confirm_address_page_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
@@ -130,6 +139,9 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_common_confirm_address_error_en, contents)
+                self.assertIn(self.content_common_confirm_address_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_common_confirm_address_page_title_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -818,8 +830,10 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('address-in-northern-ireland', display_region, False),
                               contents)
             if display_region == 'cy':
+                self.assertIn(self.content_common_address_in_northern_ireland_page_title_cy, contents)
                 self.assertIn(self.content_common_address_in_northern_ireland_cy, contents)
             else:
+                self.assertIn(self.content_common_address_in_northern_ireland_page_title_en, contents)
                 self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
 
     async def check_post_confirm_address_address_in_england(self, url, display_region):
@@ -830,6 +844,7 @@ class TestHelpers(RHTestCase):
                                                              False))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland_page_title, contents)
             self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
             self.assertIn(self.content_common_address_in_england_secondary, contents)
 
@@ -841,6 +856,7 @@ class TestHelpers(RHTestCase):
                                                              False))
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
+            self.assertIn(self.content_common_address_not_in_northern_ireland_page_title, contents)
             self.assertIn(self.content_common_address_not_in_northern_ireland, contents)
             self.assertIn(self.content_common_address_in_wales_secondary, contents)
 
@@ -853,9 +869,14 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('address-in-scotland', display_region, False), contents)
-            if display_region == 'cy':
+            if display_region == 'ni':
+                self.assertIn(self.content_common_address_in_scotland_page_title_ni, contents)
+                self.assertIn(self.content_common_address_in_scotland_ni, contents)
+            elif display_region == 'cy':
+                self.assertIn(self.content_common_address_in_scotland_page_title_cy, contents)
                 self.assertIn(self.content_common_address_in_scotland_cy, contents)
             else:
+                self.assertIn(self.content_common_address_in_scotland_page_title_en, contents)
                 self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     async def check_post_confirm_address_returns_addresstype_na(self, url, display_region):

@@ -80,12 +80,15 @@ class CommonAddressInScotland(CommonCommon):
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
 
-        if display_region == 'cy':
+        if display_region == 'ni':
+            page_title = 'Address not part of census for Northern Ireland'
+            locale = 'en'
+        elif display_region == 'cy':
             # TODO: add welsh translation
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'cy'
         else:
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-scotland')
@@ -113,10 +116,10 @@ class CommonAddressInNorthernIreland(CommonCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'cy'
         else:
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-northern-ireland')
@@ -142,7 +145,7 @@ class CommonAddressInEngland(CommonCommon):
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
-        page_title = 'This address is not part of the census for Northern Ireland'
+        page_title = 'Address not part of census for Northern Ireland'
         locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-england')
@@ -166,7 +169,7 @@ class CommonAddressInWales(CommonCommon):
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
-        page_title = 'This address is not part of the census for Northern Ireland'
+        page_title = 'Address not part of census for Northern Ireland'
         locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-wales')
@@ -332,10 +335,11 @@ class CommonSelectAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            page_title = 'Dewiswch eich cyfeiriad'
+            # TODO: add welsh translation
+            page_title = 'Select address'
             locale = 'cy'
         else:
-            page_title = 'Select your address'
+            page_title = 'Select address'
             locale = 'en'
 
         attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
@@ -366,10 +370,11 @@ class CommonSelectAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            page_title = 'Dewiswch eich cyfeiriad'
+            # TODO: add welsh translation
+            page_title = 'Error: Select address'
             locale = 'cy'
         else:
-            page_title = 'Select your address'
+            page_title = 'Error: Select address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
@@ -434,10 +439,10 @@ class CommonConfirmAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Is this the correct address?"
+            page_title = "Confirm address"
             locale = 'cy'
         else:
-            page_title = 'Is this the correct address?'
+            page_title = 'Confirm address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -491,10 +496,10 @@ class CommonConfirmAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Is this the correct address?"
+            page_title = "Error: Confirm address"
             locale = 'cy'
         else:
-            page_title = 'Is this the correct address?'
+            page_title = 'Error: Confirm address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')

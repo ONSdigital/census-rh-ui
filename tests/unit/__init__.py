@@ -406,11 +406,19 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_cy = '0800 169 2021'
         self.content_call_centre_number_ni = '0800 328 2021'
 
+        self.content_common_address_in_northern_ireland_page_title_en = \
+            '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_northern_ireland_en = \
             'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
+        self.content_common_address_in_northern_ireland_page_title_cy = \
+            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
         self.content_common_address_in_northern_ireland_cy = \
             'This address is not part of the census for England and Wales'
+
+        self.content_common_address_not_in_northern_ireland_page_title = \
+            '<title>Address not part of census for Northern Ireland - Census 2021</title>'
         self.content_common_address_not_in_northern_ireland = \
             'This address is not part of the census for Northern Ireland'
         self.content_common_address_in_england_secondary = \
@@ -418,9 +426,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_wales_secondary = \
             'You have selected an address in Wales.'
 
+        self.content_common_address_in_scotland_page_title_en = \
+            '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
+        self.content_common_address_in_scotland_page_title_cy = \
+            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
+        self.content_common_address_in_scotland_page_title_ni = \
+            '<title>Address not part of census for Northern Ireland - Census 2021</title>'
+        self.content_common_address_in_scotland_ni = 'This address is not part of the census for Northern Ireland'
 
         self.content_common_enter_address_error_en = 'Enter a valid UK postcode'
         # TODO Add Welsh Translation
@@ -430,19 +446,32 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_common_enter_address_error_empty_cy = "Enter a postcode"
 
+        self.content_common_select_address_page_title_en = '<title>Select address - Census 2021</title>'
+        self.content_common_select_address_page_title_error_en = '<title>Error: Select address - Census 2021</title>'
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
         self.content_common_select_address_value_en = '1 Gate Reach'
         self.content_common_select_address_no_results_en = 'We cannot find your address'
+        # TODO Add Welsh Translation
+        self.content_common_select_address_page_title_cy = '<title>Select address - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_common_select_address_page_title_error_cy = '<title>Error: Select address - Cyfrifiad 2021</title>'
         self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
+        self.content_common_confirm_address_page_title_en = '<title>Confirm address - Census 2021</title>'
+        self.content_common_confirm_address_page_title_error_en = '<title>Error: Confirm address - Census 2021</title>'
         self.content_common_confirm_address_title_en = 'Is this the correct address?'
         self.content_common_confirm_address_error_en = 'Select an answer'
         self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
+        # TODO Add Welsh Translation
+        self.content_common_confirm_address_page_title_cy = '<title>Confirm address - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_common_confirm_address_page_title_error_cy = \
+            '<title>Error: Confirm address - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation

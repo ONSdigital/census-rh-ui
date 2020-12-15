@@ -2096,7 +2096,7 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_address_in_scotland_en, str(resp_content))
+            self.assertIn(self.content_common_address_in_scotland_ni, str(resp_content))
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_en(self):
