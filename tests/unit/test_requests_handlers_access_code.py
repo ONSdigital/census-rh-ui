@@ -3938,7 +3938,7 @@ class TestRequestsHandlersAccessCode(TestHelpers):
                                                       self.request_common_enter_name_form_data_no_last, True, False)
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -3949,11 +3949,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -3964,11 +3964,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -3979,11 +3979,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -3994,11 +3994,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4009,12 +4009,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4025,12 +4025,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -4041,12 +4041,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', self.common_form_data_empty,
             'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -4057,12 +4057,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', self.common_form_data_empty,
             'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_manager_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4074,11 +4074,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_manager_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4090,11 +4090,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_manager_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_manager_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4106,11 +4106,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', self.common_form_data_empty, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_resident_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4122,12 +4122,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_resident_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4139,12 +4139,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4156,12 +4156,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4173,12 +4173,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4187,12 +4187,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4201,12 +4201,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4215,12 +4215,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_empty_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_empty_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4229,12 +4229,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', self.common_form_data_empty,
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', self.common_form_data_empty,
             'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -4245,12 +4245,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -4261,12 +4261,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -4277,12 +4277,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -4293,12 +4293,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4309,12 +4309,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4325,12 +4325,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -4341,12 +4341,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -4357,12 +4357,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_manager_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4374,12 +4374,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_manager_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4391,12 +4391,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_manager_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_manager_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4408,12 +4408,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'manager', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'manager', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_resident_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4425,12 +4425,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_resident_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4442,12 +4442,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4459,12 +4459,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4476,12 +4476,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4490,12 +4490,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4504,12 +4504,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4518,12 +4518,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_input_invalid_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_input_invalid_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4532,12 +4532,12 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_access_code_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'individual', 'CE')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'individual', 'CE')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -4548,11 +4548,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -4563,11 +4563,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -4578,11 +4578,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -4593,11 +4593,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4608,11 +4608,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -4623,11 +4623,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -4638,11 +4638,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -4653,11 +4653,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'household')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'household')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_manager_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4669,11 +4669,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'manager')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'manager')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_manager_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4685,11 +4685,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'manager')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'manager')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_manager_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_manager_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4701,11 +4701,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'manager')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'manager')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_resident_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4717,11 +4717,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_resident_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4733,11 +4733,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4749,11 +4749,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4765,11 +4765,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4778,11 +4778,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -4791,11 +4791,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -4804,11 +4804,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'individual')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_option_no_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_option_no_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -4817,8 +4817,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_no(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'individual')
+        await self.check_post_confirm_send_by_post_input_no(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'individual')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_hh_ew_e(self):
@@ -4832,8 +4832,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'HH', 'UAC', 'E', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_hh_ew_w(self):
@@ -4847,8 +4847,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'HH', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_hh_cy(self):
@@ -4862,8 +4862,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'HH', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_hh_ni(self):
@@ -4877,8 +4877,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'HH', 'UAC', 'N', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_spg_ew_e(self):
@@ -4892,8 +4892,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'E', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'SPG', 'UAC', 'E', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_spg_ew_w(self):
@@ -4907,8 +4907,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'SPG', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_spg_cy(self):
@@ -4922,8 +4922,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'SPG', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'SPG', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_spg_ni(self):
@@ -4937,8 +4937,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'SPG', 'UAC', 'N', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'SPG', 'UAC', 'N', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_e(self):
@@ -4953,8 +4953,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_manager_ce_m_ew_w(self):
@@ -4969,8 +4969,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_manager_ce_m_cy(self):
@@ -4985,8 +4985,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'false')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'false')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_e(self):
@@ -5001,8 +5001,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ew_w(self):
@@ -5017,8 +5017,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_resident_ce_m_cy(self):
@@ -5033,8 +5033,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_select_resident_ce_m_ni(self):
@@ -5049,8 +5049,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_ce_r_ew_e(self):
@@ -5062,8 +5062,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_ce_r_ew_w(self):
@@ -5075,8 +5075,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_ce_r_cy(self):
@@ -5088,8 +5088,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true')
 
     @unittest_run_loop
     async def test_request_access_code_post_code_sent_post_ce_r_ni(self):
@@ -5101,11 +5101,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5116,11 +5116,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'E', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'HH', 'E', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5131,11 +5131,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'HH', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'HH', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -5146,11 +5146,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'HH', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'HH', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -5161,11 +5161,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'HH', 'N', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'HH', 'N', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5176,11 +5176,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'E', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'SPG', 'E', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5191,11 +5191,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'SPG', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'SPG', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -5206,11 +5206,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'SPG', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'SPG', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -5221,11 +5221,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'SPG', 'N', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'SPG', 'N', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_manager_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5237,11 +5237,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'E', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_manager_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5253,11 +5253,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_manager_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_manager_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5269,11 +5269,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'UAC', 'false')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'W', 'UAC', 'false')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_resident_ce_m_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5285,11 +5285,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'E', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_resident_ce_m_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5301,11 +5301,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'W', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5317,11 +5317,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'W', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -5333,11 +5333,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'N', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5346,11 +5346,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'E', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'E', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5359,11 +5359,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'W', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'W', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5372,11 +5372,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'W', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'W', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_get_fulfilment_error_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_get_fulfilment_error_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -5385,11 +5385,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'N', 'UAC', 'true')
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'N', 'UAC', 'true')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5400,11 +5400,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5415,11 +5415,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -5430,11 +5430,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -5445,11 +5445,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5460,11 +5460,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5475,11 +5475,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -5490,11 +5490,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -5505,11 +5505,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_ew_e(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_manager_ce_m_ew_e(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5522,11 +5522,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_ew_w(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_manager_ce_m_ew_w(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5539,11 +5539,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_manager_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_manager_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5555,11 +5555,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ew_e(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_resident_ce_m_ew_e(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5572,11 +5572,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ew_w(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_resident_ce_m_ew_w(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5589,11 +5589,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_resident_ce_m_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5605,11 +5605,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_select_resident_ce_m_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_select_resident_ce_m_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -5621,11 +5621,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5634,11 +5634,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5647,11 +5647,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5660,11 +5660,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -5673,11 +5673,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_hh_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5688,11 +5688,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_hh_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH')
@@ -5703,11 +5703,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_hh_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_hh_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'HH')
@@ -5718,11 +5718,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_hh_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_hh_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH')
@@ -5733,11 +5733,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_spg_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5748,11 +5748,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_spg_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'SPG')
@@ -5763,11 +5763,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_spg_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_spg_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'SPG')
@@ -5778,11 +5778,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_spg_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_spg_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'SPG')
@@ -5793,11 +5793,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ew_e(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_manager_ce_m_ew_e(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5810,11 +5810,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_ew_w(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_manager_ce_m_ew_w(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5827,11 +5827,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_manager_ce_m_cy(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_manager_ce_m_cy(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
@@ -5844,11 +5844,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ew_e(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_resident_ce_m_ew_e(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5861,11 +5861,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ew_w(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_resident_ce_m_ew_w(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
@@ -5878,11 +5878,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_cy(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_resident_ce_m_cy(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
@@ -5895,11 +5895,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_select_resident_ce_m_ni(
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_select_resident_ce_m_ni(
             self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
@@ -5912,11 +5912,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_ce_r_ew_e(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_ce_r_ew_e(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5925,11 +5925,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_ce_r_ew_w(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_ce_r_ew_w(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'CE')
@@ -5938,11 +5938,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_ce_r_cy(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_ce_r_cy(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_access_code_select_address_cy, 'cy', 'CE')
@@ -5951,11 +5951,11 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_access_code_post_confirm_name_address_request_fulfilment_error_429_ce_r_ni(self):
+    async def test_request_access_code_post_confirm_send_by_post_request_fulfilment_error_429_ce_r_ni(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_access_code_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'CE')
@@ -5964,8 +5964,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.check_post_select_how_to_receive_input_post(
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_uac(
-            self.post_request_access_code_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_uac(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
     async def test_request_access_to_individual_code_sms_hh_ew_e(self):
@@ -6116,8 +6116,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_en, 'en', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_en, 'en', 'HH', 'UAC', 'E', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6133,8 +6133,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_en, 'en', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'HH', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_en, 'en', 'HH', 'UAC', 'W', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6150,8 +6150,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_cy, 'cy', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_cy, 'cy', 'HH', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_cy, 'cy', 'HH', 'UAC', 'W', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6167,8 +6167,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_ni, 'ni', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'HH',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_ni, 'ni', 'HH', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_ni, 'ni', 'HH', 'UAC', 'N', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6184,8 +6184,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_en, 'en', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_en, 'en', 'SPG', 'UAC', 'E', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6201,8 +6201,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_en, 'en', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_en, 'en', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_en, 'en', 'SPG', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_en, 'en', 'SPG', 'UAC', 'W', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6218,8 +6218,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_cy, 'cy', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_cy, 'cy', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_cy, 'cy', 'SPG', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_cy, 'cy', 'SPG', 'UAC', 'W', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6235,8 +6235,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_ni, 'ni', override_sub_user_journey='access-code')
         await self.check_post_enter_name(self.post_request_individual_code_enter_name_ni, 'ni', 'individual', 'SPG',
                                          override_sub_user_journey='access-code')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_individual_code_confirm_name_address_ni, 'ni', 'SPG', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_individual_code_confirm_send_by_post_ni, 'ni', 'SPG', 'UAC', 'N', 'true',
             override_sub_user_journey='access-code')
 
     @unittest_run_loop
@@ -6256,8 +6256,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6277,8 +6277,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'manager', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6298,8 +6298,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'manager', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6319,8 +6319,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6340,8 +6340,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6361,8 +6361,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6382,8 +6382,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6400,8 +6400,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6418,8 +6418,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_en, 'en')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_en, 'en', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6436,8 +6436,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_cy, 'cy')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_cy, 'cy', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6454,8 +6454,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
             self.post_request_access_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name(self.post_request_access_code_enter_name_ni, 'ni', 'individual', 'CE',
                                          check_room_number=True)
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6474,8 +6474,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'manager', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6494,8 +6494,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'manager', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6514,8 +6514,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
                                    self.post_request_access_code_enter_room_number_cy,
                                    'cy', 'manager', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'false',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'false',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6534,8 +6534,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6554,8 +6554,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6574,8 +6574,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
                                    self.post_request_access_code_enter_room_number_cy,
                                    'cy', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6594,8 +6594,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_ni,
                                    self.post_request_access_code_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6611,8 +6611,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6628,8 +6628,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6645,8 +6645,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
                                    self.post_request_access_code_enter_room_number_cy,
                                    'cy', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6662,8 +6662,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_ni,
                                    self.post_request_access_code_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True)
 
     @unittest_run_loop
@@ -6800,8 +6800,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'E', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'E', 'true',
             check_room_number=True, long_surname=True)
 
     @unittest_run_loop
@@ -6818,8 +6818,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_en,
                                    self.post_request_access_code_enter_room_number_en,
                                    'en', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_en, 'en', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_en, 'en', 'CE', 'UAC', 'W', 'true',
             check_room_number=True, long_surname=True)
 
     @unittest_run_loop
@@ -6836,8 +6836,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_cy,
                                    self.post_request_access_code_enter_room_number_cy,
                                    'cy', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_cy, 'cy', 'CE', 'UAC', 'W', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_cy, 'cy', 'CE', 'UAC', 'W', 'true',
             check_room_number=True, long_surname=True)
 
     @unittest_run_loop
@@ -6854,8 +6854,8 @@ class TestRequestsHandlersAccessCode(TestHelpers):
         await self.add_room_number(self.get_request_access_code_enter_room_number_ni,
                                    self.post_request_access_code_enter_room_number_ni,
                                    'ni', 'individual', 'ConfirmNameAddress')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_access_code_confirm_name_address_ni, 'ni', 'CE', 'UAC', 'N', 'true',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_access_code_confirm_send_by_post_ni, 'ni', 'CE', 'UAC', 'N', 'true',
             check_room_number=True, long_surname=True)
 
     @unittest_run_loop

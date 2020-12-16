@@ -267,21 +267,21 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         if display_region == 'cy':
             if attributes['individual']:
                 # TODO Add Welsh Translation
-                page_title = 'Error: Select how to receive individual access code'
+                page_title = View.page_title_error_prefix_cy + 'Select how to receive individual access code'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
                 # TODO Add Welsh Translation
-                page_title = 'Error: Select how to receive manager access code'
+                page_title = View.page_title_error_prefix_cy + 'Select how to receive manager access code'
             else:
                 # TODO Add Welsh Translation
-                page_title = 'Error: Select how to receive household access code'
+                page_title = View.page_title_error_prefix_cy + 'Select how to receive household access code'
             locale = 'cy'
         else:
             if attributes['individual']:
-                page_title = 'Error: Select how to receive individual access code'
+                page_title = View.page_title_error_prefix_en + 'Select how to receive individual access code'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = 'Error: Select how to receive manager access code'
+                page_title = View.page_title_error_prefix_en + 'Select how to receive manager access code'
             else:
-                page_title = 'Error: Select how to receive household access code'
+                page_title = View.page_title_error_prefix_en + 'Select how to receive household access code'
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -362,10 +362,10 @@ class RequestCodeEnterMobile(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Error: Enter mobile number"
+            page_title = View.page_title_error_prefix_cy + "Enter mobile number"
             locale = 'cy'
         else:
-            page_title = 'Error: Enter mobile number'
+            page_title = View.page_title_error_prefix_en + 'Enter mobile number'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-mobile')
@@ -464,21 +464,21 @@ class RequestCodeConfirmSendByText(RequestCommon):
         if display_region == 'cy':
             if attributes['individual']:
                 # TODO Add Welsh Translation
-                page_title = 'Error: Confirm to send individual access code by text'
+                page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by text'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
                 # TODO Add Welsh Translation
-                page_title = 'Error: Confirm to send manager access code by text'
+                page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by text'
             else:
                 # TODO Add Welsh Translation
-                page_title = 'Error: Confirm to send household access code by text'
+                page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by text'
             locale = 'cy'
         else:
             if attributes['individual']:
-                page_title = 'Error: Confirm to send individual access code by text'
+                page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by text'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = 'Error: Confirm to send manager access code by text'
+                page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by text'
             else:
-                page_title = 'Error: Confirm to send household access code by text'
+                page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by text'
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -595,10 +595,10 @@ class RequestCommonEnterName(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Error: Enter name"
+            page_title = View.page_title_error_prefix_cy + "Enter name"
             locale = 'cy'
         else:
-            page_title = 'Error: Enter name'
+            page_title = View.page_title_error_prefix_en + 'Enter name'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/enter-name')
@@ -651,16 +651,52 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Do you want to send a new access code to this address?'
             locale = 'cy'
         else:
-            page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if request_type == 'access-code':
+            if attributes['individual']:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send individual access code by post'
+                else:
+                    page_title = 'Confirm to send individual access code by post'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send manager access code by post'
+                else:
+                    page_title = 'Confirm to send manager access code by post'
+            else:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send household access code by post'
+                else:
+                    page_title = 'Confirm to send household access code by post'
+        elif request_type == 'continuation-questionnaire':
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send continuation questionnaire'
+            else:
+                page_title = 'Confirm to send continuation questionnaire'
+        else:
+            if attributes['individual']:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send individual paper questionnaire'
+                else:
+                    page_title = 'Confirm to send individual paper questionnaire'
+            else:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send household paper questionnaire'
+                else:
+                    page_title = 'Confirm to send household paper questionnaire'
 
         return {
             'page_title': page_title,
@@ -688,16 +724,52 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Do you want to send a new access code to this address?'
             locale = 'cy'
         else:
-            page_title = 'Do you want to send a new access code to this address?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/confirm-send-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if request_type == 'access-code':
+            if attributes['individual']:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by post'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by post'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by post'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by post'
+            else:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by post'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by post'
+        elif request_type == 'continuation-questionnaire':
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                page_title = View.page_title_error_prefix_cy + 'Confirm to send continuation questionnaire'
+            else:
+                page_title = View.page_title_error_prefix_en + 'Confirm to send continuation questionnaire'
+        else:
+            if attributes['individual']:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual paper questionnaire'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual paper questionnaire'
+            else:
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household paper questionnaire'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send household paper questionnaire'
 
         data = await request.post()
         try:
@@ -1120,10 +1192,10 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "How many people are in your household?"
+            page_title = View.page_title_error_prefix_cy + "How many people are in your household?"
             locale = 'cy'
         else:
-            page_title = 'How many people are in your household?'
+            page_title = View.page_title_error_prefix_en + 'How many people are in your household?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/number-of-people-in-your-household')
@@ -1220,17 +1292,24 @@ class RequestQuestionnaireSent(RequestCommon):
         request_type = 'paper-questionnaire'
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'A paper questionnaire will be sent'
-            locale = 'cy'
-        else:
-            page_title = 'A paper questionnaire will be sent'
-            locale = 'en'
-
         self.log_entry(request, display_region + '/requests/' + request_type + '/sent')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Individual paper questionnaire will be sent'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Household paper questionnaire will be sent'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Individual paper questionnaire will be sent'
+            else:
+                page_title = 'Household paper questionnaire will be sent'
+            locale = 'en'
 
         return {
                 'page_title': page_title,
@@ -1261,10 +1340,10 @@ class RequestContinuationSent(RequestCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'A continuation questionnaire will be sent'
+            page_title = 'Continuation questionnaire will be sent'
             locale = 'cy'
         else:
-            page_title = 'A continuation questionnaire will be sent'
+            page_title = 'Continuation questionnaire will be sent'
             locale = 'en'
 
         self.log_entry(request, display_region + '/requests/' + request_type + '/sent')
@@ -1298,17 +1377,24 @@ class RequestLargePrintSentPost(RequestCommon):
         request_type = 'large-print'
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'A large-print paper questionnaire will be sent'
-            locale = 'cy'
-        else:
-            page_title = 'A large-print paper questionnaire will be sent'
-            locale = 'en'
-
         self.log_entry(request, display_region + '/requests/paper-questionnaire/large-print-sent-post')
 
         attributes = await self.get_check_attributes(request, request_type)
+
+        if display_region == 'cy':
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Large-print individual paper questionnaire will be sent'
+            else:
+                # TODO Add Welsh Translation
+                page_title = 'Large-print household paper questionnaire will be sent'
+            locale = 'cy'
+        else:
+            if attributes['individual']:
+                page_title = 'Large-print individual paper questionnaire will be sent'
+            else:
+                page_title = 'Large-print household paper questionnaire will be sent'
+            locale = 'en'
 
         return {
                 'page_title': page_title,

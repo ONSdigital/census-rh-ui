@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-19 17:42+0000\n"
+"POT-Creation-Date: 2020-12-16 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.8.1\n"
 
 #: app/templates/404.html:13
 msgid "Page not found"
@@ -26,14 +26,14 @@ msgid "If you entered a web address, check it is correct."
 msgstr ""
 
 #: app/templates/404.html:16
-msgid "If you pasted the web address, check that you copied the entire address."
+msgid "If you pasted the web address, check you copied the whole address."
 msgstr ""
 
 #: app/templates/404.html:18
 #, python-format
 msgid ""
-"If you still encounter problems please %(open)scontact us%(close)s. We "
-"apologise for any inconvenience this may have caused."
+"If the web address is correct or you selected a link or button, "
+"%(open)scontact us%(close)s for more help."
 msgstr ""
 
 #: app/templates/closed.html:12
@@ -49,7 +49,7 @@ msgid "Thank you for your help."
 msgstr ""
 
 #: app/templates/common-address-in-northern-ireland.html:5
-#: app/templates/common-address-in-scotland.html:13
+#: app/templates/common-address-in-scotland.html:16
 msgid "This address is not part of the census for England and Wales"
 msgstr ""
 
@@ -57,28 +57,30 @@ msgstr ""
 msgid "You have selected an address in Northern Ireland."
 msgstr ""
 
-#: app/templates/common-address-in-northern-ireland.html:9
-#: app/templates/start-code-for-northern-ireland.html:9
+#: app/templates/common-address-in-northern-ireland.html:10
+#: app/templates/start-code-for-northern-ireland.html:10
+#, python-format
 msgid ""
 "The Northern Ireland Statistics and Research Agency (NISRA) runs the "
-"census in Northern Ireland. Visit the <a "
-"href=\"https://www.census.gov.uk/ni/\">NISRA census website</a> to find "
-"out how to take part in the census for Northern Ireland."
+"census in Northern Ireland. Visit the %(open)sNISRA census "
+"website%(close)s to find out how to take part in the census for Northern "
+"Ireland."
 msgstr ""
 
-#: app/templates/common-address-in-northern-ireland.html:11
-#: app/templates/start-code-for-northern-ireland.html:11
-msgid "Alternatively, you can <a href=\"/contact-us/\">contact us for help</a>."
+#: app/templates/common-address-in-northern-ireland.html:12
+#: app/templates/start-code-for-northern-ireland.html:12
+#, python-format
+msgid "Alternatively, you can %(open)scontact us%(close)s for help."
 msgstr ""
 
-#: app/templates/common-address-in-scotland.html:15
+#: app/templates/common-address-in-scotland.html:19
 msgid ""
 "You have selected an address in Scotland. Visit the <a "
 "href=\"https://www.scotlandscensus.gov.uk/\">National Records of Scotland"
 " website</a> to find out how to take part in the census for Scotland."
 msgstr ""
 
-#: app/templates/common-address-in-scotland.html:18
+#: app/templates/common-address-in-scotland.html:22
 #, python-format
 msgid "Alternatively, you can %(open)scontact us for help%(close)s."
 msgstr ""
@@ -93,46 +95,52 @@ msgid "No, search for address again"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:38
-#: app/templates/request-code-confirm-mobile.html:36
-#: app/templates/request-code-select-method.html:22
-#: app/templates/request-common-confirm-name-address.html:23
+#: app/templates/common-resident-or-manager.html:37
+#: app/templates/request-code-confirm-send-by-text.html:36
+#: app/templates/request-code-select-how-to-receive.html:20
+#: app/templates/request-common-confirm-send-by-post.html:23
+#: app/templates/start-confirm-address.html:36
 msgid "Select an answer"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:48
-#: app/templates/start-confirm-address.html:52
+#: app/templates/start-confirm-address.html:56
 msgid "Is this the correct address?"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:62
-#: app/templates/request-common-confirm-name-address.html:92
+#: app/templates/request-common-confirm-send-by-post.html:98
 msgid "Change flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:64
-#: app/templates/request-common-confirm-name-address.html:93
+#: app/templates/request-common-confirm-send-by-post.html:99
 msgid "Add flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:80
-#: app/templates/common-enter-address.html:95
-#: app/templates/common-enter-room-number.html:58
-#: app/templates/common-resident-or-manager.html:78
-#: app/templates/common-select-address.html:75
-#: app/templates/request-code-confirm-mobile.html:62
+#: app/templates/common-enter-address.html:113
+#: app/templates/common-enter-room-number.html:61
+#: app/templates/common-resident-or-manager.html:70
+#: app/templates/common-select-address.html:67
+#: app/templates/request-code-confirm-send-by-text.html:62
 #: app/templates/request-code-enter-mobile.html:52
-#: app/templates/request-code-select-method.html:105
-#: app/templates/request-common-confirm-name-address.html:140
-#: app/templates/request-common-enter-name.html:63
+#: app/templates/request-code-household.html:54
+#: app/templates/request-code-select-how-to-receive.html:74
+#: app/templates/request-common-confirm-send-by-post.html:150
+#: app/templates/request-common-enter-name.html:69
+#: app/templates/request-common-people-in-household.html:69
+#: app/templates/request-questionnaire-household.html:52
+#: app/templates/request-questionnaire-individual.html:33
 #: app/templates/start-address-changed.html:20
-#: app/templates/start-confirm-address.html:88
+#: app/templates/start-confirm-address.html:80
 #: app/templates/start-unlinked-linked.html:20
 msgid "Continue"
 msgstr ""
 
 #: app/templates/common-contact-centre.html:15
-#: app/templates/common-contact-centre.html:21
-#: app/templates/common-contact-centre.html:35
+#: app/templates/common-contact-centre.html:25
+#: app/templates/common-contact-centre.html:45
 msgid "You need to call the Census customer contact centre"
 msgstr ""
 
@@ -140,127 +148,158 @@ msgstr ""
 msgid "There is an issue linking your address via the website."
 msgstr ""
 
-#: app/templates/common-contact-centre.html:23
-msgid "There is an issue changing your address via the website."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:27
-msgid "Register an address"
-msgstr ""
-
-#: app/templates/common-contact-centre.html:29
-msgid ""
-"If you can’t find your address or part of your address has changed, it "
-"may not be registered on our system."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:31
-msgid "To register your address, we need you to get in touch."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:37
-msgid "There is an issue processing your address via the website."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:42
+#: app/templates/common-contact-centre.html:20
+#: app/templates/common-contact-centre.html:30
+#: app/templates/common-contact-centre.html:50
 #, python-format
 msgid ""
 "You can call us free on %(telephone_number)s or %(open)schoose another "
 "way to contact us%(close)s."
 msgstr ""
 
+#: app/templates/common-contact-centre.html:27
+msgid "There is an issue changing your address via the website."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:35
+msgid "Register an address"
+msgstr ""
+
+#: app/templates/common-contact-centre.html:37
+msgid "If you can’t find your address, it may not be registered on our system."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:40
+#, python-format
+msgid ""
+"To register your address, we need you to get in touch. You can call us "
+"free on %(telephone_number)s or %(open)schoose another way to contact "
+"us%(close)s."
+msgstr ""
+
+#: app/templates/common-contact-centre.html:47
+msgid "There is an issue processing your address via the website."
+msgstr ""
+
 #: app/templates/common-enter-address.html:7
+msgid "Enter a postcode"
+msgstr ""
+
+#: app/templates/common-enter-address.html:9
 #: app/templates/support_centre_enter_postcode.html:17
 msgid "Enter a valid UK postcode"
 msgstr ""
 
-#: app/templates/common-enter-address.html:22
+#: app/templates/common-enter-address.html:24
 msgid "What is your postcode?"
 msgstr ""
 
-#: app/templates/common-enter-address.html:25
+#: app/templates/common-enter-address.html:27
 msgid "<p>This will enable us to associate your code to your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:29
+#: app/templates/common-enter-address.html:31
 msgid "<p>To request an individual access code, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:31
-msgid ""
-"<p>To request an access code, we need your address. A new access code "
-"will start a new census.</p>"
-msgstr ""
-
 #: app/templates/common-enter-address.html:33
-msgid "<p>To send a paper questionnaire, we need your address</p>"
+msgid "<p>To request an access code, we need your address</p>"
 msgstr ""
 
 #: app/templates/common-enter-address.html:35
-msgid "<p>We need to know the address for which you are answering.</p>"
+msgid "<p>To send a paper census questionnaire, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:46
+#: app/templates/common-enter-address.html:37
+msgid "<p>To send a continuation questionnaire, we need your address</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:39
+msgid "<p>We need to know the address for which you are answering</p>"
+msgstr ""
+
+#: app/templates/common-enter-address.html:50
 msgid "Please supply your address"
 msgstr ""
 
-#: app/templates/common-enter-address.html:48
+#: app/templates/common-enter-address.html:52
 msgid ""
 "The access code that you have entered is not currently linked to an "
 "address. Please select your address so we can make the link."
 msgstr ""
 
-#: app/templates/common-enter-address.html:64
+#: app/templates/common-enter-address.html:68
 msgid "UK postcode"
 msgstr ""
 
-#: app/templates/common-enter-address.html:75
+#: app/templates/common-enter-address.html:80
 #, python-format
 msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
-"%(open)scontact us to request an access code%(close)s"
+"%(open)scontact us to request a paper census questionnaire%(close)s."
 msgstr ""
 
-#: app/templates/common-enter-address.html:81
-msgid "I don't live at a fixed address"
+#: app/templates/common-enter-address.html:86
+#, python-format
+msgid ""
+"If you live somewhere that is mobile, such as a canal boat or motorhome, "
+"%(open)scontact us to request a continuation questionnaire%(close)s."
 msgstr ""
 
-#: app/templates/common-enter-address.html:85
-#: app/templates/request-code-select-method.html:82
+#: app/templates/common-enter-address.html:92
+#, python-format
+msgid ""
+"If you live somewhere that is mobile, such as a canal boat or motorhome, "
+"%(open)scontact us to request an access code%(close)s."
+msgstr ""
+
+#: app/templates/common-enter-address.html:99
+msgid "I don’t live at a fixed address"
+msgstr ""
+
+#: app/templates/common-enter-address.html:103
+#: app/templates/request-code-household.html:44
+#: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:130
-#: app/templates/support_centre_list_of_centres.html:55
+#: app/templates/support_centre_list_of_centres.html:59
 msgid "Hide this"
 msgstr ""
 
 #: app/templates/common-enter-room-number.html:20
+msgid "You have entered too many characters. Enter up to 10 characters"
+msgstr ""
+
+#: app/templates/common-enter-room-number.html:22
 msgid "Enter your flat or room number"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:23
+#: app/templates/common-enter-room-number.html:25
 msgid "What is your flat or room number?"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:40
+#: app/templates/common-enter-room-number.html:42
 msgid "Flat or room number"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:46
+#: app/templates/common-enter-room-number.html:49
 msgid "{x} character too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:47
+#: app/templates/common-enter-room-number.html:50
 msgid "{x} characters too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:48
+#: app/templates/common-enter-room-number.html:51
+#: app/templates/web-form.html:159
 msgid "You have {x} character remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:49
+#: app/templates/common-enter-room-number.html:52
+#: app/templates/web-form.html:160
 msgid "You have {x} characters remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:63
+#: app/templates/common-enter-room-number.html:66
 msgid "Cancel and return to the previous page"
 msgstr ""
 
@@ -284,12 +323,8 @@ msgid ""
 "establishment"
 msgstr ""
 
-#: app/templates/common-resident-or-manager.html:45
+#: app/templates/common-resident-or-manager.html:47
 msgid "Are you a resident or manager of this establishment?"
-msgstr ""
-
-#: app/templates/common-resident-or-manager.html:62
-msgid "Please select an option."
 msgstr ""
 
 #: app/templates/common-select-address.html:27
@@ -299,11 +334,15 @@ msgid ""
 "%(pcode)s</p>"
 msgstr ""
 
-#: app/templates/common-select-address.html:37
+#: app/templates/common-select-address.html:30
+msgid "Select an address"
+msgstr ""
+
+#: app/templates/common-select-address.html:41
 msgid "We cannot find your address"
 msgstr ""
 
-#: app/templates/common-select-address.html:40
+#: app/templates/common-select-address.html:44
 #, python-format
 msgid ""
 "If this is incorrect you can %(start_request_code_link)senter the "
@@ -311,12 +350,8 @@ msgid ""
 "us%(end_link)s."
 msgstr ""
 
-#: app/templates/common-select-address.html:46
+#: app/templates/common-select-address.html:50
 msgid "Select your address"
-msgstr ""
-
-#: app/templates/common-select-address.html:57
-msgid "Select an address"
 msgstr ""
 
 #: app/templates/error.html:15
@@ -334,101 +369,16 @@ msgid ""
 "continues."
 msgstr ""
 
-#: app/templates/expired.html:8
-msgid "Your unique access code has expired"
-msgstr ""
-
-#: app/templates/expired.html:12
-#, python-format
-msgid ""
-"You can %(open)srequest a new code%(close)s if you have not submitted a "
-"census yet."
-msgstr ""
-
-#: app/templates/request-code-code-sent-post.html:31
-#, python-format
-msgid "A letter will be sent to %(name)s at %(address)s"
-msgstr ""
-
-#: app/templates/request-code-code-sent-post.html:34
-msgid ""
-"The letter with an individual access code should arrive soon for you to "
-"start the census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-post.html:36
-msgid ""
-"The letter with a new manager access code should arrive soon for you to "
-"start the census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-post.html:38
-msgid ""
-"The letter with a new household access code should arrive soon for you to"
-" start the census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-post.html:46
-#: app/templates/request-form-sent-post.html:41
-msgid "Done"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:21
-#, python-format
-msgid "We have sent a text to %(number)s"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:24
-msgid ""
-"The text message with an individual access code should arrive soon for "
-"you to start your census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:26
-msgid ""
-"The text message with a new manager access code should arrive soon for "
-"you to start your census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:28
-msgid ""
-"The text message with a new household access code should arrive soon for "
-"you to start your census"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:41
-msgid "The text will be sent from <strong>Census2021</strong>"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:45
-msgid "Didn't receive a text?"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:48
-#, python-format
-msgid ""
-"It can take a few minutes for the text to arrive. If it doesn't arrive, "
-"you can %(open)srequest a new access code%(close)s."
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:51
-msgid "Ready to start your census online?"
-msgstr ""
-
-#: app/templates/request-code-code-sent-sms.html:56 app/templates/start.html:74
-msgid "Start census"
-msgstr ""
-
-#: app/templates/request-code-confirm-mobile.html:21
+#: app/templates/request-code-confirm-send-by-text.html:21
 msgid "Yes, send the text"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:28
+#: app/templates/request-code-confirm-send-by-text.html:28
 msgid "No, I need to change it"
 msgstr ""
 
-#: app/templates/request-code-confirm-mobile.html:46
-msgid "Is this mobile phone number correct?"
+#: app/templates/request-code-confirm-send-by-text.html:46
+msgid "Is this mobile number correct?"
 msgstr ""
 
 #: app/templates/request-code-enter-mobile.html:18
@@ -442,144 +392,253 @@ msgid ""
 msgstr ""
 
 #: app/templates/request-code-enter-mobile.html:30
-msgid "What is your mobile phone number?"
+msgid "What is your mobile number?"
 msgstr ""
 
 #: app/templates/request-code-enter-mobile.html:40
-msgid "UK mobile phone number"
+msgid "UK mobile number"
 msgstr ""
 
 #: app/templates/request-code-enter-mobile.html:41
 msgid "This will not be stored and only used once to send the access code"
 msgstr ""
 
-#: app/templates/request-code-individual-introduction.html:15
-msgid "Request an individual code"
+#: app/templates/request-code-household.html:18
+msgid "Request a new household access code"
 msgstr ""
 
-#: app/templates/request-code-individual-introduction.html:17
+#: app/templates/request-code-household.html:20
 msgid ""
-"An individual access code lets you answer your census questions "
-"separately from the people you live with, so they can’t see your answers."
+"A household access code lets you start a new census for your household "
+"and the people who live there. You will lose any answers entered using a "
+"previous access code."
 msgstr ""
 
-#: app/templates/request-code-individual-introduction.html:19
+#: app/templates/request-code-household.html:22
+msgid ""
+"All households should complete the census on <strong>Sunday 21 March "
+"2021</strong> or as soon as possible after. The census should take around"
+" 10 minutes per person to fill in."
+msgstr ""
+
+#: app/templates/request-code-household.html:24
+#: app/templates/request-code-individual.html:19
 msgid "You can choose to receive your new access code by text or post."
 msgstr ""
 
-#: app/templates/request-code-individual-introduction.html:27
-msgid ""
-"No one in your household will be told that you have requested an "
-"individual access code"
-msgstr ""
-
-#: app/templates/request-code-individual-introduction.html:31
-msgid ""
-"Your individual answers will take priority over any information submitted"
-" about you in the household census."
-msgstr ""
-
-#: app/templates/request-code-individual-introduction.html:35
-msgid "Start"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:29
-msgid "Text message"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:30
-msgid "We will need your mobile number for this"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:37
-msgid "Post"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:38
-msgid "We can only send access codes to the registered household address"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:46
-msgid "How would you like to receive an individual access code?"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:48
-msgid "How would you like to receive a new manager access code?"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:50
-msgid "How would you like to receive a new household access code?"
-msgstr ""
-
-#: app/templates/request-code-select-method.html:67
-#: app/templates/start.html:115
-#, python-format
+#: app/templates/request-code-household.html:27
 msgid ""
 "If you need to answer separately from the people you live with, you can "
-"%(open)srequest an individual access code%(close)s to start a separate "
-"census."
+"request an individual access code to start a separate census."
 msgstr ""
 
-#: app/templates/request-code-select-method.html:73
-#: app/templates/start.html:121
+#: app/templates/request-code-household.html:29
+msgid "Request individual access code"
+msgstr ""
+
+#: app/templates/request-code-household.html:35 app/templates/start.html:121
 msgid ""
 "Someone in your household must still complete a census using a household "
 "access code"
 msgstr ""
 
-#: app/templates/request-code-select-method.html:79
+#: app/templates/request-code-household.html:41
+#: app/templates/request-questionnaire-household.html:39
 #: app/templates/start.html:127
 msgid "Need to answer separately from your household?"
 msgstr ""
 
-#: app/templates/request-code-select-method.html:95
+#: app/templates/request-code-individual.html:15
+msgid "Request an individual access code"
+msgstr ""
+
+#: app/templates/request-code-individual.html:17
+msgid ""
+"An individual access code lets you answer your census questions "
+"separately from the people you live with, so they can’t see your answers."
+msgstr ""
+
+#: app/templates/request-code-individual.html:27
+msgid ""
+"No one in your household will be told that you have requested an "
+"individual access code"
+msgstr ""
+
+#: app/templates/request-code-individual.html:31
+#: app/templates/request-questionnaire-individual.html:29
+msgid ""
+"Your individual answers will take priority over any information submitted"
+" about you in the household census."
+msgstr ""
+
+#: app/templates/request-code-individual.html:35
+msgid "Start"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:27
+msgid "Text message"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:28
+msgid "We will need your mobile number for this"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:35
+msgid "Post"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:36
+msgid "We can only send access codes to the registered household address"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:44
+msgid "How would you like to receive an individual access code?"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:46
+msgid "How would you like to receive a new manager access code?"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:48
+msgid "How would you like to receive a new household access code?"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:64
 msgid "Select how to send access code"
 msgstr ""
 
-#: app/templates/request-code-select-method.html:111
+#: app/templates/request-code-select-how-to-receive.html:80
 #, python-format
 msgid ""
 "To request a census in a different format or for further help, please "
 "%(open)scontact us%(close)s."
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:31
+#: app/templates/request-code-sent-by-post.html:31
+#, python-format
+msgid "A letter will be sent to %(name)s at %(address)s"
+msgstr ""
+
+#: app/templates/request-code-sent-by-post.html:34
+msgid ""
+"The letter with an individual access code should arrive soon for you to "
+"start the census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-post.html:36
+msgid ""
+"The letter with a new manager access code should arrive soon for you to "
+"start the census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-post.html:38
+msgid ""
+"The letter with a new household access code should arrive soon for you to"
+" start the census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-post.html:46
+#: app/templates/request-questionnaire-sent.html:52
+msgid "Done"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:21
+#, python-format
+msgid "A text has been sent to %(number)s"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:24
+msgid ""
+"The text message with an individual access code should arrive soon for "
+"you to start your census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:26
+msgid ""
+"The text message with a new manager access code should arrive soon for "
+"you to start your census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:28
+msgid ""
+"The text message with a new household access code should arrive soon for "
+"you to start your census"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:41
+msgid "The text will be sent from <strong>Census2021</strong>"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:45
+msgid "Didn’t receive a text?"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:48
+#, python-format
+msgid ""
+"It can take a few minutes for the text to arrive. If it doesn’t arrive, "
+"you can %(open)srequest a new access code%(close)s."
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:51
+msgid "Ready to start your census online?"
+msgstr ""
+
+#: app/templates/request-code-sent-by-text.html:56 app/templates/start.html:74
+msgid "Start census"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:31
 msgid "Yes, send the questionnaire by post"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:38
+#: app/templates/request-common-confirm-send-by-post.html:38
 msgid "No, cancel and return"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:49
+#: app/templates/request-common-confirm-send-by-post.html:49
 msgid "Yes, send the access code by post"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:56
+#: app/templates/request-common-confirm-send-by-post.html:56
 msgid "No, send it another way"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:65
-msgid "Do you want to send a paper questionnaire to this address?"
+#: app/templates/request-common-confirm-send-by-post.html:66
+msgid "Do you want to send an individual paper questionnaire to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:67
+#: app/templates/request-common-confirm-send-by-post.html:68
+msgid "Do you want to send a household paper questionnaire to this address?"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:71
+msgid "Do you want to send a continuation questionnaire to this address?"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:73
 msgid "Do you want to send an individual access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:69
+#: app/templates/request-common-confirm-send-by-post.html:75
 msgid "Do you want to send a new manager access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:71
+#: app/templates/request-common-confirm-send-by-post.html:77
 msgid "Do you want to send a new household access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:91
+#: app/templates/request-common-confirm-send-by-post.html:97
 msgid "Change name"
 msgstr ""
 
-#: app/templates/request-common-confirm-name-address.html:103
+#: app/templates/request-common-confirm-send-by-post.html:110
+msgid ""
+"Your individual paper questionnaire will arrive in a white unbranded "
+"envelope"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:112
 msgid ""
 "A letter with your individual access code will arrive in a brown "
 "unbranded envelope"
@@ -593,36 +652,155 @@ msgstr ""
 msgid "Enter your last name"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:31
-msgid "What is your name?"
+#: app/templates/request-common-enter-name.html:25
+msgid "<p>This is who the questionnaire will be addressed to</p>"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:32
+#: app/templates/request-common-enter-name.html:27
 msgid "<p>This is who the letter will be addressed to</p>"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:39
+#: app/templates/request-common-enter-name.html:37
+msgid "What is your name?"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:45
 msgid "First name"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:51
+#: app/templates/request-common-enter-name.html:57
 msgid "Last name"
 msgstr ""
 
-#: app/templates/request-form-cancelled.html:12
-msgid "Your request for a paper form has been cancelled"
+#: app/templates/request-common-people-in-household.html:20
+msgid "Enter the number of people in your household"
 msgstr ""
 
-#: app/templates/request-form-cancelled.html:15
+#: app/templates/request-common-people-in-household.html:22
+msgid "Enter a numeral"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:25
+msgid "Enter a number greater than 6"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:27
+msgid "Enter a number greater than 5"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:33
+msgid ""
+"<p>This is to make sure we send you the right number of continuation "
+"questionnaires if there are more than 6 people in your household</p>"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:35
+msgid ""
+"<p>This is to make sure we send you the right number of continuation "
+"questionnaires if there are more than 5 people in your household</p>"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:38
+msgid ""
+"<p>This is to make sure we send you the right number of paper "
+"questionnaires</p>"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:48
+msgid "How many people are in your household?"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:56
+msgid "Number of people"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:76
+#, python-format
+msgid ""
+"If you don’t already have a paper census for your household, you will "
+"need to %(open)srequest a household paper questionnaire%(close)s."
+msgstr ""
+
+#: app/templates/request-continuation-not-a-household.html:4
+msgid "This address is not a household address"
+msgstr ""
+
+#: app/templates/request-continuation-not-a-household.html:6
+msgid "You have selected an address for an establishment."
+msgstr ""
+
+#: app/templates/request-continuation-not-a-household.html:8
+msgid "Continuation questionnaires can only be requested for household addresses."
+msgstr ""
+
+#: app/templates/request-continuation-not-a-household.html:11
+#, python-format
+msgid "If you need help, please %(open)scontact us%(close)s."
+msgstr ""
+
+#: app/templates/request-questionnaire-cancelled.html:5
+msgid "Your request for a continuation questionnaire has been cancelled"
+msgstr ""
+
+#: app/templates/request-questionnaire-cancelled.html:7
+msgid "Your request for a paper questionnaire has been cancelled"
+msgstr ""
+
+#: app/templates/request-questionnaire-cancelled.html:11
 #, python-format
 msgid "Return to the %(open)scensus homepage%(close)s."
 msgstr ""
 
-#: app/templates/request-form-manager.html:6
-msgid "We cannot send census forms to managers by post"
+#: app/templates/request-questionnaire-household.html:18
+msgid "Request a household paper questionnaire"
 msgstr ""
 
-#: app/templates/request-form-manager.html:9
+#: app/templates/request-questionnaire-household.html:20
+msgid ""
+"A household paper questionnaire lets you fill in a new census for your "
+"household and the people who live there."
+msgstr ""
+
+#: app/templates/request-questionnaire-household.html:22
+msgid ""
+"All households should complete the census on <strong>Sunday 21 March "
+"2021</strong> or as soon as possible after."
+msgstr ""
+
+#: app/templates/request-questionnaire-household.html:25
+msgid ""
+"If you need to answer separately from the people you live with, you can "
+"request an individual paper questionnaire to fill in a separate census."
+msgstr ""
+
+#: app/templates/request-questionnaire-household.html:27
+#: app/templates/request-questionnaire-individual.html:15
+msgid "Request an individual paper questionnaire"
+msgstr ""
+
+#: app/templates/request-questionnaire-household.html:33
+msgid ""
+"Someone in your household must still complete a census using a household "
+"access code or by completing a household paper questionnaire"
+msgstr ""
+
+#: app/templates/request-questionnaire-individual.html:17
+msgid ""
+"An individual paper questionnaire lets you answer your census questions "
+"separately from the people you live with, so they can’t see your answers."
+msgstr ""
+
+#: app/templates/request-questionnaire-individual.html:25
+msgid ""
+"No one in your household will be told that you have requested an "
+"individual paper questionnaire"
+msgstr ""
+
+#: app/templates/request-questionnaire-manager.html:6
+msgid "We cannot send communal establishment paper questionnaires to managers"
+msgstr ""
+
+#: app/templates/request-questionnaire-manager.html:9
 #, python-format
 msgid ""
 "If you are able to complete the census online, you can %(open)srequest a "
@@ -630,24 +808,43 @@ msgid ""
 "text arrives, you can start the census."
 msgstr ""
 
-#: app/templates/request-form-manager.html:12
+#: app/templates/request-questionnaire-manager.html:12
 #, python-format
 msgid ""
 "If this is not possible, you can call us free on %(telephone_number)s to "
 "complete the census another way."
 msgstr ""
 
-#: app/templates/request-form-sent-post.html:29
+#: app/templates/request-questionnaire-sent.html:31
 #, python-format
-msgid "A large-print paper questionnaire will be sent to %(name)s at %(address)s"
+msgid ""
+"A large-print individual paper questionnaire will be sent to %(name)s at "
+"%(address)s"
 msgstr ""
 
-#: app/templates/request-form-sent-post.html:31
+#: app/templates/request-questionnaire-sent.html:33
 #, python-format
-msgid "A paper questionnaire will be sent to %(name)s at %(address)s"
+msgid ""
+"A large-print household paper questionnaire will be sent to %(name)s at "
+"%(address)s"
 msgstr ""
 
-#: app/templates/request-form-sent-post.html:34
+#: app/templates/request-questionnaire-sent.html:36
+#, python-format
+msgid "A continuation questionnaire will be sent to %(name)s at %(address)s"
+msgstr ""
+
+#: app/templates/request-questionnaire-sent.html:39
+#, python-format
+msgid "An individual paper questionnaire will be sent to %(name)s at %(address)s"
+msgstr ""
+
+#: app/templates/request-questionnaire-sent.html:41
+#, python-format
+msgid "A household paper questionnaire will be sent to %(name)s at %(address)s"
+msgstr ""
+
+#: app/templates/request-questionnaire-sent.html:45
 msgid "This should arrive soon for you to complete your census"
 msgstr ""
 
@@ -664,35 +861,48 @@ msgstr ""
 msgid "You will need to %(open)sre-enter your postcode%(close)s"
 msgstr ""
 
-#: app/templates/request-too-many-requests.html:14
+#: app/templates/request-too-many-requests.html:51
 msgid ""
 "You have reached the maximum number of paper questionnaires you can "
 "request online"
 msgstr ""
 
-#: app/templates/request-too-many-requests.html:16
+#: app/templates/request-too-many-requests.html:53
 #, python-format
 msgid "If you need a new paper questionnaire, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/request-too-many-requests.html:19
+#: app/templates/request-too-many-requests.html:56
+msgid ""
+"You have reached the maximum number of continuation questionnaires you "
+"can request online"
+msgstr ""
+
+#: app/templates/request-too-many-requests.html:58
+#, python-format
+msgid ""
+"If you need a new continuation questionnaire, please %(open)scontact "
+"us%(close)s"
+msgstr ""
+
+#: app/templates/request-too-many-requests.html:61
 msgid "You have reached the maximum number of access codes you can request online"
 msgstr ""
 
-#: app/templates/request-too-many-requests.html:21
+#: app/templates/request-too-many-requests.html:63
 #, python-format
 msgid "If you need a new access code, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/save-and-exit.html:8
+#: app/templates/save-and-exit.html:19
 msgid "Your progress has been saved"
 msgstr ""
 
-#: app/templates/save-and-exit.html:12
+#: app/templates/save-and-exit.html:30
 #, python-format
 msgid ""
-"You will need to %(open)senter your unique access code%(close)s to access"
-" the census again."
+"Keep your 16-character access code safe. You will need to enter it again "
+"to %(open)saccess your census%(close)s."
 msgstr ""
 
 #: app/templates/start-address-changed.html:14
@@ -716,14 +926,21 @@ msgstr ""
 msgid "No, this is not the correct address"
 msgstr ""
 
-#: app/templates/start-confirm-address.html:41
+#: app/templates/start-confirm-address.html:45
 msgid ""
 "Your address is in England, so you can only complete your census in "
 "English."
 msgstr ""
 
-#: app/templates/start-confirm-address.html:71
-msgid "Check and confirm the address is correct"
+#: app/templates/start-expired.html:7
+msgid "This access code has already been used"
+msgstr ""
+
+#: app/templates/start-expired.html:12
+#, python-format
+msgid ""
+"If you need to start your census again, you can %(open)srequest a new "
+"access code%(close)s."
 msgstr ""
 
 #: app/templates/start-launch-eq.html:15
@@ -741,6 +958,49 @@ msgstr ""
 #: app/templates/start-timeout.html:15
 #, python-format
 msgid "You will need to %(open)sre-enter your access code%(close)s"
+msgstr ""
+
+#: app/templates/start-transient-accommodation-type.html:25
+#: app/templates/start-transient-accommodation-type.html:27
+msgid "Barge or boat"
+msgstr ""
+
+#: app/templates/start-transient-accommodation-type.html:32
+#: app/templates/start-transient-accommodation-type.html:35
+msgid "Caravan or live-in vehicle"
+msgstr ""
+
+#: app/templates/start-transient-accommodation-type.html:33
+msgid "For example, a motorhome, van or campervan"
+msgstr ""
+
+#: app/templates/start-transient-accommodation-type.html:40
+#: app/templates/start-transient-accommodation-type.html:42
+msgid "Tent or temporary structure"
+msgstr ""
+
+#: app/templates/start-transient-accommodation-type.html:54
+msgid "Which of the following best describes your type of accommodation?"
+msgstr ""
+
+#: app/templates/start-transient-enter-town.html:18
+msgid "Enter your nearest town or city"
+msgstr ""
+
+#: app/templates/start-transient-enter-town.html:22
+msgid ""
+"What is the nearest town or city to where you were living on Sunday 21 "
+"March 2021?"
+msgstr ""
+
+#: app/templates/start-transient-enter-town.html:24
+msgid ""
+"What is the nearest town or city to where you will be living on Sunday 21"
+" March 2021?"
+msgstr ""
+
+#: app/templates/start-transient-enter-town.html:44
+msgid "Enter a town or city"
 msgstr ""
 
 #: app/templates/start-unlinked-linked.html:14
@@ -787,6 +1047,14 @@ msgid ""
 "by text or post."
 msgstr ""
 
+#: app/templates/start.html:115
+#, python-format
+msgid ""
+"If you need to answer separately from the people you live with, you can "
+"%(open)srequest an individual access code%(close)s to start a separate "
+"census."
+msgstr ""
+
 #: app/templates/start.html:139 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""
@@ -812,244 +1080,312 @@ msgstr ""
 msgid "Support centres near %(highlight_postcode)s"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:24
+#: app/templates/support_centre_list_of_centres.html:26
 #, python-format
 msgid "%(distance_in_miles)s miles away"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:36
+#: app/templates/support_centre_list_of_centres.html:39
 #, python-format
 msgid "Find %(location_name_span)s on Google Maps"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:43
+#: app/templates/support_centre_list_of_centres.html:47
 msgid "Telephone: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:46
+#: app/templates/support_centre_list_of_centres.html:50
 msgid "Email: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:53
+#: app/templates/support_centre_list_of_centres.html:57
 msgid "Opening times and facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:59
+#: app/templates/support_centre_list_of_centres.html:63
 msgid "Opening times"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:61
+#: app/templates/support_centre_list_of_centres.html:65
 msgid "Monday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:67
-#: app/templates/support_centre_list_of_centres.html:76
-#: app/templates/support_centre_list_of_centres.html:85
-#: app/templates/support_centre_list_of_centres.html:94
-#: app/templates/support_centre_list_of_centres.html:103
-#: app/templates/support_centre_list_of_centres.html:112
-#: app/templates/support_centre_list_of_centres.html:121
-#: app/templates/support_centre_list_of_centres.html:130
-#: app/templates/support_centre_list_of_centres.html:139
-#: app/templates/support_centre_list_of_centres.html:148
-#: app/templates/support_centre_list_of_centres.html:157
-#: app/templates/support_centre_list_of_centres.html:166
+#: app/templates/support_centre_list_of_centres.html:71
+#: app/templates/support_centre_list_of_centres.html:80
+#: app/templates/support_centre_list_of_centres.html:89
+#: app/templates/support_centre_list_of_centres.html:98
+#: app/templates/support_centre_list_of_centres.html:107
+#: app/templates/support_centre_list_of_centres.html:116
+#: app/templates/support_centre_list_of_centres.html:125
+#: app/templates/support_centre_list_of_centres.html:134
+#: app/templates/support_centre_list_of_centres.html:143
+#: app/templates/support_centre_list_of_centres.html:152
+#: app/templates/support_centre_list_of_centres.html:161
+#: app/templates/support_centre_list_of_centres.html:170
 msgid "Closed"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:70
+#: app/templates/support_centre_list_of_centres.html:74
 msgid "Tuesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:79
+#: app/templates/support_centre_list_of_centres.html:83
 msgid "Wednesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:88
+#: app/templates/support_centre_list_of_centres.html:92
 msgid "Thursday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:97
+#: app/templates/support_centre_list_of_centres.html:101
 msgid "Friday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:106
+#: app/templates/support_centre_list_of_centres.html:110
 msgid "Saturday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:115
+#: app/templates/support_centre_list_of_centres.html:119
 msgid "Sunday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:124
+#: app/templates/support_centre_list_of_centres.html:128
 msgid "Census Saturday, 20 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:133
+#: app/templates/support_centre_list_of_centres.html:137
 msgid "Census Day, 21 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:142
+#: app/templates/support_centre_list_of_centres.html:146
 msgid "Good Friday, 2 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:151
+#: app/templates/support_centre_list_of_centres.html:155
 msgid "Easter Monday, 5 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:160
+#: app/templates/support_centre_list_of_centres.html:164
 msgid "May Bank Holiday, 3 May"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:171
+#: app/templates/support_centre_list_of_centres.html:175
 msgid "Centre facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:175
+#: app/templates/support_centre_list_of_centres.html:179
 msgid "Car park, including disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:177
+#: app/templates/support_centre_list_of_centres.html:181
 msgid "Car park"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:179
+#: app/templates/support_centre_list_of_centres.html:183
 msgid "Disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:181
+#: app/templates/support_centre_list_of_centres.html:185
 msgid "Level access into building entrance"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:182
+#: app/templates/support_centre_list_of_centres.html:186
 msgid "Wheelchair access"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:183
+#: app/templates/support_centre_list_of_centres.html:187
 msgid "Staff are disability aware"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:184
+#: app/templates/support_centre_list_of_centres.html:188
 msgid "Waiting room seating"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:185
+#: app/templates/support_centre_list_of_centres.html:189
 msgid "Hearing loop system"
 msgstr ""
 
-#: app/templates/webchat-form.html:34
+#: app/templates/web-form-success.html:56
+msgid "Thank you for contacting us"
+msgstr ""
+
+#: app/templates/web-form-success.html:57
+msgid "Your message has been sent"
+msgstr ""
+
+#: app/templates/web-form-success.html:70
+msgid "We will respond to you within 2 working days"
+msgstr ""
+
+#: app/templates/web-form-too-many-requests.html:50
+msgid "You have reached the maximum number web form submissions"
+msgstr ""
+
+#: app/templates/web-form-too-many-requests.html:52
+#, python-format
+msgid "If you need further assistance, please %(open)scontact us%(close)s"
+msgstr ""
+
+#: app/templates/web-form.html:24 app/templates/webchat-form.html:75
+msgid "England"
+msgstr ""
+
+#: app/templates/web-form.html:31 app/templates/webchat-form.html:82
+msgid "Wales"
+msgstr ""
+
+#: app/templates/web-form.html:38 app/templates/webchat-form.html:89
+msgid "Northern Ireland"
+msgstr ""
+
+#: app/templates/web-form.html:50 app/templates/webchat-form.html:101
+msgid "I don’t have everything I need to complete my census"
+msgstr ""
+
+#: app/templates/web-form.html:57 app/templates/webchat-form.html:108
+msgid "I am having technical difficulties"
+msgstr ""
+
+#: app/templates/web-form.html:64 app/templates/webchat-form.html:115
+msgid "I need help with my census form"
+msgstr ""
+
+#: app/templates/web-form.html:71 app/templates/webchat-form.html:122
+msgid "I have a complaint"
+msgstr ""
+
+#: app/templates/web-form.html:78 app/templates/webchat-form.html:129
+msgid "I need help with my address"
+msgstr ""
+
+#: app/templates/web-form.html:85 app/templates/webchat-form.html:136
+msgid "Something else"
+msgstr ""
+
+#: app/templates/web-form.html:93 app/templates/web-form.html:97
+#: app/templates/webchat-form.html:29 app/templates/webchat-form.html:33
+msgid "Select an option"
+msgstr ""
+
+#: app/templates/web-form.html:101
+msgid "Enter detail of your issue"
+msgstr ""
+
+#: app/templates/web-form.html:105 app/templates/webchat-form.html:25
+#: app/templates/webchat-form.html:156
+msgid "Enter your name"
+msgstr ""
+
+#: app/templates/web-form.html:109
+msgid "Enter a valid email address"
+msgstr ""
+
+#: app/templates/web-form.html:118
+msgid "Web form"
+msgstr ""
+
+#: app/templates/web-form.html:122
+msgid "Do not include any personal information, for example, your access code"
+msgstr ""
+
+#: app/templates/web-form.html:129 app/templates/webchat-form.html:166
+msgid "Select your country"
+msgstr ""
+
+#: app/templates/web-form.html:140 app/templates/webchat-form.html:177
+msgid "What do you need help with?"
+msgstr ""
+
+#: app/templates/web-form.html:155
+msgid "Please provide more detail"
+msgstr ""
+
+#: app/templates/web-form.html:167
+msgid "Your contact details"
+msgstr ""
+
+#: app/templates/web-form.html:174
+msgid "Name"
+msgstr ""
+
+#: app/templates/web-form.html:188
+msgid "Email address"
+msgstr ""
+
+#: app/templates/web-form.html:189
+msgid "We will only use this to send you a reply"
+msgstr ""
+
+#: app/templates/web-form.html:199
+msgid "Send message"
+msgstr ""
+
+#: app/templates/web-form.html:205
+msgid ""
+"For information about what we do with your personal data see our <a "
+"href=\"#0\">privacy and data protection</a>"
+msgstr ""
+
+#: app/templates/webchat-form.html:40
 msgid "Web chat unavailable"
 msgstr ""
 
-#: app/templates/webchat-form.html:36
-msgid "Our contact centre is now closed."
-msgstr ""
-
-#: app/templates/webchat-form.html:39
-#, python-format
-msgid "You can still contact us through our %(open)sweb form%(close)s."
-msgstr ""
-
 #: app/templates/webchat-form.html:42
-msgid "Web chat opening times"
-msgstr ""
-
-#: app/templates/webchat-form.html:44
-#, python-format
-msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
+msgid "Our contact centre is now closed."
 msgstr ""
 
 #: app/templates/webchat-form.html:45
 #, python-format
+msgid "You can still contact us through our %(open)sweb form%(close)s."
+msgstr ""
+
+#: app/templates/webchat-form.html:48
+msgid "Web chat opening times"
+msgstr ""
+
+#: app/templates/webchat-form.html:50
+#, python-format
+msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
+msgstr ""
+
+#: app/templates/webchat-form.html:51
+#, python-format
 msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
 msgstr ""
 
-#: app/templates/webchat-form.html:46
+#: app/templates/webchat-form.html:52
 #, python-format
 msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
 msgstr ""
 
-#: app/templates/webchat-form.html:47
+#: app/templates/webchat-form.html:53
 #, python-format
 msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
 msgstr ""
 
-#: app/templates/webchat-form.html:53
+#: app/templates/webchat-form.html:59
 msgid "Javascript disabled"
 msgstr ""
 
-#: app/templates/webchat-form.html:55
+#: app/templates/webchat-form.html:61
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
 msgstr ""
 
-#: app/templates/webchat-form.html:57
+#: app/templates/webchat-form.html:63
 msgid "Get Help"
 msgstr ""
 
-#: app/templates/webchat-form.html:69
-msgid "England"
-msgstr ""
-
-#: app/templates/webchat-form.html:76
-msgid "Wales"
-msgstr ""
-
-#: app/templates/webchat-form.html:83
-msgid "Northern Ireland"
-msgstr ""
-
-#: app/templates/webchat-form.html:95
-msgid "I don’t have everything I need to complete my census"
-msgstr ""
-
-#: app/templates/webchat-form.html:102
-msgid "I am having technical difficulties"
-msgstr ""
-
-#: app/templates/webchat-form.html:109
-msgid "I need help with my census form"
-msgstr ""
-
-#: app/templates/webchat-form.html:116
-msgid "I have a complaint"
-msgstr ""
-
-#: app/templates/webchat-form.html:123
-msgid "I need help with my address"
-msgstr ""
-
-#: app/templates/webchat-form.html:130
-msgid "Something else"
-msgstr ""
-
-#: app/templates/webchat-form.html:138
+#: app/templates/webchat-form.html:144
 msgid "Enter web chat details"
 msgstr ""
 
-#: app/templates/webchat-form.html:142
+#: app/templates/webchat-form.html:148
 msgid "Data stored during web chat sessions will not be shared with third parties"
 msgstr ""
 
-#: app/templates/webchat-form.html:152 app/templates/webchat-form.html:157
-#: app/templates/webchat-form.html:167
-msgid "Enter your name"
-msgstr ""
-
-#: app/templates/webchat-form.html:178 app/templates/webchat-form.html:191
-msgid "Select your country"
-msgstr ""
-
-#: app/templates/webchat-form.html:184 app/templates/webchat-form.html:209
-msgid "Select an option"
-msgstr ""
-
-#: app/templates/webchat-form.html:203 app/templates/webchat-form.html:216
-msgid "What do you need help with?"
-msgstr ""
-
-#: app/templates/webchat-form.html:227
+#: app/templates/webchat-form.html:188
 msgid "Start web chat"
 msgstr ""
 

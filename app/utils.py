@@ -35,7 +35,11 @@ class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
     valid_user_journeys = r'{user_journey:\bstart|requests\b}'
-    valid_sub_user_journeys = r'{sub_user_journey:\bunlinked|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
+    valid_sub_user_journeys = \
+        r'{sub_user_journey:\bunlinked|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
+    page_title_error_prefix_en = 'Error: '
+    # TODO: Add Welsh Translation
+    page_title_error_prefix_cy = 'Error: '
 
     @staticmethod
     def setup_request(request):
