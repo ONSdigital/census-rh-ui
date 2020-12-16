@@ -1269,8 +1269,7 @@ class RequestCodeNIManager(RequestCommon):
         return {
                 'page_title': page_title,
                 'display_region': display_region,
-                'locale': locale,
-                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+                'locale': locale
             }
 
 
@@ -1289,8 +1288,7 @@ class RequestFormNIManager(RequestCommon):
         return {
                 'page_title': page_title,
                 'display_region': display_region,
-                'locale': locale,
-                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+                'locale': locale
             }
 
 
