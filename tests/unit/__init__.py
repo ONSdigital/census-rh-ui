@@ -563,7 +563,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_common_resident_or_manager_error_cy = 'Select an answer'
 
-        self.content_common_nisra_ce_manager_title = 'Communal Establishment Manager Portal'
+        self.content_common_nisra_ce_manager_title = 'You need to visit the Communal Establishment Manager Portal'
 
         self.content_common_save_and_exit_link_en = 'Exit'
         # TODO: add welsh translation
