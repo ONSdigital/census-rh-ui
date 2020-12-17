@@ -230,7 +230,8 @@ class StartCodeForNorthernIreland(StartCommon):
             'display_region': display_region,
             'locale': locale,
             'page_title': page_title,
-            'page_url': View.gen_page_url(request)
+            'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
 
@@ -267,7 +268,8 @@ class StartCodeForEnglandAndWales(StartCommon):
         return {
             'display_region': display_region,
             'locale': locale,
-            'page_title': page_title
+            'page_title': page_title,
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
 
