@@ -1268,7 +1268,6 @@ class RequestCodeNIManager(RequestCommon):
 
         return {
                 'page_title': page_title,
-                'display_region': display_region,
                 'locale': locale
             }
 
@@ -1287,7 +1286,6 @@ class RequestFormNIManager(RequestCommon):
 
         return {
                 'page_title': page_title,
-                'display_region': display_region,
                 'locale': locale
             }
 
