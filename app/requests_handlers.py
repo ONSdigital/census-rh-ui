@@ -1421,16 +1421,14 @@ class RequestCodeNIManager(RequestCommon):
         self.setup_request(request)
 
         display_region = 'ni'
-        page_title = 'You need to visit the Communal Establishment Portal'
+        page_title = 'You need to visit the Communal Establishment Manager Portal'
         locale = 'en'
 
         self.log_entry(request, display_region + '/requests/access-code/ce-manager')
 
         return {
                 'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+                'locale': locale
             }
 
 
@@ -1441,16 +1439,14 @@ class RequestFormNIManager(RequestCommon):
         self.setup_request(request)
 
         display_region = 'ni'
-        page_title = 'You need to visit the Communal Establishment Portal'
+        page_title = 'You need to visit the Communal Establishment Manager Portal'
         locale = 'en'
 
         self.log_entry(request, display_region + '/requests/paper-questionnaire/ce-manager')
 
         return {
                 'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+                'locale': locale
             }
 
 
