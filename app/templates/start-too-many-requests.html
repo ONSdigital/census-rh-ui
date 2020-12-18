@@ -47,11 +47,10 @@
 
 {%- block main -%}
 
-    <h1>{{ _('We are unable to launch your census questionnaire') }}</h1>
+    <h1>{{ _('Sorry, there was a problem starting your census') }}</h1>
 
-    <p>{{ _('We are currently experiencing very high load so are unable to launch your census questionnaire. Please try again later.') }}</p>
-    {%- autoescape false -%}
-        <p>{{ _('If you need further assistance, please %(open)scontact us%(close)s', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
-    {%- endautoescape -%}
+    <p>{{ _('We are working to fix the problem.') }}</p>
+
+    <p>{{ _('Please try again later.') }}</p>
 
 {%- endblock -%}

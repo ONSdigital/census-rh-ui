@@ -525,7 +525,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
         self.content_common_429_error_eq_launch_title_en = \
-            'We are unable to launch your census questionnaire'
+            'Sorry, there was a problem starting your census'
         self.content_common_429_error_uac_title_en = \
             'You have reached the maximum number of access codes you can request online'
         self.content_common_429_error_paper_questionnaire_title_en = \
@@ -534,7 +534,7 @@ class RHTestCase(AioHTTPTestCase):
             'You have reached the maximum number of continuation questionnaires you can request online'
         # TODO: add welsh translation
         self.content_common_429_error_eq_launch_title_cy = \
-            'We are unable to launch your census questionnaire'
+            'Sorry, there was a problem starting your census'
         # TODO: add welsh translation
         self.content_common_429_error_uac_title_cy = \
             'You have reached the maximum number of access codes you can request online'
