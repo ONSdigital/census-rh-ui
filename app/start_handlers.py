@@ -248,8 +248,7 @@ class StartNICE4Code(StartCommon):
 
         return {
             'locale': locale,
-            'page_title': page_title,
-            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
+            'page_title': page_title
         }
 
 
