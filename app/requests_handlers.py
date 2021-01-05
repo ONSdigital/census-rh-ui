@@ -294,6 +294,7 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         data = await request.post()
         try:
             request_method = data['form-select-method']
+            logger.info("method selected for receiving access code", method_selected=request_method)
         except KeyError:
             logger.info('request method selection error',
                         client_ip=request['client_ip'])
@@ -490,6 +491,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
+            logger.info('confirmed method as text', user_selection=mobile_confirmation)
         except KeyError:
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
@@ -774,6 +776,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         data = await request.post()
         try:
             name_address_confirmation = data['request-name-address-confirmation']
+            logger.info('confirmed method as post, also confirmed address', user_selection=name_address_confirmation)
         except KeyError:
             logger.info('name confirmation error',
                         client_ip=request['client_ip'])
