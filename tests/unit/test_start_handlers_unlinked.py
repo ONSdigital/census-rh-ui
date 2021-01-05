@@ -2086,7 +2086,7 @@ class TestStartHandlersUnlinked(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_en,
-                    data=self.common_select_address_input_not_listed_en)
+                    data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-not-found'")
 
@@ -2131,7 +2131,7 @@ class TestStartHandlersUnlinked(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_cy,
-                    data=self.common_select_address_input_not_listed_cy)
+                    data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-not-found'")
 
@@ -2175,7 +2175,7 @@ class TestStartHandlersUnlinked(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_unlinked_select_address_ni,
-                    data=self.common_select_address_input_not_listed_en)
+                    data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/unlinked/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-not-found'")
 

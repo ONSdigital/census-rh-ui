@@ -1,13 +1,5 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% if display_region == 'ni' %}
-    {% set contact_us_link = domain_url_en + '/contact-us/' %}
-{% elif display_region == 'cy' %}
-    {% set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' %}
-{% else %}
-    {% set contact_us_link = domain_url_en + '/contact-us/' %}
-{% endif %}
-
 {% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey) %}
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
@@ -24,7 +16,11 @@
     }
 } %}
 
-{% set question_description = _('<p class="u-fs-r--b">%(total)s addresses found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) %}
+{%- if total_matches == 1: -%}
+    {%- set question_description = _('<p class="u-fs-r--b">%(total)s address found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) -%}
+{%- else: -%}
+    {%- set question_description = _('<p class="u-fs-r--b">%(total)s addresses found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) -%}
+{%- endif -%}
 
 {%- if 'error-no-address-selected' in field_messages_dict -%}
     {%- set error_select_address = {'id': 'error-no-address-selected', 'text': _('Select an address')} -%}
@@ -53,7 +49,7 @@
 
             {{
                 onsRadios({
-                    'name': 'form-select-address',
+                    'name': 'form-pick-address',
                     'or': 'Or',
                     'radios': addresses,
                     'error': error_select_address
