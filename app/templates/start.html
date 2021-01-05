@@ -1,7 +1,7 @@
 {% extends 'base-' + display_region + '.html' %}
 
 {% set request_access_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey='access-code') %}
-{% set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) %}
+{% set request_individual_code_link = url('RequestCodeIndividual:get', display_region=display_region) %}
 {% set webchat_link = url('WebChat:get', display_region=display_region) %}
 
 {% from 'components/uac/_macro.njk' import onsUACInput %}

@@ -66,10 +66,10 @@ class CommonCommon(View):
             else:
                 if (case_type == 'HH' or case_type == 'SPG') and not individual:
                     raise HTTPFound(
-                        request.app.router['RequestHouseholdCode:get'].url_for(display_region=display_region))
+                        request.app.router['RequestCodeHousehold:get'].url_for(display_region=display_region))
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
 
 
@@ -84,12 +84,15 @@ class CommonAddressInScotland(CommonCommon):
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
 
-        if display_region == 'cy':
+        if display_region == 'ni':
+            page_title = 'Address not part of census for Northern Ireland'
+            locale = 'en'
+        elif display_region == 'cy':
             # TODO: add welsh translation
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'cy'
         else:
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-scotland')
@@ -117,10 +120,10 @@ class CommonAddressInNorthernIreland(CommonCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'cy'
         else:
-            page_title = 'This address is not part of the census for England and Wales'
+            page_title = 'Address not part of census for England and Wales'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-northern-ireland')
@@ -146,7 +149,7 @@ class CommonAddressInEngland(CommonCommon):
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
-        page_title = 'This address is not part of the census for Northern Ireland'
+        page_title = 'Address not part of census for Northern Ireland'
         locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-england')
@@ -170,7 +173,7 @@ class CommonAddressInWales(CommonCommon):
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
-        page_title = 'This address is not part of the census for Northern Ireland'
+        page_title = 'Address not part of census for Northern Ireland'
         locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-wales')
@@ -252,11 +255,15 @@ class CommonEnterAddress(CommonCommon):
                 session.changed()
 
         if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = 'Enter address'
             locale = 'cy'
         else:
+            page_title = 'Enter address'
             locale = 'en'
         return {
             'display_region': display_region,
+            'page_title': page_title,
             'user_journey': user_journey,
             'sub_user_journey': sub_user_journey,
             'locale': locale,
@@ -273,8 +280,11 @@ class CommonEnterAddress(CommonCommon):
         sub_user_journey = request.match_info['sub_user_journey']
 
         if display_region == 'cy':
+            # TODO: add welsh translation
+            page_title = View.page_title_error_prefix_cy + 'Enter address'
             locale = 'cy'
         else:
+            page_title = View.page_title_error_prefix_en + 'Enter address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-address')
@@ -283,6 +293,8 @@ class CommonEnterAddress(CommonCommon):
             await check_permission(request)
 
         data = await request.post()
+
+        session = await get_session(request)
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
@@ -297,14 +309,16 @@ class CommonEnterAddress(CommonCommon):
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR',
                                                                     'error_postcode_invalid')
             flash(request, flash_message)
-            raise HTTPFound(
-                request.app.router['CommonEnterAddress:get'].url_for(
-                    display_region=display_region,
-                    user_journey=user_journey,
-                    sub_user_journey=sub_user_journey
-                ))
-
-        session = await get_session(request)
+            return {
+                'display_region': display_region,
+                'page_title': page_title,
+                'user_journey': user_journey,
+                'sub_user_journey': sub_user_journey,
+                'locale': locale,
+                'page_url': View.gen_page_url(request),
+                'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us'),
+                'individual': session['attributes']['individual']
+            }
 
         session['attributes']['postcode'] = postcode
         session.changed()
@@ -336,10 +350,11 @@ class CommonSelectAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            page_title = 'Dewiswch eich cyfeiriad'
+            # TODO: add welsh translation
+            page_title = 'Select address'
             locale = 'cy'
         else:
-            page_title = 'Select your address'
+            page_title = 'Select address'
             locale = 'en'
 
         attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
@@ -370,10 +385,11 @@ class CommonSelectAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            page_title = 'Dewiswch eich cyfeiriad'
+            # TODO: add welsh translation
+            page_title = View.page_title_error_prefix_cy + 'Select address'
             locale = 'cy'
         else:
-            page_title = 'Select your address'
+            page_title = View.page_title_error_prefix_en + 'Select address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
@@ -438,10 +454,10 @@ class CommonConfirmAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Is this the correct address?"
+            page_title = "Confirm address"
             locale = 'cy'
         else:
-            page_title = 'Is this the correct address?'
+            page_title = 'Confirm address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -495,10 +511,10 @@ class CommonConfirmAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Is this the correct address?"
+            page_title = View.page_title_error_prefix_cy + "Confirm address"
             locale = 'cy'
         else:
-            page_title = 'Is this the correct address?'
+            page_title = View.page_title_error_prefix_en + 'Confirm address'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -696,10 +712,10 @@ class CommonCEMangerQuestion(CommonCommon):
         if display_region == 'cy':
             locale = 'cy'
             # TODO Add Welsh translation
-            page_title = 'Are you a resident or manager of this establishment?'
+            page_title = 'Confirm resident or manager'
         else:
             locale = 'en'
-            page_title = 'Are you a resident or manager of this establishment?'
+            page_title = 'Confirm resident or manager'
         return {
             'display_region': display_region,
             'user_journey': user_journey,
@@ -724,10 +740,10 @@ class CommonCEMangerQuestion(CommonCommon):
         if display_region == 'cy':
             locale = 'cy'
             # TODO Add Welsh translation
-            page_title = 'Are you a resident or manager of this establishment?'
+            page_title = View.page_title_error_prefix_cy + 'Confirm resident or manager'
         else:
             locale = 'en'
-            page_title = 'Are you a resident or manager of this establishment?'
+            page_title = View.page_title_error_prefix_en + 'Confirm resident or manager'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
@@ -771,7 +787,7 @@ class CommonCEMangerQuestion(CommonCommon):
                         request_type=sub_user_journey, display_region=display_region))
             else:
                 raise HTTPFound(
-                    request.app.router['RequestCodeSelectMethod:get'].url_for(
+                    request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                         request_type=sub_user_journey, display_region=display_region))
 
         elif resident_or_manager == 'manager':
@@ -793,7 +809,7 @@ class CommonCEMangerQuestion(CommonCommon):
                         request.app.router['RequestCodeNIManager:get'].url_for())
                 else:
                     raise HTTPFound(
-                        request.app.router['RequestCodeSelectMethod:get'].url_for(
+                        request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
                             request_type=sub_user_journey, display_region=display_region))
 
         else:
@@ -820,7 +836,7 @@ class CommonCEMangerQuestion(CommonCommon):
 
 
 @common_routes.view(r'/' + View.valid_display_regions + '/' + View.valid_user_journeys
-                    + '/' + View.valid_sub_user_journeys + '/enter-room-number/')
+                    + '/' + View.valid_sub_user_journeys + '/enter-flat-or-room-number/')
 class CommonEnterRoomNumber(CommonCommon):
     """
     Common route to allow user to enter a room number if in a CE
@@ -832,17 +848,18 @@ class CommonEnterRoomNumber(CommonCommon):
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
 
-        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey +
+                       '/enter-flat-or-room-number')
 
         session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             locale = 'cy'
             # TODO Add Welsh translation
-            page_title = 'What is your flat or room number?'
+            page_title = 'Enter flat or room number'
         else:
             locale = 'en'
-            page_title = 'What is your flat or room number?'
+            page_title = 'Enter flat or room number'
 
         if session_attributes['roomNumber']:
             room_number = session_attributes['roomNumber']
@@ -868,12 +885,13 @@ class CommonEnterRoomNumber(CommonCommon):
         if display_region == 'cy':
             locale = 'cy'
             # TODO Add Welsh translation
-            page_title = 'What is your flat or room number?'
+            page_title = View.page_title_error_prefix_cy + 'Enter flat or room number'
         else:
             locale = 'en'
-            page_title = 'What is your flat or room number?'
+            page_title = View.page_title_error_prefix_en + 'Enter flat or room number'
 
-        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-room-number')
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey +
+                       '/enter-flat-or-room-number')
 
         session = await get_session(request)
         session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
@@ -889,7 +907,7 @@ class CommonEnterRoomNumber(CommonCommon):
             try:
                 if session_attributes['first_name']:
                     raise HTTPFound(
-                        request.app.router['RequestCommonConfirmNameAddress:get'].url_for(
+                        request.app.router['RequestCommonConfirmSendByPost:get'].url_for(
                             display_region=display_region,
                             user_journey=user_journey,
                             request_type=sub_user_journey

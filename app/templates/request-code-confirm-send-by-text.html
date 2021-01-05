@@ -10,7 +10,7 @@
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestCodeConfirmMobile:post', request_type=request_type, display_region=display_region)
+        'action': url('RequestCodeConfirmSendByText:post', request_type=request_type, display_region=display_region)
     }
 } -%}
 
@@ -43,7 +43,7 @@
     {%- endif -%}
 
     {%- call onsQuestion({
-        'title': _('Is this mobile phone number correct?'),
+        'title': _('Is this mobile number correct?'),
         'description': '<p class="js-mobile-no">'|safe + submitted_mobile_number + '</p>'|safe
     }) -%}
 
