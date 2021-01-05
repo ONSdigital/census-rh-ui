@@ -298,7 +298,7 @@ class CommonEnterAddress(CommonCommon):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'])
+            logger.info('valid postcode', client_ip=request['client_ip'], postcode_entered=postcode)
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
@@ -424,9 +424,10 @@ class CommonSelectAddress(CommonCommon):
         else:
             session = await get_session(request)
             session['attributes']['address'] = form_return['address']
-            session['attributes']['uprn'] = form_return['uprn']
+            uprn = form_return['uprn']
+            session['attributes']['uprn'] = uprn
             session.changed()
-            logger.info('session updated', client_ip=request['client_ip'])
+            logger.info('session updated', client_ip=request['client_ip'], uprn_selected=uprn)
 
         raise HTTPFound(
             request.app.router['CommonConfirmAddress:get'].url_for(
