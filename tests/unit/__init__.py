@@ -406,11 +406,19 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_cy = '0800 169 2021'
         self.content_call_centre_number_ni = '0800 328 2021'
 
+        self.content_common_address_in_northern_ireland_page_title_en = \
+            '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_northern_ireland_en = \
             'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
+        self.content_common_address_in_northern_ireland_page_title_cy = \
+            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
         self.content_common_address_in_northern_ireland_cy = \
             'This address is not part of the census for England and Wales'
+
+        self.content_common_address_not_in_northern_ireland_page_title = \
+            '<title>Address not part of census for Northern Ireland - Census 2021</title>'
         self.content_common_address_not_in_northern_ireland = \
             'This address is not part of the census for Northern Ireland'
         self.content_common_address_in_england_secondary = \
@@ -418,9 +426,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_wales_secondary = \
             'You have selected an address in Wales.'
 
+        self.content_common_address_in_scotland_page_title_en = \
+            '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
         # TODO: add welsh translation
+        self.content_common_address_in_scotland_page_title_cy = \
+            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
         self.content_common_address_in_scotland_cy = 'This address is not part of the census for England and Wales'
+        self.content_common_address_in_scotland_page_title_ni = \
+            '<title>Address not part of census for Northern Ireland - Census 2021</title>'
+        self.content_common_address_in_scotland_ni = 'This address is not part of the census for Northern Ireland'
 
         self.content_common_enter_address_error_en = 'Enter a valid UK postcode'
         # TODO Add Welsh Translation
@@ -430,19 +446,32 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_common_enter_address_error_empty_cy = "Enter a postcode"
 
+        self.content_common_select_address_page_title_en = '<title>Select address - Census 2021</title>'
+        self.content_common_select_address_page_title_error_en = '<title>Error: Select address - Census 2021</title>'
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
         self.content_common_select_address_value_en = '1 Gate Reach'
         self.content_common_select_address_no_results_en = 'We cannot find your address'
+        # TODO Add Welsh Translation
+        self.content_common_select_address_page_title_cy = '<title>Select address - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_common_select_address_page_title_error_cy = '<title>Error: Select address - Cyfrifiad 2021</title>'
         self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
         self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
 
+        self.content_common_confirm_address_page_title_en = '<title>Confirm address - Census 2021</title>'
+        self.content_common_confirm_address_page_title_error_en = '<title>Error: Confirm address - Census 2021</title>'
         self.content_common_confirm_address_title_en = 'Is this the correct address?'
         self.content_common_confirm_address_error_en = 'Select an answer'
         self.content_common_confirm_address_value_yes_en = 'Yes, this is the correct address'
         self.content_common_confirm_address_value_no_en = 'No, search for address again'
+        # TODO Add Welsh Translation
+        self.content_common_confirm_address_page_title_cy = '<title>Confirm address - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_common_confirm_address_page_title_error_cy = \
+            '<title>Error: Confirm address - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_common_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation
@@ -455,6 +484,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_text = 'Room A8'
         self.content_common_ce_room_number_add_link_en = 'Add flat or room number'
         self.content_common_ce_room_number_change_link_en = 'Change flat or room number'
+        self.content_common_enter_room_number_page_title_en = \
+            '<title>Enter flat or room number - Census 2021</title>'
+        self.content_common_enter_room_number_page_title_error_en = \
+            '<title>Error: Enter flat or room number - Census 2021</title>'
         self.content_common_enter_room_number_title_en = 'What is your flat or room number?'
         self.content_common_enter_room_number_empty_en = 'Enter your flat or room number'
         self.content_common_enter_room_number_over_length_en = \
@@ -463,6 +496,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_ce_room_number_add_link_cy = 'Add flat or room number'
         # TODO: add welsh translation
         self.content_common_ce_room_number_change_link_cy = 'Change flat or room number'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_page_title_cy = \
+            '<title>Enter flat or room number - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_common_enter_room_number_page_title_error_cy = \
+            '<title>Error: Enter flat or room number - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_common_enter_room_number_title_cy = 'What is your flat or room number?'
         # TODO: add welsh translation
@@ -540,6 +579,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_429_error_continuation_questionnaire_title_cy = \
             'You have reached the maximum number of continuation questionnaires you can request online'
 
+        self.content_common_resident_or_manager_page_title_en = \
+            '<title>Confirm resident or manager - Census 2021</title>'
+        self.content_common_resident_or_manager_page_title_error_en = \
+            '<title>Error: Confirm resident or manager - Census 2021</title>'
         self.content_common_resident_or_manager_title_en = 'Are you a resident or manager of this establishment?'
         self.content_common_resident_or_manager_option_resident_en = 'Resident'
         self.content_common_resident_or_manager_description_resident_en = \
@@ -548,6 +591,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_description_manager_en = \
             'A manager is responsible for answering the census questions about this establishment'
         self.content_common_resident_or_manager_error_en = 'Select an answer'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_page_title_cy = \
+            '<title>Confirm resident or manager - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_common_resident_or_manager_page_title_error_cy = \
+            '<title>Error: Confirm resident or manager - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_common_resident_or_manager_title_cy = 'Are you a resident or manager of this establishment?'
         # TODO: add welsh translation
@@ -993,15 +1042,15 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_request_fulfilment_post = f
 
-        self.request_code_select_method_data_sms = {
+        self.request_code_select_how_to_receive_data_sms = {
             'form-select-method': 'sms', 'action[save_continue]': ''
         }
 
-        self.request_code_select_method_data_post = {
+        self.request_code_select_how_to_receive_data_post = {
             'form-select-method': 'post', 'action[save_continue]': ''
         }
 
-        self.request_code_select_method_data_invalid = {
+        self.request_code_select_how_to_receive_data_invalid = {
             'form-select-method': 'invalid', 'action[save_continue]': ''
         }
 
@@ -1011,6 +1060,10 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_code_enter_mobile_form_data_invalid = {
             'request-mobile-number': self.mobile_invalid_short, 'action[save_continue]': '',
+        }
+
+        self.request_code_enter_mobile_form_data_empty = {
+            'request-mobile-number': '', 'action[save_continue]': '',
         }
 
         self.request_code_mobile_confirmation_data_yes = {
@@ -1044,46 +1097,61 @@ class RHTestCase(AioHTTPTestCase):
             'name_first_name': 'Bob', 'action[save_continue]': '',
         }
 
-        self.request_common_confirm_name_address_data_yes = {
+        self.request_common_confirm_send_by_post_data_yes = {
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
         }
 
-        self.request_common_confirm_name_address_data_yes_large_print = {
+        self.request_common_confirm_send_by_post_data_yes_large_print = {
             'request-name-address-confirmation': 'yes',
             'request-name-address-large-print': 'large-print',
             'action[save_continue]': ''
         }
 
-        self.request_common_confirm_name_address_data_no = {
+        self.request_common_confirm_send_by_post_data_no = {
             'request-name-address-confirmation': 'no', 'action[save_continue]': ''
         }
 
-        self.request_common_confirm_name_address_data_invalid = {
+        self.request_common_confirm_send_by_post_data_invalid = {
             'request-name-address-confirmation': 'invalid', 'action[save_continue]': ''
         }
 
+        self.content_request_individual_page_title_en = '<title>Request individual access code - Census 2021</title>'
         self.content_request_individual_title_en = 'Request an individual access code'
-        self.content_request_individual_title_cy = 'Gofyn am god mynediad unigryw'
         self.content_request_individual_secondary_en = 'You can choose to receive your new access code by text or post.'
+        # TODO: add welsh translation
+        self.content_request_individual_page_title_cy = '<title>Request individual access code - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_individual_title_cy = 'Request an individual access code'
         # TODO: add welsh translation
         self.content_request_individual_secondary_cy = 'You can choose to receive your new access code by text or post.'
 
-        self.content_request_individual_form_title_en = 'Request an individual paper questionnaire'
+        self.content_request_individual_questionnaire_page_title_en = \
+            '<title>Request individual paper questionnaire - Census 2021</title>'
+        self.content_request_individual_questionnaire_title_en = 'Request an individual paper questionnaire'
         # TODO: add welsh translation
-        self.content_request_individual_form_title_cy = 'Request an individual paper questionnaire'
-        self.content_request_individual_form_secondary_en = \
+        self.content_request_individual_questionnaire_page_title_cy = \
+            '<title>Request individual paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_individual_questionnaire_title_cy = 'Request an individual paper questionnaire'
+        self.content_request_individual_questionnaire_secondary_en = \
             'An individual paper questionnaire lets you answer your census questions separately from the people ' \
             'you live with, so they can\\xe2\\x80\\x99t see your answers.'
         # TODO: add welsh translation
-        self.content_request_individual_form_secondary_cy = \
+        self.content_request_individual_questionnaire_secondary_cy = \
             'An individual paper questionnaire lets you answer your census questions separately from the people ' \
             'you live with, so they can\\xe2\\x80\\x99t see your answers.'
 
+        self.content_request_enter_address_page_title_en = '<title>Enter address - Census 2021</title>'
+        self.content_request_enter_address_page_title_error_en = '<title>Error: Enter address - Census 2021</title>'
         self.content_request_enter_address_title_en = 'What is your postcode?'
         self.content_request_access_code_enter_address_secondary_en = \
             'To request an access code, we need your address'
         self.content_request_individual_code_enter_address_secondary_en = \
             'To request an individual access code, we need your address'
+        # TODO: add welsh translation
+        self.content_request_enter_address_page_title_cy = '<title>Enter address - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_enter_address_page_title_error_cy = '<title>Error: Enter address - Cyfrifiad 2021</title>'
         self.content_request_enter_address_title_cy = 'Beth yw eich cod post?'
         # TODO: add welsh translation
         self.content_request_access_code_enter_address_secondary_cy = \
@@ -1091,84 +1159,186 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_individual_code_enter_address_secondary_cy = \
             'To request an individual access code, we need your address'
 
-        self.content_request_code_select_method_individual_response_question_en = \
+        self.content_request_code_select_how_to_receive_individual_response_question_en = \
             'Need to answer separately from your household?'
-        self.content_request_code_select_method_error_en = 'Select an answer'
-        self.content_request_code_select_method_secondary_en = 'Select how to send access code'
-        self.content_request_code_select_method_option_text_en = 'Text message'
-        self.content_request_code_select_method_option_post_en = 'Post'
+        self.content_request_code_select_how_to_receive_error_en = 'Select an answer'
+        self.content_request_code_select_how_to_receive_secondary_en = 'Select how to send access code'
+        self.content_request_code_select_how_to_receive_option_text_en = 'Text message'
+        self.content_request_code_select_how_to_receive_option_post_en = 'Post'
 
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_response_question_cy = \
+        self.content_request_code_select_how_to_receive_individual_response_question_cy = \
             'Need to answer separately from your household?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_error_cy = "Select an answer"
+        self.content_request_code_select_how_to_receive_error_cy = "Select an answer"
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_secondary_cy = "Select how to send access code"
+        self.content_request_code_select_how_to_receive_secondary_cy = "Select how to send access code"
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_option_text_cy = 'Text message'
+        self.content_request_code_select_how_to_receive_option_text_cy = 'Text message'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_option_post_cy = 'Post'
+        self.content_request_code_select_how_to_receive_option_post_cy = 'Post'
 
-        self.content_request_code_select_method_household_title_en = \
+        self.content_request_code_select_how_to_receive_household_page_title_en = \
+            '<title>Select how to receive household access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_household_page_title_error_en = \
+            '<title>Error: Select how to receive household access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_household_title_en = \
             'How would you like to receive a new household access code?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_household_title_cy = \
+        self.content_request_code_select_how_to_receive_household_page_title_cy = \
+            '<title>Select how to receive household access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_household_page_title_error_cy = \
+            '<title>Error: Select how to receive household access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_household_title_cy = \
             'How would you like to receive a new household access code?'
 
-        self.content_request_code_select_method_individual_title_en = \
+        self.content_request_code_select_how_to_receive_individual_page_title_en = \
+            '<title>Select how to receive individual access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_individual_page_title_error_en = \
+            '<title>Error: Select how to receive individual access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_individual_title_en = \
             'How would you like to receive an individual access code?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_individual_title_cy = \
+        self.content_request_code_select_how_to_receive_individual_page_title_cy = \
+            '<title>Select how to receive individual access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_individual_page_title_error_cy = \
+            '<title>Error: Select how to receive individual access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_individual_title_cy = \
             'How would you like to receive an individual access code?'
 
-        self.content_request_code_select_method_manager_title_en = \
+        self.content_request_code_select_how_to_receive_manager_page_title_en = \
+            '<title>Select how to receive manager access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_manager_page_title_error_en = \
+            '<title>Error: Select how to receive manager access code - Census 2021</title>'
+        self.content_request_code_select_how_to_receive_manager_title_en = \
             'How would you like to receive a new manager access code?'
         # TODO Add Welsh Translation
-        self.content_request_code_select_method_manager_title_cy = \
+        self.content_request_code_select_how_to_receive_manager_page_title_cy = \
+            '<title>Select how to receive manager access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_manager_page_title_error_cy = \
+            '<title>Error: Select how to receive manager access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_manager_title_cy = \
             'How would you like to receive a new manager access code?'
 
-        self.content_request_code_enter_mobile_title_en = 'What is your mobile phone number?'
-        self.content_request_code_enter_mobile_error_en = ''
+        self.content_request_code_enter_mobile_page_title_en = '<title>Enter mobile number - Census 2021</title>'
+        self.content_request_code_enter_mobile_page_title_error_en = \
+            '<title>Error: Enter mobile number - Census 2021</title>'
+        self.content_request_code_enter_mobile_title_en = 'What is your mobile number?'
+        self.content_request_code_enter_mobile_error_empty_en = 'Enter your mobile number'
+        self.content_request_code_enter_mobile_error_invalid_en = \
+            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
         self.content_request_code_enter_mobile_secondary_en = \
             'This will not be stored and only used once to send the access code'
-        self.content_request_code_enter_mobile_title_cy = 'Beth yw eich rhif ff\\xc3\\xb4n symudol?'
-        self.content_request_code_enter_mobile_error_cy = ""
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_page_title_cy = '<title>Enter mobile number - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_page_title_error_cy = \
+            '<title>Error: Enter mobile number - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_title_cy = 'What is your mobile number?'
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_error_empty_cy = "Enter your mobile number"
+        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_error_invalid_cy = \
+            "Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345"
         # TODO Add Welsh Translation
         self.content_request_code_enter_mobile_secondary_cy = \
             "This will not be stored and only used once to send the access code"
 
-        self.content_request_code_confirm_mobile_title_en = 'Is this mobile phone number correct?'
-        self.content_request_code_confirm_mobile_error_en = 'Select an answer'
-        self.content_request_code_confirm_mobile_title_cy = "Ydy\\\'r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
+        self.content_request_code_confirm_send_by_text_page_title_household_en = \
+            '<title>Confirm to send household access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_page_title_household_error_en = \
+            '<title>Error: Confirm to send household access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_page_title_manager_en = \
+            '<title>Confirm to send manager access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_page_title_manager_error_en = \
+            '<title>Error: Confirm to send manager access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_page_title_individual_en = \
+            '<title>Confirm to send individual access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_page_title_individual_error_en = \
+            '<title>Error: Confirm to send individual access code by text - Census 2021</title>'
+        self.content_request_code_confirm_send_by_text_title_en = 'Is this mobile number correct?'
+        self.content_request_code_confirm_send_by_text_error_en = 'Select an answer'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_mobile_error_cy = "Select an answer"
+        self.content_request_code_confirm_send_by_text_page_title_household_cy = \
+            '<title>Confirm to send household access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_page_title_household_error_cy = \
+            '<title>Error: Confirm to send household access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_page_title_manager_cy = \
+            '<title>Confirm to send manager access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_page_title_manager_error_cy = \
+            '<title>Error: Confirm to send manager access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_page_title_individual_cy = \
+            '<title>Confirm to send individual access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_page_title_individual_error_cy = \
+            '<title>Error: Confirm to send individual access code by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_title_cy = "Is this mobile number correct?"
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_text_error_cy = "Select an answer"
 
-        self.content_request_code_sent_sms_title_en = 'We have sent an access code'
-        self.content_request_code_sent_sms_secondary_individual_en = \
+        self.content_request_code_sent_by_text_page_title_household_en = \
+            '<title>Household access code has been sent by text - Census 2021</title>'
+        self.content_request_code_sent_by_text_page_title_individual_en = \
+            '<title>Individual access code has been sent by text - Census 2021</title>'
+        self.content_request_code_sent_by_text_page_title_manager_en = \
+            '<title>Manager access code has been sent by text - Census 2021</title>'
+        self.content_request_code_sent_by_text_title_en = 'A text has been sent to '
+        self.content_request_code_sent_by_text_secondary_individual_en = \
             'The text message with an individual access code should arrive soon for you to start your census'
-        self.content_request_code_sent_sms_secondary_manager_en = \
+        self.content_request_code_sent_by_text_secondary_manager_en = \
             'The text message with a new manager access code should arrive soon for you to start your census'
-        self.content_request_code_sent_sms_secondary_household_en = \
+        self.content_request_code_sent_by_text_secondary_household_en = \
             'The text message with a new household access code should arrive soon for you to start your census'
-        self.content_request_code_sent_sms_title_cy = 'Rydym ni wedi anfon cod mynediad'
         # TODO Add Welsh Translation
-        self.content_request_code_sent_sms_secondary_individual_cy = \
+        self.content_request_code_sent_by_text_page_title_household_cy = \
+            '<title>Household access code has been sent by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_text_page_title_individual_cy = \
+            '<title>Individual access code has been sent by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_text_page_title_manager_cy = \
+            '<title>Manager access code has been sent by text - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_text_title_cy = 'A text has been sent to '
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_text_secondary_individual_cy = \
             'The text message with an individual access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
-        self.content_request_code_sent_sms_secondary_manager_cy = \
+        self.content_request_code_sent_by_text_secondary_manager_cy = \
             'The text message with a new manager access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
-        self.content_request_code_sent_sms_secondary_household_cy = \
+        self.content_request_code_sent_by_text_secondary_household_cy = \
             'The text message with a new household access code should arrive soon for you to start your census'
 
-        self.content_request_code_household_information_title_en = 'Request a new household access code'
+        self.content_request_code_household_page_title_en = \
+            '<title>Request new household access code - Census 2021</title>'
+        self.content_request_code_household_title_en = 'Request a new household access code'
         # TODO Add Welsh Translation
-        self.content_request_code_household_information_title_cy = 'Request a new household access code'
+        self.content_request_code_household_page_title_cy = \
+            '<title>Request new household access code - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_household_title_cy = 'Request a new household access code'
 
-        self.content_request_questionnaire_household_information_title_en = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_page_title_en = \
+            '<title>Request household paper questionnaire - Census 2021</title>'
+        self.content_request_questionnaire_household_title_en = 'Request a household paper questionnaire'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_household_information_title_cy = 'Request a household paper questionnaire'
+        self.content_request_questionnaire_household_page_title_cy = \
+            '<title>Request household paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_household_title_cy = 'Request a household paper questionnaire'
 
         self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
         self.content_request_questionnaire_people_in_household_error_empty_en = \
@@ -1182,9 +1352,19 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a numeral'
 
+        self.content_request_common_enter_name_page_title_en = \
+            '<title>Enter name - Census 2021</title>'
+        self.content_request_common_enter_name_page_title_error_en = \
+            '<title>Error: Enter name - Census 2021</title>'
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_page_title_cy = \
+            '<title>Enter name - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_page_title_error_cy = \
+            '<title>Error: Enter name - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_title_cy = 'What is your name?'
         # TODO Add Welsh Translation
@@ -1192,42 +1372,78 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
 
-        self.content_request_common_confirm_name_address_title_individual_en = \
+        self.content_request_code_confirm_send_by_post_page_title_individual_en = \
+            '<title>Confirm to send individual access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_page_title_error_individual_en = \
+            '<title>Error: Confirm to send individual access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_page_title_manager_en = \
+            '<title>Confirm to send manager access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_page_title_error_manager_en = \
+            '<title>Error: Confirm to send manager access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_page_title_household_en = \
+            '<title>Confirm to send household access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_page_title_error_household_en = \
+            '<title>Error: Confirm to send household access code by post - Census 2021</title>'
+        self.content_request_code_confirm_send_by_post_title_individual_en = \
             'Do you want to send an individual access code to this address?'
-        self.content_request_common_confirm_name_address_title_manager_en = \
+        self.content_request_code_confirm_send_by_post_title_manager_en = \
             'Do you want to send a new manager access code to this address?'
-        self.content_request_common_confirm_name_address_title_household_en = \
+        self.content_request_code_confirm_send_by_post_title_household_en = \
             'Do you want to send a new household access code to this address?'
-        self.content_request_common_confirm_name_address_error_en = 'Select an answer'
-        self.content_request_code_confirm_name_address_individual_message_en = \
+        self.content_request_common_confirm_send_by_post_error_en = 'Select an answer'
+        self.content_request_code_confirm_send_by_post_individual_message_en = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
-        self.content_request_questionnaire_confirm_name_address_individual_message_en = \
+        self.content_request_questionnaire_confirm_send_by_post_individual_message_en = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
-        self.content_request_common_confirm_name_address_option_yes_en = 'Yes, send the access code by post'
-        self.content_request_common_confirm_name_address_option_no_en = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_yes_en = 'Yes, send the access code by post'
+        self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it another way'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_title_individual_cy = \
+        self.content_request_code_confirm_send_by_post_page_title_individual_cy = \
+            '<title>Confirm to send individual access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_page_title_error_individual_cy = \
+            '<title>Error: Confirm to send individual access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_page_title_manager_cy = \
+            '<title>Confirm to send manager access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_page_title_error_manager_cy = \
+            '<title>Error: Confirm to send manager access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_page_title_household_cy = \
+            '<title>Confirm to send household access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_page_title_error_household_cy = \
+            '<title>Error: Confirm to send household access code by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_confirm_send_by_post_title_individual_cy = \
             'Do you want to send an individual access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_title_manager_cy = \
+        self.content_request_code_confirm_send_by_post_title_manager_cy = \
             'Do you want to send a new manager access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_title_household_cy = \
+        self.content_request_code_confirm_send_by_post_title_household_cy = \
             'Do you want to send a new household access code to this address?'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_error_cy = \
+        self.content_request_common_confirm_send_by_post_error_cy = \
             "Select an answer"
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_name_address_individual_message_cy = \
+        self.content_request_code_confirm_send_by_post_individual_message_cy = \
             'A letter with your individual access code will arrive in a brown unbranded envelope'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_individual_message_cy = \
+        self.content_request_questionnaire_confirm_send_by_post_individual_message_cy = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_option_yes_cy = 'Yes, send the access code by post'
+        self.content_request_code_confirm_send_by_post_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
-        self.content_request_common_confirm_name_address_option_no_cy = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it another way'
 
+        self.content_request_code_sent_by_post_page_title_household_en = \
+            '<title>Household access code will be sent by post - Census 2021</title>'
+        self.content_request_code_sent_by_post_page_title_manager_en = \
+            '<title>Manager access code will be sent by post - Census 2021</title>'
+        self.content_request_code_sent_by_post_page_title_individual_en = \
+            '<title>Individual access code will be sent by post - Census 2021</title>'
         self.content_request_code_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_code_sent_post_title_ce_en = \
@@ -1244,6 +1460,15 @@ class RHTestCase(AioHTTPTestCase):
             'The letter with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_post_secondary_household_en = \
             'The letter with a new household access code should arrive soon for you to start the census'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_post_page_title_household_cy = \
+            '<title>Household access code will be sent by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_post_page_title_manager_cy = \
+            '<title>Manager access code will be sent by post - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_code_sent_by_post_page_title_individual_cy = \
+            '<title>Individual access code will be sent by post - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_request_code_sent_post_title_cy = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -1590,24 +1815,30 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.get_request_access_code_select_method_en = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_access_code_select_method_cy = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_access_code_select_method_ni = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-        self.post_request_access_code_select_method_en = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.post_request_access_code_select_method_cy = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.post_request_access_code_select_method_ni = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='ni'
-        )
+        self.get_request_access_code_select_how_to_receive_en = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='en'
+            )
+        self.get_request_access_code_select_how_to_receive_cy = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='cy'
+            )
+        self.get_request_access_code_select_how_to_receive_ni = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='ni'
+            )
+        self.post_request_access_code_select_how_to_receive_en = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='en'
+            )
+        self.post_request_access_code_select_how_to_receive_cy = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='cy'
+            )
+        self.post_request_access_code_select_how_to_receive_ni = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='ni'
+            )
 
         self.get_request_access_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
             request_type='access-code', display_region='en'
@@ -1628,24 +1859,21 @@ class RHTestCase(AioHTTPTestCase):
             request_type='access-code', display_region='ni'
         )
 
-        self.get_request_access_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_access_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_access_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-        self.post_request_access_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.post_request_access_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.post_request_access_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='ni'
-        )
+        self.get_request_access_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='en')
+        self.get_request_access_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='cy')
+        self.get_request_access_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='ni')
+        self.post_request_access_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='en')
+        self.post_request_access_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='cy')
+        self.post_request_access_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='ni')
 
         self.post_request_access_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
             request_type='access-code', display_region='en'
@@ -1657,27 +1885,27 @@ class RHTestCase(AioHTTPTestCase):
             request_type='access-code', display_region='ni'
         )
 
-        self.post_request_access_code_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='en')
-        self.post_request_access_code_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='cy')
-        self.post_request_access_code_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='ni')
+        self.post_request_access_code_confirm_send_by_post_en = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='en')
+        self.post_request_access_code_confirm_send_by_post_cy = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='cy')
+        self.post_request_access_code_confirm_send_by_post_ni = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='ni')
 
         # Start Request Individual Code
 
         # URLs
 
-        self.get_request_individual_code_en = self.app.router['RequestIndividualCode:get'].url_for(
+        self.get_request_individual_code_en = self.app.router['RequestCodeIndividual:get'].url_for(
             request_type='access-code', display_region='en'
         )
-        self.get_request_individual_code_cy = self.app.router['RequestIndividualCode:get'].url_for(
+        self.get_request_individual_code_cy = self.app.router['RequestCodeIndividual:get'].url_for(
             request_type='access-code', display_region='cy'
         )
-        self.get_request_individual_code_ni = self.app.router['RequestIndividualCode:get'].url_for(
+        self.get_request_individual_code_ni = self.app.router['RequestCodeIndividual:get'].url_for(
             request_type='access-code', display_region='ni'
         )
 
@@ -1691,13 +1919,13 @@ class RHTestCase(AioHTTPTestCase):
             request_type='paper-questionnaire', display_region='ni'
         )
 
-        self.post_request_individual_code_en = self.app.router['RequestIndividualCode:post'].url_for(
+        self.post_request_individual_code_en = self.app.router['RequestCodeIndividual:post'].url_for(
             request_type='access-code', display_region='en'
         )
-        self.post_request_individual_code_cy = self.app.router['RequestIndividualCode:post'].url_for(
+        self.post_request_individual_code_cy = self.app.router['RequestCodeIndividual:post'].url_for(
             request_type='access-code', display_region='cy'
         )
-        self.post_request_individual_code_ni = self.app.router['RequestIndividualCode:post'].url_for(
+        self.post_request_individual_code_ni = self.app.router['RequestCodeIndividual:post'].url_for(
             request_type='access-code', display_region='ni'
         )
 
@@ -1768,24 +1996,30 @@ class RHTestCase(AioHTTPTestCase):
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.get_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-        self.post_request_individual_code_select_method_en = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.post_request_individual_code_select_method_cy = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.post_request_individual_code_select_method_ni = self.app.router['RequestCodeSelectMethod:post'].url_for(
-            request_type='access-code', display_region='ni'
-        )
+        self.get_request_individual_code_select_how_to_receive_en = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='en'
+            )
+        self.get_request_individual_code_select_how_to_receive_cy = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='cy'
+            )
+        self.get_request_individual_code_select_how_to_receive_ni = \
+            self.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                request_type='access-code', display_region='ni'
+            )
+        self.post_request_individual_code_select_how_to_receive_en = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='en'
+            )
+        self.post_request_individual_code_select_how_to_receive_cy = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='cy'
+            )
+        self.post_request_individual_code_select_how_to_receive_ni = \
+            self.app.router['RequestCodeSelectHowToReceive:post'].url_for(
+                request_type='access-code', display_region='ni'
+            )
 
         self.get_request_individual_code_enter_mobile_en = self.app.router['RequestCodeEnterMobile:get'].url_for(
             request_type='access-code', display_region='en'
@@ -1806,24 +2040,21 @@ class RHTestCase(AioHTTPTestCase):
             request_type='access-code', display_region='ni'
         )
 
-        self.get_request_individual_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.get_request_individual_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.get_request_individual_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:get'].url_for(
-            request_type='access-code', display_region='ni'
-        )
-        self.post_request_individual_code_confirm_mobile_en = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='en'
-        )
-        self.post_request_individual_code_confirm_mobile_cy = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='cy'
-        )
-        self.post_request_individual_code_confirm_mobile_ni = self.app.router['RequestCodeConfirmMobile:post'].url_for(
-            request_type='access-code', display_region='ni'
-        )
+        self.get_request_individual_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='en')
+        self.get_request_individual_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='cy')
+        self.get_request_individual_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type='access-code', display_region='ni')
+        self.post_request_individual_code_confirm_send_by_text_en = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='en')
+        self.post_request_individual_code_confirm_send_by_text_cy = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='cy')
+        self.post_request_individual_code_confirm_send_by_text_ni = \
+            self.app.router['RequestCodeConfirmSendByText:post'].url_for(request_type='access-code',
+                                                                         display_region='ni')
 
         self.post_request_individual_code_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
             request_type='access-code', display_region='en'
@@ -1845,25 +2076,25 @@ class RHTestCase(AioHTTPTestCase):
             request_type='paper-questionnaire', display_region='ni'
         )
 
-        self.post_request_individual_code_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='en')
-        self.post_request_individual_code_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='cy')
-        self.post_request_individual_code_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='access-code',
-                                                                            display_region='ni')
+        self.post_request_individual_code_confirm_send_by_post_en = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='en')
+        self.post_request_individual_code_confirm_send_by_post_cy = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='cy')
+        self.post_request_individual_code_confirm_send_by_post_ni = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='access-code',
+                                                                           display_region='ni')
 
-        self.post_request_individual_form_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='en')
-        self.post_request_individual_form_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='cy')
-        self.post_request_individual_form_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='ni')
+        self.post_request_individual_form_confirm_send_by_post_en = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='en')
+        self.post_request_individual_form_confirm_send_by_post_cy = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='cy')
+        self.post_request_individual_form_confirm_send_by_post_ni = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='ni')
 
         # Start Request Paper Questionnaire
 
@@ -1951,25 +2182,25 @@ class RHTestCase(AioHTTPTestCase):
                 display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
 
-        self.post_request_access_code_household_information_en = self.app.router['RequestHouseholdCode:post'].url_for(
+        self.post_request_access_code_household_en = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='en', user_journey='requests', sub_user_journey='access-code'
         )
-        self.post_request_access_code_household_information_cy = self.app.router['RequestHouseholdCode:post'].url_for(
+        self.post_request_access_code_household_cy = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='cy', user_journey='requests', sub_user_journey='access-code'
         )
-        self.post_request_access_code_household_information_ni = self.app.router['RequestHouseholdCode:post'].url_for(
+        self.post_request_access_code_household_ni = self.app.router['RequestCodeHousehold:post'].url_for(
             display_region='ni', user_journey='requests', sub_user_journey='access-code'
         )
 
-        self.post_request_paper_questionnaire_household_information_en = \
+        self.post_request_paper_questionnaire_household_en = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
-        self.post_request_paper_questionnaire_household_information_cy = \
+        self.post_request_paper_questionnaire_household_cy = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
-        self.post_request_paper_questionnaire_household_information_ni = \
+        self.post_request_paper_questionnaire_household_ni = \
             self.app.router['RequestHouseholdForm:post'].url_for(
                 display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
             )
@@ -2010,15 +2241,15 @@ class RHTestCase(AioHTTPTestCase):
             request_type='paper-questionnaire', display_region='ni'
         )
 
-        self.post_request_paper_questionnaire_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='en')
-        self.post_request_paper_questionnaire_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='cy')
-        self.post_request_paper_questionnaire_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='paper-questionnaire',
-                                                                            display_region='ni')
+        self.post_request_paper_questionnaire_confirm_send_by_post_en = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='en')
+        self.post_request_paper_questionnaire_confirm_send_by_post_cy = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='cy')
+        self.post_request_paper_questionnaire_confirm_send_by_post_ni = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='paper-questionnaire',
+                                                                           display_region='ni')
 
         # Content
 
@@ -2028,6 +2259,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_paper_questionnaire_enter_address_secondary_cy = \
             'To send a paper census questionnaire, we need your address'
 
+        self.content_request_questionnaire_sent_post_page_title_en = \
+            '<title>Household paper questionnaire will be sent - Census 2021</title>'
+        self.content_request_questionnaire_sent_post_individual_page_title_en = \
+            '<title>Individual paper questionnaire will be sent - Census 2021</title>'
+        self.content_request_questionnaire_sent_post_page_title_large_print_en = \
+            '<title>Large-print household paper questionnaire will be sent - Census 2021</title>'
+        self.content_request_questionnaire_sent_post_individual_page_title_large_print_en = \
+            '<title>Large-print individual paper questionnaire will be sent - Census 2021</title>'
         self.content_request_questionnaire_sent_post_title_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_questionnaire_sent_post_individual_title_en = \
@@ -2071,6 +2310,19 @@ class RHTestCase(AioHTTPTestCase):
             'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
+
+        # TODO: add welsh translation
+        self.content_request_questionnaire_sent_post_page_title_cy = \
+            '<title>Household paper questionnaire will be sent - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_questionnaire_sent_post_individual_page_title_cy = \
+            '<title>Individual paper questionnaire will be sent - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_questionnaire_sent_post_page_title_large_print_cy = \
+            '<title>Large-print household paper questionnaire will be sent - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_request_questionnaire_sent_post_individual_page_title_large_print_cy = \
+            '<title>Large-print individual paper questionnaire will be sent - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_cy = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -2140,27 +2392,51 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_sent_post_individual_title_large_print_ni = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
-        self.content_request_questionnaire_confirm_name_address_title_en = \
+        self.content_request_questionnaire_confirm_send_by_post_page_title_en = \
+            '<title>Confirm to send household paper questionnaire - Census 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_page_title_error_en = \
+            '<title>Error: Confirm to send household paper questionnaire - Census 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_title_en = \
             'Do you want to send a household paper questionnaire to this address?'
-        self.content_request_questionnaire_confirm_name_address_individual_title_en = \
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_individual_page_title_en = \
+            '<title>Confirm to send individual paper questionnaire - Census 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_individual_page_title_error_en = \
+            '<title>Error: Confirm to send individual paper questionnaire - Census 2021</title>'
+        self.content_request_questionnaire_confirm_send_by_post_individual_title_en = \
             'Do you want to send an individual paper questionnaire to this address?'
-        self.content_request_questionnaire_confirm_name_address_option_yes_en = 'Yes, send the questionnaire by post'
-        self.content_request_questionnaire_confirm_name_address_option_no_en = 'No, cancel and return'
-        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_en = \
+        self.content_request_questionnaire_confirm_send_by_post_option_yes_en = 'Yes, send the questionnaire by post'
+        self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
             'I need a large-print questionnaire'
 
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_title_cy = \
+        self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
+            '<title>Confirm to send household paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_page_title_error_cy = \
+            '<title>Error: Confirm to send household paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_title_cy = \
             'Do you want to send a household paper questionnaire to this address?'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_individual_title_cy = \
+        self.content_request_questionnaire_confirm_send_by_post_individual_page_title_cy = \
+            '<title>Confirm to send individual paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_individual_page_title_error_cy = \
+            '<title>Error: Confirm to send individual paper questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_questionnaire_confirm_send_by_post_individual_title_cy = \
             'Do you want to send an individual paper questionnaire to this address?'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_option_yes_cy = 'Yes, send the questionnaire by post'
+        self.content_request_questionnaire_confirm_send_by_post_option_yes_cy = 'Yes, send the questionnaire by post'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_option_no_cy = 'No, cancel and return'
+        self.content_request_questionnaire_confirm_send_by_post_option_no_cy = 'No, cancel and return'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_confirm_name_address_large_print_checkbox_cy = \
+        self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
             'I need a large-print questionnaire'
 
         self.content_request_questionnaire_manager_title_en = \
@@ -2256,15 +2532,15 @@ class RHTestCase(AioHTTPTestCase):
                 request_type='continuation-questionnaire', display_region='ni'
             )
 
-        self.post_request_continuation_questionnaire_confirm_name_address_en = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
-                                                                            display_region='en')
-        self.post_request_continuation_questionnaire_confirm_name_address_cy = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
-                                                                            display_region='cy')
-        self.post_request_continuation_questionnaire_confirm_name_address_ni = \
-            self.app.router['RequestCommonConfirmNameAddress:post'].url_for(request_type='continuation-questionnaire',
-                                                                            display_region='ni')
+        self.post_request_continuation_questionnaire_confirm_send_by_post_en = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
+                                                                           display_region='en')
+        self.post_request_continuation_questionnaire_confirm_send_by_post_cy = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
+                                                                           display_region='cy')
+        self.post_request_continuation_questionnaire_confirm_send_by_post_ni = \
+            self.app.router['RequestCommonConfirmSendByPost:post'].url_for(request_type='continuation-questionnaire',
+                                                                           display_region='ni')
 
         # Content
 
@@ -2293,10 +2569,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_continuation_questionnaire_people_in_household_error_number_ni = \
             'Enter a number greater than 6'
 
+        self.content_request_continuation_questionnaire_sent_post_page_title_en = \
+            '<title>Continuation questionnaire will be sent - Census 2021</title>'
         self.content_request_continuation_questionnaire_sent_post_title_en = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_continuation_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
+        # TODO: add welsh translation
+        self.content_request_continuation_questionnaire_sent_post_page_title_cy = \
+            '<title>Continuation questionnaire will be sent - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_request_continuation_questionnaire_sent_post_title_cy = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -2307,10 +2588,20 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_continuation_questionnaire_sent_post_title_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
-        self.content_request_continuation_questionnaire_confirm_name_address_title_en = \
+        self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_en = \
+            '<title>Confirm to send continuation questionnaire - Census 2021</title>'
+        self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_error_en = \
+            '<title>Error: Confirm to send continuation questionnaire - Census 2021</title>'
+        self.content_request_continuation_questionnaire_confirm_send_by_post_title_en = \
             'Do you want to send a continuation questionnaire to this address?'
         # TODO Add Welsh Translation
-        self.content_request_continuation_questionnaire_confirm_name_address_title_cy = \
+        self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_cy = \
+            '<title>Confirm to send continuation questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_error_cy = \
+            '<title>Error: Confirm to send continuation questionnaire - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_request_continuation_questionnaire_confirm_send_by_post_title_cy = \
             'Do you want to send a continuation questionnaire to this address?'
 
         self.content_request_continuation_questionnaire_request_cancelled_title_en = \

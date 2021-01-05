@@ -10,7 +10,11 @@
 
 {% block main %}
 
-    <h1 class="u-mt-l">{{ _('This address is not part of the census for England and Wales') }}</h1>
+    {% if display_region == 'ni' %}
+        <h1 class="u-mt-l">This address is not part of the census for Northern Ireland</h1>
+    {% else %}
+        <h1 class="u-mt-l">{{ _('This address is not part of the census for England and Wales') }}</h1>
+    {% endif %}
 
     <p>{{ _('You have selected an address in Scotland. Visit the <a href="https://www.scotlandscensus.gov.uk/">National Records of Scotland website</a> to find out how to take part in the census for Scotland.') }}</p>
 

@@ -7,12 +7,12 @@
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from 'components/radios/_macro.njk' import onsRadios -%}
 
-{%- set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) -%}
+{%- set request_individual_code_link = url('RequestCodeIndividual:get', display_region=display_region) -%}
 
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestCodeSelectMethod:post', request_type=request_type, display_region=display_region)
+        'action': url('RequestCodeSelectHowToReceive:post', request_type=request_type, display_region=display_region)
     }
 } -%}
 

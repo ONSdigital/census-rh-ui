@@ -4,12 +4,12 @@
 {%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
 {%- from "components/panel/_macro.njk" import onsPanel -%}
 
-{%- set request_individual_code_link = url('RequestIndividualCode:get', display_region=display_region) -%}
+{%- set request_individual_code_link = url('RequestCodeIndividual:get', display_region=display_region) -%}
 
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestHouseholdCode:post', display_region=display_region)
+        'action': url('RequestCodeHousehold:post', display_region=display_region)
     }
 } -%}
 
