@@ -1,0 +1,25 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- if display_region == 'ni' -%}
+    {%- set contact_us_link = domain_url_en + '/contact-us/' -%}
+{%- elif display_region == 'cy' -%}
+    {%- set contact_us_link = domain_url_cy + '/cysylltu-a-ni/' -%}
+{%- else -%}
+    {%- set contact_us_link = domain_url_en + '/contact-us/' -%}
+{%- endif -%}
+
+{%- block main -%}
+
+    <h1>
+        {{ _('There is a problem with your browser') }}
+    </h1>
+
+    <p>{{ _('Try updating your browser to a newer version.') }}</p>
+
+    <p>{{ _('If the problem still occurs, try using a different browser or device.') }}</p>
+
+    {%- autoescape false -%}
+        <p>{{ _('To request a census in a different format or for further help, please %(open)scontact us%(close)s.', open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
+
+{%- endblock main -%}

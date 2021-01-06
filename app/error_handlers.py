@@ -114,6 +114,18 @@ async def response_error(request):
     return jinja.render_template('error.html', request, attributes, status=500)
 
 
+async def browser_error(request):
+    logger.error('browser compatibility error 505')
+    attributes = check_display_region(request)
+    return jinja.render_template('error_505.html', request, attributes, status=505)
+
+
+async def upstream_error(request):
+    logger.error('upstream error returning a 403')
+    attributes = check_display_region(request)
+    return jinja.render_template('error.html', request, attributes, status=403)
+
+
 async def not_found_error(request):
     attributes = check_display_region(request)
     return jinja.render_template('404.html', request, attributes, status=404)
@@ -149,6 +161,8 @@ def setup(app):
     overrides = {
         500: response_error,
         503: response_error,
+        505: browser_error,
+        403: upstream_error,
         404: not_found_error,
     }
     error_middleware = create_error_middleware(overrides)
