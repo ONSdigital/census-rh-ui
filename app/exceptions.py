@@ -35,7 +35,7 @@ class TooManyRequestsWebForm(Exception):
 
 
 class TooManyRequestsEQLaunch(Exception):
-    """Raised when web form returns a 429 error"""
+    """Raised when EQ returns a 429 error"""
 
 
 class ExerciseClosedError(Exception):
