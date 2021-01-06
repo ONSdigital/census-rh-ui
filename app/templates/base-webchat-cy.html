@@ -49,7 +49,7 @@
 {% block head %}
 
     <!-- Google Analytics -->
-    {% if gtm_auth and gtm_preview and gtm_cookies_win %}
+    {% if gtm_cont_id and gtm_auth %}
         {% include 'partials/gtm.html' with context %}
     {% endif %}
     <!-- End Google Analytics -->
@@ -58,7 +58,7 @@
 
 {% block bodyStart %}
 
-    {% if gtm_auth and gtm_preview and gtm_cookies_win %}
+    {% if gtm_cont_id and gtm_auth %}
         {% include 'partials/gtm-no-script.html' with context %}
     {% endif %}
 
