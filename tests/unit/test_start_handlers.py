@@ -1329,6 +1329,105 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.content_common_500_error_cy, contents)
             self.assertIn(self.ons_logo_cy, contents)
 
+    @unittest_run_loop
+    async def test_post_start_confirm_address_get_survey_launched_429_ew_e(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+            mocked.post(self.rhsvc_url_surveylaunched, status=429)
+
+            response = await self.client.request('POST',
+                                                 self.post_start_en,
+                                                 data=self.start_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_start_confirm_address_en,
+                    allow_redirects=False,
+                    data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_429_error_eq_launch_title_en, contents)
+
+    @unittest_run_loop
+    async def test_post_start_confirm_address_get_survey_launched_429_ew_w(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+            mocked.post(self.rhsvc_url_surveylaunched, status=429)
+
+            response = await self.client.request('POST',
+                                                 self.post_start_en,
+                                                 data=self.start_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_start_confirm_address_en,
+                    allow_redirects=False,
+                    data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_common_429_error_eq_launch_title_en, contents)
+
+    @unittest_run_loop
+    async def test_post_start_confirm_address_get_survey_launched_429_cy(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_w)
+            mocked.post(self.rhsvc_url_surveylaunched, status=429)
+
+            response = await self.client.request('POST',
+                                                 self.post_start_cy,
+                                                 data=self.start_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_start_confirm_address_cy,
+                    allow_redirects=False,
+                    data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_429_error_eq_launch_title_cy, contents)
+            self.assertIn(self.ons_logo_cy, contents)
+
+    @unittest_run_loop
+    async def test_post_start_confirm_address_get_survey_launched_429_ni(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_n)
+            mocked.post(self.rhsvc_url_surveylaunched, status=429)
+
+            await self.client.request('POST', self.post_start_ni, data=self.start_data_valid)
+
+            await self.client.request('POST', self.post_start_confirm_address_ni,
+                                      data=self.start_confirm_address_data_yes)
+
+            await self.client.request('POST', self.post_start_language_options_ni,
+                                      data=self.start_ni_language_option_data_no)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_start_select_language_ni,
+                    allow_redirects=False,
+                    data=self.start_ni_select_language_data_ul)
+            self.assertLogEvent(cm, 'error in response', status_code=429)
+
+            self.assertEqual(response.status, 429)
+            contents = str(await response.content.read())
+            self.assertIn(self.content_common_429_error_eq_launch_title_en, contents)
+            self.assertIn(self.nisra_logo, contents)
+
     def test_uac_hash(self):
         # Given some post data
         post_data = {'uac': 'w4nw wpph jjpt p7fn', 'action[save_continue]': ''}
