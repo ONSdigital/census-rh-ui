@@ -294,10 +294,9 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         data = await request.post()
         try:
             request_method = data['form-select-method']
-            logger.info("method selected for receiving access code", method_selected=request_method)
         except KeyError:
             logger.info('request method selection error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], method_selected=request_method)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -317,7 +316,7 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('request method selection error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], method_selected=request_method)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -491,10 +490,9 @@ class RequestCodeConfirmSendByText(RequestCommon):
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
-            logger.info('confirmed method as text', user_selection=mobile_confirmation)
         except KeyError:
             logger.info('mobile confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=mobile_confirmation)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -554,7 +552,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('mobile confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=mobile_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             return attributes
 
@@ -776,10 +774,9 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         data = await request.post()
         try:
             name_address_confirmation = data['request-name-address-confirmation']
-            logger.info('confirmed method as post, also confirmed address', user_selection=name_address_confirmation)
         except KeyError:
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=name_address_confirmation)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
@@ -1027,7 +1024,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=name_address_confirmation)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Select an answer',

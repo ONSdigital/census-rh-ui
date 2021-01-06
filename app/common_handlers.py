@@ -545,10 +545,9 @@ class CommonConfirmAddress(CommonCommon):
 
         if address_confirmation == 'yes':
 
-            logger.info('address confirmed', user_selection=address_confirmation)
             try:
                 if session['attributes']['censusAddressType'] == 'NA':
-                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'], user_selection=address_confirmation)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
@@ -675,7 +674,6 @@ class CommonConfirmAddress(CommonCommon):
 
         elif address_confirmation == 'no':
 
-            logger.info('address NOT confirmed', user_selection=address_confirmation)
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(display_region=display_region,
                                                                      user_journey=user_journey,
@@ -684,7 +682,7 @@ class CommonConfirmAddress(CommonCommon):
         else:
             # catch all just in case, should never get here
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=address_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             attributes['page_title'] = page_title
             attributes['display_region'] = display_region
