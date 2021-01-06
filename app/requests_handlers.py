@@ -396,7 +396,7 @@ class RequestCodeEnterMobile(RequestCommon):
                                                                                display_region=display_region))
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info(exc, client_ip=request['client_ip'])
+            logger.info(exc, client_ip=request['client_ip'], empty_or_invalid_mobile=data['request-mobile-number'])
             if exc.message_type == 'empty':
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
                                                                     'mobile_empty')
@@ -513,7 +513,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
             logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
                         f"individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], postcode=attributes['postcode'])
 
             fulfilment_code_array = []
 
@@ -848,7 +848,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], postcode=attributes['postcode'])
 
                     if attributes['roomNumber']:
                         if len(attributes['last_name']) < last_name_char_limit:
