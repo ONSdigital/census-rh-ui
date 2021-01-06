@@ -709,7 +709,7 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
                                                       self.request_common_enter_name_form_data_no_last, True, False)
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -719,12 +719,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
             self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -734,12 +734,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
             self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -749,12 +749,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy',
             self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -764,12 +764,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni',
             self.common_form_data_empty, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -780,12 +780,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
             self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -796,12 +796,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
             self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -812,12 +812,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy',
             self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_empty_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_empty_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -828,12 +828,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni',
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni',
             self.common_form_data_empty, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -843,12 +843,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -858,12 +858,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -873,12 +873,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -888,12 +888,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'HH')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -904,12 +904,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -920,12 +920,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -936,12 +936,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_invalid_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_invalid_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -952,12 +952,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_invalid_or_no_selection(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni',
-            self.request_common_confirm_name_address_data_invalid, 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_invalid_or_no_selection(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni',
+            self.request_common_confirm_send_by_post_data_invalid, 'household', 'SPG')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -967,11 +967,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -981,11 +981,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -995,11 +995,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -1009,11 +1009,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1024,11 +1024,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1039,11 +1039,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -1054,11 +1054,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_option_no_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_option_no_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -1069,11 +1069,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_no_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_input_no_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1083,12 +1083,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH', 'E', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'E',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1098,12 +1098,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH', 'W', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'W',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -1113,12 +1113,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'HH', 'W', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'HH', 'W',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -1128,12 +1128,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'HH', 'N', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'HH', 'N',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1144,12 +1144,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG', 'E', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'E',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1160,12 +1160,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG', 'W', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'W',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -1176,12 +1176,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'SPG', 'W', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG', 'W',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_get_fulfilment_error_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_get_fulfilment_error_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -1192,12 +1192,12 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_get_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'SPG', 'N', 
+        await self.check_post_confirm_send_by_post_error_from_get_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG', 'N',
             'CONTINUATION', 'false')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1207,11 +1207,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1221,11 +1221,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -1235,11 +1235,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -1249,11 +1249,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1264,11 +1264,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1279,11 +1279,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -1294,11 +1294,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -1309,11 +1309,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_from_request_fulfilment(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_from_request_fulfilment(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_hh_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1323,11 +1323,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_hh_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_hh_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
@@ -1337,11 +1337,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_hh_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_hh_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
@@ -1351,11 +1351,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_hh_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_hh_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
@@ -1365,11 +1365,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_spg_ew_e(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_spg_ew_e(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1380,11 +1380,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_spg_ew_w(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_spg_ew_w(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address(
@@ -1395,11 +1395,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_spg_cy(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_spg_cy(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address(
@@ -1411,11 +1411,11 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy')
 
     @unittest_run_loop
-    async def test_request_continuation_questionnaire_confirm_name_address_request_fulfilment_error_429_spg_ni(self):
+    async def test_request_continuation_questionnaire_confirm_send_by_post_request_fulfilment_error_429_spg_ni(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address(
@@ -1426,8 +1426,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_error_429_from_request_fulfilment_form(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni')
+        await self.check_post_confirm_send_by_post_error_429_from_request_fulfilment_form(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni')
 
     @unittest_run_loop
     async def test_request_continuation_questionnaire_sent_post_hh_ew_e(self):
@@ -1440,8 +1440,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'E', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1455,8 +1455,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1470,8 +1470,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1485,8 +1485,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'HH',
             'CONTINUATION', 'N', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1501,8 +1501,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'E', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1517,8 +1517,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1533,8 +1533,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1549,8 +1549,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG',
             'CONTINUATION', 'N', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1622,8 +1622,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'E', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1637,8 +1637,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1652,8 +1652,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1668,8 +1668,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'E', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1684,8 +1684,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1700,8 +1700,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '6')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=6)
 
     @unittest_run_loop
@@ -1715,8 +1715,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'E', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1730,8 +1730,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1745,8 +1745,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1760,8 +1760,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'HH',
             'CONTINUATION', 'N', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1776,8 +1776,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'E', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1792,8 +1792,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1808,8 +1808,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1824,8 +1824,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG',
             'CONTINUATION', 'N', 'false', number_in_household=7)
 
     @unittest_run_loop
@@ -1839,8 +1839,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'E', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1854,8 +1854,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1869,8 +1869,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'HH',
             'CONTINUATION', 'W', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1884,8 +1884,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'HH',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'HH',
             'CONTINUATION', 'N', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1900,8 +1900,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'E', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1916,8 +1916,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_en, 'en', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_en, 'en', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_en, 'en', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_en, 'en', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1932,8 +1932,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_cy, 'cy', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG',
             'CONTINUATION', 'W', 'false', number_in_household=18)
 
     @unittest_run_loop
@@ -1948,8 +1948,8 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '18')
         await self.check_post_enter_name(
             self.post_request_continuation_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
-        await self.check_post_confirm_name_address_input_yes(
-            self.post_request_continuation_questionnaire_confirm_name_address_ni, 'ni', 'SPG',
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_continuation_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG',
             'CONTINUATION', 'N', 'false', number_in_household=18)
 
     @unittest_run_loop

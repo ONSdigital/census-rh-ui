@@ -6,13 +6,13 @@
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestIndividualCode:post', display_region=display_region)
+        'action': url('RequestCodeIndividual:post', display_region=display_region)
     }
 } -%}
 
 {%- block main -%}
 
-    <h1 class="u-mb-l u-fs-xxl">{{ _('Request an individual code') }}</h1>
+    <h1 class="u-mb-l u-fs-xxl">{{ _('Request an individual access code') }}</h1>
 
     <p>{{ _('An individual access code lets you answer your census questions separately from the people you live with, so they can’t see your answers.') }}</p>
 

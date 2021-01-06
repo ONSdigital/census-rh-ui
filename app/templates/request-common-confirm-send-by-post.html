@@ -15,7 +15,7 @@
 {%- set form =  {
     'method': 'POST',
     'attributes': {
-        'action': url('RequestCommonConfirmNameAddress:post', display_region=display_region, request_type=request_type)
+        'action': url('RequestCommonConfirmSendByPost:post', display_region=display_region, request_type=request_type)
     }
 } -%}
 
@@ -148,7 +148,8 @@
     {{
         onsButton({
             'text': _('Continue'),
-            'classes': 'u-mt-l'
+            'classes': 'u-mt-l',
+            'submitType': 'loader'
         })
     }}
 
