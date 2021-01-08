@@ -334,11 +334,10 @@ class TestUtils(RHTestCase):
         valid_request = {'client_ip': '192.168.0.0, 35.190.0.0, 35.191.10.0'}
         spoofed_request = {'client_ip': '200.30.20.10, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
         invalid_request = {'client_ip': 'GHT.RGT.ED.WS, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
-        built_valid = View.single_client_ip(valid_request)
-        built_invalid = View.single_client_ip(invalid_request)
-        built_spoofed = View.single_client_ip(spoofed_request)
+        single_ip_request = {'client_ip': '35.191.10.0'}
         expected_valid = '192.168.0.0'
         expected_empty = ''
-        self.assertEqual(built_valid, expected_valid)
-        self.assertEqual(built_spoofed, expected_valid)
-        self.assertEqual(built_invalid, expected_empty)
+        self.assertEqual(View.single_client_ip(valid_request), expected_valid)
+        self.assertEqual(View.single_client_ip(spoofed_request), expected_valid)
+        self.assertEqual(View.single_client_ip(invalid_request), expected_empty)
+        self.assertEqual(View.single_client_ip(single_ip_request), expected_empty)
