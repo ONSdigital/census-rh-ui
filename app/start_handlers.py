@@ -170,7 +170,7 @@ class Start(StartCommon):
             raise HTTPFound(request.app.router['CommonEnterAddress:get'].url_for(
                 display_region=display_region,
                 user_journey='start',
-                sub_user_journey='unlinked'
+                sub_user_journey='link-address'
             ))
         else:
             await remember(uac_json['caseId'], request)
@@ -552,9 +552,9 @@ class StartSaveAndExit(StartCommon):
         }
 
 
-@start_routes.view(r'/' + View.valid_display_regions + '/start/unlinked/address-has-been-linked/')
+@start_routes.view(r'/' + View.valid_display_regions + '/start/link-address/address-has-been-linked/')
 class StartAddressHasBeenLinked(StartCommon):
-    @aiohttp_jinja2.template('start-unlinked-linked.html')
+    @aiohttp_jinja2.template('start-link-address-linked.html')
     async def get(self, request):
         self.setup_request(request)
         await check_permission(request)
@@ -568,7 +568,7 @@ class StartAddressHasBeenLinked(StartCommon):
             page_title = 'Your address has been linked to your code'
             locale = 'en'
 
-        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+        self.log_entry(request, display_region + '/start/link-address/address-has-been-linked')
 
         return {
             'page_title': page_title,
@@ -587,7 +587,7 @@ class StartAddressHasBeenLinked(StartCommon):
         else:
             locale = 'en'
 
-        self.log_entry(request, display_region + '/start/unlinked/address-has-been-linked')
+        self.log_entry(request, display_region + '/start/link-address/address-has-been-linked')
 
         session = await get_session(request)
         try:

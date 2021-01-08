@@ -3,9 +3,9 @@ from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestRequestsHandlersIndividualCode(TestHelpers):
+class TestRequestHandlersIndividualCode(TestHelpers):
 
-    user_journey = 'requests'
+    user_journey = 'request'
     sub_user_journey = 'access-code'
     individual = True
 

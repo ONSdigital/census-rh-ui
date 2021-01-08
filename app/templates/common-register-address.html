@@ -1,0 +1,13 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- block main -%}
+
+    <h1 class="u-mt-l">{{ _('Register an address') }}</h1>
+
+    <p>{{ _('If you can’t find your address, it may not be registered on our system.') }}</p>
+
+    {%- autoescape false -%}
+        <p>{{ _('To register your address, we need you to get in touch. You can call us free on %(telephone_number)s or %(open)schoose another way to contact us%(close)s.', telephone_number=call_centre_number, open='<a href="%s">' % contact_us_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
+
+{%- endblock -%}

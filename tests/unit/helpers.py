@@ -660,23 +660,21 @@ class TestHelpers(RHTestCase):
             response = await self.client.request('POST', url, data=self.common_select_address_input_not_listed_en)
 
             self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('call-contact-centre/address-not-found',
-                                                             display_region, 'GET', False))
+            self.assertLogEvent(cm, self.build_url_log_entry('register-address', display_region, 'GET', True))
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('call-contact-centre/address-not-found',
-                                                          display_region, False), contents)
+                self.assertIn(self.build_translation_link('register-address', display_region, True), contents)
             if display_region == 'ni':
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_common_register_address_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ni, contents)
             elif display_region == 'cy':
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
+                self.assertIn(self.content_common_register_address_title_cy, contents)
                 self.assertIn(self.content_call_centre_number_cy, contents)
             else:
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_common_register_address_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_confirm_address_input_invalid_or_no_selection(self, url, display_region, data, is_ce=False):

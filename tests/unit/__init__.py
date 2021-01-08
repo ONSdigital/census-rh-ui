@@ -520,15 +520,15 @@ class RHTestCase(AioHTTPTestCase):
             'form-enter-room-number': 'Room A8, Flat 47', 'action[save_continue]': '',
         }
 
-        self.content_common_call_contact_centre_address_not_found_title_en = \
+        self.content_common_register_address_title_en = \
             'Register an address'
         # TODO: add welsh translation
-        self.content_common_call_contact_centre_address_not_found_title_cy = \
+        self.content_common_register_address_title_cy = \
             'Register an address'
-        self.content_common_call_contact_centre_address_not_found_text_en = \
+        self.content_common_register_address_text_en = \
             'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         # TODO: add welsh translation
-        self.content_common_call_contact_centre_address_not_found_text_cy = \
+        self.content_common_register_address_text_cy = \
             'If you can\\xe2\\x80\\x99t find your address, it may not be registered on our system.'
         self.content_common_call_contact_centre_address_linking_en = \
             'There is an issue linking your address via the website.'
@@ -1507,86 +1507,86 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_timeout_error_en = 're-enter your postcode'
         self.content_request_timeout_error_cy = 'nodi eich cod post eto'
 
-        # Unlinked UACs
+        # Unlinked/Link Address UACs
 
         # URLs
-        self.get_start_unlinked_enter_address_en = \
+        self.get_start_link_address_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='en', user_journey='start',
-                                                              sub_user_journey='unlinked')
-        self.get_start_unlinked_enter_address_cy = \
+                                                              sub_user_journey='link-address')
+        self.get_start_link_address_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                              sub_user_journey='unlinked')
-        self.get_start_unlinked_enter_address_ni = \
+                                                              sub_user_journey='link-address')
+        self.get_start_link_address_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                              sub_user_journey='unlinked')
-        self.post_start_unlinked_enter_address_en = \
+                                                              sub_user_journey='link-address')
+        self.post_start_link_address_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='unlinked')
-        self.post_start_unlinked_enter_address_cy = \
+                                                               sub_user_journey='link-address')
+        self.post_start_link_address_enter_address_cy = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='unlinked')
-        self.post_start_unlinked_enter_address_ni = \
+                                                               sub_user_journey='link-address')
+        self.post_start_link_address_enter_address_ni = \
             self.app.router['CommonEnterAddress:post'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='unlinked')
+                                                               sub_user_journey='link-address')
 
-        self.get_start_unlinked_select_address_en = \
+        self.get_start_link_address_select_address_en = \
             self.app.router['CommonSelectAddress:get'].url_for(display_region='en', user_journey='start',
-                                                               sub_user_journey='unlinked')
-        self.get_start_unlinked_select_address_cy = \
+                                                               sub_user_journey='link-address')
+        self.get_start_link_address_select_address_cy = \
             self.app.router['CommonSelectAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                               sub_user_journey='unlinked')
-        self.get_start_unlinked_select_address_ni = \
+                                                               sub_user_journey='link-address')
+        self.get_start_link_address_select_address_ni = \
             self.app.router['CommonSelectAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                               sub_user_journey='unlinked')
-        self.post_start_unlinked_select_address_en = \
+                                                               sub_user_journey='link-address')
+        self.post_start_link_address_select_address_en = \
             self.app.router['CommonSelectAddress:post'].url_for(display_region='en', user_journey='start',
-                                                                sub_user_journey='unlinked')
-        self.post_start_unlinked_select_address_cy = \
+                                                                sub_user_journey='link-address')
+        self.post_start_link_address_select_address_cy = \
             self.app.router['CommonSelectAddress:post'].url_for(display_region='cy', user_journey='start',
-                                                                sub_user_journey='unlinked')
-        self.post_start_unlinked_select_address_ni = \
+                                                                sub_user_journey='link-address')
+        self.post_start_link_address_select_address_ni = \
             self.app.router['CommonSelectAddress:post'].url_for(display_region='ni', user_journey='start',
-                                                                sub_user_journey='unlinked')
+                                                                sub_user_journey='link-address')
 
-        self.get_start_unlinked_confirm_address_en = \
+        self.get_start_link_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='en', user_journey='start',
-                                                                sub_user_journey='unlinked')
-        self.get_start_unlinked_confirm_address_cy = \
+                                                                sub_user_journey='link-address')
+        self.get_start_link_address_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='cy', user_journey='start',
-                                                                sub_user_journey='unlinked')
-        self.get_start_unlinked_confirm_address_ni = \
+                                                                sub_user_journey='link-address')
+        self.get_start_link_address_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:get'].url_for(display_region='ni', user_journey='start',
-                                                                sub_user_journey='unlinked')
-        self.post_start_unlinked_confirm_address_en = \
+                                                                sub_user_journey='link-address')
+        self.post_start_link_address_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='en', user_journey='start',
-                                                                 sub_user_journey='unlinked')
-        self.post_start_unlinked_confirm_address_cy = \
+                                                                 sub_user_journey='link-address')
+        self.post_start_link_address_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='cy', user_journey='start',
-                                                                 sub_user_journey='unlinked')
-        self.post_start_unlinked_confirm_address_ni = \
+                                                                 sub_user_journey='link-address')
+        self.post_start_link_address_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
-                                                                 sub_user_journey='unlinked')
+                                                                 sub_user_journey='link-address')
 
-        self.get_start_unlinked_address_has_been_linked_en = \
+        self.get_start_link_address_address_has_been_linked_en = \
             self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='en')
-        self.get_start_unlinked_address_has_been_linked_cy = \
+        self.get_start_link_address_address_has_been_linked_cy = \
             self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='cy')
-        self.get_start_unlinked_address_has_been_linked_ni = \
+        self.get_start_link_address_address_has_been_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='ni')
-        self.post_start_unlinked_address_has_been_linked_en = \
+        self.post_start_link_address_address_has_been_linked_en = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
-        self.post_start_unlinked_address_has_been_linked_cy = \
+        self.post_start_link_address_address_has_been_linked_cy = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
-        self.post_start_unlinked_address_has_been_linked_ni = \
+        self.post_start_link_address_address_has_been_linked_ni = \
             self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
 
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
-            self.unlinked_uac_json_e = json.load(fp)
+            self.link_address_uac_json_e = json.load(fp)
         with open('tests/test_data/rhsvc/uac_unlinked_w.json') as fp:
-            self.unlinked_uac_json_w = json.load(fp)
+            self.link_address_uac_json_w = json.load(fp)
         with open('tests/test_data/rhsvc/uac_unlinked_n.json') as fp:
-            self.unlinked_uac_json_n = json.load(fp)
+            self.link_address_uac_json_n = json.load(fp)
 
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
             f = asyncio.Future()
@@ -1606,21 +1606,21 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         # Content
-        self.content_start_unlinked_enter_address_question_title_en = 'What is your postcode?'
+        self.content_start_link_address_enter_address_question_title_en = 'What is your postcode?'
         # TODO: add welsh translation
-        self.content_start_unlinked_enter_address_question_title_cy = 'Beth yw eich cod post?'
+        self.content_start_link_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
 
-        self.content_start_unlinked_address_has_been_linked_title_en = 'Your address has been linked to your code'
+        self.content_start_link_address_address_has_been_linked_title_en = 'Your address has been linked to your code'
         # TODO: add welsh translation
-        self.content_start_unlinked_address_has_been_linked_title_cy = 'Your address has been linked to your code'
-        self.content_start_unlinked_address_has_been_linked_secondary_en = \
+        self.content_start_link_address_address_has_been_linked_title_cy = 'Your address has been linked to your code'
+        self.content_start_link_address_address_has_been_linked_secondary_en = \
             'You are now ready to start your Census questions'
         # TODO: add welsh translation
-        self.content_start_unlinked_address_has_been_linked_secondary_cy = \
+        self.content_start_link_address_address_has_been_linked_secondary_cy = \
             'You are now ready to start your Census questions'
 
-        self.content_unlinked_timeout_error_en = 're-enter your access code'
-        self.content_unlinked_timeout_error_cy = 'nodi eich cod mynediad eto'
+        self.content_link_address_timeout_error_en = 're-enter your access code'
+        self.content_link_address_timeout_error_cy = 'nodi eich cod mynediad eto'
 
         # Start Change Address
 
@@ -1735,89 +1735,89 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
 
         self.get_request_access_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_access_code_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_access_code_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_room_number_en = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_room_number_cy = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_enter_room_number_ni = self.app.router['CommonEnterRoomNumber:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.post_request_access_code_resident_or_manager_en = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_resident_or_manager_cy = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_resident_or_manager_ni = self.app.router['CommonCEMangerQuestion:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_access_code_select_how_to_receive_en = \
@@ -1945,60 +1945,60 @@ class RHTestCase(AioHTTPTestCase):
         )
 
         self.get_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.get_request_individual_code_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_individual_code_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.get_request_individual_code_select_how_to_receive_en = \
@@ -2106,134 +2106,134 @@ class RHTestCase(AioHTTPTestCase):
         # URLs
 
         self.get_request_paper_questionnaire_enter_address_en = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_enter_address_cy = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_enter_address_ni = self.app.router['CommonEnterAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_enter_address_en = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_enter_address_cy = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_enter_address_ni = self.app.router['CommonEnterAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
 
         self.get_request_paper_questionnaire_select_address_en = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_select_address_cy = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_select_address_ni = self.app.router['CommonSelectAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_select_address_en = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_select_address_cy = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_select_address_ni = self.app.router['CommonSelectAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
 
         self.get_request_paper_questionnaire_confirm_address_en = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_confirm_address_cy = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.get_request_paper_questionnaire_confirm_address_ni = self.app.router['CommonConfirmAddress:get'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_confirm_address_en = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_confirm_address_cy = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
         )
         self.post_request_paper_questionnaire_confirm_address_ni = self.app.router['CommonConfirmAddress:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+            display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
         )
 
         self.get_request_paper_questionnaire_enter_room_number_en = \
             self.app.router['CommonEnterRoomNumber:get'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.get_request_paper_questionnaire_enter_room_number_cy = \
             self.app.router['CommonEnterRoomNumber:get'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.get_request_paper_questionnaire_enter_room_number_ni = \
             self.app.router['CommonEnterRoomNumber:get'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_enter_room_number_en = \
             self.app.router['CommonEnterRoomNumber:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_enter_room_number_cy = \
             self.app.router['CommonEnterRoomNumber:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_enter_room_number_ni = \
             self.app.router['CommonEnterRoomNumber:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
             )
 
         self.post_request_access_code_household_en = self.app.router['RequestCodeHousehold:post'].url_for(
-            display_region='en', user_journey='requests', sub_user_journey='access-code'
+            display_region='en', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_household_cy = self.app.router['RequestCodeHousehold:post'].url_for(
-            display_region='cy', user_journey='requests', sub_user_journey='access-code'
+            display_region='cy', user_journey='request', sub_user_journey='access-code'
         )
         self.post_request_access_code_household_ni = self.app.router['RequestCodeHousehold:post'].url_for(
-            display_region='ni', user_journey='requests', sub_user_journey='access-code'
+            display_region='ni', user_journey='request', sub_user_journey='access-code'
         )
 
         self.post_request_paper_questionnaire_household_en = \
             self.app.router['RequestHouseholdForm:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_household_cy = \
             self.app.router['RequestHouseholdForm:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_household_ni = \
             self.app.router['RequestHouseholdForm:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
             )
 
         self.post_request_paper_questionnaire_people_in_household_en = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='en', user_journey='requests', request_type='paper-questionnaire'
+                display_region='en', user_journey='request', request_type='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_people_in_household_cy = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='cy', user_journey='requests', request_type='paper-questionnaire'
+                display_region='cy', user_journey='request', request_type='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_people_in_household_ni = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='ni', user_journey='requests', request_type='paper-questionnaire'
+                display_region='ni', user_journey='request', request_type='paper-questionnaire'
             )
 
         self.post_request_paper_questionnaire_resident_or_manager_en = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_resident_or_manager_cy = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='paper-questionnaire'
             )
         self.post_request_paper_questionnaire_resident_or_manager_ni = \
             self.app.router['CommonCEMangerQuestion:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='paper-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='paper-questionnaire'
             )
 
         self.post_request_paper_questionnaire_enter_name_en = self.app.router['RequestCommonEnterName:post'].url_for(
@@ -2462,66 +2462,66 @@ class RHTestCase(AioHTTPTestCase):
 
         self.get_request_continuation_questionnaire_enter_address_en = \
             self.app.router['CommonEnterAddress:get'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.get_request_continuation_questionnaire_enter_address_cy = \
             self.app.router['CommonEnterAddress:get'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.get_request_continuation_questionnaire_enter_address_ni = \
             self.app.router['CommonEnterAddress:get'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_enter_address_en = \
             self.app.router['CommonEnterAddress:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_enter_address_cy = \
             self.app.router['CommonEnterAddress:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_enter_address_ni = \
             self.app.router['CommonEnterAddress:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
 
         self.post_request_continuation_questionnaire_select_address_en = \
             self.app.router['CommonSelectAddress:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_select_address_cy = \
             self.app.router['CommonSelectAddress:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_select_address_ni = \
             self.app.router['CommonSelectAddress:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
 
         self.post_request_continuation_questionnaire_confirm_address_en = \
             self.app.router['CommonConfirmAddress:post'].url_for(
-                display_region='en', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='en', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_confirm_address_cy = \
             self.app.router['CommonConfirmAddress:post'].url_for(
-                display_region='cy', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='cy', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_confirm_address_ni = \
             self.app.router['CommonConfirmAddress:post'].url_for(
-                display_region='ni', user_journey='requests', sub_user_journey='continuation-questionnaire'
+                display_region='ni', user_journey='request', sub_user_journey='continuation-questionnaire'
             )
 
         self.post_request_continuation_questionnaire_people_in_household_en = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='en', user_journey='requests', request_type='continuation-questionnaire'
+                display_region='en', user_journey='request', request_type='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_people_in_household_cy = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='cy', user_journey='requests', request_type='continuation-questionnaire'
+                display_region='cy', user_journey='request', request_type='continuation-questionnaire'
             )
         self.post_request_continuation_questionnaire_people_in_household_ni = \
             self.app.router['RequestCommonPeopleInHousehold:post'].url_for(
-                display_region='ni', user_journey='requests', request_type='continuation-questionnaire'
+                display_region='ni', user_journey='request', request_type='continuation-questionnaire'
             )
 
         self.post_request_continuation_questionnaire_enter_name_en = \
