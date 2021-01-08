@@ -120,10 +120,10 @@ class Start(StartCommon):
         if display_region == 'cy':
             locale = 'cy'
             # TODO Confirm welsh translation
-            page_title = "Dechrau'r cyfrifiad"
+            page_title = View.page_title_error_prefix_cy + "Dechrau'r cyfrifiad"
         else:
             locale = 'en'
-            page_title = 'Start census'
+            page_title = View.page_title_error_prefix_en + 'Start census'
         data = await request.post()
 
         if data.get('uac').upper()[0:3] == 'CE4':
@@ -284,15 +284,23 @@ class StartConfirmAddress(StartCommon):
         self.setup_request(request)
         self.log_entry(request, display_region + '/start/confirm-address')
         await check_permission(request)
-        if display_region == 'cy':
-            locale = 'cy'
-            # TODO: add welsh translation
-            page_title = "Is this the correct address?"
-        else:
-            locale = 'en'
-            page_title = 'Is this the correct address?'
 
         session = await get_session(request)
+
+        if display_region == 'cy':
+            # TODO: add welsh translation
+            if session.get('flash'):
+                page_title = View.page_title_error_prefix_cy + 'Confirm address'
+            else:
+                page_title = 'Confirm address'
+            locale = 'cy'
+        else:
+            if session.get('flash'):
+                page_title = View.page_title_error_prefix_en + 'Confirm address'
+            else:
+                page_title = 'Confirm address'
+            locale = 'en'
+
         try:
             attributes = session['attributes']
         except KeyError:
@@ -326,15 +334,12 @@ class StartConfirmAddress(StartCommon):
         await check_permission(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/confirm-address')
-        if display_region == 'cy':
-            locale = 'cy'
-            # TODO: add welsh translation
-            page_title = "Is this the correct address?"
-        else:
-            locale = 'en'
-            page_title = 'Is this the correct address?'
 
         data = await request.post()
+        if display_region == 'cy':
+            locale = 'cy'
+        else:
+            locale = 'en'
 
         session = await get_session(request)
         try:
@@ -353,16 +358,9 @@ class StartConfirmAddress(StartCommon):
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
-            return {'locale': locale,
-                    'page_title': page_title,
-                    'page_url': View.gen_page_url(request),
-                    'page_show_signout': 'true',
-                    'display_region': display_region,
-                    'addressLine1': attributes['addressLine1'],
-                    'addressLine2': attributes['addressLine2'],
-                    'addressLine3': attributes['addressLine3'],
-                    'townName': attributes['townName'],
-                    'postcode': attributes['postcode']}
+
+            raise HTTPFound(
+                request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
         if address_confirmation == 'Yes':
             if case['region'] == 'N':
@@ -390,16 +388,8 @@ class StartConfirmAddress(StartCommon):
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
-            return {'locale': locale,
-                    'page_title': page_title,
-                    'page_url': View.gen_page_url(request),
-                    'page_show_signout': 'true',
-                    'display_region': display_region,
-                    'addressLine1': attributes['addressLine1'],
-                    'addressLine2': attributes['addressLine2'],
-                    'addressLine3': attributes['addressLine3'],
-                    'townName': attributes['townName'],
-                    'postcode': attributes['postcode']}
+            raise HTTPFound(
+                request.app.router['StartConfirmAddress:get'].url_for(display_region=display_region))
 
 
 @start_routes.view('/ni/start/language-options/')

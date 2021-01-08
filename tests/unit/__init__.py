@@ -649,10 +649,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_code_for_england_and_wales_secondary = \
             'You have entered an access code for the census in England and Wales.'
 
+        self.content_start_confirm_address_page_title_en = '<title>Confirm address - Census 2021</title>'
+        self.content_start_confirm_address_page_title_error_en = '<title>Error: Confirm address - Census 2021</title>'
         self.content_start_confirm_address_title_en = 'Is this the correct address?'
         self.content_start_confirm_address_option_yes_en = 'Yes, this is the correct address'
         self.content_start_confirm_address_option_no_en = 'No, this is not the correct address'
         self.content_start_confirm_address_error_en = 'Select an answer'
+        # TODO: add welsh translation
+        self.content_start_confirm_address_page_title_cy = '<title>Confirm address - Cyfrifiad 2021</title>'
+        # TODO: add welsh translation
+        self.content_start_confirm_address_page_title_error_cy = \
+            '<title>Error: Confirm address - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_start_confirm_address_title_cy = "Is this the correct address?"
         # TODO: add welsh translation

@@ -222,26 +222,46 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
+        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive individual access code'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive manager access code'
+            if session.get('flash'):
+                if attributes['individual']:
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Select how to receive individual access code'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Select how to receive manager access code'
+                else:
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Select how to receive household access code'
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive household access code'
+                if attributes['individual']:
+                    # TODO Add Welsh Translation
+                    page_title = 'Select how to receive individual access code'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    # TODO Add Welsh Translation
+                    page_title = 'Select how to receive manager access code'
+                else:
+                    # TODO Add Welsh Translation
+                    page_title = 'Select how to receive household access code'
             locale = 'cy'
         else:
-            if attributes['individual']:
-                page_title = 'Select how to receive individual access code'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = 'Select how to receive manager access code'
+            if session.get('flash'):
+                if attributes['individual']:
+                    page_title = View.page_title_error_prefix_en + 'Select how to receive individual access code'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    page_title = View.page_title_error_prefix_en + 'Select how to receive manager access code'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Select how to receive household access code'
             else:
-                page_title = 'Select how to receive household access code'
+                if attributes['individual']:
+                    page_title = 'Select how to receive individual access code'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    page_title = 'Select how to receive manager access code'
+                else:
+                    page_title = 'Select how to receive household access code'
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -253,7 +273,6 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-select-how-to-receive.html')
     async def post(self, request):
         self.setup_request(request)
 
@@ -261,35 +280,6 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         display_region = request.match_info['display_region']
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
-
-        attributes = await self.get_check_attributes(request, request_type)
-
-        if display_region == 'cy':
-            if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Select how to receive individual access code'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Select how to receive manager access code'
-            else:
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Select how to receive household access code'
-            locale = 'cy'
-        else:
-            if attributes['individual']:
-                page_title = View.page_title_error_prefix_en + 'Select how to receive individual access code'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = View.page_title_error_prefix_en + 'Select how to receive manager access code'
-            else:
-                page_title = View.page_title_error_prefix_en + 'Select how to receive household access code'
-            locale = 'en'
-
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         data = await request.post()
         try:
@@ -301,7 +291,11 @@ class RequestCodeSelectHowToReceive(RequestCommon):
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
-            return attributes
+            raise HTTPFound(
+                request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
         if request_method == 'sms':
             raise HTTPFound(
@@ -321,7 +315,11 @@ class RequestCodeSelectHowToReceive(RequestCommon):
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
-            return attributes
+            raise HTTPFound(
+                request.app.router['RequestCodeSelectHowToReceive:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/' +
@@ -334,12 +332,20 @@ class RequestCodeEnterMobile(RequestCommon):
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
+        session = await get_session(request)
+
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = "Enter mobile number"
+            if session.get('flash'):
+                page_title = View.page_title_error_prefix_cy + 'Enter mobile number'
+            else:
+                page_title = 'Enter mobile number'
             locale = 'cy'
         else:
-            page_title = 'Enter mobile number'
+            if session.get('flash'):
+                page_title = View.page_title_error_prefix_en + 'Enter mobile number'
+            else:
+                page_title = 'Enter mobile number'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
@@ -361,21 +367,13 @@ class RequestCodeEnterMobile(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = View.page_title_error_prefix_cy + "Enter mobile number"
             locale = 'cy'
         else:
-            page_title = View.page_title_error_prefix_en + 'Enter mobile number'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
         attributes = await self.get_check_attributes(request, request_type)
-        attributes['page_title'] = page_title
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['display_region'] = display_region
-        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
 
@@ -404,8 +402,11 @@ class RequestCodeEnterMobile(RequestCommon):
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
                                                                     'mobile_invalid')
             flash(request, flash_message)
-
-            return attributes
+            raise HTTPFound(
+                request.app.router['RequestCodeEnterMobile:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/' +

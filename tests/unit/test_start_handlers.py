@@ -1524,15 +1524,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
@@ -1549,15 +1550,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
@@ -1574,15 +1576,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_cy,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', contents)
-            self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_common_save_and_exit_link_cy, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_cy, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_error_cy, contents)
 
@@ -1599,15 +1602,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_ni,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_empty)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
-            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
     @unittest_run_loop
@@ -1623,15 +1627,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
@@ -1648,15 +1653,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_en,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
@@ -1673,15 +1679,16 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_cy,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', contents)
-            self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_common_save_and_exit_link_cy, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_cy, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_error_cy, contents)
 
@@ -1698,14 +1705,15 @@ class TestStartHandlers(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
 
             response = await self.client.request('POST', self.post_start_confirm_address_ni,
-                                                 allow_redirects=False,
                                                  data=self.start_confirm_address_data_invalid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/confirm-address'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_error_en, contents)
             self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
@@ -2009,6 +2017,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_en, confirm_address_content)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2088,6 +2097,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_en, confirm_address_content)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2167,6 +2177,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_en, confirm_address_content)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2246,6 +2257,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_en, confirm_address_content)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2325,6 +2337,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_cy, confirm_address_content)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_cy, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_cy, confirm_address_content)
@@ -2404,6 +2417,7 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.ons_logo_cy, confirm_address_content)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_cy, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2481,6 +2495,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2575,6 +2590,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2668,6 +2684,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2777,6 +2794,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2885,6 +2903,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -2994,6 +3013,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -3102,6 +3122,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -3211,6 +3232,7 @@ class TestStartHandlers(TestHelpers):
             confirm_address_content = str(await post_start_response.content.read())
             self.assertIn(self.nisra_logo, confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_page_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
@@ -3343,5 +3365,6 @@ class TestStartHandlers(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo('cy'), contents)
+            self.assertIn(self.content_start_confirm_address_page_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_region_warning_cy, contents)
