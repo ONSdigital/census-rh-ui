@@ -1,6 +1,5 @@
 import string
 import re
-import json
 import math
 
 from aiohttp.client_exceptions import (ClientResponseError)
@@ -171,7 +170,6 @@ class View:
                 raise TooManyRequestsEQLaunch()
             else:
                 raise ex
-
 
         logger.info('redirecting to eq', client_ip=request['client_ip'])
         eq_url = app['EQ_URL']
