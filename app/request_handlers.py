@@ -421,26 +421,46 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
+        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send individual access code by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send manager access code by text'
+            if session.get('flash'):
+                if attributes['individual']:
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by text'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by text'
+                else:
+                    # TODO Add Welsh Translation
+                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by text'
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send household access code by text'
+                if attributes['individual']:
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send individual access code by text'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send manager access code by text'
+                else:
+                    # TODO Add Welsh Translation
+                    page_title = 'Confirm to send household access code by text'
             locale = 'cy'
         else:
-            if attributes['individual']:
-                page_title = 'Confirm to send individual access code by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = 'Confirm to send manager access code by text'
+            if session.get('flash'):
+                if attributes['individual']:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by text'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by text'
+                else:
+                    page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by text'
             else:
-                page_title = 'Confirm to send household access code by text'
+                if attributes['individual']:
+                    page_title = 'Confirm to send individual access code by text'
+                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                    page_title = 'Confirm to send manager access code by text'
+                else:
+                    page_title = 'Confirm to send household access code by text'
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -462,32 +482,6 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         attributes = await self.get_check_attributes(request, request_type)
 
-        if display_region == 'cy':
-            if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by text'
-            else:
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by text'
-            locale = 'cy'
-        else:
-            if attributes['individual']:
-                page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by text'
-            else:
-                page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by text'
-            locale = 'en'
-
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-
         data = await request.post()
         try:
             mobile_confirmation = data['request-mobile-confirmation']
@@ -498,7 +492,11 @@ class RequestCodeConfirmSendByText(RequestCommon):
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
-            return attributes
+            raise HTTPFound(
+                request.app.router['RequestCodeConfirmSendByText:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
         if mobile_confirmation == 'yes':
 
@@ -555,7 +553,11 @@ class RequestCodeConfirmSendByText(RequestCommon):
             logger.info('mobile confirmation error',
                         client_ip=request['client_ip'])
             flash(request, NO_SELECTION_CHECK_MSG)
-            return attributes
+            raise HTTPFound(
+                request.app.router['RequestCodeConfirmSendByText:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/' +
@@ -568,12 +570,21 @@ class RequestCommonEnterName(RequestCommon):
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
+        session = await get_session(request)
+
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = "Enter name"
+            if session.get('flash'):
+                # TODO Add Welsh Translation
+                page_title = View.page_title_error_prefix_cy + "Enter name"
+            else:
+                # TODO Add Welsh Translation
+                page_title = "Enter name"
             locale = 'cy'
         else:
-            page_title = 'Enter name'
+            if session.get('flash'):
+                page_title = View.page_title_error_prefix_en + "Enter name"
+            else:
+                page_title = "Enter name"
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
@@ -594,22 +605,9 @@ class RequestCommonEnterName(RequestCommon):
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = View.page_title_error_prefix_cy + "Enter name"
-            locale = 'cy'
-        else:
-            page_title = View.page_title_error_prefix_en + 'Enter name'
-            locale = 'en'
-
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
         attributes = await self.get_check_attributes(request, request_type)
-        attributes['page_title'] = page_title
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['display_region'] = display_region
-        attributes['page_url'] = View.gen_page_url(request)
 
         data = await request.post()
 
@@ -618,15 +616,11 @@ class RequestCommonEnterName(RequestCommon):
         if not form_valid:
             logger.info('form submission error',
                         client_ip=request['client_ip'])
-            return {
-                'form_value_name_first_name': data.get('name_first_name'),
-                'form_value_name_last_name': data.get('name_last_name'),
-                'display_region': display_region,
-                'request_type': request_type,
-                'page_title': page_title,
-                'page_url': View.gen_page_url(request),
-                'locale': locale
-            }
+            raise HTTPFound(
+                request.app.router['RequestCommonEnterName:get'].url_for(
+                    display_region=display_region,
+                    request_type=request_type
+                ))
 
         name_first_name = data['name_first_name']
         name_last_name = data['name_last_name']
@@ -658,6 +652,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
+        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if request_type == 'access-code':
@@ -698,6 +693,12 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                     page_title = 'Confirm to send household paper questionnaire'
                 else:
                     page_title = 'Confirm to send household paper questionnaire'
+
+        if session.get('flash'):
+            if display_region == 'cy':
+                page_title = View.page_title_error_prefix_cy + page_title
+            else:
+                page_title = View.page_title_error_prefix_en + page_title
 
         return {
             'page_title': page_title,
@@ -724,53 +725,9 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
         attributes = await self.get_check_attributes(request, request_type)
-
-        if request_type == 'access-code':
-            if attributes['individual']:
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by post'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by post'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by post'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by post'
-            else:
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by post'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by post'
-        elif request_type == 'continuation-questionnaire':
-            if display_region == 'cy':
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + 'Confirm to send continuation questionnaire'
-            else:
-                page_title = View.page_title_error_prefix_en + 'Confirm to send continuation questionnaire'
-        else:
-            if attributes['individual']:
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual paper questionnaire'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual paper questionnaire'
-            else:
-                if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household paper questionnaire'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send household paper questionnaire'
 
         data = await request.post()
         try:
@@ -784,24 +741,9 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
 
-            return {
-                'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'request_type': request_type,
-                'page_url': View.gen_page_url(request),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
-            }
+            raise HTTPFound(
+                request.app.router['RequestCommonConfirmSendByPost:get'].url_for(display_region=display_region,
+                                                                                 request_type=request_type))
 
         if name_address_confirmation == 'yes':
 
@@ -1038,24 +980,9 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
 
-            return {
-                'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'request_type': request_type,
-                'page_url': View.gen_page_url(request),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
-            }
+            raise HTTPFound(
+                request.app.router['RequestCommonConfirmSendByPost:get'].url_for(display_region=display_region,
+                                                                                 request_type=request_type))
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/' +
