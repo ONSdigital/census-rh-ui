@@ -55,6 +55,6 @@ class LaunchEQ(View):
 
         token = data.get('token')
 
-        logger.info('redirecting to eq', client_ip=request['client_ip'])
+        logger.info('redirecting to eq', client_ip=request['client_ip'], region_of_site=display_region)
         eq_url = request.app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')

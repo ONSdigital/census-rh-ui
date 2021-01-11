@@ -29,7 +29,7 @@ class RequestCommon(View):
     @staticmethod
     def request_code_check_session(request, request_type):
         if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'])
+            logger.info('session timed out', client_ip=request['client_ip'], request_made=request, type_of_request=request_type)
             raise SessionTimeout('requests', request_type)
 
     async def get_check_attributes(self, request, request_type):
@@ -80,8 +80,11 @@ class RequestCodeIndividual(RequestCommon):
                 session.changed()
 
                 attributes = session['attributes']
-                if attributes['case_type']:
-                    logger.info('have session and case_type - directing to select method')
+                case_type = attributes['case_type']
+                if case_type:
+                    logger.info('have session and case_type - directing to select method',
+                                is_individual=session['attributes']['individual'],
+                                type_of_case=case_type)
                     raise HTTPFound(
                         request.app.router['RequestCodeSelectHowToReceive:get'].url_for(request_type=request_type,
                                                                                         display_region=display_region))
@@ -90,9 +93,9 @@ class RequestCodeIndividual(RequestCommon):
             else:
                 raise KeyError
         except KeyError:
-            logger.info('no session - directing to enter address')
             attributes = {'individual': True}
             session['attributes'] = attributes
+            logger.info('no session - directing to enter address', session_attributes=attributes)
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(user_journey='requests',
                                                                      sub_user_journey=request_type,
@@ -396,7 +399,7 @@ class RequestCodeEnterMobile(RequestCommon):
                                                                                display_region=display_region))
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info(exc, client_ip=request['client_ip'], empty_or_invalid_mobile=data['request-mobile-number'])
+            logger.info(exc, client_ip=request['client_ip'])
             if exc.message_type == 'empty':
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'MOBILE_ENTER_ERROR',
                                                                     'mobile_empty')
@@ -616,7 +619,9 @@ class RequestCommonEnterName(RequestCommon):
 
         if not form_valid:
             logger.info('form submission error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region,
+                        type_of_request=request_type)
             return {
                 'form_value_name_first_name': data.get('name_first_name'),
                 'form_value_name_last_name': data.get('name_last_name'),
@@ -776,7 +781,10 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             name_address_confirmation = data['request-name-address-confirmation']
         except KeyError:
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'], user_selection=name_address_confirmation)
+                        client_ip=request['client_ip'],
+                        user_selection=name_address_confirmation,
+                        type_of_request=request_type,
+                        region_of_site=display_region)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
@@ -844,19 +852,20 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
                     fulfilment_type_array.append(fulfilment_type)
 
+                    room_number = attributes['roomNumber']
                     logger.info(
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'], postcode=attributes['postcode'])
+                        client_ip=request['client_ip'], postcode=attributes['postcode'], room_number_entered=room_number)
 
-                    if attributes['roomNumber']:
+                    if room_number:
                         if len(attributes['last_name']) < last_name_char_limit:
-                            last_name = attributes['last_name'] + ', ' + attributes['roomNumber']
+                            last_name = attributes['last_name'] + ', ' + room_number
                             title = None
                         else:
                             last_name = attributes['last_name']
-                            title = attributes['roomNumber']
+                            title = room_number
                     else:
                         last_name = attributes['last_name']
                         title = None
@@ -984,7 +993,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], case_id=attributes['case_id'])
 
                     try:
                         await RHService.request_fulfilment_post(request,
@@ -1024,7 +1033,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'], user_selection=name_address_confirmation)
+                        client_ip=request['client_ip'], user_selection=name_address_confirmation, region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Select an answer',
@@ -1206,7 +1215,9 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         if not form_valid:
             logger.info('form submission error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region,
+                        type_of_request=request_type)
             return {
                 'display_region': display_region,
                 'page_title': page_title,
