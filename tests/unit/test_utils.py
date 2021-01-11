@@ -329,3 +329,15 @@ class TestUtils(RHTestCase):
         self.after_census_day(2021, 3, 22)
         self.before_census_day(2021, 3, 21)
         self.before_census_day(2021, 3, 20)
+
+    def test_client_ip(self):
+        valid_request = {'client_ip': '192.168.0.0, 35.190.0.0, 35.191.10.0'}
+        spoofed_request = {'client_ip': '200.30.20.10, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
+        invalid_request = {'client_ip': 'GHT.RGT.ED.WS, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
+        single_ip_request = {'client_ip': '35.191.10.0'}
+        expected_valid = '192.168.0.0'
+        expected_empty = ''
+        self.assertEqual(View.single_client_ip(valid_request), expected_valid)
+        self.assertEqual(View.single_client_ip(spoofed_request), expected_valid)
+        self.assertEqual(View.single_client_ip(invalid_request), expected_empty)
+        self.assertEqual(View.single_client_ip(single_ip_request), expected_empty)

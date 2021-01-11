@@ -54,7 +54,13 @@ class View:
     @staticmethod
     def single_client_ip(request):
         if request['client_ip']:
-            single_ip = request['client_ip'].split(',', 1)[0]
+            client_ip = request['client_ip']
+            ip_validation_pattern = re.compile(r'^[0-9.,\s]*$')
+            if ip_validation_pattern.fullmatch(client_ip) and client_ip.count(',') > 1:
+                single_ip = client_ip.split(', ', -1)[-3]
+            else:
+                logger.warn('clientIP failed validation. Provided IP - ' + client_ip)
+                single_ip = ''
         elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
             single_ip = '127.0.0.1'
         else:
