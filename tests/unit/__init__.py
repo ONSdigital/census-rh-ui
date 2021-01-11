@@ -273,28 +273,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_invalid_mobile_error_cy = \
             'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
 
-        self.post_common_select_address_form_data_valid = \
-            '{"uprn": "10023122451", "address": "1 Gate Reach, Exeter, EX2 6GA"}'
-
-        self.post_common_select_address_form_data_not_listed_en = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
-        self.post_common_select_address_form_data_not_listed_cy = \
-            '{"uprn": "xxxx", "address": "I cannot find my address"}'
-
         self.common_select_address_input_valid = {
-            'form-select-address': self.post_common_select_address_form_data_valid,
-            'action[save_continue]': '',
+            'form-pick-address': '10023122451', 'action[save_continue]': '',
         }
 
-        self.common_select_address_input_not_listed_en = {
-            'form-select-address': self.post_common_select_address_form_data_not_listed_en,
-            'action[save_continue]': '',
-        }
-
-        self.common_select_address_input_not_listed_cy = {
-            'form-select-address': self.post_common_select_address_form_data_not_listed_cy,
-            'action[save_continue]': '',
+        self.common_select_address_input_not_listed = {
+            'form-pick-address': 'xxxx', 'action[save_continue]': '',
         }
 
         self.common_confirm_address_input_yes = {
@@ -563,12 +547,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
+        self.content_common_429_error_eq_launch_title_en = \
+            'Sorry, there was a problem starting your census'
         self.content_common_429_error_uac_title_en = \
             'You have reached the maximum number of access codes you can request online'
         self.content_common_429_error_paper_questionnaire_title_en = \
             'You have reached the maximum number of paper questionnaires you can request online'
         self.content_common_429_error_continuation_questionnaire_title_en = \
             'You have reached the maximum number of continuation questionnaires you can request online'
+        # TODO: add welsh translation
+        self.content_common_429_error_eq_launch_title_cy = \
+            'Sorry, there was a problem starting your census'
         # TODO: add welsh translation
         self.content_common_429_error_uac_title_cy = \
             'You have reached the maximum number of access codes you can request online'

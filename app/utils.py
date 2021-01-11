@@ -1,9 +1,10 @@
 import string
 import re
-import json
 import math
 
-from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh
+from aiohttp.client_exceptions import (ClientResponseError)
+from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, InvalidDataErrorWelsh, \
+    TooManyRequestsEQLaunch
 from aiohttp.web import HTTPFound
 from datetime import datetime, date
 from pytz import timezone, utc
@@ -52,7 +53,13 @@ class View:
     @staticmethod
     def single_client_ip(request):
         if request['client_ip']:
-            single_ip = request['client_ip'].split(',', 1)[0]
+            client_ip = request['client_ip']
+            ip_validation_pattern = re.compile(r'^[0-9.,\s]*$')
+            if ip_validation_pattern.fullmatch(client_ip) and client_ip.count(',') > 1:
+                single_ip = client_ip.split(', ', -1)[-3]
+            else:
+                logger.warn('clientIP failed validation. Provided IP - ' + client_ip)
+                single_ip = ''
         elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
             single_ip = '127.0.0.1'
         else:
@@ -156,7 +163,13 @@ class View:
                         key_store=app['key_store'],
                         key_purpose='authentication')
 
-        await RHService.post_surveylaunched(request, case, adlocation)
+        try:
+            await RHService.post_surveylaunched(request, case, adlocation)
+        except ClientResponseError as ex:
+            if ex.status == 429:
+                raise TooManyRequestsEQLaunch()
+            else:
+                raise ex
 
         logger.info('redirecting to eq', client_ip=request['client_ip'])
         eq_url = app['EQ_URL']
@@ -413,24 +426,15 @@ class AddressIndex(View):
 
         for singleAddress in postcode_return['response']['addresses']:
             address_options.append({
-                'value':
-                json.dumps({
-                    'uprn': singleAddress['uprn'],
-                    'address': singleAddress['formattedAddress']
-                }),
+                'value': singleAddress['uprn'],
                 'label': {
                     'text': singleAddress['formattedAddress']
                 },
-                'id':
-                singleAddress['uprn']
+                'id': singleAddress['uprn']
             })
 
         address_options.append({
-            'value':
-            json.dumps({
-                'uprn': 'xxxx',
-                'address': cannot_find_text
-            }),
+            'value': 'xxxx',
             'label': {
                 'text': cannot_find_text
             },
@@ -593,7 +597,8 @@ class RHService(View):
         launch_json = {
             'questionnaireId': case['questionnaireId'],
             'caseId': case['caseId'],
-            'agentId': adlocation
+            'agentId': adlocation,
+            'clientIP': View.single_client_ip(request)
         }
         rhsvc_url = request.app['RHSVC_URL']
         return await View._make_request(request,

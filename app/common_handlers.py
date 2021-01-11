@@ -1,5 +1,4 @@
 import aiohttp_jinja2
-import json
 
 from aiohttp.web import HTTPFound, RouteTableDef
 from structlog import get_logger
@@ -371,6 +370,7 @@ class CommonSelectAddress(CommonCommon):
         address_content['sub_user_journey'] = sub_user_journey
         address_content['locale'] = locale
         address_content['page_url'] = View.gen_page_url(request)
+        address_content['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         return address_content
 
@@ -399,7 +399,7 @@ class CommonSelectAddress(CommonCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['form-select-address'])
+            selected_uprn = data['form-pick-address']
         except KeyError:
             logger.info('no address selected', client_ip=request['client_ip'], region_of_site=display_region, journey_requiring_address=user_journey)
             if display_region == 'cy':
@@ -413,9 +413,10 @@ class CommonSelectAddress(CommonCommon):
             address_content['sub_user_journey'] = sub_user_journey
             address_content['locale'] = locale
             address_content['page_url'] = View.gen_page_url(request)
+            address_content['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
             return address_content
 
-        if form_return['uprn'] == 'xxxx':
+        if selected_uprn == 'xxxx':
             raise HTTPFound(
                 request.app.router['CommonCallContactCentre:get'].url_for(
                     display_region=display_region,
@@ -423,11 +424,9 @@ class CommonSelectAddress(CommonCommon):
                     error='address-not-found'))
         else:
             session = await get_session(request)
-            session['attributes']['address'] = form_return['address']
-            uprn = form_return['uprn']
-            session['attributes']['uprn'] = uprn
+            session['attributes']['uprn'] = selected_uprn
             session.changed()
-            logger.info('session updated', client_ip=request['client_ip'], uprn_selected=uprn, region_of_site=display_region)
+            logger.info('session updated', client_ip=request['client_ip'], uprn_selected=selected_uprn, region_of_site=display_region)
 
         raise HTTPFound(
             request.app.router['CommonConfirmAddress:get'].url_for(

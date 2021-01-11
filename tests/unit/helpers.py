@@ -657,7 +657,7 @@ class TestHelpers(RHTestCase):
 
     async def check_post_select_address_address_not_found(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST', url, data=self.common_select_address_input_not_listed_en)
+            response = await self.client.request('POST', url, data=self.common_select_address_input_not_listed)
 
             self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('call-contact-centre/address-not-found',
