@@ -1,6 +1,5 @@
 import string
 import re
-import json
 import math
 
 from aiohttp.client_exceptions import (ClientResponseError)
@@ -171,7 +170,6 @@ class View:
                 raise TooManyRequestsEQLaunch()
             else:
                 raise ex
-
 
         logger.info('redirecting to eq', client_ip=request['client_ip'])
         eq_url = app['EQ_URL']
@@ -428,24 +426,15 @@ class AddressIndex(View):
 
         for singleAddress in postcode_return['response']['addresses']:
             address_options.append({
-                'value':
-                json.dumps({
-                    'uprn': singleAddress['uprn'],
-                    'address': singleAddress['formattedAddress']
-                }),
+                'value': singleAddress['uprn'],
                 'label': {
                     'text': singleAddress['formattedAddress']
                 },
-                'id':
-                singleAddress['uprn']
+                'id': singleAddress['uprn']
             })
 
         address_options.append({
-            'value':
-            json.dumps({
-                'uprn': 'xxxx',
-                'address': cannot_find_text
-            }),
+            'value': 'xxxx',
             'label': {
                 'text': cannot_find_text
             },
