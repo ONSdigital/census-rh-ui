@@ -671,10 +671,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_region_warning_cy = \
             'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
 
+        self.content_start_ni_language_options_page_title = \
+            '<title>Confirm English or other language - Census 2021</title>'
+        self.content_start_ni_language_options_page_title_error = \
+            '<title>Error: Confirm English or other language - Census 2021</title>'
         self.content_start_ni_language_options_title = 'Would you like to complete the census in English?'
         self.content_start_ni_language_options_error = 'Select a language option'
         self.content_start_ni_language_options_option_yes = 'Yes, continue in English'
 
+        self.content_start_ni_select_language_page_title = '<title>Choose language - Census 2021</title>'
+        self.content_start_ni_select_language_page_title_error = \
+            '<title>Error: Choose language - Census 2021</title>'
         self.content_start_ni_select_language_title = 'Choose your language'
         self.content_start_ni_select_language_error = 'Select a language option'
         self.content_start_ni_select_language_option = 'Continue in English'
@@ -688,8 +695,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
         self.content_start_timeout_secondary_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_start_timeout_restart_en = 're-enter your access code'
-        self.content_start_timeout_restart_cy = 'nodi eich cod mynediad eto'
+        self.content_start_timeout_restart_en = 'enter your 16-character access code'
+        # TODO: add welsh translation
+        self.content_start_timeout_restart_cy = 'enter your 16-character access code'
 
         # End Start Journey
 
@@ -1626,8 +1634,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_link_address_address_has_been_linked_secondary_cy = \
             'You are now ready to start your Census questions'
 
-        self.content_link_address_timeout_error_en = 're-enter your access code'
-        self.content_link_address_timeout_error_cy = 'nodi eich cod mynediad eto'
+        self.content_link_address_timeout_error_en = 'enter your 16-character access code'
+        # TODO: add welsh translation
+        self.content_link_address_timeout_error_cy = 'enter your 16-character access code'
 
         # Start Change Address
 
@@ -2862,11 +2871,21 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
 
+        self.content_start_transient_enter_town_name_page_title_en = \
+            '<title>Nearest town or city - Census 2021</title>'
+        self.content_start_transient_enter_town_name_page_title_error_en = \
+            '<title>Error: Nearest town or city - Census 2021</title>'
         self.content_start_transient_enter_town_name_pre_census_day_title_en = \
             'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
         self.content_start_transient_enter_town_name_post_census_day_title_en = \
             'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
         self.content_start_transient_enter_town_name_error_en = "Enter your nearest town or city"
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_page_title_cy = \
+            '<title>Nearest town or city - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_start_transient_enter_town_name_page_title_error_cy = \
+            '<title>Error: Nearest town or city - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
             'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
@@ -2876,12 +2895,22 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_error_cy = "Enter your nearest town or city"
 
+        self.content_start_transient_accommodation_type_page_title_en = \
+            "<title>Which of the following best describes your type of accommodation? - Census 2021</title>"
+        self.content_start_transient_accommodation_type_page_title_error_en = \
+            "<title>Error: Which of the following best describes your type of accommodation? - Census 2021</title>"
         self.content_start_transient_accommodation_type_title_en = \
             "Which of the following best describes your type of accommodation?"
         self.content_start_transient_accommodation_type_error_en = "Select an answer"
         self.content_start_transient_accommodation_type_value_barge_en = "Barge or boat"
         self.content_start_transient_accommodation_type_value_caravan_en = "Caravan or live-in vehicle"
         self.content_start_transient_accommodation_type_value_tent_en = "Tent or temporary structure"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_page_title_cy = \
+            "<title>Which of the following best describes your type of accommodation? - Cyfrifiad 2021</title>"
+        # TODO Add Welsh Translation
+        self.content_start_transient_accommodation_type_page_title_error_cy = \
+            "<title>Error: Which of the following best describes your type of accommodation? - Cyfrifiad 2021</title>"
         # TODO Add Welsh Translation
         self.content_start_transient_accommodation_type_title_cy = \
             "Which of the following best describes your type of accommodation?"

@@ -290,16 +290,14 @@ class CommonEnterAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Enter address'
-            else:
-                page_title = 'Enter address'
+            page_title = 'Enter address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Enter address'
-            else:
-                page_title = 'Enter address'
+            page_title = 'Enter address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         return {
@@ -377,20 +375,16 @@ class CommonSelectAddress(CommonCommon):
         if user_journey == 'start':
             await check_permission(request)
 
-        session = await get_session(request)
-
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Select address'
-            else:
-                page_title = 'Select address'
+            page_title = 'Select address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Select address'
-            else:
-                page_title = 'Select address'
+            page_title = 'Select address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
@@ -479,16 +473,14 @@ class CommonConfirmAddress(CommonCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Confirm address'
-            else:
-                page_title = 'Confirm address'
+            page_title = 'Confirm address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Confirm address'
-            else:
-                page_title = 'Confirm address'
+            page_title = 'Confirm address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
@@ -728,16 +720,14 @@ class CommonCEMangerQuestion(CommonCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Confirm resident or manager'
-            else:
-                page_title = 'Confirm resident or manager'
+            page_title = 'Confirm resident or manager'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Confirm resident or manager'
-            else:
-                page_title = 'Confirm resident or manager'
+            page_title = 'Confirm resident or manager'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         return {
@@ -852,21 +842,18 @@ class CommonEnterRoomNumber(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey +
                        '/enter-flat-or-room-number')
 
-        session = await get_session(request)
         session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Enter flat or room number'
-            else:
-                page_title = 'Enter flat or room number'
+            page_title = 'Enter flat or room number'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Enter flat or room number'
-            else:
-                page_title = 'Enter flat or room number'
+            page_title = 'Enter flat or room number'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         if session_attributes['roomNumber']:

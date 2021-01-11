@@ -222,46 +222,30 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
-        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if display_region == 'cy':
-            if session.get('flash'):
-                if attributes['individual']:
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Select how to receive individual access code'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Select how to receive manager access code'
-                else:
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Select how to receive household access code'
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive manager access code'
             else:
-                if attributes['individual']:
-                    # TODO Add Welsh Translation
-                    page_title = 'Select how to receive individual access code'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    # TODO Add Welsh Translation
-                    page_title = 'Select how to receive manager access code'
-                else:
-                    # TODO Add Welsh Translation
-                    page_title = 'Select how to receive household access code'
+                # TODO Add Welsh Translation
+                page_title = 'Select how to receive household access code'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                if attributes['individual']:
-                    page_title = View.page_title_error_prefix_en + 'Select how to receive individual access code'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    page_title = View.page_title_error_prefix_en + 'Select how to receive manager access code'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Select how to receive household access code'
+            if attributes['individual']:
+                page_title = 'Select how to receive individual access code'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Select how to receive manager access code'
             else:
-                if attributes['individual']:
-                    page_title = 'Select how to receive individual access code'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    page_title = 'Select how to receive manager access code'
-                else:
-                    page_title = 'Select how to receive household access code'
+                page_title = 'Select how to receive household access code'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -328,24 +312,19 @@ class RequestCodeEnterMobile(RequestCommon):
     @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def get(self, request):
         self.setup_request(request)
-
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        session = await get_session(request)
-
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Enter mobile number'
-            else:
-                page_title = 'Enter mobile number'
+            page_title = 'Enter mobile number'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Enter mobile number'
-            else:
-                page_title = 'Enter mobile number'
+            page_title = 'Enter mobile number'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
@@ -360,7 +339,6 @@ class RequestCodeEnterMobile(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-enter-mobile.html')
     async def post(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -421,46 +399,30 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
-        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if display_region == 'cy':
-            if session.get('flash'):
-                if attributes['individual']:
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send individual access code by text'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send manager access code by text'
-                else:
-                    # TODO Add Welsh Translation
-                    page_title = View.page_title_error_prefix_cy + 'Confirm to send household access code by text'
+            if attributes['individual']:
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send manager access code by text'
             else:
-                if attributes['individual']:
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send individual access code by text'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send manager access code by text'
-                else:
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send household access code by text'
+                # TODO Add Welsh Translation
+                page_title = 'Confirm to send household access code by text'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                if attributes['individual']:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send individual access code by text'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send manager access code by text'
-                else:
-                    page_title = View.page_title_error_prefix_en + 'Confirm to send household access code by text'
+            if attributes['individual']:
+                page_title = 'Confirm to send individual access code by text'
+            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+                page_title = 'Confirm to send manager access code by text'
             else:
-                if attributes['individual']:
-                    page_title = 'Confirm to send individual access code by text'
-                elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                    page_title = 'Confirm to send manager access code by text'
-                else:
-                    page_title = 'Confirm to send household access code by text'
+                page_title = 'Confirm to send household access code by text'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         attributes['page_title'] = page_title
@@ -471,7 +433,6 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-code-confirm-send-by-text.html')
     async def post(self, request):
         self.setup_request(request)
 
@@ -570,21 +531,16 @@ class RequestCommonEnterName(RequestCommon):
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
 
-        session = await get_session(request)
-
         if display_region == 'cy':
-            if session.get('flash'):
-                # TODO Add Welsh Translation
-                page_title = View.page_title_error_prefix_cy + "Enter name"
-            else:
-                # TODO Add Welsh Translation
-                page_title = "Enter name"
+            # TODO Add Welsh Translation
+            page_title = "Enter name"
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + "Enter name"
-            else:
-                page_title = "Enter name"
+            page_title = "Enter name"
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
@@ -599,7 +555,6 @@ class RequestCommonEnterName(RequestCommon):
 
         return attributes
 
-    @aiohttp_jinja2.template('request-common-enter-name.html')
     async def post(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -652,7 +607,6 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
-        session = await get_session(request)
         attributes = await self.get_check_attributes(request, request_type)
 
         if request_type == 'access-code':
@@ -694,7 +648,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                 else:
                     page_title = 'Confirm to send household paper questionnaire'
 
-        if session.get('flash'):
+        if request.get('flash'):
             if display_region == 'cy':
                 page_title = View.page_title_error_prefix_cy + page_title
             else:
@@ -719,7 +673,6 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             'individual': attributes['individual']
         }
 
-    @aiohttp_jinja2.template('request-common-confirm-send-by-post.html')
     async def post(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
@@ -1095,9 +1048,13 @@ class RequestCommonPeopleInHousehold(RequestCommon):
         if display_region == 'cy':
             # TODO Add Welsh Translation
             page_title = "How many people are in your household?"
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
             page_title = 'How many people are in your household?'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
@@ -1112,19 +1069,10 @@ class RequestCommonPeopleInHousehold(RequestCommon):
             'page_url': View.gen_page_url(request)
         }
 
-    @aiohttp_jinja2.template('request-common-people-in-household.html')
     async def post(self, request):
         self.setup_request(request)
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
-
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = View.page_title_error_prefix_cy + "How many people are in your household?"
-            locale = 'cy'
-        else:
-            page_title = View.page_title_error_prefix_en + 'How many people are in your household?'
-            locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
 
@@ -1135,13 +1083,9 @@ class RequestCommonPeopleInHousehold(RequestCommon):
         if not form_valid:
             logger.info('form submission error',
                         client_ip=request['client_ip'])
-            return {
-                'display_region': display_region,
-                'page_title': page_title,
-                'page_url': View.gen_page_url(request),
-                'request_type': request_type,
-                'locale': locale
-            }
+            raise HTTPFound(
+                request.app.router['RequestCommonPeopleInHousehold:get'].url_for(display_region=display_region,
+                                                                                 request_type=request_type))
 
         session = await get_session(request)
         session['attributes']['number_of_people'] = data['number_of_people']

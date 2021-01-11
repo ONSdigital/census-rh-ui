@@ -71,7 +71,7 @@
         {% include 'partials/messages.html' with context %}
     {% endif %}
 
-    <h1 class="u-fs-xxl">{{_('Start census')}}</h1>
+    <h1 class="u-fs-xxl u-mt-l">{{_('Start census')}}</h1>
 
     {{
         onsUACInput({
@@ -135,14 +135,5 @@
     %}
         {{ content | safe }}
     {% endcall %}
-
-    {{ onsButton({
-        'text': _('Web chat'),
-        "type": 'button',
-        "classes": 'u-mb-m, u-mt-s',
-        "url": webchat_link,
-        "newWindow": true
-        })
-    }}
 
 {% endblock %}

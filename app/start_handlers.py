@@ -32,9 +32,9 @@ class StartCommon(View):
             logger.warn('attempt to use a malformed access code',
                         client_ip=request['client_ip'])
             message = {
-                'en': BAD_CODE_MSG,
-                'cy': BAD_CODE_MSG_CY,
-                'ni': BAD_CODE_MSG,
+                'en': INVALID_CODE_MSG,
+                'cy': INVALID_CODE_MSG_CY,
+                'ni': INVALID_CODE_MSG,
             }[lang]
             flash(request, message)
             raise HTTPFound(request.app.router['Start:get'].url_for(display_region=lang))
@@ -71,9 +71,13 @@ class Start(StartCommon):
             locale = 'cy'
             # TODO Confirm welsh translation
             page_title = "Dechrau'r cyfrifiad"
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
         else:
             locale = 'en'
             page_title = 'Start census'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
 
         try:
             adlocation = request.query['adlocation']
@@ -107,7 +111,6 @@ class Start(StartCommon):
                 'page_url': View.gen_page_url(request)
             }
 
-    @aiohttp_jinja2.template('start.html')
     async def post(self, request):
         """
         Forward to Address confirmation
@@ -117,16 +120,18 @@ class Start(StartCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start')
-        if display_region == 'cy':
-            locale = 'cy'
-            # TODO Confirm welsh translation
-            page_title = View.page_title_error_prefix_cy + "Dechrau'r cyfrifiad"
-        else:
-            locale = 'en'
-            page_title = View.page_title_error_prefix_en + 'Start census'
+
         data = await request.post()
 
-        if data.get('uac').upper()[0:3] == 'CE4':
+        if data.get('uac') == '':
+            logger.info('access code not supplied', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                flash(request, BAD_CODE_MSG_CY)
+            else:
+                flash(request, BAD_CODE_MSG)
+            raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+
+        elif data.get('uac').upper()[0:3] == 'CE4':
             logger.info('CE4 case', client_ip=request['client_ip'])
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartNICE4Code:get'].url_for())
@@ -146,15 +151,7 @@ class Start(StartCommon):
                     flash(request, INVALID_CODE_MSG_CY)
                 else:
                     flash(request, INVALID_CODE_MSG)
-                return aiohttp_jinja2.render_template(
-                    'start.html',
-                    request, {
-                        'display_region': display_region,
-                        'page_title': page_title,
-                        'locale': locale,
-                        'page_url': View.gen_page_url(request)
-                    },
-                    status=401)
+                raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
             else:
                 logger.error('error processing access code', client_ip=request['client_ip'])
                 raise ex
@@ -289,16 +286,14 @@ class StartConfirmAddress(StartCommon):
 
         if display_region == 'cy':
             # TODO: add welsh translation
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_cy + 'Confirm address'
-            else:
-                page_title = 'Confirm address'
+            page_title = 'Confirm address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if session.get('flash'):
-                page_title = View.page_title_error_prefix_en + 'Confirm address'
-            else:
-                page_title = 'Confirm address'
+            page_title = 'Confirm address'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         try:
@@ -403,12 +398,15 @@ class StartNILanguageOptions(StartCommon):
         self.log_entry(request, 'ni/start/language-options')
         await check_permission(request)
 
+        page_title = 'Confirm English or other language'
+        if request.get('flash'):
+            page_title = View.page_title_error_prefix_en + page_title
+
         return {'locale': 'en',
-                'page_title': 'Would you like to complete the census in English?',
+                'page_title': page_title,
                 'page_show_signout': 'true',
                 'display_region': 'ni'}
 
-    @aiohttp_jinja2.template('start-ni-language-options.html')
     async def post(self, request):
         self.setup_request(request)
         self.log_entry(request, 'ni/start/language-options')
@@ -419,10 +417,6 @@ class StartNILanguageOptions(StartCommon):
         try:
             attributes = session['attributes']
             case = session['case']
-            attributes[
-                'page_title'] = 'Would you like to complete the census in English?'
-            attributes['page_show_signout'] = 'true'
-
         except KeyError:
             raise SessionTimeout('start')
 
@@ -432,7 +426,8 @@ class StartNILanguageOptions(StartCommon):
             logger.info('ni language option error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return attributes
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
 
         if language_option == 'Yes':
             attributes['language'] = 'en'
@@ -450,10 +445,8 @@ class StartNILanguageOptions(StartCommon):
             logger.info('language selection error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return {'locale': 'en',
-                    'page_title': 'Would you like to complete the census in English?',
-                    'page_show_signout': 'true',
-                    'display_region': 'ni'}
+            raise HTTPFound(
+                request.app.router['StartNILanguageOptions:get'].url_for())
 
 
 @start_routes.view('/ni/start/select-language/')
@@ -467,12 +460,15 @@ class StartNISelectLanguage(StartCommon):
         self.log_entry(request, 'ni/start/select-language')
         await check_permission(request)
 
+        page_title = 'Choose language'
+        if request.get('flash'):
+            page_title = View.page_title_error_prefix_en + page_title
+
         return {'locale': 'en',
-                'page_title': 'Choose your language',
+                'page_title': page_title,
                 'page_show_signout': 'true',
                 'display_region': 'ni'}
 
-    @aiohttp_jinja2.template('start-ni-select-language.html')
     async def post(self, request):
         self.setup_request(request)
         self.log_entry(request, 'ni/start/select-language')
@@ -493,10 +489,8 @@ class StartNISelectLanguage(StartCommon):
             logger.info('ni language option error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return {'locale': 'en',
-                    'page_title': 'Choose your language',
-                    'page_show_signout': 'true',
-                    'display_region': 'ni'}
+            raise HTTPFound(
+                request.app.router['StartNISelectLanguage:get'].url_for())
 
         if language_option == 'gaeilge':
             attributes['language'] = 'ga'
@@ -512,10 +506,8 @@ class StartNISelectLanguage(StartCommon):
             logger.info('language selection error',
                         client_ip=request['client_ip'])
             flash(request, START_LANGUAGE_OPTION_MSG)
-            return {'locale': 'en',
-                    'page_title': 'Choose your language',
-                    'page_show_signout': 'true',
-                    'display_region': 'ni'}
+            raise HTTPFound(
+                request.app.router['StartNISelectLanguage:get'].url_for())
 
         attributes['display_region'] = 'ni'
 
@@ -659,21 +651,17 @@ class StartTransientEnterTownName(StartCommon):
         self.setup_request(request)
         await check_permission(request)
         display_region = request.match_info['display_region']
-        after_census_day = View.check_if_after_census_day()
 
         if display_region == 'cy':
-            if after_census_day:
-                # TODO: add welsh translation
-                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
-            else:
-                # TODO: add welsh translation
-                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            # TODO: add welsh translation
+            page_title = 'Nearest town or city'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if after_census_day:
-                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
-            else:
-                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            page_title = 'Nearest town or city'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/start/transient/enter-town-name')
@@ -683,7 +671,7 @@ class StartTransientEnterTownName(StartCommon):
             'display_region': display_region,
             'locale': locale,
             'page_url': View.gen_page_url(request),
-            'after-census-day': after_census_day,
+            'after-census-day': View.check_if_after_census_day(),
             'page_show_signout': 'true'
         }
 
@@ -692,22 +680,6 @@ class StartTransientEnterTownName(StartCommon):
         self.setup_request(request)
         await check_permission(request)
         display_region = request.match_info['display_region']
-        after_census_day = View.check_if_after_census_day()
-
-        if display_region == 'cy':
-            if after_census_day:
-                # TODO: add welsh translation
-                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
-            else:
-                # TODO: add welsh translation
-                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
-            locale = 'cy'
-        else:
-            if after_census_day:
-                page_title = 'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
-            else:
-                page_title = 'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
-            locale = 'en'
 
         self.log_entry(request, display_region + '/start/transient/enter-town-name')
 
@@ -736,14 +708,9 @@ class StartTransientEnterTownName(StartCommon):
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
                                                                    'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
-            return {
-                'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'page_url': View.gen_page_url(request),
-                'after-census-day': after_census_day,
-                'page_show_signout': 'true'
-            }
+            raise HTTPFound(
+                request.app.router['StartTransientEnterTownName:get'].url_for(display_region=display_region)
+            )
 
 
 @start_routes.view(r'/' + View.valid_display_regions + '/start/transient/accommodation-type/')
@@ -757,9 +724,13 @@ class StartTransientAccommodationType(StartCommon):
         if display_region == 'cy':
             # TODO: add welsh translation
             page_title = 'Which of the following best describes your type of accommodation?'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
             page_title = 'Which of the following best describes your type of accommodation?'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/start/transient/accommodation-type')
@@ -779,11 +750,8 @@ class StartTransientAccommodationType(StartCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Which of the following best describes your type of accommodation?'
             locale = 'cy'
         else:
-            page_title = 'Which of the following best describes your type of accommodation?'
             locale = 'en'
 
         self.log_entry(request, display_region + '/start/transient/accommodation-type')
@@ -823,10 +791,6 @@ class StartTransientAccommodationType(StartCommon):
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
                                                                    'ACCOMMODATION_TYPE_ERROR',
                                                                    'error-accommodation-type'))
-            return {
-                'page_title': page_title,
-                'display_region': display_region,
-                'locale': locale,
-                'page_url': View.gen_page_url(request),
-                'page_show_signout': 'true'
-            }
+            raise HTTPFound(
+                request.app.router['StartTransientAccommodationType:get'].url_for(display_region=display_region)
+            )

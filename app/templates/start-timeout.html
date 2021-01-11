@@ -12,7 +12,7 @@
     {% endcall %}
 
     {% autoescape false %}
-        <p>{{ _('You will need to %(open)sre-enter your access code%(close)s', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
+        <p>{{ _('You will need to %(open)senter your 16-character access code%(close)s again to access your census.', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
     {% endautoescape %}
 
 {% endblock %}

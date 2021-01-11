@@ -2518,6 +2518,9 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_cy, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
@@ -2525,6 +2528,9 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_en, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
@@ -2534,6 +2540,9 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_start_transient_accommodation_type_error_cy, contents)
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_cy, contents)
@@ -2541,6 +2550,9 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_start_transient_accommodation_type_error_en, contents)
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_en, contents)
@@ -2549,6 +2561,9 @@ class TestHelpers(RHTestCase):
     def check_text_start_transient_ni_select_language(self, contents, check_error=False):
         if check_error:
             self.assertIn(self.content_start_ni_select_language_error, contents)
+            self.assertIn(self.content_start_ni_select_language_page_title_error, contents)
+        else:
+            self.assertIn(self.content_start_ni_select_language_page_title, contents)
         self.assertIn(self.content_common_save_and_exit_link_en, contents)
         self.assertIn(self.content_start_ni_select_language_title, contents)
         self.assertIn(self.content_start_ni_select_language_option, contents)
@@ -2557,6 +2572,9 @@ class TestHelpers(RHTestCase):
     def check_text_start_transient_ni_language_options(self, contents, check_error=False):
         if check_error:
             self.assertIn(self.content_start_ni_language_options_error, contents)
+            self.assertIn(self.content_start_ni_language_options_page_title_error, contents)
+        else:
+            self.assertIn(self.content_start_ni_language_options_page_title, contents)
         self.assertIn(self.content_common_save_and_exit_link_en, contents)
         self.assertIn(self.content_start_ni_language_options_title, contents)
         self.assertIn(self.content_start_ni_language_options_option_yes, contents)
