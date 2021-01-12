@@ -687,10 +687,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_ni_select_language_option = 'Continue in English'
         self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
 
-        self.content_signed_out_page_title_en = 'Progress saved'
+        self.content_signed_out_page_title_en = '<title>Progress saved - Census 2021</title>'
         self.content_signed_out_title_en = 'Your progress has been saved'
         # TODO: add welsh translation
-        self.content_signed_out_page_title_cy = 'Progress saved'
+        self.content_signed_out_page_title_cy = '<title>Progress saved - Cyfrifiad 2021</title>'
         self.content_signed_out_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
@@ -2662,11 +2662,19 @@ class RHTestCase(AioHTTPTestCase):
 
         # Contents
 
+        self.content_support_centre_enter_postcode_page_title_en = '<title>Find a support centre - Census 2021</title>'
+        self.content_support_centre_enter_postcode_page_title_error_en = \
+            '<title>Error: Find a support centre - Census 2021</title>'
         self.content_support_centre_enter_postcode_title_en = 'Find a support centre'
         self.content_support_centre_enter_postcode_secondary_en = \
             'To find your nearest support centre, we need your postcode.'
         self.content_support_centre_enter_postcode_error_empty_en = 'Enter a postcode'
         self.content_support_centre_enter_postcode_error_invalid_en = 'Enter a valid UK postcode'
+
+        self.content_support_centre_enter_postcode_page_title_cy = \
+            '<title>Chwilio am ganolfan gymorth - Cyfrifiad 2021</title>'
+        self.content_support_centre_enter_postcode_page_title_error_cy = \
+            '<title>Error: Chwilio am ganolfan gymorth - Cyfrifiad 2021</title>'
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
@@ -2846,16 +2854,25 @@ class RHTestCase(AioHTTPTestCase):
             f'{rh_svc_url}/webform'
         )
 
+        self.content_web_form_page_title_en = '<title>Web form - Census 2021</title>'
+        self.content_web_form_page_title_error_en = '<title>Error: Web form - Census 2021</title>'
         self.content_web_form_title_en = 'Web form'
         self.content_web_form_warning_en = 'Do not include any personal information, for example, your access code'
+        # TODO Add Welsh Translation
+        self.content_web_form_page_title_cy = '<title>Web form - Cyfrifiad 2021</title>'
+        # TODO Add Welsh Translation
+        self.content_web_form_page_title_error_cy = '<title>Error: Web form - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_web_form_title_cy = 'Web form'
         # TODO Add Welsh Translation
         self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
 
+        self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_en = 'Your message has been sent'
         self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
+        # TODO Add Welsh Translation
+        self.content_web_form_success_page_title_cy = '<title>Thank you for contacting us - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
         self.content_web_form_success_title_cy = 'Thank you for contacting us'
         # TODO Add Welsh Translation

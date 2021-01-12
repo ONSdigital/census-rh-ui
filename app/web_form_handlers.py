@@ -34,12 +34,12 @@ class WebForm(View):
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Web Form'
+            page_title = 'Web form'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            page_title = 'Web Form'
+            page_title = 'Web form'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
