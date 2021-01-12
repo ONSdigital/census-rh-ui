@@ -124,7 +124,7 @@ class WebChat(WebChat):
                 'page_url': View.gen_page_url(request)
             }
         else:
-            logger.info('webchat closed', client_ip=request['client_ip'])
+            logger.info('webchat closed', client_ip=request['client_ip'], region_of_site=display_region)
             return {
                 'webchat_status': 'closed',
                 'display_region': display_region,
@@ -159,7 +159,8 @@ class WebChat(WebChat):
 
         if not form_valid:
             logger.info('form submission error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region)
             return {
                 'form_value_screen_name': data.get('screen_name'),
                 'form_value_country': data.get('country'),
@@ -182,12 +183,12 @@ class WebChat(WebChat):
             'page_url': View.gen_page_url(request)
         }
 
-        logger.info('date/time check', client_ip=request['client_ip'])
+        logger.info('date/time check', client_ip=request['client_ip'], region_of_site=display_region)
         if WebChat.check_open():
             return aiohttp_jinja2.render_template('webchat-window.html',
                                                   request, context)
         else:
-            logger.info('webchat closed', client_ip=request['client_ip'])
+            logger.info('webchat closed', client_ip=request['client_ip'], region_of_site=display_region)
             return {
                 'webchat_status': 'closed',
                 'display_region': display_region,

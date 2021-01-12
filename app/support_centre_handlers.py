@@ -49,10 +49,10 @@ class SupportCentreEnterPostcode(View):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'])
+            logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info('invalid postcode', client_ip=request['client_ip'])
+            logger.info('invalid postcode', client_ip=request['client_ip'], invalid_postcode=postcode, region_of_site=display_region)
             flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
             flash(request, flash_message)
             raise HTTPFound(
@@ -81,10 +81,10 @@ class SupportCentreListCentres(View):
 
         try:
             postcode_value = ProcessPostcode.validate_postcode(request.match_info['postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'])
+            logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode_value, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh):
-            logger.info('invalid postcode', client_ip=request['client_ip'])
+            logger.info('invalid postcode', client_ip=request['client_ip'], invalid_postcode=postcode_value, region_of_site=display_region)
             attributes = {
                 'page_title': 'Error',
                 'display_region': display_region,

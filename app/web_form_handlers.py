@@ -115,7 +115,7 @@ class WebForm(View):
             form_valid = False
 
         if not form_valid:
-            logger.info('web form submission error', client_ip=request['client_ip'])
+            logger.info('web form submission error', client_ip=request['client_ip'], region_of_site=display_region)
             return {
                 'form_value_name': data.get('name'),
                 'form_value_country': data.get('country'),
@@ -129,7 +129,7 @@ class WebForm(View):
             }
 
         else:
-            logger.info('call web form endpoint', client_ip=request['client_ip'])
+            logger.info('call web form endpoint', client_ip=request['client_ip'], region_of_site=display_region)
             if display_region == 'cy':
                 language = 'CY'
             else:

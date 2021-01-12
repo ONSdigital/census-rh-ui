@@ -330,7 +330,7 @@ class ProcessNumberOfPeople:
         number_of_people_valid = True
 
         if (data.get('number_of_people')) == '':
-            logger.info('number_of_people empty', client_ip=request['client_ip'])
+            logger.info('number_of_people empty', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
@@ -343,7 +343,7 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif not (data.get('number_of_people')).isnumeric():
-            logger.info('number_of_people nan', client_ip=request['client_ip'])
+            logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter a numeral',
@@ -357,14 +357,14 @@ class ProcessNumberOfPeople:
 
         elif request_type == 'continuation-questionnaire':
             if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
-                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'])
+                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
                 flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_continuation'))
                 number_of_people_valid = False
 
             elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
-                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'])
+                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
                 if display_region == 'cy':
                     # TODO Add Welsh Translation
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
@@ -487,7 +487,10 @@ class RHService(View):
         uac_hash = uac
         logger.info('request linked case',
                     uac_hash=uac_hash,
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    country_code=address['countryCode'],
+                    postcode_value=address['postcode'],
+                    uprn_value=address['uprn'])
         rhsvc_url = request.app['RHSVC_URL']
         address_json = {
             "addressLine1": address['addressLine1'],
