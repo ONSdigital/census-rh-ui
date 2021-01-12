@@ -23,9 +23,7 @@
 
 {%- set question_title = _('What is your postcode?') -%}
 
-{%- if sub_user_journey == 'link-address' -%}
-    {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
-{%- elif sub_user_journey == 'change-address' -%}
+{%- if (sub_user_journey == 'change-address') or (sub_user_journey == 'link-address') -%}
     {%- set question_description = '' -%}
 {%- elif (individual == True) -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
