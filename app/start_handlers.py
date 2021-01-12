@@ -80,7 +80,8 @@ class Start(StartCommon):
             if adlocation.isdigit():
                 logger.info('assisted digital query parameter found',
                             adlocation=adlocation,
-                            client_ip=request['client_ip'])
+                            client_ip=request['client_ip'],
+                            region_of_site=display_region)
                 return {
                     'display_region': display_region,
                     'page_title': page_title,
@@ -99,7 +100,7 @@ class Start(StartCommon):
                     'page_url': View.gen_page_url(request)
                 }
         except KeyError:
-            logger.info('no adlocation present')
+            logger.info('no adlocation present', region_of_site=display_region)
             return {
                 'display_region': display_region,
                 'page_title': page_title,
@@ -127,7 +128,7 @@ class Start(StartCommon):
         data = await request.post()
 
         if data.get('uac').upper()[0:3] == 'CE4':
-            logger.info('CE4 case', client_ip=request['client_ip'])
+            logger.info('CE4 case', client_ip=request['client_ip'], region_of_site=display_region)
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartNICE4Code:get'].url_for())
             else:
@@ -160,7 +161,7 @@ class Start(StartCommon):
                 raise ex
 
         if uac_json['caseId'] is None:
-            logger.info('unlinked case', client_ip=request['client_ip'])
+            logger.info('unlinked case', client_ip=request['client_ip'], case_details=uac_json, region_of_site=display_region)
             session = await get_session(request)
             session['attributes'] = {}
             session['case'] = uac_json
@@ -299,9 +300,13 @@ class StartConfirmAddress(StartCommon):
             raise SessionTimeout('start')
 
         display_region_warning = False
-        if (display_region == 'cy') and (session['case']['region'] == 'E'):
+        case_region = session['case']['region']
+        if (display_region == 'cy') and (case_region == 'E'):
             logger.info('welsh url with english region - language_code will be set to en for eq',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region,
+                        region_of_case=case_region,
+                        postcode=attributes['postcode'])
             display_region_warning = True
 
         return {'locale': locale,
@@ -348,7 +353,10 @@ class StartConfirmAddress(StartCommon):
             address_confirmation = data['address-check-answer']
         except KeyError:
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        user_selection=address_confirmation,
+                        region_of_site=display_region,
+                        postcode=attributes['postcode'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -385,7 +393,10 @@ class StartConfirmAddress(StartCommon):
         else:
             # catch all just in case, should never get here
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        user_selection=address_confirmation,
+                        region_of_site=display_region,
+                        postcode=attributes['postcode'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -738,7 +749,8 @@ class StartTransientEnterTownName(StartCommon):
 
         except KeyError:
             logger.info('error town name empty',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region)
             if display_region == 'cy':
                 # TODO: add welsh translation
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
@@ -823,7 +835,7 @@ class StartTransientAccommodationType(StartCommon):
                                               session.get('adlocation'))
 
         except KeyError:
-            logger.info('transient accommodation type error', client_ip=request['client_ip'])
+            logger.info('transient accommodation type error', client_ip=request['client_ip'], region_of_site=display_region)
             if display_region == 'cy':
                 # TODO: add welsh translation
                 flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
