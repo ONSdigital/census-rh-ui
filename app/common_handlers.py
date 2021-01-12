@@ -1,5 +1,4 @@
 import aiohttp_jinja2
-import json
 
 from aiohttp.web import HTTPFound, RouteTableDef
 from structlog import get_logger
@@ -401,6 +400,7 @@ class CommonSelectAddress(CommonCommon):
         address_content['sub_user_journey'] = sub_user_journey
         address_content['locale'] = locale
         address_content['page_url'] = View.gen_page_url(request)
+        address_content['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
 
         return address_content
 
@@ -418,7 +418,7 @@ class CommonSelectAddress(CommonCommon):
         data = await request.post()
 
         try:
-            form_return = json.loads(data['form-select-address'])
+            selected_uprn = data['form-pick-address']
         except KeyError:
             logger.info('no address selected', client_ip=request['client_ip'])
             if display_region == 'cy':
@@ -432,7 +432,7 @@ class CommonSelectAddress(CommonCommon):
                     sub_user_journey=sub_user_journey
                 ))
 
-        if form_return['uprn'] == 'xxxx':
+        if selected_uprn == 'xxxx':
             raise HTTPFound(
                 request.app.router['CommonRegisterAddress:get'].url_for(
                     display_region=display_region,
@@ -440,8 +440,7 @@ class CommonSelectAddress(CommonCommon):
                     sub_user_journey=sub_user_journey))
         else:
             session = await get_session(request)
-            session['attributes']['address'] = form_return['address']
-            session['attributes']['uprn'] = form_return['uprn']
+            session['attributes']['uprn'] = selected_uprn
             session.changed()
             logger.info('session updated', client_ip=request['client_ip'])
 
