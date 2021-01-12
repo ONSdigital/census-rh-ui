@@ -687,8 +687,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_ni_select_language_option = 'Continue in English'
         self.content_start_ni_select_language_switch_back = 'You can change your language back to English at any time.'
 
-        self.content_start_save_and_exit_title_en = 'Your progress has been saved'
-        self.content_start_save_and_exit_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
+        self.content_signed_out_page_title_en = 'Progress saved'
+        self.content_signed_out_title_en = 'Your progress has been saved'
+        # TODO: add welsh translation
+        self.content_signed_out_page_title_cy = 'Progress saved'
+        self.content_signed_out_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
         self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
@@ -709,7 +712,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_en = self.app.router['Start:post'].url_for(display_region='en')
         self.get_start_confirm_address_en = self.app.router['StartConfirmAddress:get'].url_for(display_region='en')
         self.post_start_confirm_address_en = self.app.router['StartConfirmAddress:post'].url_for(display_region='en')
-        self.get_start_save_and_exit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
 
         self.get_start_cy = self.app.router['Start:get'].url_for(display_region='cy')
         self.get_start_adlocation_valid_cy = self.app.router['Start:get'].url_for(display_region='cy').with_query(
@@ -719,7 +721,6 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_cy = self.app.router['Start:post'].url_for(display_region='cy')
         self.get_start_confirm_address_cy = self.app.router['StartConfirmAddress:get'].url_for(display_region='cy')
         self.post_start_confirm_address_cy = self.app.router['StartConfirmAddress:post'].url_for(display_region='cy')
-        self.get_start_save_and_exit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
 
         self.get_start_ni = self.app.router['Start:get'].url_for(display_region='ni')
         self.get_start_adlocation_valid_ni = self.app.router['Start:get'].url_for(display_region='ni').with_query(
@@ -734,7 +735,10 @@ class RHTestCase(AioHTTPTestCase):
         self.post_start_language_options_ni = self.app.router['StartNILanguageOptions:post'].url_for()
         self.get_start_select_language_ni = self.app.router['StartNISelectLanguage:get'].url_for()
         self.post_start_select_language_ni = self.app.router['StartNISelectLanguage:post'].url_for()
-        self.get_start_save_and_exit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
+
+        self.get_signed_out_en = self.app.router['SignedOut:get'].url_for(display_region='en')
+        self.get_signed_out_cy = self.app.router['SignedOut:get'].url_for(display_region='cy')
+        self.get_signed_out_ni = self.app.router['SignedOut:get'].url_for(display_region='ni')
 
         self.case_id = self.uac_json_e['caseId']
         self.collection_exercise_id = self.uac_json_e['collectionExerciseId']
@@ -802,7 +806,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.account_service_url = '/start/'
-        self.account_service_log_out_url = '/start/save-and-exit/'
+        self.account_service_log_out_url = '/signed-out/'
 
         self.survey_launched_json = {
             'questionnaireId': self.questionnaire_id,
@@ -957,10 +961,6 @@ class RHTestCase(AioHTTPTestCase):
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
         self.address_index_epoch_param_test = f'?epoch=test'
-
-        self.get_start_saveandexit_en = self.app.router['StartSaveAndExit:get'].url_for(display_region='en')
-        self.get_start_saveandexit_cy = self.app.router['StartSaveAndExit:get'].url_for(display_region='cy')
-        self.get_start_saveandexit_ni = self.app.router['StartSaveAndExit:get'].url_for(display_region='ni')
 
         self.selected_uprn = '10023122451'
         self.selected_uprn_ni = '187748262'
@@ -1318,7 +1318,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_by_text_secondary_individual_en = \
             'The text message with an individual access code should arrive soon for you to start your census'
         self.content_request_code_sent_by_text_secondary_manager_en = \
-            'The text message with a new manager access code should arrive soon for you to start your census'
+            'The text message with a new manager access code should arrive soon for you to start the census'
         self.content_request_code_sent_by_text_secondary_household_en = \
             'The text message with a new household access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
@@ -1337,7 +1337,7 @@ class RHTestCase(AioHTTPTestCase):
             'The text message with an individual access code should arrive soon for you to start your census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_by_text_secondary_manager_cy = \
-            'The text message with a new manager access code should arrive soon for you to start your census'
+            'The text message with a new manager access code should arrive soon for you to start the census'
         # TODO Add Welsh Translation
         self.content_request_code_sent_by_text_secondary_household_cy = \
             'The text message with a new household access code should arrive soon for you to start your census'

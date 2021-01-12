@@ -515,25 +515,6 @@ class StartNISelectLanguage(StartCommon):
                                       session.get('adlocation'))
 
 
-@start_routes.view(r'/' + View.valid_display_regions + '/start/save-and-exit/')
-class StartSaveAndExit(StartCommon):
-    @aiohttp_jinja2.template('save-and-exit.html')
-    async def get(self, request):
-        self.setup_request(request)
-        display_region = request.match_info['display_region']
-        self.log_entry(request, display_region + '/start/save-and-exit')
-        if display_region == 'cy':
-            locale = 'cy'
-        else:
-            locale = 'en'
-        await forget(request)
-        return {
-            'display_region': display_region,
-            'locale': locale,
-            'page_url': View.gen_page_url(request)
-        }
-
-
 @start_routes.view(r'/' + View.valid_display_regions + '/start/link-address/address-has-been-linked/')
 class StartAddressHasBeenLinked(StartCommon):
     @aiohttp_jinja2.template('start-link-address-linked.html')

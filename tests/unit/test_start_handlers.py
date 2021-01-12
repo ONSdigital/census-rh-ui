@@ -1886,38 +1886,41 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.nisra_logo, contents)
 
     @unittest_run_loop
-    async def test_get_start_save_and_exit_ew(self):
+    async def test_get_signed_out_ew(self):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET', self.get_start_save_and_exit_en)
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/save-and-exit'")
+            response = await self.client.request('GET', self.get_signed_out_en)
+            self.assertLogEvent(cm, "received GET on endpoint 'en/signed-out'")
             self.assertLogEvent(cm, "identity not previously remembered")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
-            self.assertIn(self.content_start_save_and_exit_title_en, contents)
+            self.assertIn(self.content_signed_out_page_title_en, contents)
+            self.assertIn(self.content_signed_out_title_en, contents)
             self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/save-and-exit/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn('<a href="/cy/signed-out/" lang="cy" >Cymraeg</a>', contents)
 
     @unittest_run_loop
-    async def test_get_start_save_and_exit_cy(self):
+    async def test_get_signed_out_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET', self.get_start_save_and_exit_cy)
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/save-and-exit'")
+            response = await self.client.request('GET', self.get_signed_out_cy)
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/signed-out'")
             self.assertLogEvent(cm, "identity not previously remembered")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
-            self.assertIn(self.content_start_save_and_exit_title_cy, contents)
+            self.assertIn(self.content_signed_out_page_title_cy, contents)
+            self.assertIn(self.content_signed_out_title_cy, contents)
             self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/save-and-exit/" lang="en" >English</a>', contents)
+            self.assertIn('<a href="/en/signed-out/" lang="en" >English</a>', contents)
 
     @unittest_run_loop
-    async def test_get_start_save_and_exit_ni(self):
+    async def test_get_signed_out_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('GET', self.get_start_save_and_exit_ni)
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/save-and-exit'")
+            response = await self.client.request('GET', self.get_signed_out_ni)
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/signed-out'")
             self.assertLogEvent(cm, "identity not previously remembered")
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
-            self.assertIn(self.content_start_save_and_exit_title_en, contents)
+            self.assertIn(self.content_signed_out_page_title_en, contents)
+            self.assertIn(self.content_signed_out_title_en, contents)
             self.assertIn(self.nisra_logo, contents)
 
     @unittest_run_loop

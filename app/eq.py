@@ -33,7 +33,7 @@ class EqPayloadConstructor(object):
         domain_url = app['DOMAIN_URL_EN']
         url_path_prefix = app['URL_PATH_PREFIX']
         url_display_region = '/' + self._sample_attributes['display_region']
-        save_and_exit_url = '/start/save-and-exit/'
+        save_and_exit_url = '/signed-out/'
         start_url = '/start/'
         self._account_service_url = \
             f'{domain_url_protocol}{domain_url}{url_path_prefix}{url_display_region}{start_url}'
