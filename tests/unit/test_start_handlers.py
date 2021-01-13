@@ -1607,7 +1607,7 @@ class TestStartHandlers(TestHelpers):
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_common_save_and_exit_link_en, contents)
-            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
             self.assertIn(self.content_start_confirm_address_error_en, contents)
 
     @unittest_run_loop
@@ -2405,8 +2405,8 @@ class TestStartHandlers(TestHelpers):
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', confirm_address_content)
             self.assertIn(self.content_common_save_and_exit_link_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_cy, confirm_address_content)
-            self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
-            self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_option_no_cy, confirm_address_content)
 
             post_confirm_address_response = await self.client.request(
                 'POST',
