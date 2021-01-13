@@ -378,16 +378,28 @@ class ProcessNumberOfPeople:
 
             elif int(data.get('number_of_people')) > 30:
                 logger.info('number_of_people continuation greater than 30', client_ip=request['client_ip'])
-                flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
-                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                   'number_of_people_continuation_high'))
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation_high'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation_high'))
                 number_of_people_valid = False
 
         elif int(data.get('number_of_people')) > 30:
             logger.info('number_of_people greater than 30', client_ip=request['client_ip'])
-            flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
-                                                               'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                               'number_of_people_high'))
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_high'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_high'))
             number_of_people_valid = False
 
         return number_of_people_valid
