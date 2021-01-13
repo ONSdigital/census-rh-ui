@@ -2205,6 +2205,90 @@ class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '6')
 
     @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '31')
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_people_in_household_too_many_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_people_in_household_invalid(
+            self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '31')
+
+    @unittest_run_loop
     async def test_get_request_continuation_questionnaire_census_address_type_ce_ew(self):
         await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')

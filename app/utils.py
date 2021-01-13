@@ -346,11 +346,11 @@ class ProcessNumberOfPeople:
             logger.info('number_of_people nan', client_ip=request['client_ip'])
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                flash(request, FlashMessage.generate_flash_message('Enter a number',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                flash(request, FlashMessage.generate_flash_message('Enter a number',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
             number_of_people_valid = False
@@ -360,7 +360,7 @@ class ProcessNumberOfPeople:
                 logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'])
                 flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                   'number_of_people_continuation'))
+                                                                   'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
             elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
@@ -369,12 +369,26 @@ class ProcessNumberOfPeople:
                     # TODO Add Welsh Translation
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                       'number_of_people_continuation'))
+                                                                       'number_of_people_continuation_low'))
                 else:
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                       'number_of_people_continuation'))
+                                                                       'number_of_people_continuation_low'))
                 number_of_people_valid = False
+
+            elif int(data.get('number_of_people')) > 30:
+                logger.info('number_of_people continuation greater than 30', client_ip=request['client_ip'])
+                flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_continuation_high'))
+                number_of_people_valid = False
+
+        elif int(data.get('number_of_people')) > 30:
+            logger.info('number_of_people greater than 30', client_ip=request['client_ip'])
+            flash(request, FlashMessage.generate_flash_message('Enter a number less than 30',
+                                                               'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                               'number_of_people_high'))
+            number_of_people_valid = False
 
         return number_of_people_valid
 
@@ -384,6 +398,10 @@ class ProcessNumberOfPeople:
         number_of_household_forms = 0
         number_of_continuation_forms = 0
         number_of_large_print_forms = 0
+
+        # '0' is valid for second properties, but trips up the calculation, so should be treated as '1'
+        if number_of_people == 0:
+            number_of_people = 1
 
         if large_print:
             number_of_large_print_forms = math.ceil(number_of_people / 2)

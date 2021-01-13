@@ -1201,6 +1201,10 @@ class TestHelpers(RHTestCase):
                     self.assertLogEvent(cm, "number_of_people continuation less than 7")
                 elif not display_region == 'ni' and int(number_of_people) < 6:
                     self.assertLogEvent(cm, "number_of_people continuation less than 6")
+                elif int(number_of_people) > 30:
+                    self.assertLogEvent(cm, "number_of_people continuation greater than 30")
+            elif int(number_of_people) > 30:
+                self.assertLogEvent(cm, "number_of_people greater than 30")
 
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -1214,7 +1218,10 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_cy, contents)
                 elif self.sub_user_journey == 'continuation-questionnaire' and int(number_of_people) < 6:
                     self.assertIn(
-                        self.content_request_continuation_questionnaire_people_in_household_error_number_cy, contents)
+                        self.content_request_continuation_questionnaire_people_in_household_error_number_greater_cy,
+                        contents)
+                elif int(number_of_people) > 30:
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_number_less_cy, contents)
                 self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
             else:
                 if number_of_people == '':
@@ -1224,12 +1231,14 @@ class TestHelpers(RHTestCase):
                 elif self.sub_user_journey == 'continuation-questionnaire':
                     if display_region == 'ni' and int(number_of_people) < 7:
                         self.assertIn(
-                            self.content_request_continuation_questionnaire_people_in_household_error_number_ni,
+                            self.content_request_continuation_questionnaire_people_in_household_error_number_greater_ni,
                             contents)
                     elif not display_region == 'ni' and int(number_of_people) < 6:
                         self.assertIn(
-                            self.content_request_continuation_questionnaire_people_in_household_error_number_en,
+                            self.content_request_continuation_questionnaire_people_in_household_error_number_greater_en,
                             contents)
+                elif int(number_of_people) > 30:
+                    self.assertIn(self.content_request_questionnaire_people_in_household_error_number_less_en, contents)
                 self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
 
     async def check_get_select_how_to_receive_form_manager(self, url, display_region):
@@ -2947,13 +2956,17 @@ class TestHelpers(RHTestCase):
         if fulfilment_type == 'LARGE_PRINT':
             if (individual == 'true') or (number_in_household and number_in_household <= 2):
                 fulfilment_type_array = str(['LARGE_PRINT'])
-            if number_in_household == 7:
+            elif number_in_household == 0:
+                fulfilment_type_array = str(['LARGE_PRINT'])
+            elif number_in_household == 7:
                 fulfilment_type_array = str(['LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT', 'LARGE_PRINT'])
         elif fulfilment_type == 'QUESTIONNAIRE':
             if (individual == 'true') or (number_in_household and number_in_household <= 5):
                 fulfilment_type_array = str(['QUESTIONNAIRE'])
             else:
-                if number_in_household == 6:
+                if number_in_household == 0:
+                    fulfilment_type_array = str(['QUESTIONNAIRE'])
+                elif number_in_household == 6:
                     if display_region == 'ni':
                         fulfilment_type_array = str(['QUESTIONNAIRE'])
                     else:
