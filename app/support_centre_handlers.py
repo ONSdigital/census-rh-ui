@@ -52,7 +52,7 @@ class SupportCentreEnterPostcode(View):
             logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info('invalid postcode', client_ip=request['client_ip'], invalid_postcode=postcode, region_of_site=display_region)
+            logger.info('invalid postcode', client_ip=request['client_ip'], region_of_site=display_region)
             flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR', 'postcode')
             flash(request, flash_message)
             raise HTTPFound(
