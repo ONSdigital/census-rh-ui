@@ -354,7 +354,6 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             logger.info('address confirmation error',
                         client_ip=request['client_ip'],
-                        user_selection=address_confirmation,
                         region_of_site=display_region,
                         postcode=attributes['postcode'])
             if display_region == 'cy':

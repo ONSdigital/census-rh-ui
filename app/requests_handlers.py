@@ -782,7 +782,6 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         except KeyError:
             logger.info('name confirmation error',
                         client_ip=request['client_ip'],
-                        user_selection=name_address_confirmation,
                         type_of_request=request_type,
                         region_of_site=display_region)
             if display_region == 'cy':

@@ -84,7 +84,7 @@ class SupportCentreListCentres(View):
             logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode_value, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh):
-            logger.info('invalid postcode', client_ip=request['client_ip'], invalid_postcode=postcode_value, region_of_site=display_region)
+            logger.info('invalid postcode', client_ip=request['client_ip'], region_of_site=display_region)
             attributes = {
                 'page_title': 'Error',
                 'display_region': display_region,
