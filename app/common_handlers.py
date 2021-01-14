@@ -546,16 +546,16 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
-                census_address_type = session['attributes']['censusAddressType']
-                if census_address_type == 'NA':
+                census_address_type_value = session['attributes']['censusAddressType']
+                if census_address_type_value == 'NA':
                     logger.info('censusAddressType is NA', client_ip=request['client_ip'], user_selection=address_confirmation)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-                elif (census_address_type == 'CE') and \
+                elif (census_address_type_value == 'CE') and \
                         (sub_user_journey == 'continuation-questionnaire'):
                     logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'], sub_journey=sub_user_journey,
-                                census_addr_type=census_address_type)
+                                census_addr_type=census_address_type_value)
                     raise HTTPFound(
                         request.app.router['RequestContinuationNotAHousehold:get'].url_for(
                             display_region=display_region))
@@ -566,35 +566,35 @@ class CommonConfirmAddress(CommonCommon):
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             try:
-                country_code = session['attributes']['countryCode']
+                country_code_value = session['attributes']['countryCode']
                 uprn = session['attributes']['uprn']
-                if country_code == 'S':
-                    logger.info('address is in Scotland', client_ip=request['client_ip'], country_code_found=country_code, uprn_value=uprn)
+                if country_code_value == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'], country_code_found=country_code_value, uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif country_code == 'N' and display_region != 'ni':
+                elif country_code_value == 'N' and display_region != 'ni':
                     logger.info('address is in Northern Ireland but not display_region ni',
                                 client_ip=request['client_ip'],
-                                country_code_found=country_code,
+                                country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInNorthernIreland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif display_region == 'ni' and country_code == 'W':
+                elif display_region == 'ni' and country_code_value == 'W':
                     logger.info('address is in Wales but display_region ni',
                                 client_ip=request['client_ip'],
-                                country_code_found=country_code,
+                                country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInWales:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif display_region == 'ni' and country_code == 'E':
+                elif display_region == 'ni' and country_code_value == 'E':
                     logger.info('address is in England but display_region ni',
                                 client_ip=request['client_ip'],
-                                country_code_found=country_code,
+                                country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -621,16 +621,16 @@ class CommonConfirmAddress(CommonCommon):
                             request.app.router['StartAddressHasBeenChanged:get'].url_for(display_region=display_region))
 
                 except ClientResponseError as ex:
-                    hashed_uac = session['case']['uacHash']
+                    hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac)
+                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac)
+                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac)
+                                     client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
 
                     cc_error = ''
                     if sub_user_journey == 'unlinked':
@@ -772,8 +772,7 @@ class CommonCEMangerQuestion(CommonCommon):
             resident_or_manager = data['form-resident-or-manager']
         except KeyError:
             logger.info('resident or manager question error',
-                        client_ip=request['client_ip'],
-                        manager_or_resident=resident_or_manager)
+                        client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:

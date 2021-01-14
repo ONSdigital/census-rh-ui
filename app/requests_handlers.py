@@ -80,11 +80,11 @@ class RequestCodeIndividual(RequestCommon):
                 session.changed()
 
                 attributes = session['attributes']
-                case_type = attributes['case_type']
-                if case_type:
+                case_type_value = attributes['case_type']
+                if case_type_value:
                     logger.info('have session and case_type - directing to select method',
                                 is_individual=session['attributes']['individual'],
-                                type_of_case=case_type)
+                                type_of_case=case_type_value)
                     raise HTTPFound(
                         request.app.router['RequestCodeSelectHowToReceive:get'].url_for(request_type=request_type,
                                                                                         display_region=display_region))
@@ -852,20 +852,20 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
                     fulfilment_type_array.append(fulfilment_type)
 
-                    room_number = attributes['roomNumber']
+                    room_number_value = attributes['roomNumber']
                     logger.info(
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'], postcode=attributes['postcode'], room_number_entered=room_number)
+                        client_ip=request['client_ip'], postcode=attributes['postcode'], room_number_entered=room_number_value)
 
-                    if room_number:
+                    if room_number_value:
                         if len(attributes['last_name']) < last_name_char_limit:
-                            last_name = attributes['last_name'] + ', ' + room_number
+                            last_name = attributes['last_name'] + ', ' + room_number_value
                             title = None
                         else:
                             last_name = attributes['last_name']
-                            title = room_number
+                            title = room_number_value
                     else:
                         last_name = attributes['last_name']
                         title = None
