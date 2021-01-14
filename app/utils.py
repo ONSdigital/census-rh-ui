@@ -357,14 +357,18 @@ class ProcessNumberOfPeople:
 
         elif request_type == 'continuation-questionnaire':
             if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
-                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
+                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'],
+                            region_of_site=display_region,
+                            type_of_request=request_type)
                 flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_continuation'))
                 number_of_people_valid = False
 
             elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
-                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
+                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'],
+                            region_of_site=display_region,
+                            type_of_request=request_type)
                 if display_region == 'cy':
                     # TODO Add Welsh Translation
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',

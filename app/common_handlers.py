@@ -546,7 +546,7 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
-                census_address_type=session['attributes']['censusAddressType']
+                census_address_type = session['attributes']['censusAddressType']
                 if census_address_type == 'NA':
                     logger.info('censusAddressType is NA', client_ip=request['client_ip'], user_selection=address_confirmation)
                     raise HTTPFound(
@@ -566,8 +566,8 @@ class CommonConfirmAddress(CommonCommon):
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             try:
-                country_code=session['attributes']['countryCode']
-                uprn=session['attributes']['uprn']
+                country_code = session['attributes']['countryCode']
+                uprn = session['attributes']['uprn']
                 if country_code == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'], country_code_found=country_code, uprn_value=uprn)
                     raise HTTPFound(
