@@ -299,7 +299,7 @@ class RequestCodeSelectHowToReceive(RequestCommon):
             request_method = data['form-select-method']
         except KeyError:
             logger.info('request method selection error',
-                        client_ip=request['client_ip'], method_selected=request_method)
+                        client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -495,7 +495,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
             mobile_confirmation = data['request-mobile-confirmation']
         except KeyError:
             logger.info('mobile confirmation error',
-                        client_ip=request['client_ip'], user_selection=mobile_confirmation)
+                        client_ip=request['client_ip'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
