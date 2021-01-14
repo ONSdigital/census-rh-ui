@@ -2114,14 +2114,14 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_no)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=False)
+                self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
+            self.check_text_enter_mobile(display_region, contents, check_empty=False, check_error=False)
 
     async def check_post_confirm_send_by_post_input_no_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:

@@ -1385,7 +1385,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_individual_message_en = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         self.content_request_code_confirm_send_by_post_option_yes_en = 'Yes, send the access code by post'
-        self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it by text message'
         # TODO Add Welsh Translation
         self.content_request_code_confirm_send_by_post_page_title_individual_cy = \
             '<title>Confirm to send individual access code by post - Cyfrifiad 2021</title>'
@@ -1425,7 +1425,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_confirm_send_by_post_option_yes_cy = 'Yes, send the access code by post'
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it by text message'
 
         self.content_request_code_sent_by_post_page_title_household_en = \
             '<title>Household access code will be sent by post - Census 2021</title>'
