@@ -22,8 +22,8 @@
     {%- set question_description = _('<p class="u-fs-r--b">%(total)s addresses found for postcode %(pcode)s</p>', total=total_matches|string, pcode=postcode) -%}
 {%- endif -%}
 
-{%- if 'error-no-address-selected' in field_messages_dict -%}
-    {%- set error_select_address = {'id': 'error-no-address-selected', 'text': _('Select an address')} -%}
+{%- if 'error-no-address-picked' in field_messages_dict -%}
+    {%- set error_pick_address = {'id': 'error-no-address-picked', 'text': _('Select an address')} -%}
 {%- endif -%}
 
 {% block main %}
@@ -52,7 +52,7 @@
                     'name': 'form-pick-address',
                     'or': 'Or',
                     'radios': addresses,
-                    'error': error_select_address
+                    'error': error_pick_address
                 })
             }}
 
