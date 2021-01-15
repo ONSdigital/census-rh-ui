@@ -309,6 +309,18 @@ class ProcessName:
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
             name_valid = False
 
+        elif len(data.get('name_first_name')) > 35:
+            if display_region == 'cy':
+                # TODO Add Welsh translation
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+            else:
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+            name_valid = False
+
         if not (data.get('name_last_name')):
             if display_region == 'cy':
                 # TODO Add Welsh Translation
@@ -317,6 +329,18 @@ class ProcessName:
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+            name_valid = False
+
+        elif len(data.get('name_last_name')) > 35:
+            if display_region == 'cy':
+                # TODO Add Welsh translation
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+            else:
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_last_name_len'))
             name_valid = False
 
         return name_valid

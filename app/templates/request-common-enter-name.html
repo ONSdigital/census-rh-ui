@@ -14,10 +14,14 @@
     }
 } %}
 
-{%- if 'error_first_name' in field_messages_dict -%}
+{%- if 'error_first_name_len' in field_messages_dict -%}
+    {%- set error_first_name = {'id': 'error_first_name_len', 'text': _('You have entered too many characters. Enter up to 35 characters')} -%}
+{%- elif 'error_first_name' in field_messages_dict -%}
     {%- set error_first_name = {'id': 'error_first_name', 'text': _('Enter your first name')} -%}
 {%- endif -%}
-{%- if 'error_last_name' in field_messages_dict -%}
+{%- if 'error_last_name_len' in field_messages_dict -%}
+    {%- set error_last_name = {'id': 'error_last_name_len', 'text': _('You have entered too many characters. Enter up to 35 characters')} -%}
+{%- elif 'error_last_name' in field_messages_dict -%}
     {%- set error_last_name = {'id': 'error_last_name', 'text': _('Enter your last name')} -%}
 {%- endif -%}
 
@@ -46,7 +50,14 @@
                 },
                 'value': form_value_name_first_name,
                 'name': 'name_first_name',
-                'error': error_first_name
+                'error': error_first_name,
+                'charCheckLimit': {
+                    'limit': 35,
+                    'charCountOverLimitSingular': _('{x} character too many'),
+                    'charCountOverLimitPlural': _('{x} characters too many'),
+                    'charCountSingular': _('You have {x} character remaining'),
+                    'charCountPlural': _('You have {x} characters remaining')
+                }
             })
         }}
 
@@ -58,7 +69,14 @@
                 },
                 'value': form_value_name_last_name,
                 'name': 'name_last_name',
-                'error': error_last_name
+                'error': error_last_name,
+                'charCheckLimit': {
+                    'limit': 35,
+                    'charCountOverLimitSingular': _('{x} character too many'),
+                    'charCountOverLimitPlural': _('{x} characters too many'),
+                    'charCountSingular': _('You have {x} character remaining'),
+                    'charCountPlural': _('You have {x} characters remaining')
+                }
             })
         }}
 
