@@ -188,7 +188,7 @@ class CommonAddressInWales(CommonCommon):
                     + '/' + View.valid_sub_user_journeys + '/register-address/')
 class CommonRegisterAddress(CommonCommon):
     """
-    Common route to render a 'Call the Contact Centre' page from any journey
+    Common route to render the 'Register address' page from any journey
     """
     @aiohttp_jinja2.template('common-register-address.html')
     async def get(self, request):
@@ -211,7 +211,6 @@ class CommonRegisterAddress(CommonCommon):
             'page_title': page_title,
             'display_region': display_region,
             'locale': locale,
-            'user_journey': user_journey,
             'page_url': View.gen_page_url(request),
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us'),
             'call_centre_number': View.get_call_centre_number(display_region)

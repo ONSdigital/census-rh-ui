@@ -779,7 +779,7 @@ class RHTestCase(AioHTTPTestCase):
                 self.uac_json_e['address']['addressLine1'] + ', ' + self.uac_json_e['address']['addressLine2'],
             'response_id': self.response_id,
             'account_service_url': f'{account_svc_url}{url_path_prefix}/start/',
-            'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/start/save-and-exit',
+            'account_service_log_out_url': f'{account_svc_url}{url_path_prefix}/signed-out/',
             'channel': self.channel,
             'user_id': '',
             'questionnaire_id': self.questionnaire_id,
