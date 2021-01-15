@@ -21,20 +21,30 @@ from .helpers import TestHelpers
 class TestWebFormHandlers(TestHelpers):
     user_journey = 'web-form'
 
-    def check_text_web_form(self, display_region, contents):
+    def check_text_web_form(self, display_region, contents, check_error=False):
         if display_region == 'cy':
+            if check_error:
+                self.assertIn(self.content_web_form_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_web_form_page_title_cy, contents)
             self.assertIn(self.content_web_form_title_cy, contents)
             self.assertIn(self.content_web_form_warning_cy, contents)
         else:
+            if check_error:
+                self.assertIn(self.content_web_form_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_web_form_page_title_en, contents)
             self.assertIn(self.content_web_form_title_en, contents)
             self.assertIn(self.content_web_form_warning_en, contents)
 
     def check_text_web_form_success(self, display_region, contents):
         if display_region == 'cy':
+            self.assertIn(self.content_web_form_success_page_title_cy, contents)
             self.assertIn(self.content_web_form_success_title_cy, contents)
             self.assertIn(self.content_web_form_success_confirmation_cy, contents)
             self.assertIn(self.content_web_form_success_secondary_cy, contents)
         else:
+            self.assertIn(self.content_web_form_success_page_title_en, contents)
             self.assertIn(self.content_web_form_success_title_en, contents)
             self.assertIn(self.content_web_form_success_confirmation_en, contents)
             self.assertIn(self.content_web_form_success_secondary_en, contents)
@@ -126,7 +136,7 @@ class TestWebFormHandlers(TestHelpers):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('web-form', display_region, include_sub_user_journey=False,
                                                           include_page=False), contents)
-            self.check_text_web_form(display_region, contents)
+            self.check_text_web_form(display_region, contents, check_error=True)
             if missing_value == 'country':
                 if display_region == 'cy':
                     self.assertMessagePanel(WEBFORM_MISSING_COUNTRY_MSG_CY, contents)
@@ -169,7 +179,7 @@ class TestWebFormHandlers(TestHelpers):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('web-form', display_region, include_sub_user_journey=False,
                                                           include_page=False), contents)
-            self.check_text_web_form(display_region, contents)
+            self.check_text_web_form(display_region, contents, check_error=True)
             if display_region == 'cy':
                 self.assertMessagePanel(WEBFORM_MISSING_EMAIL_INVALID_MSG_CY, contents)
             else:

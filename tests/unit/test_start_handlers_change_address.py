@@ -2337,15 +2337,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_select_address_en,
                     data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/address-not-found'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/start/call-contact-centre/address-not-found/" lang="cy" >Cymraeg</a>',
+            self.assertIn('<a href="/cy/start/change-address/register-address/" lang="cy" >Cymraeg</a>',
                           str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_common_register_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_register_address_text_en, str(resp_content))
             self.assertIn(self.content_call_centre_number_ew, str(resp_content))
 
     @unittest_run_loop
@@ -2391,15 +2391,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_select_address_cy,
                     data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/address-not-found'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.ons_logo_cy, str(resp_content))
-            self.assertIn('<a href="/en/start/call-contact-centre/address-not-found/" lang="en" >English</a>',
+            self.assertIn('<a href="/en/start/change-address/register-address/" lang="en" >English</a>',
                           str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_cy, str(resp_content))
+            self.assertIn(self.content_common_register_address_title_cy, str(resp_content))
+            self.assertIn(self.content_common_register_address_text_cy, str(resp_content))
             self.assertIn(self.content_call_centre_number_cy, str(resp_content))
 
     @unittest_run_loop
@@ -2444,13 +2444,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_select_address_ni,
                     data=self.common_select_address_input_not_listed)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/select-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/address-not-found'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
             resp_content = await response.content.read()
             self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_address_not_found_text_en, str(resp_content))
+            self.assertIn(self.content_common_register_address_title_en, str(resp_content))
+            self.assertIn(self.content_common_register_address_text_en, str(resp_content))
             self.assertIn(self.content_call_centre_number_ni, str(resp_content))
 
     @unittest_run_loop
@@ -2917,12 +2917,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
@@ -2979,12 +2981,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
@@ -3041,12 +3045,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -3101,12 +3107,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
@@ -3163,12 +3171,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
@@ -3225,12 +3235,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, aioresponses(
+                'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")

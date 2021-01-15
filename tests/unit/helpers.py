@@ -660,23 +660,21 @@ class TestHelpers(RHTestCase):
             response = await self.client.request('POST', url, data=self.common_select_address_input_not_listed)
 
             self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('call-contact-centre/address-not-found',
-                                                             display_region, 'GET', False))
+            self.assertLogEvent(cm, self.build_url_log_entry('register-address', display_region, 'GET', True))
             self.assertEqual(response.status, 200)
 
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('call-contact-centre/address-not-found',
-                                                          display_region, False), contents)
+                self.assertIn(self.build_translation_link('register-address', display_region, True), contents)
             if display_region == 'ni':
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_common_register_address_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ni, contents)
             elif display_region == 'cy':
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_cy, contents)
+                self.assertIn(self.content_common_register_address_title_cy, contents)
                 self.assertIn(self.content_call_centre_number_cy, contents)
             else:
-                self.assertIn(self.content_common_call_contact_centre_address_not_found_title_en, contents)
+                self.assertIn(self.content_common_register_address_title_en, contents)
                 self.assertIn(self.content_call_centre_number_ew, contents)
 
     async def check_post_confirm_address_input_invalid_or_no_selection(self, url, display_region, data, is_ce=False):
@@ -2520,6 +2518,9 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_cy, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
@@ -2527,6 +2528,9 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_en, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
                 self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
             else:
@@ -2536,6 +2540,9 @@ class TestHelpers(RHTestCase):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_start_transient_accommodation_type_error_cy, contents)
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_error_cy, contents)
+            else:
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_cy, contents)
@@ -2543,6 +2550,9 @@ class TestHelpers(RHTestCase):
         else:
             if check_error:
                 self.assertIn(self.content_start_transient_accommodation_type_error_en, contents)
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_error_en, contents)
+            else:
+                self.assertIn(self.content_start_transient_accommodation_type_page_title_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_en, contents)
@@ -2551,6 +2561,9 @@ class TestHelpers(RHTestCase):
     def check_text_start_transient_ni_select_language(self, contents, check_error=False):
         if check_error:
             self.assertIn(self.content_start_ni_select_language_error, contents)
+            self.assertIn(self.content_start_ni_select_language_page_title_error, contents)
+        else:
+            self.assertIn(self.content_start_ni_select_language_page_title, contents)
         self.assertIn(self.content_common_save_and_exit_link_en, contents)
         self.assertIn(self.content_start_ni_select_language_title, contents)
         self.assertIn(self.content_start_ni_select_language_option, contents)
@@ -2559,6 +2572,9 @@ class TestHelpers(RHTestCase):
     def check_text_start_transient_ni_language_options(self, contents, check_error=False):
         if check_error:
             self.assertIn(self.content_start_ni_language_options_error, contents)
+            self.assertIn(self.content_start_ni_language_options_page_title_error, contents)
+        else:
+            self.assertIn(self.content_start_ni_language_options_page_title, contents)
         self.assertIn(self.content_common_save_and_exit_link_en, contents)
         self.assertIn(self.content_start_ni_language_options_title, contents)
         self.assertIn(self.content_start_ni_language_options_option_yes, contents)

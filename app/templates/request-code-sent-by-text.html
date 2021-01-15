@@ -1,7 +1,7 @@
 {%- extends 'base-' + display_region + '.html' -%}
 
 {%- set start_survey_link = url('Start:get', display_region=display_region) -%}
-{%- set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
+{%- set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey='request', sub_user_journey=request_type) -%}
 
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from "components/panel/_macro.njk" import onsPanel -%}
@@ -23,7 +23,7 @@
         {%- if (individual == True) -%}
             <p>{{ _('The text message with an individual access code should arrive soon for you to start your census') }}</p>
         {%- elif (case_type == 'CE' and address_level == 'E') -%}
-            <p>{{ _('The text message with a new manager access code should arrive soon for you to start your census') }}</p>
+            <p>{{ _('The text message with a new manager access code should arrive soon for you to start the census') }}</p>
         {%- else -%}
             <p>{{ _('The text message with a new household access code should arrive soon for you to start your census') }}</p>
         {%- endif -%}

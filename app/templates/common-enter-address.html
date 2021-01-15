@@ -4,9 +4,9 @@
 {%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
 
 {%- if 'error_postcode_empty' in field_messages_dict -%}
-    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a postcode') } -%}
+    {%- set error_postcode = { 'id':'error_postcode_empty', 'text': _('Enter a postcode') } -%}
 {%- elif 'error_postcode_invalid' in field_messages_dict -%}
-    {%- set error_postcode = { 'id':'error-postcode', 'text': _('Enter a valid UK postcode') } -%}
+    {%- set error_postcode = { 'id':'error_postcode_invalid', 'text': _('Enter a valid UK postcode') } -%}
 {%- endif -%}
 
 {%- from 'components/question/_macro.njk' import onsQuestion -%}
@@ -23,9 +23,7 @@
 
 {%- set question_title = _('What is your postcode?') -%}
 
-{%- if sub_user_journey == 'unlinked' -%}
-    {%- set question_description = _('<p>This will enable us to associate your code to your address</p>') -%}
-{%- elif sub_user_journey == 'change-address' -%}
+{%- if (sub_user_journey == 'change-address') or (sub_user_journey == 'link-address') -%}
     {%- set question_description = '' -%}
 {%- elif (individual == True) -%}
     {%- set question_description = _('<p>To request an individual access code, we need your address</p>') -%}
@@ -43,14 +41,6 @@
 
     {%- if messages_dict -%}
         {%- include 'partials/messages.html' with context -%}
-    {%- endif -%}
-
-    {%- if sub_user_journey == 'unlinked' -%}
-
-        <h1 class="u-mb-l u-fs-xxl">{{_('Please supply your address')}}</h1>
-
-        <p>{{_('The access code that you have entered is not currently linked to an address. Please select your address so we can make the link.')}}</p>
-
     {%- endif -%}
 
     {%- call onsQuestion({
