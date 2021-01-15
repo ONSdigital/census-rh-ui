@@ -19,8 +19,8 @@
     }
 } -%}
 
-{%- if 'nothing-chosen' in field_messages_dict -%}
-    {%- set error_radio = {'id': 'nothing-chosen', 'text': _('Select an answer')} -%}
+{%- if 'nothing-picked' in field_messages_dict -%}
+    {%- set error_radio = {'id': 'nothing-picked', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- if (request_type == 'paper-questionnaire') or (request_type == 'continuation-questionnaire') -%}

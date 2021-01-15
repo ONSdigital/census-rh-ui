@@ -16,8 +16,8 @@
     }
 } -%}
 
-{%- if 'nothing-chosen' in field_messages_dict -%}
-    {%- set error_radio = {'id': 'nothing-chosen', 'text': _('Select an answer')} -%}
+{%- if 'nothing-picked' in field_messages_dict -%}
+    {%- set error_radio = {'id': 'nothing-picked', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- set form_options = [
@@ -60,7 +60,7 @@
 
         {{
             onsRadios({
-                'name': 'form-select-method',
+                'name': 'form-pick-method',
                 'legend': _('Select how to send access code'),
                 'radios': form_options,
                 'error': error_radio

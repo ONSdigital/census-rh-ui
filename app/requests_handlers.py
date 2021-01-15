@@ -293,7 +293,7 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         data = await request.post()
         try:
-            request_method = data['form-select-method']
+            request_method = data['form-pick-method']
         except KeyError:
             logger.info('request method selection error',
                         client_ip=request['client_ip'])

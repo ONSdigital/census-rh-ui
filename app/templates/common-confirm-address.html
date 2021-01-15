@@ -34,8 +34,8 @@
 ]
 -%}
 
-    {%- if 'nothing-chosen' in field_messages_dict -%}
-    {%- set error_address = {'id': 'nothing-chosen', 'text': _('Select an answer')} -%}
+    {%- if 'nothing-picked' in field_messages_dict -%}
+    {%- set error_address = {'id': 'nothing-picked', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- block main -%}

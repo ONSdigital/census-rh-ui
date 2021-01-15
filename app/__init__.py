@@ -17,7 +17,7 @@ WEBFORM_MISSING_EMAIL_INVALID_MSG = {'text': 'Email address invalid', 'clickable
 
 ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'error-no-address-picked'}  # NOQA
 START_LANGUAGE_OPTION_MSG = {'text': 'Select a language option', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'error-language-option'}  # NOQA
-NO_SELECTION_CHECK_MSG = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'nothing-chosen'}  # NOQA
+NO_SELECTION_CHECK_MSG = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'nothing-picked'}  # NOQA
 
 # TODO ADD WELSH TRANSLATION
 BAD_CODE_MSG_CY = {'text': 'Enter an access code', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'uac'}  # NOQA
@@ -41,4 +41,4 @@ WEBFORM_MISSING_EMAIL_INVALID_MSG_CY = {'text': 'Email address invalid', 'clicka
 
 ADDRESS_SELECT_CHECK_MSG_CY = {'text': 'Dewiswch gyfeiriad', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'error-no-address-picked'}  # NOQA
 # TODO ADD WELSH TRANSLATION
-NO_SELECTION_CHECK_MSG_CY = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'nothing-chosen'}  # NOQA
+NO_SELECTION_CHECK_MSG_CY = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'nothing-picked'}  # NOQA
