@@ -33,8 +33,8 @@
         }
     ]
 %}
-{%- if 'no-selection' in field_messages_dict -%}
-    {%- set error_resident_or_manager = {'id': 'no-selection', 'text': _('Select an answer')} -%}
+{%- if 'nothing-chosen' in field_messages_dict -%}
+    {%- set error_resident_or_manager = {'id': 'nothing-chosen', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {% block main %}

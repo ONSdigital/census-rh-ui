@@ -16,8 +16,8 @@
     }
 } -%}
 
-{%- if 'no-selection' in field_messages_dict -%}
-    {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
+{%- if 'nothing-chosen' in field_messages_dict -%}
+    {%- set error_radio = {'id': 'nothing-chosen', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
 {%- set form_options = [
