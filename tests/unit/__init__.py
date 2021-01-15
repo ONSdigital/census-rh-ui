@@ -1306,13 +1306,19 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
         self.content_request_questionnaire_people_in_household_error_empty_en = \
             'Enter the number of people in your household'
-        self.content_request_questionnaire_people_in_household_error_nan_en = 'Enter a numeral'
+        self.content_request_questionnaire_people_in_household_error_nan_en = 'Enter a number'
+        self.content_request_questionnaire_people_in_household_error_number_less_en = \
+            'Enter a number less than 31'
+        # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_title_cy = "Faint o bobl sydd yn eich cartref?"
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_error_empty_cy = \
             'Enter the number of people in your household'
         # TODO Add Welsh Translation
-        self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a numeral'
+        self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a number'
+        # TODO: add welsh translation
+        self.content_request_questionnaire_people_in_household_error_number_less_cy = \
+            'Enter a number less than 31'
 
         self.content_request_common_enter_name_page_title_en = \
             '<title>Enter name - Census 2021</title>'
@@ -2495,12 +2501,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_continuation_questionnaire_not_a_household_secondary_cy = \
             'Continuation questionnaires can only be requested for household addresses.'
 
-        self.content_request_continuation_questionnaire_people_in_household_error_number_en = \
+        self.content_request_continuation_questionnaire_people_in_household_error_number_greater_en = \
             'Enter a number greater than 5'
         # TODO: add welsh translation
-        self.content_request_continuation_questionnaire_people_in_household_error_number_cy = \
+        self.content_request_continuation_questionnaire_people_in_household_error_number_greater_cy = \
             'Enter a number greater than 5'
-        self.content_request_continuation_questionnaire_people_in_household_error_number_ni = \
+        self.content_request_continuation_questionnaire_people_in_household_error_number_greater_ni = \
             'Enter a number greater than 6'
 
         self.content_request_continuation_questionnaire_sent_post_page_title_en = \

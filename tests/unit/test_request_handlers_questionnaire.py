@@ -3801,6 +3801,134 @@ class TestRequestHandlersPaperForm(TestHelpers):
             self.post_request_individual_form_confirm_send_by_post_ni, 'ni', 'SPG', 'LARGE_PRINT', 'N', 'true')
 
     @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'QUESTIONNAIRE', 'E', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_cy, 'cy', 'HH', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_ni, 'ni', 'HH', 'QUESTIONNAIRE', 'N', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'QUESTIONNAIRE', 'E', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_sent_post_no_in_household_0_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG', 'QUESTIONNAIRE', 'N', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
     async def test_request_paper_questionnaire_sent_post_no_in_household_6_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
@@ -4185,6 +4313,134 @@ class TestRequestHandlersPaperForm(TestHelpers):
             number_in_household=18)
 
     @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'LARGE_PRINT', 'E', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'LARGE_PRINT', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_cy, 'cy', 'HH', 'LARGE_PRINT', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_ni, 'ni', 'HH', 'LARGE_PRINT', 'N', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'LARGE_PRINT', 'E', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'SPG', 'LARGE_PRINT', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_cy, 'cy', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_cy, 'cy', 'SPG', 'LARGE_PRINT', 'W', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_0_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '0')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_ni, 'ni', 'household', 'SPG')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_ni, 'ni', 'SPG', 'LARGE_PRINT', 'N', 'false',
+            number_in_household=0)
+
+    @unittest_run_loop
     async def test_request_paper_questionnaire_large_print_sent_post_no_in_household_7_hh_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
@@ -4503,3 +4759,99 @@ class TestRequestHandlersPaperForm(TestHelpers):
             self.post_request_paper_questionnaire_household_ni, 'ni')
         await self.check_post_people_in_household_invalid(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', 'aaa')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_cy, 'cy', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '31')
+
+    @unittest_run_loop
+    async def test_request_paper_questionnaire_people_in_household_31_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_paper_questionnaire_select_address_ni, 'ni', 'SPG')
+        await self.check_post_confirm_address_input_yes_form(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household_invalid(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '31')
