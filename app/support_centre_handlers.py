@@ -23,9 +23,13 @@ class SupportCentreEnterPostcode(View):
         if display_region == 'cy':
             locale = 'cy'
             page_title = 'Chwilio am ganolfan gymorth'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
         else:
             locale = 'en'
             page_title = 'Find a support centre'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
         return {
             'display_region': display_region,
             'page_title': page_title,

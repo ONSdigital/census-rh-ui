@@ -19,8 +19,7 @@ ADDRESS_SELECT_CHECK_MSG = {'text': 'Select an address', 'level': 'ERROR', 'type
 START_LANGUAGE_OPTION_MSG = {'text': 'Select a language option', 'level': 'ERROR', 'type': 'START_LANGUAGE_OPTION_MSG', 'field': 'error-language-option'}  # NOQA
 NO_SELECTION_CHECK_MSG = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA
 
-# TODO ADD WELSH TRANSLATION
-BAD_CODE_MSG_CY = {'text': 'Enter an access code', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'uac'}  # NOQA
+BAD_CODE_MSG_CY = {'text': 'Rhowch god mynediad', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'uac'}  # NOQA
 # TODO ADD WELSH TRANSLATION
 INVALID_CODE_MSG_CY = {'text': 'Enter a valid access code', 'clickable': True, 'level': 'ERROR', 'type': 'INVALID_CODE', 'field': 'uac'}  # NOQA
 # TODO ADD WELSH TRANSLATION

@@ -3,9 +3,9 @@ from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestRequestsHandlersAccessCode(TestHelpers):
+class TestRequestHandlersAccessCode(TestHelpers):
 
-    user_journey = 'requests'
+    user_journey = 'request'
     sub_user_journey = 'access-code'
 
     @unittest_run_loop

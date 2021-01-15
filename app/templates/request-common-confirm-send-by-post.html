@@ -10,7 +10,7 @@
 {%- from "components/panel/_macro.njk" import onsPanel -%}
 
 {%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
-{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='requests', sub_user_journey=request_type) -%}
+{%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='request', sub_user_journey=request_type) -%}
 
 {%- set form =  {
     'method': 'POST',
@@ -133,7 +133,7 @@
                             'id': 'large-print-yes',
                             'name': 'request-name-address-large-print',
                             'label': {
-                                'text': 'I need a large-print questionnaire'
+                                'text': _('I need a large-print questionnaire')
                             },
                             'value': 'large-print'
                         }

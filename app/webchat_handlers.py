@@ -1,6 +1,6 @@
 import aiohttp_jinja2
 
-from aiohttp.web import RouteTableDef
+from aiohttp.web import HTTPFound, RouteTableDef
 
 from datetime import datetime, date
 from structlog import get_logger
@@ -111,9 +111,13 @@ class WebChat(WebChat):
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             page_title = 'Gwe-sgwrs'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            page_title = 'Web Chat'
+            page_title = 'Web chat'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'en'
         self.log_entry(request, display_region + '/web-chat')
         if WebChat.check_open():
@@ -160,15 +164,8 @@ class WebChat(WebChat):
         if not form_valid:
             logger.info('form submission error',
                         client_ip=request['client_ip'])
-            return {
-                'form_value_screen_name': data.get('screen_name'),
-                'form_value_country': data.get('country'),
-                'form_value_query': data.get('query'),
-                'display_region': display_region,
-                'page_title': page_title,
-                'locale': locale,
-                'page_url': View.gen_page_url(request)
-            }
+            raise HTTPFound(
+                request.app.router['WebChat:get'].url_for(display_region=display_region))
 
         context = {
             'screen_name': data.get('screen_name'),
