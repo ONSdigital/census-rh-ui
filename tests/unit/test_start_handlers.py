@@ -2418,8 +2418,8 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.content_common_save_and_exit_link_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_page_title_cy, confirm_address_content)
             self.assertIn(self.content_start_confirm_address_title_cy, confirm_address_content)
-            self.assertIn(self.content_start_confirm_address_option_yes_en, confirm_address_content)
-            self.assertIn(self.content_start_confirm_address_option_no_en, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, confirm_address_content)
+            self.assertIn(self.content_start_confirm_address_option_no_cy, confirm_address_content)
 
             post_confirm_address_response = await self.client.request(
                 'POST',
