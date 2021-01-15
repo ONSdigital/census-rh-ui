@@ -552,7 +552,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_hh_ew_w(self):
@@ -566,7 +566,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_hh_cy(self):
@@ -580,7 +580,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_hh_ni(self):
@@ -594,7 +594,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_spg_ew_e(self):
@@ -608,7 +608,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_spg_ew_w(self):
@@ -622,7 +622,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_spg_cy(self):
@@ -636,7 +636,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_spg_ni(self):
@@ -650,7 +650,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_select_resident_ce_m_ew_e(self):
@@ -662,7 +662,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_select_resident_ce_m_ew_w(self):
@@ -674,7 +674,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_select_resident_ce_m_cy(self):
@@ -686,7 +686,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_select_resident_ce_m_ni(self):
@@ -698,7 +698,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_ce_r_ew_e(self):
@@ -708,7 +708,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_ce_r_ew_w(self):
@@ -718,7 +718,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_ce_r_cy(self):
@@ -728,7 +728,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_empty_ce_r_ni(self):
@@ -738,7 +738,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.common_form_data_empty, False, False)
+                                                      self.common_form_data_empty)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_hh_ew_e(self):
@@ -752,7 +752,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_hh_ew_w(self):
@@ -766,7 +766,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_hh_cy(self):
@@ -780,7 +780,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_hh_ni(self):
@@ -794,7 +794,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_spg_ew_e(self):
@@ -808,7 +808,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_spg_ew_w(self):
@@ -822,7 +822,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_spg_cy(self):
@@ -836,7 +836,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_spg_ni(self):
@@ -850,7 +850,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_select_resident_ce_m_ew_e(self):
@@ -862,7 +862,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_select_resident_ce_m_ew_w(self):
@@ -874,7 +874,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_select_resident_ce_m_cy(self):
@@ -886,7 +886,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_select_resident_ce_m_ni(self):
@@ -898,7 +898,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_ce_r_ew_e(self):
@@ -908,7 +908,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_ce_r_ew_w(self):
@@ -918,7 +918,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_ce_r_cy(self):
@@ -928,7 +928,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_first_ce_r_ni(self):
@@ -938,7 +938,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_first, False, True)
+                                                      self.request_common_enter_name_form_data_no_first)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_hh_ew_e(self):
@@ -952,7 +952,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_hh_ew_w(self):
@@ -966,7 +966,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_hh_cy(self):
@@ -980,7 +980,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_hh_ni(self):
@@ -994,7 +994,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_spg_ew_e(self):
@@ -1008,7 +1008,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_spg_ew_w(self):
@@ -1022,7 +1022,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_spg_cy(self):
@@ -1036,7 +1036,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_spg_ni(self):
@@ -1050,7 +1050,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_people_in_household(
             self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_select_resident_ce_m_ew_e(self):
@@ -1062,7 +1062,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_select_resident_ce_m_ew_w(self):
@@ -1074,7 +1074,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_en, 'en')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_select_resident_ce_m_cy(self):
@@ -1086,7 +1086,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_cy, 'cy')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_select_resident_ce_m_ni(self):
@@ -1098,7 +1098,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_resident_or_manager_form_resident(
             self.post_request_paper_questionnaire_resident_or_manager_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_ce_r_ew_e(self):
@@ -1108,7 +1108,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_e)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_ce_r_ew_w(self):
@@ -1118,7 +1118,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_en, 'en',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_ce_r_cy(self):
@@ -1128,7 +1128,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_ce_r_w)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_cy, 'cy',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_enter_name_no_last_ce_r_ni(self):
@@ -1138,7 +1138,7 @@ class TestRequestHandlersPaperForm(TestHelpers):
         await self.check_post_confirm_address_input_yes_form_individual(
             self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_ce_r_n)
         await self.check_post_enter_name_inputs_error(self.post_request_paper_questionnaire_enter_name_ni, 'ni',
-                                                      self.request_common_enter_name_form_data_no_last, True, False)
+                                                      self.request_common_enter_name_form_data_no_last)
 
     @unittest_run_loop
     async def test_request_paper_questionnaire_confirm_send_by_post_empty_hh_ew_e(self):
