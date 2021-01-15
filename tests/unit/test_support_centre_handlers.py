@@ -20,6 +20,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, contents)
 
@@ -35,6 +36,7 @@ class TestSupportCentre(RHTestCase):
             resp_content = str(await response.content.read())
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', resp_content)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_error_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_error_empty_en, resp_content)
@@ -49,6 +51,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, contents)
 
@@ -64,6 +67,7 @@ class TestSupportCentre(RHTestCase):
             resp_content = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', resp_content)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_error_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_error_empty_cy, resp_content)
@@ -78,6 +82,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, contents)
 
@@ -93,6 +98,7 @@ class TestSupportCentre(RHTestCase):
             resp_content = str(await response.content.read())
             self.assertIn(self.ons_logo_en, str(resp_content))
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', resp_content)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_error_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_error_invalid_en, resp_content)
@@ -107,6 +113,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, contents)
 
@@ -122,6 +129,7 @@ class TestSupportCentre(RHTestCase):
             resp_content = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, str(resp_content))
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', resp_content)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_error_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, resp_content)
             self.assertIn(self.content_support_centre_enter_postcode_error_invalid_cy, resp_content)
@@ -167,6 +175,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, contents)
 
@@ -223,6 +232,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, contents)
 
@@ -279,6 +289,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/find-a-support-centre/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_en, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_en, contents)
 
@@ -324,6 +335,7 @@ class TestSupportCentre(RHTestCase):
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/find-a-support-centre/" lang="en" >English</a>', contents)
+            self.assertIn(self.content_support_centre_enter_postcode_page_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_title_cy, contents)
             self.assertIn(self.content_support_centre_enter_postcode_secondary_cy, contents)
 

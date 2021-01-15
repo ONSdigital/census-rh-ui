@@ -3,9 +3,9 @@ from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestRequestsHandlersPaperForm(TestHelpers):
+class TestRequestHandlersPaperForm(TestHelpers):
 
-    user_journey = 'requests'
+    user_journey = 'request'
     sub_user_journey = 'paper-questionnaire'
 
     @unittest_run_loop

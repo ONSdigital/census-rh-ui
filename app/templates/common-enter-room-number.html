@@ -7,7 +7,7 @@
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from 'components/input/_macro.njk' import onsInput -%}
 
-{%- set cancel_link = url('CommonConfirmAddress:get', display_region=display_region, user_journey='requests', sub_user_journey=sub_user_journey) -%}
+{%- set cancel_link = url('CommonConfirmAddress:get', display_region=display_region, user_journey='request', sub_user_journey=sub_user_journey) -%}
 
 {%- set form =  {
     'method': 'POST',

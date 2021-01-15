@@ -3,9 +3,9 @@ from .helpers import TestHelpers
 
 
 # noinspection PyTypeChecker
-class TestRequestsHandlersContinuationQuestionnaire(TestHelpers):
+class TestRequestHandlersContinuationQuestionnaire(TestHelpers):
 
-    user_journey = 'requests'
+    user_journey = 'request'
     sub_user_journey = 'continuation-questionnaire'
 
     @unittest_run_loop
