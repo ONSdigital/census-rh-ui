@@ -1334,7 +1334,7 @@ class RHTestCase(AioHTTPTestCase):
             'Enter the number of people in your household'
         self.content_request_questionnaire_people_in_household_error_nan_en = 'Enter a number'
         self.content_request_questionnaire_people_in_household_error_number_less_en = \
-            'Enter a number less than 30'
+            'Enter a number less than 31'
         # TODO Add Welsh Translation
         self.content_request_questionnaire_people_in_household_title_cy = 'How many people are in your household?'
         # TODO Add Welsh Translation
@@ -1344,7 +1344,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a number'
         # TODO: add welsh translation
         self.content_request_questionnaire_people_in_household_error_number_less_cy = \
-            'Enter a number less than 30'
+            'Enter a number less than 31'
 
         self.content_request_common_enter_name_page_title_en = \
             '<title>Enter name - Census 2021</title>'
