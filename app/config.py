@@ -61,6 +61,8 @@ class BaseConfig:
     REDIS_SERVER = env('REDIS_SERVER', default='localhost')
 
     REDIS_PORT = env('REDIS_PORT', default='7379')
+    REDIS_POOL_MIN = env('REDIS_POOL_MIN', default='10')
+    REDIS_POOL_MAX = env('REDIS_POOL_MAX', default='500')
 
     SESSION_AGE = env('SESSION_AGE', default='600')
 

@@ -41,19 +41,21 @@ def setup(app_config):
 
     loop = get_event_loop()
     redis_pool = loop.run_until_complete(
-        make_redis_pool(app_config['REDIS_SERVER'], app_config['REDIS_PORT']))
+        make_redis_pool(app_config['REDIS_SERVER'], app_config['REDIS_PORT'], app_config['REDIS_POOL_MIN'], app_config['REDIS_POOL_MAX']))
     return session_middleware(
         RedisStorage(redis_pool,
                      cookie_name='RH_SESSION',
                      max_age=int(app_config['SESSION_AGE'])))
 
 
-async def make_redis_pool(host, port):
+async def make_redis_pool(host, port, poolMin, poolMax):
     redis_address = (host, port)
     try:
         redis_pool = await create_pool(
             redis_address,
             create_connection_timeout=3,
+            minsize=poolMin.
+            maxsize=poolMax
         )
         return redis_pool
     except (OSError, RedisError):
