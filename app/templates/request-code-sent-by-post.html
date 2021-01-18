@@ -1,16 +1,14 @@
 {%- extends 'base-' + display_region + '.html' -%}
 
-{%- set display_name = first_name + ' ' + last_name -%}
-{%- set display_address -%}
-    {{ addressLine1 + ', ' }}
-    {%- if addressLine2 -%}{{ addressLine2 }}
-    {%- elif addressLine3 -%}{{ addressLine3 }}
-    {%- elif townName -%}{{ townName }}
-    {%- elif postcode -%}{{ postcode }}
+{%- if roomNumber -%}
+    {%- if last_name|length > 23 -%}
+        {%- set display_name -%}{{ roomNumber + ' ' + first_name + ' ' + last_name }}{%- endset -%}
+    {%- else -%}
+        {%- set display_name -%}{{ first_name + ' ' + last_name + ', ' + roomNumber }}{%- endset -%}
     {%- endif -%}
-{%- endset -%}
-
-{%- set display_name -%}{{ first_name + ' ' + last_name }} {%- if roomNumber -%} {{ ', ' + roomNumber }}{% endif %}{%- endset -%}
+{%- else -%}
+    {%- set display_name -%}{{ first_name + ' ' + last_name }}{%- endset -%}
+{%- endif -%}
 {% set display_address %}{{ addressLine1 }}, {% if addressLine2 %}{{ addressLine2 }}{% elif addressLine3 %}{{ addressLine3 }}{% elif townName %}{{ townName }}{% elif postcode %}{{ postcode }}{% endif %}{% endset %}
 
 {%- from 'components/button/_macro.njk' import onsButton -%}

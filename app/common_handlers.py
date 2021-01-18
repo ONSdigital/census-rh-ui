@@ -858,6 +858,10 @@ class CommonEnterRoomNumber(CommonCommon):
             room_number = session_attributes['roomNumber']
         else:
             room_number = None
+        if session_attributes.get('first_name'):
+            previous_page = 'send-by-post'
+        else:
+            previous_page = 'confirm-address'
         return {
             'display_region': display_region,
             'user_journey': user_journey,
@@ -865,7 +869,8 @@ class CommonEnterRoomNumber(CommonCommon):
             'locale': locale,
             'page_url': View.gen_page_url(request),
             'page_title': page_title,
-            'room_number': room_number
+            'room_number': room_number,
+            'previous_page': previous_page
         }
 
     async def post(self, request):

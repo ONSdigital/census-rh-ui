@@ -1427,7 +1427,7 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_title_ce_with_room_long_surname_en = \
-            'A letter will be sent to Bob Bobbington-Fortesque-Smythe, Room A8 ' \
+            'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
             'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with an individual access code should arrive soon for you to start the census'
@@ -1452,8 +1452,8 @@ class RHTestCase(AioHTTPTestCase):
             "Caiff llythyr ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, " \
             "Cumbria College Of Art &amp; Design"
         self.content_request_code_sent_post_title_ce_with_room_long_surname_cy = \
-            "Caiff llythyr ei anfon at Bob Bobbington-Fortesque-Smythe, " \
-            "Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Caiff llythyr ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe " \
+            "yn Halls Of Residence, Cumbria College Of Art &amp; Design"
         self.content_request_code_sent_post_secondary_individual_cy = \
             "Dylai\\xe2\\x80\\x99r llythyr yn cynnwys cod mynediad unigol gyrraedd yn fuan " \
             "er mwyn i chi ddechrau\\\'r cyfrifiad"
@@ -2262,8 +2262,8 @@ class RHTestCase(AioHTTPTestCase):
             'A household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en = \
-            'An individual paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'An individual paper questionnaire will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_title_large_print_ce_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
@@ -2318,8 +2318,8 @@ class RHTestCase(AioHTTPTestCase):
             'Caiff holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy = \
-            'Caiff holiadur papur i unigolion ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Caiff holiadur papur i unigolion ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_large_print_ce_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
