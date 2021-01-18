@@ -34,10 +34,14 @@ class WebForm(View):
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             # TODO Add Welsh Translation
-            page_title = 'Web Form'
+            page_title = 'Web form'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            page_title = 'Web Form'
+            page_title = 'Web form'
+            if request.get('flash'):
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
         self.log_entry(request, display_region + '/web-form')
 
@@ -52,13 +56,6 @@ class WebForm(View):
     async def post(self, request):
         self.setup_request(request)
         display_region = request.match_info['display_region']
-        if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Web Form'
-            locale = 'cy'
-        else:
-            page_title = 'Web Form'
-            locale = 'en'
         self.log_entry(request, display_region + '/web-form')
 
         data = await request.post()
@@ -116,17 +113,8 @@ class WebForm(View):
 
         if not form_valid:
             logger.info('web form submission error', client_ip=request['client_ip'], region_of_site=display_region)
-            return {
-                'form_value_name': data.get('name'),
-                'form_value_country': data.get('country'),
-                'form_value_category': data.get('category'),
-                'form_value_email': data.get('email'),
-                'form_value_description': data.get('description'),
-                'display_region': display_region,
-                'page_title': page_title,
-                'locale': locale,
-                'page_url': View.gen_page_url(request)
-            }
+            raise HTTPFound(
+                request.app.router['WebForm:get'].url_for(display_region=display_region))
 
         else:
             logger.info('call web form endpoint', client_ip=request['client_ip'], region_of_site=display_region)

@@ -35,9 +35,9 @@ census_day = date(2021, 3, 21)
 class View:
     valid_display_regions = r'{display_region:\ben|cy|ni\b}'
     valid_ew_display_regions = r'{display_region:\ben|cy\b}'
-    valid_user_journeys = r'{user_journey:\bstart|requests\b}'
+    valid_user_journeys = r'{user_journey:\bstart|request\b}'
     valid_sub_user_journeys = \
-        r'{sub_user_journey:\bunlinked|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
+        r'{sub_user_journey:\blink-address|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
     page_title_error_prefix_en = 'Error: '
     # TODO: Add Welsh Translation
     page_title_error_prefix_cy = 'Error: '
@@ -346,11 +346,11 @@ class ProcessNumberOfPeople:
             logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                flash(request, FlashMessage.generate_flash_message('Enter a number',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter a numeral',
+                flash(request, FlashMessage.generate_flash_message('Enter a number',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
             number_of_people_valid = False
@@ -362,7 +362,7 @@ class ProcessNumberOfPeople:
                             type_of_request=request_type)
                 flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                   'number_of_people_continuation'))
+                                                                   'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
             elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
@@ -373,12 +373,38 @@ class ProcessNumberOfPeople:
                     # TODO Add Welsh Translation
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                       'number_of_people_continuation'))
+                                                                       'number_of_people_continuation_low'))
                 else:
                     flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
-                                                                       'number_of_people_continuation'))
+                                                                       'number_of_people_continuation_low'))
                 number_of_people_valid = False
+
+            elif int(data.get('number_of_people')) > 30:
+                logger.info('number_of_people continuation greater than 30', client_ip=request['client_ip'])
+                if display_region == 'cy':
+                    # TODO Add Welsh Translation
+                    flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation_high'))
+                else:
+                    flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                                                                       'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                       'number_of_people_continuation_high'))
+                number_of_people_valid = False
+
+        elif int(data.get('number_of_people')) > 30:
+            logger.info('number_of_people greater than 30', client_ip=request['client_ip'])
+            if display_region == 'cy':
+                # TODO Add Welsh Translation
+                flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_high'))
+            else:
+                flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                                                                   'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
+                                                                   'number_of_people_high'))
+            number_of_people_valid = False
 
         return number_of_people_valid
 
@@ -388,6 +414,10 @@ class ProcessNumberOfPeople:
         number_of_household_forms = 0
         number_of_continuation_forms = 0
         number_of_large_print_forms = 0
+
+        # '0' is valid for second properties, but trips up the calculation, so should be treated as '1'
+        if number_of_people == 0:
+            number_of_people = 1
 
         if large_print:
             number_of_large_print_forms = math.ceil(number_of_people / 2)
