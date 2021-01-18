@@ -1076,6 +1076,16 @@ class RHTestCase(AioHTTPTestCase):
             'name_first_name': 'Bob', 'action[save_continue]': '',
         }
 
+        self.request_common_enter_name_form_data_overlong_firstname = {
+            'name_first_name': 'Robert Albert Everest Reginald Bartholomew', 'name_last_name': 'Bobbington',
+            'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_overlong_lastname = {
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbington-Browning Fortesque-Smythe',
+            'action[save_continue]': '',
+        }
+
         self.request_common_confirm_send_by_post_data_yes = {
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
         }
@@ -1320,7 +1330,11 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Error: Enter name - Census 2021</title>'
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
+        self.content_request_common_enter_name_error_first_name_overlength_en = \
+            "You have entered too many characters. Enter up to 35 characters"
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
+        self.content_request_common_enter_name_error_last_name_overlength_en = \
+            "You have entered too many characters. Enter up to 35 characters"
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_page_title_cy = \
             '<title>Enter name - Cyfrifiad 2021</title>'
@@ -1331,7 +1345,13 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_error_first_name_cy = "Enter your first name"
         # TODO Add Welsh Translation
+        self.content_request_common_enter_name_error_first_name_overlength_cy = \
+            "You have entered too many characters. Enter up to 35 characters"
+        # TODO Add Welsh Translation
         self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_error_last_name_overlength_cy = \
+            "You have entered too many characters. Enter up to 35 characters"
 
         self.content_request_code_confirm_send_by_post_page_title_individual_en = \
             '<title>Confirm to send individual access code by post - Census 2021</title>'

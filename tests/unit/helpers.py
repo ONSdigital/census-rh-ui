@@ -1731,22 +1731,22 @@ class TestHelpers(RHTestCase):
                 if first_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
                 elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
+                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
                 if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
                 elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
+                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
                 if first_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
                 elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
+                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
                 if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
                 elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
+                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
