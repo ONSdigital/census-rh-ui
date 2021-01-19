@@ -39,8 +39,7 @@ class View:
     valid_sub_user_journeys = \
         r'{sub_user_journey:\blink-address|change-address|access-code|paper-questionnaire|continuation-questionnaire\b}'
     page_title_error_prefix_en = 'Error: '
-    # TODO: Add Welsh Translation
-    page_title_error_prefix_cy = 'Error: '
+    page_title_error_prefix_cy = 'Gwall: '
 
     @staticmethod
     def setup_request(request):
@@ -330,7 +329,8 @@ class ProcessNumberOfPeople:
         number_of_people_valid = True
 
         if (data.get('number_of_people')) == '':
-            logger.info('number_of_people empty', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
+            logger.info('number_of_people empty', client_ip=request['client_ip'], region_of_site=display_region,
+                        type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
@@ -343,7 +343,8 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif not (data.get('number_of_people')).isnumeric():
-            logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region, type_of_request=request_type)
+            logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region,
+                        type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter a number',
