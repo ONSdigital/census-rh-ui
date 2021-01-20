@@ -124,6 +124,13 @@ class View:
                 link = base_cy + '/cysylltu-a-ni'
             else:
                 link = base_en + '/contact-us'
+        elif requested_link == 'privacy':
+            if display_region == 'ni':
+                link = base_ni + '/privacy-and-data-protection/'
+            elif display_region == 'cy':
+                link = base_cy + '/preifatrwydd-a-diogelu-data/'
+            else:
+                link = base_en + '/privacy-and-data-protection/'
 
         return link
 
