@@ -26,7 +26,8 @@ class CommonCommon(View):
     @staticmethod
     def common_check_session(request, user_journey, sub_user_journey):
         if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'], timed_out_journey=user_journey, timed_out_sub_journey=sub_user_journey)
+            logger.info('session timed out', client_ip=request['client_ip'], timed_out_journey=user_journey,
+                        timed_out_sub_journey=sub_user_journey)
             raise SessionTimeout(user_journey, sub_user_journey)
 
     async def common_check_attributes(self, request, user_journey, sub_user_journey):
@@ -156,6 +157,7 @@ class CommonAddressInEngland(CommonCommon):
         return {
             'page_title': page_title,
             'locale': locale,
+            'page_url': View.gen_page_url(request),
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
@@ -180,6 +182,7 @@ class CommonAddressInWales(CommonCommon):
         return {
             'page_title': page_title,
             'locale': locale,
+            'page_url': View.gen_page_url(request),
             'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
@@ -326,7 +329,8 @@ class CommonEnterAddress(CommonCommon):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], display_region)
-            logger.info('valid postcode', client_ip=request['client_ip'], postcode_entered=postcode, region_of_site=display_region)
+            logger.info('valid postcode', client_ip=request['client_ip'], postcode_entered=postcode,
+                        region_of_site=display_region)
             
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
@@ -419,7 +423,8 @@ class CommonSelectAddress(CommonCommon):
         try:
             selected_uprn = data['form-pick-address']
         except KeyError:
-            logger.info('no address selected', client_ip=request['client_ip'], region_of_site=display_region, journey_requiring_address=user_journey)
+            logger.info('no address selected', client_ip=request['client_ip'], region_of_site=display_region,
+                        journey_requiring_address=user_journey)
             if display_region == 'cy':
                 flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             else:
@@ -441,7 +446,8 @@ class CommonSelectAddress(CommonCommon):
             session = await get_session(request)
             session['attributes']['uprn'] = selected_uprn
             session.changed()
-            logger.info('session updated', client_ip=request['client_ip'], uprn_selected=selected_uprn, region_of_site=display_region)
+            logger.info('session updated', client_ip=request['client_ip'], uprn_selected=selected_uprn,
+                        region_of_site=display_region)
 
         raise HTTPFound(
             request.app.router['CommonConfirmAddress:get'].url_for(
@@ -556,13 +562,15 @@ class CommonConfirmAddress(CommonCommon):
             try:
                 census_address_type_value = session['attributes']['censusAddressType']
                 if census_address_type_value == 'NA':
-                    logger.info('censusAddressType is NA', client_ip=request['client_ip'], user_selection=address_confirmation)
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'],
+                                user_selection=address_confirmation)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
                 elif (census_address_type_value == 'CE') and \
                         (sub_user_journey == 'continuation-questionnaire'):
-                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'], sub_journey=sub_user_journey,
+                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'],
+                                sub_journey=sub_user_journey,
                                 census_addr_type=census_address_type_value)
                     raise HTTPFound(
                         request.app.router['RequestContinuationNotAHousehold:get'].url_for(
@@ -577,7 +585,8 @@ class CommonConfirmAddress(CommonCommon):
                 country_code_value = session['attributes']['countryCode']
                 uprn = session['attributes']['uprn']
                 if country_code_value == 'S':
-                    logger.info('address is in Scotland', client_ip=request['client_ip'], country_code_found=country_code_value, uprn_value=uprn)
+                    logger.info('address is in Scotland', client_ip=request['client_ip'],
+                                country_code_found=country_code_value, uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
@@ -923,7 +932,8 @@ class CommonEnterRoomNumber(CommonCommon):
 
         except KeyError:
             room_number_entered = data['form-enter-room-number']
-            logger.info('room number question error', client_ip=request['client_ip'], room_number_given=room_number_entered)
+            logger.info('room number question error', client_ip=request['client_ip'],
+                        room_number_given=room_number_entered)
             if len(room_number_entered) > 10:
                 if display_region == 'cy':
                     # TODO Add Welsh translation
