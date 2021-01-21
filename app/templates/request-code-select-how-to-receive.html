@@ -20,6 +20,12 @@
     {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
+{%- if case_type == 'CE' -%}
+    {%- set post_description = _('We can only send access codes to the registered address') -%}
+{%- else -%}
+    {%- set post_description = _('We can only send access codes to the registered household address') -%}
+{%- endif -%}
+
 {%- set form_options = [
         {
             'id': 'sms',
@@ -33,7 +39,7 @@
             'id': 'post',
             'label': {
                 'text': _('Post'),
-                'description': _('We can only send access codes to the registered household address')
+                'description': post_description
             },
             'value': 'post'
         }

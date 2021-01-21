@@ -171,7 +171,7 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_en, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_en, contents)
 
-    def check_text_select_how_to_receive(self, display_region, contents, user_type, check_error=False):
+    def check_text_select_how_to_receive(self, display_region, contents, user_type, address_type, check_error=False):
         if display_region == 'cy':
             if check_error:
                 self.assertIn(self.content_request_code_select_how_to_receive_error_cy, contents)
@@ -198,6 +198,10 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_secondary_cy, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_cy, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_cy, contents)
+            if address_type == 'CE':
+                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_cy, contents)
+            else:
+                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_cy, contents)
         else:
             if check_error:
                 self.assertIn(self.content_request_code_select_how_to_receive_error_en, contents)
@@ -224,6 +228,10 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_secondary_en, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_en, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_en, contents)
+            if address_type == 'CE':
+                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_en, contents)
+            else:
+                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_en, contents)
 
     def check_text_resident_or_manager(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -734,7 +742,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_household_title_en, contents)
 
     async def check_post_confirm_address_input_yes_code_individual(self, url, display_region,
-                                                                   case_by_uprn_return, user_type):
+                                                                   case_by_uprn_return, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
 
@@ -747,7 +755,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_confirm_address_input_yes_code_new_case(self, url, display_region,
                                                                  create_case_return):
@@ -779,7 +787,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_household_title_en, contents)
 
     async def check_post_confirm_address_input_yes_code_new_case_individual(
-            self, url, display_region, create_case_return, user_type):
+            self, url, display_region, create_case_return, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
             passthrough=[str(self.server._root)]
@@ -801,7 +809,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_confirm_address_input_yes_form(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -1137,7 +1145,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def check_post_household_information_code(self, url, display_region, user_type):
+    async def check_post_household_information_code(self, url, display_region, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'POST', True))
@@ -1146,7 +1154,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_household_information_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1250,7 +1258,7 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('access-code/select-how-to-receive', display_region, False),
                               contents)
-            self.check_text_select_how_to_receive(display_region, contents, 'manager')
+            self.check_text_select_how_to_receive(display_region, contents, 'manager', 'CE')
 
     async def check_post_select_how_to_receive_input_sms(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1302,7 +1310,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
     async def check_post_select_how_to_receive_input_invalid_or_no_selection(
-            self, url, display_region, data, user_type):
+            self, url, display_region, data, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
@@ -1312,7 +1320,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=True)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type, check_error=True)
 
     async def check_post_resident_or_manager(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1325,7 +1333,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, 'CE')
 
     async def check_post_resident_or_manager_code_manager_ni(self, url, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -2116,7 +2124,7 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.content_request_code_sent_by_post_page_title_household_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
 
-    async def check_post_confirm_send_by_post_input_no(self, url, display_region, user_type):
+    async def check_post_confirm_send_by_post_input_no(self, url, display_region, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_no)
@@ -2128,7 +2136,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=False)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type, check_error=False)
 
     async def check_post_confirm_send_by_post_input_no_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -2320,7 +2328,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_individual_questionnaire_title_en, contents)
                 self.assertIn(self.content_request_individual_questionnaire_secondary_en, contents)
 
-    async def check_post_request_individual_code_journey_switch(self, url, display_region):
+    async def check_post_request_individual_code_journey_switch(self, url, display_region, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('individual', display_region, 'POST', True))
@@ -2332,7 +2340,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region, True), contents)
-            self.check_text_select_how_to_receive(display_region, contents, 'individual')
+            self.check_text_select_how_to_receive(display_region, contents, 'individual', address_type)
 
     async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
                               data_over_length=False, check_for_value=False):
