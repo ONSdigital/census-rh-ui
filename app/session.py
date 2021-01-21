@@ -54,8 +54,8 @@ async def make_redis_pool(host, port, poolMin, poolMax):
         redis_pool = await create_pool(
             redis_address,
             create_connection_timeout=3,
-            minsize=poolMin,
-            maxsize=poolMax
+            minsize=int(poolMin),
+            maxsize=int(poolMax)
         )
         return redis_pool
     except (OSError, RedisError):
