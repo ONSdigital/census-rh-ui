@@ -112,12 +112,12 @@ class WebForm(View):
             form_valid = False
 
         if not form_valid:
-            logger.info('web form submission error', client_ip=request['client_ip'])
+            logger.info('web form submission error', client_ip=request['client_ip'], region_of_site=display_region)
             raise HTTPFound(
                 request.app.router['WebForm:get'].url_for(display_region=display_region))
 
         else:
-            logger.info('call web form endpoint', client_ip=request['client_ip'])
+            logger.info('call web form endpoint', client_ip=request['client_ip'], region_of_site=display_region)
             if display_region == 'cy':
                 language = 'CY'
             else:
@@ -150,8 +150,7 @@ class WebFormSuccess(View):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Thank you for contacting us'
+            page_title = "Diolch am gysylltu â ni"
             locale = 'cy'
         else:
             page_title = 'Thank you for contacting us'
