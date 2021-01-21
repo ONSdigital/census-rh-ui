@@ -69,7 +69,6 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            # TODO Confirm welsh translation
             page_title = "Dechrau'r cyfrifiad"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
@@ -286,8 +285,7 @@ class StartConfirmAddress(StartCommon):
         session = await get_session(request)
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Confirm address'
+            page_title = "Cadarnhau cyfeiriad"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -712,15 +710,14 @@ class StartTransientAccommodationType(StartCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Which of the following best describes your type of accommodation?'
+            page_title = 'Dewis math o lety'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            page_title = 'Which of the following best describes your type of accommodation?'
+            page_title = 'Select type of accommodation'
             if request.get('flash'):
-                page_title = View.page_title_error_prefix_cy + page_title
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
         self.log_entry(request, display_region + '/start/transient/accommodation-type')
