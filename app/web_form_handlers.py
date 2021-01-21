@@ -152,8 +152,7 @@ class WebFormSuccess(View):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Thank you for contacting us'
+            page_title = "Diolch am gysylltu â ni"
             locale = 'cy'
         else:
             page_title = 'Thank you for contacting us'
