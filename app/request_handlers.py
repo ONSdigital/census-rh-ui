@@ -29,7 +29,8 @@ class RequestCommon(View):
     @staticmethod
     def request_code_check_session(request, request_type):
         if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'])
+            logger.info('session timed out', client_ip=request['client_ip'], request_made=request,
+                        type_of_request=request_type)
             raise SessionTimeout('request', request_type)
 
     async def get_check_attributes(self, request, request_type):
@@ -51,8 +52,7 @@ class RequestCodeIndividual(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request individual access code'
+            page_title = 'Gofyn am god mynediad unigol'
             locale = 'cy'
         else:
             page_title = 'Request individual access code'
@@ -80,8 +80,11 @@ class RequestCodeIndividual(RequestCommon):
                 session.changed()
 
                 attributes = session['attributes']
-                if attributes['case_type']:
-                    logger.info('have session and case_type - directing to select method')
+                case_type_value = attributes['case_type']
+                if case_type_value:
+                    logger.info('have session and case_type - directing to select method',
+                                is_individual=session['attributes']['individual'],
+                                type_of_case=case_type_value)
                     raise HTTPFound(
                         request.app.router['RequestCodeSelectHowToReceive:get'].url_for(request_type=request_type,
                                                                                         display_region=display_region))
@@ -90,9 +93,9 @@ class RequestCodeIndividual(RequestCommon):
             else:
                 raise KeyError
         except KeyError:
-            logger.info('no session - directing to enter address')
             attributes = {'individual': True}
             session['attributes'] = attributes
+            logger.info('no session - directing to enter address', session_attributes=attributes)
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(user_journey='request',
                                                                      sub_user_journey=request_type,
@@ -144,8 +147,7 @@ class RequestCodeHousehold(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request new household access code'
+            page_title = 'Gofyn am god mynediad newydd ar gyfer y cartref'
             locale = 'cy'
         else:
             page_title = 'Request new household access code'
@@ -226,14 +228,11 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive individual access code'
+                page_title = 'Dewis sut i anfon cod mynediad unigol'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive manager access code'
+                page_title = 'Dewis sut i gael cod mynediad rheolwr'
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Select how to receive household access code'
+                page_title = 'Dewis sut i gael cod mynediad y cartref'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -294,7 +293,7 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('request method selection error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], method_selected=request_method)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -316,8 +315,7 @@ class RequestCodeEnterMobile(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Enter mobile number'
+            page_title = 'Nodi rhif ffôn symudol'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -403,14 +401,11 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send individual access code by text'
+                page_title = 'Cadarnhau i anfon cod mynediad unigol drwy neges destun'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send manager access code by text'
+                page_title = 'Cadarnhau i anfon cod mynediad rheolwr drwy neges destun'
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send household access code by text'
+                page_title = 'Cadarnhau i anfon cod mynediad y cartref drwy neges destun'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -473,7 +468,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
             logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
                         f"individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], postcode=attributes['postcode'])
 
             fulfilment_code_array = []
 
@@ -512,7 +507,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('mobile confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=mobile_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             raise HTTPFound(
                 request.app.router['RequestCodeConfirmSendByText:get'].url_for(
@@ -532,8 +527,7 @@ class RequestCommonEnterName(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = "Enter name"
+            page_title = "Nodi enw"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -570,7 +564,9 @@ class RequestCommonEnterName(RequestCommon):
 
         if not form_valid:
             logger.info('form submission error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region,
+                        type_of_request=request_type)
             raise HTTPFound(
                 request.app.router['RequestCommonEnterName:get'].url_for(
                     display_region=display_region,
@@ -612,26 +608,22 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         if request_type == 'access-code':
             if attributes['individual']:
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send individual access code by post'
+                    page_title = "Cadarnhau i anfon cod mynediad unigol drwy'r post"
                 else:
                     page_title = 'Confirm to send individual access code by post'
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send manager access code by post'
+                    page_title = "Cadarnhau i anfon cod mynediad rheolwr drwy'r post"
                 else:
                     page_title = 'Confirm to send manager access code by post'
             else:
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send household access code by post'
+                    page_title = "Cadarnhau i anfon cod mynediad y cartref drwy'r post"
                 else:
                     page_title = 'Confirm to send household access code by post'
         elif request_type == 'continuation-questionnaire':
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                page_title = 'Confirm to send continuation questionnaire'
+                page_title = 'Cadarnhau i anfon holiadur parhad'
             else:
                 page_title = 'Confirm to send continuation questionnaire'
         else:
@@ -643,8 +635,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                     page_title = 'Confirm to send individual paper questionnaire'
             else:
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send household paper questionnaire'
+                    page_title = 'Cadarnhau i anfon copi papur o Holiadur y Cartref'
                 else:
                     page_title = 'Confirm to send household paper questionnaire'
 
@@ -687,7 +678,9 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             name_address_confirmation = data['request-name-address-confirmation']
         except KeyError:
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        type_of_request=request_type,
+                        region_of_site=display_region)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
@@ -740,19 +733,21 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
                     fulfilment_type_array.append(fulfilment_type)
 
+                    room_number_value = attributes['roomNumber']
                     logger.info(
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], postcode=attributes['postcode'],
+                        room_number_entered=room_number_value)
 
-                    if attributes['roomNumber']:
+                    if room_number_value:
                         if len(attributes['last_name']) < last_name_char_limit:
-                            last_name = attributes['last_name'] + ', ' + attributes['roomNumber']
+                            last_name = attributes['last_name'] + ', ' + room_number_value
                             title = None
                         else:
                             last_name = attributes['last_name']
-                            title = attributes['roomNumber']
+                            title = room_number_value
                     else:
                         last_name = attributes['last_name']
                         title = None
@@ -880,7 +875,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         f"fulfilment query: case_type={attributes['case_type']}, "
                         f"fulfilment_type={fulfilment_type_array}, "
                         f"region={attributes['region']}, individual={fulfilment_individual}",
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], case_id=attributes['case_id'])
 
                     try:
                         await RHService.request_fulfilment_post(request,
@@ -920,7 +915,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         else:
             # catch all just in case, should never get here
             logger.info('name confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=name_address_confirmation,
+                        region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Select an answer',
@@ -954,14 +950,11 @@ class RequestCodeSentByText(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Individual access code has been sent by text'
+                page_title = "Mae cod mynediad unigol wedi cael ei anfon drwy neges destun"
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Manager access code has been sent by text'
+                page_title = "Mae cod mynediad rheolwr wedi cael ei anfon drwy neges destun"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Household access code has been sent by text'
+                page_title = "Mae cod mynediad y cartref wedi cael ei anfon drwy neges destun"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -997,14 +990,11 @@ class RequestCodeSentByPost(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Individual access code will be sent by post'
+                page_title = "Caiff cod mynediad unigol ei anfon drwy'r post"
             elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
-                # TODO Add Welsh Translation
-                page_title = 'Manager access code will be sent by post'
+                page_title = "Caiff cod mynediad rheolwr ei anfon drwy'r post"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Household access code will be sent by post'
+                page_title = "Caiff cod mynediad y cartref ei anfon drwy'r post"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -1082,7 +1072,9 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         if not form_valid:
             logger.info('form submission error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region,
+                        type_of_request=request_type)
             raise HTTPFound(
                 request.app.router['RequestCommonPeopleInHousehold:get'].url_for(display_region=display_region,
                                                                                  request_type=request_type))

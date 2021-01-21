@@ -26,7 +26,8 @@ class CommonCommon(View):
     @staticmethod
     def common_check_session(request, user_journey, sub_user_journey):
         if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'])
+            logger.info('session timed out', client_ip=request['client_ip'],
+                        timed_out_journey=user_journey, timed_out_sub_journey=sub_user_journey)
             raise SessionTimeout(user_journey, sub_user_journey)
 
     async def common_check_attributes(self, request, user_journey, sub_user_journey):
@@ -198,8 +199,7 @@ class CommonRegisterAddress(CommonCommon):
         sub_user_journey = request.match_info['sub_user_journey']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Register address'
+            page_title = 'Cofrestru cyfeiriad'
             locale = 'cy'
         else:
             page_title = 'Register address'
@@ -287,8 +287,7 @@ class CommonEnterAddress(CommonCommon):
                 session.changed()
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Enter address'
+            page_title = 'Nodi cyfeiriad'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -326,8 +325,9 @@ class CommonEnterAddress(CommonCommon):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], display_region)
-            logger.info('valid postcode', client_ip=request['client_ip'])
-
+            logger.info('valid postcode', client_ip=request['client_ip'],
+                        postcode_entered=postcode, region_of_site=display_region)
+            
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
             if exc.message_type == 'empty':
@@ -374,8 +374,7 @@ class CommonSelectAddress(CommonCommon):
             await check_permission(request)
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Select address'
+            page_title = 'Dewis cyfeiriad'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -419,7 +418,8 @@ class CommonSelectAddress(CommonCommon):
         try:
             selected_uprn = data['form-pick-address']
         except KeyError:
-            logger.info('no address selected', client_ip=request['client_ip'])
+            logger.info('no address selected', client_ip=request['client_ip'],
+                        region_of_site=display_region, journey_requiring_address=user_journey)
             if display_region == 'cy':
                 flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             else:
@@ -441,7 +441,8 @@ class CommonSelectAddress(CommonCommon):
             session = await get_session(request)
             session['attributes']['uprn'] = selected_uprn
             session.changed()
-            logger.info('session updated', client_ip=request['client_ip'])
+            logger.info('session updated', client_ip=request['client_ip'],
+                        uprn_selected=selected_uprn, region_of_site=display_region)
 
         raise HTTPFound(
             request.app.router['CommonConfirmAddress:get'].url_for(
@@ -470,8 +471,7 @@ class CommonConfirmAddress(CommonCommon):
         session = await get_session(request)
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Confirm address'
+            page_title = 'Cadarnhau cyfeiriad'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -538,7 +538,8 @@ class CommonConfirmAddress(CommonCommon):
             address_confirmation = data['form-confirm-address']
         except KeyError:
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -553,14 +554,18 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
-                if session['attributes']['censusAddressType'] == 'NA':
-                    logger.info('censusAddressType is NA', client_ip=request['client_ip'])
+                census_address_type_value = session['attributes']['censusAddressType']
+                if census_address_type_value == 'NA':
+                    logger.info('censusAddressType is NA', client_ip=request['client_ip'],
+                                user_selection=address_confirmation)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-                elif (session['attributes']['censusAddressType'] == 'CE') and \
+                elif (census_address_type_value == 'CE') and \
                         (sub_user_journey == 'continuation-questionnaire'):
-                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'])
+                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'],
+                                sub_journey=sub_user_journey,
+                                census_addr_type=census_address_type_value)
                     raise HTTPFound(
                         request.app.router['RequestContinuationNotAHousehold:get'].url_for(
                             display_region=display_region))
@@ -571,26 +576,38 @@ class CommonConfirmAddress(CommonCommon):
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             try:
-                if session['attributes']['countryCode'] == 'S':
-                    logger.info('address is in Scotland', client_ip=request['client_ip'])
+                country_code_value = session['attributes']['countryCode']
+                uprn = session['attributes']['uprn']
+                if country_code_value == 'S':
+                    logger.info('address is in Scotland', client_ip=request['client_ip'],
+                                country_code_found=country_code_value, uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif session['attributes']['countryCode'] == 'N' and display_region != 'ni':
+                elif country_code_value == 'N' and display_region != 'ni':
                     logger.info('address is in Northern Ireland but not display_region ni',
-                                client_ip=request['client_ip'])
+                                client_ip=request['client_ip'],
+                                country_code_found=country_code_value,
+                                region_of_site=display_region,
+                                uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInNorthernIreland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif display_region == 'ni' and session['attributes']['countryCode'] == 'W':
+                elif display_region == 'ni' and country_code_value == 'W':
                     logger.info('address is in Wales but display_region ni',
-                                client_ip=request['client_ip'])
+                                client_ip=request['client_ip'],
+                                country_code_found=country_code_value,
+                                region_of_site=display_region,
+                                uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInWales:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
-                elif display_region == 'ni' and session['attributes']['countryCode'] == 'E':
+                elif display_region == 'ni' and country_code_value == 'E':
                     logger.info('address is in England but display_region ni',
-                                client_ip=request['client_ip'])
+                                client_ip=request['client_ip'],
+                                country_code_found=country_code_value,
+                                region_of_site=display_region,
+                                uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInEngland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
@@ -615,15 +632,16 @@ class CommonConfirmAddress(CommonCommon):
                             request.app.router['StartAddressHasBeenChanged:get'].url_for(display_region=display_region))
 
                 except ClientResponseError as ex:
+                    hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status)
+                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status)
+                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'], status_code=ex.status)
+                                     client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
 
                     cc_error = ''
                     if sub_user_journey == 'link-address':
@@ -655,7 +673,7 @@ class CommonConfirmAddress(CommonCommon):
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'])
+                                    client_ip=request['client_ip'], unmatched_uprn=session['attributes']['uprn'])
                         logger.info('requesting new case', client_ip=request['client_ip'])
                         try:
                             case_creation_return = await RHService.post_case_create(request, session['attributes'])
@@ -680,6 +698,7 @@ class CommonConfirmAddress(CommonCommon):
                         raise ex
 
         elif address_confirmation == 'no':
+
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(display_region=display_region,
                                                                      user_journey=user_journey,
@@ -688,7 +707,7 @@ class CommonConfirmAddress(CommonCommon):
         else:
             # catch all just in case, should never get here
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], user_selection=address_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             raise HTTPFound(
                 request.app.router['CommonConfirmAddress:get'].url_for(
@@ -717,8 +736,7 @@ class CommonCEMangerQuestion(CommonCommon):
         await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Confirm resident or manager'
+            page_title = 'Cadarnhau preswylydd neu reolwr'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -811,7 +829,8 @@ class CommonCEMangerQuestion(CommonCommon):
         else:
             # catch all just in case, should never get here
             logger.info('resident or manager question error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'],
+                        manager_or_resident=resident_or_manager)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -843,8 +862,7 @@ class CommonEnterRoomNumber(CommonCommon):
         session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Enter flat or room number'
+            page_title = 'Nodi rhif fflat neu ystafell'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -910,8 +928,10 @@ class CommonEnterRoomNumber(CommonCommon):
                     ))
 
         except KeyError:
-            logger.info('room number question error', client_ip=request['client_ip'])
-            if len(data['form-enter-room-number']) > 10:
+            room_number_entered = data['form-enter-room-number']
+            logger.info('room number question error', client_ip=request['client_ip'],
+                        room_number_given=room_number_entered)
+            if len(room_number_entered) > 10:
                 if display_region == 'cy':
                     # TODO Add Welsh translation
                     flash(request, FlashMessage.generate_flash_message(

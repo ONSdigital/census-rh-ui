@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-16 16:23+0000\n"
+"POT-Creation-Date: 2021-01-18 16:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,28 +119,28 @@ msgid "Add flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:80
-#: app/templates/common-enter-address.html:113
+#: app/templates/common-enter-address.html:103
 #: app/templates/common-enter-room-number.html:61
 #: app/templates/common-resident-or-manager.html:70
-#: app/templates/common-select-address.html:67
+#: app/templates/common-select-address.html:63
 #: app/templates/request-code-confirm-send-by-text.html:62
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:74
 #: app/templates/request-common-confirm-send-by-post.html:150
 #: app/templates/request-common-enter-name.html:69
-#: app/templates/request-common-people-in-household.html:69
+#: app/templates/request-common-people-in-household.html:73
 #: app/templates/request-questionnaire-household.html:52
 #: app/templates/request-questionnaire-individual.html:33
 #: app/templates/start-address-changed.html:20
 #: app/templates/start-confirm-address.html:80
-#: app/templates/start-unlinked-linked.html:20
+#: app/templates/start-link-address-linked.html:20
 msgid "Continue"
 msgstr ""
 
 #: app/templates/common-contact-centre.html:15
 #: app/templates/common-contact-centre.html:25
-#: app/templates/common-contact-centre.html:45
+#: app/templates/common-contact-centre.html:35
 msgid "You need to call the Census customer contact centre"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 
 #: app/templates/common-contact-centre.html:20
 #: app/templates/common-contact-centre.html:30
-#: app/templates/common-contact-centre.html:50
+#: app/templates/common-contact-centre.html:40
 #, python-format
 msgid ""
 "You can call us free on %(telephone_number)s or %(open)schoose another "
@@ -161,23 +161,7 @@ msgstr ""
 msgid "There is an issue changing your address via the website."
 msgstr ""
 
-#: app/templates/common-contact-centre.html:35
-msgid "Register an address"
-msgstr ""
-
 #: app/templates/common-contact-centre.html:37
-msgid "If you can’t find your address, it may not be registered on our system."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:40
-#, python-format
-msgid ""
-"To register your address, we need you to get in touch. You can call us "
-"free on %(telephone_number)s or %(open)schoose another way to contact "
-"us%(close)s."
-msgstr ""
-
-#: app/templates/common-contact-centre.html:47
 msgid "There is an issue processing your address via the website."
 msgstr ""
 
@@ -194,73 +178,59 @@ msgstr ""
 msgid "What is your postcode?"
 msgstr ""
 
-#: app/templates/common-enter-address.html:27
-msgid "<p>This will enable us to associate your code to your address</p>"
-msgstr ""
-
-#: app/templates/common-enter-address.html:31
+#: app/templates/common-enter-address.html:29
 msgid "<p>To request an individual access code, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:33
+#: app/templates/common-enter-address.html:31
 msgid "<p>To request an access code, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:35
+#: app/templates/common-enter-address.html:33
 msgid "<p>To send a paper census questionnaire, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:37
+#: app/templates/common-enter-address.html:35
 msgid "<p>To send a continuation questionnaire, we need your address</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:39
+#: app/templates/common-enter-address.html:37
 msgid "<p>We need to know the address for which you are answering</p>"
 msgstr ""
 
-#: app/templates/common-enter-address.html:50
-msgid "Please supply your address"
-msgstr ""
-
-#: app/templates/common-enter-address.html:52
-msgid ""
-"The access code that you have entered is not currently linked to an "
-"address. Please select your address so we can make the link."
-msgstr ""
-
-#: app/templates/common-enter-address.html:68
+#: app/templates/common-enter-address.html:58
 msgid "UK postcode"
 msgstr ""
 
-#: app/templates/common-enter-address.html:80
+#: app/templates/common-enter-address.html:70
 #, python-format
 msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
 "%(open)scontact us to request a paper census questionnaire%(close)s."
 msgstr ""
 
-#: app/templates/common-enter-address.html:86
+#: app/templates/common-enter-address.html:76
 #, python-format
 msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
 "%(open)scontact us to request a continuation questionnaire%(close)s."
 msgstr ""
 
-#: app/templates/common-enter-address.html:92
+#: app/templates/common-enter-address.html:82
 #, python-format
 msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
 "%(open)scontact us to request an access code%(close)s."
 msgstr ""
 
-#: app/templates/common-enter-address.html:99
+#: app/templates/common-enter-address.html:89
 msgid "I don’t live at a fixed address"
 msgstr ""
 
-#: app/templates/common-enter-address.html:103
+#: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
 #: app/templates/request-questionnaire-household.html:42
-#: app/templates/start.html:130
+#: app/templates/start.html:131
 #: app/templates/support_centre_list_of_centres.html:59
 msgid "Hide this"
 msgstr ""
@@ -303,6 +273,22 @@ msgstr ""
 msgid "Cancel and return to the previous page"
 msgstr ""
 
+#: app/templates/common-register-address.html:5
+msgid "Register an address"
+msgstr ""
+
+#: app/templates/common-register-address.html:7
+msgid "If you can’t find your address, it may not be registered on our system."
+msgstr ""
+
+#: app/templates/common-register-address.html:10
+#, python-format
+msgid ""
+"To register your address, we need you to get in touch. You can call us "
+"free on %(telephone_number)s or %(open)schoose another way to contact "
+"us%(close)s."
+msgstr ""
+
 #: app/templates/common-resident-or-manager.html:21
 msgid "Resident"
 msgstr ""
@@ -327,22 +313,27 @@ msgstr ""
 msgid "Are you a resident or manager of this establishment?"
 msgstr ""
 
-#: app/templates/common-select-address.html:27
+#: app/templates/common-select-address.html:20
+#, python-format
+msgid "<p class=\"u-fs-r--b\">%(total)s address found for postcode %(pcode)s</p>"
+msgstr ""
+
+#: app/templates/common-select-address.html:22
 #, python-format
 msgid ""
 "<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
 "%(pcode)s</p>"
 msgstr ""
 
-#: app/templates/common-select-address.html:30
+#: app/templates/common-select-address.html:26
 msgid "Select an address"
 msgstr ""
 
-#: app/templates/common-select-address.html:41
+#: app/templates/common-select-address.html:37
 msgid "We cannot find your address"
 msgstr ""
 
-#: app/templates/common-select-address.html:44
+#: app/templates/common-select-address.html:40
 #, python-format
 msgid ""
 "If this is incorrect you can %(start_request_code_link)senter the "
@@ -350,7 +341,7 @@ msgid ""
 "us%(end_link)s."
 msgstr ""
 
-#: app/templates/common-select-address.html:50
+#: app/templates/common-select-address.html:46
 msgid "Select your address"
 msgstr ""
 
@@ -436,7 +427,7 @@ msgstr ""
 msgid "Request individual access code"
 msgstr ""
 
-#: app/templates/request-code-household.html:35 app/templates/start.html:121
+#: app/templates/request-code-household.html:35 app/templates/start.html:122
 msgid ""
 "Someone in your household must still complete a census using a household "
 "access code"
@@ -444,7 +435,7 @@ msgstr ""
 
 #: app/templates/request-code-household.html:41
 #: app/templates/request-questionnaire-household.html:39
-#: app/templates/start.html:127
+#: app/templates/start.html:128
 msgid "Need to answer separately from your household?"
 msgstr ""
 
@@ -556,7 +547,7 @@ msgstr ""
 #: app/templates/request-code-sent-by-text.html:26
 msgid ""
 "The text message with a new manager access code should arrive soon for "
-"you to start your census"
+"you to start the census"
 msgstr ""
 
 #: app/templates/request-code-sent-by-text.html:28
@@ -644,6 +635,10 @@ msgid ""
 "unbranded envelope"
 msgstr ""
 
+#: app/templates/request-common-confirm-send-by-post.html:136
+msgid "I need a large-print questionnaire"
+msgstr ""
+
 #: app/templates/request-common-enter-name.html:18
 msgid "Enter your first name"
 msgstr ""
@@ -677,7 +672,7 @@ msgid "Enter the number of people in your household"
 msgstr ""
 
 #: app/templates/request-common-people-in-household.html:22
-msgid "Enter a numeral"
+msgid "Enter a number"
 msgstr ""
 
 #: app/templates/request-common-people-in-household.html:25
@@ -688,33 +683,38 @@ msgstr ""
 msgid "Enter a number greater than 5"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:33
+#: app/templates/request-common-people-in-household.html:30
+#: app/templates/request-common-people-in-household.html:32
+msgid "Enter a number less than 31"
+msgstr ""
+
+#: app/templates/request-common-people-in-household.html:37
 msgid ""
 "<p>This is to make sure we send you the right number of continuation "
 "questionnaires if there are more than 6 people in your household</p>"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:35
+#: app/templates/request-common-people-in-household.html:39
 msgid ""
 "<p>This is to make sure we send you the right number of continuation "
 "questionnaires if there are more than 5 people in your household</p>"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:38
+#: app/templates/request-common-people-in-household.html:42
 msgid ""
 "<p>This is to make sure we send you the right number of paper "
 "questionnaires</p>"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:48
+#: app/templates/request-common-people-in-household.html:52
 msgid "How many people are in your household?"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:56
+#: app/templates/request-common-people-in-household.html:60
 msgid "Number of people"
 msgstr ""
 
-#: app/templates/request-common-people-in-household.html:76
+#: app/templates/request-common-people-in-household.html:80
 #, python-format
 msgid ""
 "If you don’t already have a paper census for your household, you will "
@@ -852,8 +852,8 @@ msgstr ""
 msgid "Your session has timed out due to inactivity"
 msgstr ""
 
-#: app/templates/request-timeout.html:12 app/templates/start-timeout.html:11
-msgid "To protect your information we have timed you out."
+#: app/templates/request-timeout.html:12
+msgid "To protect your information we have timed you out"
 msgstr ""
 
 #: app/templates/request-timeout.html:16
@@ -894,11 +894,11 @@ msgstr ""
 msgid "If you need a new access code, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/save-and-exit.html:19
+#: app/templates/signed-out.html:19
 msgid "Your progress has been saved"
 msgstr ""
 
-#: app/templates/save-and-exit.html:30
+#: app/templates/signed-out.html:30
 #, python-format
 msgid ""
 "Keep your 16-character access code safe. You will need to enter it again "
@@ -910,7 +910,7 @@ msgid "Your address has been changed"
 msgstr ""
 
 #: app/templates/start-address-changed.html:16
-#: app/templates/start-unlinked-linked.html:16
+#: app/templates/start-link-address-linked.html:16
 msgid "You are now ready to start your Census questions"
 msgstr ""
 
@@ -955,9 +955,31 @@ msgstr ""
 msgid "Launch census"
 msgstr ""
 
+#: app/templates/start-link-address-linked.html:14
+msgid "Your address has been linked to your code"
+msgstr ""
+
+#: app/templates/start-timeout.html:11
+msgid "To protect your information we have timed you out."
+msgstr ""
+
 #: app/templates/start-timeout.html:15
 #, python-format
-msgid "You will need to %(open)sre-enter your access code%(close)s"
+msgid ""
+"You will need to %(open)senter your 16-character access code%(close)s "
+"again to access your census."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:50
+msgid "Sorry, there was a problem starting your census"
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:52
+msgid "We are working to fix the problem."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:54
+msgid "Please try again later."
 msgstr ""
 
 #: app/templates/start-transient-accommodation-type.html:25
@@ -1003,10 +1025,6 @@ msgstr ""
 msgid "Enter a town or city"
 msgstr ""
 
-#: app/templates/start-unlinked-linked.html:14
-msgid "Your address has been linked to your code"
-msgstr ""
-
 #: app/templates/start.html:28
 msgid "Enter an access code"
 msgstr ""
@@ -1035,11 +1053,11 @@ msgstr ""
 msgid "Access census"
 msgstr ""
 
-#: app/templates/start.html:108
+#: app/templates/start.html:109
 msgid "If you don’t have an access code"
 msgstr ""
 
-#: app/templates/start.html:110
+#: app/templates/start.html:111
 #, python-format
 msgid ""
 "You can %(open)srequest a new access code%(close)s to start a new census "
@@ -1047,7 +1065,7 @@ msgid ""
 "by text or post."
 msgstr ""
 
-#: app/templates/start.html:115
+#: app/templates/start.html:116
 #, python-format
 msgid ""
 "If you need to answer separately from the people you live with, you can "
@@ -1055,7 +1073,7 @@ msgid ""
 "census."
 msgstr ""
 
-#: app/templates/start.html:139 app/templates/webchat-window.html:5
+#: app/templates/start.html:140 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""
 
@@ -1320,7 +1338,7 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: app/templates/web-form.html:205
+#: app/templates/web-form.html:206
 msgid ""
 "For information about what we do with your personal data see our <a "
 "href=\"#0\">privacy and data protection</a>"

@@ -19,13 +19,17 @@
 {%- if 'number_of_people_empty' in field_messages_dict -%}
     {%- set error_number_of_people = {'id': 'number_of_people_empty', 'text': _('Enter the number of people in your household')} -%}
 {%- elif 'number_of_people_nan' in field_messages_dict -%}
-    {%- set error_number_of_people = {'id': 'number_of_people_nan', 'text': _('Enter a numeral')} -%}
-{%- elif 'number_of_people_continuation' in field_messages_dict -%}
+    {%- set error_number_of_people = {'id': 'number_of_people_nan', 'text': _('Enter a number')} -%}
+{%- elif 'number_of_people_continuation_low' in field_messages_dict -%}
     {%- if display_region == 'ni' -%}
-        {%- set error_number_of_people = {'id': 'number_of_people_continuation', 'text': _('Enter a number greater than 6')} -%}
+        {%- set error_number_of_people = {'id': 'number_of_people_continuation_low', 'text': _('Enter a number greater than 6')} -%}
     {%- else -%}
-        {%- set error_number_of_people = {'id': 'number_of_people_continuation', 'text': _('Enter a number greater than 5')} -%}
+        {%- set error_number_of_people = {'id': 'number_of_people_continuation_low', 'text': _('Enter a number greater than 5')} -%}
     {%- endif -%}
+{%- elif 'number_of_people_continuation_high' in field_messages_dict -%}
+    {%- set error_number_of_people = {'id': 'number_of_people_continuation_high', 'text': _('Enter a number less than 31')} -%}
+{%- elif 'number_of_people_high' in field_messages_dict -%}
+    {%- set error_number_of_people = {'id': 'number_of_people_high', 'text': _('Enter a number less than 31')} -%}
 {%- endif -%}
 
 {%- if request_type == 'continuation-questionnaire' -%}
