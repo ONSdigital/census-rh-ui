@@ -199,9 +199,17 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_cy, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_cy, contents)
             if address_type == 'CE':
-                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_cy, contents)
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_cy, contents)
             else:
-                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_cy, contents)
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_individual_cy,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_cy, contents)
         else:
             if check_error:
                 self.assertIn(self.content_request_code_select_how_to_receive_error_en, contents)
@@ -229,9 +237,17 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_en, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_en, contents)
             if address_type == 'CE':
-                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_en, contents)
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_en,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_en, contents)
             else:
-                self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_en, contents)
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_individual_en,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_en, contents)
 
     def check_text_resident_or_manager(self, display_region, contents, check_error=False):
         if display_region == 'cy':

@@ -1129,8 +1129,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_option_post_en = 'Post'
         self.content_request_code_select_how_to_receive_option_post_hint_en = \
             'We can only send access codes to the registered household address'
+        self.content_request_code_select_how_to_receive_option_post_hint_individual_en = \
+            'An unbranded envelope can be addressed to you at the registered household address'
         self.content_request_code_select_how_to_receive_option_post_hint_ce_en = \
             'We can only send access codes to the registered address'
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_en = \
+            'An unbranded envelope can be addressed to you at the registered address'
 
         self.content_request_code_select_how_to_receive_individual_response_question_cy = \
             "Angen ateb ar wahân i aelodau eich cartref?"
@@ -1142,8 +1146,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_option_post_hint_cy = \
             "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
         # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_option_post_hint_individual_cy = \
+            'An unbranded envelope can be addressed to you at the registered household address'
+        # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
             "We can only send access codes to the registered address"
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
+            'An unbranded envelope can be addressed to you at the registered address'
 
         self.content_request_code_select_how_to_receive_household_page_title_en = \
             '<title>Select how to receive household access code - Census 2021</title>'
