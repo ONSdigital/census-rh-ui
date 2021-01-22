@@ -2701,9 +2701,9 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
-                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_en, contents)
             else:
-                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_en, contents)
 
     def check_text_start_transient_accommodation_type(self, display_region, contents, check_error=False):
         if display_region == 'cy':
