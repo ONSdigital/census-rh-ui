@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-18 16:59+0000\n"
+"POT-Creation-Date: 2021-01-22 12:56+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -118,7 +118,9 @@ msgid "Select an answer"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:48
+#: app/templates/common-confirm-address.html:72
 #: app/templates/start-confirm-address.html:56
+#: app/templates/start-confirm-address.html:72
 msgid "Is this the correct address?"
 msgstr "Ai hwn yw'r cyfeiriad cywir?"
 
@@ -132,23 +134,23 @@ msgstr "Newid rhif fflat neu ystafell"
 msgid "Add flat or room number"
 msgstr "Ychwanegu rhif fflat neu ystafell"
 
-#: app/templates/common-confirm-address.html:80
+#: app/templates/common-confirm-address.html:82
 #: app/templates/common-enter-address.html:103
 #: app/templates/common-enter-room-number.html:61
-#: app/templates/common-resident-or-manager.html:70
-#: app/templates/common-select-address.html:63
-#: app/templates/request-code-confirm-send-by-text.html:62
+#: app/templates/common-resident-or-manager.html:72
+#: app/templates/common-select-address.html:65
+#: app/templates/request-code-confirm-send-by-text.html:64
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
-#: app/templates/request-code-select-how-to-receive.html:74
-#: app/templates/request-common-confirm-send-by-post.html:150
+#: app/templates/request-code-select-how-to-receive.html:88
+#: app/templates/request-common-confirm-send-by-post.html:152
 #: app/templates/request-common-enter-name.html:69
 #: app/templates/request-common-people-in-household.html:73
 #: app/templates/request-questionnaire-household.html:52
-#: app/templates/request-questionnaire-individual.html:33
 #: app/templates/start-address-changed.html:20
-#: app/templates/start-confirm-address.html:80
+#: app/templates/start-confirm-address.html:82
 #: app/templates/start-link-address-linked.html:20
+#: app/templates/start-transient-enter-town.html:55
 msgid "Continue"
 msgstr "Parhau"
 
@@ -337,6 +339,7 @@ msgid ""
 msgstr "Mae rheolwr yn gyfrifol am ateb cwestiynau'r cyfrifiad am y sefydliad hwn"
 
 #: app/templates/common-resident-or-manager.html:47
+#: app/templates/common-resident-or-manager.html:62
 msgid "Are you a resident or manager of this establishment?"
 msgstr "Ai preswylydd neu reolwr ydych chi yn y sefydliad hwn?"
 
@@ -374,6 +377,7 @@ msgstr ""
 "ni%(end_link)s."
 
 #: app/templates/common-select-address.html:46
+#: app/templates/common-select-address.html:55
 msgid "Select your address"
 msgstr "Dewiswch eich cyfeiriad"
 
@@ -403,6 +407,7 @@ msgid "No, I need to change it"
 msgstr "Nac ydy, mae angen i mi ei newid"
 
 #: app/templates/request-code-confirm-send-by-text.html:46
+#: app/templates/request-code-confirm-send-by-text.html:54
 msgid "Is this mobile number correct?"
 msgstr "Ydy’r rhif symudol hwn yn gywir?"
 
@@ -518,42 +523,57 @@ msgstr ""
 "gaiff ei chyflwyno amdanoch chi ar ffurflen y cartref."
 
 #: app/templates/request-code-individual.html:35
+#: app/templates/request-questionnaire-individual.html:33
 msgid "Start"
 msgstr "Dechrau"
 
+#: app/templates/request-code-select-how-to-receive.html:25
+msgid "An unbranded envelope can be addressed to you at the registered address"
+msgstr ""
+
 #: app/templates/request-code-select-how-to-receive.html:27
-msgid "Text message"
-msgstr "Neges destun"
+msgid "We can only send access codes to the registered address"
+msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:28
-msgid "We will need your mobile number for this"
-msgstr "Bydd angen eich rhif ffôn symudol arnom ar gyfer hyn"
+#: app/templates/request-code-select-how-to-receive.html:31
+msgid ""
+"An unbranded envelope can be addressed to you at the registered household"
+" address"
+msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:35
-msgid "Post"
-msgstr "Post"
-
-#: app/templates/request-code-select-how-to-receive.html:36
+#: app/templates/request-code-select-how-to-receive.html:33
 msgid "We can only send access codes to the registered household address"
 msgstr "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
 
-#: app/templates/request-code-select-how-to-receive.html:44
+#: app/templates/request-code-select-how-to-receive.html:41
+msgid "Text message"
+msgstr "Neges destun"
+
+#: app/templates/request-code-select-how-to-receive.html:42
+msgid "We will need your mobile number for this"
+msgstr "Bydd angen eich rhif ffôn symudol arnom ar gyfer hyn"
+
+#: app/templates/request-code-select-how-to-receive.html:49
+msgid "Post"
+msgstr "Post"
+
+#: app/templates/request-code-select-how-to-receive.html:58
 msgid "How would you like to receive an individual access code?"
 msgstr "Sut hoffech chi gael cod mynediad unigol?"
 
-#: app/templates/request-code-select-how-to-receive.html:46
+#: app/templates/request-code-select-how-to-receive.html:60
 msgid "How would you like to receive a new manager access code?"
 msgstr "Sut hoffech chi gael cod mynediad rheolwr newydd?"
 
-#: app/templates/request-code-select-how-to-receive.html:48
+#: app/templates/request-code-select-how-to-receive.html:62
 msgid "How would you like to receive a new household access code?"
 msgstr "Sut hoffech chi gael cod mynediad newydd ar gyfer y cartref?"
 
-#: app/templates/request-code-select-how-to-receive.html:64
+#: app/templates/request-code-select-how-to-receive.html:78
 msgid "Select how to send access code"
 msgstr "Dewiswch sut i anfon y cod mynediad"
 
-#: app/templates/request-code-select-how-to-receive.html:80
+#: app/templates/request-code-select-how-to-receive.html:94
 #, python-format
 msgid ""
 "To request a census in a different format or for further help, please "
@@ -708,7 +728,11 @@ msgstr ""
 "Bydd llythyr yn cynnwys cod mynediad unigol yn cyrraedd mewn amlen blaen "
 "frown"
 
-#: app/templates/request-common-confirm-send-by-post.html:136
+#: app/templates/request-common-confirm-send-by-post.html:131
+msgid "Large print"
+msgstr "Print mawr"
+
+#: app/templates/request-common-confirm-send-by-post.html:138
 msgid "I need a large-print questionnaire"
 msgstr "Mae angen holiadur print mawr arnaf"
 
@@ -1116,6 +1140,7 @@ msgid "Tent or temporary structure"
 msgstr "Pabell neu strwythur dros dro"
 
 #: app/templates/start-transient-accommodation-type.html:54
+#: app/templates/start-transient-accommodation-type.html:62
 msgid "Which of the following best describes your type of accommodation?"
 msgstr "Pa un o’r canlynol sy’n disgrifio eich math o gartref orau?"
 
@@ -1128,14 +1153,14 @@ msgid ""
 "What is the nearest town or city to where you were living on Sunday 21 "
 "March 2021?"
 msgstr ""
-"Beth yw'r dref neu'r ddinas agosaf i ble y byddwch chi'n byw ddydd Sul 21"
-" Mawrth 2021?"
 
 #: app/templates/start-transient-enter-town.html:24
 msgid ""
 "What is the nearest town or city to where you will be living on Sunday 21"
 " March 2021?"
 msgstr ""
+"Beth yw'r dref neu'r ddinas agosaf i ble y byddwch chi'n byw ddydd Sul 21"
+" Mawrth 2021?"
 
 #: app/templates/start-transient-enter-town.html:44
 msgid "Enter a town or city"
@@ -1184,7 +1209,7 @@ msgid ""
 "if you have lost or not received an access code. This can be sent to you "
 "by text or post."
 msgstr ""
-"llwch chi %(open)sofyn am god mynediad newydd%(close)s i ddechrau "
+"Gallwch chi%(open)sofyn am god mynediad newydd%(close)s i ddechrau "
 "cyfrifiad newydd os ydych chi wedi colli eich cod mynediad neu heb gael "
 "un. Gall y cod gael ei anfon atoch drwy neges destun neu drwy'r post."
 
@@ -1553,7 +1578,7 @@ msgstr ""
 
 #: app/templates/partials/messages.html:8
 msgid "There is a problem with this page"
-msgstr ""
+msgstr "Mae problem gyda'r dudalen hon"
 
 #: app/templates/partials/messages.html:10
 msgid "There is a problem with your answer"
@@ -1568,3 +1593,4 @@ msgstr ""
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr ""
+

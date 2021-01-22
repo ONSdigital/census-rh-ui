@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-18 16:59+0000\n"
+"POT-Creation-Date: 2021-01-22 12:56+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -105,7 +105,9 @@ msgid "Select an answer"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:48
+#: app/templates/common-confirm-address.html:72
 #: app/templates/start-confirm-address.html:56
+#: app/templates/start-confirm-address.html:72
 msgid "Is this the correct address?"
 msgstr ""
 
@@ -119,23 +121,23 @@ msgstr ""
 msgid "Add flat or room number"
 msgstr ""
 
-#: app/templates/common-confirm-address.html:80
+#: app/templates/common-confirm-address.html:82
 #: app/templates/common-enter-address.html:103
 #: app/templates/common-enter-room-number.html:61
-#: app/templates/common-resident-or-manager.html:70
-#: app/templates/common-select-address.html:63
-#: app/templates/request-code-confirm-send-by-text.html:62
+#: app/templates/common-resident-or-manager.html:72
+#: app/templates/common-select-address.html:65
+#: app/templates/request-code-confirm-send-by-text.html:64
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
-#: app/templates/request-code-select-how-to-receive.html:74
-#: app/templates/request-common-confirm-send-by-post.html:150
+#: app/templates/request-code-select-how-to-receive.html:88
+#: app/templates/request-common-confirm-send-by-post.html:152
 #: app/templates/request-common-enter-name.html:69
 #: app/templates/request-common-people-in-household.html:73
 #: app/templates/request-questionnaire-household.html:52
-#: app/templates/request-questionnaire-individual.html:33
 #: app/templates/start-address-changed.html:20
-#: app/templates/start-confirm-address.html:80
+#: app/templates/start-confirm-address.html:82
 #: app/templates/start-link-address-linked.html:20
+#: app/templates/start-transient-enter-town.html:55
 msgid "Continue"
 msgstr ""
 
@@ -311,6 +313,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/common-resident-or-manager.html:47
+#: app/templates/common-resident-or-manager.html:62
 msgid "Are you a resident or manager of this establishment?"
 msgstr ""
 
@@ -343,6 +346,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/common-select-address.html:46
+#: app/templates/common-select-address.html:55
 msgid "Select your address"
 msgstr ""
 
@@ -370,6 +374,7 @@ msgid "No, I need to change it"
 msgstr ""
 
 #: app/templates/request-code-confirm-send-by-text.html:46
+#: app/templates/request-code-confirm-send-by-text.html:54
 msgid "Is this mobile number correct?"
 msgstr ""
 
@@ -464,42 +469,57 @@ msgid ""
 msgstr ""
 
 #: app/templates/request-code-individual.html:35
+#: app/templates/request-questionnaire-individual.html:33
 msgid "Start"
 msgstr ""
 
+#: app/templates/request-code-select-how-to-receive.html:25
+msgid "An unbranded envelope can be addressed to you at the registered address"
+msgstr ""
+
 #: app/templates/request-code-select-how-to-receive.html:27
-msgid "Text message"
+msgid "We can only send access codes to the registered address"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:28
-msgid "We will need your mobile number for this"
+#: app/templates/request-code-select-how-to-receive.html:31
+msgid ""
+"An unbranded envelope can be addressed to you at the registered household"
+" address"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:35
-msgid "Post"
-msgstr ""
-
-#: app/templates/request-code-select-how-to-receive.html:36
+#: app/templates/request-code-select-how-to-receive.html:33
 msgid "We can only send access codes to the registered household address"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:44
+#: app/templates/request-code-select-how-to-receive.html:41
+msgid "Text message"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:42
+msgid "We will need your mobile number for this"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:49
+msgid "Post"
+msgstr ""
+
+#: app/templates/request-code-select-how-to-receive.html:58
 msgid "How would you like to receive an individual access code?"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:46
+#: app/templates/request-code-select-how-to-receive.html:60
 msgid "How would you like to receive a new manager access code?"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:48
+#: app/templates/request-code-select-how-to-receive.html:62
 msgid "How would you like to receive a new household access code?"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:64
+#: app/templates/request-code-select-how-to-receive.html:78
 msgid "Select how to send access code"
 msgstr ""
 
-#: app/templates/request-code-select-how-to-receive.html:80
+#: app/templates/request-code-select-how-to-receive.html:94
 #, python-format
 msgid ""
 "To request a census in a different format or for further help, please "
@@ -636,7 +656,11 @@ msgid ""
 "unbranded envelope"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:136
+#: app/templates/request-common-confirm-send-by-post.html:131
+msgid "Large print"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:138
 msgid "I need a large-print questionnaire"
 msgstr ""
 
@@ -1003,6 +1027,7 @@ msgid "Tent or temporary structure"
 msgstr ""
 
 #: app/templates/start-transient-accommodation-type.html:54
+#: app/templates/start-transient-accommodation-type.html:62
 msgid "Which of the following best describes your type of accommodation?"
 msgstr ""
 

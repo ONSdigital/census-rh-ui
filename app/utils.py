@@ -454,8 +454,7 @@ class AddressIndex(View):
         address_options = []
 
         if display_region == 'cy':
-            # TODO: Add Welsh Translation
-            cannot_find_text = 'I cannot find my address'
+            cannot_find_text = 'Ni allaf ddod o hyd i fy nghyfeiriad'
         else:
             cannot_find_text = 'I cannot find my address'
 

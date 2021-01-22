@@ -1535,7 +1535,6 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
         self.content_start_link_address_enter_address_question_title_en = 'What is your postcode?'
-        # TODO: add welsh translation
         self.content_start_link_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
 
         self.content_start_link_address_address_has_been_linked_title_en = 'Your address has been linked to your code'
@@ -2787,9 +2786,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_page_title_error_cy = \
             '<title>Gwall: Nearest town or city - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
-            'What is the nearest town or city to where you will be living on Sunday 21 March 2021?'
+            "Beth yw\\\'r dref neu\\\'r ddinas agosaf i ble y byddwch chi\\\'n byw ddydd Sul 21 Mawrth 2021?"
         # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_post_census_day_title_cy = \
             'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
@@ -2836,15 +2834,12 @@ class RHTestCase(AioHTTPTestCase):
         self.start_transient_accommodation_type_input_tent_en = {
             'accommodation-type': 'Tent or temporary structure', 'action[save_continue]': '',
         }
-        # TODO Add Welsh Translation
         self.start_transient_accommodation_type_input_barge_cy = {
             'accommodation-type': 'Bad neu gwch', 'action[save_continue]': '',
         }
-        # TODO Add Welsh Translation
         self.start_transient_accommodation_type_input_caravan_cy = {
             'accommodation-type': 'Caraf\\xc3\\xa1n neu gerbyd preswyl', 'action[save_continue]': '',
         }
-        # TODO Add Welsh Translation
         self.start_transient_accommodation_type_input_tent_cy = {
             'accommodation-type': 'Pabell neu strwythur dros dro', 'action[save_continue]': '',
         }
