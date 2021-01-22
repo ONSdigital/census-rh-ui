@@ -162,5 +162,19 @@ async def remember(identity, request):
                 identity=identity)
 
 
+async def invalidate(request):
+    """
+    Invalidate open session.
+    """
+    session = await get_session(request)
+    try:
+        session.invalidate()
+        logger.info('session invalidated',
+                    client_ip=request['client_ip'])
+    except KeyError:
+        logger.warn('session already invalidated',
+                    client_ip=request['client_ip'])
+
+
 def get_sha256_hash(uac: str):
     return hashlib.sha256(uac.encode()).hexdigest()
