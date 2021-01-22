@@ -576,14 +576,15 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_nisra_ce_manager_title = 'You need to visit the Communal Establishment Manager Portal'
 
-        self.content_common_save_and_exit_link_en = 'Exit'
-        # TODO: add welsh translation
-        self.content_common_save_and_exit_link_cy = 'Exit'
         # End Common
 
         # Start Journey
 
         # Content
+
+        self.content_start_exit_button_en = 'href="/en/start/exit/"'
+        self.content_start_exit_button_cy = 'href="/cy/start/exit/"'
+        self.content_start_exit_button_ni = 'href="/ni/start/exit/"'
 
         self.content_start_title_en = 'Start census'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
@@ -1137,6 +1138,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_secondary_en = 'Select how to send access code'
         self.content_request_code_select_how_to_receive_option_text_en = 'Text message'
         self.content_request_code_select_how_to_receive_option_post_en = 'Post'
+        self.content_request_code_select_how_to_receive_option_post_hint_en = \
+            'We can only send access codes to the registered household address'
+        self.content_request_code_select_how_to_receive_option_post_hint_individual_en = \
+            'An unbranded envelope can be addressed to you at the registered household address'
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_en = \
+            'We can only send access codes to the registered address'
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_en = \
+            'An unbranded envelope can be addressed to you at the registered address'
 
         self.content_request_code_select_how_to_receive_individual_response_question_cy = \
             "Angen ateb ar wahân i aelodau eich cartref?"
@@ -1145,6 +1154,17 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_secondary_cy = "Dewiswch sut i anfon y cod mynediad"
         self.content_request_code_select_how_to_receive_option_text_cy = "Neges destun"
         self.content_request_code_select_how_to_receive_option_post_cy = "Post"
+        self.content_request_code_select_how_to_receive_option_post_hint_cy = \
+            "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_option_post_hint_individual_cy = \
+            'An unbranded envelope can be addressed to you at the registered household address'
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
+            "We can only send access codes to the registered address"
+        # TODO Add Welsh Translation
+        self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
+            'An unbranded envelope can be addressed to you at the registered address'
 
         self.content_request_code_select_how_to_receive_household_page_title_en = \
             '<title>Select how to receive household access code - Census 2021</title>'

@@ -6,11 +6,11 @@
     {%- set page_title_value = 'Census 2021' -%}
 {%- endif -%}
 
-{%- if page_show_signout == 'true' -%}
+{%- if ('/start/' in page_url) and (page_url != '/start/') and (timeout != 'true') -%}
     {%- set signout_button_value = {
             'text': 'Exit',
             'buttonStyle': 'exit',
-            'url': domain_url_ni + '/start/'
+            'url': url('StartExit:get', display_region='ni')
         }
     -%}
 {%- endif -%}

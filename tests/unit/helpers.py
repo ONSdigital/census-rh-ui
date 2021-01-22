@@ -70,6 +70,10 @@ class TestHelpers(RHTestCase):
 
     def check_text_enter_address(self, display_region, contents, check_empty=False, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_empty:
                 self.assertIn(self.content_request_enter_address_page_title_error_cy, contents)
                 self.assertIn(self.content_common_enter_address_error_empty_cy, contents)
@@ -88,6 +92,16 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_access_code_enter_address_secondary_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_empty:
                 self.assertIn(self.content_request_enter_address_page_title_error_en, contents)
                 self.assertIn(self.content_common_enter_address_error_empty_en, contents)
@@ -108,6 +122,10 @@ class TestHelpers(RHTestCase):
 
     def check_text_select_address(self, display_region, contents, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_common_select_address_error_cy, contents)
                 self.assertIn(self.content_common_select_address_page_title_error_cy, contents)
@@ -116,6 +134,16 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_select_address_title_cy, contents)
             self.assertIn(self.content_common_select_address_value_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_common_select_address_error_en, contents)
                 self.assertIn(self.content_common_select_address_page_title_error_en, contents)
@@ -127,6 +155,10 @@ class TestHelpers(RHTestCase):
     def check_text_confirm_address(self, display_region, contents, check_error=False, check_ce=False,
                                    check_room_number=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_common_confirm_address_error_cy, contents)
                 self.assertIn(self.content_common_confirm_address_page_title_error_cy, contents)
@@ -149,6 +181,16 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_cy, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_common_confirm_address_error_en, contents)
                 self.assertIn(self.content_common_confirm_address_page_title_error_en, contents)
@@ -171,8 +213,12 @@ class TestHelpers(RHTestCase):
                 self.assertNotIn(self.content_common_ce_room_number_change_link_en, contents)
                 self.assertNotIn(self.content_common_ce_room_number_add_link_en, contents)
 
-    def check_text_select_how_to_receive(self, display_region, contents, user_type, check_error=False):
+    def check_text_select_how_to_receive(self, display_region, contents, user_type, address_type, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_request_code_select_how_to_receive_error_cy, contents)
             if user_type == 'individual':
@@ -198,7 +244,29 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_secondary_cy, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_cy, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_cy, contents)
+            if address_type == 'CE':
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_cy, contents)
+            else:
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_individual_cy,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_request_code_select_how_to_receive_error_en, contents)
             if user_type == 'individual':
@@ -224,9 +292,25 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_select_how_to_receive_secondary_en, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_text_en, contents)
             self.assertIn(self.content_request_code_select_how_to_receive_option_post_en, contents)
+            if address_type == 'CE':
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_en,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_ce_en, contents)
+            else:
+                if user_type == 'individual':
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_individual_en,
+                                  contents)
+                else:
+                    self.assertIn(self.content_request_code_select_how_to_receive_option_post_hint_en, contents)
 
     def check_text_resident_or_manager(self, display_region, contents, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_common_resident_or_manager_page_title_error_cy, contents)
                 self.assertIn(self.content_common_resident_or_manager_error_cy, contents)
@@ -238,6 +322,16 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_resident_or_manager_option_manager_cy, contents)
             self.assertIn(self.content_common_resident_or_manager_description_manager_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_common_resident_or_manager_page_title_error_en, contents)
                 self.assertIn(self.content_common_resident_or_manager_error_en, contents)
@@ -251,6 +345,10 @@ class TestHelpers(RHTestCase):
 
     def check_text_enter_mobile(self, display_region, contents, check_empty=False, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_empty:
                 self.assertIn(self.content_request_code_enter_mobile_error_empty_cy, contents)
             elif check_error:
@@ -262,6 +360,16 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_request_code_enter_mobile_title_cy, contents)
             self.assertIn(self.content_request_code_enter_mobile_secondary_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_empty:
                 self.assertIn(self.content_request_code_enter_mobile_error_empty_en, contents)
             elif check_error:
@@ -275,6 +383,10 @@ class TestHelpers(RHTestCase):
 
     def check_text_confirm_send_by_text(self, display_region, contents, user_type, check_error=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_request_code_confirm_send_by_text_error_cy, contents)
             if user_type == 'individual':
@@ -296,6 +408,16 @@ class TestHelpers(RHTestCase):
                     self.assertIn(self.content_request_code_confirm_send_by_text_page_title_household_cy, contents)
             self.assertIn(self.content_request_code_confirm_send_by_text_title_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_request_code_confirm_send_by_text_error_en, contents)
             if user_type == 'individual':
@@ -320,6 +442,10 @@ class TestHelpers(RHTestCase):
     def check_text_confirm_send_by_post(self, display_region, contents, user_type, check_error=False,
                                         override_sub_user_journey=False, check_ce=False, check_room_number=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_request_common_confirm_send_by_post_error_cy, contents)
             if (self.sub_user_journey == 'paper-questionnaire') and (override_sub_user_journey is False):
@@ -407,6 +533,16 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_yes_cy, contents)
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_no_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_request_common_confirm_send_by_post_error_en, contents)
             if (self.sub_user_journey == 'paper-questionnaire') and (override_sub_user_journey is False):
@@ -496,13 +632,19 @@ class TestHelpers(RHTestCase):
 
     def check_text_error_500(self, display_region, contents):
         if display_region == 'cy':
+            self.assertNotIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_500_error_cy, contents)
         else:
+            self.assertNotIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_500_error_en, contents)
 
     def check_text_enter_room_number(self, display_region, contents, check_empty=False, check_over_length=False,
                                      check_for_value=False):
         if display_region == 'cy':
+            if self.user_journey == 'start':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
             if check_empty:
                 self.assertIn(self.content_common_enter_room_number_page_title_error_cy, contents)
                 self.assertIn(self.content_common_enter_room_number_empty_cy, contents)
@@ -513,6 +655,16 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_enter_room_number_page_title_cy, contents)
             self.assertIn(self.content_common_enter_room_number_title_cy, contents)
         else:
+            if self.user_journey == 'start':
+                if display_region == 'ni':
+                    self.assertIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertIn(self.content_start_exit_button_en, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
             if check_empty:
                 self.assertIn(self.content_common_enter_room_number_page_title_error_en, contents)
                 self.assertIn(self.content_common_enter_room_number_empty_en, contents)
@@ -734,7 +886,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_household_title_en, contents)
 
     async def check_post_confirm_address_input_yes_code_individual(self, url, display_region,
-                                                                   case_by_uprn_return, user_type):
+                                                                   case_by_uprn_return, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
 
@@ -747,7 +899,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_confirm_address_input_yes_code_new_case(self, url, display_region,
                                                                  create_case_return):
@@ -779,7 +931,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_household_title_en, contents)
 
     async def check_post_confirm_address_input_yes_code_new_case_individual(
-            self, url, display_region, create_case_return, user_type):
+            self, url, display_region, create_case_return, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
             passthrough=[str(self.server._root)]
@@ -801,7 +953,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_confirm_address_input_yes_form(self, url, display_region, case_by_uprn_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
@@ -1137,7 +1289,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             self.check_text_error_500(display_region, contents)
 
-    async def check_post_household_information_code(self, url, display_region, user_type):
+    async def check_post_household_information_code(self, url, display_region, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'POST', True))
@@ -1146,7 +1298,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
     async def check_post_household_information_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1250,7 +1402,7 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('access-code/select-how-to-receive', display_region, False),
                               contents)
-            self.check_text_select_how_to_receive(display_region, contents, 'manager')
+            self.check_text_select_how_to_receive(display_region, contents, 'manager', 'CE')
 
     async def check_post_select_how_to_receive_input_sms(self, url, display_region, override_sub_user_journey=None):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1302,7 +1454,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
     async def check_post_select_how_to_receive_input_invalid_or_no_selection(
-            self, url, display_region, data, user_type):
+            self, url, display_region, data, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
@@ -1312,7 +1464,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type, check_error=True)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type, check_error=True)
 
     async def check_post_resident_or_manager(self, url, display_region, data, user_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -1325,7 +1477,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type)
+            self.check_text_select_how_to_receive(display_region, contents, user_type, 'CE')
 
     async def check_post_resident_or_manager_code_manager_ni(self, url, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -2125,7 +2277,7 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.content_request_code_sent_by_post_page_title_household_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
 
-    async def check_post_confirm_send_by_post_input_no(self, url, display_region, user_type):
+    async def check_post_confirm_send_by_post_input_no(self, url, display_region, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_no)
@@ -2281,12 +2433,15 @@ class TestHelpers(RHTestCase):
         contents = str(await response.content.read())
         self.assertIn(self.get_logo(display_region), contents)
         if display_region == 'cy':
-            self.assertNotIn(self.content_common_save_and_exit_link_cy, contents)
+            self.assertNotIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_start_timeout_title_cy, contents)
             self.assertIn(self.content_start_timeout_secondary_cy, contents)
             self.assertIn(self.content_start_timeout_restart_cy, contents)
         else:
-            self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
+            if display_region == 'ni':
+                self.assertNotIn(self.content_start_exit_button_ni, contents)
+            else:
+                self.assertNotIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_timeout_title_en, contents)
             self.assertIn(self.content_start_timeout_secondary_en, contents)
             self.assertIn(self.content_start_timeout_restart_en, contents)
@@ -2329,7 +2484,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_individual_questionnaire_title_en, contents)
                 self.assertIn(self.content_request_individual_questionnaire_secondary_en, contents)
 
-    async def check_post_request_individual_code_journey_switch(self, url, display_region):
+    async def check_post_request_individual_code_journey_switch(self, url, display_region, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url)
             self.assertLogEvent(cm, self.build_url_log_entry('individual', display_region, 'POST', True))
@@ -2341,7 +2496,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region, True), contents)
-            self.check_text_select_how_to_receive(display_region, contents, 'individual')
+            self.check_text_select_how_to_receive(display_region, contents, 'individual', address_type)
 
     async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
                               data_over_length=False, check_for_value=False):
@@ -2534,6 +2689,7 @@ class TestHelpers(RHTestCase):
     def check_text_start_transient_enter_town_name(self, display_region, contents,
                                                    after_census_day=False, check_error=False):
         if display_region == 'cy':
+            self.assertIn(self.content_start_exit_button_cy, contents)
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_cy, contents)
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_error_cy, contents)
@@ -2544,6 +2700,10 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
         else:
+            if display_region == 'ni':
+                self.assertIn(self.content_start_exit_button_ni, contents)
+            else:
+                self.assertIn(self.content_start_exit_button_en, contents)
             if check_error:
                 self.assertIn(self.content_start_transient_enter_town_name_error_en, contents)
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_error_en, contents)
@@ -2561,6 +2721,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_start_transient_accommodation_type_page_title_error_cy, contents)
             else:
                 self.assertIn(self.content_start_transient_accommodation_type_page_title_cy, contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_cy, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_cy, contents)
@@ -2571,6 +2732,10 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_start_transient_accommodation_type_page_title_error_en, contents)
             else:
                 self.assertIn(self.content_start_transient_accommodation_type_page_title_en, contents)
+            if display_region == 'ni':
+                self.assertIn(self.content_start_exit_button_ni, contents)
+            else:
+                self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_title_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_barge_en, contents)
             self.assertIn(self.content_start_transient_accommodation_type_value_caravan_en, contents)
@@ -2582,7 +2747,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_ni_select_language_page_title_error, contents)
         else:
             self.assertIn(self.content_start_ni_select_language_page_title, contents)
-        self.assertIn(self.content_common_save_and_exit_link_en, contents)
+        self.assertIn(self.content_start_exit_button_ni, contents)
         self.assertIn(self.content_start_ni_select_language_title, contents)
         self.assertIn(self.content_start_ni_select_language_option, contents)
         self.assertIn(self.content_start_ni_select_language_switch_back, contents)
@@ -2593,7 +2758,7 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_start_ni_language_options_page_title_error, contents)
         else:
             self.assertIn(self.content_start_ni_language_options_page_title, contents)
-        self.assertIn(self.content_common_save_and_exit_link_en, contents)
+        self.assertIn(self.content_start_exit_button_ni, contents)
         self.assertIn(self.content_start_ni_language_options_title, contents)
         self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 

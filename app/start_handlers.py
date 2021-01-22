@@ -13,7 +13,7 @@ from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
 
 from .flash import flash
 from .exceptions import InvalidEqPayLoad, SessionTimeout
-from .security import remember, check_permission, forget, get_sha256_hash
+from .security import remember, check_permission, forget, get_sha256_hash, invalidate
 
 from .utils import View, RHService, FlashMessage
 
@@ -313,7 +313,6 @@ class StartConfirmAddress(StartCommon):
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
-                'page_show_signout': 'true',
                 'display_region': display_region,
                 'addressLine1': attributes['addressLine1'],
                 'addressLine2': attributes['addressLine2'],
@@ -412,7 +411,7 @@ class StartNILanguageOptions(StartCommon):
 
         return {'locale': 'en',
                 'page_title': page_title,
-                'page_show_signout': 'true',
+                'page_url': View.gen_page_url(request),
                 'display_region': 'ni'}
 
     async def post(self, request):
@@ -473,8 +472,8 @@ class StartNISelectLanguage(StartCommon):
             page_title = View.page_title_error_prefix_en + page_title
 
         return {'locale': 'en',
+                'page_url': View.gen_page_url(request),
                 'page_title': page_title,
-                'page_show_signout': 'true',
                 'display_region': 'ni'}
 
     async def post(self, request):
@@ -660,8 +659,7 @@ class StartTransientEnterTownName(StartCommon):
             'display_region': display_region,
             'locale': locale,
             'page_url': View.gen_page_url(request),
-            'after-census-day': View.check_if_after_census_day(),
-            'page_show_signout': 'true'
+            'after-census-day': View.check_if_after_census_day()
         }
 
     @aiohttp_jinja2.template('start-transient-enter-town.html')
@@ -728,8 +726,7 @@ class StartTransientAccommodationType(StartCommon):
             'page_title': page_title,
             'display_region': display_region,
             'locale': locale,
-            'page_url': View.gen_page_url(request),
-            'page_show_signout': 'true'
+            'page_url': View.gen_page_url(request)
         }
 
     @aiohttp_jinja2.template('start-transient-accommodation-type.html')
@@ -784,3 +781,15 @@ class StartTransientAccommodationType(StartCommon):
             raise HTTPFound(
                 request.app.router['StartTransientAccommodationType:get'].url_for(display_region=display_region)
             )
+
+
+@start_routes.view(r'/' + View.valid_display_regions + '/start/exit/')
+class StartExit(StartCommon):
+    async def get(self, request):
+        self.setup_request(request)
+        display_region = request.match_info['display_region']
+        self.log_entry(request, display_region + '/start/exit')
+        await invalidate(request)
+        raise HTTPFound(
+            request.app.router['Start:get'].url_for(display_region=display_region)
+        )
