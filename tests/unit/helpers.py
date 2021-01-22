@@ -2273,14 +2273,12 @@ class TestHelpers(RHTestCase):
         self.assertIn(self.get_logo(display_region), contents)
         if display_region == 'cy':
             self.assertNotIn(self.content_common_save_and_exit_link_cy, contents)
-            self.assertIn(self.content_start_timeout_title_cy, contents)
-            self.assertIn(self.content_start_timeout_secondary_cy, contents)
-            self.assertIn(self.content_start_timeout_restart_cy, contents)
+            self.assertIn(self.content_start_forbidden_title_cy, contents)
+            self.assertIn(self.content_start_forbidden_link_text_cy, contents)
         else:
             self.assertNotIn(self.content_common_save_and_exit_link_en, contents)
-            self.assertIn(self.content_start_timeout_title_en, contents)
-            self.assertIn(self.content_start_timeout_secondary_en, contents)
-            self.assertIn(self.content_start_timeout_restart_en, contents)
+            self.assertIn(self.content_start_forbidden_title_en, contents)
+            self.assertIn(self.content_start_forbidden_link_text_en, contents)
 
     async def check_get_request_individual_code(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:

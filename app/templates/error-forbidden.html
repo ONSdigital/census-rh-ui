@@ -1,0 +1,16 @@
+{%- extends 'base-' + display_region + '.html' -%}
+
+{%- set start_link = url('Start:get', display_region=display_region) -%}
+
+{%- block main -%}
+
+    <h1 data-ga="error" data-ga-category="error" data-ga-action="error-message-shown" data-ga-label="system-error">
+        {{ _('Sorry, there is a problem') }}
+    </h1>
+
+    {%- autoescape false -%}
+        <p>{{ _('To access this page you need to %(open)senter your 16-character access code%(close)s.', open='<a href="%s">' % start_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
+
+{%- endblock main -%}
+

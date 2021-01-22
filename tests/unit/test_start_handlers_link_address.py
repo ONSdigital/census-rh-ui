@@ -99,25 +99,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_en,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/link-address/address-has-been-linked/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -227,25 +211,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                 'POST',
                 self.post_start_link_address_confirm_address_en,
-                allow_redirects=True,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/link-address/address-has-been-linked/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -353,25 +321,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_en,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/link-address/address-has-been-linked/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -481,25 +433,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                 'POST',
                 self.post_start_link_address_confirm_address_en,
-                allow_redirects=True,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/link-address/address-has-been-linked/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -607,25 +543,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_cy,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/link-address/address-has-been-linked/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_cy, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_cy, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -735,25 +655,9 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_cy,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/link-address/address-has-been-linked/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_cy, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_cy, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -857,19 +761,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -990,19 +881,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_title_en, contents)
-            self.assertIn(self.content_start_link_address_address_has_been_linked_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -1101,13 +979,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1216,13 +1087,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1329,13 +1193,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1444,13 +1301,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1557,13 +1407,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1672,13 +1515,6 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/address-has-been-linked'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_link_address_address_has_been_linked_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/address-has-been-linked'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -3493,9 +3329,3 @@ class TestStartHandlersLinkAddress(TestHelpers):
         await self.assert_no_direct_access(self.post_start_link_address_confirm_address_en, 'en', 'GET')
         await self.assert_no_direct_access(self.post_start_link_address_confirm_address_cy, 'cy', 'GET')
         await self.assert_no_direct_access(self.post_start_link_address_confirm_address_ni, 'ni', 'GET')
-        await self.assert_no_direct_access(self.get_start_link_address_address_has_been_linked_en, 'en', 'GET')
-        await self.assert_no_direct_access(self.get_start_link_address_address_has_been_linked_cy, 'cy', 'GET')
-        await self.assert_no_direct_access(self.get_start_link_address_address_has_been_linked_ni, 'ni', 'GET')
-        await self.assert_no_direct_access(self.post_start_link_address_address_has_been_linked_en, 'en', 'GET')
-        await self.assert_no_direct_access(self.post_start_link_address_address_has_been_linked_cy, 'cy', 'GET')
-        await self.assert_no_direct_access(self.post_start_link_address_address_has_been_linked_ni, 'ni', 'GET')
