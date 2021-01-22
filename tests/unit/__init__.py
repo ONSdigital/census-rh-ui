@@ -576,14 +576,15 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_nisra_ce_manager_title = 'You need to visit the Communal Establishment Manager Portal'
 
-        self.content_common_save_and_exit_link_en = 'Exit'
-        # TODO: add welsh translation
-        self.content_common_save_and_exit_link_cy = 'Exit'
         # End Common
 
         # Start Journey
 
         # Content
+
+        self.content_start_exit_button_en = 'href="/en/start/exit/"'
+        self.content_start_exit_button_cy = 'href="/cy/start/exit/"'
+        self.content_start_exit_button_ni = 'href="/ni/start/exit/"'
 
         self.content_start_title_en = 'Start census'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
