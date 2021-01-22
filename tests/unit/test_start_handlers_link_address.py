@@ -61,6 +61,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -77,6 +78,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/select-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -92,6 +94,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -173,6 +176,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -189,6 +193,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/select-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -204,6 +209,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -283,6 +289,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -299,6 +306,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/select-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -314,6 +322,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -395,6 +404,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -411,6 +421,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/select-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -426,6 +437,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -505,6 +517,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/enter-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_cy, contents)
 
             response = await self.client.request(
@@ -521,6 +534,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/select-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_select_address_title_cy, contents)
             self.assertIn(self.content_common_select_address_value_cy, contents)
 
@@ -536,6 +550,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/confirm-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
@@ -617,6 +632,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/enter-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_cy, contents)
 
             response = await self.client.request(
@@ -633,6 +649,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/select-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_select_address_title_cy, contents)
             self.assertIn(self.content_common_select_address_value_cy, contents)
 
@@ -648,6 +665,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/confirm-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
@@ -725,6 +743,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             contents = str(await response.content.read())
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/enter-address'")
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -739,6 +758,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -752,6 +772,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -766,6 +787,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_language_options_title, contents)
             self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 
@@ -845,6 +867,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             contents = str(await response.content.read())
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/enter-address'")
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
@@ -859,6 +882,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
 
@@ -872,6 +896,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
@@ -886,6 +911,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_language_options_title, contents)
             self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 
@@ -992,6 +1018,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1100,6 +1127,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1206,6 +1234,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1314,6 +1343,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1420,6 +1450,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1528,6 +1559,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_ni_select_language_title, contents)
             self.assertIn(self.content_start_ni_select_language_option, contents)
 
@@ -1596,6 +1628,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
@@ -1611,6 +1644,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/address-in-scotland/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
@@ -1651,6 +1685,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
@@ -1666,6 +1701,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/address-in-scotland/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_address_in_scotland_cy, contents)
 
     @unittest_run_loop
@@ -1706,6 +1742,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
@@ -1719,6 +1756,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_address_in_scotland_ni, contents)
 
     @unittest_run_loop
@@ -1759,6 +1797,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
@@ -1774,6 +1813,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_call_contact_centre_title_en, contents)
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
             self.assertIn(self.content_call_centre_number_ew, contents)
@@ -1816,6 +1856,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
@@ -1831,6 +1872,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
             self.assertIn(self.content_call_centre_number_cy, contents)
@@ -1873,6 +1915,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/link-address/confirm-address'")
             contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
             self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
@@ -1886,6 +1929,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_call_contact_centre_title_en, contents)
             self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
             self.assertIn(self.content_call_centre_number_ni, contents)
@@ -1931,6 +1975,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/register-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_register_address_title_en, contents)
             self.assertIn(self.content_common_register_address_text_en, contents)
             self.assertIn(self.content_call_centre_number_ew, contents)
@@ -1976,6 +2021,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/register-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_register_address_title_cy, contents)
             self.assertIn(self.content_common_register_address_text_cy, contents)
             self.assertIn(self.content_call_centre_number_cy, contents)
@@ -2018,6 +2064,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_register_address_title_en, contents)
             self.assertIn(self.content_common_register_address_text_en, contents)
             self.assertIn(self.content_call_centre_number_ni, contents)
@@ -2054,6 +2101,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         self.assertIn(self.ons_logo_en, contents)
         self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                       contents)
+        self.assertIn(self.content_start_exit_button_en, contents)
         self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
         self.assertIn(self.content_common_enter_address_error_en, contents)
 
@@ -2089,6 +2137,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('<a href="/en/start/link-address/enter-address/" lang="en" >English</a>',
                       contents)
+        self.assertIn(self.content_start_exit_button_cy, contents)
         self.assertIn(self.content_start_link_address_enter_address_question_title_cy, contents)
         self.assertIn(self.content_common_enter_address_error_cy, contents)
 
@@ -2122,6 +2171,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_exit_button_ni, contents)
         self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
         self.assertIn(self.content_common_enter_address_error_en, contents)
 
@@ -2165,6 +2215,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/select-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_error_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
@@ -2209,6 +2260,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/select-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_select_address_title_cy, contents)
             self.assertIn(self.content_common_select_address_error_cy, contents)
             self.assertIn(self.content_common_select_address_value_cy, contents)
@@ -2250,6 +2302,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_select_address_title_en, contents)
             self.assertIn(self.content_common_select_address_error_en, contents)
             self.assertIn(self.content_common_select_address_value_en, contents)
@@ -2302,6 +2355,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/enter-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
     @unittest_run_loop
@@ -2352,6 +2406,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/enter-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_cy, contents)
 
     @unittest_run_loop
@@ -2400,6 +2455,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_start_link_address_enter_address_question_title_en, contents)
 
     @unittest_run_loop
@@ -2452,6 +2508,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_error_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
@@ -2507,6 +2564,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/confirm-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_error_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
@@ -2560,6 +2618,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_error_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
@@ -2615,6 +2674,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/link-address/confirm-address/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_error_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
@@ -2670,6 +2730,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/link-address/confirm-address/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_confirm_address_title_cy, contents)
             self.assertIn(self.content_common_confirm_address_error_cy, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
@@ -2723,6 +2784,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_confirm_address_title_en, contents)
             self.assertIn(self.content_common_confirm_address_error_en, contents)
             self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
@@ -2755,6 +2817,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(403, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertNotIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_timeout_en, contents)
             self.assertIn(self.content_link_address_timeout_error_en, contents)
 
@@ -2786,6 +2849,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(403, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertNotIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_timeout_cy, contents)
             self.assertIn(self.content_link_address_timeout_error_cy, contents)
 
@@ -2817,6 +2881,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(403, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertNotIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_timeout_en, contents)
             self.assertIn(self.content_link_address_timeout_error_en, contents)
 
@@ -2872,6 +2937,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ew, contents)
 
@@ -2927,6 +2993,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, contents)
             self.assertIn(self.content_call_centre_number_cy, contents)
 
@@ -2980,6 +3047,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ni, contents)
 
@@ -3035,6 +3103,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ew, contents)
 
@@ -3090,6 +3159,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, contents)
             self.assertIn(self.content_call_centre_number_cy, contents)
 
@@ -3143,6 +3213,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ni, contents)
 
@@ -3198,6 +3269,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/address-linking/" lang="cy" >Cymraeg</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ew, contents)
 
@@ -3253,6 +3325,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/address-linking/" lang="en" >English</a>',
                           contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_cy, contents)
             self.assertIn(self.content_call_centre_number_cy, contents)
 
@@ -3306,6 +3379,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertEqual(200, response.status)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_call_contact_centre_address_linking_en, contents)
             self.assertIn(self.content_call_centre_number_ni, contents)
 

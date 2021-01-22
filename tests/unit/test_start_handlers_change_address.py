@@ -56,13 +56,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
-            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -74,11 +74,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -90,12 +91,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -105,13 +107,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -185,13 +188,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -203,11 +207,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -219,12 +224,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -234,13 +240,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -312,13 +319,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -330,11 +338,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -346,12 +355,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -361,13 +371,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -441,13 +452,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -459,11 +471,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -475,12 +488,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -490,13 +504,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -568,13 +583,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_cy, contents)
 
             response = await self.client.request(
                 'POST',
@@ -586,11 +602,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -602,12 +619,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_select_address_title_cy, contents)
+            self.assertIn(self.content_common_select_address_value_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -617,13 +635,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_title_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -697,13 +716,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_cy, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_cy, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_cy, contents)
 
             response = await self.client.request(
                 'POST',
@@ -715,11 +735,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -731,12 +752,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_select_address_title_cy, contents)
+            self.assertIn(self.content_common_select_address_value_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -746,13 +768,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_title_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -824,11 +847,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -840,9 +864,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -854,10 +879,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -867,11 +893,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -881,10 +908,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_language_options_title, str(resp_content))
-            self.assertIn(self.content_start_ni_language_options_option_yes, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_language_options_title, contents)
+            self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 
             response = await self.client.request(
                 'POST',
@@ -959,11 +987,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_yes_en, str(resp_content))
-            self.assertIn(self.content_start_confirm_address_option_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_yes_en, contents)
+            self.assertIn(self.content_start_confirm_address_option_no_en, contents)
 
             response = await self.client.request(
                 'POST',
@@ -975,9 +1004,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -989,10 +1019,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1002,11 +1033,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1016,10 +1048,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_language_options_title, str(resp_content))
-            self.assertIn(self.content_start_ni_language_options_option_yes, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_language_options_title, contents)
+            self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1131,10 +1164,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1248,10 +1282,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1363,10 +1398,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1480,10 +1516,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1595,10 +1632,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1712,10 +1750,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/select-language'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_title, str(resp_content))
-            self.assertIn(self.content_start_ni_select_language_option, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_ni_select_language_title, contents)
+            self.assertIn(self.content_start_ni_select_language_option, contents)
 
             response = await self.client.request(
                 'POST',
@@ -1790,9 +1829,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1802,11 +1842,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/address-in-scotland'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/address-in-scotland/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_address_in_scotland_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_address_in_scotland_en, contents)
 
     @unittest_run_loop
     async def test_change_address_address_in_scotland_cy(self):
@@ -1854,9 +1895,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1866,11 +1908,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/address-in-scotland'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/address-in-scotland/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_address_in_scotland_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_address_in_scotland_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_address_in_scotland_ni(self):
@@ -1918,9 +1961,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1930,9 +1974,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/address-in-scotland'")
 
             self.assertEqual(response.status, 200)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_address_in_scotland_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_address_in_scotland_ni, contents)
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_en(self):
@@ -1980,9 +2025,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -1992,13 +2038,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_title_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ew, contents)
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_cy(self):
@@ -2046,9 +2093,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
             response = await self.client.request(
                     'POST',
@@ -2058,13 +2106,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_cy, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, str(resp_content))
-            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
+            self.assertIn(self.content_call_centre_number_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_census_address_type_na_ni(self):
@@ -2112,9 +2161,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     data=self.common_select_address_input_valid)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/select-address'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/confirm-address'")
-            resp_content = await response_get_confirm.content.read()
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response_get_confirm.content.read())
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
             response = await self.client.request(
                     'POST',
@@ -2124,11 +2174,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/unable-to-match-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_title_en, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_call_contact_centre_title_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ni, contents)
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_en(self):
@@ -2176,13 +2227,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/register-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_register_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_register_address_text_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_register_address_title_en, contents)
+            self.assertIn(self.content_common_register_address_text_en, contents)
+            self.assertIn(self.content_call_centre_number_ew, contents)
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_cy(self):
@@ -2230,13 +2282,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/register-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_register_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_register_address_text_cy, str(resp_content))
-            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_register_address_title_cy, contents)
+            self.assertIn(self.content_common_register_address_text_cy, contents)
+            self.assertIn(self.content_call_centre_number_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_address_not_listed_ni(self):
@@ -2283,11 +2336,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/register-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_register_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_register_address_text_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_register_address_title_en, contents)
+            self.assertIn(self.content_common_register_address_text_en, contents)
+            self.assertIn(self.content_call_centre_number_ni, contents)
 
     @unittest_run_loop
     async def test_post_start_change_address_enter_address_bad_postcode_en(
@@ -2326,12 +2380,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
         self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/enter-address'")
 
         self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_en, str(resp_content))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_en, contents)
         self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                      str(resp_content))
-        self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
-        self.assertIn(self.content_common_enter_address_error_en, str(resp_content))
+                      contents)
+        self.assertIn(self.content_start_exit_button_en, contents)
+        self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
+        self.assertIn(self.content_common_enter_address_error_en, contents)
 
     @unittest_run_loop
     async def test_post_start_change_address_enter_address_bad_postcode_cy(
@@ -2370,12 +2425,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
         self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/enter-address'")
 
         self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.ons_logo_cy, str(resp_content))
+        contents = str(await response.content.read())
+        self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
-                      str(resp_content))
-        self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
-        self.assertIn(self.content_common_enter_address_error_cy, str(resp_content))
+                      contents)
+        self.assertIn(self.content_start_exit_button_cy, contents)
+        self.assertIn(self.content_start_change_address_enter_address_question_title_cy, contents)
+        self.assertIn(self.content_common_enter_address_error_cy, contents)
 
     @unittest_run_loop
     async def test_post_start_change_address_enter_address_bad_postcode_ni(
@@ -2414,10 +2470,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
         self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/enter-address'")
 
         self.assertEqual(response.status, 200)
-        resp_content = await response.content.read()
-        self.assertIn(self.nisra_logo, str(resp_content))
-        self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
-        self.assertIn(self.content_common_enter_address_error_en, str(resp_content))
+        contents = str(await response.content.read())
+        self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_exit_button_ni, contents)
+        self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
+        self.assertIn(self.content_common_enter_address_error_en, contents)
 
     @unittest_run_loop
     async def test_change_address_no_address_selected_en(self):
@@ -2464,13 +2521,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/select-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_error_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
     @unittest_run_loop
     async def test_change_address_no_address_selected_cy(self):
@@ -2517,13 +2575,14 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/select-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_select_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_select_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_select_address_title_cy, contents)
+            self.assertIn(self.content_common_select_address_error_cy, contents)
+            self.assertIn(self.content_common_select_address_value_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_no_address_selected_ni(self):
@@ -2569,11 +2628,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/select-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_select_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_select_address_value_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_select_address_title_en, contents)
+            self.assertIn(self.content_common_select_address_error_en, contents)
+            self.assertIn(self.content_common_select_address_value_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_no_en(self):
@@ -2628,11 +2688,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/enter-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_no_cy(self):
@@ -2687,11 +2748,12 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/enter-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_no_ni(self):
@@ -2746,9 +2808,10 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/enter-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_start_change_address_enter_address_question_title_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_change_address_enter_address_question_title_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_en(self):
@@ -2805,14 +2868,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_error_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_cy(self):
@@ -2869,14 +2933,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_title_cy, contents)
+            self.assertIn(self.content_common_confirm_address_error_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_invalid_ni(self):
@@ -2933,12 +2998,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_error_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_en(self):
@@ -2995,14 +3061,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/change-address/confirm-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_error_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_cy(self):
@@ -3059,14 +3126,15 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/change-address/confirm-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_cy, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_confirm_address_title_cy, contents)
+            self.assertIn(self.content_common_confirm_address_error_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_cy, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_empty_ni(self):
@@ -3123,12 +3191,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "address confirmation error")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_title_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_error_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_yes_en, str(resp_content))
-            self.assertIn(self.content_common_confirm_address_value_no_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_confirm_address_title_en, contents)
+            self.assertIn(self.content_common_confirm_address_error_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_yes_en, contents)
+            self.assertIn(self.content_common_confirm_address_value_no_en, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_en(self):
@@ -3187,12 +3256,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ew, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_cy(self):
@@ -3251,12 +3321,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
-            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_cy, contents)
+            self.assertIn(self.content_call_centre_number_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_404_ni(self):
@@ -3315,10 +3386,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ni, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_en(self):
@@ -3377,12 +3449,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ew, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_cy(self):
@@ -3441,12 +3514,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
-            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_cy, contents)
+            self.assertIn(self.content_call_centre_number_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_400_ni(self):
@@ -3505,10 +3579,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ni, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_en(self):
@@ -3567,12 +3642,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_en, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
             self.assertIn('<a href="/cy/start/call-contact-centre/change-address/" lang="cy" >Cymraeg</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ew, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ew, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_cy(self):
@@ -3631,12 +3707,13 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.ons_logo_cy, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
             self.assertIn('<a href="/en/start/call-contact-centre/change-address/" lang="en" >English</a>',
-                          str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_cy, str(resp_content))
-            self.assertIn(self.content_call_centre_number_cy, str(resp_content))
+                          contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_cy, contents)
+            self.assertIn(self.content_call_centre_number_cy, contents)
 
     @unittest_run_loop
     async def test_change_address_confirm_address_unable_to_link_500_ni(self):
@@ -3695,10 +3772,11 @@ class TestStartHandlersChangeAddress(TestHelpers):
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/change-address'")
 
             self.assertEqual(200, response.status)
-            resp_content = await response.content.read()
-            self.assertIn(self.nisra_logo, str(resp_content))
-            self.assertIn(self.content_common_call_contact_centre_change_address_en, str(resp_content))
-            self.assertIn(self.content_call_centre_number_ni, str(resp_content))
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_common_call_contact_centre_change_address_en, contents)
+            self.assertIn(self.content_call_centre_number_ni, contents)
 
     @unittest_run_loop
     async def test_no_direct_access(self):

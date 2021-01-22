@@ -20,6 +20,20 @@
     {%- set error_radio = {'id': 'no-selection', 'text': _('Select an answer')} -%}
 {%- endif -%}
 
+{%- if case_type == 'CE' -%}
+    {%- if (individual == True) -%}
+        {%- set post_description = _('An unbranded envelope can be addressed to you at the registered address') -%}
+    {%- else -%}
+        {%- set post_description = _('We can only send access codes to the registered address') -%}
+    {%- endif -%}
+{%- else -%}
+    {%- if (individual == True) -%}
+        {%- set post_description = _('An unbranded envelope can be addressed to you at the registered household address') -%}
+    {%- else -%}
+        {%- set post_description = _('We can only send access codes to the registered household address') -%}
+    {%- endif -%}
+{%- endif -%}
+
 {%- set form_options = [
         {
             'id': 'sms',
@@ -33,7 +47,7 @@
             'id': 'post',
             'label': {
                 'text': _('Post'),
-                'description': _('We can only send access codes to the registered household address')
+                'description': post_description
             },
             'value': 'post'
         }

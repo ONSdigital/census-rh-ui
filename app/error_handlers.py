@@ -123,6 +123,7 @@ async def not_found_error(request):
 
 async def forbidden(request):
     attributes = check_display_region(request)
+    attributes['timeout'] = 'true'
     return jinja.render_template('error-forbidden.html', request, attributes, status=403)
 
 
@@ -144,6 +145,7 @@ async def too_many_requests_eq_launch(request):
 
 async def session_timeout(request, user_journey: str, sub_user_journey: str):
     attributes = check_display_region(request)
+    attributes['timeout'] = 'true'
     if user_journey == 'start':
         return jinja.render_template('start-timeout.html', request, attributes, status=403)
     else:
