@@ -53,7 +53,7 @@
                     {
                         'id': 'no',
                         'label': {
-                            'text': _('No, send it another way')
+                            'text': _('No, send it by text message')
                         },
                         'value': 'no'
                     }
@@ -86,7 +86,15 @@
     {%- call onsQuestion({ 'title': question_title }) -%}
 
         <p>
-            {{ first_name }} {{ last_name }}{%- if roomNumber -%}, {{ roomNumber }}{%- endif -%}<br>
+            {%- if roomNumber -%}
+                {%- if last_name|length > 23 -%}
+                    {{ roomNumber }} {{ first_name }} {{ last_name }}<br>
+                {%- else -%}
+                    {{ first_name }} {{ last_name }}, {{ roomNumber }}<br>
+                {%- endif -%}
+            {%- else -%}
+                {{ first_name }} {{ last_name }}<br>
+            {%- endif -%}
             {{ addressLine1 }}<br>
             {%- if addressLine2 -%}{{ addressLine2 }}<br>{%- endif -%}
             {%- if addressLine3 -%}{{ addressLine3 }}<br>{%- endif -%}

@@ -125,7 +125,8 @@ class WebChat(WebChat):
                 'display_region': display_region,
                 'page_title': page_title,
                 'locale': locale,
-                'page_url': View.gen_page_url(request)
+                'page_url': View.gen_page_url(request),
+                'privacy_link': View.get_campaign_site_link(request, display_region, 'privacy')
             }
         else:
             logger.info('webchat closed', client_ip=request['client_ip'], region_of_site=display_region)
