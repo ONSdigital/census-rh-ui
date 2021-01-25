@@ -49,7 +49,9 @@ class WebForm(View):
             'display_region': display_region,
             'page_title': page_title,
             'locale': locale,
-            'page_url': View.gen_page_url(request)
+            'page_url': View.gen_page_url(request),
+            'privacy_link': View.get_campaign_site_link(request, display_region, 'privacy'),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us')
         }
 
     @aiohttp_jinja2.template('web-form.html')

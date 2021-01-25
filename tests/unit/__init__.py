@@ -1055,7 +1055,7 @@ class RHTestCase(AioHTTPTestCase):
         }
 
         self.request_common_enter_name_form_data_long_surname = {
-            'name_first_name': 'Bob', 'name_last_name': 'Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe',
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbington-Fortesque-Smythe',
             'action[save_continue]': '',
         }
 
@@ -1065,6 +1065,16 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_common_enter_name_form_data_no_last = {
             'name_first_name': 'Bob', 'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_overlong_firstname = {
+            'name_first_name': 'Robert Albert Everest Reginald Bartholomew', 'name_last_name': 'Bobbington',
+            'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_overlong_lastname = {
+            'name_first_name': 'Bob', 'name_last_name': 'Bobbington-Browning Fortesque-Smythe',
+            'action[save_continue]': '',
         }
 
         self.request_common_confirm_send_by_post_data_yes = {
@@ -1313,7 +1323,11 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Error: Enter name - Census 2021</title>'
         self.content_request_common_enter_name_title_en = 'What is your name?'
         self.content_request_common_enter_name_error_first_name_en = 'Enter your first name'
+        self.content_request_common_enter_name_error_first_name_overlength_en = \
+            "You have entered too many characters. Enter up to 35 characters"
         self.content_request_common_enter_name_error_last_name_en = 'Enter your last name'
+        self.content_request_common_enter_name_error_last_name_overlength_en = \
+            "You have entered too many characters. Enter up to 35 characters"
         self.content_request_common_enter_name_page_title_cy = \
             '<title>Nodi enw - Cyfrifiad 2021</title>'
         self.content_request_common_enter_name_page_title_error_cy = \
@@ -1322,7 +1336,13 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_common_enter_name_error_first_name_cy = "Enter your first name"
         # TODO Add Welsh Translation
+        self.content_request_common_enter_name_error_first_name_overlength_cy = \
+            "You have entered too many characters. Enter up to 35 characters"
+        # TODO Add Welsh Translation
         self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
+        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_error_last_name_overlength_cy = \
+            "You have entered too many characters. Enter up to 35 characters"
 
         self.content_request_code_confirm_send_by_post_page_title_individual_en = \
             '<title>Confirm to send individual access code by post - Census 2021</title>'
@@ -1348,7 +1368,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_individual_message_en = \
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         self.content_request_code_confirm_send_by_post_option_yes_en = 'Yes, send the access code by post'
-        self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it by text message'
+        # TODO Add Welsh Translation
         self.content_request_code_confirm_send_by_post_page_title_individual_cy = \
             '<title>Cadarnhau i anfon cod mynediad unigol drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_confirm_send_by_post_page_title_error_individual_cy = \
@@ -1376,7 +1397,7 @@ class RHTestCase(AioHTTPTestCase):
             "Bydd eich holiadur papur i unigolion yn cyrraedd mewn amlen blaen wen"
         self.content_request_code_confirm_send_by_post_option_yes_cy = "Ydw, anfonwch y cod mynediad drwy\\\'r post"
         # TODO Add Welsh Translation
-        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it another way'
+        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it by text message'
 
         self.content_request_code_sent_by_post_page_title_household_en = \
             '<title>Household access code will be sent by post - Census 2021</title>'
@@ -1392,7 +1413,7 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_title_ce_with_room_long_surname_en = \
-            'A letter will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, Room A8 ' \
+            'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
             'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with an individual access code should arrive soon for you to start the census'
@@ -1414,8 +1435,8 @@ class RHTestCase(AioHTTPTestCase):
             "Caiff llythyr ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, " \
             "Cumbria College Of Art &amp; Design"
         self.content_request_code_sent_post_title_ce_with_room_long_surname_cy = \
-            "Caiff llythyr ei anfon at Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, " \
-            "Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Caiff llythyr ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe " \
+            "yn Halls Of Residence, Cumbria College Of Art &amp; Design"
         self.content_request_code_sent_post_secondary_individual_cy = \
             "Dylai\\xe2\\x80\\x99r llythyr yn cynnwys cod mynediad unigol gyrraedd yn fuan " \
             "er mwyn i chi ddechrau\\\'r cyfrifiad"
@@ -2221,11 +2242,11 @@ class RHTestCase(AioHTTPTestCase):
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_title_ce_room_long_last_en = \
-            'A household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'A household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en = \
-            'An individual paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
-            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'An individual paper questionnaire will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_title_large_print_ce_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
@@ -2239,8 +2260,8 @@ class RHTestCase(AioHTTPTestCase):
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
-            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
 
@@ -2277,11 +2298,11 @@ class RHTestCase(AioHTTPTestCase):
             'Caiff holiadur papur i unigolion ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_title_ce_with_room_long_last_cy = \
-            'Caiff holiadur papur y cartref ei anfon at Bob Bobbingtonhurst-Whitney-Davenport Fortesque-Smythe, ' \
+            'Caiff holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy = \
-            'Caiff holiadur papur i unigolion ei anfon at Bob Bobbingtonhurst-Whitney-Davenport ' \
-            'Fortesque-Smythe, Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Caiff holiadur papur i unigolion ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_large_print_ce_cy = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
@@ -2298,8 +2319,8 @@ class RHTestCase(AioHTTPTestCase):
             "Halls Of Residence, Cumbria College Of Art &amp; Design"
         # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbingtonhurst-Whitney-Davenport ' \
-            'Fortesque-Smythe, Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_cy = \
             "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
 
@@ -2743,7 +2764,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_page_title_en = '<title>Web form - Census 2021</title>'
         self.content_web_form_page_title_error_en = '<title>Error: Web form - Census 2021</title>'
         self.content_web_form_title_en = 'Web form'
-        self.content_web_form_warning_en = 'Do not include any personal information, for example, your access code'
+        self.content_web_form_warning_en = 'Information about what we do with your personal data is available in our'
         # TODO Add Welsh Translation
         self.content_web_form_page_title_cy = '<title>Web form - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
@@ -2751,7 +2772,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_web_form_title_cy = 'Web form'
         # TODO Add Welsh Translation
-        self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
+        self.content_web_form_warning_cy = 'Information about what we do with your personal data is available in our'
 
         self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'

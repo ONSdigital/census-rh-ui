@@ -1870,36 +1870,45 @@ class TestHelpers(RHTestCase):
                     self.check_text_confirm_send_by_post(display_region, contents, user_type, check_error=False,
                                                          override_sub_user_journey=False, check_ce=False)
 
-    async def check_post_enter_name_inputs_error(self, url, display_region, data, value_first=True, value_last=True):
+    async def check_post_enter_name_inputs_error(self, url, display_region, data):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=data)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
-
+            if data.get('name_first_name'):
+                first_name = data.get('name_first_name')
+            else:
+                first_name = ''
+            if data.get('name_last_name'):
+                last_name = data.get('name_last_name')
+            else:
+                last_name = ''
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-name', display_region), contents)
             if display_region == 'cy':
-                if not value_first:
+                if first_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
-                if not value_last:
+                elif len(first_name) > 35:
+                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
+                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
-                if not value_first or not value_last:
-                    self.assertIn(self.content_request_common_enter_name_page_title_error_cy, contents)
-                else:
-                    self.assertIn(self.content_request_common_enter_name_page_title_cy, contents)
+                elif len(last_name) > 35:
+                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
+                self.assertIn(self.content_request_common_enter_name_page_title_error_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
-                if not value_first:
+                if first_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
-                if not value_last:
+                elif len(first_name) > 35:
+                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
+                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
-                    if not value_first or not value_last:
-                        self.assertIn(self.content_request_common_enter_name_page_title_error_en, contents)
-                    else:
-                        self.assertIn(self.content_request_common_enter_name_page_title_en, contents)
+                elif len(last_name) > 35:
+                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
+                self.assertIn(self.content_request_common_enter_name_page_title_error_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
     async def check_post_confirm_send_by_post_input_yes(self, url, display_region, case_type, fulfilment_type,
@@ -2273,14 +2282,14 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_no)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-mobile', display_region, 'GET'))
 
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
             if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
-            self.check_text_select_how_to_receive(display_region, contents, user_type, address_type, check_error=False)
+                self.assertIn(self.build_translation_link('enter-mobile', display_region), contents)
+            self.check_text_enter_mobile(display_region, contents, check_empty=False, check_error=False)
 
     async def check_post_confirm_send_by_post_input_no_form(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
