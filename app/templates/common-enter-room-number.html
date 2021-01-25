@@ -7,7 +7,11 @@
 {%- from 'components/button/_macro.njk' import onsButton -%}
 {%- from 'components/input/_macro.njk' import onsInput -%}
 
-{%- set cancel_link = url('CommonConfirmAddress:get', display_region=display_region, user_journey='request', sub_user_journey=sub_user_journey) -%}
+{%- if previous_page == 'send-by-post' -%}
+    {%- set cancel_link = url('RequestCommonConfirmSendByPost:get', display_region=display_region, user_journey='request', request_type=sub_user_journey) -%}
+{%- else -%}
+    {%- set cancel_link = url('CommonConfirmAddress:get', display_region=display_region, user_journey='request', sub_user_journey=sub_user_journey) -%}
+{%- endif -%}
 
 {%- set form =  {
     'method': 'POST',

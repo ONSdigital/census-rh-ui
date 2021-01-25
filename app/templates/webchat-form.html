@@ -141,13 +141,7 @@
         %}
 
         <div id="web-chat-form-display" class="web-chat-form__body" style="display:none;">
-            <h1 class="u-fs-xxl u-mt-l">{{_('Enter web chat details')}}</h1>
-
-            {{
-                onsPanel({
-                    'body': _('Data stored during web chat sessions will not be shared with third parties')
-                })
-            }}
+            <h1 class="u-fs-xxl u-mt-l">{{_('Web chat')}}</h1>
 
             {{
                 onsInput({
@@ -190,6 +184,10 @@
                 })
 
             }}
+
+            {%- autoescape false -%}
+                <p class="u-fs-s">{{ _('Information about what we do with your personal data is available in our %(open)sprivacy and data protection statement%(close)s.', open='<a href="%s">' % privacy_link, close='</a>')|safe }}</p>
+            {%- endautoescape -%}
 
         </div>
 

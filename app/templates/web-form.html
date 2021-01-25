@@ -5,6 +5,7 @@
 {%- from 'components/radios/_macro.njk' import onsRadios -%}
 {%- from 'components/textarea/_macro.njk' import onsTextarea -%}
 {%- from 'components/panel/_macro.njk' import onsPanel -%}
+{%- from "components/breadcrumb/_macro.njk" import onsBreadcrumb -%}
 
 {%- set messages_dict=dict(get_flashed_messages()|groupby('level')) -%}
 {%- set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) -%}
@@ -109,6 +110,20 @@
     {%- set error_email = {'id': 'error-email', 'text': _('Enter a valid email address')} -%}
 {%- endif -%}
 
+{% block preMain %}
+    {{
+        onsBreadcrumb({
+            "ariaLabel": 'Breadcrumb',
+            "itemsList": [
+                {
+                    'url': contact_us_link,
+                    'text': _('Back')
+                }
+            ]
+        })
+    }}
+{% endblock %}
+
 {%- block main -%}
 
     {%- if messages_dict -%}
@@ -116,13 +131,6 @@
     {%- endif -%}
 
     <h1 class="u-fs-xxl u-mt-l">{{_('Web form')}}</h1>
-
-    {{
-        onsPanel({
-            'body': _('Do not include any personal information, for example, your access code'),
-            'type': 'warn'
-        })
-    }}
 
     {{
         onsRadios({
@@ -150,7 +158,7 @@
         onsTextarea({
             'id': 'description',
             'name': 'description',
-            'classes': 'input--w-30',
+            'rows': 6,
             'label': {
                 'text': _('Please provide more detail')
             },
@@ -170,6 +178,7 @@
         onsInput({
             'id': 'name',
             'name': 'name',
+            'classes': 'input--w-30',
             'label': {
                 'text': _('Name')
             },
@@ -182,6 +191,7 @@
         onsInput({
             'id': 'email',
             'name': 'email',
+            'classes': 'input--w-30',
             'type': 'email',
             'autocomplete': 'email',
             'label': {
@@ -203,6 +213,8 @@
 
     }}
 
-    <p class="u-fs-s">{{ _('For information about what we do with your personal data see our <a href="#0">privacy and data protection</a>') }}</p>
+    {%- autoescape false -%}
+        <p class="u-fs-s">{{ _('Information about what we do with your personal data is available in our %(open)sprivacy and data protection statement%(close)s.', open='<a href="%s">' % privacy_link, close='</a>')|safe }}</p>
+    {%- endautoescape -%}
 
 {%- endblock -%}
