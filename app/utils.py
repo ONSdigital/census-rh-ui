@@ -304,8 +304,10 @@ class ProcessName:
     def validate_name(request, data, display_region):
 
         name_valid = True
+        form_first_name = data.get('name_first_name')
+        form_last_name = data.get('name_last_name')
 
-        if not (data.get('name_first_name')):
+        if not form_first_name:
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter your first name',
@@ -315,7 +317,19 @@ class ProcessName:
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
             name_valid = False
 
-        if not (data.get('name_last_name')):
+        elif len(form_first_name) > 35:
+            if display_region == 'cy':
+                # TODO Add Welsh translation
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+            else:
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+            name_valid = False
+
+        if not form_last_name:
             if display_region == 'cy':
                 # TODO Add Welsh Translation
                 flash(request, FlashMessage.generate_flash_message('Enter your last name',
@@ -323,6 +337,18 @@ class ProcessName:
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your last name',
                                                                    'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+            name_valid = False
+
+        elif len(form_last_name) > 35:
+            if display_region == 'cy':
+                # TODO Add Welsh translation
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+            else:
+                flash(request, FlashMessage.generate_flash_message(
+                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
+                    'NAME_ENTER_ERROR', 'error_last_name_len'))
             name_valid = False
 
         return name_valid
