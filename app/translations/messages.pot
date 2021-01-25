@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-22 12:56+0000\n"
+"POT-Creation-Date: 2021-01-25 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,26 +111,26 @@ msgid "Is this the correct address?"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:62
-#: app/templates/request-common-confirm-send-by-post.html:98
+#: app/templates/request-common-confirm-send-by-post.html:106
 msgid "Change flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:64
-#: app/templates/request-common-confirm-send-by-post.html:99
+#: app/templates/request-common-confirm-send-by-post.html:107
 msgid "Add flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:82
 #: app/templates/common-enter-address.html:103
-#: app/templates/common-enter-room-number.html:61
+#: app/templates/common-enter-room-number.html:65
 #: app/templates/common-resident-or-manager.html:72
 #: app/templates/common-select-address.html:65
 #: app/templates/request-code-confirm-send-by-text.html:64
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:152
-#: app/templates/request-common-enter-name.html:69
+#: app/templates/request-common-confirm-send-by-post.html:160
+#: app/templates/request-common-enter-name.html:87
 #: app/templates/request-common-people-in-household.html:73
 #: app/templates/request-questionnaire-household.html:52
 #: app/templates/start-address-changed.html:20
@@ -237,41 +237,49 @@ msgstr ""
 msgid "Hide this"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:20
+#: app/templates/common-enter-room-number.html:24
 msgid "You have entered too many characters. Enter up to 10 characters"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:22
+#: app/templates/common-enter-room-number.html:26
 msgid "Enter your flat or room number"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:25
+#: app/templates/common-enter-room-number.html:29
 msgid "What is your flat or room number?"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:42
+#: app/templates/common-enter-room-number.html:46
 msgid "Flat or room number"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:49
+#: app/templates/common-enter-room-number.html:53
+#: app/templates/request-common-enter-name.html:56
+#: app/templates/request-common-enter-name.html:75
 msgid "{x} character too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:50
+#: app/templates/common-enter-room-number.html:54
+#: app/templates/request-common-enter-name.html:57
+#: app/templates/request-common-enter-name.html:76
 msgid "{x} characters too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:51
-#: app/templates/web-form.html:159
+#: app/templates/common-enter-room-number.html:55
+#: app/templates/request-common-enter-name.html:58
+#: app/templates/request-common-enter-name.html:77
+#: app/templates/web-form.html:167
 msgid "You have {x} character remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:52
-#: app/templates/web-form.html:160
+#: app/templates/common-enter-room-number.html:56
+#: app/templates/request-common-enter-name.html:59
+#: app/templates/request-common-enter-name.html:78
+#: app/templates/web-form.html:168
 msgid "You have {x} characters remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:66
+#: app/templates/common-enter-room-number.html:70
 msgid "Cancel and return to the previous page"
 msgstr ""
 
@@ -525,31 +533,31 @@ msgid ""
 "%(open)scontact us%(close)s."
 msgstr ""
 
-#: app/templates/request-code-sent-by-post.html:31
+#: app/templates/request-code-sent-by-post.html:29
 #, python-format
 msgid "A letter will be sent to %(name)s at %(address)s"
 msgstr ""
 
-#: app/templates/request-code-sent-by-post.html:34
+#: app/templates/request-code-sent-by-post.html:32
 msgid ""
 "The letter with an individual access code should arrive soon for you to "
 "start the census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-post.html:36
+#: app/templates/request-code-sent-by-post.html:34
 msgid ""
 "The letter with a new manager access code should arrive soon for you to "
 "start the census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-post.html:38
+#: app/templates/request-code-sent-by-post.html:36
 msgid ""
 "The letter with a new household access code should arrive soon for you to"
 " start the census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-post.html:46
-#: app/templates/request-questionnaire-sent.html:52
+#: app/templates/request-code-sent-by-post.html:44
+#: app/templates/request-questionnaire-sent.html:60
 msgid "Done"
 msgstr ""
 
@@ -612,7 +620,7 @@ msgid "Yes, send the access code by post"
 msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:56
-msgid "No, send it another way"
+msgid "No, send it by text message"
 msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:66
@@ -639,55 +647,60 @@ msgstr ""
 msgid "Do you want to send a new household access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:97
+#: app/templates/request-common-confirm-send-by-post.html:105
 msgid "Change name"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:110
+#: app/templates/request-common-confirm-send-by-post.html:118
 msgid ""
 "Your individual paper questionnaire will arrive in a white unbranded "
 "envelope"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:112
+#: app/templates/request-common-confirm-send-by-post.html:120
 msgid ""
 "A letter with your individual access code will arrive in a brown "
 "unbranded envelope"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:131
+#: app/templates/request-common-confirm-send-by-post.html:139
 msgid "Large print"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:138
+#: app/templates/request-common-confirm-send-by-post.html:146
 msgid "I need a large-print questionnaire"
 msgstr ""
 
 #: app/templates/request-common-enter-name.html:18
+#: app/templates/request-common-enter-name.html:23
+msgid "You have entered too many characters. Enter up to 35 characters"
+msgstr ""
+
+#: app/templates/request-common-enter-name.html:20
 msgid "Enter your first name"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:21
+#: app/templates/request-common-enter-name.html:25
 msgid "Enter your last name"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:25
+#: app/templates/request-common-enter-name.html:29
 msgid "<p>This is who the questionnaire will be addressed to</p>"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:27
+#: app/templates/request-common-enter-name.html:31
 msgid "<p>This is who the letter will be addressed to</p>"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:37
+#: app/templates/request-common-enter-name.html:41
 msgid "What is your name?"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:45
+#: app/templates/request-common-enter-name.html:49
 msgid "First name"
 msgstr ""
 
-#: app/templates/request-common-enter-name.html:57
+#: app/templates/request-common-enter-name.html:68
 msgid "Last name"
 msgstr ""
 
@@ -839,36 +852,36 @@ msgid ""
 "complete the census another way."
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:31
+#: app/templates/request-questionnaire-sent.html:39
 #, python-format
 msgid ""
 "A large-print individual paper questionnaire will be sent to %(name)s at "
 "%(address)s"
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:33
+#: app/templates/request-questionnaire-sent.html:41
 #, python-format
 msgid ""
 "A large-print household paper questionnaire will be sent to %(name)s at "
 "%(address)s"
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:36
+#: app/templates/request-questionnaire-sent.html:44
 #, python-format
 msgid "A continuation questionnaire will be sent to %(name)s at %(address)s"
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:39
+#: app/templates/request-questionnaire-sent.html:47
 #, python-format
 msgid "An individual paper questionnaire will be sent to %(name)s at %(address)s"
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:41
+#: app/templates/request-questionnaire-sent.html:49
 #, python-format
 msgid "A household paper questionnaire will be sent to %(name)s at %(address)s"
 msgstr ""
 
-#: app/templates/request-questionnaire-sent.html:45
+#: app/templates/request-questionnaire-sent.html:53
 msgid "This should arrive soon for you to complete your census"
 msgstr ""
 
@@ -1098,7 +1111,8 @@ msgid ""
 "census."
 msgstr ""
 
-#: app/templates/start.html:140 app/templates/webchat-window.html:5
+#: app/templates/start.html:140 app/templates/webchat-form.html:144
+#: app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""
 
@@ -1269,104 +1283,105 @@ msgstr ""
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/web-form.html:24 app/templates/webchat-form.html:75
+#: app/templates/web-form.html:25 app/templates/webchat-form.html:75
 msgid "England"
 msgstr ""
 
-#: app/templates/web-form.html:31 app/templates/webchat-form.html:82
+#: app/templates/web-form.html:32 app/templates/webchat-form.html:82
 msgid "Wales"
 msgstr ""
 
-#: app/templates/web-form.html:38 app/templates/webchat-form.html:89
+#: app/templates/web-form.html:39 app/templates/webchat-form.html:89
 msgid "Northern Ireland"
 msgstr ""
 
-#: app/templates/web-form.html:50 app/templates/webchat-form.html:101
+#: app/templates/web-form.html:51 app/templates/webchat-form.html:101
 msgid "I don’t have everything I need to complete my census"
 msgstr ""
 
-#: app/templates/web-form.html:57 app/templates/webchat-form.html:108
+#: app/templates/web-form.html:58 app/templates/webchat-form.html:108
 msgid "I am having technical difficulties"
 msgstr ""
 
-#: app/templates/web-form.html:64 app/templates/webchat-form.html:115
+#: app/templates/web-form.html:65 app/templates/webchat-form.html:115
 msgid "I need help with my census form"
 msgstr ""
 
-#: app/templates/web-form.html:71 app/templates/webchat-form.html:122
+#: app/templates/web-form.html:72 app/templates/webchat-form.html:122
 msgid "I have a complaint"
 msgstr ""
 
-#: app/templates/web-form.html:78 app/templates/webchat-form.html:129
+#: app/templates/web-form.html:79 app/templates/webchat-form.html:129
 msgid "I need help with my address"
 msgstr ""
 
-#: app/templates/web-form.html:85 app/templates/webchat-form.html:136
+#: app/templates/web-form.html:86 app/templates/webchat-form.html:136
 msgid "Something else"
 msgstr ""
 
-#: app/templates/web-form.html:93 app/templates/web-form.html:97
+#: app/templates/web-form.html:94 app/templates/web-form.html:98
 #: app/templates/webchat-form.html:29 app/templates/webchat-form.html:33
 msgid "Select an option"
 msgstr ""
 
-#: app/templates/web-form.html:101
+#: app/templates/web-form.html:102
 msgid "Enter detail of your issue"
 msgstr ""
 
-#: app/templates/web-form.html:105 app/templates/webchat-form.html:25
-#: app/templates/webchat-form.html:156
+#: app/templates/web-form.html:106 app/templates/webchat-form.html:25
+#: app/templates/webchat-form.html:150
 msgid "Enter your name"
 msgstr ""
 
-#: app/templates/web-form.html:109
+#: app/templates/web-form.html:110
 msgid "Enter a valid email address"
 msgstr ""
 
-#: app/templates/web-form.html:118
+#: app/templates/web-form.html:120
+msgid "Back"
+msgstr ""
+
+#: app/templates/web-form.html:133
 msgid "Web form"
 msgstr ""
 
-#: app/templates/web-form.html:122
-msgid "Do not include any personal information, for example, your access code"
-msgstr ""
-
-#: app/templates/web-form.html:129 app/templates/webchat-form.html:166
+#: app/templates/web-form.html:137 app/templates/webchat-form.html:160
 msgid "Select your country"
 msgstr ""
 
-#: app/templates/web-form.html:140 app/templates/webchat-form.html:177
+#: app/templates/web-form.html:148 app/templates/webchat-form.html:171
 msgid "What do you need help with?"
 msgstr ""
 
-#: app/templates/web-form.html:155
+#: app/templates/web-form.html:163
 msgid "Please provide more detail"
 msgstr ""
 
-#: app/templates/web-form.html:167
+#: app/templates/web-form.html:175
 msgid "Your contact details"
 msgstr ""
 
-#: app/templates/web-form.html:174
+#: app/templates/web-form.html:183
 msgid "Name"
 msgstr ""
 
-#: app/templates/web-form.html:188
+#: app/templates/web-form.html:198
 msgid "Email address"
 msgstr ""
 
-#: app/templates/web-form.html:189
+#: app/templates/web-form.html:199
 msgid "We will only use this to send you a reply"
 msgstr ""
 
-#: app/templates/web-form.html:199
+#: app/templates/web-form.html:209
 msgid "Send message"
 msgstr ""
 
-#: app/templates/web-form.html:206
+#: app/templates/web-form.html:217 app/templates/webchat-form.html:189
+#, python-format
 msgid ""
-"For information about what we do with your personal data see our <a "
-"href=\"#0\">privacy and data protection</a>"
+"Information about what we do with your personal data is available in our "
+"%(open)sprivacy and data protection statement%(close)s."
 msgstr ""
 
 #: app/templates/webchat-form.html:40
@@ -1420,15 +1435,7 @@ msgstr ""
 msgid "Get Help"
 msgstr ""
 
-#: app/templates/webchat-form.html:144
-msgid "Enter web chat details"
-msgstr ""
-
-#: app/templates/webchat-form.html:148
-msgid "Data stored during web chat sessions will not be shared with third parties"
-msgstr ""
-
-#: app/templates/webchat-form.html:188
+#: app/templates/webchat-form.html:182
 msgid "Start web chat"
 msgstr ""
 
