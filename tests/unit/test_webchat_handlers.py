@@ -212,147 +212,165 @@ class TestWebChatHandlers(RHTestCase):
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_en(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['query']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['query']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_en,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_en,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_cy(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['query']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['query']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_cy,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_cy,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG_CY, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_query_ni(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['query']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['query']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_ni,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_ni,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_en(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['country']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['country']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_en,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_en,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_cy(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['country']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['country']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_cy,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_cy,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG_CY, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_country_ni(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['country']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['country']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_ni,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_ni,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_en(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['screen_name']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['screen_name']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_en,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_en,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_en, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_cy(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['screen_name']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['screen_name']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_cy,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_cy,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.ons_logo_cy, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG_CY, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_webchat_incomplete_name_ni(self):
-        form_data = self.webchat_form_data.copy()
-        del form_data['screen_name']
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data.copy()
+            del form_data['screen_name']
 
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST',
-                                                 self.post_webchat_ni,
-                                                 data=form_data)
-        self.assertLogEvent(cm, 'form submission error')
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_ni,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
 
-        self.assertEqual(response.status, 200)
-        contents = str(await response.content.read())
-        self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
     async def test_post_webchat_open_en(self):

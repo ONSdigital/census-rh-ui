@@ -2743,7 +2743,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_page_title_en = '<title>Web form - Census 2021</title>'
         self.content_web_form_page_title_error_en = '<title>Error: Web form - Census 2021</title>'
         self.content_web_form_title_en = 'Web form'
-        self.content_web_form_warning_en = 'Do not include any personal information, for example, your access code'
+        self.content_web_form_warning_en = 'Information about what we do with your personal data is available in our'
         # TODO Add Welsh Translation
         self.content_web_form_page_title_cy = '<title>Web form - Cyfrifiad 2021</title>'
         # TODO Add Welsh Translation
@@ -2751,7 +2751,7 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_web_form_title_cy = 'Web form'
         # TODO Add Welsh Translation
-        self.content_web_form_warning_cy = 'Do not include any personal information, for example, your access code'
+        self.content_web_form_warning_cy = 'Information about what we do with your personal data is available in our'
 
         self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'
