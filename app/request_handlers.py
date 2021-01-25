@@ -17,8 +17,8 @@ from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataError
 logger = get_logger('respondent-home')
 request_routes = RouteTableDef()
 
-# Limit for last name field to include room number (60 char limit - 10 char room number value max - a comma and a space)
-last_name_char_limit = 48
+# Limit for last name field to include room number (35 char limit - 10 char room number value max - a comma and a space)
+last_name_char_limit = 23
 
 
 class RequestCommon(View):
@@ -910,8 +910,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                                                                                     request_type=request_type))
             else:
                 raise HTTPFound(
-                    request.app.router['RequestCodeSelectHowToReceive:get'].url_for(display_region=display_region,
-                                                                                    request_type=request_type))
+                    request.app.router['RequestCodeEnterMobile:get'].url_for(display_region=display_region,
+                                                                             request_type=request_type))
 
         else:
             # catch all just in case, should never get here
