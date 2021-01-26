@@ -75,7 +75,7 @@
         {%- set last_four = number[6:10] -%}
         <span>+{{ prefix_code }} (0){{ area_code }} {{ first_four }} {{ last_four }}</span>
     {%- else -%}
-        <span>Not available</span>
+        <span>{{ params.na-text }}</span>
     {%- endif -%}
 
 {% endmacro %}
