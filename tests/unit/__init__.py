@@ -892,6 +892,13 @@ class RHTestCase(AioHTTPTestCase):
         self.post_webchat_cy = self.app.router['WebChat:post'].url_for(display_region='cy')
         self.post_webchat_ni = self.app.router['WebChat:post'].url_for(display_region='ni')
 
+        self.content_webchat_form_page_title_en = '<title>Web chat - Census 2021</title>'
+        self.content_webchat_form_page_title_error_en = '<title>Error: Web chat - Census 2021</title>'
+        self.content_webchat_form_title_en = 'Web chat'
+        self.content_webchat_form_page_title_cy = '<title>Gwe-sgwrs - Cyfrifiad 2021</title>'
+        self.content_webchat_form_page_title_error_cy = '<title>Gwall: Gwe-sgwrs - Cyfrifiad 2021</title>'
+        self.content_webchat_form_title_cy = "Gwe-sgwrs"
+
         self.webchat_form_data = {
             'screen_name': 'Test',
             'email': 'test@test.gov.uk',

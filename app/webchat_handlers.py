@@ -117,7 +117,7 @@ class WebChat(WebChat):
         else:
             page_title = 'Web chat'
             if request.get('flash'):
-                page_title = View.page_title_error_prefix_cy + page_title
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
         self.log_entry(request, display_region + '/web-chat')
         if WebChat.check_open():
