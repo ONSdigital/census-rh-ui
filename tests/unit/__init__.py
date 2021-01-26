@@ -699,7 +699,7 @@ class RHTestCase(AioHTTPTestCase):
         self.uac_code = ''.join([str(n) for n in range(13)])
         self.uac1, self.uac2, self.uac3, self.uac4 = \
             self.uac_code[:4], self.uac_code[4:8], self.uac_code[8:12], self.uac_code[12:]
-        self.period_id = '2019'
+        self.period_id = '2021'
         self.uac = 'w4nwwpphjjptp7fn'
         self.uac_ce4 = 'ce4fghtykjuiplku'
         self.uacHash = self.uac_json_e['uacHash']
