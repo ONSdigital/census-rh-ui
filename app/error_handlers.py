@@ -124,7 +124,7 @@ async def not_found_error(request):
 async def forbidden(request):
     attributes = check_display_region(request)
     attributes['timeout'] = 'true'
-    return jinja.render_template('start-timeout.html', request, attributes, status=403)
+    return jinja.render_template('error-forbidden.html', request, attributes, status=403)
 
 
 async def too_many_requests(request, sub_user_journey: str):

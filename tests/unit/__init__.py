@@ -652,6 +652,13 @@ class RHTestCase(AioHTTPTestCase):
         # TODO: add welsh translation
         self.content_start_timeout_restart_cy = 'enter your 16-character access code'
 
+        self.content_start_forbidden_title_en = 'Sorry, there is a problem'
+        self.content_start_forbidden_link_text_en = 'enter your 16-character access code'
+        # TODO: add welsh translation
+        self.content_start_forbidden_title_cy = 'Sorry, there is a problem'
+        # TODO: add welsh translation
+        self.content_start_forbidden_link_text_cy = 'enter your 16-character access code'
+
         # End Start Journey
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
@@ -1516,19 +1523,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                  sub_user_journey='link-address')
 
-        self.get_start_link_address_address_has_been_linked_en = \
-            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='en')
-        self.get_start_link_address_address_has_been_linked_cy = \
-            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='cy')
-        self.get_start_link_address_address_has_been_linked_ni = \
-            self.app.router['StartAddressHasBeenLinked:get'].url_for(display_region='ni')
-        self.post_start_link_address_address_has_been_linked_en = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='en')
-        self.post_start_link_address_address_has_been_linked_cy = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='cy')
-        self.post_start_link_address_address_has_been_linked_ni = \
-            self.app.router['StartAddressHasBeenLinked:post'].url_for(display_region='ni')
-
         # Test Data
         with open('tests/test_data/rhsvc/uac_unlinked_e.json') as fp:
             self.link_address_uac_json_e = json.load(fp)
@@ -1558,15 +1552,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_link_address_enter_address_question_title_en = 'What is your postcode?'
         # TODO: add welsh translation
         self.content_start_link_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
-
-        self.content_start_link_address_address_has_been_linked_title_en = 'Your address has been linked to your code'
-        # TODO: add welsh translation
-        self.content_start_link_address_address_has_been_linked_title_cy = 'Your address has been linked to your code'
-        self.content_start_link_address_address_has_been_linked_secondary_en = \
-            'You are now ready to start your Census questions'
-        # TODO: add welsh translation
-        self.content_start_link_address_address_has_been_linked_secondary_cy = \
-            'You are now ready to start your Census questions'
 
         self.content_link_address_timeout_error_en = 'enter your 16-character access code'
         # TODO: add welsh translation
@@ -1632,19 +1617,6 @@ class RHTestCase(AioHTTPTestCase):
             self.app.router['CommonConfirmAddress:post'].url_for(display_region='ni', user_journey='start',
                                                                  sub_user_journey='change-address')
 
-        self.get_start_change_address_address_has_been_changed_en = \
-            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='en')
-        self.get_start_change_address_address_has_been_changed_cy = \
-            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='cy')
-        self.get_start_change_address_address_has_been_changed_ni = \
-            self.app.router['StartAddressHasBeenChanged:get'].url_for(display_region='ni')
-        self.post_start_change_address_address_has_been_changed_en = \
-            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='en')
-        self.post_start_change_address_address_has_been_changed_cy = \
-            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='cy')
-        self.post_start_change_address_address_has_been_changed_ni = \
-            self.app.router['StartAddressHasBeenChanged:post'].url_for(display_region='ni')
-
         # Test Data
         with open('tests/test_data/rhsvc/uac_linked_e.json') as fp:
             f = asyncio.Future()
@@ -1667,15 +1639,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_change_address_enter_address_question_title_en = 'What is your postcode?'
         # TODO: add welsh translation
         self.content_start_change_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
-
-        self.content_start_change_address_address_has_been_changed_title_en = 'Your address has been changed'
-        # TODO: add welsh translation
-        self.content_start_change_address_address_has_been_changed_title_cy = 'Your address has been changed'
-        self.content_start_change_address_address_has_been_changed_secondary_en = \
-            'You are now ready to start your Census questions'
-        # TODO: add welsh translation
-        self.content_start_change_address_address_has_been_changed_secondary_cy = \
-            'You are now ready to start your Census questions'
 
         self.content_start_change_address_timeout_error_en = 're-enter your access code'
         self.content_start_change_address_timeout_error_cy = 'nodi eich cod mynediad eto'

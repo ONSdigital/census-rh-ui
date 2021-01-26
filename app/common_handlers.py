@@ -625,13 +625,25 @@ class CommonConfirmAddress(CommonCommon):
 
                     self.validate_case(uprn_return)
 
-                    if sub_user_journey == 'link-address':
-                        raise HTTPFound(
-                            request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+                    if display_region == 'cy':
+                        locale = 'cy'
+                    else:
+                        locale = 'en'
+                    try:
+                        attributes = session['attributes']
+                        case = session['case']
+                    except KeyError:
+                        raise SessionTimeout('start')
 
-                    elif sub_user_journey == 'change-address':
+                    if case['region'] == 'N':
                         raise HTTPFound(
-                            request.app.router['StartAddressHasBeenChanged:get'].url_for(display_region=display_region))
+                            request.app.router['StartNILanguageOptions:get'].url_for())
+                    else:
+                        attributes['language'] = locale
+                        attributes['display_region'] = display_region
+                        await self.call_questionnaire(request, case,
+                                                      attributes, request.app,
+                                                      session.get('adlocation'))
 
                 except ClientResponseError as ex:
                     hashed_uac_value = session['case']['uacHash']
