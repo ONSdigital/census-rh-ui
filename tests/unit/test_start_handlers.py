@@ -331,7 +331,7 @@ class TestStartHandlers(TestHelpers):
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
         self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_start_invalid_text_url_cy(self):
@@ -348,7 +348,7 @@ class TestStartHandlers(TestHelpers):
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
-        self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_start_invalid_text_url_ni(self):
@@ -364,7 +364,7 @@ class TestStartHandlers(TestHelpers):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_start_invalid_text_random_ew(self):
@@ -381,7 +381,7 @@ class TestStartHandlers(TestHelpers):
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
         self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_start_invalid_text_random_cy(self):
@@ -398,7 +398,7 @@ class TestStartHandlers(TestHelpers):
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
         self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
-        self.assertMessagePanel(BAD_CODE_MSG_CY, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG_CY, contents)
 
     @unittest_run_loop
     async def test_post_start_invalid_text_random_ni(self):
@@ -414,7 +414,7 @@ class TestStartHandlers(TestHelpers):
         self.assertEqual(response.status, 200)
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
-        self.assertMessagePanel(BAD_CODE_MSG, contents)
+        self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop
     async def test_post_start_uac_active_missing_ew_e(self):
