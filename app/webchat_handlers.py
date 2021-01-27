@@ -100,6 +100,11 @@ class WebChat(View):
                 flash(request, WEBCHAT_MISSING_QUERY_MSG)
             form_valid = False
 
+        if not form_valid:
+            flash(request, {'level': 'INFO', 'type': 'field_values', 'field': 'all',
+                            'screen_name': data.get('screen_name'),
+                            'country': data.get('country'), 'query': data.get('query')})
+
         return form_valid
 
 

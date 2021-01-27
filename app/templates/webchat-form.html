@@ -13,6 +13,7 @@
 
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+{% set field_values_dict=dict(get_flashed_messages()|groupby('field_values')) %}
 
 {% set form =  {
     'method': 'POST',
@@ -34,6 +35,8 @@
 {%- endif -%}
 
 {% block main %}
+
+{{field_values_dict}}
 
     {% if webchat_status == 'closed' %}
 
