@@ -22,8 +22,6 @@
 
 {%- if 'error-room-number-len' in field_messages_dict -%}
     {%- set error_room_number = {'id': 'error-room-number-len', 'text': _('You have entered too many characters. Enter up to 10 characters')} -%}
-{%- elif 'error-room-number' in field_messages_dict -%}
-    {%- set error_room_number = {'id': 'error-room-number', 'text': _('Enter your flat or room number')} -%}
 {%- endif -%}
 
 {%- set question_title = _('What is your flat or room number?') -%}

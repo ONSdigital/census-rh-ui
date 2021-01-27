@@ -119,26 +119,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_change_address_confirm_address_en,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_en,
-                allow_redirects=False,
-                data=self.start_address_changed)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -269,26 +252,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                 'POST',
                 self.post_start_change_address_confirm_address_en,
-                allow_redirects=True,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -417,26 +383,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_change_address_confirm_address_en,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -567,26 +516,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                 'POST',
                 self.post_start_change_address_confirm_address_en,
-                allow_redirects=True,
+                allow_redirects=False,
                 data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/change-address/address-has-been-changed/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_en,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -715,26 +647,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_change_address_confirm_address_cy,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/change-address/address-has-been-changed/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_cy, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_cy, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -865,26 +780,9 @@ class TestStartHandlersChangeAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_change_address_confirm_address_cy,
-                    allow_redirects=True,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/change-address/address-has-been-changed/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_cy, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_cy, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_cy,
-                allow_redirects=False,
-                data=self.start_address_linked)
-
             self.assertLogEvent(cm, 'redirecting to eq')
 
         self.assertEqual(response.status, 302)
@@ -1007,20 +905,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_start_exit_button_ni, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -1161,20 +1045,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            self.assertEqual(response.status, 200)
-            contents = str(await response.content.read())
-            self.assertIn(self.nisra_logo, contents)
-            self.assertIn(self.content_start_exit_button_ni, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_title_en, contents)
-            self.assertIn(self.content_start_change_address_address_has_been_changed_secondary_en, contents)
-
-            response = await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             self.assertEqual(response.status, 200)
@@ -1283,13 +1153,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1408,13 +1271,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1531,13 +1387,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1656,13 +1505,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1779,13 +1621,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(
@@ -1904,13 +1739,6 @@ class TestStartHandlersChangeAddress(TestHelpers):
                     self.post_start_change_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/change-address/address-has-been-changed'")
-
-            await self.client.request(
-                'POST',
-                self.post_start_change_address_address_has_been_changed_ni,
-                data=self.start_address_linked)
-            self.assertLogEvent(cm, "received POST on endpoint 'ni/start/change-address/address-has-been-changed'")
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
             response = await self.client.request(

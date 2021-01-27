@@ -606,20 +606,28 @@ class CommonConfirmAddress(CommonCommon):
 
             if sub_user_journey == 'link-address' or sub_user_journey == 'change-address':
                 try:
-                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'],
-                                                                session['attributes'])
+                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'], attributes)
                     session['case'] = uprn_return
                     session.changed()
 
                     self.validate_case(uprn_return)
 
-                    if sub_user_journey == 'link-address':
-                        raise HTTPFound(
-                            request.app.router['StartAddressHasBeenLinked:get'].url_for(display_region=display_region))
+                    if display_region == 'cy':
+                        locale = 'cy'
+                    else:
+                        locale = 'en'
 
-                    elif sub_user_journey == 'change-address':
+                    case = get_session_value(session, 'case', user_journey, sub_user_journey)
+
+                    if case['region'] == 'N':
                         raise HTTPFound(
-                            request.app.router['StartAddressHasBeenChanged:get'].url_for(display_region=display_region))
+                            request.app.router['StartNILanguageOptions:get'].url_for())
+                    else:
+                        attributes['language'] = locale
+                        attributes['display_region'] = display_region
+                        await self.call_questionnaire(request, case,
+                                                      attributes, request.app,
+                                                      session.get('adlocation'))
 
                 except ClientResponseError as ex:
                     hashed_uac_value = session['case']['uacHash']
@@ -898,7 +906,7 @@ class CommonEnterRoomNumber(CommonCommon):
 
         try:
             room_number = data['form-enter-room-number']
-            if (room_number == '') or (len(room_number) > 10):
+            if len(room_number) > 10:
                 raise KeyError
             attributes['roomNumber'] = room_number
             session.changed()
@@ -932,14 +940,6 @@ class CommonEnterRoomNumber(CommonCommon):
                     flash(request, FlashMessage.generate_flash_message(
                         'You have entered too many characters. Enter up to 10 characters', 'ERROR',
                         'ROOM_NUMBER_ENTER_ERROR', 'error-room-number-len'))
-            else:
-                if display_region == 'cy':
-                    # TODO Add Welsh translation
-                    flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                       'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
-                else:
-                    flash(request, FlashMessage.generate_flash_message('Enter your flat or room number', 'ERROR',
-                                                                       'ROOM_NUMBER_ENTER_ERROR', 'error-room-number'))
             raise HTTPFound(
                 request.app.router['CommonEnterRoomNumber:get'].url_for(
                     display_region=display_region,

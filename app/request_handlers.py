@@ -9,7 +9,10 @@ from . import (NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
+
 from .exceptions import TooManyRequests
+from .security import invalidate
+
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
     FlashMessage, RHService, ProcessName, ProcessNumberOfPeople
 from .session import get_existing_session, get_session_value
@@ -961,6 +964,8 @@ class RequestCodeSentByText(RequestCommon):
         attributes['request_type'] = request_type
         attributes['page_url'] = View.gen_page_url(request)
 
+        await invalidate(request)
+
         return attributes
 
 
@@ -995,6 +1000,8 @@ class RequestCodeSentByPost(RequestCommon):
             else:
                 page_title = 'Household access code will be sent by post'
             locale = 'en'
+
+        await invalidate(request)
 
         return {
                 'page_title': page_title,
@@ -1167,6 +1174,8 @@ class RequestQuestionnaireSent(RequestCommon):
                 page_title = 'Household paper questionnaire will be sent'
             locale = 'en'
 
+        await invalidate(request)
+
         return {
                 'page_title': page_title,
                 'display_region': display_region,
@@ -1206,6 +1215,8 @@ class RequestContinuationSent(RequestCommon):
 
         session = await get_existing_session(request, 'requests', request_type)
         attributes = get_session_value(session, 'attributes', 'requests', request_type)
+
+        await invalidate(request)
 
         return {
                 'page_title': page_title,
@@ -1253,6 +1264,8 @@ class RequestLargePrintSentPost(RequestCommon):
             else:
                 page_title = 'Large-print household paper questionnaire will be sent'
             locale = 'en'
+
+        await invalidate(request)
 
         return {
                 'page_title': page_title,

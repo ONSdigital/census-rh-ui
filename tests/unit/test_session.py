@@ -33,25 +33,31 @@ class TestSessionHandling(TestHelpers):
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.get_logo(display_region if display_region else 'ni'), contents)
-        if display_region == 'cy':
-            self.assertNotIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_timeout_title_cy, contents)
-            if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_secondary_cy, contents)
-                self.assertIn(self.content_start_timeout_restart_cy, contents)
+        if 'start' in url.path:
+            if display_region == 'cy':
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
+                self.assertIn(self.content_start_forbidden_title_cy, contents)
+                self.assertIn(self.content_start_forbidden_link_text_cy, contents)
             else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
+                self.assertIn(self.content_start_forbidden_title_en, contents)
+                self.assertIn(self.content_start_forbidden_link_text_en, contents)
+        else:
+            if display_region == 'cy':
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
+                self.assertIn(self.content_timeout_title_cy, contents)
                 self.assertIn(self.content_request_timeout_secondary_cy, contents)
                 self.assertIn(self.content_request_timeout_restart_cy, contents)
-        else:
-            if display_region == 'ni':
-                self.assertNotIn(self.content_start_exit_button_ni, contents)
             else:
-                self.assertNotIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_timeout_title_en, contents)
-            self.assertIn(self.content_timeout_secondary_en, contents)
-            if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_restart_en, contents)
-            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
+                self.assertIn(self.content_timeout_title_en, contents)
+                self.assertIn(self.content_timeout_secondary_en, contents)
                 self.assertIn(self.content_request_timeout_restart_en, contents)
 
     @unittest_run_loop
@@ -72,24 +78,6 @@ class TestSessionHandling(TestHelpers):
     async def test_no_direct_access_forbidden_start_ni_select_language(self):
         await self.assert_no_session_or_forbidden('StartNISelectLanguage', 'GET')
         await self.assert_no_session_or_forbidden('StartNISelectLanguage', 'POST')
-
-    @unittest_run_loop
-    async def test_no_direct_access_forbidden_start_address_has_been_linked(self):
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'GET', 'en')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'GET', 'cy')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'GET', 'ni')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'POST', 'en')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'POST', 'cy')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenLinked', 'POST', 'ni')
-
-    @unittest_run_loop
-    async def test_no_direct_access_forbidden_start_address_has_been_changed(self):
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'GET', 'en')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'GET', 'cy')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'GET', 'ni')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'POST', 'en')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'POST', 'cy')
-        await self.assert_no_session_or_forbidden('StartAddressHasBeenChanged', 'POST', 'ni')
 
     @unittest_run_loop
     async def test_no_direct_access_forbidden_start_transient_enter_town_name(self):
