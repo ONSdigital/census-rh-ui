@@ -14,11 +14,13 @@
             'id': 'success-id',
             'icon': 'check',
             'iconSize': 'l',
-            'classes': 'u-mt-xl'
+            'classes': 'u-mt-xl u-mb-m'
         })
     -%}
 
-        <h1 class="u-mb-xs u-fs-l">{{ _('A text has been sent to %(number)s', number=submitted_mobile_number)|safe }} </h1>
+        {%- autoescape false -%}
+            <h1 class="u-mb-xs u-fs-l">{{ _('A text has been sent to %(number)s', number=submitted_mobile_number|replace(" ", "&nbsp;"))|safe }} </h1>
+        {%- endautoescape -%}
 
         {%- if (individual == True) -%}
             <p>{{ _('The text message with an individual access code should arrive soon for you to start your census') }}</p>

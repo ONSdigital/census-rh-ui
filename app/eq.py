@@ -120,7 +120,7 @@ class EqPayloadConstructor(object):
             'user_id': self._user_id,
             'questionnaire_id': self._questionnaire_id,
             'eq_id': 'census',  # hardcoded for rehearsal
-            'period_id': '2019',  # hardcoded for rehearsal
+            'period_id': '2021',
             'form_type': self._form_type,
             'survey': 'CENSUS'  # hardcoded for rehearsal
         }
