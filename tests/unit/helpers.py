@@ -2434,17 +2434,15 @@ class TestHelpers(RHTestCase):
         self.assertIn(self.get_logo(display_region), contents)
         if display_region == 'cy':
             self.assertNotIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_start_timeout_title_cy, contents)
-            self.assertIn(self.content_start_timeout_secondary_cy, contents)
-            self.assertIn(self.content_start_timeout_restart_cy, contents)
+            self.assertIn(self.content_start_forbidden_title_cy, contents)
+            self.assertIn(self.content_start_forbidden_link_text_cy, contents)
         else:
             if display_region == 'ni':
                 self.assertNotIn(self.content_start_exit_button_ni, contents)
             else:
                 self.assertNotIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_timeout_title_en, contents)
-            self.assertIn(self.content_start_timeout_secondary_en, contents)
-            self.assertIn(self.content_start_timeout_restart_en, contents)
+            self.assertIn(self.content_start_forbidden_title_en, contents)
+            self.assertIn(self.content_start_forbidden_link_text_en, contents)
 
     async def check_get_request_individual_code(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -2498,7 +2496,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region, True), contents)
             self.check_text_select_how_to_receive(display_region, contents, 'individual', address_type)
 
-    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, no_data=False,
+    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page,
                               data_over_length=False, check_for_value=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
@@ -2519,12 +2517,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-flat-or-room-number', display_region), contents)
             self.check_text_enter_room_number(display_region, contents, check_for_value=check_for_value)
 
-            if no_data or data_over_length:
-                if no_data:
-                    response = await self.client.request('POST', url_post, data=self.common_room_number_input_empty)
-                else:
-                    response = await self.client.request('POST', url_post,
-                                                         data=self.common_room_number_input_over_length)
+            if data_over_length:
+                response = await self.client.request('POST', url_post, data=self.common_room_number_input_over_length)
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-flat-or-room-number', display_region, 'POST'))
                 self.assertLogEvent(cm, self.build_url_log_entry('enter-flat-or-room-number', display_region, 'GET'))
 
@@ -2533,12 +2527,7 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.get_logo(display_region), contents)
                 if not display_region == 'ni':
                     self.assertIn(self.build_translation_link('enter-flat-or-room-number', display_region), contents)
-                if no_data:
-                    self.check_text_enter_room_number(display_region, contents,
-                                                      check_empty=True, check_over_length=False)
-                else:
-                    self.check_text_enter_room_number(display_region, contents,
-                                                      check_empty=False, check_over_length=True)
+                self.check_text_enter_room_number(display_region, contents, check_empty=False, check_over_length=True)
 
             else:
                 response = await self.client.request('POST', url_post, data=self.common_room_number_input_valid)
