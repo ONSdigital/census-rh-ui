@@ -671,7 +671,7 @@ class CommonConfirmAddress(CommonCommon):
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'], unmatched_uprn=session['attributes']['uprn'])
+                                    client_ip=request['client_ip'], unmatched_uprn=attributes['uprn'])
                         logger.info('requesting new case', client_ip=request['client_ip'])
                         try:
                             case_creation_return = await RHService.post_case_create(request, attributes)
@@ -687,7 +687,7 @@ class CommonConfirmAddress(CommonCommon):
                                                                        display_region,
                                                                        case_creation_return['caseType'],
                                                                        case_creation_return['addressLevel'],
-                                                                       session['attributes']['individual'])
+                                                                       attributes['individual'])
 
                         except ClientResponseError as ex:
                             logger.warn('error requesting new case', client_ip=request['client_ip'])
