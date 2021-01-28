@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-26 13:43+0000\n"
+"POT-Creation-Date: 2021-01-28 16:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: app/templates/common-confirm-address.html:82
 #: app/templates/common-enter-address.html:103
-#: app/templates/common-enter-room-number.html:65
+#: app/templates/common-enter-room-number.html:63
 #: app/templates/common-resident-or-manager.html:72
 #: app/templates/common-select-address.html:65
 #: app/templates/request-code-confirm-send-by-text.html:64
@@ -133,9 +133,7 @@ msgstr ""
 #: app/templates/request-common-enter-name.html:87
 #: app/templates/request-common-people-in-household.html:73
 #: app/templates/request-questionnaire-household.html:52
-#: app/templates/start-address-changed.html:20
 #: app/templates/start-confirm-address.html:82
-#: app/templates/start-link-address-linked.html:20
 #: app/templates/start-transient-enter-town.html:55
 msgid "Continue"
 msgstr ""
@@ -232,7 +230,7 @@ msgstr ""
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
 #: app/templates/request-questionnaire-household.html:42
-#: app/templates/start.html:131
+#: app/templates/start.html:129
 #: app/templates/support_centre_list_of_centres.html:61
 msgid "Hide this"
 msgstr ""
@@ -241,45 +239,41 @@ msgstr ""
 msgid "You have entered too many characters. Enter up to 10 characters"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:26
-msgid "Enter your flat or room number"
-msgstr ""
-
-#: app/templates/common-enter-room-number.html:29
+#: app/templates/common-enter-room-number.html:27
 msgid "What is your flat or room number?"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:46
+#: app/templates/common-enter-room-number.html:44
 msgid "Flat or room number"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:53
+#: app/templates/common-enter-room-number.html:51
 #: app/templates/request-common-enter-name.html:56
 #: app/templates/request-common-enter-name.html:75
 msgid "{x} character too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:54
+#: app/templates/common-enter-room-number.html:52
 #: app/templates/request-common-enter-name.html:57
 #: app/templates/request-common-enter-name.html:76
 msgid "{x} characters too many"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:55
+#: app/templates/common-enter-room-number.html:53
 #: app/templates/request-common-enter-name.html:58
 #: app/templates/request-common-enter-name.html:77
 #: app/templates/web-form.html:167
 msgid "You have {x} character remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:56
+#: app/templates/common-enter-room-number.html:54
 #: app/templates/request-common-enter-name.html:59
 #: app/templates/request-common-enter-name.html:78
 #: app/templates/web-form.html:168
 msgid "You have {x} characters remaining"
 msgstr ""
 
-#: app/templates/common-enter-room-number.html:70
+#: app/templates/common-enter-room-number.html:68
 msgid "Cancel and return to the previous page"
 msgstr ""
 
@@ -355,6 +349,17 @@ msgstr ""
 #: app/templates/common-select-address.html:46
 #: app/templates/common-select-address.html:55
 msgid "Select your address"
+msgstr ""
+
+#: app/templates/error-forbidden.html:8
+msgid "Sorry, there is a problem"
+msgstr ""
+
+#: app/templates/error-forbidden.html:12
+#, python-format
+msgid ""
+"To access this page you need to %(open)senter your 16-character access "
+"code%(close)s."
 msgstr ""
 
 #: app/templates/error.html:15
@@ -440,7 +445,7 @@ msgstr ""
 msgid "Request individual access code"
 msgstr ""
 
-#: app/templates/request-code-household.html:35 app/templates/start.html:122
+#: app/templates/request-code-household.html:35 app/templates/start.html:120
 msgid ""
 "Someone in your household must still complete a census using a household "
 "access code"
@@ -448,7 +453,7 @@ msgstr ""
 
 #: app/templates/request-code-household.html:41
 #: app/templates/request-questionnaire-household.html:39
-#: app/templates/start.html:128
+#: app/templates/start.html:126
 msgid "Need to answer separately from your household?"
 msgstr ""
 
@@ -561,49 +566,49 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:21
+#: app/templates/request-code-sent-by-text.html:22
 #, python-format
 msgid "A text has been sent to %(number)s"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:24
+#: app/templates/request-code-sent-by-text.html:26
 msgid ""
 "The text message with an individual access code should arrive soon for "
 "you to start your census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:26
+#: app/templates/request-code-sent-by-text.html:28
 msgid ""
 "The text message with a new manager access code should arrive soon for "
 "you to start the census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:28
+#: app/templates/request-code-sent-by-text.html:30
 msgid ""
 "The text message with a new household access code should arrive soon for "
 "you to start your census"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:41
+#: app/templates/request-code-sent-by-text.html:43
 msgid "The text will be sent from <strong>Census2021</strong>"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:45
+#: app/templates/request-code-sent-by-text.html:47
 msgid "Didn’t receive a text?"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:48
+#: app/templates/request-code-sent-by-text.html:50
 #, python-format
 msgid ""
 "It can take a few minutes for the text to arrive. If it doesn’t arrive, "
 "you can %(open)srequest a new access code%(close)s."
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:51
+#: app/templates/request-code-sent-by-text.html:53
 msgid "Ready to start your census online?"
 msgstr ""
 
-#: app/templates/request-code-sent-by-text.html:56 app/templates/start.html:74
+#: app/templates/request-code-sent-by-text.html:58 app/templates/start.html:72
 msgid "Start census"
 msgstr ""
 
@@ -942,15 +947,6 @@ msgid ""
 "to %(open)saccess your census%(close)s."
 msgstr ""
 
-#: app/templates/start-address-changed.html:14
-msgid "Your address has been changed"
-msgstr ""
-
-#: app/templates/start-address-changed.html:16
-#: app/templates/start-link-address-linked.html:16
-msgid "You are now ready to start your Census questions"
-msgstr ""
-
 #: app/templates/start-code-for-northern-ireland.html:5
 msgid "This access code is not part of the census for England and Wales"
 msgstr ""
@@ -990,10 +986,6 @@ msgstr ""
 
 #: app/templates/start-launch-eq.html:31
 msgid "Launch census"
-msgstr ""
-
-#: app/templates/start-link-address-linked.html:14
-msgid "Your address has been linked to your code"
 msgstr ""
 
 #: app/templates/start-timeout.html:11
@@ -1063,39 +1055,43 @@ msgstr ""
 msgid "Enter a town or city"
 msgstr ""
 
-#: app/templates/start.html:28
+#: app/templates/start.html:26
 msgid "Enter an access code"
 msgstr ""
 
-#: app/templates/start.html:80
+#: app/templates/start.html:28
+msgid "Enter a valid access code"
+msgstr ""
+
+#: app/templates/start.html:78
 msgid "Where to find your access code"
 msgstr ""
 
-#: app/templates/start.html:83
+#: app/templates/start.html:81
 msgid "Enter your 16-character access code"
 msgstr ""
 
-#: app/templates/start.html:84
+#: app/templates/start.html:82
 msgid ""
 "Keep this code safe. You will need to enter it every time you access your"
 " census"
 msgstr ""
 
-#: app/templates/start.html:86
+#: app/templates/start.html:84
 msgid ""
 "Your personal information is protected by law and will be kept "
 "confidential."
 msgstr ""
 
-#: app/templates/start.html:103
+#: app/templates/start.html:101
 msgid "Access census"
 msgstr ""
 
-#: app/templates/start.html:109
+#: app/templates/start.html:107
 msgid "If you don’t have an access code"
 msgstr ""
 
-#: app/templates/start.html:111
+#: app/templates/start.html:109
 #, python-format
 msgid ""
 "You can %(open)srequest a new access code%(close)s to start a new census "
@@ -1103,7 +1099,7 @@ msgid ""
 "by text or post."
 msgstr ""
 
-#: app/templates/start.html:116
+#: app/templates/start.html:114
 #, python-format
 msgid ""
 "If you need to answer separately from the people you live with, you can "
@@ -1111,7 +1107,7 @@ msgid ""
 "census."
 msgstr ""
 
-#: app/templates/start.html:140 app/templates/webchat-form.html:144
+#: app/templates/start.html:138 app/templates/webchat-form.html:144
 #: app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""

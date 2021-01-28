@@ -269,9 +269,9 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_common_invalid_mobile_error_en = \
             'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
-        # TODO: add welsh translation
         self.content_common_invalid_mobile_error_cy = \
-            'Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345'
+            "Rhowch rif ffôn symudol yn y Deyrnas Unedig mewn fformat dilys, er enghraifft, " \
+            "07700 900345 neu +44 7700 900345"
 
         self.common_select_address_input_valid = {
             'form-pick-address': '10023122451', 'action[save_continue]': '',
@@ -394,9 +394,8 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_northern_ireland_en = \
             'This address is not part of the census for England and Wales'
-        # TODO: add welsh translation
         self.content_common_address_in_northern_ireland_page_title_cy = \
-            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+            "<title>Nid yw&#39;r cyfeiriad yn rhan o&#39;r cyfrifiad ar gyfer Cymru a Lloegr - Cyfrifiad 2021</title>"
         self.content_common_address_in_northern_ireland_cy = \
             "Nid yw\\\'r cyfeiriad hwn yn rhan o\\\'r cyfrifiad yng Nghymru a Lloegr"
 
@@ -412,9 +411,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_scotland_page_title_en = \
             '<title>Address not part of census for England and Wales - Census 2021</title>'
         self.content_common_address_in_scotland_en = 'This address is not part of the census for England and Wales'
-        # TODO: add welsh translation
         self.content_common_address_in_scotland_page_title_cy = \
-            '<title>Address not part of census for England and Wales - Cyfrifiad 2021</title>'
+            "<title>Nid yw&#39;r cyfeiriad yn rhan o&#39;r cyfrifiad ar gyfer Cymru a Lloegr - Cyfrifiad 2021</title>"
         self.content_common_address_in_scotland_cy = \
             "Nid yw\\\'r cyfeiriad hwn yn rhan o\\\'r cyfrifiad yng Nghymru a Lloegr"
         self.content_common_address_in_scotland_page_title_ni = \
@@ -422,12 +420,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_address_in_scotland_ni = 'This address is not part of the census for Northern Ireland'
 
         self.content_common_enter_address_error_en = 'Enter a valid UK postcode'
-        # TODO Add Welsh Translation
-        self.content_common_enter_address_error_cy = "Enter a valid UK postcode"
+        self.content_common_enter_address_error_cy = "Rhowch god post dilys yn y Deyrnas Unedig"
 
         self.content_common_enter_address_error_empty_en = 'Enter a postcode'
-        # TODO Add Welsh Translation
-        self.content_common_enter_address_error_empty_cy = "Enter a postcode"
+        self.content_common_enter_address_error_empty_cy = "Rhowch god post"
 
         self.content_common_select_address_page_title_en = '<title>Select address - Census 2021</title>'
         self.content_common_select_address_page_title_error_en = '<title>Error: Select address - Census 2021</title>'
@@ -436,7 +432,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_value_en = '1 Gate Reach'
         self.content_common_select_address_no_results_en = 'We cannot find your address'
         self.content_common_select_address_page_title_cy = '<title>Dewis cyfeiriad - Cyfrifiad 2021</title>'
-        self.content_common_select_address_page_title_error_cy = '<title>Gwall: Dewis cyfeiriad - Cyfrifiad 2021</title>'
+        self.content_common_select_address_page_title_error_cy = \
+            '<title>Gwall: Dewis cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
@@ -452,8 +449,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_page_title_error_cy = \
             '<title>Gwall: Cadarnhau cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_confirm_address_title_cy = "Ai hwn yw\\\'r cyfeiriad cywir?"
-        # TODO: add welsh translation
-        self.content_common_confirm_address_error_cy = "Select an answer"
+        self.content_common_confirm_address_error_cy = "Dewiswch ateb"
         self.content_common_confirm_address_value_yes_cy = "Ie, hwn yw\\\'r cyfeiriad cywir"
         self.content_common_confirm_address_value_no_cy = "Na, rwyf am chwilio am fy nghyfeiriad eto"
 
@@ -475,11 +471,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_enter_room_number_page_title_error_cy = \
             '<title>Gwall: Nodi rhif fflat neu ystafell - Cyfrifiad 2021</title>'
         self.content_common_enter_room_number_title_cy = "Beth yw rhif eich fflat neu ystafell?"
-        # TODO: add welsh translation
-        self.content_common_enter_room_number_empty_cy = 'Enter your flat or room number'
-        # TODO: add welsh translation
+        self.content_common_enter_room_number_empty_cy = "Rhowch rif eich fflat neu ystafell"
         self.content_common_enter_room_number_over_length_cy = \
-            'You have entered too many characters. Enter up to 10 characters'
+            "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 10 o nodau"
 
         self.common_room_number_input_valid = {
             'form-enter-room-number': self.content_common_ce_room_number_text, 'action[save_continue]': '',
@@ -544,9 +538,8 @@ class RHTestCase(AioHTTPTestCase):
             "Rydych chi wedi cyrraedd y nifer fwyaf o godau mynediad y gallwch ofyn amdanynt ar lein"
         self.content_common_429_error_paper_questionnaire_title_cy = \
             "Rydych chi wedi cyrraedd y nifer fwyaf o holiaduron papur y gallwch ofyn amdanynt ar lein"
-        # TODO: add welsh translation
         self.content_common_429_error_continuation_questionnaire_title_cy = \
-            'You have reached the maximum number of continuation questionnaires you can request online'
+            "Rydych wedi cyrraedd y nifer fwyaf o holiaduron cartref (parhad) y gallwch wneud cais amdanynt ar lein"
 
         self.content_common_resident_or_manager_page_title_en = \
             '<title>Confirm resident or manager - Census 2021</title>'
@@ -571,8 +564,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_resident_or_manager_option_manager_cy = "Rheolwr"
         self.content_common_resident_or_manager_description_manager_cy = \
             "Mae rheolwr yn gyfrifol am ateb cwestiynau\\\'r cyfrifiad am y sefydliad hwn"
-        # TODO: add welsh translation
-        self.content_common_resident_or_manager_error_cy = 'Select an answer'
+        self.content_common_resident_or_manager_error_cy = "Dewiswch ateb"
 
         self.content_common_nisra_ce_manager_title = 'You need to visit the Communal Establishment Manager Portal'
 
@@ -596,9 +588,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_code_for_northern_ireland_title_en = \
             'This access code is not part of the census for England and Wales'
-        # TODO: add welsh translation
         self.content_start_code_for_northern_ireland_title_cy = \
-            'This access code is not part of the census for England and Wales'
+            "Nid yw\\\'r cod mynediad hwn yn rhan o\\\'r cyfrifiad ar gyfer Cymru a Lloegr"
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
         self.content_start_code_for_england_and_wales_secondary = \
@@ -616,8 +607,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_title_cy = "Ai hwn yw\\\'r cyfeiriad cywir?"
         self.content_start_confirm_address_option_yes_cy = "Ie, hwn yw\\\'r cyfeiriad cywir"
         self.content_start_confirm_address_option_no_cy = "Na, nid hwn yw\\\'r cyfeiriad cywir"
-        # TODO: add welsh translation
-        self.content_start_confirm_address_error_cy = 'Select an answer'
+        self.content_start_confirm_address_error_cy = "Dewiswch ateb"
         self.content_start_confirm_address_region_warning_cy = \
             'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
 
@@ -639,8 +629,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_signed_out_page_title_en = '<title>Progress saved - Census 2021</title>'
         self.content_signed_out_title_en = 'Your progress has been saved'
-        # TODO: add welsh translation
-        self.content_signed_out_page_title_cy = '<title>Progress saved - Cyfrifiad 2021</title>'
+        self.content_signed_out_page_title_cy = "<title>Cynnydd wedi&#39;i gadw - Cyfrifiad 2021</title>"
         self.content_signed_out_title_cy = 'Mae eich cynnydd wedi cael ei gadw'
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
@@ -1113,9 +1102,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_individual_questionnaire_page_title_en = \
             '<title>Request individual paper questionnaire - Census 2021</title>'
         self.content_request_individual_questionnaire_title_en = 'Request an individual paper questionnaire'
-        # TODO: add welsh translation
         self.content_request_individual_questionnaire_page_title_cy = \
-            '<title>Request individual paper questionnaire - Cyfrifiad 2021</title>'
+            '<title>Gofyn am holiadur papur i unigolion - Cyfrifiad 2021</title>'
         self.content_request_individual_questionnaire_title_cy = "Gofyn am holiadur papur i unigolion"
         self.content_request_individual_questionnaire_secondary_en = \
             'An individual paper questionnaire lets you answer your census questions separately from the people ' \
@@ -1156,8 +1144,7 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_code_select_how_to_receive_individual_response_question_cy = \
             "Angen ateb ar wahân i aelodau eich cartref?"
-        # TODO Add Welsh Translation
-        self.content_request_code_select_how_to_receive_error_cy = "Select an answer"
+        self.content_request_code_select_how_to_receive_error_cy = "Dewiswch ateb"
         self.content_request_code_select_how_to_receive_secondary_cy = "Dewiswch sut i anfon y cod mynediad"
         self.content_request_code_select_how_to_receive_option_text_cy = "Neges destun"
         self.content_request_code_select_how_to_receive_option_post_cy = "Post"
@@ -1226,11 +1213,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_enter_mobile_page_title_error_cy = \
             '<title>Gwall: Nodi rhif ff\\xc3\\xb4n symudol - Cyfrifiad 2021</title>'
         self.content_request_code_enter_mobile_title_cy = "Beth yw eich rhif symudol?"
-        # TODO Add Welsh Translation
-        self.content_request_code_enter_mobile_error_empty_cy = "Enter your mobile number"
-        # TODO Add Welsh Translation
+        self.content_request_code_enter_mobile_error_empty_cy = "Rhowch eich rhif ff\\xc3\\xb4n symudol"
         self.content_request_code_enter_mobile_error_invalid_cy = \
-            "Enter a UK mobile number in a valid format, for example, 07700 900345 or +44 7700 900345"
+            "Rhowch rif ff\\xc3\\xb4n symudol yn y Deyrnas Unedig mewn fformat dilys, er enghraifft, " \
+            "07700 900345 neu +44 7700 900345"
         self.content_request_code_enter_mobile_secondary_cy = \
             "Ni chaiff y rhif ei storio a dim ond unwaith i anfon y cod mynediad y caiff ei ddefnyddio"
 
@@ -1261,8 +1247,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_confirm_send_by_text_page_title_individual_error_cy = \
             '<title>Gwall: Cadarnhau i anfon cod mynediad unigol drwy neges destun - Cyfrifiad 2021</title>'
         self.content_request_code_confirm_send_by_text_title_cy = "Ydy\\xe2\\x80\\x99r rhif symudol hwn yn gywir?"
-        # TODO Add Welsh Translation
-        self.content_request_code_confirm_send_by_text_error_cy = "Select an answer"
+        self.content_request_code_confirm_send_by_text_error_cy = "Dewiswch ateb"
 
         self.content_request_code_sent_by_text_page_title_household_en = \
             '<title>Household access code has been sent by text - Census 2021</title>'
@@ -1303,9 +1288,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_household_page_title_en = \
             '<title>Request household paper questionnaire - Census 2021</title>'
         self.content_request_questionnaire_household_title_en = 'Request a household paper questionnaire'
-        # TODO Add Welsh Translation
         self.content_request_questionnaire_household_page_title_cy = \
-            '<title>Request household paper questionnaire - Cyfrifiad 2021</title>'
+            '<title>Gofyn am holiadur papur y cartref - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_household_title_cy = "Gofyn am holiadur papur y cartref"
 
         self.content_request_questionnaire_people_in_household_title_en = 'How many people are in your household?'
@@ -1315,14 +1299,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_people_in_household_error_number_less_en = \
             'Enter a number less than 31'
         self.content_request_questionnaire_people_in_household_title_cy = "Faint o bobl sydd yn eich cartref?"
-        # TODO Add Welsh Translation
-        self.content_request_questionnaire_people_in_household_error_empty_cy = \
-            'Enter the number of people in your household'
-        # TODO Add Welsh Translation
-        self.content_request_questionnaire_people_in_household_error_nan_cy = 'Enter a number'
-        # TODO: add welsh translation
+        self.content_request_questionnaire_people_in_household_error_empty_cy = "Rhowch nifer y bobl yn eich cartref"
+        self.content_request_questionnaire_people_in_household_error_nan_cy = "Rhowch rif"
         self.content_request_questionnaire_people_in_household_error_number_less_cy = \
-            'Enter a number less than 31'
+            "Rhowch rif sy\\\'n llai na 31"
 
         self.content_request_common_enter_name_page_title_en = \
             '<title>Enter name - Census 2021</title>'
@@ -1340,16 +1320,12 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_common_enter_name_page_title_error_cy = \
             '<title>Gwall: Nodi enw - Cyfrifiad 2021</title>'
         self.content_request_common_enter_name_title_cy = "Beth yw eich enw?"
-        # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_first_name_cy = "Enter your first name"
-        # TODO Add Welsh Translation
+        self.content_request_common_enter_name_error_first_name_cy = "Rhowch eich enw cyntaf"
         self.content_request_common_enter_name_error_first_name_overlength_cy = \
-            "You have entered too many characters. Enter up to 35 characters"
-        # TODO Add Welsh Translation
-        self.content_request_common_enter_name_error_last_name_cy = 'Enter your last name'
-        # TODO Add Welsh Translation
+            "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau"
+        self.content_request_common_enter_name_error_last_name_cy = "Rhowch eich cyfenw"
         self.content_request_common_enter_name_error_last_name_overlength_cy = \
-            "You have entered too many characters. Enter up to 35 characters"
+            "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau"
 
         self.content_request_code_confirm_send_by_post_page_title_individual_en = \
             '<title>Confirm to send individual access code by post - Census 2021</title>'
@@ -1376,7 +1352,6 @@ class RHTestCase(AioHTTPTestCase):
             'Your individual paper questionnaire will arrive in a white unbranded envelope'
         self.content_request_code_confirm_send_by_post_option_yes_en = 'Yes, send the access code by post'
         self.content_request_code_confirm_send_by_post_option_no_en = 'No, send it by text message'
-        # TODO Add Welsh Translation
         self.content_request_code_confirm_send_by_post_page_title_individual_cy = \
             '<title>Cadarnhau i anfon cod mynediad unigol drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_confirm_send_by_post_page_title_error_individual_cy = \
@@ -1395,9 +1370,7 @@ class RHTestCase(AioHTTPTestCase):
             "Ydych chi am anfon cod mynediad rheolwr newydd i\\\'r cyfeiriad hwn?"
         self.content_request_code_confirm_send_by_post_title_household_cy = \
             "Ydych chi am anfon cod mynediad newydd ar gyfer y cartref i\\\'r cyfeiriad hwn?"
-        # TODO Add Welsh Translation
-        self.content_request_common_confirm_send_by_post_error_cy = \
-            "Select an answer"
+        self.content_request_common_confirm_send_by_post_error_cy = "Dewiswch ateb"
         self.content_request_code_confirm_send_by_post_individual_message_cy = \
             "Bydd llythyr yn cynnwys cod mynediad unigol yn cyrraedd mewn amlen blaen frown"
         self.content_request_questionnaire_confirm_send_by_post_individual_message_cy = \
@@ -1636,7 +1609,6 @@ class RHTestCase(AioHTTPTestCase):
 
         # Content
         self.content_start_change_address_enter_address_question_title_en = 'What is your postcode?'
-        # TODO: add welsh translation
         self.content_start_change_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
 
         self.content_start_change_address_timeout_error_en = 're-enter your access code'
@@ -2227,18 +2199,14 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
 
-        # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_page_title_cy = \
-            '<title>Household paper questionnaire will be sent - Cyfrifiad 2021</title>'
-        # TODO: add welsh translation
+            '<title>Caiff holiadur papur y cartref ei anfon - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_sent_post_individual_page_title_cy = \
-            '<title>Individual paper questionnaire will be sent - Cyfrifiad 2021</title>'
-        # TODO: add welsh translation
+            '<title>Caiff holiadur papur i unigolion ei anfon - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_sent_post_page_title_large_print_cy = \
-            '<title>Large-print household paper questionnaire will be sent - Cyfrifiad 2021</title>'
-        # TODO: add welsh translation
+            '<title>Caiff copi print mawr o holiadur papur y cartref ei anfon - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_sent_post_individual_page_title_large_print_cy = \
-            '<title>Large-print individual paper questionnaire will be sent - Cyfrifiad 2021</title>'
+            "<title>Caiff copi print mawr o&#39;r holiadur papur i unigolion ei anfon - Cyfrifiad 2021</title>"
         self.content_request_questionnaire_sent_post_title_cy = \
             "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
         self.content_request_questionnaire_sent_post_individual_title_cy = \
@@ -2318,12 +2286,10 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Gwall: Cadarnhau i anfon copi papur o Holiadur y Cartref - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_confirm_send_by_post_title_cy = \
             "Ydych chi am anfon holiadur papur y cartref i\\\'r cyfeiriad hwn?"
-        # TODO Add Welsh Translation
         self.content_request_questionnaire_confirm_send_by_post_individual_page_title_cy = \
-            '<title>Confirm to send individual paper questionnaire - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
+            '<title>Cadarnhau i anfon holiadur papur i unigolion - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_confirm_send_by_post_individual_page_title_error_cy = \
-            '<title>Gwall: Confirm to send individual paper questionnaire - Cyfrifiad 2021</title>'
+            '<title>Gwall: Cadarnhau i anfon holiadur papur i unigolion - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_confirm_send_by_post_individual_title_cy = \
             "Ydych chi am anfon holiadur papur i unigolion i\\\'r cyfeiriad hwn?"
         self.content_request_questionnaire_confirm_send_by_post_option_yes_cy = \
@@ -2339,9 +2305,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_questionnaire_request_cancelled_title_en = \
             'Your request for a paper questionnaire has been cancelled'
-        # TODO Add Welsh Translation
         self.content_request_questionnaire_request_cancelled_title_cy = \
-            'Your request for a paper questionnaire has been cancelled'
+            "Mae eich cais am holiadur papur wedi cael ei ganslo"
 
         # Start Request Continuation Questionnaire
 
@@ -2438,26 +2403,22 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_continuation_questionnaire_enter_address_secondary_en = \
             'To send a continuation questionnaire, we need your address'
-        # TODO: add welsh translation
         self.content_request_continuation_questionnaire_enter_address_secondary_cy = \
-            'To send a continuation questionnaire, we need your address'
+            "I anfon holiadur cartref (parhad), bydd angen eich cyfeiriad arnom"
 
         self.content_request_continuation_questionnaire_not_a_household_title_en = \
             'This address is not a household address'
         self.content_request_continuation_questionnaire_not_a_household_secondary_en = \
             'Continuation questionnaires can only be requested for household addresses.'
-        # TODO: add welsh translation
         self.content_request_continuation_questionnaire_not_a_household_title_cy = \
-            'This address is not a household address'
-        # TODO: add welsh translation
+            "Nid yw\\\'r cyfeiriad hwn yn gyfeiriad cartref"
         self.content_request_continuation_questionnaire_not_a_household_secondary_cy = \
-            'Continuation questionnaires can only be requested for household addresses.'
+            "Dim ond ar gyfer cyfeiriadau cartref y gellir gwneud cais am holiaduron cartref (Parhad)."
 
         self.content_request_continuation_questionnaire_people_in_household_error_number_greater_en = \
             'Enter a number greater than 5'
-        # TODO: add welsh translation
         self.content_request_continuation_questionnaire_people_in_household_error_number_greater_cy = \
-            'Enter a number greater than 5'
+            "Rhowch rif sy\\\'n fwy na 5"
         self.content_request_continuation_questionnaire_people_in_household_error_number_greater_ni = \
             'Enter a number greater than 6'
 
@@ -2467,9 +2428,8 @@ class RHTestCase(AioHTTPTestCase):
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_continuation_questionnaire_sent_post_secondary_en = \
             'This should arrive soon for you to complete your census'
-        # TODO: add welsh translation
         self.content_request_continuation_questionnaire_sent_post_page_title_cy = \
-            '<title>Continuation questionnaire will be sent - Cyfrifiad 2021</title>'
+            '<title>Caiff holiadur y cartref (parhad) ei anfon - Cyfrifiad 2021</title>'
         # TODO: add welsh translation
         self.content_request_continuation_questionnaire_sent_post_title_cy = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
@@ -2490,15 +2450,13 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Cadarnhau i anfon holiadur parhad - Cyfrifiad 2021</title>'
         self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_error_cy = \
             '<title>Gwall: Cadarnhau i anfon holiadur parhad - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
         self.content_request_continuation_questionnaire_confirm_send_by_post_title_cy = \
-            'Do you want to send a continuation questionnaire to this address?'
+            "Ydych chi am anfon holiadur y cartref (parhad) i\\\'r cyfeiriad hwn?"
 
         self.content_request_continuation_questionnaire_request_cancelled_title_en = \
             'Your request for a continuation questionnaire has been cancelled'
-        # TODO Add Welsh Translation
         self.content_request_continuation_questionnaire_request_cancelled_title_cy = \
-            'Your request for a continuation questionnaire has been cancelled'
+            "Mae eich cais am holiadur y cartref (parhad) wedi cael ei ganslo"
 
         # Start Support Centre Pages
 
@@ -2547,10 +2505,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_title_cy = "Chwilio am ganolfan gymorth"
         self.content_support_centre_enter_postcode_secondary_cy = \
             "Er mwyn chwilio am eich canolfan gymorth agosaf, bydd angen i ni gael eich cod post."
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_empty_cy = 'Enter a postcode'
-        # TODO Add Welsh Translation
-        self.content_support_centre_enter_postcode_error_invalid_cy = "Enter a valid UK postcode"
+        self.content_support_centre_enter_postcode_error_empty_cy = "Rhowch god post"
+        self.content_support_centre_enter_postcode_error_invalid_cy = "Rhowch god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
             'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
@@ -2727,14 +2683,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_page_title_error_en = '<title>Error: Web form - Census 2021</title>'
         self.content_web_form_title_en = 'Web form'
         self.content_web_form_warning_en = 'Information about what we do with your personal data is available in our'
-        # TODO Add Welsh Translation
-        self.content_web_form_page_title_cy = '<title>Web form - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
-        self.content_web_form_page_title_error_cy = '<title>Gwall: Web form - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
-        self.content_web_form_title_cy = 'Web form'
-        # TODO Add Welsh Translation
-        self.content_web_form_warning_cy = 'Information about what we do with your personal data is available in our'
+        self.content_web_form_page_title_cy = '<title>Gwe-ffurflen - Cyfrifiad 2021</title>'
+        self.content_web_form_page_title_error_cy = '<title>Gwall: Gwe-ffurflen - Cyfrifiad 2021</title>'
+        self.content_web_form_title_cy = 'Gwe-ffurflen'
+        self.content_web_form_warning_cy = \
+            "Mae gwybodaeth am yr hyn rydym yn ei wneud gyda\\\'ch data personol ar gael yn ein"
 
         self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'
@@ -2742,10 +2695,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
         self.content_web_form_success_page_title_cy = '<title>Diolch am gysylltu \\xc3\\xa2 ni - Cyfrifiad 2021</title>'
         self.content_web_form_success_title_cy = 'Diolch am gysylltu \\xc3\\xa2 ni'
-        # TODO Add Welsh Translation
-        self.content_web_form_success_confirmation_cy = 'Your message has been sent'
-        # TODO Add Welsh Translation
-        self.content_web_form_success_secondary_cy = 'We will respond to you within 2 working days'
+        self.content_web_form_success_confirmation_cy = "Mae eich neges wedi cael ei hanfon"
+        self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
 
         self.content_web_form_error_429_title_en = 'You have reached the maximum number web form submissions'
         # TODO Add Welsh Translation
@@ -2764,19 +2715,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_transient_enter_town_name_post_census_day_title_en = \
             'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
         self.content_start_transient_enter_town_name_error_en = "Enter your nearest town or city"
-        # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_page_title_cy = \
-            '<title>Nearest town or city - Cyfrifiad 2021</title>'
-        # TODO Add Welsh Translation
+            '<title>Tref neu ddinas agosaf - Cyfrifiad 2021</title>'
         self.content_start_transient_enter_town_name_page_title_error_cy = \
-            '<title>Gwall: Nearest town or city - Cyfrifiad 2021</title>'
+            '<title>Gwall: Tref neu ddinas agosaf - Cyfrifiad 2021</title>'
         self.content_start_transient_enter_town_name_pre_census_day_title_cy = \
             "Beth yw\\\'r dref neu\\\'r ddinas agosaf i ble y byddwch chi\\\'n byw ddydd Sul 21 Mawrth 2021?"
-        # TODO Add Welsh Translation
         self.content_start_transient_enter_town_name_post_census_day_title_cy = \
-            'What is the nearest town or city to where you were living on Sunday 21 March 2021?'
-        # TODO Add Welsh Translation
-        self.content_start_transient_enter_town_name_error_cy = "Enter your nearest town or city"
+            "Beth yw\\\'r dref neu\\\'r ddinas agosaf i ble y byddwch chi\\\'n byw ddydd Sul 21 Mawrth 2021?"
+        self.content_start_transient_enter_town_name_error_cy = "Rhowch eich tref neu ddinas agosaf"
 
         self.content_start_transient_accommodation_type_page_title_en = \
             "<title>Select type of accommodation - Census 2021</title>"
@@ -2794,8 +2741,7 @@ class RHTestCase(AioHTTPTestCase):
             "<title>Gwall: Dewis math o lety - Cyfrifiad 2021</title>"
         self.content_start_transient_accommodation_type_title_cy = \
             "Pa un o\\xe2\\x80\\x99r canlynol sy\\xe2\\x80\\x99n disgrifio eich math o gartref orau?"
-        # TODO Add Welsh Translation
-        self.content_start_transient_accommodation_type_error_cy = "Select an answer"
+        self.content_start_transient_accommodation_type_error_cy = "Dewiswch ateb"
         self.content_start_transient_accommodation_type_value_barge_cy = "Bad neu gwch"
         self.content_start_transient_accommodation_type_value_caravan_cy = "Caraf\\xc3\\xa1n neu gerbyd preswyl"
         self.content_start_transient_accommodation_type_value_tent_cy = "Pabell neu strwythur dros dro"

@@ -215,8 +215,7 @@ class StartCodeForNorthernIreland(StartCommon):
 
         if display_region == 'cy':
             locale = 'cy'
-            # TODO: add welsh translation
-            page_title = "This access code is not part of the census for England and Wales"
+            page_title = "Nid yw'r cod mynediad hwn yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
         else:
             locale = 'en'
             page_title = 'This access code is not part of the census for England and Wales'
@@ -531,8 +530,7 @@ class StartTransientEnterTownName(StartCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Nearest town or city'
+            page_title = "Tref neu ddinas agosaf"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -580,8 +578,7 @@ class StartTransientEnterTownName(StartCommon):
                         client_ip=request['client_ip'],
                         region_of_site=display_region)
             if display_region == 'cy':
-                # TODO: add welsh translation
-                flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
+                flash(request, FlashMessage.generate_flash_message("Rhowch eich tref neu ddinas agosaf", 'ERROR',
                                                                    'TOWN_NAME_ENTER_ERROR', 'error-enter-town-name'))
             else:
                 flash(request, FlashMessage.generate_flash_message('Enter your nearest town or city', 'ERROR',
@@ -660,8 +657,7 @@ class StartTransientAccommodationType(StartCommon):
             logger.info('transient accommodation type error', client_ip=request['client_ip'],
                         region_of_site=display_region)
             if display_region == 'cy':
-                # TODO: add welsh translation
-                flash(request, FlashMessage.generate_flash_message('Select an answer', 'ERROR',
+                flash(request, FlashMessage.generate_flash_message("Dewiswch ateb", 'ERROR',
                                                                    'ACCOMMODATION_TYPE_ERROR',
                                                                    'error-accommodation-type'))
             else:

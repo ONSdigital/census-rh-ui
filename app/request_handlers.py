@@ -110,8 +110,7 @@ class RequestIndividualForm(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request individual paper questionnaire'
+            page_title = 'Gofyn am holiadur papur i unigolion'
             locale = 'cy'
         else:
             page_title = 'Request individual paper questionnaire'
@@ -184,8 +183,7 @@ class RequestHouseholdForm(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request household paper questionnaire'
+            page_title = "Gofyn am holiadur papur y cartref"
             locale = 'cy'
         else:
             page_title = 'Request household paper questionnaire'
@@ -630,8 +628,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         else:
             if attributes['individual']:
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send individual paper questionnaire'
+                    page_title = "Cadarnhau i anfon holiadur papur i unigolion"
                 else:
                     page_title = 'Confirm to send individual paper questionnaire'
             else:
@@ -683,7 +680,6 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         type_of_request=request_type,
                         region_of_site=display_region)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
@@ -919,8 +915,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         client_ip=request['client_ip'], user_selection=name_address_confirmation,
                         region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Select an answer',
+                flash(request, FlashMessage.generate_flash_message('Dewiswch ateb',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
@@ -1041,8 +1036,7 @@ class RequestCommonPeopleInHousehold(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = "How many people are in your household?"
+            page_title = "Faint o bobl sydd yn eich cartref chi?"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -1103,8 +1097,7 @@ class RequestQuestionnaireManager(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Cannot send paper questionnaires to managers'
+            page_title = "Ni allwn anfon holiaduron papur at reolwyr"
             locale = 'cy'
         else:
             page_title = 'Cannot send paper questionnaires to managers'
@@ -1133,11 +1126,16 @@ class RequestQuestionnaireCancelled(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Your request for a questionnaire has been cancelled'
+            if request_type == 'continuation-questionnaire':
+                page_title = "Mae eich cais am holiadur y cartref (parhad) wedi cael ei ganslo"
+            else:
+                page_title = "Mae eich cais am holiadur papur wedi cael ei ganslo"
             locale = 'cy'
         else:
-            page_title = 'Your request for a questionnaire has been cancelled'
+            if request_type == 'continuation-questionnaire':
+                page_title = 'Your request for a continuation questionnaire has been cancelled'
+            else:
+                page_title = 'Your request for a paper questionnaire has been cancelled'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/request-cancelled')
@@ -1167,11 +1165,9 @@ class RequestQuestionnaireSent(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Individual paper questionnaire will be sent'
+                page_title = "Caiff holiadur papur i unigolion ei anfon"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Household paper questionnaire will be sent'
+                page_title = "Caiff holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -1210,8 +1206,7 @@ class RequestContinuationSent(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Continuation questionnaire will be sent'
+            page_title = "Caiff holiadur y cartref (parhad) ei anfon"
             locale = 'cy'
         else:
             page_title = 'Continuation questionnaire will be sent'
@@ -1256,11 +1251,9 @@ class RequestLargePrintSentPost(RequestCommon):
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Large-print individual paper questionnaire will be sent'
+                page_title = "Caiff copi print mawr o'r holiadur papur i unigolion ei anfon"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Large-print household paper questionnaire will be sent'
+                page_title = "Caiff copi print mawr o holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -1332,8 +1325,7 @@ class RequestContinuationNotAHousehold(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'This address is not a household address'
+            page_title = "Nid yw'r cyfeiriad hwn yn gyfeiriad cartref"
             locale = 'cy'
         else:
             page_title = 'This address is not a household address'

@@ -2899,7 +2899,11 @@ class TestHelpers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '9999999999999'
             eq_payload['case_type'] = 'SPG'
-            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+            if display_region == 'cy':
+                eq_payload['display_address'] = accommodation_type_text + ' gerllaw ' + \
+                                                self.data_start_transient_town_name
+            else:
+                eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
 
             response = await self.client.request(
                 'POST',

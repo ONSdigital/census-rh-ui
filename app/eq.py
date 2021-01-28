@@ -144,8 +144,7 @@ class EqPayloadConstructor(object):
             transient_town_name = sample_attributes['transientTownName']
             transient_accommodation_type = sample_attributes['transientAccommodationType']
             if sample_attributes['language'] == 'cy':
-                # TODO: Add Welsh Translation
-                display_address = transient_accommodation_type + ' near ' + transient_town_name
+                display_address = transient_accommodation_type + ' gerllaw ' + transient_town_name
             else:
                 display_address = transient_accommodation_type + ' near ' + transient_town_name
 
