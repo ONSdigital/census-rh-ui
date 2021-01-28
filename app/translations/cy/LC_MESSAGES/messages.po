@@ -196,7 +196,7 @@ msgstr "Beth yw eich cod post?"
 
 #: app/templates/common-enter-address.html:29
 msgid "<p>To request an individual access code, we need your address</p>"
-msgstr ""
+msgstr "<p>I ofyn am god mynediad unigol, bydd angen eich cyfeiriad arnom</p>"
 
 #: app/templates/common-enter-address.html:31
 msgid "<p>To request an access code, we need your address</p>"
@@ -225,7 +225,7 @@ msgid ""
 "%(open)scontact us to request a paper census questionnaire%(close)s."
 msgstr ""
 "Os ydych chi'n byw mewn cartref symudol, fel cwch camlas neu gartref "
-"modur, %(open)scysylltwch â ni i ofyn am god mynediad."
+"modur, %(open)scysylltwch â ni i ofyn am god mynediad%(close)s."
 
 #: app/templates/common-enter-address.html:76
 #, python-format
@@ -233,6 +233,8 @@ msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
 "%(open)scontact us to request a continuation questionnaire%(close)s."
 msgstr ""
+"Os ydych chi'n byw mewn cartref symudol, fel cwch camlas neu gartref modur, "
+"%(open)scysylltwch â ni i ofyn am holiadur cartref (parhad)%(close)s."
 
 #: app/templates/common-enter-address.html:82
 #, python-format
@@ -385,14 +387,14 @@ msgstr "Dewiswch eich cyfeiriad"
 
 #: app/templates/error-forbidden.html:8
 msgid "Sorry, there is a problem"
-msgstr ""
+msgstr "Mae'n ddrwg gennym, mae problem wedi codi"
 
 #: app/templates/error-forbidden.html:12
 #, python-format
 msgid ""
 "To access this page you need to %(open)senter your 16-character access "
 "code%(close)s."
-msgstr ""
+msgstr "I fynd i'r dudalen hon, bydd angen i chi roi %(open)seich cod mynediad 16 nod%(close)s."
 
 #: app/templates/error.html:15
 msgid "Sorry, something went wrong"
@@ -754,7 +756,7 @@ msgstr "Mae angen holiadur print mawr arnaf"
 #: app/templates/request-common-enter-name.html:18
 #: app/templates/request-common-enter-name.html:23
 msgid "You have entered too many characters. Enter up to 35 characters"
-msgstr ""
+msgstr "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau"
 
 #: app/templates/request-common-enter-name.html:20
 msgid "Enter your first name"
@@ -980,7 +982,7 @@ msgstr ""
 #: app/templates/request-questionnaire-sent.html:44
 #, python-format
 msgid "A continuation questionnaire will be sent to %(name)s at %(address)s"
-msgstr ""
+msgstr "Caiff holiadur papur y cartref (parhad) ei anfon at %(name)s yn %(address)s"
 
 #: app/templates/request-questionnaire-sent.html:47
 #, python-format
@@ -1193,7 +1195,7 @@ msgstr "Rhowch god mynediad"
 
 #: app/templates/start.html:28
 msgid "Enter a valid access code"
-msgstr ""
+msgstr "Rhowch god mynediad dilys"
 
 #: app/templates/start.html:78
 msgid "Where to find your access code"

@@ -180,7 +180,6 @@ class TestWebChatHandlers(RHTestCase):
                                                   'Our contact centre is now closed',
                                                   mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
@@ -188,7 +187,6 @@ class TestWebChatHandlers(RHTestCase):
                                                   'Mae ein canolfan gyswllt bellach ar gau',
                                                   mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
@@ -420,14 +418,12 @@ class TestWebChatHandlers(RHTestCase):
         await self.should_respond_not_open_to_post(self.post_webchat_en, 'Our contact centre is now closed',
                                                    self.ons_logo_en, mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
         await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Mae ein canolfan gyswllt bellach ar gau',
                                                    self.ons_logo_cy, mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)

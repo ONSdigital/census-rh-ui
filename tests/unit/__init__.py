@@ -643,10 +643,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_forbidden_title_en = 'Sorry, there is a problem'
         self.content_start_forbidden_link_text_en = 'enter your 16-character access code'
-        # TODO: add welsh translation
-        self.content_start_forbidden_title_cy = 'Sorry, there is a problem'
-        # TODO: add welsh translation
-        self.content_start_forbidden_link_text_cy = 'enter your 16-character access code'
+        self.content_start_forbidden_title_cy = "Mae\\\'n ddrwg gennym, mae problem wedi codi"
+        self.content_start_forbidden_link_text_cy = "eich cod mynediad 16 nod"
 
         # End Start Journey
 
@@ -1125,7 +1123,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_access_code_enter_address_secondary_cy = \
             "I ofyn am god mynediad, bydd angen eich cyfeiriad arnom"
         self.content_request_individual_code_enter_address_secondary_cy = \
-            'To request an individual access code, we need your address'
+            "I ofyn am god mynediad unigol, bydd angen eich cyfeiriad arnom"
 
         self.content_request_code_select_how_to_receive_individual_response_question_en = \
             'Need to answer separately from your household?'
@@ -2233,24 +2231,21 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy = \
             'Caiff holiadur papur i unigolion ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe ' \
             'yn Halls Of Residence, Cumbria College Of Art &amp; Design'
-        # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_large_print_ce_cy = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington yn Halls Of Residence, ' \
             'Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_individual_title_large_print_ce_cy = \
             "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington yn " \
             "Halls Of Residence, Cumbria College Of Art &amp; Design"
-        # TODO: add welsh translation
         self.content_request_questionnaire_sent_title_lp_ce_room_cy = \
-            "A large-print household paper questionnaire will be sent to Bob Bobbington, Room A8 at " \
+            "Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington, Room A8 yn " \
             "Halls Of Residence, Cumbria College Of Art &amp; Design"
         self.content_request_questionnaire_sent_indi_title_lp_ce_room_cy = \
             "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington, Room A8 yn " \
             "Halls Of Residence, Cumbria College Of Art &amp; Design"
-        # TODO: add welsh translation
         self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_cy = \
             "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
 
@@ -2430,9 +2425,8 @@ class RHTestCase(AioHTTPTestCase):
             'This should arrive soon for you to complete your census'
         self.content_request_continuation_questionnaire_sent_post_page_title_cy = \
             '<title>Caiff holiadur y cartref (parhad) ei anfon - Cyfrifiad 2021</title>'
-        # TODO: add welsh translation
         self.content_request_continuation_questionnaire_sent_post_title_cy = \
-            'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
+            "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
         # TODO Add Welsh Translation
         self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
             'This should arrive soon for you to complete your census'
