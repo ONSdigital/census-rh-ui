@@ -22,12 +22,10 @@
     }
 } %}
 
-{%- if 'uac' in field_messages_dict -%}
-    {%- set error_uac = {
-                    'id': 'uac',
-                    'text': _('Enter an access code')
-                }
-    -%}
+{%- if 'uac_empty' in field_messages_dict -%}
+    {%- set error_uac = {'id': 'uac_empty', 'text': _('Enter an access code')} -%}
+{%- elif 'uac_invalid' in field_messages_dict -%}
+    {%- set error_uac = {'id': 'uac_invalid', 'text': _('Enter a valid access code')} -%}
 {%- endif -%}
 
 {% if display_region == 'ni' %}
