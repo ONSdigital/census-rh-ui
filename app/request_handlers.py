@@ -116,7 +116,7 @@ class RequestIndividualForm(RequestCommon):
         request_type = 'paper-questionnaire'
         self.log_entry(request, display_region + '/request/paper-questionnaire/individual')
 
-        session = await get_existing_session(request, 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
         session['attributes']['individual'] = True
         session.changed()
 
@@ -153,7 +153,7 @@ class RequestCodeHousehold(RequestCommon):
         request_type = 'access-code'
         self.log_entry(request, display_region + '/request/access-code/household')
 
-        session = await get_existing_session(request, 'requests', 'access-code')
+        session = await get_existing_session(request, 'request', 'access-code')
         session['attributes']['individual'] = False
         session.changed()
 
@@ -189,7 +189,7 @@ class RequestHouseholdForm(RequestCommon):
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/request/paper-questionnaire/household')
 
-        session = await get_existing_session(request, 'requests', 'paper-questionnaire')
+        session = await get_existing_session(request, 'request', 'paper-questionnaire')
         session['attributes']['individual'] = False
         session.changed()
 
@@ -210,8 +210,8 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -314,8 +314,8 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes',  'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes',  'request', request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -337,8 +337,8 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -385,8 +385,8 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -425,8 +425,8 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
         try:
@@ -529,8 +529,8 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -547,8 +547,8 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -593,8 +593,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if request_type == 'access-code':
             if attributes['individual']:
@@ -662,8 +662,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
         try:
@@ -938,8 +938,8 @@ class RequestCodeSentByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-text')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -981,8 +981,8 @@ class RequestCodeSentByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-post')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -1062,8 +1062,8 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -1156,8 +1156,8 @@ class RequestQuestionnaireSent(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -1213,8 +1213,8 @@ class RequestContinuationSent(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         await invalidate(request)
 
@@ -1247,8 +1247,8 @@ class RequestLargePrintSentPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/paper-questionnaire/large-print-sent-post')
 
-        session = await get_existing_session(request, 'requests', request_type)
-        attributes = get_session_value(session, 'attributes', 'requests', request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
