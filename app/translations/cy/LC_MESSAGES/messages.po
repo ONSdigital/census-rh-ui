@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-28 16:46+0000\n"
+"POT-Creation-Date: 2021-01-29 10:34+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -210,10 +210,6 @@ msgstr "<p>I anfon holiadur papur y cyfrifiad, bydd angen eich cyfeiriad arnom</
 msgid "<p>To send a continuation questionnaire, we need your address</p>"
 msgstr "<p>I anfon holiadur cartref (parhad), bydd angen eich cyfeiriad arnom</p>"
 
-#: app/templates/common-enter-address.html:37
-msgid "<p>We need to know the address for which you are answering</p>"
-msgstr ""
-
 #: app/templates/common-enter-address.html:58
 msgid "UK postcode"
 msgstr "Cod post yn y Deyrnas Unedig"
@@ -233,8 +229,9 @@ msgid ""
 "If you live somewhere that is mobile, such as a canal boat or motorhome, "
 "%(open)scontact us to request a continuation questionnaire%(close)s."
 msgstr ""
-"Os ydych chi'n byw mewn cartref symudol, fel cwch camlas neu gartref modur, "
-"%(open)scysylltwch â ni i ofyn am holiadur cartref (parhad)%(close)s."
+"Os ydych chi'n byw mewn cartref symudol, fel cwch camlas neu gartref "
+"modur, %(open)scysylltwch â ni i ofyn am holiadur cartref "
+"(parhad)%(close)s."
 
 #: app/templates/common-enter-address.html:82
 #, python-format
@@ -394,7 +391,9 @@ msgstr "Mae'n ddrwg gennym, mae problem wedi codi"
 msgid ""
 "To access this page you need to %(open)senter your 16-character access "
 "code%(close)s."
-msgstr "I fynd i'r dudalen hon, bydd angen i chi roi %(open)seich cod mynediad 16 nod%(close)s."
+msgstr ""
+"I fynd i'r dudalen hon, bydd angen i chi roi %(open)seich cod mynediad 16"
+" nod%(close)s."
 
 #: app/templates/error.html:15
 msgid "Sorry, something went wrong"
@@ -550,7 +549,7 @@ msgstr ""
 
 #: app/templates/request-code-select-how-to-receive.html:27
 msgid "We can only send access codes to the registered address"
-msgstr ""
+msgstr "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
 
 #: app/templates/request-code-select-how-to-receive.html:31
 msgid ""
@@ -982,7 +981,9 @@ msgstr ""
 #: app/templates/request-questionnaire-sent.html:44
 #, python-format
 msgid "A continuation questionnaire will be sent to %(name)s at %(address)s"
-msgstr "Caiff holiadur papur y cartref (parhad) ei anfon at %(name)s yn %(address)s"
+msgstr ""
+"Caiff holiadur papur y cartref (parhad) ei anfon at %(name)s yn "
+"%(address)s"
 
 #: app/templates/request-questionnaire-sent.html:47
 #, python-format

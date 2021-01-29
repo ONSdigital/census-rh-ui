@@ -1151,9 +1151,8 @@ class RHTestCase(AioHTTPTestCase):
         # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_individual_cy = \
             'An unbranded envelope can be addressed to you at the registered household address'
-        # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
-            "We can only send access codes to the registered address"
+            "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
         # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
             'An unbranded envelope can be addressed to you at the registered address'

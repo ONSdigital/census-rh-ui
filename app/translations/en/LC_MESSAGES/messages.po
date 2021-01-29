@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-28 16:46+0000\n"
+"POT-Creation-Date: 2021-01-29 10:34+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -193,10 +193,6 @@ msgstr ""
 
 #: app/templates/common-enter-address.html:35
 msgid "<p>To send a continuation questionnaire, we need your address</p>"
-msgstr ""
-
-#: app/templates/common-enter-address.html:37
-msgid "<p>We need to know the address for which you are answering</p>"
 msgstr ""
 
 #: app/templates/common-enter-address.html:58
@@ -1479,5 +1475,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Your address has been linked to your code"
+#~ msgstr ""
+
+#~ msgid "<p>We need to know the address for which you are answering</p>"
 #~ msgstr ""
 
