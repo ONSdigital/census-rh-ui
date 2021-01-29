@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-01-29 10:34+0000\n"
+"POT-Creation-Date: 2021-01-29 17:54+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -545,7 +545,7 @@ msgstr "Dechrau"
 
 #: app/templates/request-code-select-how-to-receive.html:25
 msgid "An unbranded envelope can be addressed to you at the registered address"
-msgstr ""
+msgstr "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
 #: app/templates/request-code-select-how-to-receive.html:27
 msgid "We can only send access codes to the registered address"
@@ -650,6 +650,8 @@ msgid ""
 "The text message with a new manager access code should arrive soon for "
 "you to start the census"
 msgstr ""
+"Dylai’r neges destun yn cynnwys cod mynediad rheolwr newydd gyrraedd yn "
+"fuan er mwyn i chi ddechrau’r cyfrifiad"
 
 #: app/templates/request-code-sent-by-text.html:30
 msgid ""
@@ -698,7 +700,7 @@ msgstr "Ydw, anfonwch y cod mynediad drwy'r post"
 
 #: app/templates/request-common-confirm-send-by-post.html:56
 msgid "No, send it by text message"
-msgstr ""
+msgstr "Nac ydw, anfonwch y cod mynediad drwy neges destun"
 
 #: app/templates/request-common-confirm-send-by-post.html:66
 msgid "Do you want to send an individual paper questionnaire to this address?"
@@ -894,7 +896,7 @@ msgid ""
 "All households should complete the census on <strong>Sunday 21 March "
 "2021</strong> or as soon as possible after."
 msgstr ""
-"Dylai pob cartref gwblhau'r cyfrifiad ddydd <strong>Sul 21 Mawrth "
+"Dylai pob cartref gwblhau'r cyfrifiad ddydd <strong>ddydd Sul 21 Mawrth "
 "2021</strong>, neu cyn gynted â phosibl ar ôl y dyddiad hwnnw."
 
 #: app/templates/request-questionnaire-household.html:25
@@ -1129,6 +1131,8 @@ msgid ""
 "You will need to %(open)senter your 16-character access code%(close)s "
 "again to access your census."
 msgstr ""
+"Bydd angen i chi roi %(open)seich cod mynediad 16 nod%(close)s eto i fynd"
+" at eich cyfrifiad."
 
 #: app/templates/start-too-many-requests.html:50
 msgid "Sorry, there was a problem starting your census"
@@ -1625,3 +1629,4 @@ msgstr ""
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
+

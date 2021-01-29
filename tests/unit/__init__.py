@@ -638,8 +638,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_timeout_secondary_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_start_timeout_restart_en = 'enter your 16-character access code'
-        # TODO: add welsh translation
-        self.content_start_timeout_restart_cy = 'enter your 16-character access code'
+        self.content_start_timeout_restart_cy = 'eich cod mynediad 16 node'
 
         self.content_start_forbidden_title_en = 'Sorry, there is a problem'
         self.content_start_forbidden_link_text_en = 'enter your 16-character access code'
@@ -1153,9 +1152,8 @@ class RHTestCase(AioHTTPTestCase):
             'An unbranded envelope can be addressed to you at the registered household address'
         self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
             "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
-        # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
-            'An unbranded envelope can be addressed to you at the registered address'
+            "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
         self.content_request_code_select_how_to_receive_household_page_title_en = \
             '<title>Select how to receive household access code - Census 2021</title>'
@@ -1270,7 +1268,8 @@ class RHTestCase(AioHTTPTestCase):
             "Dylai\\xe2\\x80\\x99r neges destun yn cynnwys cod mynediad unigol gyrraedd yn fuan er mwyn " \
             "i chi ddechrau eich cyfrifiad"
         self.content_request_code_sent_by_text_secondary_manager_cy = \
-            'The text message with a new manager access code should arrive soon for you to start the census'
+            "Dylai\\xe2\\x80\\x99r neges destun yn cynnwys cod mynediad rheolwr newydd gyrraedd yn " \
+            "fuan er mwyn i chi ddechrau\\xe2\\x80\\x99r cyfrifiad"
         self.content_request_code_sent_by_text_secondary_household_cy = \
             "Dylai\\xe2\\x80\\x99r neges destun yn cynnwys cod mynediad newydd ar gyfer y cartref gyrraedd " \
             "yn fuan er mwyn i chi ddechrau eich cyfrifiad"
@@ -1373,8 +1372,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_individual_message_cy = \
             "Bydd eich holiadur papur i unigolion yn cyrraedd mewn amlen blaen wen"
         self.content_request_code_confirm_send_by_post_option_yes_cy = "Ydw, anfonwch y cod mynediad drwy\\\'r post"
-        # TODO Add Welsh Translation
-        self.content_request_code_confirm_send_by_post_option_no_cy = 'No, send it by text message'
+        self.content_request_code_confirm_send_by_post_option_no_cy = \
+            "Nac ydw, anfonwch y cod mynediad drwy neges destun"
 
         self.content_request_code_sent_by_post_page_title_household_en = \
             '<title>Household access code will be sent by post - Census 2021</title>'
@@ -1523,8 +1522,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_link_address_enter_address_question_title_cy = 'Beth yw eich cod post?'
 
         self.content_link_address_timeout_error_en = 'enter your 16-character access code'
-        # TODO: add welsh translation
-        self.content_link_address_timeout_error_cy = 'enter your 16-character access code'
+        self.content_link_address_timeout_error_cy = 'eich cod mynediad 16 nod'
 
         # Start Change Address
 
