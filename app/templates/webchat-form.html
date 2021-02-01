@@ -26,7 +26,7 @@
     {%- set screen_name = field_messages_dict['error_screen_name'] -%}
     {%- for fields in field_messages_dict['error_screen_name'] -%}
 
-            {%- set country = fields['country'] -%}
+            {%- set form_value_country = fields.country -%}
 
     {%- endfor -%}
 {%- endif -%}
@@ -47,7 +47,15 @@
 
 Field dict{{field_messages_dict}}<br>
 Screen Name {{screen_name}}<br>
-Message {{country}}
+
+{%- if 'error_screen_name' in field_messages_dict -%}
+    {%- set screen_name = field_messages_dict['error_screen_name'] -%}
+    {%- for fields in field_messages_dict['error_screen_name'] -%}
+
+            {{ fields.country }}
+
+    {%- endfor -%}
+{%- endif -%}
 
     {% if webchat_status == 'closed' %}
 
