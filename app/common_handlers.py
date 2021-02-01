@@ -11,7 +11,7 @@ from . import (ADDRESS_SELECT_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .security import check_permission
+from .security import get_permitted_session
 from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
 from .session import get_existing_session, get_session_value
 
@@ -252,7 +252,7 @@ class CommonEnterAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_session(request)
 
@@ -301,7 +301,7 @@ class CommonEnterAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
@@ -355,7 +355,7 @@ class CommonSelectAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
@@ -371,7 +371,7 @@ class CommonSelectAddress(CommonCommon):
             locale = 'en'
 
         attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
-        postcode = get_session_value(attributes, 'postcode', user_journey, sub_user_journey)
+        postcode = attributes['postcode']
 
         address_content = await AddressIndex.get_postcode_return(request, postcode, display_region)
         address_content['page_title'] = page_title
@@ -393,7 +393,7 @@ class CommonSelectAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
@@ -453,7 +453,7 @@ class CommonConfirmAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
@@ -469,7 +469,7 @@ class CommonConfirmAddress(CommonCommon):
             locale = 'en'
 
         attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
-        uprn = get_session_value(attributes, 'uprn', user_journey, sub_user_journey)
+        uprn = attributes['uprn']
 
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
@@ -516,7 +516,7 @@ class CommonConfirmAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
         if user_journey == 'start':
-            session = await check_permission(request)
+            session = await get_permitted_session(request)
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
