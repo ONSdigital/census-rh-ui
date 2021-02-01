@@ -83,7 +83,9 @@ class WebChat(View):
             if display_region == 'cy':
                 flash(request, WEBCHAT_MISSING_NAME_MSG_CY)
             else:
-                flash(request, WEBCHAT_MISSING_NAME_MSG)
+                flash(request, {'text': 'Enter your name', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
+                                'field': 'error_screen_name', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             form_valid = False
 
         if not (data.get('country')):
@@ -122,7 +124,7 @@ class WebChat(WebChat):
         else:
             page_title = 'Web chat'
             if request.get('flash'):
-                page_title = View.page_title_error_prefix_cy + page_title
+                page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
         self.log_entry(request, display_region + '/web-chat')
         if WebChat.check_open():
