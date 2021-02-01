@@ -68,7 +68,6 @@ def create_error_middleware(overrides):
             return await key_error(request, error)
         except ClientResponseError:
             return await response_error(request)
-        # TODO fallthrough error here
 
     return middleware_handler
 
@@ -156,9 +155,42 @@ async def session_timeout(request, user_journey: str, sub_user_journey: str):
 
 def setup(app):
     overrides = {
-        500: response_error,
-        503: response_error,
-        404: not_found_error,
+        400: response_error,  # HTTPBadRequest
+        401: response_error,  # HTTPUnauthorized
+        402: response_error,  # HTTPPaymentRequired
+        403: response_error,  # HTTPForbidden
+        404: not_found_error,  # HTTPNotFound
+        405: response_error,  # HTTPMethodNotAllowed
+        406: response_error,  # HTTPNotAcceptable
+        407: response_error,  # HTTPProxyAuthenticationRequired
+        408: response_error,  # HTTPRequestTimeout
+        409: response_error,  # HTTPConflict
+        410: response_error,  # HTTPGone
+        411: response_error,  # HTTPLengthRequired
+        412: response_error,  # HTTPPreconditionFailed
+        413: response_error,  # HTTPRequestEntityTooLarge
+        414: response_error,  # HTTPRequestURITooLong
+        415: response_error,  # HTTPUnsupportedMediaType
+        416: response_error,  # HTTPRequestRangeNotSatisfiable
+        417: response_error,  # HTTPExpectationFailed
+        421: response_error,  # HTTPMisdirectedRequest
+        422: response_error,  # HTTPUnprocessableEntity
+        424: response_error,  # HTTPFailedDependency
+        426: response_error,  # HTTPUpgradeRequired
+        428: response_error,  # HTTPPreconditionRequired
+        429: response_error,  # HTTPTooManyRequests
+        431: response_error,  # HTTPRequestHeaderFieldsTooLarge
+        451: response_error,  # HTTPUnavailableForLegalReasons
+        500: response_error,  # HTTPInternalServerError
+        501: response_error,  # HTTPNotImplemented
+        502: response_error,  # HTTPBadGateway
+        503: response_error,  # HTTPServiceUnavailable
+        504: response_error,  # HTTPGatewayTimeout
+        505: response_error,  # HTTPVersionNotSupported
+        506: response_error,  # HTTPVariantAlsoNegotiates
+        507: response_error,  # HTTPInsufficientStorage
+        510: response_error,  # HTTPNotExtended
+        511: response_error,  # HTTPNetworkAuthenticationRequired
     }
     error_middleware = create_error_middleware(overrides)
     app.middlewares.append(error_middleware)
