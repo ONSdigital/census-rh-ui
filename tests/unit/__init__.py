@@ -1117,6 +1117,15 @@ class RHTestCase(AioHTTPTestCase):
             'action[save_continue]': '',
         }
 
+        self.content_common_enter_name_check_first = \
+            'name_first_name"\\n            value="Bob"'
+        self.content_common_enter_name_check_last = \
+            'name_last_name"\\n            value="Bobbington"'
+        self.content_common_enter_name_check_long_first = \
+            'name_first_name"\\n            value="Robert Albert Everest Reginald Bartholomew"'
+        self.content_common_enter_name_check_long_last = \
+            'name_last_name"\\n            value="Bobbington-Browning Fortesque-Smythe"'
+
         self.request_common_confirm_send_by_post_data_yes = {
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''
         }

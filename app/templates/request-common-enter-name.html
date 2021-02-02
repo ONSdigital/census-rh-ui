@@ -42,6 +42,36 @@
         'description': question_description
     }) %}
 
+{%- if ('error_last_name' in field_messages_dict) or ('error_last_name_len' in field_messages_dict) -%}
+    {%- if 'error_last_name_len' in field_messages_dict -%}
+        {%- set error_dict = field_messages_dict['error_last_name_len'] -%}
+    {%- else -%}
+        {%- set error_dict = field_messages_dict['error_last_name'] -%}
+    {%- endif -%}
+    {%- for fields in error_dict -%}
+
+        {{
+            onsInput({
+                'id': 'name_first_name',
+                'label': {
+                    'text': _('First name')
+                },
+                'value': fields.value_first_name,
+                'name': 'name_first_name',
+                'error': error_first_name,
+                'charCheckLimit': {
+                    'limit': 35,
+                    'charCountOverLimitSingular': _('{x} character too many'),
+                    'charCountOverLimitPlural': _('{x} characters too many'),
+                    'charCountSingular': _('You have {x} character remaining'),
+                    'charCountPlural': _('You have {x} characters remaining')
+                }
+            })
+        }}
+
+    {%- endfor -%}
+{%- else -%}
+
         {{
             onsInput({
                 'id': 'name_first_name',
@@ -61,6 +91,38 @@
             })
         }}
 
+{%- endif -%}
+
+{%- if ('error_first_name' in field_messages_dict) or ('error_first_name_len' in field_messages_dict) -%}
+    {%- if 'error_first_name_len' in field_messages_dict -%}
+        {%- set error_dict = field_messages_dict['error_first_name_len'] -%}
+    {%- else -%}
+        {%- set error_dict = field_messages_dict['error_first_name'] -%}
+    {%- endif -%}
+    {%- for fields in error_dict -%}
+
+        {{
+            onsInput({
+                'id': 'name_last_name',
+                'label': {
+                    'text': _('Last name')
+                },
+                'value': fields.value_last_name,
+                'name': 'name_last_name',
+                'error': error_last_name,
+                'charCheckLimit': {
+                    'limit': 35,
+                    'charCountOverLimitSingular': _('{x} character too many'),
+                    'charCountOverLimitPlural': _('{x} characters too many'),
+                    'charCountSingular': _('You have {x} character remaining'),
+                    'charCountPlural': _('You have {x} characters remaining')
+                }
+            })
+        }}
+
+    {%- endfor -%}
+{%- else -%}
+
         {{
             onsInput({
                 'id': 'name_last_name',
@@ -79,6 +141,11 @@
                 }
             })
         }}
+
+{%- endif -%}
+
+
+
 
     {% endcall %}
 
