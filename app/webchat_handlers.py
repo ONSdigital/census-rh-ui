@@ -6,12 +6,6 @@ from datetime import datetime, date
 from structlog import get_logger
 from pytz import timezone, utc
 
-from . import (WEBCHAT_MISSING_NAME_MSG,
-               WEBCHAT_MISSING_COUNTRY_MSG,
-               WEBCHAT_MISSING_QUERY_MSG,
-               WEBCHAT_MISSING_NAME_MSG_CY,
-               WEBCHAT_MISSING_COUNTRY_MSG_CY,
-               WEBCHAT_MISSING_QUERY_MSG_CY)
 from .flash import flash
 from .utils import View
 
@@ -81,7 +75,9 @@ class WebChat(View):
 
         if not data.get('screen_name'):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_NAME_MSG_CY)
+                flash(request, {'text': 'Nodwch eich enw', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
+                                'field': 'error_screen_name', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             else:
                 flash(request, {'text': 'Enter your name', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
                                 'field': 'error_screen_name', 'screen_name': data.get('screen_name'),
@@ -90,22 +86,25 @@ class WebChat(View):
 
         if not (data.get('country')):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_COUNTRY_MSG_CY)
+                flash(request, {'text': 'Dewiswch eich gwlad', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
+                                'field': 'error_country', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             else:
-                flash(request, WEBCHAT_MISSING_COUNTRY_MSG)
+                flash(request, {'text': 'Select your country', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
+                                'field': 'error_country', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             form_valid = False
 
         if not (data.get('query')):
             if display_region == 'cy':
-                flash(request, WEBCHAT_MISSING_QUERY_MSG_CY)
+                flash(request, {'text': 'Pa fath o ymholiad sydd gennych chi?', 'clickable': True, 'level': 'ERROR',
+                                'type': 'BAD_CODE', 'field': 'error_query', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             else:
-                flash(request, WEBCHAT_MISSING_QUERY_MSG)
+                flash(request, {'text': 'What type of query do you have?', 'clickable': True, 'level': 'ERROR',
+                                'type': 'BAD_CODE', 'field': 'error_query', 'screen_name': data.get('screen_name'),
+                                'country': data.get('country'), 'query': data.get('query')})
             form_valid = False
-
-        if not form_valid:
-            flash(request, {'level': 'INFO', 'type': 'field_values', 'field': 'all',
-                            'screen_name': data.get('screen_name'),
-                            'country': data.get('country'), 'query': data.get('query')})
 
         return form_valid
 
