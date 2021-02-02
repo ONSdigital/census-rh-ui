@@ -12,8 +12,10 @@ from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import InvalidEqPayLoad, SessionTimeout
-from .security import remember, check_permission, forget, get_sha256_hash, invalidate
+
+from .exceptions import InvalidEqPayLoad
+from .security import remember, get_permitted_session, forget, get_sha256_hash, invalidate
+from .session import get_session_value
 
 from .utils import View, RHService, FlashMessage
 
@@ -279,9 +281,8 @@ class StartConfirmAddress(StartCommon):
         display_region = request.match_info['display_region']
         self.setup_request(request)
         self.log_entry(request, display_region + '/start/confirm-address')
-        await check_permission(request)
 
-        session = await get_session(request)
+        session = await get_permitted_session(request)
 
         if display_region == 'cy':
             page_title = "Cadarnhau cyfeiriad"
@@ -294,10 +295,7 @@ class StartConfirmAddress(StartCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        try:
-            attributes = session['attributes']
-        except KeyError:
-            raise SessionTimeout('start')
+        attributes = get_session_value(session, 'attributes', 'start')
 
         display_region_warning = False
         case_region = session['case']['region']
@@ -327,7 +325,7 @@ class StartConfirmAddress(StartCommon):
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
         self.setup_request(request)
-        await check_permission(request)
+        session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/confirm-address')
 
@@ -337,13 +335,8 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-            attributes['page_title'] = 'Is this address correct?'
-        except KeyError:
-            raise SessionTimeout('start')
+        attributes = get_session_value(session, 'attributes', 'start')
+        case = get_session_value(session, 'case', 'start')
 
         try:
             address_confirmation = data['address-check-answer']
@@ -402,7 +395,7 @@ class StartNILanguageOptions(StartCommon):
         """
         self.setup_request(request)
         self.log_entry(request, 'ni/start/language-options')
-        await check_permission(request)
+        await get_permitted_session(request)
 
         page_title = 'Confirm English or other language'
         if request.get('flash'):
@@ -416,15 +409,11 @@ class StartNILanguageOptions(StartCommon):
     async def post(self, request):
         self.setup_request(request)
         self.log_entry(request, 'ni/start/language-options')
-        await check_permission(request)
+        session = await get_permitted_session(request)
         data = await request.post()
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-        except KeyError:
-            raise SessionTimeout('start')
+        attributes = get_session_value(session, 'attributes', 'start')
+        case = get_session_value(session, 'case', 'start')
 
         try:
             language_option = data['language-option']
@@ -464,7 +453,7 @@ class StartNISelectLanguage(StartCommon):
         """
         self.setup_request(request)
         self.log_entry(request, 'ni/start/select-language')
-        await check_permission(request)
+        await get_permitted_session(request)
 
         page_title = 'Choose language'
         if request.get('flash'):
@@ -478,16 +467,11 @@ class StartNISelectLanguage(StartCommon):
     async def post(self, request):
         self.setup_request(request)
         self.log_entry(request, 'ni/start/select-language')
-        await check_permission(request)
+        session = await get_permitted_session(request)
         data = await request.post()
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-
-        except KeyError:
-            raise SessionTimeout('start')
+        attributes = get_session_value(session, 'attributes', 'start')
+        case = get_session_value(session, 'case', 'start')
 
         try:
             language_option = data['language-option']
@@ -526,7 +510,7 @@ class StartTransientEnterTownName(StartCommon):
     @aiohttp_jinja2.template('start-transient-enter-town.html')
     async def get(self, request):
         self.setup_request(request)
-        await check_permission(request)
+        await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -553,14 +537,12 @@ class StartTransientEnterTownName(StartCommon):
     @aiohttp_jinja2.template('start-transient-enter-town.html')
     async def post(self, request):
         self.setup_request(request)
-        await check_permission(request)
+        session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
         self.log_entry(request, display_region + '/start/transient/enter-town-name')
 
         data = await request.post()
-
-        session = await get_session(request)
 
         try:
             town_name = data['form-enter-town-name']
@@ -593,7 +575,7 @@ class StartTransientAccommodationType(StartCommon):
     @aiohttp_jinja2.template('start-transient-accommodation-type.html')
     async def get(self, request):
         self.setup_request(request)
-        await check_permission(request)
+        await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -619,7 +601,7 @@ class StartTransientAccommodationType(StartCommon):
     @aiohttp_jinja2.template('start-transient-accommodation-type.html')
     async def post(self, request):
         self.setup_request(request)
-        await check_permission(request)
+        session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
@@ -631,16 +613,12 @@ class StartTransientAccommodationType(StartCommon):
 
         data = await request.post()
 
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-            case = session['case']
-        except KeyError:
-            raise SessionTimeout('start')
+        attributes = get_session_value(session, 'attributes', 'start')
+        case = get_session_value(session, 'case', 'start')
 
         try:
             accommodation_type = data['accommodation-type']
-            session['attributes']['transientAccommodationType'] = accommodation_type
+            attributes['transientAccommodationType'] = accommodation_type
             session.changed()
 
             if case['region'] == 'N':

@@ -11,9 +11,9 @@ from . import (ADDRESS_SELECT_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import SessionTimeout
-from .security import check_permission
+from .security import get_permitted_session
 from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
+from .session import get_existing_session, get_session_value
 
 logger = get_logger('respondent-home')
 common_routes = RouteTableDef()
@@ -23,23 +23,6 @@ common_routes = RouteTableDef()
 
 
 class CommonCommon(View):
-    @staticmethod
-    def common_check_session(request, user_journey, sub_user_journey):
-        if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'],
-                        timed_out_journey=user_journey, timed_out_sub_journey=sub_user_journey)
-            raise SessionTimeout(user_journey, sub_user_journey)
-
-    async def common_check_attributes(self, request, user_journey, sub_user_journey):
-        self.common_check_session(request, user_journey, sub_user_journey)
-        session = await get_session(request)
-
-        if session['attributes']:
-            attributes = session['attributes']
-        else:
-            raise SessionTimeout(user_journey, sub_user_journey)
-
-        return attributes
 
     @staticmethod
     def request_confirm_address_routing(request, user_journey, sub_user_journey, display_region,
@@ -266,9 +249,9 @@ class CommonEnterAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-address')
 
         if user_journey == 'start':
-            await check_permission(request)
-
-        session = await get_session(request)
+            session = await get_permitted_session(request)
+        else:
+            session = await get_session(request)
 
         individual = False
 
@@ -283,7 +266,6 @@ class CommonEnterAddress(CommonCommon):
                 individual = False
                 attributes = {'individual': False}
                 session['attributes'] = attributes
-                session.changed()
 
         if display_region == 'cy':
             page_title = 'Nodi cyfeiriad'
@@ -316,17 +298,17 @@ class CommonEnterAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/enter-address')
 
         if user_journey == 'start':
-            await check_permission(request)
+            session = await get_permitted_session(request)
+        else:
+            session = await get_existing_session(request, user_journey, sub_user_journey)
 
         data = await request.post()
-
-        session = await get_session(request)
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], display_region)
             logger.info('valid postcode', client_ip=request['client_ip'],
                         postcode_entered=postcode, region_of_site=display_region)
-            
+
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'])
             if exc.message_type == 'empty':
@@ -370,7 +352,9 @@ class CommonSelectAddress(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
 
         if user_journey == 'start':
-            await check_permission(request)
+            session = await get_permitted_session(request)
+        else:
+            session = await get_existing_session(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Dewis cyfeiriad'
@@ -383,12 +367,8 @@ class CommonSelectAddress(CommonCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
-
-        try:
-            postcode = attributes['postcode']
-        except KeyError:
-            raise SessionTimeout(user_journey, sub_user_journey)
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        postcode = attributes['postcode']
 
         address_content = await AddressIndex.get_postcode_return(request, postcode, display_region)
         address_content['page_title'] = page_title
@@ -407,10 +387,14 @@ class CommonSelectAddress(CommonCommon):
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
 
-        if user_journey == 'start':
-            await check_permission(request)
-
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/select-address')
+
+        if user_journey == 'start':
+            session = await get_permitted_session(request)
+        else:
+            session = await get_existing_session(request, user_journey, sub_user_journey)
+
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -437,8 +421,7 @@ class CommonSelectAddress(CommonCommon):
                     user_journey=user_journey,
                     sub_user_journey=sub_user_journey))
         else:
-            session = await get_session(request)
-            session['attributes']['uprn'] = selected_uprn
+            attributes['uprn'] = selected_uprn
             session.changed()
             logger.info('session updated', client_ip=request['client_ip'],
                         uprn_selected=selected_uprn, region_of_site=display_region)
@@ -464,10 +447,12 @@ class CommonConfirmAddress(CommonCommon):
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
 
-        if user_journey == 'start':
-            await check_permission(request)
+        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
-        session = await get_session(request)
+        if user_journey == 'start':
+            session = await get_permitted_session(request)
+        else:
+            session = await get_existing_session(request, user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Cadarnhau cyfeiriad'
@@ -480,28 +465,26 @@ class CommonConfirmAddress(CommonCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
-
-        attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
-
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
         uprn = attributes['uprn']
+
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
         try:
-            room_number = session['attributes']['roomNumber']
+            room_number = attributes['roomNumber']
         except KeyError:
             room_number = None
 
-        session['attributes']['addressLine1'] = uprn_ai_return['response']['address']['addressLine1']
-        session['attributes']['addressLine2'] = uprn_ai_return['response']['address']['addressLine2']
-        session['attributes']['addressLine3'] = uprn_ai_return['response']['address']['addressLine3']
-        session['attributes']['townName'] = uprn_ai_return['response']['address']['townName']
-        session['attributes']['postcode'] = uprn_ai_return['response']['address']['postcode']
-        session['attributes']['uprn'] = uprn_ai_return['response']['address']['uprn']
-        session['attributes']['countryCode'] = uprn_ai_return['response']['address']['countryCode']
-        session['attributes']['censusEstabType'] = uprn_ai_return['response']['address']['censusEstabType']
-        session['attributes']['censusAddressType'] = uprn_ai_return['response']['address']['censusAddressType']
-        session['attributes']['roomNumber'] = room_number
+        attributes['addressLine1'] = uprn_ai_return['response']['address']['addressLine1']
+        attributes['addressLine2'] = uprn_ai_return['response']['address']['addressLine2']
+        attributes['addressLine3'] = uprn_ai_return['response']['address']['addressLine3']
+        attributes['townName'] = uprn_ai_return['response']['address']['townName']
+        attributes['postcode'] = uprn_ai_return['response']['address']['postcode']
+        attributes['uprn'] = uprn_ai_return['response']['address']['uprn']
+        attributes['countryCode'] = uprn_ai_return['response']['address']['countryCode']
+        attributes['censusEstabType'] = uprn_ai_return['response']['address']['censusEstabType']
+        attributes['censusAddressType'] = uprn_ai_return['response']['address']['censusAddressType']
+        attributes['roomNumber'] = room_number
         session.changed()
 
         return {
@@ -511,13 +494,13 @@ class CommonConfirmAddress(CommonCommon):
             'sub_user_journey': sub_user_journey,
             'locale': locale,
             'page_url': View.gen_page_url(request),
-            'addressLine1': session['attributes']['addressLine1'],
-            'addressLine2': session['attributes']['addressLine2'],
-            'addressLine3': session['attributes']['addressLine3'],
-            'townName': session['attributes']['townName'],
-            'postcode': session['attributes']['postcode'],
-            'roomNumber': session['attributes']['roomNumber'],
-            'censusAddressType': session['attributes']['censusAddressType']
+            'addressLine1': attributes['addressLine1'],
+            'addressLine2': attributes['addressLine2'],
+            'addressLine3': attributes['addressLine3'],
+            'townName': attributes['townName'],
+            'postcode': attributes['postcode'],
+            'roomNumber': attributes['roomNumber'],
+            'censusAddressType': attributes['censusAddressType']
         }
 
     async def post(self, request):
@@ -529,7 +512,12 @@ class CommonConfirmAddress(CommonCommon):
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/confirm-address')
 
-        session = await get_session(request)
+        if user_journey == 'start':
+            session = await get_permitted_session(request)
+        else:
+            session = await get_existing_session(request, user_journey, sub_user_journey)
+
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -553,7 +541,7 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
-                census_address_type_value = session['attributes']['censusAddressType']
+                census_address_type_value = attributes['censusAddressType']
                 if census_address_type_value == 'NA':
                     logger.info('censusAddressType is NA', client_ip=request['client_ip'],
                                 user_selection=address_confirmation)
@@ -575,8 +563,8 @@ class CommonConfirmAddress(CommonCommon):
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             try:
-                country_code_value = session['attributes']['countryCode']
-                uprn = session['attributes']['uprn']
+                country_code_value = attributes['countryCode']
+                uprn = attributes['uprn']
                 if country_code_value == 'S':
                     logger.info('address is in Scotland', client_ip=request['client_ip'],
                                 country_code_found=country_code_value, uprn_value=uprn)
@@ -615,8 +603,7 @@ class CommonConfirmAddress(CommonCommon):
 
             if sub_user_journey == 'link-address' or sub_user_journey == 'change-address':
                 try:
-                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'],
-                                                                session['attributes'])
+                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'], attributes)
                     session['case'] = uprn_return
                     session.changed()
 
@@ -626,11 +613,8 @@ class CommonConfirmAddress(CommonCommon):
                         locale = 'cy'
                     else:
                         locale = 'en'
-                    try:
-                        attributes = session['attributes']
-                        case = session['case']
-                    except KeyError:
-                        raise SessionTimeout('start')
+
+                    case = get_session_value(session, 'case', user_journey, sub_user_journey)
 
                     if case['region'] == 'N':
                         raise HTTPFound(
@@ -666,41 +650,41 @@ class CommonConfirmAddress(CommonCommon):
 
             elif user_journey == 'request':
                 try:
-                    uprn_return = await RHService.get_case_by_uprn(request, session['attributes']['uprn'])
-                    session['attributes']['case_id'] = uprn_return['caseId']
-                    session['attributes']['region'] = uprn_return['region']
-                    session['attributes']['case_type'] = uprn_return['caseType']
-                    session['attributes']['address_level'] = uprn_return['addressLevel']
+                    uprn_return = await RHService.get_case_by_uprn(request, attributes['uprn'])
+                    attributes['case_id'] = uprn_return['caseId']
+                    attributes['region'] = uprn_return['region']
+                    attributes['case_type'] = uprn_return['caseType']
+                    attributes['address_level'] = uprn_return['addressLevel']
                     if uprn_return['caseType'] == 'CE' and uprn_return['addressLevel'] == 'U':
-                        session['attributes']['individual'] = True
+                        attributes['individual'] = True
                     session.changed()
 
                     await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
                                                                display_region,
                                                                uprn_return['caseType'],
                                                                uprn_return['addressLevel'],
-                                                               session['attributes']['individual'])
+                                                               attributes['individual'])
 
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'], unmatched_uprn=session['attributes']['uprn'])
+                                    client_ip=request['client_ip'], unmatched_uprn=attributes['uprn'])
                         logger.info('requesting new case', client_ip=request['client_ip'])
                         try:
-                            case_creation_return = await RHService.post_case_create(request, session['attributes'])
-                            session['attributes']['case_id'] = case_creation_return['caseId']
-                            session['attributes']['region'] = case_creation_return['region']
-                            session['attributes']['case_type'] = case_creation_return['caseType']
-                            session['attributes']['address_level'] = case_creation_return['addressLevel']
+                            case_creation_return = await RHService.post_case_create(request, attributes)
+                            attributes['case_id'] = case_creation_return['caseId']
+                            attributes['region'] = case_creation_return['region']
+                            attributes['case_type'] = case_creation_return['caseType']
+                            attributes['address_level'] = case_creation_return['addressLevel']
                             if case_creation_return['caseType'] == 'CE' and case_creation_return['addressLevel'] == 'U':
-                                session['attributes']['individual'] = True
+                                attributes['individual'] = True
                             session.changed()
 
                             await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
                                                                        display_region,
                                                                        case_creation_return['caseType'],
                                                                        case_creation_return['addressLevel'],
-                                                                       session['attributes']['individual'])
+                                                                       attributes['individual'])
 
                         except ClientResponseError as ex:
                             logger.warn('error requesting new case', client_ip=request['client_ip'])
@@ -743,8 +727,8 @@ class CommonCEMangerQuestion(CommonCommon):
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
-        session = await get_session(request)
-        await self.common_check_attributes(request, user_journey, sub_user_journey)
+        session = await get_existing_session(request, user_journey, sub_user_journey)
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Cadarnhau preswylydd neu reolwr'
@@ -764,11 +748,11 @@ class CommonCEMangerQuestion(CommonCommon):
             'locale': locale,
             'page_url': View.gen_page_url(request),
             'page_title': page_title,
-            'addressLine1': session['attributes']['addressLine1'],
-            'addressLine2': session['attributes']['addressLine2'],
-            'addressLine3': session['attributes']['addressLine3'],
-            'townName': session['attributes']['townName'],
-            'postcode': session['attributes']['postcode']
+            'addressLine1': attributes['addressLine1'],
+            'addressLine2': attributes['addressLine2'],
+            'addressLine3': attributes['addressLine3'],
+            'townName': attributes['townName'],
+            'postcode': attributes['postcode']
         }
 
     async def post(self, request):
@@ -779,8 +763,8 @@ class CommonCEMangerQuestion(CommonCommon):
 
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
-        session = await get_session(request)
-        await self.common_check_attributes(request, user_journey, sub_user_journey)
+        session = await get_existing_session(request, user_journey, sub_user_journey)
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -802,8 +786,8 @@ class CommonCEMangerQuestion(CommonCommon):
 
         if resident_or_manager == 'resident':
 
-            session['attributes']['address_level'] = 'U'
-            session['attributes']['individual'] = True
+            attributes['address_level'] = 'U'
+            attributes['individual'] = True
             session.changed()
 
             if sub_user_journey == 'paper-questionnaire':
@@ -817,7 +801,7 @@ class CommonCEMangerQuestion(CommonCommon):
 
         elif resident_or_manager == 'manager':
 
-            session['attributes']['individual'] = False
+            attributes['individual'] = False
             session.changed()
 
             if sub_user_journey == 'paper-questionnaire':
@@ -870,7 +854,8 @@ class CommonEnterRoomNumber(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey +
                        '/enter-flat-or-room-number')
 
-        session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
+        session = await get_existing_session(request, user_journey, sub_user_journey)
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Nodi rhif fflat neu ystafell'
@@ -883,11 +868,11 @@ class CommonEnterRoomNumber(CommonCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        if session_attributes['roomNumber']:
-            room_number = session_attributes['roomNumber']
+        if attributes['roomNumber']:
+            room_number = attributes['roomNumber']
         else:
             room_number = None
-        if session_attributes.get('first_name'):
+        if attributes.get('first_name'):
             previous_page = 'send-by-post'
         else:
             previous_page = 'confirm-address'
@@ -911,8 +896,8 @@ class CommonEnterRoomNumber(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey +
                        '/enter-flat-or-room-number')
 
-        session = await get_session(request)
-        session_attributes = await self.common_check_attributes(request, user_journey, sub_user_journey)
+        session = await get_existing_session(request, user_journey, sub_user_journey)
+        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -920,10 +905,10 @@ class CommonEnterRoomNumber(CommonCommon):
             room_number = data['form-enter-room-number']
             if len(room_number) > 10:
                 raise KeyError
-            session['attributes']['roomNumber'] = room_number
+            attributes['roomNumber'] = room_number
             session.changed()
             try:
-                if session_attributes['first_name']:
+                if attributes['first_name']:
                     raise HTTPFound(
                         request.app.router['RequestCommonConfirmSendByPost:get'].url_for(
                             display_region=display_region,

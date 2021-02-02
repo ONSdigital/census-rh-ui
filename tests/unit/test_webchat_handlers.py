@@ -33,20 +33,20 @@ class TestWebChatHandlers(RHTestCase):
     def test_check_open_census_saturday_open(self):
         self.should_be_open(2021, 3, 20, 8, 1)      # just after opening
         self.should_be_open(2021, 3, 20, 10, 30)    # mid morning
-        self.should_be_open(2021, 3, 20, 15, 59)    # before closing
+        self.should_be_open(2021, 3, 20, 19, 59)    # before closing
 
     def test_check_open_census_saturday_closed(self):
         self.should_be_closed(2021, 3, 20, 7, 59)   # just before opening
-        self.should_be_closed(2021, 3, 20, 16, 1)   # just after closing
+        self.should_be_closed(2021, 3, 20, 20, 1)   # just after closing
 
     def test_check_open_census_sunday_open(self):
         self.should_be_open(2021, 3, 21, 8, 1)      # just after opening
         self.should_be_open(2021, 3, 21, 10, 30)    # mid morning
-        self.should_be_open(2021, 3, 21, 15, 59)    # before closing
+        self.should_be_open(2021, 3, 21, 19, 59)    # before closing
 
     def test_check_open_census_sunday_closed(self):
         self.should_be_closed(2021, 3, 21, 7, 59)   # just before opening
-        self.should_be_closed(2021, 3, 21, 16, 1)   # just after closing
+        self.should_be_closed(2021, 3, 21, 20, 1)   # just after closing
 
     def test_check_open_weekday_open(self):
         self.should_be_open(2019, 6, 17, 9, 30)     # 2019 BST summer

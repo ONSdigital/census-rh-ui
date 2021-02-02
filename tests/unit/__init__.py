@@ -641,11 +641,26 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_timeout_restart_cy = 'eich cod mynediad 16 node'
 
         self.content_start_forbidden_title_en = 'Sorry, there is a problem'
-        self.content_start_forbidden_link_text_en = 'enter your 16-character access code'
+        self.content_start_timeout_forbidden_link_text_en = 'enter your 16-character access code'
         self.content_start_forbidden_title_cy = "Mae\\\'n ddrwg gennym, mae problem wedi codi"
-        self.content_start_forbidden_link_text_cy = "eich cod mynediad 16 nod"
+        self.content_start_timeout_forbidden_link_text_cy = "eich cod mynediad 16 nod"
 
         # End Start Journey
+
+        # Session Timeout
+
+        self.content_timeout_title_en = 'Your session has timed out due to inactivity'
+        self.content_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
+        self.content_timeout_secondary_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_secondary_cy = \
+            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
+        # Welsh translation for start but not yet request timeout page though identical text. Babel not run since change
+        self.content_request_timeout_secondary_cy = \
+            'To protect your information we have timed you out'
+        self.content_request_timeout_restart_en = 're-enter your postcode'
+        self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
+
+        # End Session Timeout
 
         self.get_start_en = self.app.router['Start:get'].url_for(display_region='en')
         self.get_start_adlocation_valid_en = self.app.router['Start:get'].url_for(display_region='en').with_query(
