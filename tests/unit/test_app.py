@@ -44,43 +44,43 @@ class TestCreateApp(AioHTTPTestCase):
             response = await self.client.request('GET', '/')
         self.assertEqual(response.headers['Strict-Transport-Security'],
                          'max-age=31536000 includeSubDomains')
-        self.assertIn("default-src 'self' https://cdn.census.gov.uk",
+        self.assertIn("default-src 'self' https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
-        self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.census.gov.uk",
+        self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.ons.gov.uk",
                       response.headers['Content-Security-Policy'])
         self.assertIn(
             f"script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval' "
-            f"https://cdn.census.gov.uk 'nonce-{nonce}'",
+            f"https://cdn.ons.gov.uk 'nonce-{nonce}'",
             response.headers['Content-Security-Policy'])
         self.assertIn(
-            "connect-src 'self' https://cdn.census.gov.uk",
+            "connect-src 'self' https://cdn.ons.gov.uk",
             response.headers['Content-Security-Policy'])
         self.assertIn(
             "frame-src https://www.googletagmanager.com https://www.timeforstorm.com",
             response.headers['Content-Security-Policy'])
         self.assertIn(
             "img-src 'self' data: https://www.google-analytics.com https://ssl.gstatic.com "
-            "https://www.gstatic.com https://cdn.census.gov.uk",
+            "https://www.gstatic.com https://cdn.ons.gov.uk",
             response.headers['Content-Security-Policy'])
         self.assertEqual(response.headers['X-XSS-Protection'], '1; mode=block')
         self.assertEqual(response.headers['X-Content-Type-Options'], 'nosniff')
-        self.assertIn("default-src 'self' https://cdn.census.gov.uk",
+        self.assertIn("default-src 'self' https://cdn.ons.gov.uk",
                       response.headers['X-Content-Security-Policy'])
-        self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.census.gov.uk",
+        self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.ons.gov.uk",
                       response.headers['X-Content-Security-Policy'])
         self.assertIn(
             f"script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval' "
-            f"https://cdn.census.gov.uk 'nonce-{nonce}'",
+            f"https://cdn.ons.gov.uk 'nonce-{nonce}'",
             response.headers['X-Content-Security-Policy'])
         self.assertIn(
-            "connect-src 'self' https://cdn.census.gov.uk",
+            "connect-src 'self' https://cdn.ons.gov.uk",
             response.headers['X-Content-Security-Policy'])
         self.assertIn(
             "frame-src https://www.googletagmanager.com https://www.timeforstorm.com",
             response.headers['X-Content-Security-Policy'])
         self.assertIn(
             "img-src 'self' data: https://www.google-analytics.com https://ssl.gstatic.com "
-            "https://www.gstatic.com https://cdn.census.gov.uk",
+            "https://www.gstatic.com https://cdn.ons.gov.uk",
             response.headers['X-Content-Security-Policy'])
         self.assertEqual(response.headers['Referrer-Policy'], 'strict-origin-when-cross-origin')
 
