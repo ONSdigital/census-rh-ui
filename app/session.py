@@ -2,9 +2,10 @@ import time
 
 from asyncio import get_event_loop
 from aioredis import create_pool, RedisError
-from aiohttp_session import session_middleware, Session
+from aiohttp_session import session_middleware, Session, get_session
 from aiohttp_session.redis_storage import RedisStorage
 from structlog import get_logger
+from .exceptions import SessionTimeout
 
 logger = get_logger('respondent-home')
 
@@ -60,3 +61,20 @@ async def make_redis_pool(host, port, poolMin, poolMax):
         return redis_pool
     except (OSError, RedisError):
         logger.error('failed to create redis connection')
+
+
+async def get_existing_session(request, user_journey, sub_user_journey=None) -> Session:
+    session = await get_session(request)
+    if not session.new:
+        return session
+    else:
+        logger.warn('session timed out', client_ip=request['client_ip'])
+        raise SessionTimeout(user_journey, sub_user_journey)
+
+
+def get_session_value(session, key, user_journey, sub_user_journey=None):
+    try:
+        return session[key]
+    except KeyError:
+        logger.info(f'Failed to extract session key {key}')
+        raise SessionTimeout(user_journey, sub_user_journey)
