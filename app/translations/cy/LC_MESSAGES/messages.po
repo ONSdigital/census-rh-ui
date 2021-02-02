@@ -347,7 +347,7 @@ msgstr "Ai preswylydd neu reolwr ydych chi yn y sefydliad hwn?"
 #: app/templates/common-select-address.html:20
 #, python-format
 msgid "<p class=\"u-fs-r--b\">%(total)s address found for postcode %(pcode)s</p>"
-msgstr ""
+msgstr "Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y cod post"
 
 #: app/templates/common-select-address.html:22
 #, python-format
@@ -555,7 +555,7 @@ msgstr "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad
 msgid ""
 "An unbranded envelope can be addressed to you at the registered household"
 " address"
-msgstr ""
+msgstr "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
 #: app/templates/request-code-select-how-to-receive.html:33
 msgid "We can only send access codes to the registered household address"
@@ -769,7 +769,7 @@ msgstr "Rhowch eich cyfenw"
 
 #: app/templates/request-common-enter-name.html:29
 msgid "<p>This is who the questionnaire will be addressed to</p>"
-msgstr ""
+msgstr "<p>Dyma at bwy y bydd yr holiadur wedi'i gyfeirio</p>"
 
 #: app/templates/request-common-enter-name.html:31
 msgid "<p>This is who the letter will be addressed to</p>"
@@ -814,13 +814,15 @@ msgid ""
 "questionnaires if there are more than 6 people in your household</p>"
 msgstr ""
 "<p>Mae hyn er mwyn gwneud yn siŵr ein bod yn anfon y nifer gywir o "
-"holiaduron cartref (parhad) os oes mwy na 5 unigolyn yn eich cartref</p>"
+"holiaduron cartref (parhad) os oes mwy na 6 unigolyn yn eich cartref</p>"
 
 #: app/templates/request-common-people-in-household.html:39
 msgid ""
 "<p>This is to make sure we send you the right number of continuation "
 "questionnaires if there are more than 5 people in your household</p>"
 msgstr ""
+"<p>Mae hyn er mwyn gwneud yn siŵr ein bod yn anfon y nifer gywir o "
+"holiaduron cartref (parhad) os oes mwy na 5 unigolyn yn eich cartref</p>"
 
 #: app/templates/request-common-people-in-household.html:42
 msgid ""
@@ -1136,15 +1138,15 @@ msgstr ""
 
 #: app/templates/start-too-many-requests.html:50
 msgid "Sorry, there was a problem starting your census"
-msgstr ""
+msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
 
 #: app/templates/start-too-many-requests.html:52
 msgid "We are working to fix the problem."
-msgstr ""
+msgstr "Rydym ni'n gweithio i ddatrys y broblem"
 
 #: app/templates/start-too-many-requests.html:54
 msgid "Please try again later."
-msgstr ""
+msgstr "Rhowch gynnig arall arni yn nes ymlaen"
 
 #: app/templates/start-transient-accommodation-type.html:25
 #: app/templates/start-transient-accommodation-type.html:27
@@ -1427,12 +1429,12 @@ msgstr "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
 
 #: app/templates/web-form-too-many-requests.html:50
 msgid "You have reached the maximum number web form submissions"
-msgstr ""
+msgstr "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
 
 #: app/templates/web-form-too-many-requests.html:52
 #, python-format
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
-msgstr ""
+msgstr "Os oes angen rhagor o help arnoch chi, %(open)scysylltwch â ni%(close)s"
 
 #: app/templates/web-form.html:25 app/templates/webchat-form.html:75
 msgid "England"
@@ -1477,7 +1479,7 @@ msgstr "Dewiswch opsiwn"
 
 #: app/templates/web-form.html:102
 msgid "Enter detail of your issue"
-msgstr ""
+msgstr "Rhowch fanylion eich problem"
 
 #: app/templates/web-form.html:106 app/templates/webchat-form.html:25
 #: app/templates/webchat-form.html:150
@@ -1486,11 +1488,11 @@ msgstr "Nodwch eich enw"
 
 #: app/templates/web-form.html:110
 msgid "Enter a valid email address"
-msgstr ""
+msgstr "Rhowch gyfeiriad e-bost dilys"
 
 #: app/templates/web-form.html:120
 msgid "Back"
-msgstr ""
+msgstr "Yn ôl"
 
 #: app/templates/web-form.html:133
 msgid "Web form"
@@ -1623,7 +1625,7 @@ msgstr "Mae problem gyda'ch ateb"
 #: app/templates/partials/messages.html:14
 #, python-format
 msgid "There are %(errorcount)s problems with this page"
-msgstr ""
+msgstr "Mae %(errorcount)s o broblemau gyda'r dudalen hon"
 
 #: app/templates/partials/messages.html:16
 #, python-format

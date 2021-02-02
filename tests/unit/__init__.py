@@ -531,9 +531,8 @@ class RHTestCase(AioHTTPTestCase):
             'You have reached the maximum number of paper questionnaires you can request online'
         self.content_common_429_error_continuation_questionnaire_title_en = \
             'You have reached the maximum number of continuation questionnaires you can request online'
-        # TODO: add welsh translation
         self.content_common_429_error_eq_launch_title_cy = \
-            'Sorry, there was a problem starting your census'
+            "Mae\\\'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
         self.content_common_429_error_uac_title_cy = \
             "Rydych chi wedi cyrraedd y nifer fwyaf o godau mynediad y gallwch ofyn amdanynt ar lein"
         self.content_common_429_error_paper_questionnaire_title_cy = \
@@ -654,9 +653,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_timeout_secondary_en = 'To protect your information we have timed you out'
         self.content_start_timeout_secondary_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        # Welsh translation for start but not yet request timeout page though identical text. Babel not run since change
         self.content_request_timeout_secondary_cy = \
-            'To protect your information we have timed you out'
+            'I ddiogelu eich gwybodaeth, rydyn ni wedi rhoi terfyn amser ar eich sesiwn'
         self.content_request_timeout_restart_en = 're-enter your postcode'
         self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
 
@@ -1162,9 +1160,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_option_post_cy = "Post"
         self.content_request_code_select_how_to_receive_option_post_hint_cy = \
             "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
-        # TODO Add Welsh Translation
         self.content_request_code_select_how_to_receive_option_post_hint_individual_cy = \
-            'An unbranded envelope can be addressed to you at the registered household address'
+            "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
         self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
             "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
         self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
@@ -1441,8 +1438,7 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
-        # TODO: add welsh translation
-        self.content_request_contact_centre_cy = 'You need to call the Census customer contact centre'
+        self.content_request_contact_centre_cy = "Mae angen i chi ffonio canolfan gyswllt cwsmeriaid y cyfrifiad"
 
         self.content_request_timeout_error_en = 're-enter your postcode'
         self.content_request_timeout_error_cy = 'nodi eich cod post eto'
@@ -2439,9 +2435,8 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Caiff holiadur y cartref (parhad) ei anfon - Cyfrifiad 2021</title>'
         self.content_request_continuation_questionnaire_sent_post_title_cy = \
             "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
-        # TODO Add Welsh Translation
         self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
-            'This should arrive soon for you to complete your census'
+            "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
 
         self.content_request_continuation_questionnaire_sent_post_title_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
@@ -2705,8 +2700,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
 
         self.content_web_form_error_429_title_en = 'You have reached the maximum number web form submissions'
-        # TODO Add Welsh Translation
-        self.content_web_form_error_429_title_cy = 'You have reached the maximum number web form submissions'
+        self.content_web_form_error_429_title_cy = "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
 
         # Transient
 
