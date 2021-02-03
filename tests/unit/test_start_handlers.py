@@ -1496,22 +1496,6 @@ class TestStartHandlers(TestHelpers):
         # Then an InactiveCaseError is raised
 
     @unittest_run_loop
-    async def test_no_direct_access(self):
-        await self.assert_no_direct_access(self.get_start_confirm_address_en, 'en', 'GET')
-        await self.assert_no_direct_access(self.get_start_confirm_address_cy, 'cy', 'GET')
-        await self.assert_no_direct_access(self.get_start_confirm_address_ni, 'ni', 'GET')
-        await self.assert_no_direct_access(self.post_start_confirm_address_en, 'en', 'POST',
-                                           self.start_confirm_address_data_yes)
-        await self.assert_no_direct_access(self.post_start_confirm_address_cy, 'cy', 'POST',
-                                           self.start_confirm_address_data_yes)
-        await self.assert_no_direct_access(self.post_start_confirm_address_ni, 'ni', 'POST',
-                                           self.start_confirm_address_data_yes)
-        await self.assert_no_direct_access(self.get_start_language_options_ni, 'ni', 'GET')
-        await self.assert_no_direct_access(self.post_start_language_options_ni, 'ni', 'POST')
-        await self.assert_no_direct_access(self.get_start_select_language_ni, 'ni', 'GET')
-        await self.assert_no_direct_access(self.post_start_select_language_ni, 'ni', 'POST')
-
-    @unittest_run_loop
     async def test_post_start_confirm_address_empty_ew_e(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
                 as mocked:
