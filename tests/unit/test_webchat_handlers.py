@@ -226,6 +226,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
@@ -244,6 +246,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG_CY, contents)
 
     @unittest_run_loop
@@ -262,6 +266,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_QUERY_MSG, contents)
 
     @unittest_run_loop
@@ -280,6 +286,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
@@ -298,6 +306,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG_CY, contents)
 
     @unittest_run_loop
@@ -316,6 +326,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_COUNTRY_MSG, contents)
 
     @unittest_run_loop
@@ -334,6 +346,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
@@ -352,6 +366,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG_CY, contents)
 
     @unittest_run_loop
@@ -370,6 +386,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertMessagePanel(WEBCHAT_MISSING_NAME_MSG, contents)
 
     @unittest_run_loop
