@@ -2676,9 +2676,9 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
-                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_en, contents)
             else:
-                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_en, contents)
 
     def check_text_start_transient_accommodation_type(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -2876,7 +2876,11 @@ class TestHelpers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '9999999999999'
             eq_payload['case_type'] = 'SPG'
-            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+            if display_region == 'cy':
+                eq_payload['display_address'] = accommodation_type_text + ' gerllaw ' + \
+                                                self.data_start_transient_town_name
+            else:
+                eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
 
             response = await self.client.request(
                 'POST',
