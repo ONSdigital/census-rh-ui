@@ -17,21 +17,15 @@ START_LANGUAGE_OPTION_MSG = {'text': 'Select a language option', 'level': 'ERROR
 NO_SELECTION_CHECK_MSG = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA
 
 BAD_CODE_MSG_CY = {'text': 'Rhowch god mynediad', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE', 'field': 'uac_empty'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-INVALID_CODE_MSG_CY = {'text': 'Enter a valid access code', 'clickable': True, 'level': 'ERROR', 'type': 'INVALID_CODE', 'field': 'uac_invalid'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-ADDRESS_CHECK_MSG_CY = {'text': "Select an answer", 'level': 'ERROR', 'type': 'ADDRESS_CONFIRMATION_ERROR', 'field': 'address'}  # NOQA
+INVALID_CODE_MSG_CY = {'text': 'Rhowch god mynediad dilys', 'clickable': True, 'level': 'ERROR', 'type': 'INVALID_CODE', 'field': 'uac_invalid'}  # NOQA
+ADDRESS_CHECK_MSG_CY = {'text': "Dewiswch ateb", 'level': 'ERROR', 'type': 'ADDRESS_CONFIRMATION_ERROR', 'field': 'address'}  # NOQA
 
 WEBFORM_MISSING_COUNTRY_MSG_CY = {'text': 'Dewiswch eich gwlad', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_COUNTRY', 'field': 'error-country'}  # NOQA
 WEBFORM_MISSING_CATEGORY_MSG_CY = {'text': 'Pa fath o ymholiad sydd gennych chi?', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_QUERY', 'field': 'error-category'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_DESCRIPTION_MSG_CY = {'text': 'No detail provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'error-description'}  # NOQA
+WEBFORM_MISSING_DESCRIPTION_MSG_CY = {'text': 'Heb ddarparu unrhyw fanylion', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_DESCRIPTION', 'field': 'error-description'}  # NOQA
 WEBFORM_MISSING_NAME_MSG_CY = {'text': 'Nodwch eich enw', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_NAME', 'field': 'error-name'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY = {'text': 'No email provided', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-WEBFORM_MISSING_EMAIL_INVALID_MSG_CY = {'text': 'Email address invalid', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
+WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY = {'text': 'Heb ddarparu cyfeiriad e-bost', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
+WEBFORM_MISSING_EMAIL_INVALID_MSG_CY = {'text': 'Cyfeiriad e-bost annilys', 'clickable': True, 'level': 'ERROR', 'type': 'ERROR_WEBFORM_EMAIL', 'field': 'error-email'}  # NOQA
 
 ADDRESS_SELECT_CHECK_MSG_CY = {'text': 'Dewiswch gyfeiriad', 'level': 'ERROR', 'type': 'ADDRESS_SELECT_CHECK_MSG', 'field': 'error-no-address-selected'}  # NOQA
-# TODO ADD WELSH TRANSLATION
-NO_SELECTION_CHECK_MSG_CY = {'text': 'Select an answer', 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA
+NO_SELECTION_CHECK_MSG_CY = {'text': "Dewiswch ateb", 'level': 'ERROR', 'type': 'NO_SELECTION_ERROR', 'field': 'no-selection'}  # NOQA

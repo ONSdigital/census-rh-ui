@@ -2447,31 +2447,6 @@ class TestHelpers(RHTestCase):
                 else:
                     self.assertIn(self.content_common_429_error_paper_questionnaire_title_en, contents)
 
-    async def assert_no_direct_access(self, url, display_region, method, data=None):
-        with self.assertLogs('respondent-home', 'WARN') as cm:
-            if method == 'POST':
-                if data:
-                    response = await self.client.request('POST', url, allow_redirects=False, data=data)
-                else:
-                    response = await self.client.request('POST', url, allow_redirects=False)
-            else:
-                response = await self.client.request('GET', url, allow_redirects=False)
-        self.assertLogEvent(cm, 'permission denied')
-        self.assertEqual(response.status, 403)
-        contents = str(await response.content.read())
-        self.assertIn(self.get_logo(display_region), contents)
-        if display_region == 'cy':
-            self.assertNotIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_start_forbidden_title_cy, contents)
-            self.assertIn(self.content_start_forbidden_link_text_cy, contents)
-        else:
-            if display_region == 'ni':
-                self.assertNotIn(self.content_start_exit_button_ni, contents)
-            else:
-                self.assertNotIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_start_forbidden_title_en, contents)
-            self.assertIn(self.content_start_forbidden_link_text_en, contents)
-
     async def check_get_request_individual_code(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('GET', url)
@@ -2727,9 +2702,9 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
-                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_en, contents)
             else:
-                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_en, contents)
 
     def check_text_start_transient_accommodation_type(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -2927,7 +2902,11 @@ class TestHelpers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '9999999999999'
             eq_payload['case_type'] = 'SPG'
-            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+            if display_region == 'cy':
+                eq_payload['display_address'] = accommodation_type_text + ' gerllaw ' + \
+                                                self.data_start_transient_town_name
+            else:
+                eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
 
             response = await self.client.request(
                 'POST',

@@ -23,10 +23,10 @@ census_saturday = date(2021, 3, 20)
 census_sunday = date(2021, 3, 21)
 
 census_saturday_open = 8
-census_saturday_close = 16
+census_saturday_close = 20
 
 census_sunday_open = 8
-census_sunday_close = 16
+census_sunday_close = 20
 
 saturday_open = 8
 saturday_close = 13

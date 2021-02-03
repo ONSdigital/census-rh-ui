@@ -4,6 +4,8 @@
 {%- from "components/lists/_macro.njk" import onsList -%}
 {%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink, rhADTelephone -%}
 
+{%- set not_available_text = _('Not available') -%}
+
 {%- block main -%}
 
     {%- autoescape false -%}
@@ -44,7 +46,7 @@
                     "classes": 'list--bare',
                     "itemsList": [
                         {
-                            "text": _('Telephone: ') + rhADTelephone({'number': centre['phone']})
+                            "text": _('Telephone: ') + rhADTelephone({'number': centre['phone'], 'natext': not_available_text })
                         },
                         {
                             "text": _('Email: ') + rhEmailLink({'email': centre['email'] })

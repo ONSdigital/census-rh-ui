@@ -27,20 +27,20 @@ class TestWebChatHandlers(RHTestCase):
     def test_check_open_census_saturday_open(self):
         self.should_be_open(2021, 3, 20, 8, 1)      # just after opening
         self.should_be_open(2021, 3, 20, 10, 30)    # mid morning
-        self.should_be_open(2021, 3, 20, 15, 59)    # before closing
+        self.should_be_open(2021, 3, 20, 19, 59)    # before closing
 
     def test_check_open_census_saturday_closed(self):
         self.should_be_closed(2021, 3, 20, 7, 59)   # just before opening
-        self.should_be_closed(2021, 3, 20, 16, 1)   # just after closing
+        self.should_be_closed(2021, 3, 20, 20, 1)   # just after closing
 
     def test_check_open_census_sunday_open(self):
         self.should_be_open(2021, 3, 21, 8, 1)      # just after opening
         self.should_be_open(2021, 3, 21, 10, 30)    # mid morning
-        self.should_be_open(2021, 3, 21, 15, 59)    # before closing
+        self.should_be_open(2021, 3, 21, 19, 59)    # before closing
 
     def test_check_open_census_sunday_closed(self):
         self.should_be_closed(2021, 3, 21, 7, 59)   # just before opening
-        self.should_be_closed(2021, 3, 21, 16, 1)   # just after closing
+        self.should_be_closed(2021, 3, 21, 20, 1)   # just after closing
 
     def test_check_open_weekday_open(self):
         self.should_be_open(2019, 6, 17, 9, 30)     # 2019 BST summer
@@ -174,20 +174,18 @@ class TestWebChatHandlers(RHTestCase):
                                                   'Our contact centre is now closed',
                                                   mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
         await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy,
-                                                  'Our contact centre is now closed',
+                                                  'Mae ein canolfan gyswllt bellach ar gau',
                                                   mocked_now_utc)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_get_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
         await self.should_respond_not_open_to_get(self.get_webchat_cy, self.ons_logo_cy,
-                                                  'Our contact centre is now closed',
+                                                  'Mae ein canolfan gyswllt bellach ar gau',
                                                   mocked_now_utc)
 
     @unittest_run_loop
@@ -220,6 +218,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_common_error_select_an_option_en, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -242,6 +242,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertIn(self.content_common_error_panel_answer_cy, contents)
             self.assertIn(self.content_common_error_select_an_option_cy, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -264,6 +266,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_common_error_select_an_option_en, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -286,6 +290,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_common_error_select_an_option_en, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -308,6 +314,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertIn(self.content_common_error_panel_answer_cy, contents)
             self.assertIn(self.content_common_error_select_an_option_cy, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -330,6 +338,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_common_error_select_an_option_en, contents)
             self.assertIn(self.content_webchat_error_selected_screen_name, contents)
@@ -352,6 +362,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_webchat_error_enter_your_name_en, contents)
             self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
@@ -374,6 +386,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
             self.assertIn(self.content_common_error_panel_answer_cy, contents)
             self.assertIn(self.content_webchat_error_enter_your_name_cy, contents)
             self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
@@ -396,6 +410,8 @@ class TestWebChatHandlers(RHTestCase):
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
             self.assertIn(self.content_common_error_panel_answer_en, contents)
             self.assertIn(self.content_webchat_error_enter_your_name_en, contents)
             self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
@@ -450,18 +466,16 @@ class TestWebChatHandlers(RHTestCase):
         await self.should_respond_not_open_to_post(self.post_webchat_en, 'Our contact centre is now closed',
                                                    self.ons_logo_en, mocked_now_utc, self.webchat_form_data_en)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy(self):
         mocked_now_utc = datetime.datetime(2019, 6, 16, 16, 30)
-        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Our contact centre is now closed',
+        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Mae ein canolfan gyswllt bellach ar gau',
                                                    self.ons_logo_cy, mocked_now_utc, self.webchat_form_data_cy)
 
-    # TODO Add Welsh Translation
     @unittest_run_loop
     async def test_post_webchat_not_open_200_cy_2021_bst(self):
         mocked_now_utc = datetime.datetime(2021, 3, 29, 19, 1)
-        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Our contact centre is now closed',
+        await self.should_respond_not_open_to_post(self.post_webchat_cy, 'Mae ein canolfan gyswllt bellach ar gau',
                                                    self.ons_logo_cy, mocked_now_utc, self.webchat_form_data_cy)
 
     @unittest_run_loop

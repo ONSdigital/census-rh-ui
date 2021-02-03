@@ -36,6 +36,7 @@
                 }
             ]
     %}
+    {%- set where_code_link = domain_url_ni + '/where-to-find-your-access-code/' -%}
 {% elif display_region == 'cy' %}
     {% set breadcrumb_items = [
                 {
@@ -44,6 +45,7 @@
                 }
             ]
     %}
+    {%- set where_code_link = domain_url_cy + '/ble-i-ddod-o-hyd-ich-cod-mynediad/' -%}
 {% else %}
     {% set breadcrumb_items = [
                 {
@@ -52,6 +54,7 @@
                 }
             ]
     %}
+    {%- set where_code_link = domain_url_en + '/where-to-find-your-access-code/' -%}
 {% endif %}
 
 {% block preMain %}
@@ -76,7 +79,7 @@
             'id': 'uac',
             'name': 'uac',
             'postTextboxLinkText': _('Where to find your access code'),
-            'postTextboxLinkUrl': '#',
+            'postTextboxLinkUrl': where_code_link,
             'label': {
                 'text': _('Enter your 16-character access code'),
                 'description': _('Keep this code safe. You will need to enter it every time you access your census')
@@ -133,14 +136,5 @@
     %}
         {{ content | safe }}
     {% endcall %}
-
-    {{ onsButton({
-        'text': _('Web chat'),
-        "type": 'button',
-        "classes": 'u-mb-m, u-mt-s',
-        "url": webchat_link,
-        "newWindow": true
-        })
-    }}
 
 {% endblock %}

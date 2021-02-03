@@ -64,7 +64,7 @@ class BaseConfig:
     REDIS_POOL_MIN = env('REDIS_POOL_MIN', default='50')
     REDIS_POOL_MAX = env('REDIS_POOL_MAX', default='500')
 
-    SESSION_AGE = env('SESSION_AGE', default='600')
+    SESSION_AGE = env('SESSION_AGE', default='2700')  # 45 minutes
 
     WEBCHAT_SVC_URL = env('WEBCHAT_SVC_URL')
 
@@ -116,7 +116,7 @@ class DevelopmentConfig:
     REDIS_POOL_MIN = env('REDIS_POOL_MIN', default='50')
     REDIS_POOL_MAX = env('REDIS_POOL_MAX', default='500')
 
-    SESSION_AGE = env('SESSION_AGE', default='300')  # 5 minutes
+    SESSION_AGE = env('SESSION_AGE', default='2700')  # 45 minutes
 
     WEBCHAT_SVC_URL = env.str(
         'WEBCHAT_SVC_URL',

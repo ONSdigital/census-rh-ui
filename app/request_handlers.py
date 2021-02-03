@@ -9,10 +9,13 @@ from . import (NO_SELECTION_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .exceptions import SessionTimeout, TooManyRequests
+
+from .exceptions import TooManyRequests
 from .security import invalidate
+
 from .utils import View, ProcessMobileNumber, InvalidDataError, InvalidDataErrorWelsh, \
     FlashMessage, RHService, ProcessName, ProcessNumberOfPeople
+from .session import get_existing_session, get_session_value
 
 logger = get_logger('respondent-home')
 request_routes = RouteTableDef()
@@ -26,24 +29,6 @@ class RequestCommon(View):
     valid_request_types_code_only = r'{request_type:\baccess-code\b}'
     valid_request_types_form_only = r'{request_type:\bpaper-questionnaire|continuation-questionnaire\b}'
     valid_request_types_code_and_form = r'{request_type:\baccess-code|paper-questionnaire|continuation-questionnaire\b}'
-
-    @staticmethod
-    def request_code_check_session(request, request_type):
-        if request.cookies.get('RH_SESSION') is None:
-            logger.info('session timed out', client_ip=request['client_ip'], request_made=request,
-                        type_of_request=request_type)
-            raise SessionTimeout('request', request_type)
-
-    async def get_check_attributes(self, request, request_type):
-        self.request_code_check_session(request, request_type)
-        session = await get_session(request)
-        try:
-            attributes = session['attributes']
-
-        except KeyError:
-            raise SessionTimeout('request', request_type)
-
-        return attributes
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/access-code/individual/')
@@ -76,7 +61,7 @@ class RequestCodeIndividual(RequestCommon):
         session = await get_session(request)
 
         try:
-            if request.cookies.get('RH_SESSION'):
+            if not session.new:
                 session['attributes']['individual'] = True
                 session.changed()
 
@@ -110,8 +95,7 @@ class RequestIndividualForm(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request individual paper questionnaire'
+            page_title = 'Gofyn am holiadur papur i unigolion'
             locale = 'cy'
         else:
             page_title = 'Request individual paper questionnaire'
@@ -131,7 +115,7 @@ class RequestIndividualForm(RequestCommon):
         request_type = 'paper-questionnaire'
         self.log_entry(request, display_region + '/request/paper-questionnaire/individual')
 
-        session = await get_session(request)
+        session = await get_existing_session(request, 'request', request_type)
         session['attributes']['individual'] = True
         session.changed()
 
@@ -168,7 +152,7 @@ class RequestCodeHousehold(RequestCommon):
         request_type = 'access-code'
         self.log_entry(request, display_region + '/request/access-code/household')
 
-        session = await get_session(request)
+        session = await get_existing_session(request, 'request', 'access-code')
         session['attributes']['individual'] = False
         session.changed()
 
@@ -184,8 +168,7 @@ class RequestHouseholdForm(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Request household paper questionnaire'
+            page_title = "Gofyn am holiadur papur y cartref"
             locale = 'cy'
         else:
             page_title = 'Request household paper questionnaire'
@@ -204,7 +187,7 @@ class RequestHouseholdForm(RequestCommon):
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/request/paper-questionnaire/household')
 
-        session = await get_session(request)
+        session = await get_existing_session(request, 'request', 'paper-questionnaire')
         session['attributes']['individual'] = False
         session.changed()
 
@@ -225,7 +208,8 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -328,7 +312,8 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes',  'request', request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -350,7 +335,8 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -363,8 +349,7 @@ class RequestCodeEnterMobile(RequestCommon):
 
             attributes['mobile_number'] = mobile_number
             attributes['submitted_mobile_number'] = data['request-mobile-number']
-            session = await get_session(request)
-            session['attributes'] = attributes
+            session.changed()
 
             raise HTTPFound(
                 request.app.router['RequestCodeConfirmSendByText:get'].url_for(request_type=request_type,
@@ -398,7 +383,8 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -437,7 +423,8 @@ class RequestCodeConfirmSendByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
         try:
@@ -540,7 +527,8 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         attributes['page_title'] = page_title
         attributes['display_region'] = display_region
@@ -557,7 +545,8 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -579,9 +568,7 @@ class RequestCommonEnterName(RequestCommon):
 
         attributes['first_name'] = name_first_name
         attributes['last_name'] = name_last_name
-
-        session = await get_session(request)
-        session['attributes'] = attributes
+        session.changed()
 
         raise HTTPFound(
             request.app.router['RequestCommonConfirmSendByPost:get'].url_for(display_region=display_region,
@@ -604,7 +591,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if request_type == 'access-code':
             if attributes['individual']:
@@ -630,8 +618,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         else:
             if attributes['individual']:
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    page_title = 'Confirm to send individual paper questionnaire'
+                    page_title = "Cadarnhau i anfon holiadur papur i unigolion"
                 else:
                     page_title = 'Confirm to send individual paper questionnaire'
             else:
@@ -672,7 +659,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         data = await request.post()
         try:
@@ -683,7 +671,6 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         type_of_request=request_type,
                         region_of_site=display_region)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
                 flash(request, NO_SELECTION_CHECK_MSG)
@@ -919,8 +906,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         client_ip=request['client_ip'], user_selection=name_address_confirmation,
                         region_of_site=display_region, type_of_request=request_type)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Select an answer',
+                flash(request, FlashMessage.generate_flash_message('Dewiswch ateb',
                                                                    'ERROR',
                                                                    'NAME_CONFIRMATION_ERROR',
                                                                    'request-name-confirmation'))
@@ -947,7 +933,8 @@ class RequestCodeSentByText(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-text')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -989,7 +976,8 @@ class RequestCodeSentByPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-post')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
@@ -1041,8 +1029,7 @@ class RequestCommonPeopleInHousehold(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = "How many people are in your household?"
+            page_title = "Faint o bobl sydd yn eich cartref chi?"
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -1053,8 +1040,6 @@ class RequestCommonPeopleInHousehold(RequestCommon):
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
-
-        await self.get_check_attributes(request, request_type)
 
         return {
             'page_title': page_title,
@@ -1071,6 +1056,9 @@ class RequestCommonPeopleInHousehold(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
 
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
+
         data = await request.post()
 
         form_valid = ProcessNumberOfPeople.validate_number_of_people(request, data, display_region, request_type)
@@ -1084,8 +1072,7 @@ class RequestCommonPeopleInHousehold(RequestCommon):
                 request.app.router['RequestCommonPeopleInHousehold:get'].url_for(display_region=display_region,
                                                                                  request_type=request_type))
 
-        session = await get_session(request)
-        session['attributes']['number_of_people'] = data['number_of_people']
+        attributes['number_of_people'] = data['number_of_people']
         session.changed()
 
         raise HTTPFound(
@@ -1103,8 +1090,7 @@ class RequestQuestionnaireManager(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Cannot send paper questionnaires to managers'
+            page_title = "Ni allwn anfon holiaduron papur at reolwyr"
             locale = 'cy'
         else:
             page_title = 'Cannot send paper questionnaires to managers'
@@ -1133,11 +1119,16 @@ class RequestQuestionnaireCancelled(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Your request for a questionnaire has been cancelled'
+            if request_type == 'continuation-questionnaire':
+                page_title = "Mae eich cais am holiadur y cartref (parhad) wedi cael ei ganslo"
+            else:
+                page_title = "Mae eich cais am holiadur papur wedi cael ei ganslo"
             locale = 'cy'
         else:
-            page_title = 'Your request for a questionnaire has been cancelled'
+            if request_type == 'continuation-questionnaire':
+                page_title = 'Your request for a continuation questionnaire has been cancelled'
+            else:
+                page_title = 'Your request for a paper questionnaire has been cancelled'
             locale = 'en'
 
         self.log_entry(request, display_region + '/request/' + request_type + '/request-cancelled')
@@ -1163,15 +1154,14 @@ class RequestQuestionnaireSent(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Individual paper questionnaire will be sent'
+                page_title = "Caiff holiadur papur i unigolion ei anfon"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Household paper questionnaire will be sent'
+                page_title = "Caiff holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -1210,8 +1200,7 @@ class RequestContinuationSent(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Continuation questionnaire will be sent'
+            page_title = "Caiff holiadur y cartref (parhad) ei anfon"
             locale = 'cy'
         else:
             page_title = 'Continuation questionnaire will be sent'
@@ -1219,7 +1208,8 @@ class RequestContinuationSent(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         await invalidate(request)
 
@@ -1252,15 +1242,14 @@ class RequestLargePrintSentPost(RequestCommon):
 
         self.log_entry(request, display_region + '/request/paper-questionnaire/large-print-sent-post')
 
-        attributes = await self.get_check_attributes(request, request_type)
+        session = await get_existing_session(request, 'request', request_type)
+        attributes = get_session_value(session, 'attributes', 'request', request_type)
 
         if display_region == 'cy':
             if attributes['individual']:
-                # TODO Add Welsh Translation
-                page_title = 'Large-print individual paper questionnaire will be sent'
+                page_title = "Caiff copi print mawr o'r holiadur papur i unigolion ei anfon"
             else:
-                # TODO Add Welsh Translation
-                page_title = 'Large-print household paper questionnaire will be sent'
+                page_title = "Caiff copi print mawr o holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
             if attributes['individual']:
@@ -1332,8 +1321,7 @@ class RequestContinuationNotAHousehold(RequestCommon):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'This address is not a household address'
+            page_title = "Nid yw'r cyfeiriad hwn yn gyfeiriad cartref"
             locale = 'cy'
         else:
             page_title = 'This address is not a household address'
