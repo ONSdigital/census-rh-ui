@@ -71,8 +71,7 @@ class CommonAddressInScotland(CommonCommon):
             page_title = 'Address not part of census for Northern Ireland'
             locale = 'en'
         elif display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Address not part of census for England and Wales'
+            page_title = "Nid yw'r cyfeiriad yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
             locale = 'cy'
         else:
             page_title = 'Address not part of census for England and Wales'
@@ -102,8 +101,7 @@ class CommonAddressInNorthernIreland(CommonCommon):
         user_journey = request.match_info['user_journey']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Address not part of census for England and Wales'
+            page_title = "Nid yw'r cyfeiriad yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
             locale = 'cy'
         else:
             page_title = 'Address not part of census for England and Wales'
@@ -216,8 +214,7 @@ class CommonCallContactCentre(CommonCommon):
         error = request.match_info['error']
 
         if display_region == 'cy':
-            # TODO: add welsh translation
-            page_title = 'Call Census Customer Contact Centre'
+            page_title = "Ffoniwch Canolfan Gyswllt i Gwsmeriaid y Cyfrifiad"
             locale = 'cy'
         else:
             page_title = 'Call Census Customer Contact Centre'
@@ -932,9 +929,8 @@ class CommonEnterRoomNumber(CommonCommon):
                         room_number_given=room_number_entered)
             if len(room_number_entered) > 10:
                 if display_region == 'cy':
-                    # TODO Add Welsh translation
                     flash(request, FlashMessage.generate_flash_message(
-                        'You have entered too many characters. Enter up to 10 characters', 'ERROR',
+                        "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 10 o nodau", 'ERROR',
                         'ROOM_NUMBER_ENTER_ERROR', 'error-room-number-len'))
                 else:
                     flash(request, FlashMessage.generate_flash_message(

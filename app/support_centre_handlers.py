@@ -53,7 +53,8 @@ class SupportCentreEnterPostcode(View):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode, region_of_site=display_region)
+            logger.info('valid postcode', client_ip=request['client_ip'],
+                        valid_postcode=postcode, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
             logger.info('invalid postcode', client_ip=request['client_ip'], region_of_site=display_region)
@@ -85,7 +86,8 @@ class SupportCentreListCentres(View):
 
         try:
             postcode_value = ProcessPostcode.validate_postcode(request.match_info['postcode'], locale)
-            logger.info('valid postcode', client_ip=request['client_ip'], valid_postcode=postcode_value, region_of_site=display_region)
+            logger.info('valid postcode', client_ip=request['client_ip'],
+                        valid_postcode=postcode_value, region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh):
             logger.info('invalid postcode', client_ip=request['client_ip'], region_of_site=display_region)

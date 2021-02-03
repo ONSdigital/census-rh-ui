@@ -102,9 +102,8 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
-        # TODO Add Welsh Translation
         self.assertEqual(
-            'Enter a postcode',
+            'Rhowch god post',
             str(cm.exception)
         )
         # With the correct message
@@ -117,9 +116,8 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
-        # TODO Add Welsh Translation
         self.assertEqual(
-            'Enter a valid UK postcode',
+            'Rhowch god post dilys yn y Deyrnas Unedig',
             str(cm.exception)
         )
         # With the correct message
@@ -132,9 +130,8 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
-        # TODO Add Welsh Translation
         self.assertEqual(
-            'Enter a valid UK postcode',
+            'Rhowch god post dilys yn y Deyrnas Unedig',
             str(cm.exception)
         )
         # With the correct message
@@ -147,9 +144,8 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
-        # TODO Add Welsh Translation
         self.assertEqual(
-            'Enter a valid UK postcode',
+            'Rhowch god post dilys yn y Deyrnas Unedig',
             str(cm.exception)
         )
         # With the correct message
@@ -162,9 +158,8 @@ class TestUtils(RHTestCase):
         with self.assertRaises(InvalidDataErrorWelsh) as cm:
             ProcessPostcode.validate_postcode(postcode, locale)
         # Then an InvalidDataError is raised
-        # TODO Add Welsh Translation
         self.assertEqual(
-            'Enter a valid UK postcode',
+            'Rhowch god post dilys yn y Deyrnas Unedig',
             str(cm.exception)
         )
         # With the correct message
