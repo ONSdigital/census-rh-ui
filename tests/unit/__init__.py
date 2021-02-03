@@ -253,6 +253,8 @@ class RHTestCase(AioHTTPTestCase):
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
         ad_look_up_svc_url = self.app['AD_LOOK_UP_SVC_URL']
 
+        self.aims_postcode_limit = '250'
+
         self.get_info = self.app.router['Info:get'].url_for()
 
         # Common
@@ -922,8 +924,8 @@ class RHTestCase(AioHTTPTestCase):
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
 
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
-        self.address_index_epoch_param = f'?epoch={aims_epoch}'
-        self.address_index_epoch_param_test = f'?epoch=test'
+        self.address_index_epoch_param = f'?limit={self.aims_postcode_limit}&epoch={aims_epoch}'
+        self.address_index_epoch_param_test = f'?limit={self.aims_postcode_limit}&epoch=test'
 
         self.selected_uprn = '10023122451'
         self.selected_uprn_ni = '187748262'

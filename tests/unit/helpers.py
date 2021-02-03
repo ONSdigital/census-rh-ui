@@ -1747,7 +1747,8 @@ class TestHelpers(RHTestCase):
     async def check_post_enter_address_error_from_ai(self, get_url, post_url, display_region, status):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=status)
+            mocked.get(self.addressindexsvc_url + self.postcode_valid + '?limit=' + self.aims_postcode_limit,
+                       status=status)
 
             await self.client.request('GET', get_url)
             response = await self.client.request('POST', post_url, data=self.common_postcode_input_valid)
@@ -1760,7 +1761,8 @@ class TestHelpers(RHTestCase):
 
     def mock_ai_503s(self, mocked, times):
         for i in range(times):
-            mocked.get(self.addressindexsvc_url + self.postcode_valid, status=503)
+            mocked.get(self.addressindexsvc_url + self.postcode_valid + '?limit=' + self.aims_postcode_limit,
+                       status=503)
 
     async def check_post_enter_address_error_503_from_ai(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
