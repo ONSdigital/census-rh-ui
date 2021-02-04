@@ -33,8 +33,7 @@ class WebForm(View):
         self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
-            # TODO Add Welsh Translation
-            page_title = 'Web form'
+            page_title = 'Gwe-ffurflen'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
@@ -84,7 +83,6 @@ class WebForm(View):
 
         if not data.get('description'):
             if display_region == 'cy':
-                # TODO Add Welsh Translation
                 flash(request, WEBFORM_MISSING_DESCRIPTION_MSG_CY)
             else:
                 flash(request, WEBFORM_MISSING_DESCRIPTION_MSG)
@@ -99,7 +97,6 @@ class WebForm(View):
 
         if not (data.get('email')):
             if display_region == 'cy':
-                # TODO Add Welsh Translation
                 flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY)
             else:
                 flash(request, WEBFORM_MISSING_EMAIL_EMPTY_MSG)
@@ -107,7 +104,6 @@ class WebForm(View):
 
         elif not email_validation_pattern.fullmatch(str(data.get('email'))):
             if display_region == 'cy':
-                # TODO: Add Welsh Translation
                 flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG_CY)
             else:
                 flash(request, WEBFORM_MISSING_EMAIL_INVALID_MSG)

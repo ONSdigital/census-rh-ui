@@ -197,36 +197,31 @@ class ProcessPostcode:
 
         if len(postcode) == 0:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh("Enter a postcode", 'empty')
+                raise InvalidDataErrorWelsh("Rhowch god post", 'empty')
             else:
                 raise InvalidDataError('Enter a postcode', 'empty')
 
         if not postcode.isalnum():
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
+                raise InvalidDataErrorWelsh("Rhowch god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) < 5:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
+                raise InvalidDataErrorWelsh("Rhowch god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if len(postcode) > 7:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
+                raise InvalidDataErrorWelsh("Rhowch god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
         if not ProcessPostcode.postcode_validation_pattern.fullmatch(postcode):
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh("Enter a valid UK postcode")
+                raise InvalidDataErrorWelsh("Rhowch god post dilys yn y Deyrnas Unedig")
             else:
                 raise InvalidDataError('Enter a valid UK postcode')
 
@@ -247,9 +242,8 @@ class ProcessMobileNumber:
             list(map(int, number))
         except ValueError:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
-                                            '07700 900345 or +44 7700 900345', message_type='invalid')
+                raise InvalidDataErrorWelsh("Rhowch rif ffôn symudol yn y Deyrnas Unedig mewn fformat dilys, "
+                                            "er enghraifft, 07700 900345 neu +44 7700 900345", message_type='invalid')
             else:
                 raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
                                        '07700 900345 or +44 7700 900345', message_type='invalid')
@@ -263,34 +257,30 @@ class ProcessMobileNumber:
 
         if len(number) == 0:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('Enter your mobile number', message_type='empty')
+                raise InvalidDataErrorWelsh("Rhowch eich rhif ffôn symudol", message_type='empty')
             else:
                 raise InvalidDataError('Enter your mobile number', message_type='empty')
 
         if not number.startswith('7'):
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
-                                            '07700 900345 or +44 7700 900345', message_type='invalid')
+                raise InvalidDataErrorWelsh("Rhowch rif ffôn symudol yn y Deyrnas Unedig mewn fformat dilys, "
+                                            "er enghraifft, 07700 900345 neu +44 7700 900345", message_type='invalid')
             else:
                 raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
                                        '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) > 10:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
-                                            '07700 900345 or +44 7700 900345', message_type='invalid')
+                raise InvalidDataErrorWelsh("Rhowch rif ffôn symudol yn y Deyrnas Unedig mewn fformat dilys, "
+                                            "er enghraifft, 07700 900345 neu +44 7700 900345", message_type='invalid')
             else:
                 raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
                                        '07700 900345 or +44 7700 900345', message_type='invalid')
 
         if len(number) < 10:
             if locale == 'cy':
-                # TODO: Add Welsh Translation
-                raise InvalidDataErrorWelsh('Enter a UK mobile number in a valid format, for example, '
-                                            '07700 900345 or +44 7700 900345', message_type='invalid')
+                raise InvalidDataErrorWelsh("Rhowch rif ffôn symudol yn y Deyrnas Unedig mewn fformat dilys, "
+                                            "er enghraifft, 07700 900345 neu +44 7700 900345", message_type='invalid')
             else:
                 raise InvalidDataError('Enter a UK mobile number in a valid format, for example, '
                                        '07700 900345 or +44 7700 900345', message_type='invalid')
@@ -309,46 +299,46 @@ class ProcessName:
 
         if not form_first_name:
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter your first name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
+                flash(request, {'text': "Rhowch eich enw cyntaf", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_first_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your first name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
+                flash(request, {'text': "Enter your first name", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_first_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             name_valid = False
 
         elif len(form_first_name) > 35:
             if display_region == 'cy':
-                # TODO Add Welsh translation
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+                flash(request, {'text': "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau",
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_first_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+                flash(request, {'text': 'You have entered too many characters. Enter up to 35 characters',
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_first_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             name_valid = False
 
         if not form_last_name:
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter your last name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+                flash(request, {'text': "Rhowch eich cyfenw", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_last_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your last name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+                flash(request, {'text': "Enter your last name", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_last_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             name_valid = False
 
         elif len(form_last_name) > 35:
             if display_region == 'cy':
-                # TODO Add Welsh translation
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+                flash(request, {'text': "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau",
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_last_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+                flash(request, {'text': 'You have entered too many characters. Enter up to 35 characters',
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_last_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             name_valid = False
 
         return name_valid
@@ -365,8 +355,7 @@ class ProcessNumberOfPeople:
             logger.info('number_of_people empty', client_ip=request['client_ip'], region_of_site=display_region,
                         type_of_request=request_type)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter the number of people in your household',
+                flash(request, FlashMessage.generate_flash_message("Rhowch nifer y bobl yn eich cartref",
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_empty'))
             else:
@@ -379,8 +368,7 @@ class ProcessNumberOfPeople:
             logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region,
                         type_of_request=request_type)
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter a number',
+                flash(request, FlashMessage.generate_flash_message("Rhowch rif",
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_nan'))
             else:
@@ -404,8 +392,7 @@ class ProcessNumberOfPeople:
                             region_of_site=display_region,
                             type_of_request=request_type)
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    flash(request, FlashMessage.generate_flash_message('Enter a number greater than 5',
+                    flash(request, FlashMessage.generate_flash_message("Rhowch rif sy'n fwy na 5",
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                        'number_of_people_continuation_low'))
                 else:
@@ -417,8 +404,7 @@ class ProcessNumberOfPeople:
             elif int(data.get('number_of_people')) > 30:
                 logger.info('number_of_people continuation greater than 30', client_ip=request['client_ip'])
                 if display_region == 'cy':
-                    # TODO Add Welsh Translation
-                    flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                    flash(request, FlashMessage.generate_flash_message("Rhowch rif sy'n llai na 31",
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                        'number_of_people_continuation_high'))
                 else:
@@ -430,8 +416,7 @@ class ProcessNumberOfPeople:
         elif int(data.get('number_of_people')) > 30:
             logger.info('number_of_people greater than 30', client_ip=request['client_ip'])
             if display_region == 'cy':
-                # TODO Add Welsh Translation
-                flash(request, FlashMessage.generate_flash_message('Enter a number less than 31',
+                flash(request, FlashMessage.generate_flash_message("Rhowch rif sy'n llai na 31",
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
                                                                    'number_of_people_high'))
             else:
@@ -487,8 +472,7 @@ class AddressIndex(View):
         address_options = []
 
         if display_region == 'cy':
-            # TODO: Add Welsh Translation
-            cannot_find_text = 'I cannot find my address'
+            cannot_find_text = 'Ni allaf ddod o hyd i fy nghyfeiriad'
         else:
             cannot_find_text = 'I cannot find my address'
 

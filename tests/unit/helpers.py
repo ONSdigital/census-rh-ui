@@ -1889,25 +1889,53 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-name', display_region), contents)
             if display_region == 'cy':
-                if first_name == '':
+                if (first_name == '') and (last_name == ''):
+                    self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                    self.assertNotIn(self.content_common_enter_name_check_last, contents)
                     self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
-                elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
-                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
-                elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
+                else:
+                    if first_name == '':
+                        self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
+                    elif len(first_name) > 35:
+                        self.assertNotIn(self.content_common_enter_name_check_long_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
+                    if last_name == '':
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
+                    elif len(last_name) > 35:
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_long_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
-                if first_name == '':
+                if (first_name == '') and (last_name == ''):
+                    self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                    self.assertNotIn(self.content_common_enter_name_check_last, contents)
                     self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
-                elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
-                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
-                elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
+                else:
+                    if first_name == '':
+                        self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
+                    elif len(first_name) > 35:
+                        self.assertNotIn(self.content_common_enter_name_check_long_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
+                    if last_name == '':
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
+                    elif len(last_name) > 35:
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_long_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
@@ -2674,9 +2702,9 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_start_transient_enter_town_name_page_title_en, contents)
             if after_census_day:
-                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_post_census_day_title_en, contents)
             else:
-                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_cy, contents)
+                self.assertIn(self.content_start_transient_enter_town_name_pre_census_day_title_en, contents)
 
     def check_text_start_transient_accommodation_type(self, display_region, contents, check_error=False):
         if display_region == 'cy':
@@ -2874,7 +2902,11 @@ class TestHelpers(RHTestCase):
                 f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
             eq_payload['ru_ref'] = '9999999999999'
             eq_payload['case_type'] = 'SPG'
-            eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
+            if display_region == 'cy':
+                eq_payload['display_address'] = accommodation_type_text + ' gerllaw ' + \
+                                                self.data_start_transient_town_name
+            else:
+                eq_payload['display_address'] = accommodation_type_text + ' near ' + self.data_start_transient_town_name
 
             response = await self.client.request(
                 'POST',
