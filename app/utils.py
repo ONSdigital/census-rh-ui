@@ -299,42 +299,46 @@ class ProcessName:
 
         if not form_first_name:
             if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message("Rhowch eich enw cyntaf",
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
+                flash(request, {'text': "Rhowch eich enw cyntaf", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_first_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your first name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_first_name'))
+                flash(request, {'text': "Enter your first name", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_first_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             name_valid = False
 
         elif len(form_first_name) > 35:
             if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message(
-                    "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau", 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+                flash(request, {'text': "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau",
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_first_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_first_name_len'))
+                flash(request, {'text': 'You have entered too many characters. Enter up to 35 characters',
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_first_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             name_valid = False
 
         if not form_last_name:
             if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message("Rhowch eich cyfenw",
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+                flash(request, {'text': "Rhowch eich cyfenw", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_last_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message('Enter your last name',
-                                                                   'ERROR', 'NAME_ENTER_ERROR', 'error_last_name'))
+                flash(request, {'text': "Enter your last name", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
+                                'field': 'error_last_name', 'value_first_name': form_first_name,
+                                'value_last_name': form_last_name})
             name_valid = False
 
         elif len(form_last_name) > 35:
             if display_region == 'cy':
-                flash(request, FlashMessage.generate_flash_message(
-                    "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau", 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+                flash(request, {'text': "Rydych wedi defnyddio gormod o nodau. Rhowch hyd at 35 o nodau",
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_last_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             else:
-                flash(request, FlashMessage.generate_flash_message(
-                    'You have entered too many characters. Enter up to 35 characters', 'ERROR',
-                    'NAME_ENTER_ERROR', 'error_last_name_len'))
+                flash(request, {'text': 'You have entered too many characters. Enter up to 35 characters',
+                                'level': 'ERROR', 'type': 'NAME_ENTER_ERROR', 'field': 'error_last_name_len',
+                                'value_first_name': form_first_name, 'value_last_name': form_last_name})
             name_valid = False
 
         return name_valid

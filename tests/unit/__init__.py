@@ -907,9 +907,12 @@ class RHTestCase(AioHTTPTestCase):
 
         self.webchat_form_data = {
             'screen_name': 'Test',
-            'email': 'test@test.gov.uk',
+            'query': 'address',
+        }
+
+        self.webchat_form_data_en = {
+            **self.webchat_form_data,
             'language': 'english',
-            'query': 'help',
             'country': 'england'
         }
 
@@ -919,7 +922,37 @@ class RHTestCase(AioHTTPTestCase):
             'country': 'wales',
         }
 
+        self.webchat_form_data_ni = {
+            **self.webchat_form_data,
+            'language': 'english',
+            'country': 'northern_ireland'
+        }
+
         self.webchatsvc_url = self.app['WEBCHAT_SVC_URL']
+
+        self.content_webchat_error_missing_screen_name_panel_en = \
+            {'text': 'Enter your name', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
+             'field': 'error_screen_name', 'screen_name': '', 'country': 'england', 'query': 'help'}
+
+        self.content_webchat_error_selected_screen_name = \
+            'name="screen_name"\\n            value="Test"'
+        self.content_webchat_error_selected_country_en = \
+            'value="england" \\n                            name="country"\\n                             checked'
+        self.content_webchat_error_selected_country_cy = \
+            'value="wales" \\n                            name="country"\\n                             checked'
+        self.content_webchat_error_selected_country_ni = \
+            'value="northern_ireland" \\n                            name="country"\\n' \
+            '                             checked'
+        self.content_webchat_error_selected_query = \
+            'value="address" \\n                            name="query"\\n                             checked'
+        self.content_common_error_panel_answer_en = 'There is a problem with your answer'
+        self.content_common_error_panel_answer_cy = "Mae problem gyda\\\'ch ateb"
+        self.content_common_error_select_an_option_en = 'Select an option'
+        self.content_common_error_select_an_option_cy = 'Dewiswch opsiwn'
+        self.content_webchat_error_enter_your_name_en = \
+            'class="panel__error"\\n            \\n        >\\n            <strong>Enter your name</strong>'
+        self.content_webchat_error_enter_your_name_cy = \
+            'class="panel__error"\\n            \\n        >\\n            <strong>Nodwch eich enw</strong>'
 
         self.addressindexsvc_url = f'{address_index_svc_url}/addresses/rh/postcode/'
         self.address_index_epoch_param = f'?epoch={aims_epoch}'
@@ -1089,6 +1122,15 @@ class RHTestCase(AioHTTPTestCase):
             'name_first_name': 'Bob', 'name_last_name': 'Bobbington-Browning Fortesque-Smythe',
             'action[save_continue]': '',
         }
+
+        self.content_common_enter_name_check_first = \
+            'name_first_name"\\n            value="Bob"'
+        self.content_common_enter_name_check_last = \
+            'name_last_name"\\n            value="Bobbington"'
+        self.content_common_enter_name_check_long_first = \
+            'name_first_name"\\n            value="Robert Albert Everest Reginald Bartholomew"'
+        self.content_common_enter_name_check_long_last = \
+            'name_last_name"\\n            value="Bobbington-Browning Fortesque-Smythe"'
 
         self.request_common_confirm_send_by_post_data_yes = {
             'request-name-address-confirmation': 'yes', 'action[save_continue]': ''

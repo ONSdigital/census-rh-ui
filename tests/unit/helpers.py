@@ -1889,25 +1889,53 @@ class TestHelpers(RHTestCase):
             if not display_region == 'ni':
                 self.assertIn(self.build_translation_link('enter-name', display_region), contents)
             if display_region == 'cy':
-                if first_name == '':
+                if (first_name == '') and (last_name == ''):
+                    self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                    self.assertNotIn(self.content_common_enter_name_check_last, contents)
                     self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
-                elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
-                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
-                elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
+                else:
+                    if first_name == '':
+                        self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_cy, contents)
+                    elif len(first_name) > 35:
+                        self.assertNotIn(self.content_common_enter_name_check_long_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_cy, contents)
+                    if last_name == '':
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_cy, contents)
+                    elif len(last_name) > 35:
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_long_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_cy, contents)
                 self.assertIn(self.content_request_common_enter_name_title_cy, contents)
             else:
-                if first_name == '':
+                if (first_name == '') and (last_name == ''):
+                    self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                    self.assertNotIn(self.content_common_enter_name_check_last, contents)
                     self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
-                elif len(first_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
-                if last_name == '':
                     self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
-                elif len(last_name) > 35:
-                    self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
+                else:
+                    if first_name == '':
+                        self.assertNotIn(self.content_common_enter_name_check_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_en, contents)
+                    elif len(first_name) > 35:
+                        self.assertNotIn(self.content_common_enter_name_check_long_first, contents)
+                        self.assertIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_first_name_overlength_en, contents)
+                    if last_name == '':
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_en, contents)
+                    elif len(last_name) > 35:
+                        self.assertIn(self.content_common_enter_name_check_first, contents)
+                        self.assertNotIn(self.content_common_enter_name_check_long_last, contents)
+                        self.assertIn(self.content_request_common_enter_name_error_last_name_overlength_en, contents)
                 self.assertIn(self.content_request_common_enter_name_page_title_error_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
