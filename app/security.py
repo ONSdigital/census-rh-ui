@@ -38,6 +38,7 @@ CSP = {
     'connect-src': [
         "'self'",
         'https://cdn.ons.gov.uk',
+        'https://www.google-analytics.com'
     ],
     'frame-src': [
         'https://www.googletagmanager.com',
