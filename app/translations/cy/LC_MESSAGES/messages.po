@@ -1243,7 +1243,7 @@ msgid ""
 "if you have lost or not received an access code. This can be sent to you "
 "by text or post."
 msgstr ""
-"Gallwch chi%(open)sofyn am god mynediad newydd%(close)s i ddechrau "
+"Gallwch chi %(open)sofyn am god mynediad newydd%(close)s i ddechrau "
 "cyfrifiad newydd os ydych chi wedi colli eich cod mynediad neu heb gael "
 "un. Gall y cod gael ei anfon atoch drwy neges destun neu drwy'r post."
 
