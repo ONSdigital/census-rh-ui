@@ -623,7 +623,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                     page_title = 'Confirm to send individual paper questionnaire'
             else:
                 if display_region == 'cy':
-                    page_title = 'Cadarnhau i anfon copi papur o Holiadur y Cartref'
+                    page_title = "Cadarnhau i anfon holiadur papur y cartref"
                 else:
                     page_title = 'Confirm to send household paper questionnaire'
 

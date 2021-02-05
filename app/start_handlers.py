@@ -579,7 +579,7 @@ class StartTransientAccommodationType(StartCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = 'Dewis math o lety'
+            page_title = 'Dewis math o gartref'
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'

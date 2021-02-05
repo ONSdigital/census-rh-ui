@@ -8,7 +8,7 @@
 
 {%- if ('/start/' in page_url) and (page_url != '/start/') and (timeout != 'true') -%}
     {%- set signout_button_value = {
-            'text': 'Exit',
+            'text': 'Gadael',
             'buttonStyle': 'exit',
             'url': url('StartExit:get', display_region='cy')
         }
@@ -27,7 +27,7 @@
                     },
                     {
                         'text': 'Cysylltu â ni',
-                        'url': domain_url_cy + '/contact-us/'
+                        'url': domain_url_cy + '/cysylltu-a-ni/'
                     },
                     {
                         'text': 'Ieithoedd',
@@ -146,11 +146,11 @@
         onsCookiesBanner({
             'statementTitle': 'Dywedwch wrthym a ydych yn derbyn cwcis',
             'statementText': "Rydym ni’n defnyddio <a href='" + domain_url_cy + "/cwcis" + "'>cwcis i gasglu gwybodaeth</a> am y ffordd rydych chi’n defnyddio cyfrifiad.gov.uk. Rydym ni’n defnyddio’r wybodaeth hon i sicrhau bod y wefan yn gweithio cystal â phosibl ac i wella ein gwasanaethau.",
-            'confirmationText': 'Rydych chi wedi derbyn yr holl gwcis. Gallwch chi <a href="' + domain_url_cy + '/cwcis' + '">newd eich dewisiadau o ran cwcis</a> ar unrhyw adeg.',
+            'confirmationText': 'Rydych chi wedi derbyn yr holl gwcis. Gallwch chi <a href="' + domain_url_cy + '/cwcis' + '">newid eich dewisiadau o ran cwcis</a> ar unrhyw adeg.',
             'secondaryButtonUrl': domain_url_cy + '/cwcis',
             'primaryButtonText': "Derbyn yr holl gwcis",
             'secondaryButtonText': "Gosod dewisiadau o ran cwcis",
-            'confirmationButtonText': 'Cuddio'
+            'confirmationButtonText': 'Cuddio hwn'
         })
     }}
 {%- endblock -%}

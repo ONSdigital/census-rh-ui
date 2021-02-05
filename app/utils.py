@@ -118,11 +118,11 @@ class View:
                 link = base_en
         elif requested_link == 'contact-us':
             if display_region == 'ni':
-                link = base_ni + '/contact-us'
+                link = base_ni + '/contact-us/'
             elif display_region == 'cy':
-                link = base_cy + '/cysylltu-a-ni'
+                link = base_cy + '/cysylltu-a-ni/'
             else:
-                link = base_en + '/contact-us'
+                link = base_en + '/contact-us/'
         elif requested_link == 'privacy':
             if display_region == 'ni':
                 link = base_ni + '/privacy-and-data-protection/'
