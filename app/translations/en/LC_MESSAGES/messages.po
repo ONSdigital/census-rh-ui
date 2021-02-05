@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-05 13:08+0000\n"
+"POT-Creation-Date: 2021-02-05 16:29+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -979,6 +979,10 @@ msgstr ""
 
 #: app/templates/start-expired.html:7
 msgid "This access code has already been used"
+msgstr ""
+
+#: app/templates/start-expired.html:9
+msgid "Someone has already submitted a census using this access code."
 msgstr ""
 
 #: app/templates/start-expired.html:12

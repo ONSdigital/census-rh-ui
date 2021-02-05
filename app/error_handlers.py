@@ -210,7 +210,6 @@ def check_display_region(request):
     base_attributes = {
         'domain_url_en': domain_url_en,
         'domain_url_cy': domain_url_cy,
-        'page_title': 'Error',
         'page_url': View.gen_page_url(request)
     }
 
@@ -218,17 +217,20 @@ def check_display_region(request):
         attributes = {
             **base_attributes,
             'display_region': 'ni',
+            'page_title': 'Error',
         }
     elif path_starts_with('/cy'):
         attributes = {
             **base_attributes,
             'display_region': 'cy',
             'locale': 'cy',
+            'page_title': 'Gwall',
         }
     else:
         attributes = {
             **base_attributes,
             'display_region': 'en',
+            'page_title': 'Error',
         }
 
     return attributes

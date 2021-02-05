@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-05 13:08+0000\n"
+"POT-Creation-Date: 2021-02-05 16:29+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -91,8 +91,8 @@ msgid ""
 msgstr ""
 "Rydych chi wedi dewis cyfeiriad yn yr Alban. Ewch i <a "
 "href=\"https://www.scotlandscensus.gov.uk/\"> wefan Cofnodion "
-"Cenedlaethol yr Alban</a> i gael gwybod sut i gymryd rhan yn y "
-"cyfrifiad ar gyfer yr Alban."
+"Cenedlaethol yr Alban</a> i gael gwybod sut i gymryd rhan yn y cyfrifiad "
+"ar gyfer yr Alban."
 
 #: app/templates/common-address-in-scotland.html:22
 #, python-format
@@ -756,7 +756,8 @@ msgid ""
 "A letter with your individual access code will arrive in a brown "
 "unbranded envelope"
 msgstr ""
-"Bydd llythyr yn cynnwys eich cod mynediad unigol yn cyrraedd mewn amlen blaen frown"
+"Bydd llythyr yn cynnwys eich cod mynediad unigol yn cyrraedd mewn amlen "
+"blaen frown"
 
 #: app/templates/request-common-confirm-send-by-post.html:139
 msgid "Large print"
@@ -1113,6 +1114,10 @@ msgstr ""
 #: app/templates/start-expired.html:7
 msgid "This access code has already been used"
 msgstr "Mae'r cod mynediad hwn eisoes wedi cael ei ddefnyddio"
+
+#: app/templates/start-expired.html:9
+msgid "Someone has already submitted a census using this access code."
+msgstr "Mae rhywun wedi cyflwyno cyfrifiad yn barod gan ddefnyddio'r cod mynediad hwn"
 
 #: app/templates/start-expired.html:12
 #, python-format
