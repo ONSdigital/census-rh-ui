@@ -21,6 +21,7 @@ from . import routes
 from . import security
 from . import session
 from . import settings
+from . import trace
 from .app_logging import logger_initial_config
 
 logger = get_logger('respondent-home')
@@ -83,6 +84,7 @@ def create_app(config_name=None) -> Application:
             security.nonce_middleware,
             session.setup(app_config),
             flash.flash_middleware,
+            trace.trace_middleware
         ],
         router=routing.ResourceRouter(),
     )

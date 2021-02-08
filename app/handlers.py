@@ -14,7 +14,6 @@ static_routes = RouteTableDef()
 @static_routes.view('/info', use_prefix=False)
 class Info(View):
     async def get(self, request):
-        self.setup_request(request)
         info = {
             'name': 'respondent-home-ui',
             'version': VERSION,
@@ -28,7 +27,6 @@ class Info(View):
 class LaunchEQ(View):
     @aiohttp_jinja2.template('start-launch-eq.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/launch-eq')
         if display_region == 'cy':
@@ -47,7 +45,6 @@ class LaunchEQ(View):
 
     @aiohttp_jinja2.template('start-launch-eq.html')
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/launch-eq')
 
@@ -55,7 +52,11 @@ class LaunchEQ(View):
 
         token = data.get('token')
 
-        logger.info('redirecting to eq', client_ip=request['client_ip'], region_of_site=display_region)
+        logger.info('redirecting to eq',
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
+                    region_of_site=display_region)
         eq_url = request.app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')
 
@@ -64,7 +65,6 @@ class LaunchEQ(View):
 class SignedOut(View):
     @aiohttp_jinja2.template('signed-out.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/signed-out')
         if display_region == 'cy':

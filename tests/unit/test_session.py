@@ -1,9 +1,15 @@
 from .helpers import TestHelpers
 from aiohttp.test_utils import unittest_run_loop
-from http import cookies
 
 
 class TestSessionHandling(TestHelpers):
+
+    def clear_session(self):
+        """
+        Ensure session cleared from previous requests
+        """
+        jar = self.client._session.cookie_jar
+        jar.clear()
 
     def build_url(self, class_name, method, display_region=None, user_journey='', sub_user_journey='', request_type=''):
         if not display_region:
@@ -21,6 +27,7 @@ class TestSessionHandling(TestHelpers):
             self, class_name, method, display_region=None, user_journey='', sub_user_journey='', request_type=''):
         url = self.build_url(
             class_name, method, display_region, user_journey, sub_user_journey, request_type)
+        self.clear_session()
         with self.assertLogs('respondent-home', 'WARN') as cm:
             if method == 'POST':
                 response = await self.client.request('POST', url, allow_redirects=False)
@@ -55,13 +62,16 @@ class TestSessionHandling(TestHelpers):
             self, class_name, method, display_region=None, user_journey='', sub_user_journey=''):
         url = self.build_url(
             class_name, method, display_region, user_journey, sub_user_journey)
-        cookie = {'RH_SESSION': '{"attributes" : "Dummy" }'}
+        self.clear_session()
+        cookie = {'RH_SESSION': '{ "session": {"client_id": "36be6b97-b4de-4718-8a74-8b27fb03ca8c"}}'}
+        header = {"X-Cloud-Trace-Context": "0123456789/0123456789012345678901;o=1"}
         with self.assertLogs('respondent-home', 'WARN') as cm:
             if method == 'POST':
-                response = await self.client.request('POST', url, allow_redirects=False, cookies=cookie)
+                response = await self.client.request('POST', url, allow_redirects=False, cookies=cookie, headers=header)
             else:
-                response = await self.client.request('GET', url, allow_redirects=False, cookies=cookie)
-        self.assertLogEvent(cm, 'permission denied')
+                response = await self.client.request('GET', url, allow_redirects=False, cookies=cookie,  headers=header)
+        self.assertLogEvent(cm, 'permission denied',
+                            client_id='36be6b97-b4de-4718-8a74-8b27fb03ca8c', trace='0123456789')
         self.assertEqual(response.status, 403)
         contents = str(await response.content.read())
         self.assertIn(self.get_logo(display_region if display_region else 'ni'), contents)

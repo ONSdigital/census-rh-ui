@@ -125,14 +125,18 @@ async def get_permitted_session(request) -> Session:
     try:
         identity = session[SESSION_KEY]
         logger.info('permission granted',
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
                     identity=identity,
-                    url=request.rel_url.human_repr(),
-                    client_ip=request['client_ip'])
+                    url=request.rel_url.human_repr())
         return session
     except KeyError:
         logger.warn('permission denied',
-                    url=request.rel_url.human_repr(),
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
+                    url=request.rel_url.human_repr())
         raise HTTPForbidden
 
 
@@ -146,12 +150,16 @@ async def forget(request):
         identity = session[SESSION_KEY]
         session.pop(SESSION_KEY, None)
         logger.info('identity forgotten',
-                    identity=identity,
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
+                    identity=identity)
     except KeyError:
         logger.warn('identity not previously remembered',
-                    url=request.rel_url.human_repr(),
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
+                    url=request.rel_url.human_repr())
 
 
 async def remember(identity, request):
@@ -163,6 +171,8 @@ async def remember(identity, request):
     session[SESSION_KEY] = identity
     logger.info('identity remembered',
                 client_ip=request['client_ip'],
+                client_id=request['client_id'],
+                trace=request['trace'],
                 identity=identity)
 
 
@@ -174,10 +184,14 @@ async def invalidate(request):
     try:
         session.invalidate()
         logger.info('session invalidated',
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'])
     except KeyError:
         logger.warn('session already invalidated',
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'])
 
 
 def get_sha256_hash(uac: str):

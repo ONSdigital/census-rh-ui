@@ -68,7 +68,10 @@ async def get_existing_session(request, user_journey, sub_user_journey=None) -> 
     if not session.new:
         return session
     else:
-        logger.warn('session timed out', client_ip=request['client_ip'])
+        logger.warn('session timed out',
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'])
         raise SessionTimeout(user_journey, sub_user_journey)
 
 
@@ -76,5 +79,5 @@ def get_session_value(session, key, user_journey, sub_user_journey=None):
     try:
         return session[key]
     except KeyError:
-        logger.info(f'Failed to extract session key {key}')
+        logger.info(f'Failed to extract session key {key}', client_id=session['client_id'])
         raise SessionTimeout(user_journey, sub_user_journey)

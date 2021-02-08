@@ -30,7 +30,6 @@ web_form_routes = RouteTableDef()
 class WebForm(View):
     @aiohttp_jinja2.template('web-form.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             page_title = 'Gwe-ffurflen'
@@ -55,7 +54,6 @@ class WebForm(View):
 
     @aiohttp_jinja2.template('web-form.html')
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/web-form')
 
@@ -110,12 +108,20 @@ class WebForm(View):
             form_valid = False
 
         if not form_valid:
-            logger.info('web form submission error', client_ip=request['client_ip'], region_of_site=display_region)
+            logger.info('web form submission error',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             raise HTTPFound(
                 request.app.router['WebForm:get'].url_for(display_region=display_region))
 
         else:
-            logger.info('call web form endpoint', client_ip=request['client_ip'], region_of_site=display_region)
+            logger.info('call web form endpoint',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             if display_region == 'cy':
                 language = 'CY'
             else:
@@ -145,7 +151,6 @@ class WebForm(View):
 class WebFormSuccess(View):
     @aiohttp_jinja2.template('web-form-success.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         if display_region == 'cy':
             page_title = "Diolch am gysylltu â ni"

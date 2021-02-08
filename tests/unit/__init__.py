@@ -208,7 +208,7 @@ class RHTestCase(AioHTTPTestCase):
                 if (event in record.message
                         and all(record.__dict__[key] == val
                                 for key, val in kwargs.items())):
-                    break
+                    return record
             except KeyError:
                 pass
         else:

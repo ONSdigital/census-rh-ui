@@ -24,15 +24,12 @@ start_routes = RouteTableDef()
 
 
 class StartCommon(View):
-    def setup_request(self, request):
-        super().setup_request(request)
-
     def setup_uac_hash(self, request, uac, lang):
         try:
             request['uac_hash'] = self.uac_hash(uac)
         except TypeError:
             logger.warn('attempt to use a malformed access code',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             message = {
                 'en': INVALID_CODE_MSG,
                 'cy': INVALID_CODE_MSG_CY,
@@ -66,7 +63,6 @@ class Start(StartCommon):
         :param request:
         :return:
         """
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
@@ -86,6 +82,8 @@ class Start(StartCommon):
                 logger.info('assisted digital query parameter found',
                             adlocation=adlocation,
                             client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
                             region_of_site=display_region)
                 return {
                     'display_region': display_region,
@@ -97,7 +95,9 @@ class Start(StartCommon):
             else:
                 logger.warn('assisted digital query parameter not numeric - ignoring',
                             adlocation=adlocation,
-                            client_ip=request['client_ip'])
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'])
                 return {
                     'display_region': display_region,
                     'page_title': page_title,
@@ -105,7 +105,8 @@ class Start(StartCommon):
                     'page_url': View.gen_page_url(request)
                 }
         except KeyError:
-            logger.info('no adlocation present', region_of_site=display_region)
+            logger.info('no adlocation present',
+                        client_id=request['client_id'], trace=request['trace'], region_of_site=display_region)
             return {
                 'display_region': display_region,
                 'page_title': page_title,
@@ -119,14 +120,17 @@ class Start(StartCommon):
         :param request:
         :return: address confirmation view
         """
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start')
 
         data = await request.post()
 
         if data.get('uac') == '':
-            logger.info('access code not supplied', client_ip=request['client_ip'], region_of_site=display_region)
+            logger.info('access code not supplied',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, BAD_CODE_MSG_CY)
             else:
@@ -134,7 +138,11 @@ class Start(StartCommon):
             raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
 
         elif data.get('uac').upper()[0:3] == 'CE4':
-            logger.info('CE4 case', client_ip=request['client_ip'], region_of_site=display_region)
+            logger.info('CE4 case',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             if display_region == 'ni':
                 raise HTTPFound(request.app.router['StartNICE4Code:get'].url_for())
             else:
@@ -148,18 +156,23 @@ class Start(StartCommon):
         except ClientResponseError as ex:
             if ex.status == 404:
                 logger.warn('attempt to use an invalid access code',
-                            client_ip=request['client_ip'])
+                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 if display_region == 'cy':
                     flash(request, INVALID_CODE_MSG_CY)
                 else:
                     flash(request, INVALID_CODE_MSG)
                 raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
             else:
-                logger.error('error processing access code', client_ip=request['client_ip'])
+                logger.error('error processing access code',
+                             client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 raise ex
 
         if uac_json['caseId'] is None:
-            logger.info('unlinked case', client_ip=request['client_ip'], region_of_site=display_region)
+            logger.info('unlinked case',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             session = await get_session(request)
             session['attributes'] = {}
             session['case'] = uac_json
@@ -182,7 +195,7 @@ class Start(StartCommon):
             raise InvalidEqPayLoad('Could not retrieve address details')
 
         logger.debug('address confirmation displayed',
-                     client_ip=request['client_ip'])
+                     client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
         session = await get_session(request)
         session['attributes'] = attributes
         session['case'] = uac_json
@@ -211,7 +224,6 @@ class Start(StartCommon):
 class StartCodeForNorthernIreland(StartCommon):
     @aiohttp_jinja2.template('start-code-for-northern-ireland.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/code-for-northern-ireland')
 
@@ -237,7 +249,6 @@ class StartCodeForNorthernIreland(StartCommon):
 class StartNICE4Code(StartCommon):
     @aiohttp_jinja2.template('start-code-for-ni-ce-manager.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = 'ni'
         self.log_entry(request, display_region + '/start/code-for-ce-manager')
 
@@ -254,7 +265,6 @@ class StartNICE4Code(StartCommon):
 class StartCodeForEnglandAndWales(StartCommon):
     @aiohttp_jinja2.template('start-code-for-england-and-wales.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = 'ni'
         self.log_entry(request, display_region + '/start/code-for-england-and-wales')
 
@@ -279,7 +289,6 @@ class StartConfirmAddress(StartCommon):
         Address Confirmation get.
         """
         display_region = request.match_info['display_region']
-        self.setup_request(request)
         self.log_entry(request, display_region + '/start/confirm-address')
 
         session = await get_permitted_session(request)
@@ -302,6 +311,8 @@ class StartConfirmAddress(StartCommon):
         if (display_region == 'cy') and (case_region == 'E'):
             logger.info('welsh url with english region - language_code will be set to en for eq',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         region_of_site=display_region,
                         region_of_case=case_region,
                         postcode=attributes['postcode'])
@@ -324,7 +335,6 @@ class StartConfirmAddress(StartCommon):
         """
         Address Confirmation flow. If correct address will build EQ payload and send to EQ.
         """
-        self.setup_request(request)
         session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/confirm-address')
@@ -343,6 +353,8 @@ class StartConfirmAddress(StartCommon):
         except KeyError:
             logger.info('address confirmation error',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         region_of_site=display_region,
                         postcode=attributes['postcode'])
             if display_region == 'cy':
@@ -375,6 +387,8 @@ class StartConfirmAddress(StartCommon):
             # catch all just in case, should never get here
             logger.info('address confirmation error',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         user_selection=address_confirmation,
                         region_of_site=display_region,
                         postcode=attributes['postcode'])
@@ -393,7 +407,6 @@ class StartNILanguageOptions(StartCommon):
         """
         Address Confirmation get.
         """
-        self.setup_request(request)
         self.log_entry(request, 'ni/start/language-options')
         await get_permitted_session(request)
 
@@ -407,7 +420,6 @@ class StartNILanguageOptions(StartCommon):
                 'display_region': 'ni'}
 
     async def post(self, request):
-        self.setup_request(request)
         self.log_entry(request, 'ni/start/language-options')
         session = await get_permitted_session(request)
         data = await request.post()
@@ -419,7 +431,7 @@ class StartNILanguageOptions(StartCommon):
             language_option = data['language-option']
         except KeyError:
             logger.info('ni language option error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             flash(request, START_LANGUAGE_OPTION_MSG)
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
@@ -438,7 +450,7 @@ class StartNILanguageOptions(StartCommon):
         else:
             # catch all just in case, should never get here
             logger.info('language selection error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             flash(request, START_LANGUAGE_OPTION_MSG)
             raise HTTPFound(
                 request.app.router['StartNILanguageOptions:get'].url_for())
@@ -451,7 +463,6 @@ class StartNISelectLanguage(StartCommon):
         """
         Address Confirmation get.
         """
-        self.setup_request(request)
         self.log_entry(request, 'ni/start/select-language')
         await get_permitted_session(request)
 
@@ -465,7 +476,6 @@ class StartNISelectLanguage(StartCommon):
                 'display_region': 'ni'}
 
     async def post(self, request):
-        self.setup_request(request)
         self.log_entry(request, 'ni/start/select-language')
         session = await get_permitted_session(request)
         data = await request.post()
@@ -477,7 +487,7 @@ class StartNISelectLanguage(StartCommon):
             language_option = data['language-option']
         except KeyError:
             logger.info('ni language option error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             flash(request, START_LANGUAGE_OPTION_MSG)
             raise HTTPFound(
                 request.app.router['StartNISelectLanguage:get'].url_for())
@@ -494,7 +504,7 @@ class StartNISelectLanguage(StartCommon):
         else:
             # catch all just in case, should never get here
             logger.info('language selection error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             flash(request, START_LANGUAGE_OPTION_MSG)
             raise HTTPFound(
                 request.app.router['StartNISelectLanguage:get'].url_for())
@@ -509,7 +519,6 @@ class StartNISelectLanguage(StartCommon):
 class StartTransientEnterTownName(StartCommon):
     @aiohttp_jinja2.template('start-transient-enter-town.html')
     async def get(self, request):
-        self.setup_request(request)
         await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
@@ -536,7 +545,6 @@ class StartTransientEnterTownName(StartCommon):
 
     @aiohttp_jinja2.template('start-transient-enter-town.html')
     async def post(self, request):
-        self.setup_request(request)
         session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
@@ -558,6 +566,8 @@ class StartTransientEnterTownName(StartCommon):
         except KeyError:
             logger.info('error town name empty',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message("Rhowch eich tref neu ddinas agosaf", 'ERROR',
@@ -574,7 +584,6 @@ class StartTransientEnterTownName(StartCommon):
 class StartTransientAccommodationType(StartCommon):
     @aiohttp_jinja2.template('start-transient-accommodation-type.html')
     async def get(self, request):
-        self.setup_request(request)
         await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
@@ -600,7 +609,6 @@ class StartTransientAccommodationType(StartCommon):
 
     @aiohttp_jinja2.template('start-transient-accommodation-type.html')
     async def post(self, request):
-        self.setup_request(request)
         session = await get_permitted_session(request)
         display_region = request.match_info['display_region']
 
@@ -632,7 +640,10 @@ class StartTransientAccommodationType(StartCommon):
                                               session.get('adlocation'))
 
         except KeyError:
-            logger.info('transient accommodation type error', client_ip=request['client_ip'],
+            logger.info('transient accommodation type error',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message("Dewiswch ateb", 'ERROR',
@@ -650,7 +661,6 @@ class StartTransientAccommodationType(StartCommon):
 @start_routes.view(r'/' + View.valid_display_regions + '/start/exit/')
 class StartExit(StartCommon):
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         self.log_entry(request, display_region + '/start/exit')
         await invalidate(request)
