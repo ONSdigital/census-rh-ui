@@ -520,7 +520,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_404_error_secondary_en = 'If you entered a web address, check it is correct.'
         self.content_common_404_error_title_cy = "Heb ddod o hyd i\\\'r dudalen"
         self.content_common_404_error_secondary_cy = \
-            "Os gwnaethoch nodi cyfeiriad gwefan, gwnewch yn si\\xc5\\xb5r ei fod yn gywir."
+            "Os gwnaethoch chi roi cyfeiriad gwe, gwnewch yn si\\xc5\\xb5r ei fod yn gywir."
 
         self.content_common_timeout_en = 'Your session has timed out due to inactivity'
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
@@ -582,7 +582,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_title_en = 'Start census'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
         self.content_start_title_cy = "Dechrau\\\'r cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch god mynediad eich cartref, sy\\\'n cynnwys 16 o nodau"
+        self.content_start_uac_title_cy = "Rhowch eich cod mynediad, sy\\\'n cynnwys 16 o nodau"
 
         self.content_start_uac_expired_en = 'This access code has already been used'
         self.content_start_uac_expired_cy = "Mae\\\'r cod mynediad hwn eisoes wedi cael ei ddefnyddio"
@@ -1270,7 +1270,7 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Nodi rhif ff\\xc3\\xb4n symudol - Cyfrifiad 2021</title>'
         self.content_request_code_enter_mobile_page_title_error_cy = \
             '<title>Gwall: Nodi rhif ff\\xc3\\xb4n symudol - Cyfrifiad 2021</title>'
-        self.content_request_code_enter_mobile_title_cy = "Beth yw eich rhif symudol?"
+        self.content_request_code_enter_mobile_title_cy = "Beth yw eich rhif ff\\xc3\\xb4n symudol?"
         self.content_request_code_enter_mobile_error_empty_cy = "Rhowch eich rhif ff\\xc3\\xb4n symudol"
         self.content_request_code_enter_mobile_error_invalid_cy = \
             "Rhowch rif ff\\xc3\\xb4n symudol yn y Deyrnas Unedig mewn fformat dilys, er enghraifft, " \
@@ -1304,7 +1304,8 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Cadarnhau i anfon cod mynediad unigol drwy neges destun - Cyfrifiad 2021</title>'
         self.content_request_code_confirm_send_by_text_page_title_individual_error_cy = \
             '<title>Gwall: Cadarnhau i anfon cod mynediad unigol drwy neges destun - Cyfrifiad 2021</title>'
-        self.content_request_code_confirm_send_by_text_title_cy = "Ydy\\xe2\\x80\\x99r rhif symudol hwn yn gywir?"
+        self.content_request_code_confirm_send_by_text_title_cy = \
+            "Ydy\\xe2\\x80\\x99r rhif ff\\xc3\\xb4n symudol hwn yn gywir?"
         self.content_request_code_confirm_send_by_text_error_cy = "Dewiswch ateb"
 
         self.content_request_code_sent_by_text_page_title_household_en = \
@@ -1431,7 +1432,7 @@ class RHTestCase(AioHTTPTestCase):
             "Ydych chi am anfon cod mynediad newydd ar gyfer y cartref i\\\'r cyfeiriad hwn?"
         self.content_request_common_confirm_send_by_post_error_cy = "Dewiswch ateb"
         self.content_request_code_confirm_send_by_post_individual_message_cy = \
-            "Bydd llythyr yn cynnwys cod mynediad unigol yn cyrraedd mewn amlen blaen frown"
+            "Bydd llythyr yn cynnwys eich cod mynediad unigol yn cyrraedd mewn amlen blaen frown"
         self.content_request_questionnaire_confirm_send_by_post_individual_message_cy = \
             "Bydd eich holiadur papur i unigolion yn cyrraedd mewn amlen blaen wen"
         self.content_request_code_confirm_send_by_post_option_yes_cy = "Ydw, anfonwch y cod mynediad drwy\\\'r post"
@@ -2335,9 +2336,9 @@ class RHTestCase(AioHTTPTestCase):
             'I need a large-print questionnaire'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
-            '<title>Cadarnhau i anfon copi papur o Holiadur y Cartref - Cyfrifiad 2021</title>'
+            '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_confirm_send_by_post_page_title_error_cy = \
-            '<title>Gwall: Cadarnhau i anfon copi papur o Holiadur y Cartref - Cyfrifiad 2021</title>'
+            '<title>Gwall: Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_confirm_send_by_post_title_cy = \
             "Ydych chi am anfon holiadur papur y cartref i\\\'r cyfeiriad hwn?"
         self.content_request_questionnaire_confirm_send_by_post_individual_page_title_cy = \
@@ -2787,9 +2788,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_transient_accommodation_type_value_caravan_en = "Caravan or live-in vehicle"
         self.content_start_transient_accommodation_type_value_tent_en = "Tent or temporary structure"
         self.content_start_transient_accommodation_type_page_title_cy = \
-            "<title>Dewis math o lety - Cyfrifiad 2021</title>"
+            "<title>Dewis math o gartref - Cyfrifiad 2021</title>"
         self.content_start_transient_accommodation_type_page_title_error_cy = \
-            "<title>Gwall: Dewis math o lety - Cyfrifiad 2021</title>"
+            "<title>Gwall: Dewis math o gartref - Cyfrifiad 2021</title>"
         self.content_start_transient_accommodation_type_title_cy = \
             "Pa un o\\xe2\\x80\\x99r canlynol sy\\xe2\\x80\\x99n disgrifio eich math o gartref orau?"
         self.content_start_transient_accommodation_type_error_cy = "Dewiswch ateb"

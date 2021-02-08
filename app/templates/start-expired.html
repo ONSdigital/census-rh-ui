@@ -6,7 +6,7 @@
 
     <h1>{{ _('This access code has already been used') }}</h1>
 
-    <p>Someone has already submitted a census using this access code.</p>
+    <p>{{ _('Someone has already submitted a census using this access code.') }}</p>
 
     {%- autoescape false -%}
         <p>{{ _('If you need to start your census again, you can %(open)srequest a new access code%(close)s.', open='<a href="%s">' % request_code_link, close='</a>')|safe }}</p>
