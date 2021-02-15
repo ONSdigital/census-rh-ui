@@ -106,7 +106,10 @@ class Start(StartCommon):
                 }
         except KeyError:
             logger.info('no adlocation present',
-                        client_id=request['client_id'], trace=request['trace'], region_of_site=display_region)
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region)
             return {
                 'display_region': display_region,
                 'page_title': page_title,

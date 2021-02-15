@@ -50,6 +50,7 @@ class RetryRequest:
             raise ex
         else:
             logger.debug('successfully connected to service',
+                         client_ip=self.request['client_ip'],
                          client_id=self.request['client_id'],
                          trace=self.request['trace'],
                          url=self.url)
@@ -61,7 +62,10 @@ class RetryRequest:
                                                                                        ClientConnectorError))))
     async def _request_basic(self):
         # basic request without keep-alive to avoid terminating service.
-        logger.info('request using basic connection', client_id=self.request['client_id'], trace=self.request['trace'])
+        logger.info('request using basic connection',
+                    client_ip=self.request['client_ip'],
+                    client_id=self.request['client_id'],
+                    trace=self.request['trace'])
 
         async with aiohttp.request(
                 self.method, self.url, auth=self.auth, json=self.json, headers=self.headers) as resp:
@@ -93,6 +97,7 @@ class RetryRequest:
         Finally the error will be propagated.
         """
         logger.debug('making request with handler',
+                     client_ip=self.request['client_ip'],
                      client_id=self.request['client_id'],
                      trace=self.request['trace'],
                      method=self.method,
@@ -103,6 +108,7 @@ class RetryRequest:
             except RetryError as retry_ex:
                 attempts = retry_ex.last_attempt.attempt_number
                 logger.warn('Could not make request using normal pooled connection',
+                            client_ip=self.request['client_ip'],
                             client_id=self.request['client_id'],
                             trace=self.request['trace'],
                             attempts=attempts)
@@ -110,6 +116,7 @@ class RetryRequest:
         except ClientResponseError as ex:
             if not ex.status == 404:
                 logger.error('error in response',
+                             client_ip=self.request['client_ip'],
                              client_id=self.request['client_id'],
                              trace=self.request['trace'],
                              url=self.url,

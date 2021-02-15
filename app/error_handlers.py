@@ -40,6 +40,7 @@ def create_error_middleware(overrides):
 
             if request.path + '/' == index_resource.canonical.replace('{display_region}', display_region):
                 logger.debug('redirecting to index',
+                             client_ip=request['client_ip'],
                              client_id=request['client_id'],
                              trace=request['trace'],
                              path=request.path)
@@ -76,7 +77,10 @@ def create_error_middleware(overrides):
 
 
 async def inactive_case(request, case_type):
-    logger.warn('attempt to use an inactive access code', client_id=request['client_id'], trace=request['trace'])
+    logger.warn('attempt to use an inactive access code',
+                client_ip=request['client_ip'],
+                client_id=request['client_id'],
+                trace=request['trace'])
     attributes = check_display_region(request)
     attributes['case_type'] = case_type
     return jinja.render_template('start-expired.html', request, attributes)
@@ -84,6 +88,7 @@ async def inactive_case(request, case_type):
 
 async def ce_closed(request, collex_id):
     logger.warn('attempt to access collection exercise that has already ended',
+                client_ip=request['client_ip'],
                 client_id=request['client_id'],
                 trace=request['trace'],
                 collex_id=collex_id)
@@ -93,6 +98,7 @@ async def ce_closed(request, collex_id):
 
 async def eq_error(request, message: str):
     logger.error('service failed to build eq payload',
+                 client_ip=request['client_ip'],
                  client_id=request['client_id'],
                  trace=request['trace'],
                  exception=message)
@@ -102,6 +108,7 @@ async def eq_error(request, message: str):
 
 async def connection_error(request, message: str):
     logger.error('service connection error',
+                 client_ip=request['client_ip'],
                  client_id=request['client_id'],
                  trace=request['trace'],
                  exception=message)
@@ -111,6 +118,7 @@ async def connection_error(request, message: str):
 
 async def payload_error(request, url: str):
     logger.error('service failed to return expected json payload',
+                 client_ip=request['client_ip'],
                  client_id=request['client_id'],
                  trace=request['trace'],
                  url=url)
@@ -120,6 +128,7 @@ async def payload_error(request, url: str):
 
 async def key_error(request, error):
     logger.error('required value ' + str(error) + ' missing',
+                 client_ip=request['client_ip'],
                  client_id=request['client_id'],
                  trace=request['trace'],
                  missing_key=error)

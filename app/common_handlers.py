@@ -651,7 +651,10 @@ class CommonConfirmAddress(CommonCommon):
                     hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'],
+                                    status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
                                     client_ip=request['client_ip'],

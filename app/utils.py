@@ -67,6 +67,7 @@ class View:
     def log_entry(request, endpoint):
         method = request.method
         logger.info(f"received {method} on endpoint '{endpoint}'",
+                    client_ip=request['client_ip'],
                     client_id=request['client_id'],
                     trace=request['trace'],
                     method=request.method,

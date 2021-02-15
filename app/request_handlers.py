@@ -67,6 +67,7 @@ class RequestCodeIndividual(RequestCommon):
                 case_type_value = attributes['case_type']
                 if case_type_value:
                     logger.info('have session and case_type - directing to select method',
+                                client_ip=request['client_ip'],
                                 client_id=request['client_id'],
                                 trace=request['trace'],
                                 is_individual=session['attributes']['individual'],
@@ -82,7 +83,10 @@ class RequestCodeIndividual(RequestCommon):
             attributes = {'individual': True}
             session['attributes'] = attributes
             logger.info('no session - directing to enter address',
-                        client_id=request['client_id'], trace=request['trace'], session_attributes=attributes)
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        session_attributes=attributes)
             raise HTTPFound(
                 request.app.router['CommonEnterAddress:get'].url_for(user_journey='request',
                                                                      sub_user_journey=request_type,
