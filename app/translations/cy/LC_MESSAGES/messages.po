@@ -102,7 +102,7 @@ msgstr "Fel arall, gallwch chi %(open)sgysylltu â ni%(close)s am help."
 #: app/templates/common-confirm-address.html:23
 #: app/templates/start-confirm-address.html:21
 msgid "Yes, this is the correct address"
-msgstr "Ie, hwn yw'r cyfeiriad cywir"
+msgstr "Ie, dyma'r cyfeiriad cywir"
 
 #: app/templates/common-confirm-address.html:30
 msgid "No, search for address again"
@@ -122,7 +122,7 @@ msgstr "Dewiswch ateb"
 #: app/templates/start-confirm-address.html:56
 #: app/templates/start-confirm-address.html:72
 msgid "Is this the correct address?"
-msgstr "Ai hwn yw'r cyfeiriad cywir?"
+msgstr "Ai dyma'r cyfeiriad cywir?"
 
 #: app/templates/common-confirm-address.html:62
 #: app/templates/request-common-confirm-send-by-post.html:106
@@ -562,7 +562,7 @@ msgstr "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
 #: app/templates/request-code-select-how-to-receive.html:27
 msgid "We can only send access codes to the registered address"
-msgstr "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+msgstr "Dim ond i'r cyfeiriad cofrestredig y gallwn anfon codau mynediad"
 
 #: app/templates/request-code-select-how-to-receive.html:31
 msgid ""
@@ -572,7 +572,7 @@ msgstr "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
 #: app/templates/request-code-select-how-to-receive.html:33
 msgid "We can only send access codes to the registered household address"
-msgstr "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+msgstr "​Dim ond i'r cyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
 
 #: app/templates/request-code-select-how-to-receive.html:41
 msgid "Text message"
@@ -913,7 +913,7 @@ msgid ""
 "All households should complete the census on <strong>Sunday 21 March "
 "2021</strong> or as soon as possible after."
 msgstr ""
-"Dylai pob cartref gwblhau'r cyfrifiad ddydd <strong>ddydd Sul 21 Mawrth "
+"Dylai pob cartref gwblhau'r cyfrifiad <strong>ddydd Sul 21 Mawrth "
 "2021</strong>, neu cyn gynted â phosibl ar ôl y dyddiad hwnnw."
 
 #: app/templates/request-questionnaire-household.html:25
@@ -1024,7 +1024,7 @@ msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
 
 #: app/templates/request-timeout.html:12
 msgid "To protect your information we have timed you out"
-msgstr "I ddiogelu eich gwybodaeth, rydyn ni wedi rhoi terfyn amser ar eich sesiwn"
+msgstr "Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser"
 
 #: app/templates/request-timeout.html:16
 #, python-format
@@ -1086,7 +1086,7 @@ msgid ""
 "Keep your 16-character access code safe. You will need to enter it again "
 "to %(open)saccess your census%(close)s."
 msgstr ""
-"Cadwch eich cod mynediad, sy'n cynnwys 16 o nodau, yn ddiogel. Bydd angen"
+"Cadwch eich cod mynediad, sy'n cynnwys 16 nod, yn ddiogel. Bydd angen"
 " i chi roi eich cod eto er mwyn %(open)smynd at eich cyfrifiad%(close)s."
 
 #: app/templates/start-code-for-northern-ireland.html:5
@@ -1101,7 +1101,7 @@ msgstr ""
 
 #: app/templates/start-confirm-address.html:28
 msgid "No, this is not the correct address"
-msgstr "Na, nid hwn yw'r cyfeiriad cywir"
+msgstr "Na, nid dyma'r cyfeiriad cywir"
 
 #: app/templates/start-confirm-address.html:45
 msgid ""
@@ -1229,7 +1229,7 @@ msgstr "Ble i ddod o hyd i'ch cod mynediad"
 
 #: app/templates/start.html:84
 msgid "Enter your 16-character access code"
-msgstr "Rhowch eich cod mynediad, sy'n cynnwys 16 o nodau"
+msgstr "Rhowch eich cod mynediad, sy'n cynnwys 16 nod"
 
 #: app/templates/start.html:85
 msgid ""
@@ -1249,7 +1249,7 @@ msgstr ""
 
 #: app/templates/start.html:104
 msgid "Access census"
-msgstr "Mynd at y cyfrifiad"
+msgstr "Agor y cyfrifiad"
 
 #: app/templates/start.html:110
 msgid "If you don’t have an access code"

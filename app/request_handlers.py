@@ -1090,7 +1090,7 @@ class RequestQuestionnaireManager(RequestCommon):
         display_region = request.match_info['display_region']
 
         if display_region == 'cy':
-            page_title = "Ni allwn anfon holiaduron papur at reolwyr"
+            page_title = "Methu anfon holiaduron papur at reolwyr"
             locale = 'cy'
         else:
             page_title = 'Cannot send paper questionnaires to managers'

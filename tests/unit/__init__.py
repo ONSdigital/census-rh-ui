@@ -450,9 +450,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_confirm_address_page_title_cy = '<title>Cadarnhau cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_confirm_address_page_title_error_cy = \
             '<title>Gwall: Cadarnhau cyfeiriad - Cyfrifiad 2021</title>'
-        self.content_common_confirm_address_title_cy = "Ai hwn yw\\\'r cyfeiriad cywir?"
+        self.content_common_confirm_address_title_cy = "Ai dyma\\\'r cyfeiriad cywir?"
         self.content_common_confirm_address_error_cy = "Dewiswch ateb"
-        self.content_common_confirm_address_value_yes_cy = "Ie, hwn yw\\\'r cyfeiriad cywir"
+        self.content_common_confirm_address_value_yes_cy = "Ie, dyma\\\'r cyfeiriad cywir"
         self.content_common_confirm_address_value_no_cy = "Na, rwyf am chwilio am fy nghyfeiriad eto"
 
         self.content_common_ce_room_number_text = 'Room A8'
@@ -582,7 +582,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_title_en = 'Start census'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
         self.content_start_title_cy = "Dechrau\\\'r cyfrifiad"
-        self.content_start_uac_title_cy = "Rhowch eich cod mynediad, sy\\\'n cynnwys 16 o nodau"
+        self.content_start_uac_title_cy = "Rhowch eich cod mynediad, sy\\\'n cynnwys 16 nod"
 
         self.content_start_uac_expired_en = 'This access code has already been used'
         self.content_start_uac_expired_cy = "Mae\\\'r cod mynediad hwn eisoes wedi cael ei ddefnyddio"
@@ -605,9 +605,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_confirm_address_page_title_cy = '<title>Cadarnhau cyfeiriad - Cyfrifiad 2021</title>'
         self.content_start_confirm_address_page_title_error_cy = \
             '<title>Gwall: Cadarnhau cyfeiriad - Cyfrifiad 2021</title>'
-        self.content_start_confirm_address_title_cy = "Ai hwn yw\\\'r cyfeiriad cywir?"
-        self.content_start_confirm_address_option_yes_cy = "Ie, hwn yw\\\'r cyfeiriad cywir"
-        self.content_start_confirm_address_option_no_cy = "Na, nid hwn yw\\\'r cyfeiriad cywir"
+        self.content_start_confirm_address_title_cy = "Ai dyma\\\'r cyfeiriad cywir?"
+        self.content_start_confirm_address_option_yes_cy = "Ie, dyma\\\'r cyfeiriad cywir"
+        self.content_start_confirm_address_option_no_cy = "Na, nid dyma\\\'r cyfeiriad cywir"
         self.content_start_confirm_address_error_cy = "Dewiswch ateb"
         self.content_start_confirm_address_region_warning_cy = \
             'Mae eich cyfeiriad yn Lloegr, felly dim ond yn Saesneg y gallwch chi gwblhau eich cyfrifiad'
@@ -656,7 +656,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_timeout_secondary_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_request_timeout_secondary_cy = \
-            'I ddiogelu eich gwybodaeth, rydyn ni wedi rhoi terfyn amser ar eich sesiwn'
+            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_request_timeout_restart_en = 're-enter your postcode'
         self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
 
@@ -1210,11 +1210,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_select_how_to_receive_option_text_cy = "Neges destun"
         self.content_request_code_select_how_to_receive_option_post_cy = "Post"
         self.content_request_code_select_how_to_receive_option_post_hint_cy = \
-            "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+            "Dim ond i\\\'r cyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
         self.content_request_code_select_how_to_receive_option_post_hint_individual_cy = \
             "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
         self.content_request_code_select_how_to_receive_option_post_hint_ce_cy = \
-            "Dim ond i gyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+            "Dim ond i\\\'r cyfeiriad cofrestredig y gallwn anfon codau mynediad"
         self.content_request_code_select_how_to_receive_option_post_hint_ce_individual_cy = \
             "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
