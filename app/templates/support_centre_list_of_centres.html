@@ -25,7 +25,7 @@
 
             <h2 class="u-fs-l u-mb-xs">{{ location_name }}</h2>
 
-            <div><span class="u-mb-s tag">{{ _('%(distance_in_miles)s miles away', distance_in_miles=centre['distanceInMiles'] )|safe }}</span></div>
+            <div><span class="u-mb-s distance">{{ _('%(distance_in_miles)s miles away', distance_in_miles=centre['distanceInMiles'] )|safe }}</span></div>
 
             {%- if display_region == 'cy' -%}
                 {%- autoescape false -%}
