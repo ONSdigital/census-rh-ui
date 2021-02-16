@@ -99,10 +99,10 @@ class CommonAddressInNorthernIreland(CommonCommon):
         user_journey = request.match_info['user_journey']
 
         if display_region == 'cy':
-            page_title = "Nid yw'r cyfeiriad yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
+            page_title = "Rhan cyfeiriad y cyfrifiad yng Ngogledd Iwerddon"
             locale = 'cy'
         else:
-            page_title = 'Address not part of census for England and Wales'
+            page_title = 'Address part of census in Northern Ireland'
             locale = 'en'
 
         self.log_entry(request, display_region + '/' + user_journey + '/address-in-northern-ireland')

@@ -232,10 +232,10 @@ class StartCodeForNorthernIreland(StartCommon):
 
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Nid yw'r cod mynediad hwn yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
+            page_title = "Cod mynediad ar gyfer y cyfrifiad yng Ngogledd Iwerddom"
         else:
             locale = 'en'
-            page_title = 'This access code is not part of the census for England and Wales'
+            page_title = 'Access code for census in Northern Ireland'
 
         await forget(request)
 
