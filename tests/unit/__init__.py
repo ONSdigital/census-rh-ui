@@ -2568,7 +2568,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
         self.content_support_centre_list_of_centres_result_two_location_name_en = 'University of Sheffield'
         self.content_support_centre_list_of_centres_result_one_distance_away_en = \
-            '<span class="u-mb-s tag">1.3 miles away</span>'
+            '<span class="u-mb-s distance">1.3 miles away</span>'
         self.content_support_centre_list_of_centres_result_one_address_en = \
             '<p>Surrey Street<br> Sheffield<br>S1 1XZ</p>'
         self.content_support_centre_list_of_centres_result_one_telephone_en = \
@@ -2623,7 +2623,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_location_name_cy = 'Welsh Sheffield Central Library'
         self.content_support_centre_list_of_centres_result_two_location_name_cy = 'Welsh University of Sheffield'
         self.content_support_centre_list_of_centres_result_one_distance_away_cy = \
-            '<span class="u-mb-s tag">1.3 milltir i ffwrdd</span>'
+            '<span class="u-mb-s distance">1.3 milltir i ffwrdd</span>'
         self.content_support_centre_list_of_centres_result_one_address_cy = \
             '<p>Welsh Street<br> Sheffield<br>S1 1XZ</p>'
         self.content_support_centre_list_of_centres_result_one_telephone_cy = \
