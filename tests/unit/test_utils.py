@@ -326,13 +326,23 @@ class TestUtils(RHTestCase):
         self.before_census_day(2021, 3, 20)
 
     def test_client_ip(self):
+
+        request = {'client_id': '36be6b97-b4de-4718-8a74-8b27fb03ca8c', 'trace': '105445aa7843bc8bf206b12000100000'}
         valid_request = {'client_ip': '192.168.0.0, 35.190.0.0, 35.191.10.0'}
         spoofed_request = {'client_ip': '200.30.20.10, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
         invalid_request = {'client_ip': 'GHT.RGT.ED.WS, 192.168.0.0, 35.190.0.0, 35.191.10.0'}
+        invalid_request.update(request)
         single_ip_request = {'client_ip': '35.191.10.0'}
+        single_ip_request.update(request)
         expected_valid = '192.168.0.0'
         expected_empty = ''
         self.assertEqual(View.single_client_ip(valid_request), expected_valid)
         self.assertEqual(View.single_client_ip(spoofed_request), expected_valid)
-        self.assertEqual(View.single_client_ip(invalid_request), expected_empty)
-        self.assertEqual(View.single_client_ip(single_ip_request), expected_empty)
+        with self.assertLogs('respondent-home', 'WARN') as cm:
+            self.assertEqual(View.single_client_ip(invalid_request), expected_empty)
+            self.assertLogEvent(cm, 'clientIP failed validation. Provided IP - ' + invalid_request['client_ip'],
+                                client_id=request['client_id'], trace=request['trace'])
+            self.assertEqual(View.single_client_ip(single_ip_request), expected_empty)
+            self.assertLogEvent(cm, 'clientIP failed validation. Provided IP - ' + single_ip_request['client_ip'],
+                                client_id=request['client_id'], trace=request['trace'])
+

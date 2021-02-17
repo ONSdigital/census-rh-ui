@@ -63,7 +63,6 @@ class CommonAddressInScotland(CommonCommon):
     """
     @aiohttp_jinja2.template('common-address-in-scotland.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
 
@@ -96,7 +95,6 @@ class CommonAddressInNorthernIreland(CommonCommon):
     """
     @aiohttp_jinja2.template('common-address-in-northern-ireland.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
 
@@ -126,7 +124,6 @@ class CommonAddressInEngland(CommonCommon):
     """
     @aiohttp_jinja2.template('common-address-in-england.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
@@ -151,7 +148,6 @@ class CommonAddressInWales(CommonCommon):
     """
     @aiohttp_jinja2.template('common-address-in-wales.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = 'ni'
         user_journey = request.match_info['user_journey']
 
@@ -176,7 +172,6 @@ class CommonRegisterAddress(CommonCommon):
     """
     @aiohttp_jinja2.template('common-register-address.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -208,7 +203,6 @@ class CommonCallContactCentre(CommonCommon):
     """
     @aiohttp_jinja2.template('common-contact-centre.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         error = request.match_info['error']
@@ -241,7 +235,6 @@ class CommonEnterAddress(CommonCommon):
     """
     @aiohttp_jinja2.template('common-enter-address.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -290,7 +283,6 @@ class CommonEnterAddress(CommonCommon):
         }
 
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -306,11 +298,16 @@ class CommonEnterAddress(CommonCommon):
 
         try:
             postcode = ProcessPostcode.validate_postcode(data['form-enter-address-postcode'], display_region)
-            logger.info('valid postcode', client_ip=request['client_ip'],
-                        postcode_entered=postcode, region_of_site=display_region)
+            logger.info('valid postcode',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        postcode_entered=postcode,
+                        region_of_site=display_region)
 
         except (InvalidDataError, InvalidDataErrorWelsh) as exc:
-            logger.info('invalid postcode', client_ip=request['client_ip'])
+            logger.info('invalid postcode',
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             if exc.message_type == 'empty':
                 flash_message = FlashMessage.generate_flash_message(str(exc), 'ERROR', 'POSTCODE_ENTER_ERROR',
                                                                     'error_postcode_empty')
@@ -344,7 +341,6 @@ class CommonSelectAddress(CommonCommon):
     """
     @aiohttp_jinja2.template('common-select-address.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -382,7 +378,6 @@ class CommonSelectAddress(CommonCommon):
         return address_content
 
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -401,8 +396,12 @@ class CommonSelectAddress(CommonCommon):
         try:
             selected_uprn = data['form-pick-address']
         except KeyError:
-            logger.info('no address selected', client_ip=request['client_ip'],
-                        region_of_site=display_region, journey_requiring_address=user_journey)
+            logger.info('no address selected',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region,
+                        journey_requiring_address=user_journey)
             if display_region == 'cy':
                 flash(request, ADDRESS_SELECT_CHECK_MSG_CY)
             else:
@@ -423,8 +422,12 @@ class CommonSelectAddress(CommonCommon):
         else:
             attributes['uprn'] = selected_uprn
             session.changed()
-            logger.info('session updated', client_ip=request['client_ip'],
-                        uprn_selected=selected_uprn, region_of_site=display_region)
+            logger.info('session updated',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        uprn_selected=selected_uprn,
+                        region_of_site=display_region)
 
         raise HTTPFound(
             request.app.router['CommonConfirmAddress:get'].url_for(
@@ -442,7 +445,6 @@ class CommonConfirmAddress(CommonCommon):
     """
     @aiohttp_jinja2.template('common-confirm-address.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -504,7 +506,6 @@ class CommonConfirmAddress(CommonCommon):
         }
 
     async def post(self, request):
-        self.setup_request(request)
 
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
@@ -526,6 +527,8 @@ class CommonConfirmAddress(CommonCommon):
         except KeyError:
             logger.info('address confirmation error',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
@@ -543,21 +546,28 @@ class CommonConfirmAddress(CommonCommon):
             try:
                 census_address_type_value = attributes['censusAddressType']
                 if census_address_type_value == 'NA':
-                    logger.info('censusAddressType is NA', client_ip=request['client_ip'],
+                    logger.info('censusAddressType is NA',
+                                client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'],
                                 user_selection=address_confirmation)
                     raise HTTPFound(
                         request.app.router['CommonCallContactCentre:get'].url_for(
                             display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
                 elif (census_address_type_value == 'CE') and \
                         (sub_user_journey == 'continuation-questionnaire'):
-                    logger.info('continuation form for a CE - rejecting', client_ip=request['client_ip'],
+                    logger.info('continuation form for a CE - rejecting',
+                                client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'],
                                 sub_journey=sub_user_journey,
                                 census_addr_type=census_address_type_value)
                     raise HTTPFound(
                         request.app.router['RequestContinuationNotAHousehold:get'].url_for(
                             display_region=display_region))
             except KeyError:
-                logger.info('unable to check censusAddressType', client_ip=request['client_ip'])
+                logger.info('unable to check censusAddressType',
+                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 raise HTTPFound(
                     request.app.router['CommonCallContactCentre:get'].url_for(
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
@@ -566,14 +576,20 @@ class CommonConfirmAddress(CommonCommon):
                 country_code_value = attributes['countryCode']
                 uprn = attributes['uprn']
                 if country_code_value == 'S':
-                    logger.info('address is in Scotland', client_ip=request['client_ip'],
-                                country_code_found=country_code_value, uprn_value=uprn)
+                    logger.info('address is in Scotland',
+                                client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'],
+                                country_code_found=country_code_value,
+                                uprn_value=uprn)
                     raise HTTPFound(
                         request.app.router['CommonAddressInScotland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif country_code_value == 'N' and display_region != 'ni':
                     logger.info('address is in Northern Ireland but not display_region ni',
                                 client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'],
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -584,6 +600,8 @@ class CommonConfirmAddress(CommonCommon):
                     logger.info('address is in Wales but display_region ni',
                                 client_ip=request['client_ip'],
                                 country_code_found=country_code_value,
+                                client_id=request['client_id'],
+                                trace=request['trace'],
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -592,6 +610,8 @@ class CommonConfirmAddress(CommonCommon):
                 elif display_region == 'ni' and country_code_value == 'E':
                     logger.info('address is in England but display_region ni',
                                 client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'],
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -599,7 +619,8 @@ class CommonConfirmAddress(CommonCommon):
                         request.app.router['CommonAddressInEngland:get'].
                         url_for(display_region=display_region, user_journey=user_journey))
             except KeyError:
-                logger.info('unable to check for region', client_ip=request['client_ip'])
+                logger.info('unable to check for region',
+                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
 
             if sub_user_journey == 'link-address' or sub_user_journey == 'change-address':
                 try:
@@ -630,13 +651,24 @@ class CommonConfirmAddress(CommonCommon):
                     hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'],
+                                    status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'],
+                                    status_code=ex.status,
+                                    uac_hashed=hashed_uac_value)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'], status_code=ex.status, uac_hashed=hashed_uac_value)
+                                     client_ip=request['client_ip'],
+                                     client_id=request['client_id'],
+                                     trace=request['trace'],
+                                     status_code=ex.status,
+                                     uac_hashed=hashed_uac_value)
 
                     cc_error = ''
                     if sub_user_journey == 'link-address':
@@ -668,8 +700,14 @@ class CommonConfirmAddress(CommonCommon):
                 except ClientResponseError as ex:
                     if ex.status == 404:
                         logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'], unmatched_uprn=attributes['uprn'])
-                        logger.info('requesting new case', client_ip=request['client_ip'])
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'],
+                                    unmatched_uprn=attributes['uprn'])
+                        logger.info('requesting new case',
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'])
                         try:
                             case_creation_return = await RHService.post_case_create(request, attributes)
                             attributes['case_id'] = case_creation_return['caseId']
@@ -687,7 +725,10 @@ class CommonConfirmAddress(CommonCommon):
                                                                        attributes['individual'])
 
                         except ClientResponseError as ex:
-                            logger.warn('error requesting new case', client_ip=request['client_ip'])
+                            logger.warn('error requesting new case',
+                                        client_ip=request['client_ip'],
+                                        client_id=request['client_id'],
+                                        trace=request['trace'])
                             raise ex
                     else:
                         raise ex
@@ -702,7 +743,10 @@ class CommonConfirmAddress(CommonCommon):
         else:
             # catch all just in case, should never get here
             logger.info('address confirmation error',
-                        client_ip=request['client_ip'], user_selection=address_confirmation)
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        user_selection=address_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             raise HTTPFound(
                 request.app.router['CommonConfirmAddress:get'].url_for(
@@ -720,7 +764,6 @@ class CommonCEMangerQuestion(CommonCommon):
     """
     @aiohttp_jinja2.template('common-resident-or-manager.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -756,7 +799,6 @@ class CommonCEMangerQuestion(CommonCommon):
         }
 
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -772,7 +814,7 @@ class CommonCEMangerQuestion(CommonCommon):
             resident_or_manager = data['form-resident-or-manager']
         except KeyError:
             logger.info('resident or manager question error',
-                        client_ip=request['client_ip'])
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -825,6 +867,8 @@ class CommonCEMangerQuestion(CommonCommon):
             # catch all just in case, should never get here
             logger.info('resident or manager question error',
                         client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         manager_or_resident=resident_or_manager)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
@@ -846,7 +890,6 @@ class CommonEnterRoomNumber(CommonCommon):
     """
     @aiohttp_jinja2.template('common-enter-room-number.html')
     async def get(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -888,7 +931,6 @@ class CommonEnterRoomNumber(CommonCommon):
         }
 
     async def post(self, request):
-        self.setup_request(request)
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
         sub_user_journey = request.match_info['sub_user_journey']
@@ -925,7 +967,10 @@ class CommonEnterRoomNumber(CommonCommon):
 
         except KeyError:
             room_number_entered = data['form-enter-room-number']
-            logger.info('room number question error', client_ip=request['client_ip'],
+            logger.info('room number question error',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
                         room_number_given=room_number_entered)
             if len(room_number_entered) > 10:
                 if display_region == 'cy':

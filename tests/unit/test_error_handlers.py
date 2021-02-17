@@ -1,6 +1,5 @@
 from aiohttp.test_utils import unittest_run_loop
 
-from app.app import create_app
 from . import RHTestCase
 
 

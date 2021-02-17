@@ -42,10 +42,6 @@ class View:
     page_title_error_prefix_cy = 'Gwall: '
 
     @staticmethod
-    def setup_request(request):
-        request['client_ip'] = request.headers.get('X-Forwarded-For', None)
-
-    @staticmethod
     def get_now_utc():
         return datetime.utcnow()
 
@@ -57,7 +53,9 @@ class View:
             if ip_validation_pattern.fullmatch(client_ip) and client_ip.count(',') > 1:
                 single_ip = client_ip.split(', ', -1)[-3]
             else:
-                logger.warn('clientIP failed validation. Provided IP - ' + client_ip)
+                logger.warn('clientIP failed validation. Provided IP - ' + client_ip,
+                            client_id=request['client_id'],
+                            trace=request['trace'])
                 single_ip = ''
         elif request.headers.get('Origin', None) and 'localhost' in request.headers.get('Origin', None):
             single_ip = '127.0.0.1'
@@ -69,6 +67,9 @@ class View:
     def log_entry(request, endpoint):
         method = request.method
         logger.info(f"received {method} on endpoint '{endpoint}'",
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
                     method=request.method,
                     path=request.path)
 
@@ -177,7 +178,8 @@ class View:
             else:
                 raise ex
 
-        logger.info('redirecting to eq', client_ip=request['client_ip'])
+        logger.info('redirecting to eq',
+                    client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
         eq_url = app['EQ_URL']
         raise HTTPFound(f'{eq_url}/session?token={token}')
 
@@ -352,7 +354,11 @@ class ProcessNumberOfPeople:
         number_of_people_valid = True
 
         if (data.get('number_of_people')) == '':
-            logger.info('number_of_people empty', client_ip=request['client_ip'], region_of_site=display_region,
+            logger.info('number_of_people empty',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region,
                         type_of_request=request_type)
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message("Rhowch nifer y bobl yn eich cartref",
@@ -365,7 +371,11 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif not (data.get('number_of_people')).isnumeric():
-            logger.info('number_of_people nan', client_ip=request['client_ip'], region_of_site=display_region,
+            logger.info('number_of_people nan',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'],
+                        region_of_site=display_region,
                         type_of_request=request_type)
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message("Rhowch rif",
@@ -379,7 +389,10 @@ class ProcessNumberOfPeople:
 
         elif request_type == 'continuation-questionnaire':
             if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
-                logger.info('number_of_people continuation less than 7', client_ip=request['client_ip'],
+                logger.info('number_of_people continuation less than 7',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
                             region_of_site=display_region,
                             type_of_request=request_type)
                 flash(request, FlashMessage.generate_flash_message('Enter a number greater than 6',
@@ -388,7 +401,10 @@ class ProcessNumberOfPeople:
                 number_of_people_valid = False
 
             elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
-                logger.info('number_of_people continuation less than 6', client_ip=request['client_ip'],
+                logger.info('number_of_people continuation less than 6',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
                             region_of_site=display_region,
                             type_of_request=request_type)
                 if display_region == 'cy':
@@ -402,7 +418,8 @@ class ProcessNumberOfPeople:
                 number_of_people_valid = False
 
             elif int(data.get('number_of_people')) > 30:
-                logger.info('number_of_people continuation greater than 30', client_ip=request['client_ip'])
+                logger.info('number_of_people continuation greater than 30',
+                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 if display_region == 'cy':
                     flash(request, FlashMessage.generate_flash_message("Rhowch rif sy'n llai na 31",
                                                                        'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
@@ -414,7 +431,8 @@ class ProcessNumberOfPeople:
                 number_of_people_valid = False
 
         elif int(data.get('number_of_people')) > 30:
-            logger.info('number_of_people greater than 30', client_ip=request['client_ip'])
+            logger.info('number_of_people greater than 30',
+                        client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             if display_region == 'cy':
                 flash(request, FlashMessage.generate_flash_message("Rhowch rif sy'n llai na 31",
                                                                    'ERROR', 'NUMBER_OF_PEOPLE_ERROR',
@@ -540,6 +558,8 @@ class RHService(View):
         logger.info('request linked case',
                     uac_hash=uac_hash,
                     client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
                     country_code=address['countryCode'],
                     postcode_value=address['postcode'],
                     uprn_value=address['uprn'])
@@ -614,8 +634,10 @@ class RHService(View):
     async def get_uac_details(request):
         uac_hash = request['uac_hash']
         logger.info('making get request for uac',
-                    uac_hash=uac_hash,
-                    client_ip=request['client_ip'])
+                    client_ip=request['client_ip'],
+                    client_id=request['client_id'],
+                    trace=request['trace'],
+                    uac_hash=uac_hash)
         rhsvc_url = request.app['RHSVC_URL']
         return await View._make_request(request,
                                         'GET',
