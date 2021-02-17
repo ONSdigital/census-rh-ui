@@ -57,3 +57,7 @@ class InvalidDataErrorWelsh(Exception):
     def __init__(self, message=None, message_type=None):
         super().__init__(message or "Mae'r gwerth rydych wedi'i roi yn annilys")
         self.message_type = message_type
+
+
+class InvalidAccessCode(Exception):
+    """Raised when an invalid UAC is entered"""

@@ -9,11 +9,12 @@ from structlog import get_logger
 
 from . import (BAD_CODE_MSG, INVALID_CODE_MSG, NO_SELECTION_CHECK_MSG,
                START_LANGUAGE_OPTION_MSG,
-               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY)
+               BAD_CODE_MSG_CY, INVALID_CODE_MSG_CY, NO_SELECTION_CHECK_MSG_CY,
+               START_PAGE_TITLE_EN, START_PAGE_TITLE_CY)
 
 from .flash import flash
 
-from .exceptions import InvalidEqPayLoad
+from .exceptions import InvalidEqPayLoad, InvalidAccessCode
 from .security import remember, get_permitted_session, forget, get_sha256_hash, invalidate
 from .session import get_session_value
 
@@ -71,12 +72,12 @@ class Start(StartCommon):
         self.log_entry(request, display_region + '/start')
         if display_region == 'cy':
             locale = 'cy'
-            page_title = "Dechrau'r cyfrifiad"
+            page_title = START_PAGE_TITLE_CY
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_cy + page_title
         else:
             locale = 'en'
-            page_title = 'Start census'
+            page_title = START_PAGE_TITLE_EN
             if request.get('flash'):
                 page_title = View.page_title_error_prefix_en + page_title
 
@@ -153,7 +154,7 @@ class Start(StartCommon):
                     flash(request, INVALID_CODE_MSG_CY)
                 else:
                     flash(request, INVALID_CODE_MSG)
-                raise HTTPFound(request.app.router['Start:get'].url_for(display_region=display_region))
+                raise InvalidAccessCode
             else:
                 logger.error('error processing access code', client_ip=request['client_ip'])
                 raise ex
