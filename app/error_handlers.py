@@ -152,7 +152,10 @@ async def not_found_error(request):
 
 
 async def invalid_access_code(request):
-    logger.warn('invalid access code entered')
+    logger.warn('invalid access code entered',
+                client_ip=request['client_ip'],
+                client_id=request['client_id'],
+                trace=request['trace'])
     attributes = check_display_region(request)
     if attributes['display_region'] == 'cy':
         attributes['page_title'] = View.page_title_error_prefix_cy + START_PAGE_TITLE_CY
