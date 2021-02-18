@@ -580,8 +580,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_exit_button_ni = 'href="/ni/start/exit/"'
 
         self.content_start_title_en = 'Start census'
+        self.content_start_page_title_error_en = '<title>Error: Start census - Census 2021</title>'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
         self.content_start_title_cy = "Dechrau\\\'r cyfrifiad"
+        self.content_start_page_title_error_cy = '<title>Gwall: Dechrau&#39;r cyfrifiad - Cyfrifiad 2021</title>'
         self.content_start_uac_title_cy = "Rhowch eich cod mynediad, sy\\\'n cynnwys 16 nod"
 
         self.content_start_uac_expired_en = 'This access code has already been used'

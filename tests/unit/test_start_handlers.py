@@ -814,9 +814,11 @@ class TestStartHandlers(TestHelpers):
                                 'attempt to use an invalid access code',
                                 client_ip=None)
 
-        self.assertEqual(response.status, 200)
+        self.assertEqual(response.status, 401)
+        self.assertLogEvent(cm, 'invalid access code entered')
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_en, contents)
+        self.assertIn(self.content_start_page_title_error_en, contents)
         self.assertIn('<a href="/cy/start/" lang="cy" >Cymraeg</a>', contents)
         self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
@@ -833,9 +835,11 @@ class TestStartHandlers(TestHelpers):
                                 'attempt to use an invalid access code',
                                 client_ip=None)
 
-        self.assertEqual(response.status, 200)
+        self.assertEqual(response.status, 401)
+        self.assertLogEvent(cm, 'invalid access code entered')
         contents = str(await response.content.read())
         self.assertIn(self.ons_logo_cy, contents)
+        self.assertIn(self.content_start_page_title_error_cy, contents)
         self.assertIn('<a href="/en/start/" lang="en" >English</a>', contents)
         self.assertMessagePanel(INVALID_CODE_MSG_CY, contents)
 
@@ -852,9 +856,11 @@ class TestStartHandlers(TestHelpers):
                                 'attempt to use an invalid access code',
                                 client_ip=None)
 
-        self.assertEqual(response.status, 200)
+        self.assertEqual(response.status, 401)
+        self.assertLogEvent(cm, 'invalid access code entered')
         contents = str(await response.content.read())
         self.assertIn(self.nisra_logo, contents)
+        self.assertIn(self.content_start_page_title_error_en, contents)
         self.assertMessagePanel(INVALID_CODE_MSG, contents)
 
     @unittest_run_loop

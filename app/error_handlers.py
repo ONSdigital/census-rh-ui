@@ -6,12 +6,14 @@ from aiohttp.client_exceptions import (ClientResponseError,
                                        ClientConnectionError, ContentTypeError)
 
 from .exceptions import (ExerciseClosedError, InactiveCaseError,
-                         InvalidEqPayLoad,
+                         InvalidEqPayLoad, InvalidAccessCode,
                          SessionTimeout,
                          TooManyRequests, TooManyRequestsWebForm, TooManyRequestsEQLaunch)
 from structlog import get_logger
 
 from .utils import View
+
+from . import (START_PAGE_TITLE_EN, START_PAGE_TITLE_CY)
 
 logger = get_logger('respondent-home')
 
@@ -48,6 +50,8 @@ def create_error_middleware(overrides):
             return await not_found_error(request)
         except web.HTTPForbidden:
             return await forbidden(request)
+        except InvalidAccessCode:
+            return await invalid_access_code(request)
         except SessionTimeout as ex:
             return await session_timeout(request, ex.user_journey, ex.sub_user_journey)
         except TooManyRequests as ex:
@@ -137,6 +141,7 @@ async def key_error(request, error):
 
 
 async def response_error(request):
+    logger.error('response error')
     attributes = check_display_region(request)
     return jinja.render_template('error.html', request, attributes, status=500)
 
@@ -144,6 +149,19 @@ async def response_error(request):
 async def not_found_error(request):
     attributes = check_display_region(request)
     return jinja.render_template('404.html', request, attributes, status=404)
+
+
+async def invalid_access_code(request):
+    logger.warn('invalid access code entered',
+                client_ip=request['client_ip'],
+                client_id=request['client_id'],
+                trace=request['trace'])
+    attributes = check_display_region(request)
+    if attributes['display_region'] == 'cy':
+        attributes['page_title'] = View.page_title_error_prefix_cy + START_PAGE_TITLE_CY
+    else:
+        attributes['page_title'] = View.page_title_error_prefix_en + START_PAGE_TITLE_EN
+    return jinja.render_template('start.html', request, attributes, status=401)
 
 
 async def forbidden(request):
