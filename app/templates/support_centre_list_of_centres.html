@@ -3,6 +3,7 @@
 {%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
 {%- from "components/lists/_macro.njk" import onsList -%}
 {%- from "components/panel/_macro.njk" import onsPanel -%}
+{%- from "components/external-link/_macro.njk" import onsExternalLink -%}
 {%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink, rhADTelephone -%}
 
 {%- set not_available_text = _('Not available') -%}
@@ -38,6 +39,22 @@
                 {%- endautoescape -%}
             {%- endif -%}
 
+            {{
+                onsExternalLink({
+                    "url": "https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}",
+                    "linkText": _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
+                })
+            }}
+
+            {%- autoescape false -%}
+            {{
+                onsExternalLink({
+                    "url": "https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}",
+                    "linkText": _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
+                })
+            }}
+            {%- endautoescape -%}
+
             {%- autoescape false -%}
                 <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">{{ _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe }}</a></p>
             {%- endautoescape -%}
@@ -65,17 +82,23 @@
             }) %}
 
             {%- if (display_region == 'cy') and (centre['welshLanguageDescription']) -%}
-                {{
-                    onsPanel({
-                        'body': centre['welshLanguageDescription']
+                {%- call onsPanel({
+                        "classes": "u-mb-s"
                     })
-                }}
+                -%}
+                    {%- autoescape false -%}
+                        {{ centre['welshLanguageDescription'] }}
+                    {%- endautoescape -%}
+                {%- endcall -%}
             {%- elif (display_region == 'en') and (centre['description']) -%}
-                {{
-                    onsPanel({
-                        'body': centre['description']
+                {%- call onsPanel({
+                        "classes": "u-mb-s"
                     })
-                }}
+                -%}
+                    {%- autoescape false -%}
+                        {{ centre['description'] }}
+                    {%- endautoescape -%}
+                {%- endcall -%}
             {%- endif -%}
 
             <h3 class="u-fs-r--b u-mb-xs">{{ _('Opening times') }}</h3>
