@@ -39,18 +39,11 @@
                 {%- endautoescape -%}
             {%- endif -%}
 
-            {{
-                onsExternalLink({
-                    "url": "https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}",
-                    "linkText": _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
-                })
-            }}
-
             {%- autoescape false -%}
             {{
                 onsExternalLink({
-                    "url": "https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}",
-                    "linkText": _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
+                    'url': 'https://www.google.com/maps/search/?api=1&query=' + centre['latitude'] + ',' + centre['longitude'],
+                    'linkText': _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
                 })
             }}
             {%- endautoescape -%}
