@@ -80,7 +80,7 @@
                     })
                 -%}
                     {%- autoescape false -%}
-                        {{ centre['welshLanguageDescription'] }}
+                        {{ centre['welshLanguageDescription'] | replace('\n', '<br>') }}
                     {%- endautoescape -%}
                 {%- endcall -%}
             {%- elif (display_region == 'en') and (centre['description']) -%}
@@ -89,7 +89,7 @@
                     })
                 -%}
                     {%- autoescape false -%}
-                        {{ centre['description'] }}
+                        {{ centre['description'] | replace('\n', '<br>') }}
                     {%- endautoescape -%}
                 {%- endcall -%}
             {%- endif -%}
