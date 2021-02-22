@@ -14,8 +14,8 @@
       "phone": "01142734712",
       "email": "test@email.com",
       "website": "www.helloworld.com",
-      "description": "string",
-      "welshLanguageDescription": "string",
+      "description": "Fareham library offers a range of services to respodents in need of assistance completing their Census Survey",
+      "welshLanguageDescription": "Fareham library offers a range of services to respodents in need of assistance completing their Census Survey",
       "openingHours": [
         {
           "Monday": [
@@ -87,8 +87,8 @@
           "phone": "0114 222 2000",
           "email": "ask@sheffield.gov.uk",
           "website": "www.helloworld.com",
-          "description": "string",
-          "welshLanguageDescription": "string",
+          "description": "Portsmouth library offers a range of services to respodents in need of assistance completing their Census Survey",
+          "welshLanguageDescription": "Portsmouth library offers a range of services to respodents in need of assistance completing their Census Survey",
           "openingHours": [
             {
               "Census Saturday": [
@@ -148,8 +148,8 @@
           "phone": "0114 222 2000",
           "email": "ask@possibilities.gov.uk",
           "website": "www.helloworld.com",
-          "description": "string",
-          "welshLanguageDescription": "string",
+          "description": "Cardiff library offers a range of services to respodents in need of assistance completing their Census Survey",
+          "welshLanguageDescription": "Cardiff library offers a range of services to respodents in need of assistance completing their Census Survey",
           "openingHours": [
               {
                   "Monday": [

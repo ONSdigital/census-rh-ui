@@ -2,6 +2,7 @@
 
 {%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
 {%- from "components/lists/_macro.njk" import onsList -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
 {%- from 'macros/ad-lookup/_macro.njk' import rhOpeningTimes, rhEmailLink, rhADTelephone -%}
 
 {%- set not_available_text = _('Not available') -%}
@@ -62,6 +63,21 @@
                     'contextSuffix': 'content'
                 }
             }) %}
+
+            {%- if (display_region == 'cy') and (centre['welshLanguageDescription']) -%}
+                {{
+                    onsPanel({
+                        'body': centre['welshLanguageDescription']
+                    })
+                }}
+            {%- elif (display_region == 'en') and (centre['description']) -%}
+                {{
+                    onsPanel({
+                        'body': centre['description']
+                    })
+                }}
+            {%- endif -%}
+
             <h3 class="u-fs-r--b u-mb-xs">{{ _('Opening times') }}</h3>
             {% for days in centre['openingHours'] -%}
                 <div>{{ _('Monday') }} &ndash;&nbsp;
