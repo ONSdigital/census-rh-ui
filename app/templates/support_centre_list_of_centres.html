@@ -17,7 +17,7 @@
     {%- for centre in ad_response['centres'] %}
         <div class="u-pb-m u-pt-m {% if loop.index > 1 %}u-bt{% endif %}">
 
-            {%- if display_region == 'cy' -%}
+            {%- if (display_region == 'cy') and (centre['welshLanguageLocationName']) -%}
                 {%- set location_name = centre['welshLanguageLocationName'] -%}
                 {%- set location_string_google = ' am ' + centre['welshLanguageLocationName'] -%}
             {%- else -%}
@@ -29,28 +29,26 @@
 
             <div><span class="u-mb-s distance">{{ _('%(distance_in_miles)s miles away', distance_in_miles=centre['distanceInMiles'] )|safe }}</span></div>
 
-            {%- if display_region == 'cy' -%}
+            {%- if (display_region == 'cy') and (centre['welshLanguageAddress']) -%}
                 {%- autoescape false -%}
-                    <p>{{ centre['welshLanguageAddress'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
+                    <p>{{ centre['welshLanguageAddress'] | replace(',\n', '<br>') | replace('\n', '<br>') }}<br>{{ centre['postcode'] }}</p>
                 {%- endautoescape -%}
             {%- else -%}
                 {%- autoescape false -%}
-                    <p>{{ centre['address'] | replace(',', '<br>') }}<br>{{ centre['postcode'] }}</p>
+                    <p>{{ centre['address'] | replace(',\n', '<br>') | replace('\n', '<br>') }}<br>{{ centre['postcode'] }}</p>
                 {%- endautoescape -%}
             {%- endif -%}
 
-            {%- autoescape false -%}
-            {{
-                onsExternalLink({
-                    'url': 'https://www.google.com/maps/search/?api=1&query=' + centre['latitude'] + ',' + centre['longitude'],
-                    'linkText': _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
-                })
-            }}
-            {%- endautoescape -%}
-
-            {%- autoescape false -%}
-                <p><a class="icon--external-link" href="https://www.google.com/maps/search/?api=1&query={{ centre['latitude'] }},{{ centre['longitude'] }}" target="_blank" rel="noopener nofollow">{{ _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe }}</a></p>
-            {%- endautoescape -%}
+            <p>
+                {%- autoescape false -%}
+                {{
+                    onsExternalLink({
+                        'url': 'https://www.google.com/maps/search/?api=1&query=' + centre['latitude'] + ',' + centre['longitude'],
+                        'linkText': _('Find %(location_name_span)s on Google Maps', location_name_span='<span class="u-vh">%s</span>' % location_string_google)|safe
+                    })
+                }}
+                {%- endautoescape -%}
+            </p>
 
             {{
                 onsList({
