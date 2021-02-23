@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-05 16:29+0000\n"
+"POT-Creation-Date: 2021-02-16 11:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,28 +49,24 @@ msgid "Thank you for your help."
 msgstr ""
 
 #: app/templates/common-address-in-northern-ireland.html:5
-#: app/templates/common-address-in-scotland.html:16
-msgid "This address is not part of the census for England and Wales"
+msgid ""
+"You have selected an address that is part of the census in Northern "
+"Ireland"
 msgstr ""
 
-#: app/templates/common-address-in-northern-ireland.html:7
-msgid "You have selected an address in Northern Ireland."
+#: app/templates/common-address-in-northern-ireland.html:8
+#, python-format
+msgid "To take part, visit the %(open)sNorthern Ireland census website%(close)s."
 msgstr ""
 
 #: app/templates/common-address-in-northern-ireland.html:10
 #: app/templates/start-code-for-northern-ireland.html:10
 #, python-format
-msgid ""
-"The Northern Ireland Statistics and Research Agency (NISRA) runs the "
-"census in Northern Ireland. Visit the %(open)sNISRA census "
-"website%(close)s to find out how to take part in the census for Northern "
-"Ireland."
+msgid "Alternatively, you can %(open)scontact us%(close)s for help."
 msgstr ""
 
-#: app/templates/common-address-in-northern-ireland.html:12
-#: app/templates/start-code-for-northern-ireland.html:12
-#, python-format
-msgid "Alternatively, you can %(open)scontact us%(close)s for help."
+#: app/templates/common-address-in-scotland.html:16
+msgid "This address is not part of the census for England and Wales"
 msgstr ""
 
 #: app/templates/common-address-in-scotland.html:19
@@ -959,11 +955,12 @@ msgid ""
 msgstr ""
 
 #: app/templates/start-code-for-northern-ireland.html:5
-msgid "This access code is not part of the census for England and Wales"
+msgid "You have entered an access code for the census in Northern Ireland"
 msgstr ""
 
-#: app/templates/start-code-for-northern-ireland.html:7
-msgid "You have entered an access code for the census in Northern Ireland."
+#: app/templates/start-code-for-northern-ireland.html:8
+#, python-format
+msgid "Start your census on the %(open)sNorthern Ireland census website%(close)s."
 msgstr ""
 
 #: app/templates/start-confirm-address.html:28
