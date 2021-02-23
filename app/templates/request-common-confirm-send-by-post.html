@@ -77,6 +77,12 @@
     {%- set question_title = _('Do you want to send a new household access code to this address?') -%}
 {%- endif -%}
 
+{%- if (display_region == 'ni') -%}
+    {%- set large_print = 'Large print – suitable for visually impaired' -%}
+{%- else -%}
+    {%- set large_print = _('Large print') -%}
+{%- endif -%}
+
 {%- block main -%}
 
     {%- if messages_dict -%}
@@ -136,7 +142,7 @@
 
             {{
                 onsCheckboxes({
-                    'legend': _('Large print'),
+                    'legend': large_print,
                     'legendClasses': 'u-fs-m u-mt-l',
                     'checkboxes': [
                         {
