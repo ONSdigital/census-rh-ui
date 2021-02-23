@@ -580,8 +580,10 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_exit_button_ni = 'href="/ni/start/exit/"'
 
         self.content_start_title_en = 'Start census'
+        self.content_start_page_title_error_en = '<title>Error: Start census - Census 2021</title>'
         self.content_start_uac_title_en = 'Enter your 16-character access code'
         self.content_start_title_cy = "Dechrau\\\'r cyfrifiad"
+        self.content_start_page_title_error_cy = '<title>Gwall: Dechrau&#39;r cyfrifiad - Cyfrifiad 2021</title>'
         self.content_start_uac_title_cy = "Rhowch eich cod mynediad, sy\\\'n cynnwys 16 nod"
 
         self.content_start_uac_expired_en = 'This access code has already been used'
@@ -2334,6 +2336,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
             'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
+            'Large print'
+
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni = \
+            'Large print \\xe2\\x80\\x93 suitable for visually impaired'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
             '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
@@ -2352,6 +2359,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_no_cy = "Nac ydw, rwyf am ganslo a dychwelyd"
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
             'Mae angen holiadur print mawr arnaf'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
+            'Print mawr'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'

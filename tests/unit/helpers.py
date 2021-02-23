@@ -529,6 +529,8 @@ class TestHelpers(RHTestCase):
                 else:
                     self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy,
                                   contents)
+                    self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy,
+                                  contents)
             else:
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_yes_cy, contents)
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_no_cy, contents)
@@ -626,6 +628,12 @@ class TestHelpers(RHTestCase):
                 else:
                     self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en,
                                   contents)
+                    if display_region == 'ni':
+                        self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni,
+                                      contents)
+                    else:
+                        self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en,
+                                      contents)
             else:
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_yes_en, contents)
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_no_en, contents)
