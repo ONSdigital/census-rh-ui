@@ -78,9 +78,9 @@
 {%- endif -%}
 
 {%- if (display_region == 'ni') -%}
-    {%- set large_print = 'Large print – suitable for visually impaired' -%}
+    {%- set large_print_legend = 'Large print – suitable for visually impaired' -%}
 {%- else -%}
-    {%- set large_print = _('Large print') -%}
+    {%- set large_print_legend = _('Large print') -%}
 {%- endif -%}
 
 {%- block main -%}
@@ -142,7 +142,7 @@
 
             {{
                 onsCheckboxes({
-                    'legend': large_print,
+                    'legend': large_print_legend,
                     'legendClasses': 'u-fs-m u-mt-l',
                     'checkboxes': [
                         {
