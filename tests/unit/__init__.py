@@ -393,13 +393,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_call_centre_number_ni = '0800 328 2021'
 
         self.content_common_address_in_northern_ireland_page_title_en = \
-            '<title>Address not part of census for England and Wales - Census 2021</title>'
+            '<title>Address part of census in Northern Ireland - Census 2021</title>'
         self.content_common_address_in_northern_ireland_en = \
-            'This address is not part of the census for England and Wales'
+            'You have selected an address that is part of the census in Northern Ireland'
         self.content_common_address_in_northern_ireland_page_title_cy = \
-            "<title>Nid yw&#39;r cyfeiriad yn rhan o&#39;r cyfrifiad ar gyfer Cymru a Lloegr - Cyfrifiad 2021</title>"
+            '<title>Rhan cyfeiriad y cyfrifiad yng Ngogledd Iwerddon - Cyfrifiad 2021</title>'
         self.content_common_address_in_northern_ireland_cy = \
-            "Nid yw\\\'r cyfeiriad hwn yn rhan o\\\'r cyfrifiad yng Nghymru a Lloegr"
+            "Rydych chi wedi dewis cyfeiriad sy\\\'n rhan o\\\'r cyfrifiad yng Ngogledd Iwerddon"
 
         self.content_common_address_not_in_northern_ireland_page_title = \
             '<title>Address not part of census for Northern Ireland - Census 2021</title>'
@@ -590,9 +590,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_start_uac_expired_cy = "Mae\\\'r cod mynediad hwn eisoes wedi cael ei ddefnyddio"
 
         self.content_start_code_for_northern_ireland_title_en = \
-            'This access code is not part of the census for England and Wales'
+            'Access code for census in Northern Ireland'
         self.content_start_code_for_northern_ireland_title_cy = \
-            "Nid yw\\\'r cod mynediad hwn yn rhan o\\\'r cyfrifiad ar gyfer Cymru a Lloegr"
+            "Cod mynediad ar gyfer y cyfrifiad yng Ngogledd Iwerddom"
         self.content_start_code_not_for_northern_ireland_title = \
             'This access code is not part of the census for Northern Ireland'
         self.content_start_code_for_england_and_wales_secondary = \
@@ -2336,6 +2336,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
             'I need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
+            'Large print'
+
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni = \
+            'Large print \\xe2\\x80\\x93 suitable for visually impaired'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
             '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
@@ -2354,6 +2359,8 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_no_cy = "Nac ydw, rwyf am ganslo a dychwelyd"
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
             'Mae angen holiadur print mawr arnaf'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
+            'Print mawr'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'
