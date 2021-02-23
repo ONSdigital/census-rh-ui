@@ -855,8 +855,8 @@ msgid ""
 "If you don’t already have a paper census for your household, you will "
 "need to %(open)srequest a household paper questionnaire%(close)s."
 msgstr ""
-"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, bydd "
-"angen i chi wneud cais am holiadur papur y cartref."
+"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, %(open)sbydd "
+"angen i chi wneud cais am holiadur papur y cartref%(close)s."
 
 #: app/templates/request-continuation-not-a-household.html:4
 msgid "This address is not a household address"
