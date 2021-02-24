@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-05 16:29+0000\n"
+"POT-Creation-Date: 2021-02-16 11:28+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -55,33 +55,27 @@ msgid "Thank you for your help."
 msgstr "Diolch am eich help."
 
 #: app/templates/common-address-in-northern-ireland.html:5
-#: app/templates/common-address-in-scotland.html:16
-msgid "This address is not part of the census for England and Wales"
-msgstr "Nid yw'r cyfeiriad hwn yn rhan o'r cyfrifiad yng Nghymru a Lloegr"
+msgid ""
+"You have selected an address that is part of the census in Northern "
+"Ireland"
+msgstr ""
+"Rydych chi wedi dewis cyfeiriad sy'n rhan o'r cyfrifiad yng Ngogledd "
+"Iwerddon"
 
-#: app/templates/common-address-in-northern-ireland.html:7
-msgid "You have selected an address in Northern Ireland."
-msgstr "Rydych chi wedi dewis cyfeiriad yng Ngogledd Iwerddon."
+#: app/templates/common-address-in-northern-ireland.html:8
+#, python-format
+msgid "To take part, visit the %(open)sNorthern Ireland census website%(close)s."
+msgstr "Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd Iwerddon%(close)s."
 
 #: app/templates/common-address-in-northern-ireland.html:10
 #: app/templates/start-code-for-northern-ireland.html:10
 #, python-format
-msgid ""
-"The Northern Ireland Statistics and Research Agency (NISRA) runs the "
-"census in Northern Ireland. Visit the %(open)sNISRA census "
-"website%(close)s to find out how to take part in the census for Northern "
-"Ireland."
-msgstr ""
-"Asiantaeth Ystadegau ac Ymchwil Gogledd Iwerddon (NISRA) sy'n cynnal y "
-"cyfrifiad yng Ngogledd Iwerddon. Ewch i wefan %(open)scyfrifiad "
-"NISRA%(close)s i gael gwybod sut i gymryd rhan yn y cyfrifiad ar gyfer "
-"Gogledd Iwerddon."
-
-#: app/templates/common-address-in-northern-ireland.html:12
-#: app/templates/start-code-for-northern-ireland.html:12
-#, python-format
 msgid "Alternatively, you can %(open)scontact us%(close)s for help."
 msgstr "Fel arall, gallwch chi %(open)sgysylltu â ni%(close)s am help."
+
+#: app/templates/common-address-in-scotland.html:16
+msgid "This address is not part of the census for England and Wales"
+msgstr "Nid yw'r cyfeiriad hwn yn rhan o'r cyfrifiad yng Nghymru a Lloegr"
 
 #: app/templates/common-address-in-scotland.html:19
 msgid ""
@@ -323,7 +317,7 @@ msgid ""
 "us%(close)s."
 msgstr ""
 "I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi "
-"ein ffonio ni am ddim ar %(telephone_number)s %(open)sneu ddewis ffordd "
+"ein ffonio ni am ddim ar %(telephone_number)s neu %(open)sddewis ffordd "
 "arall o gysylltu â ni%(close)s."
 
 #: app/templates/common-resident-or-manager.html:21
@@ -861,8 +855,8 @@ msgid ""
 "If you don’t already have a paper census for your household, you will "
 "need to %(open)srequest a household paper questionnaire%(close)s."
 msgstr ""
-"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, bydd "
-"angen i chi wneud cais am holiadur papur y cartref."
+"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, %(open)sbydd "
+"angen i chi wneud cais am holiadur papur y cartref%(close)s."
 
 #: app/templates/request-continuation-not-a-household.html:4
 msgid "This address is not a household address"
@@ -1090,14 +1084,13 @@ msgstr ""
 " i chi roi eich cod eto er mwyn %(open)smynd at eich cyfrifiad%(close)s."
 
 #: app/templates/start-code-for-northern-ireland.html:5
-msgid "This access code is not part of the census for England and Wales"
-msgstr "Nid yw'r cod mynediad hwn yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
+msgid "You have entered an access code for the census in Northern Ireland"
+msgstr "Rydych chi wedi rhoi cod mynediad ar gyfer y cyfrifiad yng Ngogledd Iwerddon"
 
-#: app/templates/start-code-for-northern-ireland.html:7
-msgid "You have entered an access code for the census in Northern Ireland."
-msgstr ""
-"Rydych chi wedi rhoi cod mynediad ar gyfer y cyfrifiad yng Ngogledd "
-"Iwerddon."
+#: app/templates/start-code-for-northern-ireland.html:8
+#, python-format
+msgid "Start your census on the %(open)sNorthern Ireland census website%(close)s."
+msgstr "Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd Iwerddon%(close)s."
 
 #: app/templates/start-confirm-address.html:28
 msgid "No, this is not the correct address"
@@ -1117,7 +1110,9 @@ msgstr "Mae'r cod mynediad hwn eisoes wedi cael ei ddefnyddio"
 
 #: app/templates/start-expired.html:9
 msgid "Someone has already submitted a census using this access code."
-msgstr "Mae rhywun wedi cyflwyno cyfrifiad yn barod gan ddefnyddio'r cod mynediad hwn"
+msgstr ""
+"Mae rhywun wedi cyflwyno cyfrifiad yn barod gan ddefnyddio'r cod mynediad"
+" hwn"
 
 #: app/templates/start-expired.html:12
 #, python-format
@@ -1651,4 +1646,31 @@ msgstr "Mae %(errorcount)s o broblemau gyda'r dudalen hon"
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
+
+#~ msgid "You have selected an address in Northern Ireland."
+#~ msgstr "Rydych chi wedi dewis cyfeiriad yng Ngogledd Iwerddon."
+
+#~ msgid ""
+#~ "The Northern Ireland Statistics and "
+#~ "Research Agency (NISRA) runs the census"
+#~ " in Northern Ireland. Visit the "
+#~ "%(open)sNISRA census website%(close)s to find"
+#~ " out how to take part in the"
+#~ " census for Northern Ireland."
+#~ msgstr ""
+#~ "Asiantaeth Ystadegau ac Ymchwil Gogledd "
+#~ "Iwerddon (NISRA) sy'n cynnal y cyfrifiad"
+#~ " yng Ngogledd Iwerddon. Ewch i wefan"
+#~ " %(open)scyfrifiad NISRA%(close)s i gael "
+#~ "gwybod sut i gymryd rhan yn y "
+#~ "cyfrifiad ar gyfer Gogledd Iwerddon."
+
+#~ msgid "This access code is not part of the census for England and Wales"
+#~ msgstr "Nid yw'r cod mynediad hwn yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
+
+#~ msgid "You have entered an access code for the census in Northern Ireland."
+#~ msgstr ""
+#~ "Rydych chi wedi rhoi cod mynediad "
+#~ "ar gyfer y cyfrifiad yng Ngogledd "
+#~ "Iwerddon."
 
