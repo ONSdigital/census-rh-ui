@@ -253,7 +253,7 @@ class RHTestCase(AioHTTPTestCase):
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
         ad_look_up_svc_url = self.app['AD_LOOK_UP_SVC_URL']
 
-        self.aims_postcode_limit = '250'
+        self.aims_postcode_limit = '5000'
 
         self.get_info = self.app.router['Info:get'].url_for()
 
