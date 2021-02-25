@@ -2571,7 +2571,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_error_invalid_cy = "Rhowch god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
-            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
+            'https://www.google.com/maps/search/?api=1&amp;query=53.380582,-1.466986'
 
         self.content_support_centre_list_of_centres_title_en = 'Support centres near ' + self.postcode_valid
         self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
