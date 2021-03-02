@@ -308,7 +308,7 @@ class StartConfirmAddress(StartCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes = get_session_value(session, 'attributes', 'start')
+        attributes = get_session_value(request, session, 'attributes', 'start')
 
         display_region_warning = False
         case_region = session['case']['region']
@@ -349,8 +349,8 @@ class StartConfirmAddress(StartCommon):
         else:
             locale = 'en'
 
-        attributes = get_session_value(session, 'attributes', 'start')
-        case = get_session_value(session, 'case', 'start')
+        attributes = get_session_value(request, session, 'attributes', 'start')
+        case = get_session_value(request, session, 'case', 'start')
 
         try:
             address_confirmation = data['address-check-answer']
@@ -428,8 +428,8 @@ class StartNILanguageOptions(StartCommon):
         session = await get_permitted_session(request)
         data = await request.post()
 
-        attributes = get_session_value(session, 'attributes', 'start')
-        case = get_session_value(session, 'case', 'start')
+        attributes = get_session_value(request, session, 'attributes', 'start')
+        case = get_session_value(request, session, 'case', 'start')
 
         try:
             language_option = data['language-option']
@@ -484,8 +484,8 @@ class StartNISelectLanguage(StartCommon):
         session = await get_permitted_session(request)
         data = await request.post()
 
-        attributes = get_session_value(session, 'attributes', 'start')
-        case = get_session_value(session, 'case', 'start')
+        attributes = get_session_value(request, session, 'attributes', 'start')
+        case = get_session_value(request, session, 'case', 'start')
 
         try:
             language_option = data['language-option']
@@ -625,8 +625,8 @@ class StartTransientAccommodationType(StartCommon):
 
         data = await request.post()
 
-        attributes = get_session_value(session, 'attributes', 'start')
-        case = get_session_value(session, 'case', 'start')
+        attributes = get_session_value(request, session, 'attributes', 'start')
+        case = get_session_value(request, session, 'case', 'start')
 
         try:
             accommodation_type = data['accommodation-type']

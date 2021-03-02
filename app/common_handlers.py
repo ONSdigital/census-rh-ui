@@ -363,7 +363,7 @@ class CommonSelectAddress(CommonCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
         postcode = attributes['postcode']
 
         address_content = await AddressIndex.get_postcode_return(request, postcode, display_region)
@@ -389,7 +389,7 @@ class CommonSelectAddress(CommonCommon):
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -467,7 +467,7 @@ class CommonConfirmAddress(CommonCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
         uprn = attributes['uprn']
 
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
@@ -518,7 +518,7 @@ class CommonConfirmAddress(CommonCommon):
         else:
             session = await get_existing_session(request, user_journey, sub_user_journey)
 
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -635,7 +635,7 @@ class CommonConfirmAddress(CommonCommon):
                     else:
                         locale = 'en'
 
-                    case = get_session_value(session, 'case', user_journey, sub_user_journey)
+                    case = get_session_value(request, session, 'case', user_journey, sub_user_journey)
 
                     if case['region'] == 'N':
                         raise HTTPFound(
@@ -771,7 +771,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_existing_session(request, user_journey, sub_user_journey)
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Cadarnhau preswylydd neu reolwr'
@@ -806,7 +806,7 @@ class CommonCEMangerQuestion(CommonCommon):
         self.log_entry(request, display_region + '/' + user_journey + '/' + sub_user_journey + '/resident-or-manager')
 
         session = await get_existing_session(request, user_journey, sub_user_journey)
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 
@@ -898,7 +898,7 @@ class CommonEnterRoomNumber(CommonCommon):
                        '/enter-flat-or-room-number')
 
         session = await get_existing_session(request, user_journey, sub_user_journey)
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         if display_region == 'cy':
             page_title = 'Nodi rhif fflat neu ystafell'
@@ -939,7 +939,7 @@ class CommonEnterRoomNumber(CommonCommon):
                        '/enter-flat-or-room-number')
 
         session = await get_existing_session(request, user_journey, sub_user_journey)
-        attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
+        attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
 
         data = await request.post()
 

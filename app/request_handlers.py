@@ -63,8 +63,8 @@ class RequestCodeIndividual(RequestCommon):
                 session['attributes']['individual'] = True
                 session.changed()
 
-                attributes = session['attributes']
-                case_type_value = attributes['case_type']
+                attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+                case_type_value = get_session_value(request, attributes, 'case_type', 'request', request_type)
                 if case_type_value:
                     logger.info('have session and case_type - directing to select method',
                                 client_ip=request['client_ip'],
@@ -207,12 +207,15 @@ class RequestCodeSelectHowToReceive(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+        address_level = get_session_value(request, attributes, 'address_level', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = 'Dewis sut i anfon cod mynediad unigol'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Dewis sut i gael cod mynediad rheolwr'
             else:
                 page_title = 'Dewis sut i gael cod mynediad y cartref'
@@ -220,9 +223,9 @@ class RequestCodeSelectHowToReceive(RequestCommon):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Select how to receive individual access code'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Select how to receive manager access code'
             else:
                 page_title = 'Select how to receive household access code'
@@ -230,14 +233,17 @@ class RequestCodeSelectHowToReceive(RequestCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-        attributes['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
-
-        return attributes
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request),
+            'contact_us_link': View.get_campaign_site_link(request, display_region, 'contact-us'),
+            'individual': individual,
+            'case_type': case_type,
+            'address_level': address_level
+        }
 
     async def post(self, request):
 
@@ -311,16 +317,15 @@ class RequestCodeEnterMobile(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
-        session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes',  'request', request_type)
+        await get_existing_session(request, 'request', request_type)
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-
-        return attributes
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request)
+        }
 
     async def post(self, request):
         request_type = request.match_info['request_type']
@@ -334,7 +339,7 @@ class RequestCodeEnterMobile(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-mobile')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -381,12 +386,18 @@ class RequestCodeConfirmSendByText(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+        address_level = get_session_value(request, attributes, 'address_level', 'request', request_type)
+        submitted_mobile_number = \
+            get_session_value(request, attributes, 'submitted_mobile_number', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = 'Cadarnhau i anfon cod mynediad unigol drwy neges destun'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Cadarnhau i anfon cod mynediad rheolwr drwy neges destun'
             else:
                 page_title = 'Cadarnhau i anfon cod mynediad y cartref drwy neges destun'
@@ -394,9 +405,9 @@ class RequestCodeConfirmSendByText(RequestCommon):
                 page_title = View.page_title_error_prefix_cy + page_title
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Confirm to send individual access code by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Confirm to send manager access code by text'
             else:
                 page_title = 'Confirm to send household access code by text'
@@ -404,13 +415,14 @@ class RequestCodeConfirmSendByText(RequestCommon):
                 page_title = View.page_title_error_prefix_en + page_title
             locale = 'en'
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-
-        return attributes
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request),
+            'submitted_mobile_number': submitted_mobile_number
+        }
 
     async def post(self, request):
 
@@ -420,7 +432,9 @@ class RequestCodeConfirmSendByText(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-text')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
 
         data = await request.post()
         try:
@@ -439,8 +453,12 @@ class RequestCodeConfirmSendByText(RequestCommon):
                 ))
 
         if mobile_confirmation == 'yes':
+            region = get_session_value(request, attributes, 'region', 'request', request_type)
+            postcode = get_session_value(request, attributes, 'postcode', 'request', request_type)
+            case_id = get_session_value(request, attributes, 'case_id', 'request', request_type)
+            mobile_number = get_session_value(request, attributes, 'mobile_number', 'request', request_type)
 
-            if attributes['individual']:
+            if individual:
                 fulfilment_individual = 'true'
             else:
                 fulfilment_individual = 'false'
@@ -450,18 +468,18 @@ class RequestCodeConfirmSendByText(RequestCommon):
             else:
                 fulfilment_language = 'E'
 
-            logger.info(f"fulfilment query: case_type={attributes['case_type']}, region={attributes['region']}, "
+            logger.info(f"fulfilment query: case_type={case_type}, region={region}, "
                         f"individual={fulfilment_individual}",
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
                         trace=request['trace'],
-                        postcode=attributes['postcode'])
+                        postcode=postcode)
 
             fulfilment_code_array = []
 
             try:
                 available_fulfilments = await RHService.get_fulfilment(
-                    request, attributes['case_type'], attributes['region'], 'SMS', 'UAC', fulfilment_individual)
+                    request, case_type, region, 'SMS', 'UAC', fulfilment_individual)
                 if len(available_fulfilments) > 1:
                     for fulfilment in available_fulfilments:
                         if fulfilment['language'] == fulfilment_language:
@@ -470,10 +488,7 @@ class RequestCodeConfirmSendByText(RequestCommon):
                     fulfilment_code_array.append(available_fulfilments[0]['fulfilmentCode'])
 
                 try:
-                    await RHService.request_fulfilment_sms(request,
-                                                           attributes['case_id'],
-                                                           attributes['mobile_number'],
-                                                           fulfilment_code_array)
+                    await RHService.request_fulfilment_sms(request, case_id, mobile_number, fulfilment_code_array)
                 except (KeyError, ClientResponseError) as ex:
                     if ex.status == 429:
                         raise TooManyRequests(request_type)
@@ -528,16 +543,15 @@ class RequestCommonEnterName(RequestCommon):
 
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
-        session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        await get_existing_session(request, 'request', request_type)
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-
-        return attributes
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request)
+        }
 
     async def post(self, request):
         request_type = request.match_info['request_type']
@@ -546,7 +560,7 @@ class RequestCommonEnterName(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/enter-name')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -593,15 +607,18 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+        address_level = get_session_value(request, attributes, 'address_level', 'request', request_type)
 
         if request_type == 'access-code':
-            if attributes['individual']:
+            if individual:
                 if display_region == 'cy':
                     page_title = "Cadarnhau i anfon cod mynediad unigol drwy'r post"
                 else:
                     page_title = 'Confirm to send individual access code by post'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 if display_region == 'cy':
                     page_title = "Cadarnhau i anfon cod mynediad rheolwr drwy'r post"
                 else:
@@ -617,7 +634,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             else:
                 page_title = 'Confirm to send continuation questionnaire'
         else:
-            if attributes['individual']:
+            if individual:
                 if display_region == 'cy':
                     page_title = "Cadarnhau i anfon holiadur papur i unigolion"
                 else:
@@ -640,17 +657,17 @@ class RequestCommonConfirmSendByPost(RequestCommon):
             'locale': locale,
             'request_type': request_type,
             'page_url': View.gen_page_url(request),
-            'first_name': attributes['first_name'],
-            'last_name': attributes['last_name'],
-            'addressLine1': attributes['addressLine1'],
-            'addressLine2': attributes['addressLine2'],
-            'addressLine3': attributes['addressLine3'],
-            'townName': attributes['townName'],
-            'postcode': attributes['postcode'],
-            'case_type': attributes['case_type'],
-            'address_level': attributes['address_level'],
-            'roomNumber': attributes['roomNumber'],
-            'individual': attributes['individual']
+            'first_name': get_session_value(request, attributes, 'first_name', 'request', request_type),
+            'last_name': get_session_value(request, attributes, 'last_name', 'request', request_type),
+            'addressLine1': get_session_value(request, attributes, 'addressLine1', 'request', request_type),
+            'addressLine2': get_session_value(request, attributes, 'addressLine2', 'request', request_type),
+            'addressLine3': get_session_value(request, attributes, 'addressLine3', 'request', request_type),
+            'townName': get_session_value(request, attributes, 'townName', 'request', request_type),
+            'postcode': get_session_value(request, attributes, 'postcode', 'request', request_type),
+            'case_type': case_type,
+            'address_level': address_level,
+            'roomNumber': get_session_value(request, attributes, 'roomNumber', 'request', request_type),
+            'individual': individual
         }
 
     async def post(self, request):
@@ -660,7 +677,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/confirm-send-by-post')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
 
         data = await request.post()
         try:
@@ -682,8 +700,13 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                                                                                  request_type=request_type))
 
         if name_address_confirmation == 'yes':
+            case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+            region = get_session_value(request, attributes, 'region', 'request', request_type)
+            first_name = get_session_value(request, attributes, 'first_name', 'request', request_type)
+            last_name = get_session_value(request, attributes, 'last_name', 'request', request_type)
+            case_id = get_session_value(request, attributes, 'case_id', 'request', request_type)
 
-            if attributes['individual']:
+            if individual:
                 fulfilment_individual = 'true'
             else:
                 fulfilment_individual = 'false'
@@ -708,8 +731,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                 try:
                     available_fulfilments = await RHService.get_fulfilment(
                         request,
-                        attributes['case_type'],
-                        attributes['region'],
+                        case_type,
+                        region,
                         'POST',
                         fulfilment_type,
                         fulfilment_individual)
@@ -723,33 +746,33 @@ class RequestCommonConfirmSendByPost(RequestCommon):
 
                     fulfilment_type_array.append(fulfilment_type)
 
-                    room_number_value = attributes['roomNumber']
+                    room_number_value = get_session_value(request, attributes, 'roomNumber', 'request', request_type)
                     logger.info(
-                        f"fulfilment query: case_type={attributes['case_type']}, "
+                        f"fulfilment query: case_type={case_type}, "
                         f"fulfilment_type={fulfilment_type_array}, "
-                        f"region={attributes['region']}, individual={fulfilment_individual}",
+                        f"region={region}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
                         trace=request['trace'],
-                        postcode=attributes['postcode'],
+                        postcode=get_session_value(request, attributes, 'postcode', 'request', request_type),
                         room_number_entered=room_number_value)
 
                     if room_number_value:
-                        if len(attributes['last_name']) < last_name_char_limit:
-                            last_name = attributes['last_name'] + ', ' + room_number_value
+                        if len(last_name) < last_name_char_limit:
+                            last_name_value = last_name + ', ' + room_number_value
                             title = None
                         else:
-                            last_name = attributes['last_name']
+                            last_name_value = last_name
                             title = room_number_value
                     else:
-                        last_name = attributes['last_name']
+                        last_name_value = last_name
                         title = None
 
                     try:
                         await RHService.request_fulfilment_post(request,
-                                                                attributes['case_id'],
-                                                                attributes['first_name'],
-                                                                last_name,
+                                                                case_id,
+                                                                first_name,
+                                                                last_name_value,
                                                                 fulfilment_code_array,
                                                                 title)
                     except (KeyError, ClientResponseError) as ex:
@@ -790,7 +813,7 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                 fulfilment_type_array = []
 
                 required_forms = ProcessNumberOfPeople.form_calculation(
-                    attributes['region'], attributes['number_of_people'],
+                    region, get_session_value(request, attributes, 'number_of_people', 'request', request_type),
                     include_household=include_household, large_print=large_print)
 
                 logger.info(required_forms,
@@ -804,8 +827,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                     if number_of_household_forms == 1:
                         available_fulfilments = await RHService.get_fulfilment(
                             request,
-                            attributes['case_type'],
-                            attributes['region'],
+                            case_type,
+                            region,
                             'POST',
                             'QUESTIONNAIRE',
                             fulfilment_individual)
@@ -824,8 +847,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         fulfilment_code = ''
                         available_fulfilments = await RHService.get_fulfilment(
                             request,
-                            attributes['case_type'],
-                            attributes['region'],
+                            case_type,
+                            region,
                             'POST',
                             'CONTINUATION',
                             fulfilment_individual)
@@ -847,8 +870,8 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                         fulfilment_code = ''
                         available_fulfilments = await RHService.get_fulfilment(
                             request,
-                            attributes['case_type'],
-                            attributes['region'],
+                            case_type,
+                            region,
                             'POST',
                             'LARGE_PRINT',
                             fulfilment_individual)
@@ -866,19 +889,19 @@ class RequestCommonConfirmSendByPost(RequestCommon):
                             count += 1
 
                     logger.info(
-                        f"fulfilment query: case_type={attributes['case_type']}, "
+                        f"fulfilment query: case_type={case_type}, "
                         f"fulfilment_type={fulfilment_type_array}, "
-                        f"region={attributes['region']}, individual={fulfilment_individual}",
+                        f"region={region}, individual={fulfilment_individual}",
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
                         trace=request['trace'],
-                        case_id=attributes['case_id'])
+                        case_id=case_id)
 
                     try:
                         await RHService.request_fulfilment_post(request,
-                                                                attributes['case_id'],
-                                                                attributes['first_name'],
-                                                                attributes['last_name'],
+                                                                case_id,
+                                                                first_name,
+                                                                last_name,
                                                                 fulfilment_code_array)
                     except (KeyError, ClientResponseError) as ex:
                         if ex.status == 429:
@@ -946,34 +969,42 @@ class RequestCodeSentByText(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-text')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+        address_level = get_session_value(request, attributes, 'address_level', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = "Mae cod mynediad unigol wedi cael ei anfon drwy neges destun"
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = "Mae cod mynediad rheolwr wedi cael ei anfon drwy neges destun"
             else:
                 page_title = "Mae cod mynediad y cartref wedi cael ei anfon drwy neges destun"
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Individual access code has been sent by text'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Manager access code has been sent by text'
             else:
                 page_title = 'Household access code has been sent by text'
             locale = 'en'
 
-        attributes['page_title'] = page_title
-        attributes['display_region'] = display_region
-        attributes['locale'] = locale
-        attributes['request_type'] = request_type
-        attributes['page_url'] = View.gen_page_url(request)
-
         await invalidate(request)
 
-        return attributes
+        return {
+            'page_title': page_title,
+            'display_region': display_region,
+            'locale': locale,
+            'request_type': request_type,
+            'page_url': View.gen_page_url(request),
+            'submitted_mobile_number': get_session_value(request, attributes, 'submitted_mobile_number',
+                                                         'request', request_type),
+            'individual': individual,
+            'case_type': case_type,
+            'address_level': address_level
+        }
 
 
 @request_routes.view(r'/' + View.valid_display_regions + '/request/' +
@@ -988,20 +1019,23 @@ class RequestCodeSentByPost(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/code-sent-by-post')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
+        case_type = get_session_value(request, attributes, 'case_type', 'request', request_type)
+        address_level = get_session_value(request, attributes, 'address_level', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = "Caiff cod mynediad unigol ei anfon drwy'r post"
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = "Caiff cod mynediad rheolwr ei anfon drwy'r post"
             else:
                 page_title = "Caiff cod mynediad y cartref ei anfon drwy'r post"
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Individual access code will be sent by post'
-            elif (attributes['case_type'] == 'CE') and (attributes['address_level'] == 'E'):
+            elif (case_type == 'CE') and (address_level == 'E'):
                 page_title = 'Manager access code will be sent by post'
             else:
                 page_title = 'Household access code will be sent by post'
@@ -1016,17 +1050,17 @@ class RequestCodeSentByPost(RequestCommon):
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
                 'census_home_link': View.get_campaign_site_link(request, display_region, 'census-home'),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'case_type': attributes['case_type'],
-                'address_level': attributes['address_level'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
+                'first_name': get_session_value(request, attributes, 'first_name', 'request', request_type),
+                'last_name': get_session_value(request, attributes, 'last_name', 'request', request_type),
+                'addressLine1': get_session_value(request, attributes, 'addressLine1', 'request', request_type),
+                'addressLine2': get_session_value(request, attributes, 'addressLine2', 'request', request_type),
+                'addressLine3': get_session_value(request, attributes, 'addressLine3', 'request', request_type),
+                'townName': get_session_value(request, attributes, 'townName', 'request', request_type),
+                'postcode': get_session_value(request, attributes, 'postcode', 'request', request_type),
+                'case_type': case_type,
+                'address_level': address_level,
+                'roomNumber': get_session_value(request, attributes, 'roomNumber', 'request', request_type),
+                'individual': individual
             }
 
 
@@ -1066,7 +1100,7 @@ class RequestCommonPeopleInHousehold(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/number-of-people-in-your-household')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
 
         data = await request.post()
 
@@ -1163,16 +1197,17 @@ class RequestQuestionnaireSent(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = "Caiff holiadur papur i unigolion ei anfon"
             else:
                 page_title = "Caiff holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Individual paper questionnaire will be sent'
             else:
                 page_title = 'Household paper questionnaire will be sent'
@@ -1186,15 +1221,15 @@ class RequestQuestionnaireSent(RequestCommon):
                 'locale': locale,
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
+                'first_name': get_session_value(request, attributes, 'first_name', 'request', request_type),
+                'last_name': get_session_value(request, attributes, 'last_name', 'request', request_type),
+                'addressLine1': get_session_value(request, attributes, 'addressLine1', 'request', request_type),
+                'addressLine2': get_session_value(request, attributes, 'addressLine2', 'request', request_type),
+                'addressLine3': get_session_value(request, attributes, 'addressLine3', 'request', request_type),
+                'townName': get_session_value(request, attributes, 'townName', 'request', request_type),
+                'postcode': get_session_value(request, attributes, 'postcode', 'request', request_type),
+                'roomNumber': get_session_value(request, attributes, 'roomNumber', 'request', request_type),
+                'individual': individual
             }
 
 
@@ -1216,7 +1251,7 @@ class RequestContinuationSent(RequestCommon):
         self.log_entry(request, display_region + '/request/' + request_type + '/sent')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
 
         await invalidate(request)
 
@@ -1226,15 +1261,15 @@ class RequestContinuationSent(RequestCommon):
                 'locale': locale,
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
+                'first_name': get_session_value(request, attributes, 'first_name', 'request', request_type),
+                'last_name': get_session_value(request, attributes, 'last_name', 'request', request_type),
+                'addressLine1': get_session_value(request, attributes, 'addressLine1', 'request', request_type),
+                'addressLine2': get_session_value(request, attributes, 'addressLine2', 'request', request_type),
+                'addressLine3': get_session_value(request, attributes, 'addressLine3', 'request', request_type),
+                'townName': get_session_value(request, attributes, 'townName', 'request', request_type),
+                'postcode': get_session_value(request, attributes, 'postcode', 'request', request_type),
+                'roomNumber': get_session_value(request, attributes, 'roomNumber', 'request', request_type),
+                'individual': get_session_value(request, attributes, 'individual', 'request', request_type)
             }
 
 
@@ -1249,16 +1284,17 @@ class RequestLargePrintSentPost(RequestCommon):
         self.log_entry(request, display_region + '/request/paper-questionnaire/large-print-sent-post')
 
         session = await get_existing_session(request, 'request', request_type)
-        attributes = get_session_value(session, 'attributes', 'request', request_type)
+        attributes = get_session_value(request, session, 'attributes', 'request', request_type)
+        individual = get_session_value(request, attributes, 'individual', 'request', request_type)
 
         if display_region == 'cy':
-            if attributes['individual']:
+            if individual:
                 page_title = "Caiff copi print mawr o'r holiadur papur i unigolion ei anfon"
             else:
                 page_title = "Caiff copi print mawr o holiadur papur y cartref ei anfon"
             locale = 'cy'
         else:
-            if attributes['individual']:
+            if individual:
                 page_title = 'Large-print individual paper questionnaire will be sent'
             else:
                 page_title = 'Large-print household paper questionnaire will be sent'
@@ -1272,15 +1308,15 @@ class RequestLargePrintSentPost(RequestCommon):
                 'locale': locale,
                 'request_type': request_type,
                 'page_url': View.gen_page_url(request),
-                'first_name': attributes['first_name'],
-                'last_name': attributes['last_name'],
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
-                'roomNumber': attributes['roomNumber'],
-                'individual': attributes['individual']
+                'first_name': get_session_value(request, attributes, 'first_name', 'request', request_type),
+                'last_name': get_session_value(request, attributes, 'last_name', 'request', request_type),
+                'addressLine1': get_session_value(request, attributes, 'addressLine1', 'request', request_type),
+                'addressLine2': get_session_value(request, attributes, 'addressLine2', 'request', request_type),
+                'addressLine3': get_session_value(request, attributes, 'addressLine3', 'request', request_type),
+                'townName': get_session_value(request, attributes, 'townName', 'request', request_type),
+                'postcode': get_session_value(request, attributes, 'postcode', 'request', request_type),
+                'roomNumber': get_session_value(request, attributes, 'roomNumber', 'request', request_type),
+                'individual': individual
             }
 
 
