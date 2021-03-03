@@ -2337,9 +2337,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
             'I need a large-print questionnaire'
         self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
-            'Large print'
-
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni = \
             'Large print \\xe2\\x80\\x93 suitable for visually impaired'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
@@ -2360,7 +2357,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
             'Mae angen holiadur print mawr arnaf'
         self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
-            'Print mawr'
+            'Print mawr \\xe2\\x80\\x93 yn addas i\\\'r rhai \\xc3\\xa2 nam ar eu golwg'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'

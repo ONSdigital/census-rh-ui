@@ -759,7 +759,7 @@ msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:139
 msgid "Large print – suitable for visually impaired"
-msgstr ""
+msgstr "Print mawr – yn addas i'r rhai â nam ar eu golwg"
 
 #: app/templates/request-common-confirm-send-by-post.html:146
 msgid "I need a large-print questionnaire"
