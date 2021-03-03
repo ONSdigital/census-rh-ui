@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-16 11:28+0000\n"
+"POT-Creation-Date: 2021-03-03 18:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,7 +224,7 @@ msgstr ""
 #: app/templates/request-code-household.html:44
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
-#: app/templates/support_centre_list_of_centres.html:61
+#: app/templates/support_centre_list_of_centres.html:70
 msgid "Hide this"
 msgstr ""
 
@@ -674,7 +674,7 @@ msgid ""
 msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:139
-msgid "Large print"
+msgid "Large print – suitable for visually impaired"
 msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:146
@@ -1135,137 +1135,137 @@ msgstr ""
 msgid "Find"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:7
+#: app/templates/support_centre_list_of_centres.html:9
 msgid "Not available"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:12
+#: app/templates/support_centre_list_of_centres.html:14
 #, python-format
 msgid "Support centres near %(highlight_postcode)s"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:28
+#: app/templates/support_centre_list_of_centres.html:30
 #, python-format
 msgid "%(distance_in_miles)s miles away"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:41
+#: app/templates/support_centre_list_of_centres.html:47
 #, python-format
 msgid "Find %(location_name_span)s on Google Maps"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:49
+#: app/templates/support_centre_list_of_centres.html:58
 msgid "Telephone: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:52
+#: app/templates/support_centre_list_of_centres.html:61
 msgid "Email: "
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:59
+#: app/templates/support_centre_list_of_centres.html:68
 msgid "Opening times and facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:65
+#: app/templates/support_centre_list_of_centres.html:95
 msgid "Opening times"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:67
+#: app/templates/support_centre_list_of_centres.html:97
 msgid "Monday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:73
-#: app/templates/support_centre_list_of_centres.html:82
-#: app/templates/support_centre_list_of_centres.html:91
-#: app/templates/support_centre_list_of_centres.html:100
-#: app/templates/support_centre_list_of_centres.html:109
-#: app/templates/support_centre_list_of_centres.html:118
-#: app/templates/support_centre_list_of_centres.html:127
-#: app/templates/support_centre_list_of_centres.html:136
-#: app/templates/support_centre_list_of_centres.html:145
-#: app/templates/support_centre_list_of_centres.html:154
-#: app/templates/support_centre_list_of_centres.html:163
-#: app/templates/support_centre_list_of_centres.html:172
+#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:166
+#: app/templates/support_centre_list_of_centres.html:175
+#: app/templates/support_centre_list_of_centres.html:184
+#: app/templates/support_centre_list_of_centres.html:193
+#: app/templates/support_centre_list_of_centres.html:202
 msgid "Closed"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:76
+#: app/templates/support_centre_list_of_centres.html:106
 msgid "Tuesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:85
+#: app/templates/support_centre_list_of_centres.html:115
 msgid "Wednesday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:94
+#: app/templates/support_centre_list_of_centres.html:124
 msgid "Thursday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:133
 msgid "Friday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:142
 msgid "Saturday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:151
 msgid "Sunday"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:160
 msgid "Census Saturday, 20 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:169
 msgid "Census Day, 21 March"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:178
 msgid "Good Friday, 2 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:187
 msgid "Easter Monday, 5 April"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:166
+#: app/templates/support_centre_list_of_centres.html:196
 msgid "May Bank Holiday, 3 May"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:177
+#: app/templates/support_centre_list_of_centres.html:207
 msgid "Centre facilities"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:181
+#: app/templates/support_centre_list_of_centres.html:211
 msgid "Car park, including disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:183
+#: app/templates/support_centre_list_of_centres.html:213
 msgid "Car park"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:185
+#: app/templates/support_centre_list_of_centres.html:215
 msgid "Disabled parking"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:187
+#: app/templates/support_centre_list_of_centres.html:217
 msgid "Level access into building entrance"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:188
+#: app/templates/support_centre_list_of_centres.html:218
 msgid "Wheelchair access"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:189
+#: app/templates/support_centre_list_of_centres.html:219
 msgid "Staff are disability aware"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:190
+#: app/templates/support_centre_list_of_centres.html:220
 msgid "Waiting room seating"
 msgstr ""
 
-#: app/templates/support_centre_list_of_centres.html:191
+#: app/templates/support_centre_list_of_centres.html:221
 msgid "Hearing loop system"
 msgstr ""
 
