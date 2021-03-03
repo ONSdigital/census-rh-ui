@@ -370,7 +370,7 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_empty'))
             number_of_people_valid = False
 
-        elif not (data.get('number_of_people')).isnumeric():
+        elif not (data.get('number_of_people')).isdigit():
             logger.info('number_of_people nan',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
