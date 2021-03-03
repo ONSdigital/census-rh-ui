@@ -98,6 +98,9 @@ class RequestIndividualForm(RequestCommon):
     @aiohttp_jinja2.template('request-questionnaire-individual.html')
     async def get(self, request):
         display_region = request.match_info['display_region']
+
+        await get_existing_session(request, 'request', 'paper-questionnaire')
+
         if display_region == 'cy':
             page_title = 'Gofyn am holiadur papur i unigolion'
             locale = 'cy'
@@ -133,6 +136,9 @@ class RequestCodeHousehold(RequestCommon):
     @aiohttp_jinja2.template('request-code-household.html')
     async def get(self, request):
         display_region = request.match_info['display_region']
+
+        await get_existing_session(request, 'request', 'access-code')
+
         if display_region == 'cy':
             page_title = 'Gofyn am god mynediad newydd ar gyfer y cartref'
             locale = 'cy'
@@ -167,6 +173,9 @@ class RequestHouseholdForm(RequestCommon):
     @aiohttp_jinja2.template('request-questionnaire-household.html')
     async def get(self, request):
         display_region = request.match_info['display_region']
+
+        await get_existing_session(request, 'request', 'paper-questionnaire')
+
         if display_region == 'cy':
             page_title = "Gofyn am holiadur papur y cartref"
             locale = 'cy'
@@ -243,6 +252,8 @@ class RequestCodeSelectHowToReceive(RequestCommon):
 
         request_type = request.match_info['request_type']
         display_region = request.match_info['display_region']
+
+        await get_existing_session(request, 'request', request_type)
 
         self.log_entry(request, display_region + '/request/' + request_type + '/select-how-to-receive')
 
