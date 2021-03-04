@@ -113,7 +113,7 @@
                     {%- endif -%}
                 </div>
                 <div>{{ _('Wednesday') }} &ndash;&nbsp;
-                    {%- if days['Tuesday'] -%}
+                    {%- if days['Wednesday'] -%}
                         {%- for times in days['Wednesday'] -%}
                             {{ rhOpeningTimes({'open': times['start'], 'close': times['finish'], 'display_region': display_region }) }}
                         {%- endfor -%}
