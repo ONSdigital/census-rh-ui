@@ -319,18 +319,18 @@ class StartConfirmAddress(StartCommon):
                         trace=request['trace'],
                         region_of_site=display_region,
                         region_of_case=case_region,
-                        postcode=attributes['postcode'])
+                        postcode=get_session_value(request, attributes, 'postcode', 'start'))
             display_region_warning = True
 
         return {'locale': locale,
                 'page_title': page_title,
                 'page_url': View.gen_page_url(request),
                 'display_region': display_region,
-                'addressLine1': attributes['addressLine1'],
-                'addressLine2': attributes['addressLine2'],
-                'addressLine3': attributes['addressLine3'],
-                'townName': attributes['townName'],
-                'postcode': attributes['postcode'],
+                'addressLine1': get_session_value(request, attributes, 'addressLine1', 'start'),
+                'addressLine2': get_session_value(request, attributes, 'addressLine2', 'start'),
+                'addressLine3': get_session_value(request, attributes, 'addressLine3', 'start'),
+                'townName': get_session_value(request, attributes, 'townName', 'start'),
+                'postcode': get_session_value(request, attributes, 'postcode', 'start'),
                 'display_region_warning': display_region_warning
                 }
 
@@ -360,7 +360,7 @@ class StartConfirmAddress(StartCommon):
                         client_id=request['client_id'],
                         trace=request['trace'],
                         region_of_site=display_region,
-                        postcode=attributes['postcode'])
+                        postcode=get_session_value(request, attributes, 'postcode', 'start'))
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -395,7 +395,7 @@ class StartConfirmAddress(StartCommon):
                         trace=request['trace'],
                         user_selection=address_confirmation,
                         region_of_site=display_region,
-                        postcode=attributes['postcode'])
+                        postcode=get_session_value(request, attributes, 'postcode', 'start'))
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:

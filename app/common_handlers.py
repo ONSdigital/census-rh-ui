@@ -364,7 +364,7 @@ class CommonSelectAddress(CommonCommon):
             locale = 'en'
 
         attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
-        postcode = attributes['postcode']
+        postcode = get_session_value(request, attributes, 'postcode', 'request', sub_user_journey)
 
         address_content = await AddressIndex.get_postcode_return(request, postcode, display_region)
         address_content['page_title'] = page_title
@@ -468,7 +468,8 @@ class CommonConfirmAddress(CommonCommon):
             locale = 'en'
 
         attributes = get_session_value(request, session, 'attributes', user_journey, sub_user_journey)
-        uprn = attributes['uprn']
+
+        uprn = get_session_value(request, attributes, 'uprn', user_journey, sub_user_journey)
 
         uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
 
@@ -544,7 +545,8 @@ class CommonConfirmAddress(CommonCommon):
         if address_confirmation == 'yes':
 
             try:
-                census_address_type_value = attributes['censusAddressType']
+                census_address_type_value = \
+                    get_session_value(request, attributes, 'censusAddressType', user_journey, sub_user_journey)
                 if census_address_type_value == 'NA':
                     logger.info('censusAddressType is NA',
                                 client_ip=request['client_ip'],
@@ -573,8 +575,9 @@ class CommonConfirmAddress(CommonCommon):
                         display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
 
             try:
-                country_code_value = attributes['countryCode']
-                uprn = attributes['uprn']
+                country_code_value = \
+                    get_session_value(request, attributes, 'countryCode', user_journey, sub_user_journey)
+                uprn = get_session_value(request, attributes, 'uprn', user_journey, sub_user_journey)
                 if country_code_value == 'S':
                     logger.info('address is in Scotland',
                                 client_ip=request['client_ip'],
@@ -791,11 +794,11 @@ class CommonCEMangerQuestion(CommonCommon):
             'locale': locale,
             'page_url': View.gen_page_url(request),
             'page_title': page_title,
-            'addressLine1': attributes['addressLine1'],
-            'addressLine2': attributes['addressLine2'],
-            'addressLine3': attributes['addressLine3'],
-            'townName': attributes['townName'],
-            'postcode': attributes['postcode']
+            'addressLine1': get_session_value(request, attributes, 'addressLine1', user_journey, sub_user_journey),
+            'addressLine2': get_session_value(request, attributes, 'addressLine2', user_journey, sub_user_journey),
+            'addressLine3': get_session_value(request, attributes, 'addressLine3', user_journey, sub_user_journey),
+            'townName': get_session_value(request, attributes, 'townName', user_journey, sub_user_journey),
+            'postcode': get_session_value(request, attributes, 'postcode', user_journey, sub_user_journey)
         }
 
     async def post(self, request):
