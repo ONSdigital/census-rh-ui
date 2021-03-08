@@ -1352,7 +1352,7 @@ class TestHelpers(RHTestCase):
                                                              display_region, 'POST', True))
             if number_of_people == '':
                 self.assertLogEvent(cm, "number_of_people empty")
-            elif not number_of_people.isnumeric():
+            elif not number_of_people.isdecimal():
                 self.assertLogEvent(cm, "number_of_people nan")
             elif self.sub_user_journey == 'continuation-questionnaire':
                 if display_region == 'ni' and int(number_of_people) < 7:
@@ -1372,7 +1372,7 @@ class TestHelpers(RHTestCase):
             if display_region == 'cy':
                 if number_of_people == '':
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_cy, contents)
-                elif not number_of_people.isnumeric():
+                elif not number_of_people.isdecimal():
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_cy, contents)
                 elif self.sub_user_journey == 'continuation-questionnaire' and int(number_of_people) < 6:
                     self.assertIn(
@@ -1384,7 +1384,7 @@ class TestHelpers(RHTestCase):
             else:
                 if number_of_people == '':
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_en, contents)
-                elif not number_of_people.isnumeric():
+                elif not number_of_people.isdecimal():
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_en, contents)
                 elif self.sub_user_journey == 'continuation-questionnaire':
                     if display_region == 'ni' and int(number_of_people) < 7:

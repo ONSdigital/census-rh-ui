@@ -359,8 +359,9 @@ class ProcessNumberOfPeople:
     def validate_number_of_people(request, data, display_region, request_type):
 
         number_of_people_valid = True
+        number_of_people_value = data.get('number_of_people')
 
-        if (data.get('number_of_people')) == '':
+        if (not number_of_people_value) or (number_of_people_value == ''):
             logger.info('number_of_people empty',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
@@ -377,7 +378,7 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_empty'))
             number_of_people_valid = False
 
-        elif not (data.get('number_of_people')).isnumeric():
+        elif not number_of_people_value.isdecimal():
             logger.info('number_of_people nan',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
@@ -395,7 +396,7 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif request_type == 'continuation-questionnaire':
-            if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
+            if (display_region == 'ni') and (int(number_of_people_value) < 7):
                 logger.info('number_of_people continuation less than 7',
                             client_ip=request['client_ip'],
                             client_id=request['client_id'],
@@ -407,7 +408,7 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
-            elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
+            elif (not display_region == 'ni') and (int(number_of_people_value) < 6):
                 logger.info('number_of_people continuation less than 6',
                             client_ip=request['client_ip'],
                             client_id=request['client_id'],
@@ -424,7 +425,7 @@ class ProcessNumberOfPeople:
                                                                        'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
-            elif int(data.get('number_of_people')) > 30:
+            elif int(number_of_people_value) > 30:
                 logger.info('number_of_people continuation greater than 30',
                             client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 if display_region == 'cy':
@@ -437,7 +438,7 @@ class ProcessNumberOfPeople:
                                                                        'number_of_people_continuation_high'))
                 number_of_people_valid = False
 
-        elif int(data.get('number_of_people')) > 30:
+        elif int(number_of_people_value) > 30:
             logger.info('number_of_people greater than 30',
                         client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             if display_region == 'cy':
