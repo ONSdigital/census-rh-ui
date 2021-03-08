@@ -1725,7 +1725,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -2416,7 +2416,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -2437,7 +2437,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())

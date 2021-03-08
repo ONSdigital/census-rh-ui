@@ -141,7 +141,10 @@ async def key_error(request, error):
 
 
 async def response_error(request):
-    logger.error('response error')
+    logger.error('response error',
+                 client_ip=request['client_ip'],
+                 client_id=request['client_id'],
+                 trace=request['trace'])
     attributes = check_display_region(request)
     return jinja.render_template('error.html', request, attributes, status=500)
 

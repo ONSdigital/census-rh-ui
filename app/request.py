@@ -114,13 +114,20 @@ class RetryRequest:
                             attempts=attempts)
                 return await self._request_basic()
         except ClientResponseError as ex:
-            if not ex.status == 404:
+            if ex.status not in [404, 429]:
                 logger.error('error in response',
                              client_ip=self.request['client_ip'],
                              client_id=self.request['client_id'],
                              trace=self.request['trace'],
                              url=self.url,
                              status_code=ex.status)
+            elif ex.status == 429:
+                logger.warn('too many requests',
+                            client_ip=self.request['client_ip'],
+                            client_id=self.request['client_id'],
+                            trace=self.request['trace'],
+                            url=self.url,
+                            status_code=ex.status)
             raise ex
         except (ClientConnectionError, ClientConnectorError) as ex:
             logger.error('client failed to connect',
