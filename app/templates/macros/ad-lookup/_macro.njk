@@ -20,7 +20,9 @@
 
     {%- if hour|int > 11 -%}
         {%- set am_pm = 'pm' -%}
-        {%- set hour = hour|int - 12 -%}
+        {%- if hour|int > 12 -%}
+            {%- set hour = hour|int - 12 -%}
+        {%- endif -%}
     {%- else -%}
         {%- set am_pm = 'am' -%}
     {%- endif -%}
