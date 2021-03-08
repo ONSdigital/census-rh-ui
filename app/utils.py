@@ -49,9 +49,16 @@ class View:
     def single_client_ip(request):
         if request['client_ip']:
             client_ip = request['client_ip']
-            ip_validation_pattern = re.compile(r'^[0-9.,\s]*$')
-            if ip_validation_pattern.fullmatch(client_ip) and client_ip.count(',') > 1:
-                single_ip = client_ip.split(', ', -1)[-3]
+            single_ip_validation_pattern = re.compile(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')
+            if client_ip.count(',') > 1:
+                single_ip_value = client_ip.split(', ', -1)[-3]
+                if single_ip_validation_pattern.fullmatch(single_ip_value):
+                    single_ip = single_ip_value
+                else:
+                    logger.warn('clientIP failed validation. Provided IP - ' + client_ip,
+                                client_id=request['client_id'],
+                                trace=request['trace'])
+                    single_ip = ''
             else:
                 logger.warn('clientIP failed validation. Provided IP - ' + client_ip,
                             client_id=request['client_id'],
