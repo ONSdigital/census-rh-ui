@@ -1346,13 +1346,13 @@ class TestStartHandlers(TestHelpers):
                                                  data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
                     data=self.start_confirm_address_data_yes)
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -1370,13 +1370,13 @@ class TestStartHandlers(TestHelpers):
                                                  data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_start_confirm_address_en,
                     allow_redirects=False,
                     data=self.start_confirm_address_data_yes)
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -1394,13 +1394,13 @@ class TestStartHandlers(TestHelpers):
                                                  data=self.start_data_valid)
             self.assertEqual(response.status, 200)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_start_confirm_address_cy,
                     allow_redirects=False,
                     data=self.start_confirm_address_data_yes)
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -1421,13 +1421,13 @@ class TestStartHandlers(TestHelpers):
             await self.client.request('POST', self.post_start_language_options_ni,
                                       data=self.start_ni_language_option_data_no)
 
-            with self.assertLogs('respondent-home', 'ERROR') as cm:
+            with self.assertLogs('respondent-home', 'WARN') as cm:
                 response = await self.client.request(
                     'POST',
                     self.post_start_select_language_ni,
                     allow_redirects=False,
                     data=self.start_ni_select_language_data_ul)
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())

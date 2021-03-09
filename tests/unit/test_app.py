@@ -49,8 +49,8 @@ class TestCreateApp(AioHTTPTestCase):
         self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.census.gov.uk",
                       response.headers['Content-Security-Policy'])
         self.assertIn(
-            f"script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval' "
-            f"https://cdn.census.gov.uk 'nonce-{nonce}'",
+            f"script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com "
+            f"https://ssl.google-analytics.com https://cdn.census.gov.uk 'nonce-{nonce}'",
             response.headers['Content-Security-Policy'])
         self.assertIn(
             "connect-src 'self' https://cdn.census.gov.uk https://www.google-analytics.com",
@@ -69,8 +69,8 @@ class TestCreateApp(AioHTTPTestCase):
         self.assertIn("font-src 'self' data: https://fonts.gstatic.com https://cdn.census.gov.uk",
                       response.headers['X-Content-Security-Policy'])
         self.assertIn(
-            f"script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval' "
-            f"https://cdn.census.gov.uk 'nonce-{nonce}'",
+            f"script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com "
+            f"https://ssl.google-analytics.com https://cdn.census.gov.uk 'nonce-{nonce}'",
             response.headers['X-Content-Security-Policy'])
         self.assertIn(
             "connect-src 'self' https://cdn.census.gov.uk https://www.google-analytics.com",
