@@ -11,7 +11,7 @@ from . import (ADDRESS_SELECT_CHECK_MSG,
                NO_SELECTION_CHECK_MSG_CY)
 
 from .flash import flash
-from .security import get_permitted_session
+from .security import get_permitted_session, forget
 from .utils import View, ProcessPostcode, InvalidDataError, InvalidDataErrorWelsh, FlashMessage, AddressIndex, RHService
 from .session import get_existing_session, get_session_value
 
@@ -253,6 +253,7 @@ class CommonEnterAddress(CommonCommon):
             session.changed()
             individual = False
         elif user_journey == 'request':
+            await forget(request)  # Removes identity in case user has existing auth session
             try:
                 individual = session['attributes']['individual']
             except KeyError:
