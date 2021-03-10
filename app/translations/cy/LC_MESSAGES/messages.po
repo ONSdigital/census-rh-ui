@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-02-16 11:28+0000\n"
+"POT-Creation-Date: 2021-03-03 18:07+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -65,7 +65,9 @@ msgstr ""
 #: app/templates/common-address-in-northern-ireland.html:8
 #, python-format
 msgid "To take part, visit the %(open)sNorthern Ireland census website%(close)s."
-msgstr "Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd Iwerddon%(close)s."
+msgstr ""
+"Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd "
+"Iwerddon%(close)s."
 
 #: app/templates/common-address-in-northern-ireland.html:10
 #: app/templates/start-code-for-northern-ireland.html:10
@@ -245,7 +247,7 @@ msgstr "Nid wyf yn byw mewn cyfeiriad sefydlog"
 #: app/templates/request-code-household.html:44
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
-#: app/templates/support_centre_list_of_centres.html:61
+#: app/templates/support_centre_list_of_centres.html:70
 msgid "Hide this"
 msgstr "Cuddio hwn"
 
@@ -566,7 +568,9 @@ msgstr "Gall amlen blaen gael ei hanfon atoch chi yn y cyfeiriad cofrestredig"
 
 #: app/templates/request-code-select-how-to-receive.html:33
 msgid "We can only send access codes to the registered household address"
-msgstr "​Dim ond i'r cyfeiriad cofrestredig y cartref y gallwn anfon codau mynediad"
+msgstr ""
+"​Dim ond i'r cyfeiriad cofrestredig y cartref y gallwn anfon codau "
+"mynediad"
 
 #: app/templates/request-code-select-how-to-receive.html:41
 msgid "Text message"
@@ -754,8 +758,8 @@ msgstr ""
 "blaen frown"
 
 #: app/templates/request-common-confirm-send-by-post.html:139
-msgid "Large print"
-msgstr "Print mawr"
+msgid "Large print – suitable for visually impaired"
+msgstr "Print mawr – yn addas i'r rhai â nam ar eu golwg"
 
 #: app/templates/request-common-confirm-send-by-post.html:146
 msgid "I need a large-print questionnaire"
@@ -855,8 +859,8 @@ msgid ""
 "If you don’t already have a paper census for your household, you will "
 "need to %(open)srequest a household paper questionnaire%(close)s."
 msgstr ""
-"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, %(open)sbydd "
-"angen i chi wneud cais am holiadur papur y cartref%(close)s."
+"Os nad oes gennych holiadur papur ar gyfer eich cartref yn barod, "
+"%(open)sbydd angen i chi wneud cais am holiadur papur y cartref%(close)s."
 
 #: app/templates/request-continuation-not-a-household.html:4
 msgid "This address is not a household address"
@@ -1018,7 +1022,9 @@ msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
 
 #: app/templates/request-timeout.html:12
 msgid "To protect your information we have timed you out"
-msgstr "Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser"
+msgstr ""
+"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
+"amser"
 
 #: app/templates/request-timeout.html:16
 #, python-format
@@ -1080,17 +1086,21 @@ msgid ""
 "Keep your 16-character access code safe. You will need to enter it again "
 "to %(open)saccess your census%(close)s."
 msgstr ""
-"Cadwch eich cod mynediad, sy'n cynnwys 16 nod, yn ddiogel. Bydd angen"
-" i chi roi eich cod eto er mwyn %(open)smynd at eich cyfrifiad%(close)s."
+"Cadwch eich cod mynediad, sy'n cynnwys 16 nod, yn ddiogel. Bydd angen i "
+"chi roi eich cod eto er mwyn %(open)smynd at eich cyfrifiad%(close)s."
 
 #: app/templates/start-code-for-northern-ireland.html:5
 msgid "You have entered an access code for the census in Northern Ireland"
-msgstr "Rydych chi wedi rhoi cod mynediad ar gyfer y cyfrifiad yng Ngogledd Iwerddon"
+msgstr ""
+"Rydych chi wedi rhoi cod mynediad ar gyfer y cyfrifiad yng Ngogledd "
+"Iwerddon"
 
 #: app/templates/start-code-for-northern-ireland.html:8
 #, python-format
 msgid "Start your census on the %(open)sNorthern Ireland census website%(close)s."
-msgstr "Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd Iwerddon%(close)s."
+msgstr ""
+"Dechreuwch eich cyfrifiad ar %(open)swefan cyfrifiad Gogledd "
+"Iwerddon%(close)s."
 
 #: app/templates/start-confirm-address.html:28
 msgid "No, this is not the correct address"
@@ -1290,137 +1300,137 @@ msgstr "Rhowch eich cod post"
 msgid "Find"
 msgstr "Chwilio"
 
-#: app/templates/support_centre_list_of_centres.html:7
+#: app/templates/support_centre_list_of_centres.html:9
 msgid "Not available"
 msgstr "Ddim ar gael"
 
-#: app/templates/support_centre_list_of_centres.html:12
+#: app/templates/support_centre_list_of_centres.html:14
 #, python-format
 msgid "Support centres near %(highlight_postcode)s"
 msgstr "Canolfannau cymorth gerllaw %(highlight_postcode)s"
 
-#: app/templates/support_centre_list_of_centres.html:28
+#: app/templates/support_centre_list_of_centres.html:30
 #, python-format
 msgid "%(distance_in_miles)s miles away"
 msgstr "%(distance_in_miles)s milltir i ffwrdd"
 
-#: app/templates/support_centre_list_of_centres.html:41
+#: app/templates/support_centre_list_of_centres.html:47
 #, python-format
 msgid "Find %(location_name_span)s on Google Maps"
 msgstr "Chwilio %(location_name_span)s ar Google Maps"
 
-#: app/templates/support_centre_list_of_centres.html:49
+#: app/templates/support_centre_list_of_centres.html:58
 msgid "Telephone: "
 msgstr "Ffôn: "
 
-#: app/templates/support_centre_list_of_centres.html:52
+#: app/templates/support_centre_list_of_centres.html:61
 msgid "Email: "
 msgstr "E-bost: "
 
-#: app/templates/support_centre_list_of_centres.html:59
+#: app/templates/support_centre_list_of_centres.html:68
 msgid "Opening times and facilities"
 msgstr "Amseroedd agor a chyfleusterau"
 
-#: app/templates/support_centre_list_of_centres.html:65
+#: app/templates/support_centre_list_of_centres.html:95
 msgid "Opening times"
 msgstr "Amseroedd agor"
 
-#: app/templates/support_centre_list_of_centres.html:67
+#: app/templates/support_centre_list_of_centres.html:97
 msgid "Monday"
 msgstr "Dydd Llun"
 
-#: app/templates/support_centre_list_of_centres.html:73
-#: app/templates/support_centre_list_of_centres.html:82
-#: app/templates/support_centre_list_of_centres.html:91
-#: app/templates/support_centre_list_of_centres.html:100
-#: app/templates/support_centre_list_of_centres.html:109
-#: app/templates/support_centre_list_of_centres.html:118
-#: app/templates/support_centre_list_of_centres.html:127
-#: app/templates/support_centre_list_of_centres.html:136
-#: app/templates/support_centre_list_of_centres.html:145
-#: app/templates/support_centre_list_of_centres.html:154
-#: app/templates/support_centre_list_of_centres.html:163
-#: app/templates/support_centre_list_of_centres.html:172
+#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:166
+#: app/templates/support_centre_list_of_centres.html:175
+#: app/templates/support_centre_list_of_centres.html:184
+#: app/templates/support_centre_list_of_centres.html:193
+#: app/templates/support_centre_list_of_centres.html:202
 msgid "Closed"
 msgstr "Ar gau"
 
-#: app/templates/support_centre_list_of_centres.html:76
+#: app/templates/support_centre_list_of_centres.html:106
 msgid "Tuesday"
 msgstr "Dydd Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:85
+#: app/templates/support_centre_list_of_centres.html:115
 msgid "Wednesday"
 msgstr "Dydd Mercher"
 
-#: app/templates/support_centre_list_of_centres.html:94
+#: app/templates/support_centre_list_of_centres.html:124
 msgid "Thursday"
 msgstr "Dydd Iau"
 
-#: app/templates/support_centre_list_of_centres.html:103
+#: app/templates/support_centre_list_of_centres.html:133
 msgid "Friday"
 msgstr "Dydd Gwener"
 
-#: app/templates/support_centre_list_of_centres.html:112
+#: app/templates/support_centre_list_of_centres.html:142
 msgid "Saturday"
 msgstr "Dydd Sadwrn"
 
-#: app/templates/support_centre_list_of_centres.html:121
+#: app/templates/support_centre_list_of_centres.html:151
 msgid "Sunday"
 msgstr "Dydd Sul"
 
-#: app/templates/support_centre_list_of_centres.html:130
+#: app/templates/support_centre_list_of_centres.html:160
 msgid "Census Saturday, 20 March"
 msgstr "Dydd Sadwrn y Cyfrifiad, 20 Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:139
+#: app/templates/support_centre_list_of_centres.html:169
 msgid "Census Day, 21 March"
 msgstr "Diwrnod y Cyfrifiad, 21 Mawrth"
 
-#: app/templates/support_centre_list_of_centres.html:148
+#: app/templates/support_centre_list_of_centres.html:178
 msgid "Good Friday, 2 April"
 msgstr "Dydd Gwener y Groglith, 2 Ebrill"
 
-#: app/templates/support_centre_list_of_centres.html:157
+#: app/templates/support_centre_list_of_centres.html:187
 msgid "Easter Monday, 5 April"
 msgstr "Dydd Llun y Pasg, 5 Ebrill"
 
-#: app/templates/support_centre_list_of_centres.html:166
+#: app/templates/support_centre_list_of_centres.html:196
 msgid "May Bank Holiday, 3 May"
 msgstr "Gŵyl Banc Calan Mai, 3 Mai"
 
-#: app/templates/support_centre_list_of_centres.html:177
+#: app/templates/support_centre_list_of_centres.html:207
 msgid "Centre facilities"
 msgstr "Cyfleusterau'r canolfannau"
 
-#: app/templates/support_centre_list_of_centres.html:181
+#: app/templates/support_centre_list_of_centres.html:211
 msgid "Car park, including disabled parking"
 msgstr "Maes parcio, gan gynnwys parcio anabl"
 
-#: app/templates/support_centre_list_of_centres.html:183
+#: app/templates/support_centre_list_of_centres.html:213
 msgid "Car park"
 msgstr "Maes parcio"
 
-#: app/templates/support_centre_list_of_centres.html:185
+#: app/templates/support_centre_list_of_centres.html:215
 msgid "Disabled parking"
 msgstr "Parcio anabl"
 
-#: app/templates/support_centre_list_of_centres.html:187
+#: app/templates/support_centre_list_of_centres.html:217
 msgid "Level access into building entrance"
 msgstr "Mynediad gwastad i mewn i'r adeilad"
 
-#: app/templates/support_centre_list_of_centres.html:188
+#: app/templates/support_centre_list_of_centres.html:218
 msgid "Wheelchair access"
 msgstr "Mynediad i gadeiriau olwyn"
 
-#: app/templates/support_centre_list_of_centres.html:189
+#: app/templates/support_centre_list_of_centres.html:219
 msgid "Staff are disability aware"
 msgstr "Staff yn meddu ar ymwybyddiaeth o anableddau"
 
-#: app/templates/support_centre_list_of_centres.html:190
+#: app/templates/support_centre_list_of_centres.html:220
 msgid "Waiting room seating"
 msgstr "Seddi yn yr ystafelloedd aros"
 
-#: app/templates/support_centre_list_of_centres.html:191
+#: app/templates/support_centre_list_of_centres.html:221
 msgid "Hearing loop system"
 msgstr "System dolen glywed"
 
@@ -1673,4 +1683,7 @@ msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 #~ "Rydych chi wedi rhoi cod mynediad "
 #~ "ar gyfer y cyfrifiad yng Ngogledd "
 #~ "Iwerddon."
+
+#~ msgid "Large print"
+#~ msgstr "Print mawr"
 

@@ -628,11 +628,7 @@ class TestHelpers(RHTestCase):
                 else:
                     self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en,
                                   contents)
-                    if display_region == 'ni':
-                        self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni,
-                                      contents)
-                    else:
-                        self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en,
+                    self.assertIn(self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en,
                                       contents)
             else:
                 self.assertIn(self.content_request_code_confirm_send_by_post_option_yes_en, contents)
@@ -1352,7 +1348,7 @@ class TestHelpers(RHTestCase):
                                                              display_region, 'POST', True))
             if number_of_people == '':
                 self.assertLogEvent(cm, "number_of_people empty")
-            elif not number_of_people.isnumeric():
+            elif not number_of_people.isdecimal():
                 self.assertLogEvent(cm, "number_of_people nan")
             elif self.sub_user_journey == 'continuation-questionnaire':
                 if display_region == 'ni' and int(number_of_people) < 7:
@@ -1372,7 +1368,7 @@ class TestHelpers(RHTestCase):
             if display_region == 'cy':
                 if number_of_people == '':
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_cy, contents)
-                elif not number_of_people.isnumeric():
+                elif not number_of_people.isdecimal():
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_cy, contents)
                 elif self.sub_user_journey == 'continuation-questionnaire' and int(number_of_people) < 6:
                     self.assertIn(
@@ -1384,7 +1380,7 @@ class TestHelpers(RHTestCase):
             else:
                 if number_of_people == '':
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_empty_en, contents)
-                elif not number_of_people.isnumeric():
+                elif not number_of_people.isdecimal():
                     self.assertIn(self.content_request_questionnaire_people_in_household_error_nan_en, contents)
                 elif self.sub_user_journey == 'continuation-questionnaire':
                     if display_region == 'ni' and int(number_of_people) < 7:
@@ -1729,7 +1725,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -2420,7 +2416,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
@@ -2441,7 +2437,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=429)
+            self.assertLogEvent(cm, 'too many requests', status_code=429)
 
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())

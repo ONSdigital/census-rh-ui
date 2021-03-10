@@ -49,9 +49,16 @@ class View:
     def single_client_ip(request):
         if request['client_ip']:
             client_ip = request['client_ip']
-            ip_validation_pattern = re.compile(r'^[0-9.,\s]*$')
-            if ip_validation_pattern.fullmatch(client_ip) and client_ip.count(',') > 1:
-                single_ip = client_ip.split(', ', -1)[-3]
+            single_ip_validation_pattern = re.compile(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')
+            if client_ip.count(',') > 1:
+                single_ip_value = client_ip.split(', ', -1)[-3]
+                if single_ip_validation_pattern.fullmatch(single_ip_value):
+                    single_ip = single_ip_value
+                else:
+                    logger.warn('clientIP failed validation. Provided IP - ' + client_ip,
+                                client_id=request['client_id'],
+                                trace=request['trace'])
+                    single_ip = ''
             else:
                 logger.warn('clientIP failed validation. Provided IP - ' + client_ip,
                             client_id=request['client_id'],
@@ -352,8 +359,9 @@ class ProcessNumberOfPeople:
     def validate_number_of_people(request, data, display_region, request_type):
 
         number_of_people_valid = True
+        number_of_people_value = data.get('number_of_people')
 
-        if (data.get('number_of_people')) == '':
+        if (not number_of_people_value) or (number_of_people_value == ''):
             logger.info('number_of_people empty',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
@@ -370,7 +378,7 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_empty'))
             number_of_people_valid = False
 
-        elif not (data.get('number_of_people')).isnumeric():
+        elif not number_of_people_value.isdecimal():
             logger.info('number_of_people nan',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],
@@ -388,7 +396,7 @@ class ProcessNumberOfPeople:
             number_of_people_valid = False
 
         elif request_type == 'continuation-questionnaire':
-            if (display_region == 'ni') and (int(data.get('number_of_people')) < 7):
+            if (display_region == 'ni') and (int(number_of_people_value) < 7):
                 logger.info('number_of_people continuation less than 7',
                             client_ip=request['client_ip'],
                             client_id=request['client_id'],
@@ -400,7 +408,7 @@ class ProcessNumberOfPeople:
                                                                    'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
-            elif (not display_region == 'ni') and (int(data.get('number_of_people')) < 6):
+            elif (not display_region == 'ni') and (int(number_of_people_value) < 6):
                 logger.info('number_of_people continuation less than 6',
                             client_ip=request['client_ip'],
                             client_id=request['client_id'],
@@ -417,7 +425,7 @@ class ProcessNumberOfPeople:
                                                                        'number_of_people_continuation_low'))
                 number_of_people_valid = False
 
-            elif int(data.get('number_of_people')) > 30:
+            elif int(number_of_people_value) > 30:
                 logger.info('number_of_people continuation greater than 30',
                             client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
                 if display_region == 'cy':
@@ -430,7 +438,7 @@ class ProcessNumberOfPeople:
                                                                        'number_of_people_continuation_high'))
                 number_of_people_valid = False
 
-        elif int(data.get('number_of_people')) > 30:
+        elif int(number_of_people_value) > 30:
             logger.info('number_of_people greater than 30',
                         client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
             if display_region == 'cy':
@@ -523,7 +531,7 @@ class AddressIndex(View):
     async def get_ai_postcode(request, postcode):
         ai_svc_url = request.app['ADDRESS_INDEX_SVC_URL']
         ai_epoch = request.app['ADDRESS_INDEX_EPOCH']
-        url = f'{ai_svc_url}/addresses/rh/postcode/{postcode}?limit=250&epoch={ai_epoch}'
+        url = f'{ai_svc_url}/addresses/rh/postcode/{postcode}?limit=5000&epoch={ai_epoch}'
         return await View._make_request(request,
                                         'GET',
                                         url,

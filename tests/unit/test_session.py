@@ -351,27 +351,39 @@ class TestSessionHandling(TestHelpers):
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_individual_form(self):
+        await self.assert_no_session('RequestIndividualForm', 'GET', 'en')
+        await self.assert_no_session('RequestIndividualForm', 'GET', 'cy', )
+        await self.assert_no_session('RequestIndividualForm', 'GET', 'ni')
         await self.assert_no_session('RequestIndividualForm', 'POST', 'en')
         await self.assert_no_session('RequestIndividualForm', 'POST', 'cy',)
         await self.assert_no_session('RequestIndividualForm', 'POST', 'ni')
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_code_household(self):
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'en')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'cy')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'ni')
         await self.assert_no_session('RequestCodeHousehold', 'POST', 'en')
         await self.assert_no_session('RequestCodeHousehold', 'POST', 'cy')
         await self.assert_no_session('RequestCodeHousehold', 'POST', 'ni')
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_household_form(self):
+        await self.assert_no_session('RequestHouseholdForm', 'GET', 'en')
+        await self.assert_no_session('RequestHouseholdForm', 'GET', 'cy')
+        await self.assert_no_session('RequestHouseholdForm', 'GET', 'ni')
         await self.assert_no_session('RequestHouseholdForm', 'POST', 'en')
         await self.assert_no_session('RequestHouseholdForm', 'POST', 'cy')
         await self.assert_no_session('RequestHouseholdForm', 'POST', 'ni')
 
     @unittest_run_loop
-    async def test_no_direct_access_no_session_request_code_select_how_to_recieve(self):
-        await self.assert_no_session('RequestCodeEnterMobile', 'GET', 'en', request_type='access-code')
-        await self.assert_no_session('RequestCodeEnterMobile', 'GET', 'cy', request_type='access-code')
-        await self.assert_no_session('RequestCodeEnterMobile', 'GET', 'ni', request_type='access-code')
+    async def test_no_direct_access_no_session_request_code_select_how_to_receive(self):
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'GET', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'GET', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'GET', 'ni', request_type='access-code')
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'POST', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'POST', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeSelectHowToReceive', 'POST', 'ni', request_type='access-code')
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_code_enter_mobile(self):

@@ -8,14 +8,14 @@
       "distanceInMiles": 1.3,
       "latitude": "53.380582",
       "longitude": "-1.466986",
-      "address": "Surrey Street, Sheffield",
-      "welshLanguageAddress": "Welsh Street, Sheffield",
+      "address": "Surrey Street\n Sheffield",
+      "welshLanguageAddress": "Welsh Street\n Sheffield",
       "postcode": "S1 1XZ",
       "phone": "01142734712",
       "email": "test@email.com",
       "website": "www.helloworld.com",
-      "description": "string",
-      "welshLanguageDescription": "string",
+      "description": "Fareham library offers a range of services to respodents in need of assistance completing their Census Survey",
+      "welshLanguageDescription": "Fareham library offers a range of services to respodents in need of assistance completing their Census Survey",
       "openingHours": [
         {
           "Monday": [

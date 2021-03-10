@@ -129,7 +129,7 @@ class Start(StartCommon):
 
         data = await request.post()
 
-        if data.get('uac') == '':
+        if (not data.get('uac')) or (data.get('uac') == ''):
             logger.info('access code not supplied',
                         client_ip=request['client_ip'],
                         client_id=request['client_id'],

@@ -24,8 +24,8 @@ CSP = {
     'script-src': [
         "'self'",
         'https://www.googletagmanager.com',
-        "'unsafe-inline'",
-        "'unsafe-eval'",
+        'https://www.google-analytics.com',
+        'https://ssl.google-analytics.com',
         'https://cdn.census.gov.uk',
     ],
     'style-src': [

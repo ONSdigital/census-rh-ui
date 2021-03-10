@@ -253,7 +253,7 @@ class RHTestCase(AioHTTPTestCase):
         aims_epoch = self.app['ADDRESS_INDEX_EPOCH']
         ad_look_up_svc_url = self.app['AD_LOOK_UP_SVC_URL']
 
-        self.aims_postcode_limit = '250'
+        self.aims_postcode_limit = '5000'
 
         self.get_info = self.app.router['Info:get'].url_for()
 
@@ -2337,9 +2337,6 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
             'I need a large-print questionnaire'
         self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
-            'Large print'
-
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_ni = \
             'Large print \\xe2\\x80\\x93 suitable for visually impaired'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
@@ -2360,7 +2357,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
             'Mae angen holiadur print mawr arnaf'
         self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
-            'Print mawr'
+            'Print mawr \\xe2\\x80\\x93 yn addas i\\\'r rhai \\xc3\\xa2 nam ar eu golwg'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'
@@ -2571,7 +2568,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_enter_postcode_error_invalid_cy = "Rhowch god post dilys yn y Deyrnas Unedig"
 
         self.content_support_centre_list_of_centres_result_one_google_url = \
-            'https://www.google.com/maps/search/?api=1&query=53.380582,-1.466986'
+            'https://www.google.com/maps/search/?api=1&amp;query=53.380582,-1.466986'
 
         self.content_support_centre_list_of_centres_title_en = 'Support centres near ' + self.postcode_valid
         self.content_support_centre_list_of_centres_result_one_location_name_en = 'Sheffield Central Library'
