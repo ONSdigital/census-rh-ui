@@ -207,9 +207,10 @@ class Start(StartCommon):
         if data.get('adlocation'):
             session['adlocation'] = data.get('adlocation')
 
-        if 'transient' in session['case']['estabType'].lower():
-            raise HTTPFound(request.app.router['StartTransientEnterTownName:get'].
-                            url_for(display_region=display_region))
+        if session['case'].get('estabType'):
+            if 'transient' in session['case']['estabType'].lower():
+                raise HTTPFound(request.app.router['StartTransientEnterTownName:get'].
+                                url_for(display_region=display_region))
 
         if session['case']['region'] == 'N':
             if display_region == 'ni':
