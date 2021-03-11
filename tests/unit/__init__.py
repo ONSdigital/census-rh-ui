@@ -637,8 +637,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
         self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
+        self.content_start_timeout_bullet_one_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_bullet_one_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_start_timeout_restart_en = 'enter your 16-character access code'
         self.content_start_timeout_restart_cy = 'eich cod mynediad 16 node'
@@ -652,15 +652,37 @@ class RHTestCase(AioHTTPTestCase):
 
         # Session Timeout
 
-        self.content_timeout_title_en = 'Your session has timed out due to inactivity'
-        self.content_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_restart_en = 're-enter your postcode'
-        self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
+        self.content_start_timeout_title_en = 'Sorry, you need enter your access code'
+        self.content_start_timeout_title_cy = 'Sorry, you need enter your access code'
+        self.content_start_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_start_timeout_bullet_one_cy = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_start_timeout_bullet_two_en = \
+            'followed a link to the middle of a census questionnaire'
+        self.content_start_timeout_bullet_two_cy = \
+            'followed a link to the middle of a census questionnaire'
+        self.content_start_timeout_link_text_en = 'enter your 16-character access code'
+        self.content_start_timeout_link_text_cy = "enter your 16-character access code"
+
+        self.content_request_timeout_title_en = 'Sorry, you need to start again'
+        self.content_request_timeout_title_cy = 'Sorry, you need to start again'
+        self.content_request_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_request_timeout_bullet_one_cy = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_request_code_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a new access code'
+        self.content_request_code_timeout_bullet_two_cy = \
+            'followed a link to the middle of a request for a new access code'
+        self.content_request_form_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a paper census questionnaire'
+        self.content_request_form_timeout_bullet_two_cy = \
+            'followed a link to the middle of a request for a paper census questionnaire'
+        self.content_request_code_timeout_link_text_en = 'request a new access code'
+        self.content_request_code_timeout_link_text_cy = "request a new access code"
+        self.content_request_form_timeout_link_text_en = 'request a paper census questionnaire'
+        self.content_request_form_timeout_link_text_cy = "request a paper census questionnaire"
 
         # End Session Timeout
 

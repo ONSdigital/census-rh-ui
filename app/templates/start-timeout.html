@@ -4,15 +4,16 @@
 {% from 'components/panel/_macro.njk' import onsPanel %}
 
 {% block main %}
-    <h1>{{ _('Your session has timed out due to inactivity') }}</h1>
-    {% call onsPanel({
-        'classes': 'u-mb-m'
-    }) %}
-        <p>{{ _('To protect your information we have timed you out.') }}</p>
-    {% endcall %}
+    <h1>{{ _('Sorry, you need enter your access code') }}</h1>
+
+    <p>This is because you’ve either:</p>
+    <ul>
+        <li>been inactive for 45 minutes and your session has timed out to protect your information</li>
+        <li>followed a link to the middle of a census questionnaire</li>
+    </ul>
 
     {% autoescape false %}
-        <p>{{ _('You will need to %(open)senter your 16-character access code%(close)s again to access your census.', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
+        <p>{{ _('You need to %(open)senter your 16-character access code%(close)s to access your census.', open='<a href="%s">' % index_url, close='</a>')|safe }}</p>
     {% endautoescape %}
 
 {% endblock %}

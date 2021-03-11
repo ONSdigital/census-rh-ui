@@ -39,24 +39,42 @@ class TestSessionHandling(TestHelpers):
         self.assertIn(self.get_logo(display_region if display_region else 'ni'), contents)
         if display_region == 'cy':
             self.assertNotIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_timeout_title_cy, contents)
+
             if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_forbidden_link_text_cy, contents)
-                self.assertIn(self.content_start_timeout_secondary_cy, contents)
+                self.assertIn(self.content_start_timeout_title_cy, contents)
+                self.assertIn(self.content_start_timeout_bullet_one_cy, contents)
+                self.assertIn(self.content_start_timeout_bullet_two_cy, contents)
+                self.assertIn(self.content_start_timeout_link_text_cy, contents)
             else:
-                self.assertIn(self.content_request_timeout_restart_cy, contents)
-                self.assertIn(self.content_request_timeout_secondary_cy, contents)
+                self.assertIn(self.content_request_timeout_title_cy, contents)
+                self.assertIn(self.content_request_timeout_bullet_one_cy, contents)
+                if user_journey == 'access-code':
+                    self.assertIn(self.content_request_code_timeout_bullet_two_cy, contents)
+                    self.assertIn(self.content_request_code_timeout_link_text_cy, contents)
+                else:
+                    self.assertIn(self.content_request_form_timeout_bullet_two_cy, contents)
+                    self.assertIn(self.content_request_form_timeout_link_text_cy, contents)
         else:
             if display_region == 'ni':
                 self.assertNotIn(self.content_start_exit_button_ni, contents)
             else:
                 self.assertNotIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_timeout_title_en, contents)
-            self.assertIn(self.content_timeout_secondary_en, contents)
+
+            self.assertIn(self.content_start_timeout_bullet_one_en, contents)
             if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_forbidden_link_text_en, contents)
+                self.assertIn(self.content_start_timeout_title_en, contents)
+                self.assertIn(self.content_start_timeout_bullet_one_en, contents)
+                self.assertIn(self.content_start_timeout_bullet_two_en, contents)
+                self.assertIn(self.content_start_timeout_link_text_en, contents)
             else:
-                self.assertIn(self.content_request_timeout_restart_en, contents)
+                self.assertIn(self.content_request_timeout_title_en, contents)
+                self.assertIn(self.content_request_timeout_bullet_one_en, contents)
+                if user_journey == 'access-code':
+                    self.assertIn(self.content_request_code_timeout_bullet_two_en, contents)
+                    self.assertIn(self.content_request_code_timeout_link_text_en, contents)
+                else:
+                    self.assertIn(self.content_request_form_timeout_bullet_two_en, contents)
+                    self.assertIn(self.content_request_form_timeout_link_text_en, contents)
 
     async def assert_forbidden(
             self, class_name, method, display_region=None, user_journey='', sub_user_journey=''):
