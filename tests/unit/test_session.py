@@ -48,7 +48,7 @@ class TestSessionHandling(TestHelpers):
             else:
                 self.assertIn(self.content_request_timeout_title_cy, contents)
                 self.assertIn(self.content_request_timeout_bullet_one_cy, contents)
-                if user_journey == 'access-code':
+                if (sub_user_journey == 'access-code') or (request_type == 'access-code'):
                     self.assertIn(self.content_request_code_timeout_bullet_two_cy, contents)
                     self.assertIn(self.content_request_code_timeout_link_text_cy, contents)
                 else:
@@ -69,7 +69,7 @@ class TestSessionHandling(TestHelpers):
             else:
                 self.assertIn(self.content_request_timeout_title_en, contents)
                 self.assertIn(self.content_request_timeout_bullet_one_en, contents)
-                if user_journey == 'access-code':
+                if (sub_user_journey == 'access-code') or (request_type == 'access-code'):
                     self.assertIn(self.content_request_code_timeout_bullet_two_en, contents)
                     self.assertIn(self.content_request_code_timeout_link_text_en, contents)
                 else:
@@ -378,12 +378,12 @@ class TestSessionHandling(TestHelpers):
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_code_household(self):
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'en')
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'cy')
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'ni')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'en')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'cy')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'ni')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'ni', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'ni', request_type='access-code')
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_household_form(self):

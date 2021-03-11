@@ -2357,9 +2357,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
-            'I need a large-print questionnaire'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
-            'Large print \\xe2\\x80\\x93 suitable for visually impaired'
+            'I am visually impaired and need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_en = \
+            'Need a large-print questionnaire?'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
             '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
@@ -2377,9 +2377,9 @@ class RHTestCase(AioHTTPTestCase):
             "Ydw, anfonwch yr holiadur drwy\\\'r post"
         self.content_request_questionnaire_confirm_send_by_post_option_no_cy = "Nac ydw, rwyf am ganslo a dychwelyd"
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
-            'Mae angen holiadur print mawr arnaf'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
-            'Print mawr \\xe2\\x80\\x93 yn addas i\\\'r rhai \\xc3\\xa2 nam ar eu golwg'
+            'I am visually impaired and need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_cy = \
+            'Need a large-print questionnaire?'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'
