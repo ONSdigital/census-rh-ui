@@ -129,7 +129,7 @@ class RetryRequest:
                             url=self.url,
                             status_code=ex.status)
             elif ex.status == 400:
-                logger.info('bad request',
+                logger.warn('bad request',
                             client_ip=self.request['client_ip'],
                             client_id=self.request['client_id'],
                             trace=self.request['trace'],
