@@ -968,7 +968,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -984,7 +984,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1000,7 +1000,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
