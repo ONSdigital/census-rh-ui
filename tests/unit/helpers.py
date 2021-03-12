@@ -2793,6 +2793,43 @@ class TestHelpers(RHTestCase):
                 self.assertEqual(contents.count('input--text'), 1)
             self.assertIn('type="submit"', contents)
 
+    async def check_post_start(self, display_region, region, adlocation=False):
+        if region == 'N':
+            uac_payload = self.uac_json_n
+        elif region == 'W':
+            uac_payload = self.uac_json_w
+        else:
+            uac_payload = self.uac_json_e
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=uac_payload)
+            if adlocation:
+                data = self.start_data_valid_with_adlocation
+            else:
+                data = self.start_data_valid
+            response = await self.client.request('POST', self.get_url_from_class('Start', 'post', display_region),
+                                                 allow_redirects=True, data=data)
+
+            self.assertLogEvent(cm, self.build_url_log_entry('', display_region, 'POST',
+                                                             include_sub_user_journey=False,
+                                                             include_page=False))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET',
+                                                             include_page=False))
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('confirm-address', display_region,
+                                                          include_sub_user_journey=False), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+                self.assertIn(self.content_start_confirm_address_page_title_cy, contents)
+                self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            else:
+                self.assertIn(self.content_start_exit_button_en, contents)
+                self.assertIn(self.content_start_confirm_address_page_title_en, contents)
+                self.assertIn(self.content_start_confirm_address_title_en, contents)
+
     async def check_post_start_transient(self, display_region, region, after_census_day=False, adlocation=False):
         if after_census_day:
             mocked_now_utc = datetime.datetime(2021, 3, 22, 0, 0, 0, 0)
