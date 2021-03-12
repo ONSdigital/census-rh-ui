@@ -245,6 +245,15 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac-n.json') as fp:
             self.uac_json_n = json.load(fp)
 
+        with open('tests/test_data/rhsvc/uac_no_estabtype_e.json') as fp:
+            self.uac_json_no_estabtype_e = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_w.json') as fp:
+            self.uac_json_no_estabtype_w = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_n.json') as fp:
+            self.uac_json_no_estabtype_n = json.load(fp)
+
         # URLs used in later statements
         url_path_prefix = self.app['URL_PATH_PREFIX']
         account_svc_url = self.app['ACCOUNT_SERVICE_URL']
