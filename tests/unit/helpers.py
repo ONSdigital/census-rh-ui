@@ -1264,7 +1264,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1286,7 +1286,7 @@ class TestHelpers(RHTestCase):
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1675,7 +1675,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1707,7 +1707,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_code_mobile_confirmation_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-text', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1756,7 +1756,10 @@ class TestHelpers(RHTestCase):
 
             await self.client.request('GET', get_url)
             response = await self.client.request('POST', post_url, data=self.common_postcode_input_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=status)
+            if status==400:
+                self.assertLogEvent(cm, 'bad request', status_code=status)
+            else:
+                self.assertLogEvent(cm, 'error in response', status_code=status)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2380,7 +2383,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -2398,7 +2401,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'POST'))
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
