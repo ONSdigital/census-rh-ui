@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-03 18:07+0000\n"
+"POT-Creation-Date: 2021-03-12 10:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 #: app/templates/common-resident-or-manager.html:37
 #: app/templates/request-code-confirm-send-by-text.html:36
 #: app/templates/request-code-select-how-to-receive.html:20
-#: app/templates/request-common-confirm-send-by-post.html:23
+#: app/templates/request-common-confirm-send-by-post.html:24
 #: app/templates/start-confirm-address.html:36
 msgid "Select an answer"
 msgstr ""
@@ -107,12 +107,12 @@ msgid "Is this the correct address?"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:62
-#: app/templates/request-common-confirm-send-by-post.html:106
+#: app/templates/request-common-confirm-send-by-post.html:107
 msgid "Change flat or room number"
 msgstr ""
 
 #: app/templates/common-confirm-address.html:64
-#: app/templates/request-common-confirm-send-by-post.html:107
+#: app/templates/request-common-confirm-send-by-post.html:108
 msgid "Add flat or room number"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:160
+#: app/templates/request-common-confirm-send-by-post.html:181
 #: app/templates/request-common-enter-name.html:156
 #: app/templates/request-common-people-in-household.html:74
 #: app/templates/request-questionnaire-household.html:52
@@ -222,6 +222,7 @@ msgstr ""
 
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
+#: app/templates/request-common-confirm-send-by-post.html:166
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
 #: app/templates/support_centre_list_of_centres.html:70
@@ -319,32 +320,39 @@ msgstr ""
 msgid "Are you a resident or manager of this establishment?"
 msgstr ""
 
-#: app/templates/common-select-address.html:20
+#: app/templates/common-select-address.html:18
 #, python-format
 msgid "<p class=\"u-fs-r--b\">%(total)s address found for postcode %(pcode)s</p>"
 msgstr ""
 
-#: app/templates/common-select-address.html:22
+#: app/templates/common-select-address.html:20
 #, python-format
 msgid ""
 "<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
 "%(pcode)s</p>"
 msgstr ""
 
-#: app/templates/common-select-address.html:26
+#: app/templates/common-select-address.html:24
 msgid "Select an address"
 msgstr ""
 
+#: app/templates/common-select-address.html:35
+msgid "Sorry, there was a problem processing your postcode"
+msgstr ""
+
 #: app/templates/common-select-address.html:37
-msgid "We cannot find your address"
+#, python-format
+msgid ""
+"We can’t find the postcode <strong>%(pcode)s</strong>. It may not be "
+"registered on our system."
 msgstr ""
 
 #: app/templates/common-select-address.html:40
 #, python-format
 msgid ""
-"If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or %(start_contact_link)scontact "
-"us%(end_link)s."
+"To register your address, we need you to get in touch. You can call us "
+"free on %(telephone_number)s or %(start_contact_link)schoose another way "
+"to contact us%(end_link)s."
 msgstr ""
 
 #: app/templates/common-select-address.html:46
@@ -617,68 +625,75 @@ msgstr ""
 msgid "Start census"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:31
+#: app/templates/request-common-confirm-send-by-post.html:32
 msgid "Yes, send the questionnaire by post"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:38
+#: app/templates/request-common-confirm-send-by-post.html:39
 msgid "No, cancel and return"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:49
+#: app/templates/request-common-confirm-send-by-post.html:50
 msgid "Yes, send the access code by post"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:56
+#: app/templates/request-common-confirm-send-by-post.html:57
 msgid "No, send it by text message"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:66
+#: app/templates/request-common-confirm-send-by-post.html:67
 msgid "Do you want to send an individual paper questionnaire to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:68
+#: app/templates/request-common-confirm-send-by-post.html:69
 msgid "Do you want to send a household paper questionnaire to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:71
+#: app/templates/request-common-confirm-send-by-post.html:72
 msgid "Do you want to send a continuation questionnaire to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:73
+#: app/templates/request-common-confirm-send-by-post.html:74
 msgid "Do you want to send an individual access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:75
+#: app/templates/request-common-confirm-send-by-post.html:76
 msgid "Do you want to send a new manager access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:77
+#: app/templates/request-common-confirm-send-by-post.html:78
 msgid "Do you want to send a new household access code to this address?"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:105
+#: app/templates/request-common-confirm-send-by-post.html:106
 msgid "Change name"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:118
+#: app/templates/request-common-confirm-send-by-post.html:119
 msgid ""
 "Your individual paper questionnaire will arrive in a white unbranded "
 "envelope"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:120
+#: app/templates/request-common-confirm-send-by-post.html:121
 msgid ""
 "A letter with your individual access code will arrive in a brown "
 "unbranded envelope"
 msgstr ""
 
 #: app/templates/request-common-confirm-send-by-post.html:139
-msgid "Large print – suitable for visually impaired"
+msgid ""
+"If you are visually impaired, confirm that you need a paper census "
+"questionnaire in a larger font."
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:146
-msgid "I need a large-print questionnaire"
+#: app/templates/request-common-confirm-send-by-post.html:143
+#: app/templates/request-common-confirm-send-by-post.html:163
+msgid "Need a large-print questionnaire?"
+msgstr ""
+
+#: app/templates/request-common-confirm-send-by-post.html:151
+msgid "I am visually impaired and need a large-print questionnaire"
 msgstr ""
 
 #: app/templates/request-common-enter-name.html:18
@@ -897,17 +912,40 @@ msgstr ""
 msgid "This should arrive soon for you to complete your census"
 msgstr ""
 
-#: app/templates/request-timeout.html:8 app/templates/start-timeout.html:7
-msgid "Your session has timed out due to inactivity"
+#: app/templates/request-timeout.html:8
+msgid "Sorry, you need to start again"
 msgstr ""
 
-#: app/templates/request-timeout.html:12
-msgid "To protect your information we have timed you out"
+#: app/templates/request-timeout.html:10 app/templates/start-timeout.html:9
+msgid "This is because you’ve either:"
+msgstr ""
+
+#: app/templates/request-timeout.html:12 app/templates/start-timeout.html:11
+msgid ""
+"been inactive for 45 minutes and your session has timed out to protect "
+"your information"
+msgstr ""
+
+#: app/templates/request-timeout.html:14
+msgid "followed a link to the middle of a request for a new access code"
 msgstr ""
 
 #: app/templates/request-timeout.html:16
+msgid ""
+"followed a link to the middle of a request for a paper census "
+"questionnaire"
+msgstr ""
+
+#: app/templates/request-timeout.html:22
 #, python-format
-msgid "You will need to %(open)sre-enter your postcode%(close)s"
+msgid "You need to start again to %(open)srequest a new access code%(close)s."
+msgstr ""
+
+#: app/templates/request-timeout.html:26
+#, python-format
+msgid ""
+"You need to start again to %(open)srequest a paper census "
+"questionnaire%(close)s."
 msgstr ""
 
 #: app/templates/request-too-many-requests.html:51
@@ -1000,15 +1038,19 @@ msgstr ""
 msgid "Launch census"
 msgstr ""
 
-#: app/templates/start-timeout.html:11
-msgid "To protect your information we have timed you out."
+#: app/templates/start-timeout.html:7
+msgid "Sorry, you need to enter your access code"
 msgstr ""
 
-#: app/templates/start-timeout.html:15
+#: app/templates/start-timeout.html:12
+msgid "followed a link to the middle of a census questionnaire"
+msgstr ""
+
+#: app/templates/start-timeout.html:16
 #, python-format
 msgid ""
-"You will need to %(open)senter your 16-character access code%(close)s "
-"again to access your census."
+"You need to %(open)senter your 16-character access code%(close)s to "
+"access your census."
 msgstr ""
 
 #: app/templates/start-too-many-requests.html:50

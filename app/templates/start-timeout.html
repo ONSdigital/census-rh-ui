@@ -4,12 +4,12 @@
 {% from 'components/panel/_macro.njk' import onsPanel %}
 
 {% block main %}
-    <h1>{{ _('Sorry, you need enter your access code') }}</h1>
+    <h1>{{ _('Sorry, you need to enter your access code') }}</h1>
 
-    <p>This is because you’ve either:</p>
+    <p>{{ _('This is because you’ve either:') }}</p>
     <ul>
-        <li>been inactive for 45 minutes and your session has timed out to protect your information</li>
-        <li>followed a link to the middle of a census questionnaire</li>
+        <li>{{ _('been inactive for 45 minutes and your session has timed out to protect your information') }}</li>
+        <li>{{ _('followed a link to the middle of a census questionnaire') }}</li>
     </ul>
 
     {% autoescape false %}

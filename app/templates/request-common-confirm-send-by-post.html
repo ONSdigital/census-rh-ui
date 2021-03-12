@@ -140,9 +140,10 @@
 
                 {{
                     onsCheckboxes({
-                        'legend': _('Large print – suitable for visually impaired'),
-                        'legendClasses': 'u-fs-m u-mt-l',
+                        'legend': _('Need a large-print questionnaire?'),
+                        'legendClasses': 'u-vh',
                         'classes': 'u-mb-m',
+                        'dontWrap': true,
                         'checkboxes': [
                             {
                                 'id': 'large-print-yes',
@@ -165,7 +166,8 @@
                     'button': {
                         'close': _('Hide this'),
                         'contextSuffix': 'content'
-                    }
+                    },
+                    'saveState': 'true'
                 })
             -%}
                 {{ content | safe }}
