@@ -245,6 +245,15 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac-n.json') as fp:
             self.uac_json_n = json.load(fp)
 
+        with open('tests/test_data/rhsvc/uac_no_estabtype_e.json') as fp:
+            self.uac_json_no_estabtype_e = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_w.json') as fp:
+            self.uac_json_no_estabtype_w = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_n.json') as fp:
+            self.uac_json_no_estabtype_n = json.load(fp)
+
         # URLs used in later statements
         url_path_prefix = self.app['URL_PATH_PREFIX']
         account_svc_url = self.app['ACCOUNT_SERVICE_URL']
@@ -2582,22 +2591,22 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_email_en = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
         self.content_support_centre_list_of_centres_result_open_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
-        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;10am to 1pm'
-        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;9am to 5:35pm'
+        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;12pm to 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 12pm'
+        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;11am to 4pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;11:30am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 3:30pm'
         self.content_support_centre_list_of_centres_result_open_census_saturday_en = \
-            'Census Saturday, 20 March &ndash;&nbsp;10am to 4pm'
+            'Census Saturday, 20 March &ndash;&nbsp;10:30am to 4:30pm'
         self.content_support_centre_list_of_centres_result_open_census_day_en = \
             'Census Day, 21 March &ndash;&nbsp;10am to 4pm'
         self.content_support_centre_list_of_centres_result_open_good_friday_en = \
-            'Good Friday, 2 April &ndash;&nbsp;10am to 5pm'
+            'Good Friday, 2 April &ndash;&nbsp;10am to 3pm'
         self.content_support_centre_list_of_centres_result_open_easter_monday_en = \
-            'Easter Monday, 5 April &ndash;&nbsp;10am to 5pm'
+            'Easter Monday, 5 April &ndash;&nbsp;10:20am to 11:42am'
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_en = \
-            'May Bank Holiday, 3 May &ndash;&nbsp;10am to 5pm'
+            'May Bank Holiday, 3 May &ndash;&nbsp;12:15pm to 1:50pm'
         self.content_support_centre_list_of_centres_result_closed_monday_en = 'Monday &ndash;&nbsp;Closed'
         self.content_support_centre_list_of_centres_result_closed_tuesday_en = 'Tuesday &ndash;&nbsp;Closed'
         self.content_support_centre_list_of_centres_result_closed_wednesday_en = 'Wednesday &ndash;&nbsp;Closed'
@@ -2640,23 +2649,23 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_open_monday_cy = \
             'Dydd Llun &ndash;&nbsp;10:30am tan 5:15pm'
         self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
-            'Dydd Mawrth &ndash;&nbsp;10am tan 5pm'
+            'Dydd Mawrth &ndash;&nbsp;9am tan 5:35pm'
         self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
-            'Dydd Mercher &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Dydd Iau &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Dydd Gwener &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;10am tan 1pm'
-        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Dydd Sul &ndash;&nbsp;10am tan 1pm'
+            'Dydd Mercher &ndash;&nbsp;12pm tan 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Dydd Iau &ndash;&nbsp;10am tan 12pm'
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Dydd Gwener &ndash;&nbsp;11am tan 4pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;11:30am tan 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Dydd Sul &ndash;&nbsp;10am tan 3:30pm'
         self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
-            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;10am tan 4pm'
+            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;10:30am tan 4:30pm'
         self.content_support_centre_list_of_centres_result_open_census_day_cy = \
             'Diwrnod y Cyfrifiad, 21 Mawrth &ndash;&nbsp;10am tan 4pm'
         self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
-            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;10am tan 5pm'
+            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;10am tan 3pm'
         self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
-            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;10am tan 5pm'
+            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;10:20am tan 11:42am'
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
-            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;10am tan 5pm"
+            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;12:15pm tan 1:50pm"
         self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Dydd Llun &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Dydd Mawrth &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Dydd Mercher &ndash;&nbsp;Ar gau'

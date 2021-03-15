@@ -26,44 +26,44 @@
           ],
           "Tuesday": [
             {
-              "start": 1000,
-              "finish": 1700
+              "start": 900,
+              "finish": 1735
             }
           ],
           "Wednesday": [
             {
-              "start": 1000,
+              "start": 1200,
               "finish": 1700
             }
           ],
           "Thursday": [
             {
               "start": 1000,
-              "finish": 1700
+              "finish": 1200
             }
           ],
           "Friday": [
             {
-              "start": 1000,
-              "finish": 1700
+              "start": 1100,
+              "finish": 1600
             }
           ],
           "Saturday": [
             {
-              "start": 1000,
+              "start": 1130,
               "finish": 1300
             }
           ],
           "Sunday": [
             {
               "start": 1000,
-              "finish": 1300
+              "finish": 1530
             }
           ],
           "Census Saturday": [
             {
-              "start": 1000,
-              "finish": 1600
+              "start": 1030,
+              "finish": 1630
             }
           ],
           "Census Sunday": [
@@ -75,19 +75,19 @@
           "Good Friday": [
             {
               "start": 1000,
-              "finish": 1700
+              "finish": 1500
             }
           ],
           "Easter Monday": [
             {
-              "start": 1000,
-              "finish": 1700
+              "start": 1020,
+              "finish": 1142
             }
           ],
           "May Bank Holiday": [
             {
-              "start": 1000,
-              "finish": 1700
+              "start": 1215,
+              "finish": 1350
             }
           ]
         }
