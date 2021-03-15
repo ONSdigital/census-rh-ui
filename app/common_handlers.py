@@ -375,6 +375,7 @@ class CommonSelectAddress(CommonCommon):
         address_content['locale'] = locale
         address_content['page_url'] = View.gen_page_url(request)
         address_content['contact_us_link'] = View.get_campaign_site_link(request, display_region, 'contact-us')
+        address_content['call_centre_number'] = View.get_call_centre_number(display_region)
 
         return address_content
 
