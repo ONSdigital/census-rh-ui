@@ -968,7 +968,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -984,7 +984,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_cy,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -1000,7 +1000,7 @@ class TestStartHandlers(TestHelpers):
                 response = await self.client.request('POST',
                                                      self.post_start_ni,
                                                      data=self.start_data_valid)
-            self.assertLogEvent(cm, 'error in response', status_code=400)
+            self.assertLogEvent(cm, 'bad request', status_code=400)
 
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
@@ -3371,3 +3371,82 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.content_start_confirm_address_page_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_title_cy, contents)
             self.assertIn(self.content_start_confirm_address_region_warning_cy, contents)
+
+    @unittest_run_loop
+    async def test_start_estabtype_empty_ew_e(self):
+        await self.assert_start_page_correct(self.get_start_en, 'en', ad_location=False)
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_no_estabtype_e)
+
+            response = await self.client.request('POST', self.post_start_en, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertNotIn(self.content_start_confirm_address_error_en, contents)
+
+    @unittest_run_loop
+    async def test_start_estabtype_empty_ew_w(self):
+        await self.assert_start_page_correct(self.get_start_en, 'en', ad_location=False)
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_no_estabtype_w)
+
+            response = await self.client.request('POST', self.post_start_en, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'en/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'en/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn('<a href="/cy/start/confirm-address/" lang="cy" >Cymraeg</a>', contents)
+            self.assertIn(self.content_start_exit_button_en, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertNotIn(self.content_start_confirm_address_error_en, contents)
+
+    @unittest_run_loop
+    async def test_start_estabtype_empty_cy(self):
+        await self.assert_start_page_correct(self.get_start_cy, 'cy', ad_location=False)
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_no_estabtype_w)
+
+            response = await self.client.request('POST', self.post_start_cy, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'cy/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn('<a href="/en/start/confirm-address/" lang="en" >English</a>', contents)
+            self.assertIn(self.content_start_exit_button_cy, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_cy, contents)
+            self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            self.assertNotIn(self.content_start_confirm_address_error_cy, contents)
+
+    @unittest_run_loop
+    async def test_start_estabtype_empty_n(self):
+        await self.assert_start_page_correct(self.get_start_ni, 'ni', ad_location=False)
+        with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(passthrough=[str(self.server._root)])\
+                as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_no_estabtype_n)
+
+            response = await self.client.request('POST', self.post_start_ni, data=self.start_data_valid)
+            self.assertLogEvent(cm, "received POST on endpoint 'ni/start'")
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/confirm-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_start_exit_button_ni, contents)
+            self.assertIn(self.content_start_confirm_address_page_title_en, contents)
+            self.assertIn(self.content_start_confirm_address_title_en, contents)
+            self.assertNotIn(self.content_start_confirm_address_error_en, contents)

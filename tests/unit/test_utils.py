@@ -356,3 +356,17 @@ class TestUtils(RHTestCase):
             self.assertEqual(View.single_client_ip(invalid_request_ipv6), expected_empty)
             self.assertLogEvent(cm, 'clientIP failed validation. Provided IP - ' + invalid_request_ipv6['client_ip'],
                                 client_id=request['client_id'], trace=request['trace'])
+
+    def test_validate_postcode_invalid_BritishForces(self):
+        postcode = 'BFPO 105'
+        locale = 'en'
+
+        # When validate_postcode is called
+        with self.assertRaises(InvalidDataError) as cm:
+            ProcessPostcode.validate_postcode(postcode, locale)
+        # Then an InvalidDataError is raised
+        self.assertEqual(
+            'Enter a valid UK postcode',
+            str(cm.exception)
+        )
+        # With the correct message

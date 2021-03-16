@@ -245,6 +245,15 @@ class RHTestCase(AioHTTPTestCase):
         with open('tests/test_data/rhsvc/uac-n.json') as fp:
             self.uac_json_n = json.load(fp)
 
+        with open('tests/test_data/rhsvc/uac_no_estabtype_e.json') as fp:
+            self.uac_json_no_estabtype_e = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_w.json') as fp:
+            self.uac_json_no_estabtype_w = json.load(fp)
+
+        with open('tests/test_data/rhsvc/uac_no_estabtype_n.json') as fp:
+            self.uac_json_no_estabtype_n = json.load(fp)
+
         # URLs used in later statements
         url_path_prefix = self.app['URL_PATH_PREFIX']
         account_svc_url = self.app['ACCOUNT_SERVICE_URL']
@@ -432,14 +441,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
         self.content_common_select_address_value_en = '1 Gate Reach'
-        self.content_common_select_address_no_results_en = 'We cannot find your address'
+        self.content_common_select_address_no_results_en = 'Sorry, there was a problem processing your postcode'
         self.content_common_select_address_page_title_cy = '<title>Dewis cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_select_address_page_title_error_cy = \
             '<title>Gwall: Dewis cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
-        self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+        self.content_common_select_address_no_results_cy = \
+            "Mae\\\'n ddrwg gennym, roedd problem wrth brosesu eich cod post"
 
         self.content_common_confirm_address_page_title_en = '<title>Confirm address - Census 2021</title>'
         self.content_common_confirm_address_page_title_error_en = '<title>Error: Confirm address - Census 2021</title>'
@@ -637,8 +647,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
         self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
+        self.content_start_timeout_bullet_one_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_bullet_one_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_start_timeout_restart_en = 'enter your 16-character access code'
         self.content_start_timeout_restart_cy = 'eich cod mynediad 16 node'
@@ -652,15 +662,39 @@ class RHTestCase(AioHTTPTestCase):
 
         # Session Timeout
 
-        self.content_timeout_title_en = 'Your session has timed out due to inactivity'
-        self.content_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_restart_en = 're-enter your postcode'
-        self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
+        self.content_start_timeout_title_en = 'Sorry, you need to enter your access code'
+        self.content_start_timeout_title_cy = "Mae\\\'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
+        self.content_start_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_start_timeout_bullet_one_cy = \
+            "wedi bod yn anweithgar am 45 munud a bod eich sesiwn wedi cyrraedd y terfyn " \
+            "amser er mwyn diogelu eich gwybodaeth, neu"
+        self.content_start_timeout_bullet_two_en = \
+            'followed a link to the middle of a census questionnaire'
+        self.content_start_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol holiadur y cyfrifiad"
+        self.content_start_timeout_link_text_en = 'enter your 16-character access code'
+        self.content_start_timeout_link_text_cy = "roi eich cod mynediad 16 nod"
+
+        self.content_request_timeout_title_en = 'Sorry, you need to start again'
+        self.content_request_timeout_title_cy = "Mae\\\'n ddrwg gennym, mae angen i chi ddechrau eto"
+        self.content_request_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_request_timeout_bullet_one_cy = \
+            "wedi bod yn anweithgar am 45 munud a bod eich sesiwn wedi cyrraedd y " \
+            "terfyn amser er mwyn diogelu eich gwybodaeth, neu "
+        self.content_request_code_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a new access code'
+        self.content_request_code_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol cais am god mynediad newydd"
+        self.content_request_form_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a paper census questionnaire'
+        self.content_request_form_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol cais am holiadur papur y cyfrifiad"
+        self.content_request_code_timeout_link_text_en = 'request a new access code'
+        self.content_request_code_timeout_link_text_cy = "ofyn am god mynediad newydd"
+        self.content_request_form_timeout_link_text_en = 'request a paper census questionnaire'
+        self.content_request_form_timeout_link_text_cy = "ofyn am holiadur papur y cyfrifiad"
 
         # End Session Timeout
 
@@ -2335,9 +2369,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
-            'I need a large-print questionnaire'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
-            'Large print \\xe2\\x80\\x93 suitable for visually impaired'
+            'I am visually impaired and need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_en = \
+            'Need a large-print questionnaire?'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
             '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
@@ -2355,9 +2389,9 @@ class RHTestCase(AioHTTPTestCase):
             "Ydw, anfonwch yr holiadur drwy\\\'r post"
         self.content_request_questionnaire_confirm_send_by_post_option_no_cy = "Nac ydw, rwyf am ganslo a dychwelyd"
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
-            'Mae angen holiadur print mawr arnaf'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
-            'Print mawr \\xe2\\x80\\x93 yn addas i\\\'r rhai \\xc3\\xa2 nam ar eu golwg'
+            'Mae gen i nam ar fy ngolwg ac mae angen holiadur print mawr arnaf'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_cy = \
+            'Oes angen holiadur print mawr arnoch?'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'
@@ -2582,22 +2616,22 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_one_email_en = \
             'Email: <a href="mailto:test@email.com">test@email.com</a>'
         self.content_support_centre_list_of_centres_result_open_monday_en = 'Monday &ndash;&nbsp;10:30am to 5:15pm'
-        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;10am to 5pm'
-        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;10am to 1pm'
-        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_tuesday_en = 'Tuesday &ndash;&nbsp;9am to 5:35pm'
+        self.content_support_centre_list_of_centres_result_open_wednesday_en = 'Wednesday &ndash;&nbsp;12pm to 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_en = 'Thursday &ndash;&nbsp;10am to 12pm'
+        self.content_support_centre_list_of_centres_result_open_friday_en = 'Friday &ndash;&nbsp;11am to 4pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_en = 'Saturday &ndash;&nbsp;11:30am to 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_en = 'Sunday &ndash;&nbsp;10am to 3:30pm'
         self.content_support_centre_list_of_centres_result_open_census_saturday_en = \
-            'Census Saturday, 20 March &ndash;&nbsp;10am to 4pm'
+            'Census Saturday, 20 March &ndash;&nbsp;10:30am to 4:30pm'
         self.content_support_centre_list_of_centres_result_open_census_day_en = \
             'Census Day, 21 March &ndash;&nbsp;10am to 4pm'
         self.content_support_centre_list_of_centres_result_open_good_friday_en = \
-            'Good Friday, 2 April &ndash;&nbsp;10am to 5pm'
+            'Good Friday, 2 April &ndash;&nbsp;10am to 3pm'
         self.content_support_centre_list_of_centres_result_open_easter_monday_en = \
-            'Easter Monday, 5 April &ndash;&nbsp;10am to 5pm'
+            'Easter Monday, 5 April &ndash;&nbsp;10:20am to 11:42am'
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_en = \
-            'May Bank Holiday, 3 May &ndash;&nbsp;10am to 5pm'
+            'May Bank Holiday, 3 May &ndash;&nbsp;12:15pm to 1:50pm'
         self.content_support_centre_list_of_centres_result_closed_monday_en = 'Monday &ndash;&nbsp;Closed'
         self.content_support_centre_list_of_centres_result_closed_tuesday_en = 'Tuesday &ndash;&nbsp;Closed'
         self.content_support_centre_list_of_centres_result_closed_wednesday_en = 'Wednesday &ndash;&nbsp;Closed'
@@ -2640,23 +2674,23 @@ class RHTestCase(AioHTTPTestCase):
         self.content_support_centre_list_of_centres_result_open_monday_cy = \
             'Dydd Llun &ndash;&nbsp;10:30am tan 5:15pm'
         self.content_support_centre_list_of_centres_result_open_tuesday_cy = \
-            'Dydd Mawrth &ndash;&nbsp;10am tan 5pm'
+            'Dydd Mawrth &ndash;&nbsp;9am tan 5:35pm'
         self.content_support_centre_list_of_centres_result_open_wednesday_cy = \
-            'Dydd Mercher &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Dydd Iau &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Dydd Gwener &ndash;&nbsp;10am tan 5pm'
-        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;10am tan 1pm'
-        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Dydd Sul &ndash;&nbsp;10am tan 1pm'
+            'Dydd Mercher &ndash;&nbsp;12pm tan 5pm'
+        self.content_support_centre_list_of_centres_result_open_thursday_cy = 'Dydd Iau &ndash;&nbsp;10am tan 12pm'
+        self.content_support_centre_list_of_centres_result_open_friday_cy = 'Dydd Gwener &ndash;&nbsp;11am tan 4pm'
+        self.content_support_centre_list_of_centres_result_open_saturday_cy = 'Dydd Sadwrn &ndash;&nbsp;11:30am tan 1pm'
+        self.content_support_centre_list_of_centres_result_open_sunday_cy = 'Dydd Sul &ndash;&nbsp;10am tan 3:30pm'
         self.content_support_centre_list_of_centres_result_open_census_saturday_cy = \
-            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;10am tan 4pm'
+            'Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash;&nbsp;10:30am tan 4:30pm'
         self.content_support_centre_list_of_centres_result_open_census_day_cy = \
             'Diwrnod y Cyfrifiad, 21 Mawrth &ndash;&nbsp;10am tan 4pm'
         self.content_support_centre_list_of_centres_result_open_good_friday_cy = \
-            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;10am tan 5pm'
+            'Dydd Gwener y Groglith, 2 Ebrill &ndash;&nbsp;10am tan 3pm'
         self.content_support_centre_list_of_centres_result_open_easter_monday_cy = \
-            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;10am tan 5pm'
+            'Dydd Llun y Pasg, 5 Ebrill &ndash;&nbsp;10:20am tan 11:42am'
         self.content_support_centre_list_of_centres_result_open_may_bank_holiday_cy = \
-            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;10am tan 5pm"
+            "G\\xc5\\xb5yl Banc Calan Mai, 3 Mai &ndash;&nbsp;12:15pm tan 1:50pm"
         self.content_support_centre_list_of_centres_result_closed_monday_cy = 'Dydd Llun &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_tuesday_cy = 'Dydd Mawrth &ndash;&nbsp;Ar gau'
         self.content_support_centre_list_of_centres_result_closed_wednesday_cy = 'Dydd Mercher &ndash;&nbsp;Ar gau'
