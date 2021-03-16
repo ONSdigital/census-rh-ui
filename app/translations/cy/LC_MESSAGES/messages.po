@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-12 10:54+0000\n"
+"POT-Creation-Date: 2021-03-16 17:21+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -139,7 +139,7 @@ msgstr "Ychwanegu rhif fflat neu ystafell"
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:181
+#: app/templates/request-common-confirm-send-by-post.html:180
 #: app/templates/request-common-enter-name.html:156
 #: app/templates/request-common-people-in-household.html:74
 #: app/templates/request-questionnaire-household.html:52
@@ -245,7 +245,7 @@ msgstr "Nid wyf yn byw mewn cyfeiriad sefydlog"
 
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
-#: app/templates/request-common-confirm-send-by-post.html:166
+#: app/templates/request-common-confirm-send-by-post.html:165
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
 #: app/templates/support_centre_list_of_centres.html:70
@@ -377,7 +377,9 @@ msgstr "Mae'n ddrwg gennym, roedd problem wrth brosesu eich cod post"
 msgid ""
 "We can’t find the postcode <strong>%(pcode)s</strong>. It may not be "
 "registered on our system."
-msgstr "Ni allwn ddod o hyd i'r cod post <strong>%(pcode)s</strong>. Mae'n bosibl nad yw wedi'i gofrestru ar ein system."
+msgstr ""
+"Ni allwn ddod o hyd i'r cod post <strong>%(pcode)s</strong>. Mae'n bosibl"
+" nad yw wedi'i gofrestru ar ein system."
 
 #: app/templates/common-select-address.html:40
 #, python-format
@@ -385,7 +387,10 @@ msgid ""
 "To register your address, we need you to get in touch. You can call us "
 "free on %(telephone_number)s or %(start_contact_link)schoose another way "
 "to contact us%(end_link)s."
-msgstr "I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi ein ffonio ni am ddim ar %(telephone_number)s neu %(start_contact_link)sddewis ffordd arall o gysylltu â ni%(end_link)s."
+msgstr ""
+"I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi "
+"ein ffonio ni am ddim ar %(telephone_number)s neu "
+"%(start_contact_link)sddewis ffordd arall o gysylltu â ni%(end_link)s."
 
 #: app/templates/common-select-address.html:46
 #: app/templates/common-select-address.html:55
@@ -766,16 +771,17 @@ msgstr ""
 msgid ""
 "If you are visually impaired, confirm that you need a paper census "
 "questionnaire in a larger font."
-msgstr "Os oes gennych nam ar eich golwg, cadarnhewch fod angen holiadur papur y cyfrifiad arnoch mewn ffont mwy."
+msgstr ""
+"Os oes gennych nam ar eich golwg, cadarnhewch fod angen holiadur papur y "
+"cyfrifiad arnoch mewn ffont mwy."
 
-#: app/templates/request-common-confirm-send-by-post.html:143
-#: app/templates/request-common-confirm-send-by-post.html:163
-msgid "Need a large-print questionnaire?"
-msgstr "Oes angen holiadur print mawr arnoch?"
-
-#: app/templates/request-common-confirm-send-by-post.html:151
+#: app/templates/request-common-confirm-send-by-post.html:150
 msgid "I am visually impaired and need a large-print questionnaire"
 msgstr "Mae gen i nam ar fy ngolwg ac mae angen holiadur print mawr arnaf"
+
+#: app/templates/request-common-confirm-send-by-post.html:162
+msgid "Need a large-print questionnaire?"
+msgstr "Oes angen holiadur print mawr arnoch?"
 
 #: app/templates/request-common-enter-name.html:18
 #: app/templates/request-common-enter-name.html:23
@@ -1066,7 +1072,9 @@ msgstr ""
 msgid ""
 "You need to start again to %(open)srequest a paper census "
 "questionnaire%(close)s."
-msgstr "Bydd angen i chi ddechrau eto i %(open)sofyn am holiadur papur y cyfrifiad%(close)s."
+msgstr ""
+"Bydd angen i chi ddechrau eto i %(open)sofyn am holiadur papur y "
+"cyfrifiad%(close)s."
 
 #: app/templates/request-too-many-requests.html:51
 msgid ""
@@ -1199,17 +1207,29 @@ msgstr ""
 "Bydd angen i chi %(open)sroi eich cod mynediad 16 nod%(close)s i agor "
 "eich cyfrifiad."
 
-#: app/templates/start-too-many-requests.html:50
-msgid "Sorry, there was a problem starting your census"
-msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+#: app/templates/start-too-many-requests.html:43
+msgid "Sorry, too many people are using this service"
+msgstr "Mae'n ddrwg gennym, mae gormod o bobl yn defnyddio'r gwasanaeth hwn"
 
-#: app/templates/start-too-many-requests.html:52
-msgid "We are working to fix the problem."
-msgstr "Rydym ni'n gweithio i ddatrys y broblem"
+#: app/templates/start-too-many-requests.html:45
+msgid ""
+"We need to limit the number of people accessing the census during busy "
+"times."
+msgstr ""
+"Mae angen i ni gyfyngu ar nifer y bobl sy'n cwblhau'r cyfrifiad yn ystod "
+"amseroedd prysur."
 
-#: app/templates/start-too-many-requests.html:54
-msgid "Please try again later."
-msgstr "Rhowch gynnig arall arni yn nes ymlaen"
+#: app/templates/start-too-many-requests.html:47
+msgid "You can complete your census after Sunday 21 March."
+msgstr "Gallwch chi gwblhau eich cyfrifiad ar ôl dydd Sul 21 Mawrth."
+
+#: app/templates/start-too-many-requests.html:55
+msgid ""
+"Keep your 16-character access code safe. You will need it every time you "
+"access your census."
+msgstr ""
+"Cadwch eich cod mynediad 16 nod yn saff. Bydd ei angen arnoch chi bob tro"
+" y byddwch chi'n agor eich cyfrifiad."
 
 #: app/templates/start-transient-accommodation-type.html:25
 #: app/templates/start-transient-accommodation-type.html:27
@@ -1698,4 +1718,13 @@ msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 
 #~ msgid "Sorry, you need enter your access code"
 #~ msgstr "Mae'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
+
+#~ msgid "Sorry, there was a problem starting your census"
+#~ msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+
+#~ msgid "We are working to fix the problem."
+#~ msgstr "Rydym ni'n gweithio i ddatrys y broblem"
+
+#~ msgid "Please try again later."
+#~ msgstr "Rhowch gynnig arall arni yn nes ymlaen"
 
