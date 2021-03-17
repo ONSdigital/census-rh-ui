@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-12 10:54+0000\n"
+"POT-Creation-Date: 2021-03-17 17:01+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -139,7 +139,7 @@ msgstr "Ychwanegu rhif fflat neu ystafell"
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:181
+#: app/templates/request-common-confirm-send-by-post.html:180
 #: app/templates/request-common-enter-name.html:156
 #: app/templates/request-common-people-in-household.html:74
 #: app/templates/request-questionnaire-household.html:52
@@ -245,7 +245,7 @@ msgstr "Nid wyf yn byw mewn cyfeiriad sefydlog"
 
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
-#: app/templates/request-common-confirm-send-by-post.html:166
+#: app/templates/request-common-confirm-send-by-post.html:165
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
 #: app/templates/support_centre_list_of_centres.html:70
@@ -377,7 +377,9 @@ msgstr "Mae'n ddrwg gennym, roedd problem wrth brosesu eich cod post"
 msgid ""
 "We can’t find the postcode <strong>%(pcode)s</strong>. It may not be "
 "registered on our system."
-msgstr "Ni allwn ddod o hyd i'r cod post <strong>%(pcode)s</strong>. Mae'n bosibl nad yw wedi'i gofrestru ar ein system."
+msgstr ""
+"Ni allwn ddod o hyd i'r cod post <strong>%(pcode)s</strong>. Mae'n bosibl"
+" nad yw wedi'i gofrestru ar ein system."
 
 #: app/templates/common-select-address.html:40
 #, python-format
@@ -385,7 +387,10 @@ msgid ""
 "To register your address, we need you to get in touch. You can call us "
 "free on %(telephone_number)s or %(start_contact_link)schoose another way "
 "to contact us%(end_link)s."
-msgstr "I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi ein ffonio ni am ddim ar %(telephone_number)s neu %(start_contact_link)sddewis ffordd arall o gysylltu â ni%(end_link)s."
+msgstr ""
+"I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi "
+"ein ffonio ni am ddim ar %(telephone_number)s neu "
+"%(start_contact_link)sddewis ffordd arall o gysylltu â ni%(end_link)s."
 
 #: app/templates/common-select-address.html:46
 #: app/templates/common-select-address.html:55
@@ -766,16 +771,17 @@ msgstr ""
 msgid ""
 "If you are visually impaired, confirm that you need a paper census "
 "questionnaire in a larger font."
-msgstr "Os oes gennych nam ar eich golwg, cadarnhewch fod angen holiadur papur y cyfrifiad arnoch mewn ffont mwy."
+msgstr ""
+"Os oes gennych nam ar eich golwg, cadarnhewch fod angen holiadur papur y "
+"cyfrifiad arnoch mewn ffont mwy."
 
-#: app/templates/request-common-confirm-send-by-post.html:143
-#: app/templates/request-common-confirm-send-by-post.html:163
-msgid "Need a large-print questionnaire?"
-msgstr "Oes angen holiadur print mawr arnoch?"
-
-#: app/templates/request-common-confirm-send-by-post.html:151
+#: app/templates/request-common-confirm-send-by-post.html:150
 msgid "I am visually impaired and need a large-print questionnaire"
 msgstr "Mae gen i nam ar fy ngolwg ac mae angen holiadur print mawr arnaf"
+
+#: app/templates/request-common-confirm-send-by-post.html:162
+msgid "Need a large-print questionnaire?"
+msgstr "Oes angen holiadur print mawr arnoch?"
 
 #: app/templates/request-common-enter-name.html:18
 #: app/templates/request-common-enter-name.html:23
@@ -1066,7 +1072,9 @@ msgstr ""
 msgid ""
 "You need to start again to %(open)srequest a paper census "
 "questionnaire%(close)s."
-msgstr "Bydd angen i chi ddechrau eto i %(open)sofyn am holiadur papur y cyfrifiad%(close)s."
+msgstr ""
+"Bydd angen i chi ddechrau eto i %(open)sofyn am holiadur papur y "
+"cyfrifiad%(close)s."
 
 #: app/templates/request-too-many-requests.html:51
 msgid ""
@@ -1199,17 +1207,44 @@ msgstr ""
 "Bydd angen i chi %(open)sroi eich cod mynediad 16 nod%(close)s i agor "
 "eich cyfrifiad."
 
-#: app/templates/start-too-many-requests.html:50
-msgid "Sorry, there was a problem starting your census"
-msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+#: app/templates/start-too-many-requests.html:51
+msgid ""
+"We are currently experiencing very high demand, thank you for your "
+"patience"
+msgstr "Rydym ni'n brysur iawn ar hyn o bryd, diolch am eich amynedd"
 
-#: app/templates/start-too-many-requests.html:52
-msgid "We are working to fix the problem."
-msgstr "Rydym ni'n gweithio i ddatrys y broblem"
-
-#: app/templates/start-too-many-requests.html:54
+#: app/templates/start-too-many-requests.html:53
 msgid "Please try again later."
-msgstr "Rhowch gynnig arall arni yn nes ymlaen"
+msgstr "Rhowch gynnig arall arni yn nes ymlaen."
+
+#: app/templates/start-too-many-requests.html:60
+msgid ""
+"Keep your 16-character access code safe. You will need it every time you "
+"access your census."
+msgstr ""
+"Cadwch eich cod mynediad 16 nod yn ddiogel. Bydd angen y cod arnoch chi bob tro"
+" y byddwch chi'n mynd at eich cyfrifiad."
+
+#: app/templates/start-too-many-requests.html:66
+msgid "Why it's important you take part in the census"
+msgstr "Pam mae'n bwysig eich bod chi'n cymryd rhan yn y cyfrifiad"
+
+#: app/templates/start-too-many-requests.html:68
+msgid ""
+"Taking part in the census is your chance to help make sure you and your "
+"community get the services you need for the next 10 years and beyond."
+msgstr "Cymryd rhan yn y cyfrifiad yw eich cyfle i helpu i wneud yn "
+"siŵr eich bod chi a'ch cymuned yn cael y gwasanaethau sydd eu hangen "
+"arnoch am y 10 mlynedd nesaf a thu hwnt."
+
+#: app/templates/start-too-many-requests.html:70
+msgid "You must complete the census by law or you could be fined up to £1,000."
+msgstr "Rhaid i chi gwblhau'r cyfrifiad yn ôl y gyfraith neu gallech chi gael dirwy o hyd at £1,000."
+
+#: app/templates/start-too-many-requests.html:73
+#, python-format
+msgid "%(open)sFind out more about the census%(close)s"
+msgstr "%(open)sMwy o wybodaeth am y cyfrifiad%(close)s"
 
 #: app/templates/start-transient-accommodation-type.html:25
 #: app/templates/start-transient-accommodation-type.html:27
@@ -1698,4 +1733,28 @@ msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 
 #~ msgid "Sorry, you need enter your access code"
 #~ msgstr "Mae'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
+
+#~ msgid "Sorry, there was a problem starting your census"
+#~ msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+
+#~ msgid "We are working to fix the problem."
+#~ msgstr "Rydym ni'n gweithio i ddatrys y broblem"
+
+#~ msgid "Please try again later."
+#~ msgstr "Rhowch gynnig arall arni yn nes ymlaen"
+
+#~ msgid "Sorry, too many people are using this service"
+#~ msgstr "Mae'n ddrwg gennym, mae gormod o bobl yn defnyddio'r gwasanaeth hwn"
+
+#~ msgid ""
+#~ "We need to limit the number of "
+#~ "people accessing the census during busy"
+#~ " times."
+#~ msgstr ""
+#~ "Mae angen i ni gyfyngu ar nifer"
+#~ " y bobl sy'n cwblhau'r cyfrifiad yn"
+#~ " ystod amseroedd prysur."
+
+#~ msgid "You can complete your census after Sunday 21 March."
+#~ msgstr "Gallwch chi gwblhau eich cyfrifiad ar ôl dydd Sul 21 Mawrth."
 

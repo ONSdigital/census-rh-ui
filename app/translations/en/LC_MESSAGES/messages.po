@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-12 10:54+0000\n"
+"POT-Creation-Date: 2021-03-17 17:01+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -126,7 +126,7 @@ msgstr ""
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:181
+#: app/templates/request-common-confirm-send-by-post.html:180
 #: app/templates/request-common-enter-name.html:156
 #: app/templates/request-common-people-in-household.html:74
 #: app/templates/request-questionnaire-household.html:52
@@ -223,7 +223,7 @@ msgstr ""
 
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
-#: app/templates/request-common-confirm-send-by-post.html:166
+#: app/templates/request-common-confirm-send-by-post.html:165
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
 #: app/templates/support_centre_list_of_centres.html:70
@@ -688,13 +688,12 @@ msgid ""
 "questionnaire in a larger font."
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:143
-#: app/templates/request-common-confirm-send-by-post.html:163
-msgid "Need a large-print questionnaire?"
+#: app/templates/request-common-confirm-send-by-post.html:150
+msgid "I am visually impaired and need a large-print questionnaire"
 msgstr ""
 
-#: app/templates/request-common-confirm-send-by-post.html:151
-msgid "I am visually impaired and need a large-print questionnaire"
+#: app/templates/request-common-confirm-send-by-post.html:162
+msgid "Need a large-print questionnaire?"
 msgstr ""
 
 #: app/templates/request-common-enter-name.html:18
@@ -1054,16 +1053,39 @@ msgid ""
 "access your census."
 msgstr ""
 
-#: app/templates/start-too-many-requests.html:50
-msgid "Sorry, there was a problem starting your census"
+#: app/templates/start-too-many-requests.html:51
+msgid ""
+"We are currently experiencing very high demand, thank you for your "
+"patience"
 msgstr ""
 
-#: app/templates/start-too-many-requests.html:52
-msgid "We are working to fix the problem."
-msgstr ""
-
-#: app/templates/start-too-many-requests.html:54
+#: app/templates/start-too-many-requests.html:53
 msgid "Please try again later."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:60
+msgid ""
+"Keep your 16-character access code safe. You will need it every time you "
+"access your census."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:66
+msgid "Why it's important you take part in the census"
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:68
+msgid ""
+"Taking part in the census is your chance to help make sure you and your "
+"community get the services you need for the next 10 years and beyond."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:70
+msgid "You must complete the census by law or you could be fined up to £1,000."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:73
+#, python-format
+msgid "%(open)sFind out more about the census%(close)s"
 msgstr ""
 
 #: app/templates/start-transient-accommodation-type.html:25
@@ -1525,5 +1547,26 @@ msgid "There are %(errorcount)s problems with your answer"
 msgstr ""
 
 #~ msgid "Sorry, you need enter your access code"
+#~ msgstr ""
+
+#~ msgid "Sorry, there was a problem starting your census"
+#~ msgstr ""
+
+#~ msgid "We are working to fix the problem."
+#~ msgstr ""
+
+#~ msgid "Please try again later."
+#~ msgstr ""
+
+#~ msgid "Sorry, too many people are using this service"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We need to limit the number of "
+#~ "people accessing the census during busy"
+#~ " times."
+#~ msgstr ""
+
+#~ msgid "You can complete your census after Sunday 21 March."
 #~ msgstr ""
 
