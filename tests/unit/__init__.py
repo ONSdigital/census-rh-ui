@@ -536,7 +536,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
         self.content_common_429_error_eq_launch_title_en = \
-            'Sorry, too many people are using this service'
+            'We are currently experiencing very high demand, thank you for your patience'
         self.content_common_429_error_uac_title_en = \
             'You have reached the maximum number of access codes you can request online'
         self.content_common_429_error_paper_questionnaire_title_en = \
@@ -544,7 +544,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_429_error_continuation_questionnaire_title_en = \
             'You have reached the maximum number of continuation questionnaires you can request online'
         self.content_common_429_error_eq_launch_title_cy = \
-            "Mae\\\'n ddrwg gennym, mae gormod o bobl yn defnyddio\\\'r gwasanaeth hwn"
+            "Rydym ni\\\'n brysur iawn ar hyn o bryd, diolch am eich amynedd"
         self.content_common_429_error_uac_title_cy = \
             "Rydych chi wedi cyrraedd y nifer fwyaf o godau mynediad y gallwch ofyn amdanynt ar lein"
         self.content_common_429_error_paper_questionnaire_title_cy = \

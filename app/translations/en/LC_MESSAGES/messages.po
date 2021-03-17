@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-16 17:21+0000\n"
+"POT-Creation-Date: 2021-03-17 17:01+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1053,24 +1053,39 @@ msgid ""
 "access your census."
 msgstr ""
 
-#: app/templates/start-too-many-requests.html:43
-msgid "Sorry, too many people are using this service"
-msgstr ""
-
-#: app/templates/start-too-many-requests.html:45
+#: app/templates/start-too-many-requests.html:51
 msgid ""
-"We need to limit the number of people accessing the census during busy "
-"times."
+"We are currently experiencing very high demand, thank you for your "
+"patience"
 msgstr ""
 
-#: app/templates/start-too-many-requests.html:47
-msgid "You can complete your census after Sunday 21 March."
+#: app/templates/start-too-many-requests.html:53
+msgid "Please try again later."
 msgstr ""
 
-#: app/templates/start-too-many-requests.html:55
+#: app/templates/start-too-many-requests.html:60
 msgid ""
 "Keep your 16-character access code safe. You will need it every time you "
 "access your census."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:66
+msgid "Why it's important you take part in the census"
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:68
+msgid ""
+"Taking part in the census is your chance to help make sure you and your "
+"community get the services you need for the next 10 years and beyond."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:70
+msgid "You must complete the census by law or you could be fined up to £1,000."
+msgstr ""
+
+#: app/templates/start-too-many-requests.html:73
+#, python-format
+msgid "%(open)sFind out more about the census%(close)s"
 msgstr ""
 
 #: app/templates/start-transient-accommodation-type.html:25
@@ -1541,5 +1556,17 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Please try again later."
+#~ msgstr ""
+
+#~ msgid "Sorry, too many people are using this service"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We need to limit the number of "
+#~ "people accessing the census during busy"
+#~ " times."
+#~ msgstr ""
+
+#~ msgid "You can complete your census after Sunday 21 March."
 #~ msgstr ""
 

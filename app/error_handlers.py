@@ -186,6 +186,7 @@ async def too_many_requests_web_form(request):
 
 async def too_many_requests_eq_launch(request):
     attributes = check_display_region(request)
+    attributes['timeout'] = 'true'
     return jinja.render_template('start-too-many-requests.html', request, attributes, status=429)
 
 

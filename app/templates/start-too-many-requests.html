@@ -3,6 +3,14 @@
 {% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
+{%- if display_region == 'ni' -%}
+    {%- set about_the_census_link = domain_url_ni + '/about-the-census/' -%}
+{%- elif display_region == 'cy' -%}
+    {%- set about_the_census_link = domain_url_cy + '/ynglyn-ar-cyfrifiad/' -%}
+{%- else -%}
+    {%- set about_the_census_link = domain_url_en + '/about-the-census/' -%}
+{%- endif -%}
+
 {% if display_region == 'ni' %}
     {% set breadcrumb_items = [
                 {
@@ -40,20 +48,29 @@
 
 {%- block main -%}
 
-    <h1>{{ _('Sorry, too many people are using this service') }}</h1>
+    <h1>{{ _('We are currently experiencing very high demand, thank you for your patience') }}</h1>
 
-    <p>{{ _('We need to limit the number of people accessing the census during busy times.') }}</p>
-
-    <p>{{ _('You can complete your census after Sunday 21 March.') }}</p>
+    <p>{{ _('Please try again later.') }}</p>
 
     {%- call onsPanel({
             'type': 'warn'
         })
     -%}
 
-        {%- autoescape false -%}
-            <p>{{ _('Keep your 16-character access code safe. You will need it every time you access your census.') }}</p>
-        {%- endautoescape -%}
+        <p>{{ _('Keep your 16-character access code safe. You will need it every time you access your census.') }}</p>
 
     {%- endcall -%}
+
+    <hr>
+
+    <h2 class="u-fs-m u-mt-l">{{_("Why it's important you take part in the census")}}</h2>
+
+    <p>{{ _('Taking part in the census is your chance to help make sure you and your community get the services you need for the next 10 years and beyond.') }}</p>
+
+    <p>{{ _('You must complete the census by law or you could be fined up to £1,000.') }}</p>
+
+     {% autoescape false %}
+        <p>{{ _('%(open)sFind out more about the census%(close)s', open='<a href="%s">' % about_the_census_link, close='</a>')|safe }}</p>
+     {% endautoescape %}
+
 {%- endblock -%}
