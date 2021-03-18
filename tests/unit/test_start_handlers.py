@@ -1360,6 +1360,25 @@ class TestStartHandlers(TestHelpers):
             self.assertIn(self.content_common_429_error_eq_launch_title_en, contents)
 
     @unittest_run_loop
+    async def test_post_start_confirm_address_get_survey_launched_429_invalidated(self):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=self.uac_json_e)
+            mocked.post(self.rhsvc_url_surveylaunched, status=429)
+
+            response = await self.client.request('POST',
+                                                 self.post_start_en,
+                                                 data=self.start_data_valid)
+            self.assertEqual(response.status, 200)
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request(
+                    'POST',
+                    self.post_start_confirm_address_en,
+                    allow_redirects=False,
+                    data=self.start_confirm_address_data_yes)
+            self.assertLogEvent(cm, 'session invalidated')
+
+    @unittest_run_loop
     async def test_post_start_confirm_address_get_survey_launched_429_ew_w(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
             mocked.get(self.rhsvc_url, payload=self.uac_json_w)
