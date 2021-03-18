@@ -37,20 +37,14 @@
 
     {% if webchat_status == 'closed' %}
 
-        <h1 class="u-fs-xxl u-mt-l">{{_('Web chat unavailable')}}</h1>
-
-        <p>{{ _('Our contact centre is now closed.') }}</p>
-
-        {% autoescape false %}
-            <p>{{ _('You can still contact us through our %(open)sweb form%(close)s.', open='<a href="%s">' %  web_form_url, close='</a>')|safe }}</p>
-        {% endautoescape %}
+        <h1 class="u-fs-xxl u-mt-l">{{_('Web chat is now closed')}}</h1>
 
         <h2 class="u-fs-l u-mt-l">{{_('Web chat opening times')}}</h2>
         <p>
-            {{_('Monday to Friday &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': weekday_open }), close_time=rhTime({'time': weekday_close }) )|safe }}<br/>
-            {{_('Saturday &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': saturday_open }), close_time=rhTime({'time': saturday_close }) )|safe }}<br/>
-            {{_('Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_saturday_open }), close_time=rhTime({'time': census_saturday_close }) )|safe }}<br>
-            {{_('Census Day, 21 March &ndash; %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_sunday_open }), close_time=rhTime({'time': census_sunday_close }) )|safe }}
+            {{_('Monday to Friday, %(open_time)s to %(close_time)s', open_time=rhTime({'time': weekday_open }), close_time=rhTime({'time': weekday_close }) )|safe }}<br/>
+            {{_('Saturday, %(open_time)s to %(close_time)s', open_time=rhTime({'time': saturday_open }), close_time=rhTime({'time': saturday_close }) )|safe }}<br/>
+            {{_('Sunday, closed') }}<br>
+            {{_('Census weekend (20 - 21 March), %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_sunday_open }), close_time=rhTime({'time': census_sunday_close }) )|safe }}
         </p>
 
     {% else %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-17 17:01+0000\n"
+"POT-Creation-Date: 2021-03-18 13:33+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1355,39 +1355,39 @@ msgstr ""
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/web-form.html:25 app/templates/webchat-form.html:75
+#: app/templates/web-form.html:25 app/templates/webchat-form.html:69
 msgid "England"
 msgstr ""
 
-#: app/templates/web-form.html:32 app/templates/webchat-form.html:82
+#: app/templates/web-form.html:32 app/templates/webchat-form.html:76
 msgid "Wales"
 msgstr ""
 
-#: app/templates/web-form.html:39 app/templates/webchat-form.html:89
+#: app/templates/web-form.html:39 app/templates/webchat-form.html:83
 msgid "Northern Ireland"
 msgstr ""
 
-#: app/templates/web-form.html:51 app/templates/webchat-form.html:101
+#: app/templates/web-form.html:51 app/templates/webchat-form.html:95
 msgid "I don’t have everything I need to complete my census"
 msgstr ""
 
-#: app/templates/web-form.html:58 app/templates/webchat-form.html:108
+#: app/templates/web-form.html:58 app/templates/webchat-form.html:102
 msgid "I am having technical difficulties"
 msgstr ""
 
-#: app/templates/web-form.html:65 app/templates/webchat-form.html:115
+#: app/templates/web-form.html:65 app/templates/webchat-form.html:109
 msgid "I need help with my census form"
 msgstr ""
 
-#: app/templates/web-form.html:72 app/templates/webchat-form.html:122
+#: app/templates/web-form.html:72 app/templates/webchat-form.html:116
 msgid "I have a complaint"
 msgstr ""
 
-#: app/templates/web-form.html:79 app/templates/webchat-form.html:129
+#: app/templates/web-form.html:79 app/templates/webchat-form.html:123
 msgid "I need help with my address"
 msgstr ""
 
-#: app/templates/web-form.html:86 app/templates/webchat-form.html:136
+#: app/templates/web-form.html:86 app/templates/webchat-form.html:130
 msgid "Something else"
 msgstr ""
 
@@ -1401,7 +1401,7 @@ msgid "Enter detail of your issue"
 msgstr ""
 
 #: app/templates/web-form.html:106 app/templates/webchat-form.html:25
-#: app/templates/webchat-form.html:160 app/templates/webchat-form.html:177
+#: app/templates/webchat-form.html:154 app/templates/webchat-form.html:171
 msgid "Enter your name"
 msgstr ""
 
@@ -1417,13 +1417,13 @@ msgstr ""
 msgid "Web form"
 msgstr ""
 
-#: app/templates/web-form.html:137 app/templates/webchat-form.html:197
-#: app/templates/webchat-form.html:211
+#: app/templates/web-form.html:137 app/templates/webchat-form.html:191
+#: app/templates/webchat-form.html:205
 msgid "Select your country"
 msgstr ""
 
-#: app/templates/web-form.html:148 app/templates/webchat-form.html:231
-#: app/templates/webchat-form.html:245
+#: app/templates/web-form.html:148 app/templates/webchat-form.html:225
+#: app/templates/webchat-form.html:239
 msgid "What do you need help with?"
 msgstr ""
 
@@ -1451,7 +1451,7 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: app/templates/web-form.html:218 app/templates/webchat-form.html:266
+#: app/templates/web-form.html:218 app/templates/webchat-form.html:260
 #, python-format
 msgid ""
 "Information about what we do with your personal data is available in our "
@@ -1459,61 +1459,51 @@ msgid ""
 msgstr ""
 
 #: app/templates/webchat-form.html:40
-msgid "Web chat unavailable"
+msgid "Web chat is now closed"
 msgstr ""
 
 #: app/templates/webchat-form.html:42
-msgid "Our contact centre is now closed."
+msgid "Web chat opening times"
+msgstr ""
+
+#: app/templates/webchat-form.html:44
+#, python-format
+msgid "Monday to Friday, %(open_time)s to %(close_time)s"
 msgstr ""
 
 #: app/templates/webchat-form.html:45
 #, python-format
-msgid "You can still contact us through our %(open)sweb form%(close)s."
+msgid "Saturday, %(open_time)s to %(close_time)s"
 msgstr ""
 
-#: app/templates/webchat-form.html:48
-msgid "Web chat opening times"
+#: app/templates/webchat-form.html:46
+msgid "Sunday, closed"
 msgstr ""
 
-#: app/templates/webchat-form.html:50
+#: app/templates/webchat-form.html:47
 #, python-format
-msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-
-#: app/templates/webchat-form.html:51
-#, python-format
-msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-
-#: app/templates/webchat-form.html:52
-#, python-format
-msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
+msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
 msgstr ""
 
 #: app/templates/webchat-form.html:53
-#, python-format
-msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-
-#: app/templates/webchat-form.html:59
 msgid "Javascript disabled"
 msgstr ""
 
-#: app/templates/webchat-form.html:61
+#: app/templates/webchat-form.html:55
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
 msgstr ""
 
-#: app/templates/webchat-form.html:63
+#: app/templates/webchat-form.html:57
 msgid "Get Help"
 msgstr ""
 
-#: app/templates/webchat-form.html:144 app/templates/webchat-window.html:5
+#: app/templates/webchat-form.html:138 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""
 
-#: app/templates/webchat-form.html:259
+#: app/templates/webchat-form.html:253
 msgid "Start web chat"
 msgstr ""
 
@@ -1568,5 +1558,26 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "You can complete your census after Sunday 21 March."
+#~ msgstr ""
+
+#~ msgid "Web chat unavailable"
+#~ msgstr ""
+
+#~ msgid "Our contact centre is now closed."
+#~ msgstr ""
+
+#~ msgid "You can still contact us through our %(open)sweb form%(close)s."
+#~ msgstr ""
+
+#~ msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+
+#~ msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+
+#~ msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+
+#~ msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
 #~ msgstr ""
 
