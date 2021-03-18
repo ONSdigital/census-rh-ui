@@ -15,6 +15,8 @@ from .utils import View
 
 from . import (START_PAGE_TITLE_EN, START_PAGE_TITLE_CY)
 
+from .security import invalidate
+
 logger = get_logger('respondent-home')
 
 
@@ -186,6 +188,7 @@ async def too_many_requests_web_form(request):
 
 async def too_many_requests_eq_launch(request):
     attributes = check_display_region(request)
+    await invalidate(request)
     attributes['timeout'] = 'true'
     return jinja.render_template('start-too-many-requests.html', request, attributes, status=429)
 
