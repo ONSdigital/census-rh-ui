@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-17 17:01+0000\n"
+"POT-Creation-Date: 2021-03-18 13:33+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -1222,8 +1222,8 @@ msgid ""
 "Keep your 16-character access code safe. You will need it every time you "
 "access your census."
 msgstr ""
-"Cadwch eich cod mynediad 16 nod yn ddiogel. Bydd angen y cod arnoch chi bob tro"
-" y byddwch chi'n mynd at eich cyfrifiad."
+"Cadwch eich cod mynediad 16 nod yn ddiogel. Bydd angen y cod arnoch chi "
+"bob tro y byddwch chi'n mynd at eich cyfrifiad."
 
 #: app/templates/start-too-many-requests.html:66
 msgid "Why it's important you take part in the census"
@@ -1233,13 +1233,16 @@ msgstr "Pam mae'n bwysig eich bod chi'n cymryd rhan yn y cyfrifiad"
 msgid ""
 "Taking part in the census is your chance to help make sure you and your "
 "community get the services you need for the next 10 years and beyond."
-msgstr "Cymryd rhan yn y cyfrifiad yw eich cyfle i helpu i wneud yn "
-"siŵr eich bod chi a'ch cymuned yn cael y gwasanaethau sydd eu hangen "
-"arnoch am y 10 mlynedd nesaf a thu hwnt."
+msgstr ""
+"Cymryd rhan yn y cyfrifiad yw eich cyfle i helpu i wneud yn siŵr eich bod"
+" chi a'ch cymuned yn cael y gwasanaethau sydd eu hangen arnoch am y 10 "
+"mlynedd nesaf a thu hwnt."
 
 #: app/templates/start-too-many-requests.html:70
 msgid "You must complete the census by law or you could be fined up to £1,000."
-msgstr "Rhaid i chi gwblhau'r cyfrifiad yn ôl y gyfraith neu gallech chi gael dirwy o hyd at £1,000."
+msgstr ""
+"Rhaid i chi gwblhau'r cyfrifiad yn ôl y gyfraith neu gallech chi gael "
+"dirwy o hyd at £1,000."
 
 #: app/templates/start-too-many-requests.html:73
 #, python-format
@@ -1529,39 +1532,39 @@ msgstr "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
 msgstr "Os oes angen rhagor o help arnoch chi, %(open)scysylltwch â ni%(close)s"
 
-#: app/templates/web-form.html:25 app/templates/webchat-form.html:75
+#: app/templates/web-form.html:25 app/templates/webchat-form.html:69
 msgid "England"
 msgstr "Lloegr"
 
-#: app/templates/web-form.html:32 app/templates/webchat-form.html:82
+#: app/templates/web-form.html:32 app/templates/webchat-form.html:76
 msgid "Wales"
 msgstr "Cymru"
 
-#: app/templates/web-form.html:39 app/templates/webchat-form.html:89
+#: app/templates/web-form.html:39 app/templates/webchat-form.html:83
 msgid "Northern Ireland"
 msgstr "Gogledd Iwerddon"
 
-#: app/templates/web-form.html:51 app/templates/webchat-form.html:101
+#: app/templates/web-form.html:51 app/templates/webchat-form.html:95
 msgid "I don’t have everything I need to complete my census"
 msgstr "Nid oes gennyf bopeth sydd ei angen arnaf i gwblhau'r cyfrifiad"
 
-#: app/templates/web-form.html:58 app/templates/webchat-form.html:108
+#: app/templates/web-form.html:58 app/templates/webchat-form.html:102
 msgid "I am having technical difficulties"
 msgstr "Rwy'n cael anawsterau technegol"
 
-#: app/templates/web-form.html:65 app/templates/webchat-form.html:115
+#: app/templates/web-form.html:65 app/templates/webchat-form.html:109
 msgid "I need help with my census form"
 msgstr "Mae angen help arna i gyda ffurflen y cyfrifiad"
 
-#: app/templates/web-form.html:72 app/templates/webchat-form.html:122
+#: app/templates/web-form.html:72 app/templates/webchat-form.html:116
 msgid "I have a complaint"
 msgstr "Mae gen i gŵyn"
 
-#: app/templates/web-form.html:79 app/templates/webchat-form.html:129
+#: app/templates/web-form.html:79 app/templates/webchat-form.html:123
 msgid "I need help with my address"
 msgstr "Mae angen help arna i gyda fy nghyfeiriad"
 
-#: app/templates/web-form.html:86 app/templates/webchat-form.html:136
+#: app/templates/web-form.html:86 app/templates/webchat-form.html:130
 msgid "Something else"
 msgstr "Rhywbeth arall"
 
@@ -1575,7 +1578,7 @@ msgid "Enter detail of your issue"
 msgstr "Rhowch fanylion eich problem"
 
 #: app/templates/web-form.html:106 app/templates/webchat-form.html:25
-#: app/templates/webchat-form.html:160 app/templates/webchat-form.html:177
+#: app/templates/webchat-form.html:154 app/templates/webchat-form.html:171
 msgid "Enter your name"
 msgstr "Nodwch eich enw"
 
@@ -1591,13 +1594,13 @@ msgstr "Yn ôl"
 msgid "Web form"
 msgstr "Gwe-ffurflen"
 
-#: app/templates/web-form.html:137 app/templates/webchat-form.html:197
-#: app/templates/webchat-form.html:211
+#: app/templates/web-form.html:137 app/templates/webchat-form.html:191
+#: app/templates/webchat-form.html:205
 msgid "Select your country"
 msgstr "Dewiswch eich gwlad"
 
-#: app/templates/web-form.html:148 app/templates/webchat-form.html:231
-#: app/templates/webchat-form.html:245
+#: app/templates/web-form.html:148 app/templates/webchat-form.html:225
+#: app/templates/webchat-form.html:239
 msgid "What do you need help with?"
 msgstr "Gyda beth y mae angen help arnoch chi?"
 
@@ -1625,7 +1628,7 @@ msgstr "Byddwn ond yn ei ddefnyddio i anfon ymateb atoch"
 msgid "Send message"
 msgstr "Anfon neges"
 
-#: app/templates/web-form.html:218 app/templates/webchat-form.html:266
+#: app/templates/web-form.html:218 app/templates/webchat-form.html:260
 #, python-format
 msgid ""
 "Information about what we do with your personal data is available in our "
@@ -1635,51 +1638,37 @@ msgstr ""
 "yn ein %(open)sdatganiad preifatrwydd a diogelu data%(close)s."
 
 #: app/templates/webchat-form.html:40
-msgid "Web chat unavailable"
-msgstr "Nid yw'r adnodd gwe-sgwrs ar gael"
+msgid "Web chat is now closed"
+msgstr "Mae gwe-sgwrs nawr ar gau"
 
 #: app/templates/webchat-form.html:42
-msgid "Our contact centre is now closed."
-msgstr "Mae ein canolfan gyswllt bellach ar gau."
-
-#: app/templates/webchat-form.html:45
-#, python-format
-msgid "You can still contact us through our %(open)sweb form%(close)s."
-msgstr "Gallwch gysylltu â ni o hyd drwy ein %(open)sgwe-ffurflen%(close)s."
-
-#: app/templates/webchat-form.html:48
 msgid "Web chat opening times"
 msgstr "Amseroedd agor ar gyfer gwe-sgwrs"
 
-#: app/templates/webchat-form.html:50
+#: app/templates/webchat-form.html:44
 #, python-format
-msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
-msgstr "o ddydd Llun i ddydd Gwener &ndash; rhwng %(open_time)s ac %(close_time)s"
+msgid "Monday to Friday, %(open_time)s to %(close_time)s"
+msgstr "O ddydd Llun i ddydd Gwener, rhwng %(open_time)s ac %(close_time)s"
 
-#: app/templates/webchat-form.html:51
+#: app/templates/webchat-form.html:45
 #, python-format
-msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
-msgstr "Dydd Sadwrn &ndash; rhwng %(open_time)s ac %(close_time)s"
+msgid "Saturday, %(open_time)s to %(close_time)s"
+msgstr "Dydd Sadwrn, rhwng %(open_time)s ac %(close_time)s"
 
-#: app/templates/webchat-form.html:52
+#: app/templates/webchat-form.html:46
+msgid "Sunday, closed"
+msgstr "Dydd Sul, ar gau"
+
+#: app/templates/webchat-form.html:47
 #, python-format
-msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-"Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash; rhwng %(open_time)s a "
-"%(close_time)s"
+msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
+msgstr "Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac %(close_time)s"
 
 #: app/templates/webchat-form.html:53
-#, python-format
-msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-"Diwrnod y Cyfrifiad, 21 Mawrth &ndash; rhwng %(open_time)s a "
-"%(close_time)s"
-
-#: app/templates/webchat-form.html:59
 msgid "Javascript disabled"
 msgstr "JavaScript wedi'i analluogi"
 
-#: app/templates/webchat-form.html:61
+#: app/templates/webchat-form.html:55
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
@@ -1687,15 +1676,15 @@ msgstr ""
 "Mae JavaScript wedi'i analluogi ar eich porwr. I ddechrau sesiwn Gwe-"
 "sgwrs, mae angen i JavaScript fod wedi'i alluogi ar eich porwr."
 
-#: app/templates/webchat-form.html:63
+#: app/templates/webchat-form.html:57
 msgid "Get Help"
 msgstr "Cael Help"
 
-#: app/templates/webchat-form.html:144 app/templates/webchat-window.html:5
+#: app/templates/webchat-form.html:138 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr "Gwe-sgwrs"
 
-#: app/templates/webchat-form.html:259
+#: app/templates/webchat-form.html:253
 msgid "Start web chat"
 msgstr "Dechrau gwe-sgwrs"
 
@@ -1757,4 +1746,31 @@ msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 
 #~ msgid "You can complete your census after Sunday 21 March."
 #~ msgstr "Gallwch chi gwblhau eich cyfrifiad ar ôl dydd Sul 21 Mawrth."
+
+#~ msgid "Web chat unavailable"
+#~ msgstr "Nid yw'r adnodd gwe-sgwrs ar gael"
+
+#~ msgid "Our contact centre is now closed."
+#~ msgstr "Mae ein canolfan gyswllt bellach ar gau."
+
+#~ msgid "You can still contact us through our %(open)sweb form%(close)s."
+#~ msgstr "Gallwch gysylltu â ni o hyd drwy ein %(open)sgwe-ffurflen%(close)s."
+
+#~ msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+#~ "o ddydd Llun i ddydd Gwener "
+#~ "&ndash; rhwng %(open_time)s ac %(close_time)s"
+
+#~ msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr "Dydd Sadwrn &ndash; rhwng %(open_time)s ac %(close_time)s"
+
+#~ msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+#~ "Dydd Sadwrn y Cyfrifiad, 20 Mawrth "
+#~ "&ndash; rhwng %(open_time)s a %(close_time)s"
+
+#~ msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+#~ "Diwrnod y Cyfrifiad, 21 Mawrth &ndash;"
+#~ " rhwng %(open_time)s a %(close_time)s"
 
