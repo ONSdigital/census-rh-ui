@@ -441,14 +441,15 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_select_address_title_en = 'Select your address'
         self.content_common_select_address_error_en = 'Select an address'
         self.content_common_select_address_value_en = '1 Gate Reach'
-        self.content_common_select_address_no_results_en = 'We cannot find your address'
+        self.content_common_select_address_no_results_en = 'Sorry, there was a problem processing your postcode'
         self.content_common_select_address_page_title_cy = '<title>Dewis cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_select_address_page_title_error_cy = \
             '<title>Gwall: Dewis cyfeiriad - Cyfrifiad 2021</title>'
         self.content_common_select_address_title_cy = 'Dewiswch eich cyfeiriad'
         self.content_common_select_address_error_cy = 'Dewiswch gyfeiriad'
         self.content_common_select_address_value_cy = '1 Gate Reach'
-        self.content_common_select_address_no_results_cy = 'Allwn ni ddim dod o hyd'
+        self.content_common_select_address_no_results_cy = \
+            "Mae\\\'n ddrwg gennym, roedd problem wrth brosesu eich cod post"
 
         self.content_common_confirm_address_page_title_en = '<title>Confirm address - Census 2021</title>'
         self.content_common_confirm_address_page_title_error_en = '<title>Error: Confirm address - Census 2021</title>'
@@ -535,7 +536,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_timeout_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
 
         self.content_common_429_error_eq_launch_title_en = \
-            'Sorry, there was a problem starting your census'
+            'We are currently experiencing very high demand, thank you for your patience'
         self.content_common_429_error_uac_title_en = \
             'You have reached the maximum number of access codes you can request online'
         self.content_common_429_error_paper_questionnaire_title_en = \
@@ -543,7 +544,7 @@ class RHTestCase(AioHTTPTestCase):
         self.content_common_429_error_continuation_questionnaire_title_en = \
             'You have reached the maximum number of continuation questionnaires you can request online'
         self.content_common_429_error_eq_launch_title_cy = \
-            "Mae\\\'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+            "Rydym ni\\\'n brysur iawn ar hyn o bryd, diolch am eich amynedd"
         self.content_common_429_error_uac_title_cy = \
             "Rydych chi wedi cyrraedd y nifer fwyaf o godau mynediad y gallwch ofyn amdanynt ar lein"
         self.content_common_429_error_paper_questionnaire_title_cy = \
@@ -646,8 +647,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_start_timeout_title_en = 'Your session has timed out due to inactivity'
         self.content_start_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_start_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
+        self.content_start_timeout_bullet_one_en = 'To protect your information we have timed you out'
+        self.content_start_timeout_bullet_one_cy = \
             'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
         self.content_start_timeout_restart_en = 'enter your 16-character access code'
         self.content_start_timeout_restart_cy = 'eich cod mynediad 16 node'
@@ -661,15 +662,39 @@ class RHTestCase(AioHTTPTestCase):
 
         # Session Timeout
 
-        self.content_timeout_title_en = 'Your session has timed out due to inactivity'
-        self.content_timeout_title_cy = 'Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch'
-        self.content_timeout_secondary_en = 'To protect your information we have timed you out'
-        self.content_start_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_secondary_cy = \
-            'Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn amser'
-        self.content_request_timeout_restart_en = 're-enter your postcode'
-        self.content_request_timeout_restart_cy = 'nodi eich cod post eto'
+        self.content_start_timeout_title_en = 'Sorry, you need to enter your access code'
+        self.content_start_timeout_title_cy = "Mae\\\'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
+        self.content_start_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_start_timeout_bullet_one_cy = \
+            "wedi bod yn anweithgar am 45 munud a bod eich sesiwn wedi cyrraedd y terfyn " \
+            "amser er mwyn diogelu eich gwybodaeth, neu"
+        self.content_start_timeout_bullet_two_en = \
+            'followed a link to the middle of a census questionnaire'
+        self.content_start_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol holiadur y cyfrifiad"
+        self.content_start_timeout_link_text_en = 'enter your 16-character access code'
+        self.content_start_timeout_link_text_cy = "roi eich cod mynediad 16 nod"
+
+        self.content_request_timeout_title_en = 'Sorry, you need to start again'
+        self.content_request_timeout_title_cy = "Mae\\\'n ddrwg gennym, mae angen i chi ddechrau eto"
+        self.content_request_timeout_bullet_one_en = \
+            'been inactive for 45 minutes and your session has timed out to protect your information'
+        self.content_request_timeout_bullet_one_cy = \
+            "wedi bod yn anweithgar am 45 munud a bod eich sesiwn wedi cyrraedd y " \
+            "terfyn amser er mwyn diogelu eich gwybodaeth, neu "
+        self.content_request_code_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a new access code'
+        self.content_request_code_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol cais am god mynediad newydd"
+        self.content_request_form_timeout_bullet_two_en = \
+            'followed a link to the middle of a request for a paper census questionnaire'
+        self.content_request_form_timeout_bullet_two_cy = \
+            "wedi dilyn dolen i ganol cais am holiadur papur y cyfrifiad"
+        self.content_request_code_timeout_link_text_en = 'request a new access code'
+        self.content_request_code_timeout_link_text_cy = "ofyn am god mynediad newydd"
+        self.content_request_form_timeout_link_text_en = 'request a paper census questionnaire'
+        self.content_request_form_timeout_link_text_cy = "ofyn am holiadur papur y cyfrifiad"
 
         # End Session Timeout
 
@@ -2344,9 +2369,9 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_questionnaire_confirm_send_by_post_option_yes_en = 'Yes, send the questionnaire by post'
         self.content_request_questionnaire_confirm_send_by_post_option_no_en = 'No, cancel and return'
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_en = \
-            'I need a large-print questionnaire'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_en = \
-            'Large print \\xe2\\x80\\x93 suitable for visually impaired'
+            'I am visually impaired and need a large-print questionnaire'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_en = \
+            'Need a large-print questionnaire?'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_cy = \
             '<title>Cadarnhau i anfon holiadur papur y cartref - Cyfrifiad 2021</title>'
@@ -2364,9 +2389,9 @@ class RHTestCase(AioHTTPTestCase):
             "Ydw, anfonwch yr holiadur drwy\\\'r post"
         self.content_request_questionnaire_confirm_send_by_post_option_no_cy = "Nac ydw, rwyf am ganslo a dychwelyd"
         self.content_request_questionnaire_confirm_send_by_post_large_print_checkbox_cy = \
-            'Mae angen holiadur print mawr arnaf'
-        self.content_request_questionnaire_confirm_send_by_post_large_print_legend_cy = \
-            'Print mawr \\xe2\\x80\\x93 yn addas i\\\'r rhai \\xc3\\xa2 nam ar eu golwg'
+            'Mae gen i nam ar fy ngolwg ac mae angen holiadur print mawr arnaf'
+        self.content_request_questionnaire_confirm_send_by_post_large_print_section_title_cy = \
+            'Oes angen holiadur print mawr arnoch?'
 
         self.content_request_questionnaire_manager_title_en = \
             'We cannot send communal establishment paper questionnaires to managers'

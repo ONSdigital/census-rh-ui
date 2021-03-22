@@ -1,5 +1,6 @@
 from .helpers import TestHelpers
 from aiohttp.test_utils import unittest_run_loop
+from aioresponses import aioresponses
 
 
 class TestSessionHandling(TestHelpers):
@@ -39,24 +40,42 @@ class TestSessionHandling(TestHelpers):
         self.assertIn(self.get_logo(display_region if display_region else 'ni'), contents)
         if display_region == 'cy':
             self.assertNotIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_timeout_title_cy, contents)
+
             if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_forbidden_link_text_cy, contents)
-                self.assertIn(self.content_start_timeout_secondary_cy, contents)
+                self.assertIn(self.content_start_timeout_title_cy, contents)
+                self.assertIn(self.content_start_timeout_bullet_one_cy, contents)
+                self.assertIn(self.content_start_timeout_bullet_two_cy, contents)
+                self.assertIn(self.content_start_timeout_link_text_cy, contents)
             else:
-                self.assertIn(self.content_request_timeout_restart_cy, contents)
-                self.assertIn(self.content_request_timeout_secondary_cy, contents)
+                self.assertIn(self.content_request_timeout_title_cy, contents)
+                self.assertIn(self.content_request_timeout_bullet_one_cy, contents)
+                if (sub_user_journey == 'access-code') or (request_type == 'access-code'):
+                    self.assertIn(self.content_request_code_timeout_bullet_two_cy, contents)
+                    self.assertIn(self.content_request_code_timeout_link_text_cy, contents)
+                else:
+                    self.assertIn(self.content_request_form_timeout_bullet_two_cy, contents)
+                    self.assertIn(self.content_request_form_timeout_link_text_cy, contents)
         else:
             if display_region == 'ni':
                 self.assertNotIn(self.content_start_exit_button_ni, contents)
             else:
                 self.assertNotIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_timeout_title_en, contents)
-            self.assertIn(self.content_timeout_secondary_en, contents)
+
+            self.assertIn(self.content_start_timeout_bullet_one_en, contents)
             if 'start' in url.path:
-                self.assertIn(self.content_start_timeout_forbidden_link_text_en, contents)
+                self.assertIn(self.content_start_timeout_title_en, contents)
+                self.assertIn(self.content_start_timeout_bullet_one_en, contents)
+                self.assertIn(self.content_start_timeout_bullet_two_en, contents)
+                self.assertIn(self.content_start_timeout_link_text_en, contents)
             else:
-                self.assertIn(self.content_request_timeout_restart_en, contents)
+                self.assertIn(self.content_request_timeout_title_en, contents)
+                self.assertIn(self.content_request_timeout_bullet_one_en, contents)
+                if (sub_user_journey == 'access-code') or (request_type == 'access-code'):
+                    self.assertIn(self.content_request_code_timeout_bullet_two_en, contents)
+                    self.assertIn(self.content_request_code_timeout_link_text_en, contents)
+                else:
+                    self.assertIn(self.content_request_form_timeout_bullet_two_en, contents)
+                    self.assertIn(self.content_request_form_timeout_link_text_en, contents)
 
     async def assert_forbidden(
             self, class_name, method, display_region=None, user_journey='', sub_user_journey=''):
@@ -86,6 +105,70 @@ class TestSessionHandling(TestHelpers):
                 self.assertNotIn(self.content_start_exit_button_en, contents)
             self.assertIn(self.content_start_forbidden_title_en, contents)
             self.assertIn(self.content_start_timeout_forbidden_link_text_en, contents)
+
+    async def assert_cross_journey_forbidden(self, display_region, region):
+
+        if region == 'N':
+            uac_payload = self.uac_json_n
+        elif region == 'W':
+            uac_payload = self.uac_json_w
+        else:
+            uac_payload = self.uac_json_e
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, payload=uac_payload)
+            response = await self.client.request('POST', self.get_url_from_class('Start', 'post', display_region),
+                                                 allow_redirects=True, data=self.start_data_valid)
+
+            self.assertLogEvent(cm, "received POST on endpoint '" + display_region + "/start'")
+            self.assertLogEvent(cm, "received GET on endpoint '" + display_region + "/start/confirm-address'")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertIn(self.content_start_exit_button_cy, contents)
+                self.assertIn(self.content_start_confirm_address_page_title_cy, contents)
+                self.assertIn(self.content_start_confirm_address_title_cy, contents)
+            else:
+                if display_region == 'en':
+                    self.assertIn(self.content_start_exit_button_en, contents)
+                self.assertIn(self.content_start_confirm_address_page_title_en, contents)
+                self.assertIn(self.content_start_confirm_address_title_en, contents)
+
+            if display_region == 'ni':
+                request_url = self.get_request_access_code_enter_address_ni
+                confirm_url = self.post_start_confirm_address_ni
+            elif display_region == 'cy':
+                request_url = self.get_request_access_code_enter_address_cy
+                confirm_url = self.post_start_confirm_address_cy
+            else:
+                request_url = self.get_request_access_code_enter_address_en
+                confirm_url = self.post_start_confirm_address_en
+
+            response = await self.client.request('GET', request_url)
+            self.assertLogEvent(cm, "received GET on endpoint '" + display_region +
+                                "/request/access-code/enter-address'")
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_enter_address(display_region, contents, check_empty=False, check_error=False)
+
+            response = await self.client.request('POST', confirm_url, data=self.start_confirm_address_data_yes)
+            self.assertEqual(response.status, 403)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if display_region == 'cy':
+                self.assertNotIn(self.content_start_exit_button_cy, contents)
+                self.assertIn(self.content_start_forbidden_title_cy, contents)
+                self.assertIn(self.content_start_timeout_forbidden_link_text_cy, contents)
+            else:
+                if display_region == 'ni':
+                    self.assertNotIn(self.content_start_exit_button_ni, contents)
+                else:
+                    self.assertNotIn(self.content_start_exit_button_en, contents)
+                self.assertIn(self.content_start_forbidden_title_en, contents)
+                self.assertIn(self.content_start_timeout_forbidden_link_text_en, contents)
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_start_confirm_address(self):
@@ -360,12 +443,12 @@ class TestSessionHandling(TestHelpers):
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_code_household(self):
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'en')
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'cy')
-        await self.assert_no_session('RequestCodeHousehold', 'GET', 'ni')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'en')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'cy')
-        await self.assert_no_session('RequestCodeHousehold', 'POST', 'ni')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'GET', 'ni', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'en', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'cy', request_type='access-code')
+        await self.assert_no_session('RequestCodeHousehold', 'POST', 'ni', request_type='access-code')
 
     @unittest_run_loop
     async def test_no_direct_access_no_session_request_household_form(self):
@@ -492,3 +575,10 @@ class TestSessionHandling(TestHelpers):
         await self.assert_no_session('RequestLargePrintSentPost', 'GET', 'en')
         await self.assert_no_session('RequestLargePrintSentPost', 'GET', 'cy')
         await self.assert_no_session('RequestLargePrintSentPost', 'GET', 'ni')
+
+    @unittest_run_loop
+    async def test_session_start_to_fulfilment_to_start(self):
+        await self.assert_cross_journey_forbidden('en', 'E')
+        await self.assert_cross_journey_forbidden('en', 'W')
+        await self.assert_cross_journey_forbidden('cy', 'W')
+        await self.assert_cross_journey_forbidden('ni', 'N')

@@ -8,6 +8,7 @@
 {%- from 'components/radios/_macro.njk' import onsRadios -%}
 {%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
 {%- from "components/panel/_macro.njk" import onsPanel -%}
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
 
 {%- set request_common_enter_name_link = url('RequestCommonEnterName:get', display_region=display_region, request_type=request_type) -%}
 {%- set room_number_link = url('CommonEnterRoomNumber:get', display_region=display_region, user_journey='request', sub_user_journey=request_type) -%}
@@ -134,22 +135,41 @@
 
         {%- if (request_type == 'paper-questionnaire') -%}
 
-            {{
-                onsCheckboxes({
-                    'legend': _('Large print – suitable for visually impaired'),
-                    'legendClasses': 'u-fs-m u-mt-l',
-                    'checkboxes': [
-                        {
-                            'id': 'large-print-yes',
-                            'name': 'request-name-address-large-print',
-                            'label': {
-                                'text': _('I need a large-print questionnaire')
-                            },
-                            'value': 'large-print'
-                        }
-                    ]
+            {%- set content -%}
+                <p>{{ _('If you are visually impaired, confirm that you need a paper census questionnaire in a larger font.') }}</p>
+
+                {{
+                    onsCheckboxes({
+                        'dontWrap': true,
+                        'checkboxes': [
+                            {
+                                'id': 'large-print-yes',
+                                'classes': 'u-mb-m',
+                                'name': 'request-name-address-large-print',
+                                'label': {
+                                    'text': _('I am visually impaired and need a large-print questionnaire')
+                                },
+                                'value': 'large-print'
+                            }
+                        ]
+                    })
+                }}
+
+            {%- endset -%}
+
+            {%- call onsCollapsible({
+                    'id': 'collapsible',
+                    'title': _('Need a large-print questionnaire?'),
+                    'titleTag': 'h2',
+                    'button': {
+                        'close': _('Hide this'),
+                        'contextSuffix': 'content'
+                    },
+                    'saveState': 'true'
                 })
-            }}
+            -%}
+                {{ content | safe }}
+            {%- endcall -%}
 
         {%- endif -%}
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-03 18:07+0000\n"
+"POT-Creation-Date: 2021-03-18 13:33+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -108,7 +108,7 @@ msgstr "Na, rwyf am chwilio am fy nghyfeiriad eto"
 #: app/templates/common-resident-or-manager.html:37
 #: app/templates/request-code-confirm-send-by-text.html:36
 #: app/templates/request-code-select-how-to-receive.html:20
-#: app/templates/request-common-confirm-send-by-post.html:23
+#: app/templates/request-common-confirm-send-by-post.html:24
 #: app/templates/start-confirm-address.html:36
 msgid "Select an answer"
 msgstr "Dewiswch ateb"
@@ -121,12 +121,12 @@ msgid "Is this the correct address?"
 msgstr "Ai dyma'r cyfeiriad cywir?"
 
 #: app/templates/common-confirm-address.html:62
-#: app/templates/request-common-confirm-send-by-post.html:106
+#: app/templates/request-common-confirm-send-by-post.html:107
 msgid "Change flat or room number"
 msgstr "Newid rhif fflat neu ystafell"
 
 #: app/templates/common-confirm-address.html:64
-#: app/templates/request-common-confirm-send-by-post.html:107
+#: app/templates/request-common-confirm-send-by-post.html:108
 msgid "Add flat or room number"
 msgstr "Ychwanegu rhif fflat neu ystafell"
 
@@ -139,7 +139,7 @@ msgstr "Ychwanegu rhif fflat neu ystafell"
 #: app/templates/request-code-enter-mobile.html:52
 #: app/templates/request-code-household.html:54
 #: app/templates/request-code-select-how-to-receive.html:88
-#: app/templates/request-common-confirm-send-by-post.html:160
+#: app/templates/request-common-confirm-send-by-post.html:180
 #: app/templates/request-common-enter-name.html:156
 #: app/templates/request-common-people-in-household.html:74
 #: app/templates/request-questionnaire-household.html:52
@@ -245,6 +245,7 @@ msgstr "Nid wyf yn byw mewn cyfeiriad sefydlog"
 
 #: app/templates/common-enter-address.html:93
 #: app/templates/request-code-household.html:44
+#: app/templates/request-common-confirm-send-by-post.html:165
 #: app/templates/request-questionnaire-household.html:42
 #: app/templates/start.html:132
 #: app/templates/support_centre_list_of_centres.html:70
@@ -349,12 +350,12 @@ msgstr "Mae rheolwr yn gyfrifol am ateb cwestiynau'r cyfrifiad am y sefydliad hw
 msgid "Are you a resident or manager of this establishment?"
 msgstr "Ai preswylydd neu reolwr ydych chi yn y sefydliad hwn?"
 
-#: app/templates/common-select-address.html:20
+#: app/templates/common-select-address.html:18
 #, python-format
 msgid "<p class=\"u-fs-r--b\">%(total)s address found for postcode %(pcode)s</p>"
 msgstr "Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer y cod post"
 
-#: app/templates/common-select-address.html:22
+#: app/templates/common-select-address.html:20
 #, python-format
 msgid ""
 "<p class=\"u-fs-r--b\">%(total)s addresses found for postcode "
@@ -363,24 +364,33 @@ msgstr ""
 "<p class=\"u-fs-r--b\">Wedi dod o hyd i %(total)s o gyfeiriadau ar gyfer "
 "y cod post %(pcode)s</p>"
 
-#: app/templates/common-select-address.html:26
+#: app/templates/common-select-address.html:24
 msgid "Select an address"
 msgstr "Dewiswch gyfeiriad"
 
+#: app/templates/common-select-address.html:35
+msgid "Sorry, there was a problem processing your postcode"
+msgstr "Mae'n ddrwg gennym, roedd problem wrth brosesu eich cod post"
+
 #: app/templates/common-select-address.html:37
-msgid "We cannot find your address"
-msgstr "Allwn ni ddim dod o hyd i'ch cyfeiriad"
+#, python-format
+msgid ""
+"We can’t find the postcode <strong>%(pcode)s</strong>. It may not be "
+"registered on our system."
+msgstr ""
+"Ni allwn ddod o hyd i'r cod post <strong>%(pcode)s</strong>. Mae'n bosibl"
+" nad yw wedi'i gofrestru ar ein system."
 
 #: app/templates/common-select-address.html:40
 #, python-format
 msgid ""
-"If this is incorrect you can %(start_request_code_link)senter the "
-"address%(end_link)s  again or %(start_contact_link)scontact "
-"us%(end_link)s."
+"To register your address, we need you to get in touch. You can call us "
+"free on %(telephone_number)s or %(start_contact_link)schoose another way "
+"to contact us%(end_link)s."
 msgstr ""
-"Os yw hyn yn anghywir, gallwch chi %(start_request_code_link)snodi'r "
-"cyfeiriad%(end_link)s eto neu %(start_contact_link)sgysylltu â "
-"ni%(end_link)s."
+"I gofrestru eich cyfeiriad, bydd angen i chi gysylltu â ni. Gallwch chi "
+"ein ffonio ni am ddim ar %(telephone_number)s neu "
+"%(start_contact_link)sddewis ffordd arall o gysylltu â ni%(end_link)s."
 
 #: app/templates/common-select-address.html:46
 #: app/templates/common-select-address.html:55
@@ -697,59 +707,59 @@ msgstr "Barod i ddechrau'ch cyfrifiad ar lein?"
 msgid "Start census"
 msgstr "Dechrau'r cyfrifiad"
 
-#: app/templates/request-common-confirm-send-by-post.html:31
+#: app/templates/request-common-confirm-send-by-post.html:32
 msgid "Yes, send the questionnaire by post"
 msgstr "Ydw, anfonwch yr holiadur drwy'r post"
 
-#: app/templates/request-common-confirm-send-by-post.html:38
+#: app/templates/request-common-confirm-send-by-post.html:39
 msgid "No, cancel and return"
 msgstr "Nac ydw, rwyf am ganslo a dychwelyd"
 
-#: app/templates/request-common-confirm-send-by-post.html:49
+#: app/templates/request-common-confirm-send-by-post.html:50
 msgid "Yes, send the access code by post"
 msgstr "Ydw, anfonwch y cod mynediad drwy'r post"
 
-#: app/templates/request-common-confirm-send-by-post.html:56
+#: app/templates/request-common-confirm-send-by-post.html:57
 msgid "No, send it by text message"
 msgstr "Nac ydw, anfonwch y cod mynediad drwy neges destun"
 
-#: app/templates/request-common-confirm-send-by-post.html:66
+#: app/templates/request-common-confirm-send-by-post.html:67
 msgid "Do you want to send an individual paper questionnaire to this address?"
 msgstr "Ydych chi am anfon holiadur papur i unigolion i'r cyfeiriad hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:68
+#: app/templates/request-common-confirm-send-by-post.html:69
 msgid "Do you want to send a household paper questionnaire to this address?"
 msgstr "Ydych chi am anfon holiadur papur y cartref i'r cyfeiriad hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:71
+#: app/templates/request-common-confirm-send-by-post.html:72
 msgid "Do you want to send a continuation questionnaire to this address?"
 msgstr "Ydych chi am anfon holiadur y cartref (parhad) i'r cyfeiriad hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:73
+#: app/templates/request-common-confirm-send-by-post.html:74
 msgid "Do you want to send an individual access code to this address?"
 msgstr "Ydych chi am anfon cod mynediad unigol i'r cyfeiriad hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:75
+#: app/templates/request-common-confirm-send-by-post.html:76
 msgid "Do you want to send a new manager access code to this address?"
 msgstr "Ydych chi am anfon cod mynediad rheolwr newydd i'r cyfeiriad hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:77
+#: app/templates/request-common-confirm-send-by-post.html:78
 msgid "Do you want to send a new household access code to this address?"
 msgstr ""
 "Ydych chi am anfon cod mynediad newydd ar gyfer y cartref i'r cyfeiriad "
 "hwn?"
 
-#: app/templates/request-common-confirm-send-by-post.html:105
+#: app/templates/request-common-confirm-send-by-post.html:106
 msgid "Change name"
 msgstr "Newid enw"
 
-#: app/templates/request-common-confirm-send-by-post.html:118
+#: app/templates/request-common-confirm-send-by-post.html:119
 msgid ""
 "Your individual paper questionnaire will arrive in a white unbranded "
 "envelope"
 msgstr "Bydd eich holiadur papur i unigolion yn cyrraedd mewn amlen blaen wen"
 
-#: app/templates/request-common-confirm-send-by-post.html:120
+#: app/templates/request-common-confirm-send-by-post.html:121
 msgid ""
 "A letter with your individual access code will arrive in a brown "
 "unbranded envelope"
@@ -758,12 +768,20 @@ msgstr ""
 "blaen frown"
 
 #: app/templates/request-common-confirm-send-by-post.html:139
-msgid "Large print – suitable for visually impaired"
-msgstr "Print mawr – yn addas i'r rhai â nam ar eu golwg"
+msgid ""
+"If you are visually impaired, confirm that you need a paper census "
+"questionnaire in a larger font."
+msgstr ""
+"Os oes gennych nam ar eich golwg, cadarnhewch fod angen holiadur papur y "
+"cyfrifiad arnoch mewn ffont mwy."
 
-#: app/templates/request-common-confirm-send-by-post.html:146
-msgid "I need a large-print questionnaire"
-msgstr "Mae angen holiadur print mawr arnaf"
+#: app/templates/request-common-confirm-send-by-post.html:150
+msgid "I am visually impaired and need a large-print questionnaire"
+msgstr "Mae gen i nam ar fy ngolwg ac mae angen holiadur print mawr arnaf"
+
+#: app/templates/request-common-confirm-send-by-post.html:162
+msgid "Need a large-print questionnaire?"
+msgstr "Oes angen holiadur print mawr arnoch?"
 
 #: app/templates/request-common-enter-name.html:18
 #: app/templates/request-common-enter-name.html:23
@@ -1016,20 +1034,47 @@ msgstr "Caiff holiadur papur y cartref ei anfon at %(name)s yn %(address)s"
 msgid "This should arrive soon for you to complete your census"
 msgstr "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
 
-#: app/templates/request-timeout.html:8 app/templates/start-timeout.html:7
-msgid "Your session has timed out due to inactivity"
-msgstr "Mae eich sesiwn wedi cyrraedd y terfyn amser oherwydd anweithgarwch"
+#: app/templates/request-timeout.html:8
+msgid "Sorry, you need to start again"
+msgstr "Mae'n ddrwg gennym, mae angen i chi ddechrau eto"
 
-#: app/templates/request-timeout.html:12
-msgid "To protect your information we have timed you out"
+#: app/templates/request-timeout.html:10 app/templates/start-timeout.html:9
+msgid "This is because you’ve either:"
+msgstr "Mae hyn oherwydd eich bod chi naill ai:"
+
+#: app/templates/request-timeout.html:12 app/templates/start-timeout.html:11
+msgid ""
+"been inactive for 45 minutes and your session has timed out to protect "
+"your information"
 msgstr ""
-"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
-"amser"
+"wedi bod yn anweithgar am 45 munud a bod eich sesiwn wedi cyrraedd y "
+"terfyn amser er mwyn diogelu eich gwybodaeth, neu "
+
+#: app/templates/request-timeout.html:14
+msgid "followed a link to the middle of a request for a new access code"
+msgstr "wedi dilyn dolen i ganol cais am god mynediad newydd"
 
 #: app/templates/request-timeout.html:16
+msgid ""
+"followed a link to the middle of a request for a paper census "
+"questionnaire"
+msgstr "wedi dilyn dolen i ganol cais am holiadur papur y cyfrifiad"
+
+#: app/templates/request-timeout.html:22
 #, python-format
-msgid "You will need to %(open)sre-enter your postcode%(close)s"
-msgstr "Bydd angen i chi %(open)snodi eich cod post eto%(close)s"
+msgid "You need to start again to %(open)srequest a new access code%(close)s."
+msgstr ""
+"Bydd angen i chi ddechrau eto i %(open)sofyn am god mynediad "
+"newydd%(close)s."
+
+#: app/templates/request-timeout.html:26
+#, python-format
+msgid ""
+"You need to start again to %(open)srequest a paper census "
+"questionnaire%(close)s."
+msgstr ""
+"Bydd angen i chi ddechrau eto i %(open)sofyn am holiadur papur y "
+"cyfrifiad%(close)s."
 
 #: app/templates/request-too-many-requests.html:51
 msgid ""
@@ -1145,32 +1190,64 @@ msgstr ""
 msgid "Launch census"
 msgstr ""
 
-#: app/templates/start-timeout.html:11
-msgid "To protect your information we have timed you out."
-msgstr ""
-"Er mwyn diogelu eich gwybodaeth, mae eich sesiwn wedi cyrraedd y terfyn "
-"amser"
+#: app/templates/start-timeout.html:7
+msgid "Sorry, you need to enter your access code"
+msgstr "Mae'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
 
-#: app/templates/start-timeout.html:15
+#: app/templates/start-timeout.html:12
+msgid "followed a link to the middle of a census questionnaire"
+msgstr "wedi dilyn dolen i ganol holiadur y cyfrifiad"
+
+#: app/templates/start-timeout.html:16
 #, python-format
 msgid ""
-"You will need to %(open)senter your 16-character access code%(close)s "
-"again to access your census."
+"You need to %(open)senter your 16-character access code%(close)s to "
+"access your census."
 msgstr ""
-"Bydd angen i chi roi %(open)seich cod mynediad 16 nod%(close)s eto i fynd"
-" at eich cyfrifiad."
+"Bydd angen i chi %(open)sroi eich cod mynediad 16 nod%(close)s i agor "
+"eich cyfrifiad."
 
-#: app/templates/start-too-many-requests.html:50
-msgid "Sorry, there was a problem starting your census"
-msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+#: app/templates/start-too-many-requests.html:51
+msgid ""
+"We are currently experiencing very high demand, thank you for your "
+"patience"
+msgstr "Rydym ni'n brysur iawn ar hyn o bryd, diolch am eich amynedd"
 
-#: app/templates/start-too-many-requests.html:52
-msgid "We are working to fix the problem."
-msgstr "Rydym ni'n gweithio i ddatrys y broblem"
-
-#: app/templates/start-too-many-requests.html:54
+#: app/templates/start-too-many-requests.html:53
 msgid "Please try again later."
-msgstr "Rhowch gynnig arall arni yn nes ymlaen"
+msgstr "Rhowch gynnig arall arni yn nes ymlaen."
+
+#: app/templates/start-too-many-requests.html:60
+msgid ""
+"Keep your 16-character access code safe. You will need it every time you "
+"access your census."
+msgstr ""
+"Cadwch eich cod mynediad 16 nod yn ddiogel. Bydd angen y cod arnoch chi "
+"bob tro y byddwch chi'n mynd at eich cyfrifiad."
+
+#: app/templates/start-too-many-requests.html:66
+msgid "Why it's important you take part in the census"
+msgstr "Pam mae'n bwysig eich bod chi'n cymryd rhan yn y cyfrifiad"
+
+#: app/templates/start-too-many-requests.html:68
+msgid ""
+"Taking part in the census is your chance to help make sure you and your "
+"community get the services you need for the next 10 years and beyond."
+msgstr ""
+"Cymryd rhan yn y cyfrifiad yw eich cyfle i helpu i wneud yn siŵr eich bod"
+" chi a'ch cymuned yn cael y gwasanaethau sydd eu hangen arnoch am y 10 "
+"mlynedd nesaf a thu hwnt."
+
+#: app/templates/start-too-many-requests.html:70
+msgid "You must complete the census by law or you could be fined up to £1,000."
+msgstr ""
+"Rhaid i chi gwblhau'r cyfrifiad yn ôl y gyfraith neu gallech chi gael "
+"dirwy o hyd at £1,000."
+
+#: app/templates/start-too-many-requests.html:73
+#, python-format
+msgid "%(open)sFind out more about the census%(close)s"
+msgstr "%(open)sMwy o wybodaeth am y cyfrifiad%(close)s"
 
 #: app/templates/start-transient-accommodation-type.html:25
 #: app/templates/start-transient-accommodation-type.html:27
@@ -1455,39 +1532,39 @@ msgstr "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
 msgstr "Os oes angen rhagor o help arnoch chi, %(open)scysylltwch â ni%(close)s"
 
-#: app/templates/web-form.html:25 app/templates/webchat-form.html:75
+#: app/templates/web-form.html:25 app/templates/webchat-form.html:69
 msgid "England"
 msgstr "Lloegr"
 
-#: app/templates/web-form.html:32 app/templates/webchat-form.html:82
+#: app/templates/web-form.html:32 app/templates/webchat-form.html:76
 msgid "Wales"
 msgstr "Cymru"
 
-#: app/templates/web-form.html:39 app/templates/webchat-form.html:89
+#: app/templates/web-form.html:39 app/templates/webchat-form.html:83
 msgid "Northern Ireland"
 msgstr "Gogledd Iwerddon"
 
-#: app/templates/web-form.html:51 app/templates/webchat-form.html:101
+#: app/templates/web-form.html:51 app/templates/webchat-form.html:95
 msgid "I don’t have everything I need to complete my census"
 msgstr "Nid oes gennyf bopeth sydd ei angen arnaf i gwblhau'r cyfrifiad"
 
-#: app/templates/web-form.html:58 app/templates/webchat-form.html:108
+#: app/templates/web-form.html:58 app/templates/webchat-form.html:102
 msgid "I am having technical difficulties"
 msgstr "Rwy'n cael anawsterau technegol"
 
-#: app/templates/web-form.html:65 app/templates/webchat-form.html:115
+#: app/templates/web-form.html:65 app/templates/webchat-form.html:109
 msgid "I need help with my census form"
 msgstr "Mae angen help arna i gyda ffurflen y cyfrifiad"
 
-#: app/templates/web-form.html:72 app/templates/webchat-form.html:122
+#: app/templates/web-form.html:72 app/templates/webchat-form.html:116
 msgid "I have a complaint"
 msgstr "Mae gen i gŵyn"
 
-#: app/templates/web-form.html:79 app/templates/webchat-form.html:129
+#: app/templates/web-form.html:79 app/templates/webchat-form.html:123
 msgid "I need help with my address"
 msgstr "Mae angen help arna i gyda fy nghyfeiriad"
 
-#: app/templates/web-form.html:86 app/templates/webchat-form.html:136
+#: app/templates/web-form.html:86 app/templates/webchat-form.html:130
 msgid "Something else"
 msgstr "Rhywbeth arall"
 
@@ -1501,7 +1578,7 @@ msgid "Enter detail of your issue"
 msgstr "Rhowch fanylion eich problem"
 
 #: app/templates/web-form.html:106 app/templates/webchat-form.html:25
-#: app/templates/webchat-form.html:160 app/templates/webchat-form.html:177
+#: app/templates/webchat-form.html:154 app/templates/webchat-form.html:171
 msgid "Enter your name"
 msgstr "Nodwch eich enw"
 
@@ -1517,13 +1594,13 @@ msgstr "Yn ôl"
 msgid "Web form"
 msgstr "Gwe-ffurflen"
 
-#: app/templates/web-form.html:137 app/templates/webchat-form.html:197
-#: app/templates/webchat-form.html:211
+#: app/templates/web-form.html:137 app/templates/webchat-form.html:191
+#: app/templates/webchat-form.html:205
 msgid "Select your country"
 msgstr "Dewiswch eich gwlad"
 
-#: app/templates/web-form.html:148 app/templates/webchat-form.html:231
-#: app/templates/webchat-form.html:245
+#: app/templates/web-form.html:148 app/templates/webchat-form.html:225
+#: app/templates/webchat-form.html:239
 msgid "What do you need help with?"
 msgstr "Gyda beth y mae angen help arnoch chi?"
 
@@ -1551,7 +1628,7 @@ msgstr "Byddwn ond yn ei ddefnyddio i anfon ymateb atoch"
 msgid "Send message"
 msgstr "Anfon neges"
 
-#: app/templates/web-form.html:218 app/templates/webchat-form.html:266
+#: app/templates/web-form.html:218 app/templates/webchat-form.html:260
 #, python-format
 msgid ""
 "Information about what we do with your personal data is available in our "
@@ -1561,51 +1638,37 @@ msgstr ""
 "yn ein %(open)sdatganiad preifatrwydd a diogelu data%(close)s."
 
 #: app/templates/webchat-form.html:40
-msgid "Web chat unavailable"
-msgstr "Nid yw'r adnodd gwe-sgwrs ar gael"
+msgid "Web chat is now closed"
+msgstr "Mae gwe-sgwrs nawr ar gau"
 
 #: app/templates/webchat-form.html:42
-msgid "Our contact centre is now closed."
-msgstr "Mae ein canolfan gyswllt bellach ar gau."
-
-#: app/templates/webchat-form.html:45
-#, python-format
-msgid "You can still contact us through our %(open)sweb form%(close)s."
-msgstr "Gallwch gysylltu â ni o hyd drwy ein %(open)sgwe-ffurflen%(close)s."
-
-#: app/templates/webchat-form.html:48
 msgid "Web chat opening times"
 msgstr "Amseroedd agor ar gyfer gwe-sgwrs"
 
-#: app/templates/webchat-form.html:50
+#: app/templates/webchat-form.html:44
 #, python-format
-msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
-msgstr "o ddydd Llun i ddydd Gwener &ndash; rhwng %(open_time)s ac %(close_time)s"
+msgid "Monday to Friday, %(open_time)s to %(close_time)s"
+msgstr "O ddydd Llun i ddydd Gwener, rhwng %(open_time)s ac %(close_time)s"
 
-#: app/templates/webchat-form.html:51
+#: app/templates/webchat-form.html:45
 #, python-format
-msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
-msgstr "Dydd Sadwrn &ndash; rhwng %(open_time)s ac %(close_time)s"
+msgid "Saturday, %(open_time)s to %(close_time)s"
+msgstr "Dydd Sadwrn, rhwng %(open_time)s ac %(close_time)s"
 
-#: app/templates/webchat-form.html:52
+#: app/templates/webchat-form.html:46
+msgid "Sunday, closed"
+msgstr "Dydd Sul, ar gau"
+
+#: app/templates/webchat-form.html:47
 #, python-format
-msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-"Dydd Sadwrn y Cyfrifiad, 20 Mawrth &ndash; rhwng %(open_time)s a "
-"%(close_time)s"
+msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
+msgstr "Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac %(close_time)s"
 
 #: app/templates/webchat-form.html:53
-#, python-format
-msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
-msgstr ""
-"Diwrnod y Cyfrifiad, 21 Mawrth &ndash; rhwng %(open_time)s a "
-"%(close_time)s"
-
-#: app/templates/webchat-form.html:59
 msgid "Javascript disabled"
 msgstr "JavaScript wedi'i analluogi"
 
-#: app/templates/webchat-form.html:61
+#: app/templates/webchat-form.html:55
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
@@ -1613,15 +1676,15 @@ msgstr ""
 "Mae JavaScript wedi'i analluogi ar eich porwr. I ddechrau sesiwn Gwe-"
 "sgwrs, mae angen i JavaScript fod wedi'i alluogi ar eich porwr."
 
-#: app/templates/webchat-form.html:63
+#: app/templates/webchat-form.html:57
 msgid "Get Help"
 msgstr "Cael Help"
 
-#: app/templates/webchat-form.html:144 app/templates/webchat-window.html:5
+#: app/templates/webchat-form.html:138 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr "Gwe-sgwrs"
 
-#: app/templates/webchat-form.html:259
+#: app/templates/webchat-form.html:253
 msgid "Start web chat"
 msgstr "Dechrau gwe-sgwrs"
 
@@ -1657,33 +1720,57 @@ msgstr "Mae %(errorcount)s o broblemau gyda'r dudalen hon"
 msgid "There are %(errorcount)s problems with your answer"
 msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 
-#~ msgid "You have selected an address in Northern Ireland."
-#~ msgstr "Rydych chi wedi dewis cyfeiriad yng Ngogledd Iwerddon."
+#~ msgid "Sorry, you need enter your access code"
+#~ msgstr "Mae'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
+
+#~ msgid "Sorry, there was a problem starting your census"
+#~ msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
+
+#~ msgid "We are working to fix the problem."
+#~ msgstr "Rydym ni'n gweithio i ddatrys y broblem"
+
+#~ msgid "Please try again later."
+#~ msgstr "Rhowch gynnig arall arni yn nes ymlaen"
+
+#~ msgid "Sorry, too many people are using this service"
+#~ msgstr "Mae'n ddrwg gennym, mae gormod o bobl yn defnyddio'r gwasanaeth hwn"
 
 #~ msgid ""
-#~ "The Northern Ireland Statistics and "
-#~ "Research Agency (NISRA) runs the census"
-#~ " in Northern Ireland. Visit the "
-#~ "%(open)sNISRA census website%(close)s to find"
-#~ " out how to take part in the"
-#~ " census for Northern Ireland."
+#~ "We need to limit the number of "
+#~ "people accessing the census during busy"
+#~ " times."
 #~ msgstr ""
-#~ "Asiantaeth Ystadegau ac Ymchwil Gogledd "
-#~ "Iwerddon (NISRA) sy'n cynnal y cyfrifiad"
-#~ " yng Ngogledd Iwerddon. Ewch i wefan"
-#~ " %(open)scyfrifiad NISRA%(close)s i gael "
-#~ "gwybod sut i gymryd rhan yn y "
-#~ "cyfrifiad ar gyfer Gogledd Iwerddon."
+#~ "Mae angen i ni gyfyngu ar nifer"
+#~ " y bobl sy'n cwblhau'r cyfrifiad yn"
+#~ " ystod amseroedd prysur."
 
-#~ msgid "This access code is not part of the census for England and Wales"
-#~ msgstr "Nid yw'r cod mynediad hwn yn rhan o'r cyfrifiad ar gyfer Cymru a Lloegr"
+#~ msgid "You can complete your census after Sunday 21 March."
+#~ msgstr "Gallwch chi gwblhau eich cyfrifiad ar ôl dydd Sul 21 Mawrth."
 
-#~ msgid "You have entered an access code for the census in Northern Ireland."
+#~ msgid "Web chat unavailable"
+#~ msgstr "Nid yw'r adnodd gwe-sgwrs ar gael"
+
+#~ msgid "Our contact centre is now closed."
+#~ msgstr "Mae ein canolfan gyswllt bellach ar gau."
+
+#~ msgid "You can still contact us through our %(open)sweb form%(close)s."
+#~ msgstr "Gallwch gysylltu â ni o hyd drwy ein %(open)sgwe-ffurflen%(close)s."
+
+#~ msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
 #~ msgstr ""
-#~ "Rydych chi wedi rhoi cod mynediad "
-#~ "ar gyfer y cyfrifiad yng Ngogledd "
-#~ "Iwerddon."
+#~ "o ddydd Llun i ddydd Gwener "
+#~ "&ndash; rhwng %(open_time)s ac %(close_time)s"
 
-#~ msgid "Large print"
-#~ msgstr "Print mawr"
+#~ msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr "Dydd Sadwrn &ndash; rhwng %(open_time)s ac %(close_time)s"
+
+#~ msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+#~ "Dydd Sadwrn y Cyfrifiad, 20 Mawrth "
+#~ "&ndash; rhwng %(open_time)s a %(close_time)s"
+
+#~ msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+#~ "Diwrnod y Cyfrifiad, 21 Mawrth &ndash;"
+#~ " rhwng %(open_time)s a %(close_time)s"
 

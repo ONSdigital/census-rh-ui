@@ -1,7 +1,5 @@
 {% extends 'base-' + display_region + '.html' %}
 
-{% set request_code_link = url('CommonEnterAddress:get', display_region=display_region, user_journey=user_journey, sub_user_journey=sub_user_journey) %}
-
 {% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
 {% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
 
@@ -34,10 +32,12 @@
 
     {% if total_matches == 0: %}
 
-        <h1>{{ _('We cannot find your address') }}</h1>
+        <h1>{{ _('Sorry, there was a problem processing your postcode') }}</h1>
+
+        <p>{{ _('We can’t find the postcode <strong>%(pcode)s</strong>. It may not be registered on our system.', pcode=postcode)|safe }}</p>
 
         {% autoescape false %}
-            <p>{{ _('If this is incorrect you can %(start_request_code_link)senter the address%(end_link)s  again or %(start_contact_link)scontact us%(end_link)s.', start_request_code_link='<a href="%s">' % request_code_link, start_contact_link='<a href="%s">' % contact_us_link, end_link='</a>')|safe }}</p>
+            <p>{{ _('To register your address, we need you to get in touch. You can call us free on %(telephone_number)s or %(start_contact_link)schoose another way to contact us%(end_link)s.', telephone_number=call_centre_number, start_contact_link='<a href="%s">' % contact_us_link, end_link='</a>')|safe }}</p>
         {% endautoescape %}
 
     {% else: %}
