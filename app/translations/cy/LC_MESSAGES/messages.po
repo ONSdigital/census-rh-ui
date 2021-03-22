@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-18 13:33+0000\n"
+"POT-Creation-Date: 2021-03-22 16:54+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -1520,8 +1520,8 @@ msgid "Your message has been sent"
 msgstr "Mae eich neges wedi cael ei hanfon"
 
 #: app/templates/web-form-success.html:70
-msgid "We will respond to you within 2 working days"
-msgstr "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
+msgid "We will respond to you within 4 working days"
+msgstr "Byddwn yn ymateb i chi o fewn 4 diwrnod gwaith"
 
 #: app/templates/web-form-too-many-requests.html:50
 msgid "You have reached the maximum number web form submissions"
@@ -1662,7 +1662,9 @@ msgstr "Dydd Sul, ar gau"
 #: app/templates/webchat-form.html:47
 #, python-format
 msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
-msgstr "Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac %(close_time)s"
+msgstr ""
+"Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac "
+"%(close_time)s"
 
 #: app/templates/webchat-form.html:53
 msgid "Javascript disabled"
@@ -1773,4 +1775,7 @@ msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
 #~ msgstr ""
 #~ "Diwrnod y Cyfrifiad, 21 Mawrth &ndash;"
 #~ " rhwng %(open_time)s a %(close_time)s"
+
+#~ msgid "We will respond to you within 2 working days"
+#~ msgstr "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
 
