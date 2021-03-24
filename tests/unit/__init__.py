@@ -998,6 +998,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.selected_uprn = '10023122451'
         self.selected_uprn_ni = '187748262'
+        self.selected_uprn_na = '10008681962'
+        self.selected_uprn_na_ni = '187748262'
 
         self.mobile_valid = '07012345678'
         self.mobile_invalid_short = '07012'
@@ -1020,6 +1022,11 @@ class RHTestCase(AioHTTPTestCase):
             f = asyncio.Future()
             f.set_result(json.load(fp))
             self.rhsvc_case_by_uprn_hh_n = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_hh_s.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_case_by_uprn_hh_s = f
 
         with open('tests/test_data/rhsvc/case_by_uprn_spg_e.json') as fp:
             f = asyncio.Future()

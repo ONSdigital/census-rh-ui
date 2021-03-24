@@ -18,6 +18,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -25,6 +26,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -131,6 +133,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -138,6 +141,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -246,6 +250,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -253,6 +258,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -359,6 +365,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
             'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -366,6 +373,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -474,6 +482,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -481,6 +490,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -587,6 +597,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -594,6 +605,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -702,6 +714,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -709,6 +722,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -824,6 +838,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -831,6 +846,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -948,6 +964,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -955,6 +972,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1055,6 +1073,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -1062,6 +1081,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1164,6 +1184,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -1171,6 +1192,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1271,6 +1293,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -1278,6 +1301,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1380,6 +1404,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -1387,6 +1412,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1487,6 +1513,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, mock.patch(
             'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
@@ -1494,6 +1521,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1594,13 +1622,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_address_in_scotland_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_s
 
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
@@ -1651,13 +1681,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_address_in_scotland_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_s
 
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
@@ -1708,13 +1740,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_address_in_scotland_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_s
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1759,17 +1793,37 @@ class TestStartHandlersLinkAddress(TestHelpers):
             self.assertIn(self.content_start_exit_button_ni, contents)
             self.assertIn(self.content_common_address_in_scotland_ni, contents)
 
+    @skip_encrypt
     @unittest_run_loop
     async def test_link_address_census_address_type_na_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_na, status=404)
+            mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
+
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-ENG'
+            eq_payload['language_code'] = 'en'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/en'
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '10023122451'
+            eq_payload['display_address'] = 'Holiday Accommodation, Brampton Road'
 
             await self.client.request('GET', self.get_start_en)
             self.assertLogEvent(cm, "received GET on endpoint 'en/start'")
@@ -1804,31 +1858,63 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_en,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'en/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'en/start/call-contact-centre/unable-to-match-address'")
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+            self.assertLogEvent(cm, 'AIMS censusAddressType is NA, changing to HH')
+            self.assertLogEvent(cm, 'redirecting to eq')
 
-            self.assertEqual(200, response.status)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_en, contents)
-            self.assertIn('<a href="/cy/start/call-contact-centre/unable-to-match-address/" lang="cy" >Cymraeg</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_en, contents)
-            self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-            self.assertIn(self.content_call_centre_number_ew, contents)
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)
 
+    @skip_encrypt
     @unittest_run_loop
     async def test_link_address_census_address_type_na_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_na, status=404)
+            mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
+
+            mocked.post(self.rhsvc_url_surveylaunched)
+            eq_payload = self.eq_payload.copy()
+            eq_payload['region_code'] = 'GB-WLS'
+            eq_payload['language_code'] = 'cy'
+            eq_payload['channel'] = 'rh'
+            account_service_url = self.app['ACCOUNT_SERVICE_URL']
+            url_path_prefix = self.app['URL_PATH_PREFIX']
+            url_display_region = '/cy'
+            eq_payload[
+                'account_service_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_url}'
+            eq_payload[
+                'account_service_log_out_url'] = \
+                f'{account_service_url}{url_path_prefix}{url_display_region}{self.account_service_log_out_url}'
+            eq_payload['ru_ref'] = '10023122451'
+            eq_payload['display_address'] = 'Holiday Accommodation, Brampton Road'
 
             await self.client.request('GET', self.get_start_cy)
             self.assertLogEvent(cm, "received GET on endpoint 'cy/start'")
@@ -1863,31 +1949,45 @@ class TestStartHandlersLinkAddress(TestHelpers):
             response = await self.client.request(
                     'POST',
                     self.post_start_link_address_confirm_address_cy,
+                    allow_redirects=False,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'cy/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'cy/start/call-contact-centre/unable-to-match-address'")
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+            self.assertLogEvent(cm, 'AIMS censusAddressType is NA, changing to HH')
+            self.assertLogEvent(cm, 'redirecting to eq')
 
-            self.assertEqual(200, response.status)
-            contents = str(await response.content.read())
-            self.assertIn(self.ons_logo_cy, contents)
-            self.assertIn('<a href="/en/start/call-contact-centre/unable-to-match-address/" lang="en" >English</a>',
-                          contents)
-            self.assertIn(self.content_start_exit_button_cy, contents)
-            self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
-            self.assertIn(self.content_call_centre_number_cy, contents)
+        self.assertEqual(response.status, 302)
+        redirected_url = response.headers['location']
+        # outputs url on fail
+        self.assertTrue(redirected_url.startswith(self.app['EQ_URL']),
+                        redirected_url)
+        # we only care about the query string
+        _, _, _, query, *_ = urlsplit(redirected_url)
+        # convert token to dict
+        token = json.loads(parse_qs(query)['token'][0])
+        # fail early if payload keys differ
+        self.assertEqual(eq_payload.keys(), token.keys())
+        for key in eq_payload.keys():
+            # skip uuid / time generated values
+            if key in ['jti', 'tx_id', 'iat', 'exp']:
+                continue
+            # outputs failed key as msg
+            self.assertEqual(eq_payload[key], token[key], key)
 
     @unittest_run_loop
     async def test_link_address_census_address_type_na_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+            'app.utils.RHService.post_link_uac') as mocked_post_link_uac, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
+            mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_na_ni, status=404)
+            mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             await self.client.request('GET', self.get_start_ni)
             self.assertLogEvent(cm, "received GET on endpoint 'ni/start'")
@@ -1924,15 +2024,16 @@ class TestStartHandlersLinkAddress(TestHelpers):
                     self.post_start_link_address_confirm_address_ni,
                     data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, "received POST on endpoint 'ni/start/link-address/confirm-address'")
-            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/call-contact-centre/unable-to-match-address'")
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+            self.assertLogEvent(cm, 'AIMS censusAddressType is NA, changing to HH')
+            self.assertLogEvent(cm, "received GET on endpoint 'ni/start/language-options'")
 
-            self.assertEqual(200, response.status)
+            self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.nisra_logo, contents)
             self.assertIn(self.content_start_exit_button_ni, contents)
-            self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-            self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-            self.assertIn(self.content_call_centre_number_ni, contents)
+            self.assertIn(self.content_start_ni_language_options_title, contents)
+            self.assertIn(self.content_start_ni_language_options_option_yes, contents)
 
     @unittest_run_loop
     async def test_link_address_address_not_listed_en(self):
@@ -2793,13 +2894,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_404_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_en)
@@ -2849,13 +2952,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_404_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_cy)
@@ -2905,13 +3010,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_404_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked.post(self.rhsvc_url_link_uac, status=404)
 
             await self.client.request('GET', self.get_start_ni)
@@ -2959,13 +3066,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_400_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_en)
@@ -3015,13 +3124,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_400_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3071,13 +3182,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_400_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked.post(self.rhsvc_url_link_uac, status=400)
 
             await self.client.request('GET', self.get_start_ni)
@@ -3125,13 +3238,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_500_en(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_en)
@@ -3181,13 +3296,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_500_cy(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_cy)
@@ -3237,13 +3354,15 @@ class TestStartHandlersLinkAddress(TestHelpers):
     async def test_link_address_confirm_address_unable_to_link_500_ni(self):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
                 'app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn, aioresponses(
             passthrough=[str(self.server._root)]) \
                 as mocked:
 
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
             mocked.post(self.rhsvc_url_link_uac, status=500)
 
             await self.client.request('GET', self.get_start_ni)

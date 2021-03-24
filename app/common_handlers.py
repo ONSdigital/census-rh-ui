@@ -544,35 +544,50 @@ class CommonConfirmAddress(CommonCommon):
                 ))
 
         if address_confirmation == 'yes':
-
+            uprn_return = {}
+            have_uprn_return = False
             try:
-                census_address_type_value = attributes['censusAddressType']
-                if census_address_type_value == 'NA':
-                    logger.info('censusAddressType is NA',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
-                                user_selection=address_confirmation)
-                    raise HTTPFound(
-                        request.app.router['CommonCallContactCentre:get'].url_for(
-                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-                elif (census_address_type_value == 'CE') and \
-                        (sub_user_journey == 'continuation-questionnaire'):
-                    logger.info('continuation form for a CE - rejecting',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
-                                sub_journey=sub_user_journey,
-                                census_addr_type=census_address_type_value)
-                    raise HTTPFound(
-                        request.app.router['RequestContinuationNotAHousehold:get'].url_for(
-                            display_region=display_region))
-            except KeyError:
-                logger.info('unable to check censusAddressType',
-                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
+                uprn_return = await RHService.get_case_by_uprn(request, attributes['uprn'])
+                attributes['censusAddressType'] = uprn_return['addressType']
+                attributes['countryCode'] = uprn_return['region']
+                session.changed()
+                have_uprn_return = True
+                logger.info('matching uprn found in RHSvc - updating attributes',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
+                            user_selection=address_confirmation)
+            except ClientResponseError:
+                logger.info('no case matching uprn in RHSvc - using AIMS data',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
+                            user_selection=address_confirmation)
+                try:
+                    if attributes['censusAddressType'] == 'NA':
+                        logger.info('AIMS censusAddressType is NA, changing to HH',
+                                    client_ip=request['client_ip'],
+                                    client_id=request['client_id'],
+                                    trace=request['trace'],
+                                    user_selection=address_confirmation)
+                        attributes['censusAddressType'] = 'HH'
+                        session.changed()
+                except KeyError:
+                    logger.info('no AIMS value for censusAddressType - defaulting to HH',
+                                client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
+                    attributes['censusAddressType'] = 'HH'
+                    session.changed()
+
+            if (attributes['censusAddressType'] == 'CE') and (sub_user_journey == 'continuation-questionnaire'):
+                logger.info('continuation form for a CE - rejecting',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
+                            sub_journey=sub_user_journey,
+                            census_addr_type=attributes['censusAddressType'])
                 raise HTTPFound(
-                    request.app.router['CommonCallContactCentre:get'].url_for(
-                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+                    request.app.router['RequestContinuationNotAHousehold:get'].url_for(
+                        display_region=display_region))
 
             try:
                 country_code_value = attributes['countryCode']
@@ -626,11 +641,11 @@ class CommonConfirmAddress(CommonCommon):
 
             if sub_user_journey == 'link-address' or sub_user_journey == 'change-address':
                 try:
-                    uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'], attributes)
-                    session['case'] = uprn_return
+                    auth_uprn_return = await RHService.post_link_uac(request, session['case']['uacHash'], attributes)
+                    session['case'] = auth_uprn_return
                     session.changed()
 
-                    self.validate_case(uprn_return)
+                    self.validate_case(auth_uprn_return)
 
                     if display_region == 'cy':
                         locale = 'cy'
@@ -683,8 +698,7 @@ class CommonConfirmAddress(CommonCommon):
                             display_region=display_region, user_journey=user_journey, error=cc_error))
 
             elif user_journey == 'request':
-                try:
-                    uprn_return = await RHService.get_case_by_uprn(request, attributes['uprn'])
+                if have_uprn_return:
                     attributes['case_id'] = uprn_return['caseId']
                     attributes['region'] = uprn_return['region']
                     attributes['case_type'] = uprn_return['caseType']
@@ -699,40 +713,32 @@ class CommonConfirmAddress(CommonCommon):
                                                                uprn_return['addressLevel'],
                                                                attributes['individual'])
 
-                except ClientResponseError as ex:
-                    if ex.status == 404:
-                        logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
-                                    unmatched_uprn=attributes['uprn'])
-                        logger.info('requesting new case',
+                else:
+                    logger.info('requesting new case',
+                                client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'])
+                    try:
+                        case_creation_return = await RHService.post_case_create(request, attributes)
+                        attributes['case_id'] = case_creation_return['caseId']
+                        attributes['region'] = case_creation_return['region']
+                        attributes['case_type'] = case_creation_return['caseType']
+                        attributes['address_level'] = case_creation_return['addressLevel']
+                        if case_creation_return['caseType'] == 'CE' and case_creation_return['addressLevel'] == 'U':
+                            attributes['individual'] = True
+                        session.changed()
+
+                        await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                   display_region,
+                                                                   case_creation_return['caseType'],
+                                                                   case_creation_return['addressLevel'],
+                                                                   attributes['individual'])
+
+                    except ClientResponseError as ex:
+                        logger.warn('error requesting new case',
                                     client_ip=request['client_ip'],
                                     client_id=request['client_id'],
                                     trace=request['trace'])
-                        try:
-                            case_creation_return = await RHService.post_case_create(request, attributes)
-                            attributes['case_id'] = case_creation_return['caseId']
-                            attributes['region'] = case_creation_return['region']
-                            attributes['case_type'] = case_creation_return['caseType']
-                            attributes['address_level'] = case_creation_return['addressLevel']
-                            if case_creation_return['caseType'] == 'CE' and case_creation_return['addressLevel'] == 'U':
-                                attributes['individual'] = True
-                            session.changed()
-
-                            await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
-                                                                       display_region,
-                                                                       case_creation_return['caseType'],
-                                                                       case_creation_return['addressLevel'],
-                                                                       attributes['individual'])
-
-                        except ClientResponseError as ex:
-                            logger.warn('error requesting new case',
-                                        client_ip=request['client_ip'],
-                                        client_id=request['client_id'],
-                                        trace=request['trace'])
-                            raise ex
-                    else:
                         raise ex
 
         elif address_confirmation == 'no':

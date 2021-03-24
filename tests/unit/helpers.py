@@ -920,7 +920,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -949,7 +949,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
 
@@ -1013,7 +1013,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -1042,7 +1042,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -1091,7 +1091,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
                                                              display_region, 'GET'))
@@ -1137,7 +1137,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'GET'))
 
@@ -1209,33 +1209,71 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_address_in_scotland_page_title_en, contents)
                 self.assertIn(self.content_common_address_in_scotland_en, contents)
 
-    async def check_post_confirm_address_returns_addresstype_na(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+    async def check_post_confirm_address_returns_addresstype_na(self, url, display_region, create_case_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.post_case_create') as mocked_post_case_create, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
+
+            if display_region == 'ni':
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_na_ni, status=404)
+            else:
+                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_na, status=404)
+            mocked_post_case_create.return_value = create_case_return
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('call-contact-centre/unable-to-match-address',
-                                                             display_region, 'GET', False))
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+            self.assertLogEvent(cm, 'AIMS censusAddressType is NA, changing to HH')
+            self.assertLogEvent(cm, 'requesting new case')
 
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
-            if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('call-contact-centre/unable-to-match-address',
-                                                          display_region, False), contents)
-            if display_region == 'ni':
-                self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-                self.assertIn(self.content_call_centre_number_ni, contents)
-            elif display_region == 'cy':
-                self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
-                self.assertIn(self.content_call_centre_number_cy, contents)
-            else:
-                self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-                self.assertIn(self.content_call_centre_number_ew, contents)
 
-    async def check_post_confirm_address_continuation_ce(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+            if self.sub_user_journey == 'access-code':
+                if self.individual:
+                    self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
+                    if not display_region == 'ni':
+                        self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
+                    self.check_text_select_how_to_receive(display_region, contents, 'individual', 'HH')
+                else:
+                    self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
+                    if not display_region == 'ni':
+                        self.assertIn(self.build_translation_link('household', display_region), contents)
+                    if display_region == 'cy':
+                        self.assertIn(self.content_request_code_household_page_title_cy, contents)
+                        self.assertIn(self.content_request_code_household_title_cy, contents)
+                    else:
+                        self.assertIn(self.content_request_code_household_page_title_en, contents)
+                        self.assertIn(self.content_request_code_household_title_en, contents)
+
+            elif self.sub_user_journey == 'continuation-questionnaire':
+                self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household', display_region,
+                                                                 'GET'))
+                if not display_region == 'ni':
+                    self.assertIn(self.build_translation_link('number-of-people-in-your-household', display_region),
+                                  contents)
+                if display_region == 'cy':
+                    self.assertIn(self.content_request_questionnaire_people_in_household_title_cy, contents)
+                else:
+                    self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
+
+            elif self.sub_user_journey == 'paper-questionnaire':
+                self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
+                if not display_region == 'ni':
+                    self.assertIn(self.build_translation_link('household', display_region), contents)
+                if display_region == 'cy':
+                    self.assertIn(self.content_request_questionnaire_household_page_title_cy, contents)
+                    self.assertIn(self.content_request_questionnaire_household_title_cy, contents)
+                else:
+                    self.assertIn(self.content_request_questionnaire_household_page_title_en, contents)
+                    self.assertIn(self.content_request_questionnaire_household_title_en, contents)
+
+    async def check_post_confirm_address_continuation_ce(self, url, display_region, case_by_uprn_return):
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('continuation-questionnaire/not-a-household',
@@ -1284,7 +1322,7 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, 'bad request', status_code=400)
 
@@ -1756,7 +1794,7 @@ class TestHelpers(RHTestCase):
 
             await self.client.request('GET', get_url)
             response = await self.client.request('POST', post_url, data=self.common_postcode_input_valid)
-            if status==400:
+            if status == 400:
                 self.assertLogEvent(cm, 'bad request', status_code=status)
             else:
                 self.assertLogEvent(cm, 'error in response', status_code=status)

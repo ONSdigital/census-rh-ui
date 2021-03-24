@@ -407,7 +407,7 @@ class TestRequestHandlersAccessCode(TestHelpers):
         await self.check_post_select_address(self.post_request_access_code_select_address_en,
                                              'en', 'HH', self.ai_uprn_result_censusaddresstype_na)
         await self.check_post_confirm_address_returns_addresstype_na(
-            self.post_request_access_code_confirm_address_en, 'en')
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
 
     @unittest_run_loop
     async def test_get_request_access_code_census_address_type_na_cy(self):
@@ -416,7 +416,7 @@ class TestRequestHandlersAccessCode(TestHelpers):
         await self.check_post_select_address(self.post_request_access_code_select_address_cy,
                                              'cy', 'HH', self.ai_uprn_result_censusaddresstype_na)
         await self.check_post_confirm_address_returns_addresstype_na(
-            self.post_request_access_code_confirm_address_cy, 'cy')
+            self.post_request_access_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
 
     @unittest_run_loop
     async def test_get_request_access_code_census_address_type_na_ni(self):
@@ -425,7 +425,7 @@ class TestRequestHandlersAccessCode(TestHelpers):
         await self.check_post_select_address(self.post_request_access_code_select_address_ni,
                                              'ni', 'HH', self.ai_uprn_result_censusaddresstype_na_ni)
         await self.check_post_confirm_address_returns_addresstype_na(
-            self.post_request_access_code_confirm_address_ni, 'ni')
+            self.post_request_access_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
 
     @unittest_run_loop
     async def test_post_request_access_code_enter_address_invalid_postcode_ew(self):
