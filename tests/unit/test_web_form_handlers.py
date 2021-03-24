@@ -110,7 +110,7 @@ class TestWebFormHandlers(TestHelpers):
             self.assertLogEvent(cm, self.build_url_log_entry('web-form', display_region, 'POST',
                                                              include_sub_user_journey=False, include_page=False))
             self.assertLogEvent(cm, 'too many requests', status_code=429)
-
+            self.assertLogEvent(cm, 'session invalidated')
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
