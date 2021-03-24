@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-18 13:33+0000\n"
+"POT-Creation-Date: 2021-03-22 16:54+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1343,7 +1343,7 @@ msgid "Your message has been sent"
 msgstr ""
 
 #: app/templates/web-form-success.html:70
-msgid "We will respond to you within 2 working days"
+msgid "We will respond to you within 4 working days"
 msgstr ""
 
 #: app/templates/web-form-too-many-requests.html:50
@@ -1579,5 +1579,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
+#~ msgstr ""
+
+#~ msgid "We will respond to you within 2 working days"
 #~ msgstr ""
 

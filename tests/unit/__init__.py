@@ -2785,11 +2785,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_en = 'Your message has been sent'
-        self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
+        self.content_web_form_success_secondary_en = 'We will respond to you within 4 working days'
         self.content_web_form_success_page_title_cy = '<title>Diolch am gysylltu \\xc3\\xa2 ni - Cyfrifiad 2021</title>'
         self.content_web_form_success_title_cy = 'Diolch am gysylltu \\xc3\\xa2 ni'
         self.content_web_form_success_confirmation_cy = "Mae eich neges wedi cael ei hanfon"
-        self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
+        self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 4 diwrnod gwaith"
 
         self.content_web_form_error_429_title_en = 'You have reached the maximum number web form submissions'
         self.content_web_form_error_429_title_cy = "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
