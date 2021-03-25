@@ -558,7 +558,7 @@ class StartTransientEnterTownName(StartCommon):
         data = await request.post()
 
         try:
-            town_name = data['form-enter-town-name']
+            town_name = data['form-enter-town-name'].strip()
             if not town_name:
                 raise KeyError
             session['attributes']['transientTownName'] = town_name

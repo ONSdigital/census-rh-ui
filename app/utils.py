@@ -303,8 +303,10 @@ class ProcessName:
     def validate_name(request, data, display_region):
 
         name_valid = True
-        form_first_name = data.get('name_first_name')
-        form_last_name = data.get('name_last_name')
+        if data.get('name_first_name'):
+            form_first_name = data.get('name_first_name').strip()
+
+        form_last_name = data.get('name_last_name').strip()
 
         if not form_first_name:
             if display_region == 'cy':

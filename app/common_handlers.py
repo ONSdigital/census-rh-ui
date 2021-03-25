@@ -946,7 +946,7 @@ class CommonEnterRoomNumber(CommonCommon):
         data = await request.post()
 
         try:
-            room_number = data['form-enter-room-number']
+            room_number = data['form-enter-room-number'].strip()
             if len(room_number) > 10:
                 raise KeyError
             attributes['roomNumber'] = room_number
