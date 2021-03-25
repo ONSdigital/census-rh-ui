@@ -339,6 +339,12 @@ class TestRequestHandlersAccessCode(TestHelpers):
                                                           self.post_request_access_code_enter_address_cy, 'cy', 400)
         await self.check_post_enter_address_error_from_ai(self.get_request_access_code_enter_address_ni,
                                                           self.post_request_access_code_enter_address_ni, 'ni', 400)
+        await self.check_post_enter_address_error_from_ai(self.get_request_access_code_enter_address_en,
+                                                          self.post_request_access_code_enter_address_en, 'en', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_access_code_enter_address_cy,
+                                                          self.post_request_access_code_enter_address_cy, 'cy', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_access_code_enter_address_ni,
+                                                          self.post_request_access_code_enter_address_ni, 'ni', 429)
         await self.check_post_enter_address_connection_error_from_ai(
             self.post_request_access_code_enter_address_en, 'en')
         await self.check_post_enter_address_connection_error_from_ai(

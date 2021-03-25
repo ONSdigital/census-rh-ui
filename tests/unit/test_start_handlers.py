@@ -701,6 +701,32 @@ class TestStartHandlers(TestHelpers):
         self.assertIn(self.nisra_logo, contents)
         self.assertIn(self.content_common_500_error_en, contents)
 
+    async def should_use_default_error_handler(self, http_status):
+        with aioresponses(passthrough=[str(self.server._root)]) as mocked:
+            mocked.get(self.rhsvc_url, status=http_status)
+
+            with self.assertLogs('respondent-home', 'ERROR') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_start_en,
+                                                     data=self.start_data_valid)
+            self.assertLogEvent(cm, 'response error', status=http_status, method="get", url=self.rhsvc_url)
+
+        self.assertEqual(response.status, 500)
+
+    @unittest_run_loop
+    async def test_default_handler_4xx(self):
+        status_list = [*range(400, 452)]
+        status_list.remove(404)
+        for st in status_list:
+            await self.should_use_default_error_handler(st)
+
+    @unittest_run_loop
+    async def test_default_handler_5xx(self):
+        status_list = [*range(500, 512)]
+        status_list.remove(503)
+        for st in status_list:
+            await self.should_use_default_error_handler(st)
+
     @unittest_run_loop
     async def test_post_start_get_uac_500_ew(self):
         with aioresponses(passthrough=[str(self.server._root)]) as mocked:
@@ -711,6 +737,7 @@ class TestStartHandlers(TestHelpers):
                                                      self.post_start_en,
                                                      data=self.start_data_valid)
             self.assertLogEvent(cm, 'error in response', status_code=500)
+            self.assertLogEvent(cm, 'response error')
 
         self.assertEqual(response.status, 500)
         contents = str(await response.content.read())
