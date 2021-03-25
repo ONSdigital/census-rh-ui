@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-18 13:33+0000\n"
+"POT-Creation-Date: 2021-03-24 18:10+0000\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -626,27 +626,21 @@ msgstr "Caiff llythyr ei anfon at %(name)s yn %(address)s"
 
 #: app/templates/request-code-sent-by-post.html:32
 msgid ""
-"The letter with an individual access code should arrive soon for you to "
-"start the census"
-msgstr ""
-"Dylai’r llythyr yn cynnwys cod mynediad unigol gyrraedd yn fuan er mwyn i"
-" chi ddechrau'r cyfrifiad"
+"The letter with an individual access code for you to start the census "
+"should arrive within 5 working days"
+msgstr "Dylai'r llythyr gyda chod mynediad unigol i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:34
 msgid ""
-"The letter with a new manager access code should arrive soon for you to "
-"start the census"
-msgstr ""
-"Dylai’r llythyr yn cynnwys cod mynediad rheolwr newydd gyrraedd yn fuan "
-"er mwyn i chi ddechrau'r cyfrifiad"
+"The letter with a new manager access code for you to start the census "
+"should arrive within 5 working days"
+msgstr "Dylai'r llythyr gyda chod mynediad rheolwr newydd i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:36
 msgid ""
-"The letter with a new household access code should arrive soon for you to"
-" start the census"
-msgstr ""
-"Dylai’r llythyr yn cynnwys cod mynediad newydd ar gyfer y cartref "
-"gyrraedd yn fuan er mwyn i chi ddechrau'r cyfrifiad"
+"The letter with a new household access code for you to start the census "
+"should arrive within 5 working days"
+msgstr "Dylai'r llythyr gyda chod mynediad cartref newydd i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:44
 #: app/templates/request-questionnaire-sent.html:60
@@ -1031,8 +1025,8 @@ msgid "A household paper questionnaire will be sent to %(name)s at %(address)s"
 msgstr "Caiff holiadur papur y cartref ei anfon at %(name)s yn %(address)s"
 
 #: app/templates/request-questionnaire-sent.html:53
-msgid "This should arrive soon for you to complete your census"
-msgstr "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
+msgid "This should arrive within 5 working days for you to complete your census"
+msgstr "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
 #: app/templates/request-timeout.html:8
 msgid "Sorry, you need to start again"
@@ -1520,8 +1514,8 @@ msgid "Your message has been sent"
 msgstr "Mae eich neges wedi cael ei hanfon"
 
 #: app/templates/web-form-success.html:70
-msgid "We will respond to you within 2 working days"
-msgstr "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
+msgid "We will respond to you within 4 working days"
+msgstr "Byddwn yn ymateb i chi o fewn 4 diwrnod gwaith"
 
 #: app/templates/web-form-too-many-requests.html:50
 msgid "You have reached the maximum number web form submissions"
@@ -1662,7 +1656,9 @@ msgstr "Dydd Sul, ar gau"
 #: app/templates/webchat-form.html:47
 #, python-format
 msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
-msgstr "Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac %(close_time)s"
+msgstr ""
+"Penwythnos y cyfrifiad (20 – 21 Mawrth), rhwng %(open_time)s ac "
+"%(close_time)s"
 
 #: app/templates/webchat-form.html:53
 msgid "Javascript disabled"
@@ -1719,58 +1715,4 @@ msgstr "Mae %(errorcount)s o broblemau gyda'r dudalen hon"
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
-
-#~ msgid "Sorry, you need enter your access code"
-#~ msgstr "Mae'n ddrwg gennym, bydd angen i chi roi eich cod mynediad"
-
-#~ msgid "Sorry, there was a problem starting your census"
-#~ msgstr "Mae'n ddrwg gennym, roedd problem wrth ddechrau eich cyfrifiad"
-
-#~ msgid "We are working to fix the problem."
-#~ msgstr "Rydym ni'n gweithio i ddatrys y broblem"
-
-#~ msgid "Please try again later."
-#~ msgstr "Rhowch gynnig arall arni yn nes ymlaen"
-
-#~ msgid "Sorry, too many people are using this service"
-#~ msgstr "Mae'n ddrwg gennym, mae gormod o bobl yn defnyddio'r gwasanaeth hwn"
-
-#~ msgid ""
-#~ "We need to limit the number of "
-#~ "people accessing the census during busy"
-#~ " times."
-#~ msgstr ""
-#~ "Mae angen i ni gyfyngu ar nifer"
-#~ " y bobl sy'n cwblhau'r cyfrifiad yn"
-#~ " ystod amseroedd prysur."
-
-#~ msgid "You can complete your census after Sunday 21 March."
-#~ msgstr "Gallwch chi gwblhau eich cyfrifiad ar ôl dydd Sul 21 Mawrth."
-
-#~ msgid "Web chat unavailable"
-#~ msgstr "Nid yw'r adnodd gwe-sgwrs ar gael"
-
-#~ msgid "Our contact centre is now closed."
-#~ msgstr "Mae ein canolfan gyswllt bellach ar gau."
-
-#~ msgid "You can still contact us through our %(open)sweb form%(close)s."
-#~ msgstr "Gallwch gysylltu â ni o hyd drwy ein %(open)sgwe-ffurflen%(close)s."
-
-#~ msgid "Monday to Friday &ndash; %(open_time)s to %(close_time)s"
-#~ msgstr ""
-#~ "o ddydd Llun i ddydd Gwener "
-#~ "&ndash; rhwng %(open_time)s ac %(close_time)s"
-
-#~ msgid "Saturday &ndash; %(open_time)s to %(close_time)s"
-#~ msgstr "Dydd Sadwrn &ndash; rhwng %(open_time)s ac %(close_time)s"
-
-#~ msgid "Census Saturday, 20 March &ndash; %(open_time)s to %(close_time)s"
-#~ msgstr ""
-#~ "Dydd Sadwrn y Cyfrifiad, 20 Mawrth "
-#~ "&ndash; rhwng %(open_time)s a %(close_time)s"
-
-#~ msgid "Census Day, 21 March &ndash; %(open_time)s to %(close_time)s"
-#~ msgstr ""
-#~ "Diwrnod y Cyfrifiad, 21 Mawrth &ndash;"
-#~ " rhwng %(open_time)s a %(close_time)s"
 

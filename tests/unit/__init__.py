@@ -1492,11 +1492,11 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
             'at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_code_sent_post_secondary_individual_en = \
-            'The letter with an individual access code should arrive soon for you to start the census'
+            'The letter with an individual access code for you to start the census should arrive within 5 working days'
         self.content_request_code_sent_post_secondary_manager_en = \
-            'The letter with a new manager access code should arrive soon for you to start the census'
+            'The letter with a new manager access code for you to start the census should arrive within 5 working days'
         self.content_request_code_sent_post_secondary_household_en = \
-            'The letter with a new household access code should arrive soon for you to start the census'
+            'The letter with a new household access code for you to start the census should arrive within 5 working days'
         self.content_request_code_sent_by_post_page_title_household_cy = \
             '<title>Caiff cod mynediad y cartref ei anfon drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_sent_by_post_page_title_manager_cy = \
@@ -1514,14 +1514,14 @@ class RHTestCase(AioHTTPTestCase):
             "Caiff llythyr ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe " \
             "yn Halls Of Residence, Cumbria College Of Art &amp; Design"
         self.content_request_code_sent_post_secondary_individual_cy = \
-            "Dylai\\xe2\\x80\\x99r llythyr yn cynnwys cod mynediad unigol gyrraedd yn fuan " \
-            "er mwyn i chi ddechrau\\\'r cyfrifiad"
+            "Dylai\\\'r llythyr gyda chod mynediad unigol i chi ddechrau\\\'r cyfrifiad " \
+            "gyrraedd cyn pen 5 diwrnod gwaith"
         self.content_request_code_sent_post_secondary_manager_cy = \
-            "Dylai\\xe2\\x80\\x99r llythyr yn cynnwys cod mynediad rheolwr newydd gyrraedd yn fuan er " \
-            "mwyn i chi ddechrau\\\'r cyfrifiad"
+            "Dylai\\\'r llythyr gyda chod mynediad rheolwr newydd i chi ddechrau\\\'r cyfrifiad " \
+            "gyrraedd cyn pen 5 diwrnod gwaith"
         self.content_request_code_sent_post_secondary_household_cy = \
-            "Dylai\\xe2\\x80\\x99r llythyr yn cynnwys cod mynediad newydd ar gyfer y cartref gyrraedd " \
-            "yn fuan er mwyn i chi ddechrau\\\'r cyfrifiad"
+            "Dylai\\\'r llythyr gyda chod mynediad cartref newydd i chi ddechrau\\\'r cyfrifiad " \
+            "gyrraedd cyn pen 5 diwrnod gwaith"
         self.content_request_code_sent_post_title_ni = \
             'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
@@ -2291,7 +2291,7 @@ class RHTestCase(AioHTTPTestCase):
             'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_en = \
-            'This should arrive soon for you to complete your census'
+            'This should arrive within 5 working days for you to complete your census'
 
         self.content_request_questionnaire_sent_post_page_title_cy = \
             '<title>Caiff holiadur papur y cartref ei anfon - Cyfrifiad 2021</title>'
@@ -2343,7 +2343,7 @@ class RHTestCase(AioHTTPTestCase):
             'Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
             'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
         self.content_request_questionnaire_sent_post_secondary_cy = \
-            "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
+            "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
         self.content_request_questionnaire_sent_post_title_ni = \
             'A household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
@@ -2522,13 +2522,13 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_continuation_questionnaire_sent_post_title_en = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_continuation_questionnaire_sent_post_secondary_en = \
-            'This should arrive soon for you to complete your census'
+            'This should arrive within 5 working days for you to complete your census'
         self.content_request_continuation_questionnaire_sent_post_page_title_cy = \
             '<title>Caiff holiadur y cartref (parhad) ei anfon - Cyfrifiad 2021</title>'
         self.content_request_continuation_questionnaire_sent_post_title_cy = \
             "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
         self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
-            "Dylai gyrraedd yn fuan er mwyn i chi gwblhau eich cyfrifiad"
+            "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
         self.content_request_continuation_questionnaire_sent_post_title_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
@@ -2785,11 +2785,11 @@ class RHTestCase(AioHTTPTestCase):
         self.content_web_form_success_page_title_en = '<title>Thank you for contacting us - Census 2021</title>'
         self.content_web_form_success_title_en = 'Thank you for contacting us'
         self.content_web_form_success_confirmation_en = 'Your message has been sent'
-        self.content_web_form_success_secondary_en = 'We will respond to you within 2 working days'
+        self.content_web_form_success_secondary_en = 'We will respond to you within 4 working days'
         self.content_web_form_success_page_title_cy = '<title>Diolch am gysylltu \\xc3\\xa2 ni - Cyfrifiad 2021</title>'
         self.content_web_form_success_title_cy = 'Diolch am gysylltu \\xc3\\xa2 ni'
         self.content_web_form_success_confirmation_cy = "Mae eich neges wedi cael ei hanfon"
-        self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 2 ddiwrnod gwaith"
+        self.content_web_form_success_secondary_cy = "Byddwn yn ymateb i chi o fewn 4 diwrnod gwaith"
 
         self.content_web_form_error_429_title_en = 'You have reached the maximum number web form submissions'
         self.content_web_form_error_429_title_cy = "Allwch chi ddim cyflwyno mwy o ffurflenni gwe"
