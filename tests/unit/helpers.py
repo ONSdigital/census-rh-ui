@@ -1751,16 +1751,16 @@ class TestHelpers(RHTestCase):
     async def check_post_enter_address_error_from_ai(self, get_url, post_url, display_region, status):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 aioresponses(passthrough=[str(self.server._root)]) as mocked:
-            mocked.get(self.addressindexsvc_url + self.postcode_valid + '?limit=' + self.aims_postcode_limit,
-                       status=status)
+            url = self.addressindexsvc_url + self.postcode_valid + '?limit=' + self.aims_postcode_limit
+            mocked.get(url, status=status)
 
             await self.client.request('GET', get_url)
             response = await self.client.request('POST', post_url, data=self.common_postcode_input_valid)
-            if status==400:
+            if status == 400:
                 self.assertLogEvent(cm, 'bad request', status_code=status)
-            else:
+            elif status != 429:
                 self.assertLogEvent(cm, 'error in response', status_code=status)
-
+            self.assertLogEvent(cm, 'response error', status=status, method="get", url=url.replace(' ', '%20'))
             self.assertEqual(response.status, 500)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
