@@ -185,11 +185,13 @@ async def forbidden(request):
 async def too_many_requests(request, sub_user_journey: str):
     attributes = check_display_region(request)
     attributes['sub_user_journey'] = sub_user_journey
+    await invalidate(request)
     return jinja.render_template('request-too-many-requests.html', request, attributes, status=429)
 
 
 async def too_many_requests_web_form(request):
     attributes = check_display_region(request)
+    await invalidate(request)
     return jinja.render_template('web-form-too-many-requests.html', request, attributes, status=429)
 
 
