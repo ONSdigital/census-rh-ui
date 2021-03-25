@@ -140,7 +140,7 @@ class RetryRequest:
             raise ex
 
     def log_too_many_requests(self, ex: ClientResponseError):
-        ai_svc_url = self.request.app['AD_LOOK_UP_SVC_URL']
+        ai_svc_url = self.request.app['ADDRESS_INDEX_SVC_URL']
         tracking = {"client_ip": self.request['client_ip'], "client_id": self.request['client_id'],
                     "trace": self.request['trace']}
         if ai_svc_url in self.url:
