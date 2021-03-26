@@ -1758,7 +1758,9 @@ class TestHelpers(RHTestCase):
             response = await self.client.request('POST', post_url, data=self.common_postcode_input_valid)
             if status == 400:
                 self.assertLogEvent(cm, 'bad request', status_code=status)
-            elif status != 429:
+            elif status == 429:
+                self.assertLogEvent(cm, 'error in AIMS response', status_code=status)
+            else:
                 self.assertLogEvent(cm, 'error in response', status_code=status)
             self.assertLogEvent(cm, 'response error', status=status, method="get", url=url.replace(' ', '%20'))
             self.assertEqual(response.status, 500)
