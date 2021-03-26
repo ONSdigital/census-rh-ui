@@ -1884,11 +1884,11 @@ class TestHelpers(RHTestCase):
 
             response = await self.client.request('POST', url, data=data)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'POST'))
-            if data.get('name_first_name'):
+            if (data.get('name_first_name')) and (len(data.get('name_first_name').split()) > 0):
                 first_name = data.get('name_first_name')
             else:
                 first_name = ''
-            if data.get('name_last_name'):
+            if (data.get('name_last_name')) and (len(data.get('name_last_name').split()) > 0):
                 last_name = data.get('name_last_name')
             else:
                 last_name = ''
@@ -2509,7 +2509,7 @@ class TestHelpers(RHTestCase):
             self.check_text_select_how_to_receive(display_region, contents, 'individual', address_type)
 
     async def add_room_number(self, url_get, url_post, display_region, user_type, return_page,
-                              data_over_length=False, check_for_value=False):
+                              data_over_length=False, check_for_value=False, data_only_space=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
@@ -2540,6 +2540,31 @@ class TestHelpers(RHTestCase):
                 if not display_region == 'ni':
                     self.assertIn(self.build_translation_link('enter-flat-or-room-number', display_region), contents)
                 self.check_text_enter_room_number(display_region, contents, check_empty=False, check_over_length=True)
+
+            elif data_only_space:
+                response = await self.client.request('POST', url_post, data=self.common_room_number_input_only_space)
+                self.assertLogEvent(cm, self.build_url_log_entry('enter-flat-or-room-number', display_region, 'POST'))
+
+                if return_page == 'ConfirmAddress':
+                    self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET'))
+
+                    self.assertEqual(200, response.status)
+                    contents = str(await response.content.read())
+                    self.assertIn(self.get_logo(display_region), contents)
+                    if not display_region == 'ni':
+                        self.assertIn(self.build_translation_link('confirm-address', display_region), contents)
+                    self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=True,
+                                                    check_room_number=False)
+                else:
+                    self.assertLogEvent(cm, self.build_url_log_entry('confirm-send-by-post', display_region, 'GET'))
+
+                    self.assertEqual(200, response.status)
+                    contents = str(await response.content.read())
+                    self.assertIn(self.get_logo(display_region), contents)
+                    if not display_region == 'ni':
+                        self.assertIn(self.build_translation_link('confirm-send-by-post', display_region), contents)
+                    self.check_text_confirm_send_by_post(display_region, contents, user_type,
+                                                         check_error=False, check_ce=True, check_room_number=True)
 
             else:
                 response = await self.client.request('POST', url_post, data=self.common_room_number_input_valid)
@@ -2850,6 +2875,20 @@ class TestHelpers(RHTestCase):
             self.check_text_start_transient_accommodation_type(display_region, contents, check_error=False)
 
     async def check_post_start_transient_enter_town_name_empty(self, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request(
+                'POST', self.get_url_from_class('StartTransientEnterTownName', 'post', display_region),
+                data=self.start_transient_town_name_input_empty)
+            self.assertLogEvent(cm, self.build_url_log_entry('enter-town-name', display_region, 'POST'))
+            self.assertLogEvent(cm, "error town name empty")
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('enter-town-name', display_region), contents)
+            self.check_text_start_transient_enter_town_name(display_region, contents, check_error=True)
+
+    async def check_post_start_transient_enter_town_name_only_space(self, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request(
                 'POST', self.get_url_from_class('StartTransientEnterTownName', 'post', display_region),

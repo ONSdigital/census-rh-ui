@@ -946,10 +946,10 @@ class CommonEnterRoomNumber(CommonCommon):
         data = await request.post()
 
         try:
-            room_number = data['form-enter-room-number'].strip()
+            room_number = data['form-enter-room-number']
             if len(room_number) > 10:
                 raise KeyError
-            attributes['roomNumber'] = room_number
+            attributes['roomNumber'] = room_number.strip()
             session.changed()
             try:
                 if attributes['first_name']:
