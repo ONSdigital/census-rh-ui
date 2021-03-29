@@ -1149,7 +1149,11 @@ class TestHelpers(RHTestCase):
             self.check_text_resident_or_manager(display_region, contents)
 
     async def check_post_confirm_address_address_in_northern_ireland(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('address-in-northern-ireland', display_region, 'GET',
@@ -1167,7 +1171,11 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_address_in_northern_ireland_en, contents)
 
     async def check_post_confirm_address_address_in_england(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('address-in-england', display_region, 'GET',
@@ -1179,7 +1187,11 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_address_in_england_secondary, contents)
 
     async def check_post_confirm_address_address_in_wales(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('address-in-wales', display_region, 'GET',
@@ -1191,7 +1203,11 @@ class TestHelpers(RHTestCase):
             self.assertIn(self.content_common_address_in_wales_secondary, contents)
 
     async def check_post_confirm_address_address_in_scotland(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_s
+
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('address-in-scotland', display_region, 'GET', False))
