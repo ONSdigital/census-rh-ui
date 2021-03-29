@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "${DIR}"/.. || exit
 
-DESIGN_SYSTEM_VERSION="32.1.2-census"
+DESIGN_SYSTEM_VERSION="32.1.3-census"
 
 TEMP_DIR=$(mktemp -d)
 
