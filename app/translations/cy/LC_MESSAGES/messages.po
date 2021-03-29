@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-24 18:10+0000\n"
+"POT-Creation-Date: 2021-03-29 12:20+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cy\n"
@@ -628,19 +628,25 @@ msgstr "Caiff llythyr ei anfon at %(name)s yn %(address)s"
 msgid ""
 "The letter with an individual access code for you to start the census "
 "should arrive within 5 working days"
-msgstr "Dylai'r llythyr gyda chod mynediad unigol i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
+msgstr ""
+"Dylai'r llythyr gyda chod mynediad unigol i chi ddechrau'r cyfrifiad "
+"gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:34
 msgid ""
 "The letter with a new manager access code for you to start the census "
 "should arrive within 5 working days"
-msgstr "Dylai'r llythyr gyda chod mynediad rheolwr newydd i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
+msgstr ""
+"Dylai'r llythyr gyda chod mynediad rheolwr newydd i chi ddechrau'r "
+"cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:36
 msgid ""
 "The letter with a new household access code for you to start the census "
 "should arrive within 5 working days"
-msgstr "Dylai'r llythyr gyda chod mynediad cartref newydd i chi ddechrau'r cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
+msgstr ""
+"Dylai'r llythyr gyda chod mynediad cartref newydd i chi ddechrau'r "
+"cyfrifiad gyrraedd cyn pen 5 diwrnod gwaith"
 
 #: app/templates/request-code-sent-by-post.html:44
 #: app/templates/request-questionnaire-sent.html:60
@@ -1650,8 +1656,8 @@ msgid "Saturday, %(open_time)s to %(close_time)s"
 msgstr "Dydd Sadwrn, rhwng %(open_time)s ac %(close_time)s"
 
 #: app/templates/webchat-form.html:46
-msgid "Sunday, closed"
-msgstr "Dydd Sul, ar gau"
+msgid "Sunday & Bank Holidays, closed"
+msgstr "Dydd Sul a Gwyliau Banc, ar gau"
 
 #: app/templates/webchat-form.html:47
 #, python-format
@@ -1715,4 +1721,7 @@ msgstr "Mae %(errorcount)s o broblemau gyda'r dudalen hon"
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr "Mae %(errorcount)s o broblemau gyda'ch ateb"
+
+#~ msgid "Sunday, closed"
+#~ msgstr "Dydd Sul, ar gau"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-24 18:10+0000\n"
+"POT-Creation-Date: 2021-03-29 12:20+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1477,7 +1477,7 @@ msgid "Saturday, %(open_time)s to %(close_time)s"
 msgstr ""
 
 #: app/templates/webchat-form.html:46
-msgid "Sunday, closed"
+msgid "Sunday & Bank Holidays, closed"
 msgstr ""
 
 #: app/templates/webchat-form.html:47
@@ -1535,4 +1535,7 @@ msgstr ""
 #, python-format
 msgid "There are %(errorcount)s problems with your answer"
 msgstr ""
+
+#~ msgid "Sunday, closed"
+#~ msgstr ""
 
