@@ -496,6 +496,9 @@ class RHTestCase(AioHTTPTestCase):
         self.common_room_number_input_over_length = {
             'form-enter-room-number': 'Room A8, Flat 47', 'action[save_continue]': '',
         }
+        self.common_room_number_input_only_space = {
+            'form-enter-room-number': ' ', 'action[save_continue]': '',
+        }
 
         self.content_common_register_address_title_en = \
             'Register an address'
@@ -1140,6 +1143,11 @@ class RHTestCase(AioHTTPTestCase):
 
         self.request_common_enter_name_form_data_long_surname = {
             'name_first_name': 'Bob', 'name_last_name': 'Bobbington-Fortesque-Smythe',
+            'action[save_continue]': '',
+        }
+
+        self.request_common_enter_name_form_data_only_spaces = {
+            'name_first_name': ' ', 'name_last_name': ' ',
             'action[save_continue]': '',
         }
 
@@ -2845,6 +2853,9 @@ class RHTestCase(AioHTTPTestCase):
         }
         self.start_transient_town_name_input_empty = {
             'form-enter-town-name': '', 'action[save_continue]': '',
+        }
+        self.start_transient_town_name_input_only_space = {
+            'form-enter-town-name': ' ', 'action[save_continue]': '',
         }
 
         self.start_transient_accommodation_type_input_barge_en = {

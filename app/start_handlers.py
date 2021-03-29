@@ -559,9 +559,9 @@ class StartTransientEnterTownName(StartCommon):
 
         try:
             town_name = data['form-enter-town-name']
-            if not town_name:
+            if (not town_name) or (len(town_name.strip()) == 0):
                 raise KeyError
-            session['attributes']['transientTownName'] = town_name
+            session['attributes']['transientTownName'] = town_name.strip()
             session.changed()
 
             raise HTTPFound(

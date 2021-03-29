@@ -65,6 +65,11 @@ class TestStartHandlersTransient(TestHelpers):
         await self.check_post_start_transient(display_region, region)
         await self.check_post_start_transient_enter_town_name_empty(display_region)
 
+    async def check_start_transient_town_name_only_space(self, display_region, region):
+        await self.check_get_start(display_region, adlocation=False)
+        await self.check_post_start_transient(display_region, region)
+        await self.check_post_start_transient_enter_town_name_only_space(display_region)
+
     async def check_start_transient_accommodation_type_empty(self, display_region, region):
         await self.check_get_start(display_region, adlocation=False)
         await self.check_post_start_transient(display_region, region)
@@ -352,6 +357,22 @@ class TestStartHandlersTransient(TestHelpers):
     @unittest_run_loop
     async def test_transient_town_name_empty_ni(self):
         await self.check_start_transient_town_name_empty('ni', 'N')
+
+    @unittest_run_loop
+    async def test_transient_town_name_only_space_ew_e(self):
+        await self.check_start_transient_town_name_only_space('en', 'E')
+
+    @unittest_run_loop
+    async def test_transient_town_name_only_space_ew_w(self):
+        await self.check_start_transient_town_name_only_space('en', 'W')
+
+    @unittest_run_loop
+    async def test_transient_town_name_only_space_cy(self):
+        await self.check_start_transient_town_name_only_space('cy', 'W')
+
+    @unittest_run_loop
+    async def test_transient_town_name_only_space_ni(self):
+        await self.check_start_transient_town_name_only_space('ni', 'N')
 
     @unittest_run_loop
     async def test_transient_accommodation_type_empty_ew_e(self):

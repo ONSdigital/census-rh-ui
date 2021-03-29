@@ -576,8 +576,8 @@ class RequestCommonEnterName(RequestCommon):
                     request_type=request_type
                 ))
 
-        name_first_name = data['name_first_name']
-        name_last_name = data['name_last_name']
+        name_first_name = data['name_first_name'].strip()
+        name_last_name = data['name_last_name'].strip()
 
         attributes['first_name'] = name_first_name
         attributes['last_name'] = name_last_name

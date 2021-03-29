@@ -73,7 +73,7 @@ class WebChat(View):
 
         form_valid = True
 
-        if not data.get('screen_name'):
+        if (not data.get('screen_name')) or (len(data.get('screen_name').split()) == 0):
             if display_region == 'cy':
                 flash(request, {'text': 'Nodwch eich enw', 'clickable': True, 'level': 'ERROR', 'type': 'BAD_CODE',
                                 'field': 'error_screen_name', 'screen_name': data.get('screen_name'),
