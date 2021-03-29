@@ -43,8 +43,7 @@
         <p>
             {{_('Monday to Friday, %(open_time)s to %(close_time)s', open_time=rhTime({'time': weekday_open }), close_time=rhTime({'time': weekday_close }) )|safe }}<br/>
             {{_('Saturday, %(open_time)s to %(close_time)s', open_time=rhTime({'time': saturday_open }), close_time=rhTime({'time': saturday_close }) )|safe }}<br/>
-            {{_('Sunday, closed') }}<br>
-            {{_('Census weekend (20 - 21 March), %(open_time)s to %(close_time)s', open_time=rhTime({'time': census_sunday_open }), close_time=rhTime({'time': census_sunday_close }) )|safe }}
+            {{_('Sunday & Bank Holidays, closed') }}
         </p>
 
     {% else %}
