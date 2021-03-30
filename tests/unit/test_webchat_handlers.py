@@ -419,6 +419,78 @@ class TestWebChatHandlers(RHTestCase):
             self.assertIn(self.content_webchat_error_selected_query, contents)
 
     @unittest_run_loop
+    async def test_post_webchat_name_only_space_en(self):
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data_en.copy()
+            form_data['screen_name'] = ' '
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_en,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_en, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
+            self.assertIn(self.content_common_error_panel_answer_en, contents)
+            self.assertIn(self.content_webchat_error_enter_your_name_en, contents)
+            self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
+            self.assertIn(self.content_webchat_error_selected_country_en, contents)
+            self.assertIn(self.content_webchat_error_selected_query, contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_name_only_space_cy(self):
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data_cy.copy()
+            form_data['screen_name'] = ' '
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_cy,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.ons_logo_cy, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_cy, contents)
+            self.assertIn(self.content_webchat_form_title_cy, contents)
+            self.assertIn(self.content_common_error_panel_answer_cy, contents)
+            self.assertIn(self.content_webchat_error_enter_your_name_cy, contents)
+            self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
+            self.assertIn(self.content_webchat_error_selected_country_cy, contents)
+            self.assertIn(self.content_webchat_error_selected_query, contents)
+
+    @unittest_run_loop
+    async def test_post_webchat_name_only_space_ni(self):
+        with mock.patch('app.webchat_handlers.WebChat.get_now_utc') as mocked_get_now_utc:
+            mocked_get_now_utc.return_value = datetime.datetime(2019, 6, 15, 9, 30)
+            form_data = self.webchat_form_data_ni.copy()
+            form_data['screen_name'] = ' '
+
+            with self.assertLogs('respondent-home', 'INFO') as cm:
+                response = await self.client.request('POST',
+                                                     self.post_webchat_ni,
+                                                     data=form_data)
+            self.assertLogEvent(cm, 'form submission error')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.nisra_logo, contents)
+            self.assertIn(self.content_webchat_form_page_title_error_en, contents)
+            self.assertIn(self.content_webchat_form_title_en, contents)
+            self.assertIn(self.content_common_error_panel_answer_en, contents)
+            self.assertIn(self.content_webchat_error_enter_your_name_en, contents)
+            self.assertNotIn(self.content_webchat_error_selected_screen_name, contents)
+            self.assertIn(self.content_webchat_error_selected_country_ni, contents)
+            self.assertIn(self.content_webchat_error_selected_query, contents)
+
+    @unittest_run_loop
     async def test_post_webchat_open_en(self):
         mocked_now_utc = datetime.datetime(2019, 6, 15, 9, 30)
         await self.should_be_open_to_post(self.post_webchat_en, 'Web Chat', self.ons_logo_en, mocked_now_utc,

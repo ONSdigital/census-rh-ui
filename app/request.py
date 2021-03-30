@@ -122,12 +122,7 @@ class RetryRequest:
                              url=self.url,
                              status_code=ex.status)
             elif ex.status == 429:
-                logger.warn('too many requests',
-                            client_ip=self.request['client_ip'],
-                            client_id=self.request['client_id'],
-                            trace=self.request['trace'],
-                            url=self.url,
-                            status_code=ex.status)
+                self.log_too_many_requests(ex)
             elif ex.status == 400:
                 logger.warn('bad request',
                             client_ip=self.request['client_ip'],
@@ -143,3 +138,18 @@ class RetryRequest:
                          trace=self.request['trace'],
                          url=self.url)
             raise ex
+
+    def log_too_many_requests(self, ex: ClientResponseError):
+        ai_svc_url = self.request.app['ADDRESS_INDEX_SVC_URL']
+        tracking = {"client_ip": self.request['client_ip'], "client_id": self.request['client_id'],
+                    "trace": self.request['trace']}
+        if ai_svc_url in self.url:
+            logger.error('error in AIMS response',
+                         **tracking,
+                         url=self.url,
+                         status_code=ex.status)
+        else:
+            logger.warn('too many requests',
+                        **tracking,
+                        url=self.url,
+                        status_code=ex.status)
