@@ -76,8 +76,8 @@ def create_error_middleware(overrides):
             return await payload_error(request, str(ex.request_info.url))
         except KeyError as error:
             return await key_error(request, error)
-        except ClientResponseError:
-            return await response_error(request)
+        except ClientResponseError as ex:
+            return await response_error(request, ex)
 
     return middleware_handler
 
@@ -142,11 +142,18 @@ async def key_error(request, error):
     return jinja.render_template('error.html', request, attributes, status=500)
 
 
-async def response_error(request):
-    logger.error('response error',
-                 client_ip=request['client_ip'],
-                 client_id=request['client_id'],
-                 trace=request['trace'])
+async def response_error(request, ex: ClientResponseError = None):
+    tracking = {"client_ip": request['client_ip'], "client_id": request['client_id'], "trace": request['trace']}
+    if ex:
+        logger.error('response error',
+                     **tracking,
+                     url=str(ex.request_info.url),
+                     method=ex.request_info.method,
+                     status=ex.status,
+                     exception=ex.message)
+    else:
+        logger.error('uncaught response error', **tracking)
+
     attributes = check_display_region(request)
     return jinja.render_template('error.html', request, attributes, status=500)
 
@@ -178,11 +185,13 @@ async def forbidden(request):
 async def too_many_requests(request, sub_user_journey: str):
     attributes = check_display_region(request)
     attributes['sub_user_journey'] = sub_user_journey
+    await invalidate(request)
     return jinja.render_template('request-too-many-requests.html', request, attributes, status=429)
 
 
 async def too_many_requests_web_form(request):
     attributes = check_display_region(request)
+    await invalidate(request)
     return jinja.render_template('web-form-too-many-requests.html', request, attributes, status=429)
 
 

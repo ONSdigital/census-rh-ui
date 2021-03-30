@@ -306,7 +306,7 @@ class ProcessName:
         form_first_name = data.get('name_first_name')
         form_last_name = data.get('name_last_name')
 
-        if not form_first_name:
+        if (not form_first_name) or (len(form_first_name.strip()) == 0):
             if display_region == 'cy':
                 flash(request, {'text': "Rhowch eich enw cyntaf", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
                                 'field': 'error_first_name', 'value_first_name': form_first_name,
@@ -328,7 +328,7 @@ class ProcessName:
                                 'value_first_name': form_first_name, 'value_last_name': form_last_name})
             name_valid = False
 
-        if not form_last_name:
+        if (not form_last_name) or (len(form_last_name.strip()) == 0):
             if display_region == 'cy':
                 flash(request, {'text': "Rhowch eich cyfenw", 'level': 'ERROR', 'type': 'NAME_ENTER_ERROR',
                                 'field': 'error_last_name', 'value_first_name': form_first_name,

@@ -132,6 +132,12 @@ class TestRequestHandlersIndividualCode(TestHelpers):
                                                           self.post_request_individual_code_enter_address_cy, 'cy', 400)
         await self.check_post_enter_address_error_from_ai(self.get_request_individual_code_enter_address_ni,
                                                           self.post_request_individual_code_enter_address_ni, 'ni', 400)
+        await self.check_post_enter_address_error_from_ai(self.get_request_individual_code_enter_address_en,
+                                                          self.post_request_individual_code_enter_address_en, 'en', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_individual_code_enter_address_cy,
+                                                          self.post_request_individual_code_enter_address_cy, 'cy', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_individual_code_enter_address_ni,
+                                                          self.post_request_individual_code_enter_address_ni, 'ni', 429)
         await self.check_post_enter_address_connection_error_from_ai(
             self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_enter_address_connection_error_from_ai(
@@ -1022,6 +1028,62 @@ class TestRequestHandlersIndividualCode(TestHelpers):
             self.post_request_individual_code_select_how_to_receive_ni, 'ni')
         await self.check_post_enter_name_inputs_error(self.post_request_individual_code_enter_name_ni, 'ni',
                                                       self.common_form_data_empty)
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_enter_name_only_spaces_hh_ew_e(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_post(
+            self.post_request_individual_code_select_how_to_receive_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_individual_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_enter_name_only_spaces_hh_ew_w(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_post(
+            self.post_request_individual_code_select_how_to_receive_en, 'en')
+        await self.check_post_enter_name_inputs_error(self.post_request_individual_code_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_enter_name_only_spaces_hh_cy(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_cy, 'cy')
+        await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_individual_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_post(
+            self.post_request_individual_code_select_how_to_receive_cy, 'cy')
+        await self.check_post_enter_name_inputs_error(self.post_request_individual_code_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_individual_code_post_enter_name_only_spaces_hh_ni(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_ni, 'ni')
+        await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_individual_code_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_code_individual(
+            self.post_request_individual_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_post(
+            self.post_request_individual_code_select_how_to_receive_ni, 'ni')
+        await self.check_post_enter_name_inputs_error(self.post_request_individual_code_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_only_spaces)
 
     @unittest_run_loop
     async def test_request_individual_code_post_enter_name_no_first_hh_ew_e(self):

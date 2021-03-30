@@ -110,7 +110,7 @@ class TestWebFormHandlers(TestHelpers):
             self.assertLogEvent(cm, self.build_url_log_entry('web-form', display_region, 'POST',
                                                              include_sub_user_journey=False, include_page=False))
             self.assertLogEvent(cm, 'too many requests', status_code=429)
-
+            self.assertLogEvent(cm, 'session invalidated')
             self.assertEqual(response.status, 429)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -162,6 +162,28 @@ class TestWebFormHandlers(TestHelpers):
                     self.assertMessagePanel(WEBFORM_MISSING_EMAIL_EMPTY_MSG_CY, contents)
                 else:
                     self.assertMessagePanel(WEBFORM_MISSING_EMAIL_EMPTY_MSG, contents)
+
+    async def form_submission_name_invalid(self, url, display_region, name_value):
+        form_data = self.webform_form_data.copy()
+        form_data['name'] = name_value
+
+        with self.assertLogs('respondent-home', 'INFO') as cm:
+            response = await self.client.request('POST', url, data=form_data)
+            self.assertLogEvent(cm, self.build_url_log_entry('web-form', display_region, 'POST',
+                                                             include_sub_user_journey=False, include_page=False))
+            self.assertLogEvent(cm, 'web form submission error')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('web-form', display_region, include_sub_user_journey=False,
+                                                          include_page=False), contents)
+            self.check_text_web_form(display_region, contents, check_error=True)
+            if display_region == 'cy':
+                self.assertMessagePanel(WEBFORM_MISSING_NAME_MSG_CY, contents)
+            else:
+                self.assertMessagePanel(WEBFORM_MISSING_NAME_MSG, contents)
 
     async def form_submission_email_invalid(self, url, display_region, email_value):
         form_data = self.webform_form_data.copy()
@@ -220,6 +242,15 @@ class TestWebFormHandlers(TestHelpers):
         await self.form_submission_incomplete(self.post_webform_en, 'en', 'email')
         await self.form_submission_incomplete(self.post_webform_cy, 'cy', 'email')
         await self.form_submission_incomplete(self.post_webform_ni, 'ni', 'email')
+
+    @unittest_run_loop
+    async def test_form_submission_name_invalid(self):
+        await self.form_submission_name_invalid(self.post_webform_en, 'en', '')
+        await self.form_submission_name_invalid(self.post_webform_cy, 'cy', '')
+        await self.form_submission_name_invalid(self.post_webform_ni, 'ni', '')
+        await self.form_submission_name_invalid(self.post_webform_en, 'en', ' ')
+        await self.form_submission_name_invalid(self.post_webform_cy, 'cy', ' ')
+        await self.form_submission_name_invalid(self.post_webform_ni, 'ni', ' ')
 
     @unittest_run_loop
     async def test_form_submission_email_invalid(self):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-18 13:33+0000\n"
+"POT-Creation-Date: 2021-03-29 12:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -558,20 +558,20 @@ msgstr ""
 
 #: app/templates/request-code-sent-by-post.html:32
 msgid ""
-"The letter with an individual access code should arrive soon for you to "
-"start the census"
+"The letter with an individual access code for you to start the census "
+"should arrive within 5 working days"
 msgstr ""
 
 #: app/templates/request-code-sent-by-post.html:34
 msgid ""
-"The letter with a new manager access code should arrive soon for you to "
-"start the census"
+"The letter with a new manager access code for you to start the census "
+"should arrive within 5 working days"
 msgstr ""
 
 #: app/templates/request-code-sent-by-post.html:36
 msgid ""
-"The letter with a new household access code should arrive soon for you to"
-" start the census"
+"The letter with a new household access code for you to start the census "
+"should arrive within 5 working days"
 msgstr ""
 
 #: app/templates/request-code-sent-by-post.html:44
@@ -908,7 +908,7 @@ msgid "A household paper questionnaire will be sent to %(name)s at %(address)s"
 msgstr ""
 
 #: app/templates/request-questionnaire-sent.html:53
-msgid "This should arrive soon for you to complete your census"
+msgid "This should arrive within 5 working days for you to complete your census"
 msgstr ""
 
 #: app/templates/request-timeout.html:8
@@ -1342,7 +1342,7 @@ msgid "Your message has been sent"
 msgstr ""
 
 #: app/templates/web-form-success.html:70
-msgid "We will respond to you within 2 working days"
+msgid "We will respond to you within 4 working days"
 msgstr ""
 
 #: app/templates/web-form-too-many-requests.html:50
@@ -1476,7 +1476,7 @@ msgid "Saturday, %(open_time)s to %(close_time)s"
 msgstr ""
 
 #: app/templates/webchat-form.html:46
-msgid "Sunday, closed"
+msgid "Sunday & Bank Holidays, closed"
 msgstr ""
 
 #: app/templates/webchat-form.html:47

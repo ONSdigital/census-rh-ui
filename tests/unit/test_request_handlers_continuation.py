@@ -395,6 +395,15 @@ class TestRequestHandlersContinuationQuestionnaire(TestHelpers):
         await self.check_post_enter_address_error_from_ai(self.get_request_continuation_questionnaire_enter_address_ni,
                                                           self.post_request_continuation_questionnaire_enter_address_ni,
                                                           'ni', 400)
+        await self.check_post_enter_address_error_from_ai(self.get_request_continuation_questionnaire_enter_address_en,
+                                                          self.post_request_continuation_questionnaire_enter_address_en,
+                                                          'en', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_continuation_questionnaire_enter_address_cy,
+                                                          self.post_request_continuation_questionnaire_enter_address_cy,
+                                                          'cy', 429)
+        await self.check_post_enter_address_error_from_ai(self.get_request_continuation_questionnaire_enter_address_ni,
+                                                          self.post_request_continuation_questionnaire_enter_address_ni,
+                                                          'ni', 429)
         await self.check_post_enter_address_connection_error_from_ai(
             self.post_request_continuation_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address_connection_error_from_ai(
@@ -507,6 +516,106 @@ class TestRequestHandlersContinuationQuestionnaire(TestHelpers):
             self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
         await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_ni, 'ni',
                                                       self.common_form_data_empty)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_hh_ew_e(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_e)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_hh_ew_w(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_hh_cy(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_hh_w)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_hh_ni(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'HH')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_hh_n)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_spg_ew_e(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_e)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_spg_ew_w(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_en, 'en', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_en, 'en', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_en, 'en',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_spg_cy(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_cy, 'cy')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_cy, 'cy', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_spg_w)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_cy, 'cy', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_cy, 'cy',
+                                                      self.request_common_enter_name_form_data_only_spaces)
+
+    @unittest_run_loop
+    async def test_request_continuation_questionnaire_enter_name_only_spaces_spg_ni(self):
+        await self.check_get_enter_address(self.get_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_enter_address(self.post_request_continuation_questionnaire_enter_address_ni, 'ni')
+        await self.check_post_select_address(
+            self.post_request_continuation_questionnaire_select_address_ni, 'ni', 'SPG')
+        await self.check_post_confirm_address_input_yes_continuation(
+            self.post_request_continuation_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_spg_n)
+        await self.check_post_people_in_household(
+            self.post_request_continuation_questionnaire_people_in_household_ni, 'ni', '7')
+        await self.check_post_enter_name_inputs_error(self.post_request_continuation_questionnaire_enter_name_ni, 'ni',
+                                                      self.request_common_enter_name_form_data_only_spaces)
 
     @unittest_run_loop
     async def test_request_continuation_questionnaire_enter_name_no_first_hh_ew_e(self):

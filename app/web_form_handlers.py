@@ -86,7 +86,7 @@ class WebForm(View):
                 flash(request, WEBFORM_MISSING_DESCRIPTION_MSG)
             form_valid = False
 
-        if not data.get('name'):
+        if (not data.get('name')) or (len(data.get('name').strip()) == 0):
             if display_region == 'cy':
                 flash(request, WEBFORM_MISSING_NAME_MSG_CY)
             else:
